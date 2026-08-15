@@ -137,7 +137,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     badge: "bestseller",
     img: "/assets/perfumes/0809-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/0809-10ml-1.png?v=2", "/assets/perfumes/0809-10ml-2.png?v=2", "/assets/perfumes/0809-10ml-3.png?v=2"],
+      10: [
+        '/assets/perfumes/0809-10ml-1.png?v=10',
+        '/assets/perfumes/0809-10ml-2.png?v=10',
+        '/assets/perfumes/0809-10ml-3.png?v=10'
+      ],
       30: ["/assets/perfumes/0809-30ml-1.png?v=2", "/assets/perfumes/0809-30ml-2.png?v=2", "/assets/perfumes/0809-30ml-3.png?v=2"],
       50: ["/assets/perfumes/0809-50ml-1.png?v=2", "/assets/perfumes/0809-50ml-2.png?v=2", "/assets/perfumes/0809-50ml-3.png?v=2"]
     },
