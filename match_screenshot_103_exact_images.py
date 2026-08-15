@@ -1,4 +1,23 @@
-import { useState } from "react";
+import os
+
+src_dir = r"C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\frontend\src"
+
+# 1. Update PerfumesPage.tsx Purple Oud Banner image to /assets/purple-oud-banner.png?v=6
+perfumes_page_path = os.path.join(src_dir, "components", "PerfumesPage.tsx")
+with open(perfumes_page_path, "r", encoding="utf-8") as f:
+    p_code = f.read()
+
+p_code = p_code.replace('/assets/images/purple-oud-arrival.png?v=5', '/assets/purple-oud-banner.png?v=6')
+p_code = p_code.replace('/assets/images/purple-oud-arrival.png', '/assets/purple-oud-banner.png?v=6')
+
+with open(perfumes_page_path, "w", encoding="utf-8") as f:
+    f.write(p_code)
+
+print("SUCCESS: Purple Oud big banner image updated back to previous push image (/assets/purple-oud-banner.png?v=6)!")
+
+# 2. Update BestSellers.tsx with exact images matching Screenshot 103
+bs_path = os.path.join(src_dir, "components", "BestSellers.tsx")
+bs_code = """import { useState } from "react";
 import SectionHeading from "./SectionHeading";
 import type { CartItem } from "./CartDrawer";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
@@ -225,3 +244,9 @@ export default function BestSellers({
     </section>
   );
 }
+"""
+
+with open(bs_path, "w", encoding="utf-8") as f:
+    f.write(bs_code)
+
+print("SUCCESS: Best Sellers updated to match Screenshot 103 exactly!")
