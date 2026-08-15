@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vscode/
+.idea/
+python_env/
+__pycache__/
+*.pyc
+perfume_size_images_catalog.json

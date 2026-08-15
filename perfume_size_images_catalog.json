@@ -1,0 +1,189 @@
+{
+  "calantha": {
+    "10": [
+      "/assets/perfumes/calantha-10ml-1.png",
+      "/assets/perfumes/calantha-10ml-2.png",
+      "/assets/perfumes/calantha-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/calantha-30ml-1.png",
+      "/assets/perfumes/calantha-30ml-2.webp",
+      "/assets/perfumes/calantha-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/calantha-50ml-1.jpg",
+      "/assets/perfumes/calantha-50ml-2.png",
+      "/assets/perfumes/calantha-50ml-3.png"
+    ]
+  },
+  "deep-crush": {
+    "10": [
+      "/assets/perfumes/deep-crush-10ml-1.png",
+      "/assets/perfumes/deep-crush-10ml-2.png",
+      "/assets/perfumes/deep-crush-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/deep-crush-30ml-1.png",
+      "/assets/perfumes/deep-crush-30ml-2.png",
+      "/assets/perfumes/deep-crush-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/deep-crush-50ml-1.png",
+      "/assets/perfumes/deep-crush-50ml-2.png",
+      "/assets/perfumes/deep-crush-50ml-3.png"
+    ]
+  },
+  "herrlich": {
+    "10": [
+      "/assets/perfumes/herrlich-10ml-1.png",
+      "/assets/perfumes/herrlich-10ml-2.png",
+      "/assets/perfumes/herrlich-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/herrlich-30ml-1.png",
+      "/assets/perfumes/herrlich-30ml-2.png",
+      "/assets/perfumes/herrlich-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/herrlich-50ml-1.png",
+      "/assets/perfumes/herrlich-50ml-2.png",
+      "/assets/perfumes/herrlich-50ml-3.png"
+    ]
+  },
+  "midnight": {
+    "10": [
+      "/assets/perfumes/midnight-10ml-1.png",
+      "/assets/perfumes/midnight-10ml-2.png",
+      "/assets/perfumes/midnight-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/midnight-30ml-1.png",
+      "/assets/perfumes/midnight-30ml-2.png",
+      "/assets/perfumes/midnight-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/midnight-50ml-1.png",
+      "/assets/perfumes/midnight-50ml-2.png",
+      "/assets/perfumes/midnight-50ml-3.png"
+    ]
+  },
+  "mirai": {
+    "10": [
+      "/assets/perfumes/mirai-10ml-1.png",
+      "/assets/perfumes/mirai-10ml-2.png",
+      "/assets/perfumes/mirai-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/mirai-30ml-1.png",
+      "/assets/perfumes/mirai-30ml-2.png",
+      "/assets/perfumes/mirai-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/mirai-50ml-1.png",
+      "/assets/perfumes/mirai-50ml-2.png",
+      "/assets/perfumes/mirai-50ml-3.png"
+    ]
+  },
+  "o809": {
+    "10": [
+      "/assets/perfumes/o809-10ml-1.jpg",
+      "/assets/perfumes/o809-10ml-2.jpg",
+      "/assets/perfumes/o809-10ml-3.jpg"
+    ],
+    "30": [
+      "/assets/perfumes/o809-30ml-1.png",
+      "/assets/perfumes/o809-30ml-2.png",
+      "/assets/perfumes/o809-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/o809-50ml-1.jpg",
+      "/assets/perfumes/o809-50ml-2.jpg",
+      "/assets/perfumes/o809-50ml-3.jpg"
+    ]
+  },
+  "personna": {
+    "10": [
+      "/assets/perfumes/personna-10ml-1.png",
+      "/assets/perfumes/personna-10ml-2.png",
+      "/assets/perfumes/personna-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/personna-30ml-1.png",
+      "/assets/perfumes/personna-30ml-2.png",
+      "/assets/perfumes/personna-30ml-3.webp"
+    ],
+    "50": [
+      "/assets/perfumes/personna-50ml-1.jpg",
+      "/assets/perfumes/personna-50ml-2.png",
+      "/assets/perfumes/personna-50ml-3.png"
+    ]
+  },
+  "rich": {
+    "10": [
+      "/assets/rich.png",
+      "/assets/rich.png",
+      "/assets/rich.png"
+    ],
+    "30": [
+      "/assets/rich.png",
+      "/assets/rich.png",
+      "/assets/rich.png"
+    ],
+    "50": [
+      "/assets/rich.png",
+      "/assets/rich.png",
+      "/assets/rich.png"
+    ]
+  },
+  "seductive": {
+    "10": [
+      "/assets/perfumes/seductive-10ml-1.png",
+      "/assets/perfumes/seductive-10ml-2.png",
+      "/assets/perfumes/seductive-10ml-3.png"
+    ],
+    "30": [
+      "/assets/seductive.png",
+      "/assets/seductive.png",
+      "/assets/seductive.png"
+    ],
+    "50": [
+      "/assets/perfumes/seductive-50ml-1.png",
+      "/assets/perfumes/seductive-50ml-2.png",
+      "/assets/perfumes/seductive-50ml-3.png"
+    ]
+  },
+  "white-oud": {
+    "10": [
+      "/assets/perfumes/white-oud-10ml-1.png",
+      "/assets/perfumes/white-oud-10ml-2.png",
+      "/assets/perfumes/white-oud-10ml-3.png"
+    ],
+    "30": [
+      "/assets/perfumes/white-oud-30ml-1.png",
+      "/assets/perfumes/white-oud-30ml-2.png",
+      "/assets/perfumes/white-oud-30ml-3.png"
+    ],
+    "50": [
+      "/assets/perfumes/white-oud-50ml-1.png",
+      "/assets/perfumes/white-oud-50ml-2.png",
+      "/assets/perfumes/white-oud-50ml-3.png"
+    ]
+  },
+  "purple-oud": {
+    "10": [
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png"
+    ],
+    "30": [
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png"
+    ],
+    "50": [
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png",
+      "/assets/purple-oud.png"
+    ]
+  }
+}

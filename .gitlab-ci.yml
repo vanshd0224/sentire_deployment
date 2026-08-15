@@ -1,0 +1,74 @@
+stages:
+  - deploy
+
+deploy_backend:
+  stage: deploy
+  image: google/cloud-sdk:alpine
+  services:
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  only:
+    - main
+    - dev
+  before_script:
+    - apk add --no-cache docker
+    - |
+      if echo "$GCP_SERVICE_ACCOUNT_KEY" | base64 -d > /tmp/gcp-key.json 2>/dev/null && grep -q "private_key" /tmp/gcp-key.json; then
+        echo "Decoded Base64 service account key"
+      else
+        echo "$GCP_SERVICE_ACCOUNT_KEY" > /tmp/gcp-key.json
+      fi
+    - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    - gcloud config set project "$GCP_PROJECT_ID"
+    - gcloud artifacts repositories create ecommerce-backend-repo --repository-format=docker --location=asia-south1 --quiet || true
+    - gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
+  script:
+    - docker build -t asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-backend-repo/ecommerce-backend:latest ./backend
+    - docker push asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-backend-repo/ecommerce-backend:latest
+    - >
+      gcloud run deploy ecommerce-backend
+      --image asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-backend-repo/ecommerce-backend:latest
+      --region asia-south1
+      --min-instances=1
+      --allow-unauthenticated
+      --port 8080
+  after_script:
+    - rm -f /tmp/gcp-key.json
+
+deploy_frontend:
+  stage: deploy
+  image: google/cloud-sdk:alpine
+  services:
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  only:
+    - main
+    - dev
+  before_script:
+    - apk add --no-cache docker
+    - |
+      if echo "$GCP_SERVICE_ACCOUNT_KEY" | base64 -d > /tmp/gcp-key.json 2>/dev/null && grep -q "private_key" /tmp/gcp-key.json; then
+        echo "Decoded Base64 service account key"
+      else
+        echo "$GCP_SERVICE_ACCOUNT_KEY" > /tmp/gcp-key.json
+      fi
+    - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    - gcloud config set project "$GCP_PROJECT_ID"
+    - gcloud artifacts repositories create ecommerce-frontend-repo --repository-format=docker --location=asia-south1 --quiet || true
+    - gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
+  script:
+    - docker build -t asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-frontend-repo/ecommerce-frontend:latest ./frontend
+    - docker push asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-frontend-repo/ecommerce-frontend:latest
+    - >
+      gcloud run deploy ecommerce-frontend
+      --image asia-south1-docker.pkg.dev/$GCP_PROJECT_ID/ecommerce-frontend-repo/ecommerce-frontend:latest
+      --region asia-south1
+      --min-instances=1
+      --allow-unauthenticated
+      --port 8080
+  after_script:
+    - rm -f /tmp/gcp-key.json
