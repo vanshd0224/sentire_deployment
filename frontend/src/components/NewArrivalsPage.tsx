@@ -15,6 +15,66 @@ interface NewArrivalsPageProps {
   onOpenCart?: () => void;
 }
 
+interface DisplayProduct {
+  id: string;
+  name: string;
+  notes: string;
+  image: string;
+  badge: string;
+  prices: Record<number, { price: number; originalPrice: number }>;
+}
+
+const NEW_ARRIVALS_4: DisplayProduct[] = [
+  {
+    id: "rich",
+    name: "RICH",
+    notes: "Opulent Bergamot • Spiced Rose • Velvet Amber Musk",
+    image: "/assets/rich.png?v=9",
+    badge: "New Launch",
+    prices: {
+      10: { price: 559, originalPrice: 779 },
+      30: { price: 1287, originalPrice: 1809 },
+      50: { price: 1593, originalPrice: 2259 },
+    },
+  },
+  {
+    id: "purple-oud",
+    name: "PURPLE OUD",
+    notes: "Smoky Cambodian Oud • Fiery Saffron • Amethyst Rose",
+    image: "/assets/purple-oud-arrival.png?v=9",
+    badge: "Exclusive",
+    prices: {
+      10: { price: 659, originalPrice: 779 },
+      30: { price: 1199, originalPrice: 1409 },
+      50: { price: 1489, originalPrice: 1859 },
+    },
+  },
+  {
+    id: "calantha",
+    name: "CALANTHA",
+    notes: "Blooming Florals • Jasmine • Sandalwood Amber",
+    image: "/assets/calantha.png?v=9",
+    badge: "New Release",
+    prices: {
+      10: { price: 399, originalPrice: 449 },
+      30: { price: 900, originalPrice: 1409 },
+      50: { price: 1085, originalPrice: 1539 },
+    },
+  },
+  {
+    id: "herrlich",
+    name: "HERRLICH",
+    notes: "Fresh Bergamot • Jasmine Rose • Dark Chocolate",
+    image: "/assets/herrlich.png?v=9",
+    badge: "New Launch",
+    prices: {
+      10: { price: 550, originalPrice: 639 },
+      30: { price: 1499, originalPrice: 2129 },
+      50: { price: 2196, originalPrice: 3069 },
+    },
+  },
+];
+
 export default function NewArrivalsPage({
   onBackToHome,
   cartItems = [],
@@ -25,10 +85,6 @@ export default function NewArrivalsPage({
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
   const [selectedProductSizes, setSelectedProductSizes] = useState<Record<string, number>>({});
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  const newArrivals = ALL_PERFUMES.filter((p) =>
-    ["rich", "purple-oud", "calantha", "herrlich", "midnight"].includes(p.id)
-  );
 
   const getItemQuantity = (productId: string, size: number): number => {
     const item = cartItems.find((ci) => ci.productId === productId && ci.size === size);
@@ -68,39 +124,39 @@ export default function NewArrivalsPage({
             New Arrivals Collection
           </h1>
           <p className="text-sm text-ink/60 mt-2 max-w-2xl">
-            Experience our latest luxury formulations and extraits — crafted with rare ingredients.
+            Experience our 4 latest luxury formulations and extraits — crafted with rare ingredients.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {newArrivals.map((p) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {NEW_ARRIVALS_4.map((p) => {
             const currentSize = selectedProductSizes[p.id] || 50;
-            const currentPrice = p.prices[currentSize] || p.prices[50];
-            const currentMrp = p.mrps?.[currentSize] || Math.round(currentPrice * 1.35);
+            const priceInfo = p.prices[currentSize] || p.prices[50];
             const qtyInBag = getItemQuantity(p.id, currentSize);
+            const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
 
             return (
               <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
                   <div
-                    onClick={() => setSelectedDetailProduct(p)}
+                    onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
                     className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
                   >
-                    <img src={p.img} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <img src={p.image} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-2 left-2 rounded-full bg-[#c89b5a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
-                      New Launch
+                      {p.badge}
                     </span>
                   </div>
 
                   <div className="mt-3 text-center">
-                    <h3 onClick={() => setSelectedDetailProduct(p)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
                       {p.name}
                     </h3>
-                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.desc}</p>
+                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
 
                   <div className="flex justify-center gap-1.5 my-2">
-                    {p.sizes.map((sz) => (
+                    {[10, 30, 50].map((sz) => (
                       <button
                         key={sz}
                         onClick={() => setSelectedProductSizes((prev) => ({ ...prev, [p.id]: sz }))}
@@ -114,8 +170,8 @@ export default function NewArrivalsPage({
                   </div>
 
                   <div className="flex items-baseline justify-center gap-2 mt-1">
-                    <span className="font-bold text-sm text-ink">₹{currentPrice.toLocaleString("en-IN")}</span>
-                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{currentMrp.toLocaleString("en-IN")}</span>
+                    <span className="font-bold text-sm text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
 
@@ -128,7 +184,7 @@ export default function NewArrivalsPage({
                 ) : (
                   <button
                     onClick={() => {
-                      onAddToCart?.({ id: p.id, name: p.name, img: p.img }, currentSize, currentPrice);
+                      onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
                     className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
