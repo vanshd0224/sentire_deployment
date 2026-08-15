@@ -1,7 +1,78 @@
-import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
 import { useState } from "react";
 import SectionHeading from "./SectionHeading";
 import type { CartItem } from "./CartDrawer";
+import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
+
+interface ProductItem {
+  id: string;
+  name: string;
+  notes: string;
+  image: string;
+  badge: string;
+  rating: number;
+  reviewsCount: number;
+  prices: Record<number, { price: number; originalPrice: number }>;
+  outOfStockSizes?: number[];
+}
+
+const products: ProductItem[] = [
+  {
+    id: "deep-crush",
+    name: "DEEP CRUSH",
+    notes: "Lavender • Tobacco Woods • Sandalwood Amber",
+    image: "/assets/deep-crush.png?v=3",
+    badge: "Best Seller",
+    rating: 4.9,
+    reviewsCount: 142,
+    prices: {
+      10: { price: 350, originalPrice: 419 },
+      30: { price: 899, originalPrice: 1319 },
+      50: { price: 1085, originalPrice: 1539 },
+    },
+  },
+  {
+    id: "purple-oud",
+    name: "PURPLE OUD",
+    notes: "Cambodian Oud • Saffron • Amethyst Rose",
+    image: "/assets/purple-oud.png?v=3",
+    badge: "Crown Jewel",
+    rating: 4.95,
+    reviewsCount: 98,
+    prices: {
+      10: { price: 659, originalPrice: 779 },
+      30: { price: 1199, originalPrice: 1409 },
+      50: { price: 1489, originalPrice: 1859 },
+    },
+  },
+  {
+    id: "calantha",
+    name: "CALANTHA",
+    notes: "Blooming Jasmine • Rose • Sandalwood Amber",
+    image: "/assets/calantha.png?v=3",
+    badge: "Most Loved",
+    rating: 4.85,
+    reviewsCount: 116,
+    prices: {
+      10: { price: 399, originalPrice: 449 },
+      30: { price: 900, originalPrice: 1409 },
+      50: { price: 1085, originalPrice: 1539 },
+    },
+  },
+  {
+    id: "white-oud",
+    name: "WHITE OUD",
+    notes: "Essence of Oud • Pink Pepper • Luminous Amber",
+    image: "/assets/white-oud.png?v=3",
+    badge: "Iconic Scent",
+    rating: 4.88,
+    reviewsCount: 104,
+    prices: {
+      10: { price: 659, originalPrice: 779 },
+      30: { price: 1493, originalPrice: 2089 },
+      50: { price: 2889, originalPrice: 4069 },
+    },
+  },
+];
 
 interface BestSellersProps {
   onSelectProduct?: (product: PerfumeProduct) => void;
@@ -24,7 +95,6 @@ export default function BestSellers({
   onOpenCart: _onOpenCart,
   onOpenPerfumesPage,
 }: BestSellersProps) {
-  const bestSellers = ALL_PERFUMES.filter(p => p.badge === "bestseller" || ["calantha", "deep-crush", "seductive", "white-oud"].includes(p.id));
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [addedToast, setAddedToast] = useState<string | null>(null);
 
@@ -70,35 +140,35 @@ export default function BestSellers({
           </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {bestSellers.slice(0, 4).map((p) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((p) => {
             const currentSize = selectedSizes[p.id] || 50;
-            const price = p.prices[currentSize] || p.prices[10];
-            const mrp = p.mrps?.[currentSize] || Math.round(price * 1.35);
+            const priceInfo = p.prices[currentSize] || p.prices[50];
             const qty = getQuantity(p.id, currentSize);
+            const fullProd = ALL_PERFUMES.find(ap => ap.id === p.id);
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-3 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
                   <div
-                    onClick={() => onSelectProduct?.(p)}
+                    onClick={() => fullProd && onSelectProduct?.(fullProd)}
                     className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
                   >
-                    <img src={p.img} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <img src={p.image} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-2 left-2 rounded-full bg-[#120e0a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#c89b5a]">
-                      Best Seller
+                      {p.badge}
                     </span>
                   </div>
 
                   <div className="mt-3 text-center">
-                    <h3 onClick={() => onSelectProduct?.(p)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                    <h3 onClick={() => fullProd && onSelectProduct?.(fullProd)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
                       {p.name}
                     </h3>
-                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.desc}</p>
+                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
 
                   <div className="flex justify-center gap-1.5 my-2">
-                    {p.sizes.map((sz) => (
+                    {[10, 30, 50].map((sz) => (
                       <button
                         key={sz}
                         onClick={() => handleSizeSelect(p.id, sz)}
@@ -112,8 +182,8 @@ export default function BestSellers({
                   </div>
 
                   <div className="flex items-baseline justify-center gap-2 mt-1">
-                    <span className="font-bold text-sm text-ink">₹{price.toLocaleString("en-IN")}</span>
-                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{mrp.toLocaleString("en-IN")}</span>
+                    <span className="font-bold text-sm text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
 
@@ -126,7 +196,7 @@ export default function BestSellers({
                 ) : (
                   <button
                     onClick={() => {
-                      onAddToCart?.({ id: p.id, name: p.name, num: p.num, img: p.img }, currentSize, price);
+                      onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
                     className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
