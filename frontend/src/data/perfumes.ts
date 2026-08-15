@@ -30,11 +30,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 399, 30: 900, 50: 1085 },
     mrps: { 10: 449, 30: 1409, 50: 1539 },
     badge: "bestseller",
-    img: "/assets/perfumes/calantha-50ml-1.png",
+    img: "/assets/perfumes/calantha-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/calantha-10ml-1.png", "/assets/perfumes/calantha-10ml-2.png", "/assets/perfumes/calantha-10ml-3.png"],
-      30: ["/assets/perfumes/calantha-30ml-1.png", "/assets/perfumes/calantha-30ml-2.png", "/assets/perfumes/calantha-30ml-3.png"],
-      50: ["/assets/perfumes/calantha-50ml-1.png", "/assets/perfumes/calantha-50ml-2.png", "/assets/perfumes/calantha-50ml-3.png"]
+      10: ["/assets/perfumes/calantha-10ml-1.png?v=2", "/assets/perfumes/calantha-10ml-2.png?v=2", "/assets/perfumes/calantha-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/calantha-30ml-1.png?v=2", "/assets/perfumes/calantha-30ml-2.png?v=2", "/assets/perfumes/calantha-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/calantha-50ml-1.png?v=2", "/assets/perfumes/calantha-50ml-2.png?v=2", "/assets/perfumes/calantha-50ml-3.png?v=2"]
     },
     traces: ["Jasmine", "Rose", "Lily of Valley", "Sandalwood", "Amber"]
   },
@@ -51,11 +51,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 350, 30: 899, 50: 1085 },
     mrps: { 10: 419, 30: 1319, 50: 1539 },
     badge: "bestseller",
-    img: "/assets/perfumes/deep-crush-50ml-1.png",
+    img: "/assets/perfumes/deep-crush-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/deep-crush-10ml-1.png", "/assets/perfumes/deep-crush-10ml-2.png", "/assets/perfumes/deep-crush-10ml-3.png"],
-      30: ["/assets/perfumes/deep-crush-30ml-1.png", "/assets/perfumes/deep-crush-30ml-2.png", "/assets/perfumes/deep-crush-30ml-3.png"],
-      50: ["/assets/perfumes/deep-crush-50ml-1.png", "/assets/perfumes/deep-crush-50ml-2.png", "/assets/perfumes/deep-crush-50ml-3.png"]
+      10: ["/assets/perfumes/deep-crush-10ml-1.png?v=2", "/assets/perfumes/deep-crush-10ml-2.png?v=2", "/assets/perfumes/deep-crush-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/deep-crush-30ml-1.png?v=2", "/assets/perfumes/deep-crush-30ml-2.png?v=2", "/assets/perfumes/deep-crush-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-2.png?v=2", "/assets/perfumes/deep-crush-50ml-3.png?v=2"]
     },
     traces: ["Lavender", "Rose", "Tobacco", "Sandalwood", "Amber"]
   },
@@ -72,11 +72,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 550, 30: 1499, 50: 2196 },
     mrps: { 10: 639, 30: 2129, 50: 3069 },
     badge: "new",
-    img: "/assets/perfumes/herrlich-50ml-1.png",
+    img: "/assets/perfumes/herrlich-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/herrlich-10ml-1.png", "/assets/perfumes/herrlich-10ml-2.png", "/assets/perfumes/herrlich-10ml-3.png"],
-      30: ["/assets/perfumes/herrlich-30ml-1.png", "/assets/perfumes/herrlich-30ml-2.png", "/assets/perfumes/herrlich-30ml-3.png"],
-      50: ["/assets/perfumes/herrlich-50ml-1.png", "/assets/perfumes/herrlich-50ml-2.png", "/assets/perfumes/herrlich-50ml-3.png"]
+      10: ["/assets/perfumes/herrlich-10ml-1.png?v=2", "/assets/perfumes/herrlich-10ml-2.png?v=2", "/assets/perfumes/herrlich-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/herrlich-30ml-1.png?v=2", "/assets/perfumes/herrlich-30ml-2.png?v=2", "/assets/perfumes/herrlich-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/herrlich-50ml-1.png?v=2", "/assets/perfumes/herrlich-50ml-2.png?v=2", "/assets/perfumes/herrlich-50ml-3.png?v=2"]
     },
     traces: ["Bergamot", "Peach", "Jasmine", "Rose", "Dark Chocolate"]
   },
@@ -93,11 +93,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 549, 30: 1399, 50: 1949 },
     mrps: { 10: 649, 30: 2129, 50: 2709 },
     badge: "new",
-    img: "/assets/perfumes/midnight-50ml-1.png",
+    img: "/assets/perfumes/midnight-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/midnight-10ml-1.png", "/assets/perfumes/midnight-10ml-2.png", "/assets/perfumes/midnight-10ml-3.png"],
-      30: ["/assets/perfumes/midnight-30ml-1.png", "/assets/perfumes/midnight-30ml-2.png", "/assets/perfumes/midnight-30ml-3.png"],
-      50: ["/assets/perfumes/midnight-50ml-1.png", "/assets/perfumes/midnight-50ml-2.png", "/assets/perfumes/midnight-50ml-3.png"]
+      10: ["/assets/perfumes/midnight-10ml-1.png?v=2", "/assets/perfumes/midnight-10ml-2.png?v=2", "/assets/perfumes/midnight-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/midnight-30ml-1.png?v=2", "/assets/perfumes/midnight-30ml-2.png?v=2", "/assets/perfumes/midnight-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/midnight-50ml-1.png?v=2", "/assets/perfumes/midnight-50ml-2.png?v=2", "/assets/perfumes/midnight-50ml-3.png?v=2"]
     },
     traces: ["Blackcurrant", "Bergamot", "Tuberose", "Vanilla", "Musk"]
   },
@@ -114,11 +114,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 459, 30: 1199, 50: 1679 },
     mrps: { 10: 649, 30: 1809, 50: 2349 },
     badge: "bestseller",
-    img: "/assets/perfumes/mirai-50ml-1.png",
+    img: "/assets/perfumes/mirai-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/mirai-10ml-1.png", "/assets/perfumes/mirai-10ml-2.png", "/assets/perfumes/mirai-10ml-3.png"],
-      30: ["/assets/perfumes/mirai-30ml-1.png", "/assets/perfumes/mirai-30ml-2.png", "/assets/perfumes/mirai-30ml-3.png"],
-      50: ["/assets/perfumes/mirai-50ml-1.png", "/assets/perfumes/mirai-50ml-2.png", "/assets/perfumes/mirai-50ml-3.png"]
+      10: ["/assets/perfumes/mirai-10ml-1.png?v=2", "/assets/perfumes/mirai-10ml-2.png?v=2", "/assets/perfumes/mirai-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/mirai-30ml-1.png?v=2", "/assets/perfumes/mirai-30ml-2.png?v=2", "/assets/perfumes/mirai-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/mirai-50ml-1.png?v=2", "/assets/perfumes/mirai-50ml-2.png?v=2", "/assets/perfumes/mirai-50ml-3.png?v=2"]
     },
     traces: ["Lemon", "Bergamot", "Lavender", "Black Pepper", "Patchouli"]
   },
@@ -135,11 +135,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 699, 30: 1994, 50: 2889 },
     mrps: { 10: 779, 30: 2759, 50: 4069 },
     badge: "bestseller",
-    img: "/assets/perfumes/0809-50ml-1.png",
+    img: "/assets/perfumes/0809-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/0809-10ml-1.png", "/assets/perfumes/0809-10ml-2.png", "/assets/perfumes/0809-10ml-3.png"],
-      30: ["/assets/perfumes/0809-30ml-1.png", "/assets/perfumes/0809-30ml-2.png", "/assets/perfumes/0809-30ml-3.png"],
-      50: ["/assets/perfumes/0809-50ml-1.png", "/assets/perfumes/0809-50ml-2.png", "/assets/perfumes/0809-50ml-3.png"]
+      10: ["/assets/perfumes/0809-10ml-1.png?v=2", "/assets/perfumes/0809-10ml-2.png?v=2", "/assets/perfumes/0809-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/0809-30ml-1.png?v=2", "/assets/perfumes/0809-30ml-2.png?v=2", "/assets/perfumes/0809-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/0809-50ml-1.png?v=2", "/assets/perfumes/0809-50ml-2.png?v=2", "/assets/perfumes/0809-50ml-3.png?v=2"]
     },
     traces: ["Sichuan Pepper", "Lavender", "Star Anise", "Nutmeg", "Ambroxan"]
   },
@@ -156,11 +156,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 495, 30: 1219, 50: 1593 },
     mrps: { 10: 689, 30: 1409, 50: 2259 },
     badge: null,
-    img: "/assets/perfumes/personna-50ml-1.png",
+    img: "/assets/perfumes/personna-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/personna-10ml-1.png", "/assets/perfumes/personna-10ml-2.png", "/assets/perfumes/personna-10ml-3.png"],
-      30: ["/assets/perfumes/personna-30ml-1.png", "/assets/perfumes/personna-30ml-2.png", "/assets/perfumes/personna-30ml-3.png"],
-      50: ["/assets/perfumes/personna-50ml-1.png", "/assets/perfumes/personna-50ml-2.png", "/assets/perfumes/personna-50ml-3.png"]
+      10: ["/assets/perfumes/personna-10ml-1.png?v=2", "/assets/perfumes/personna-10ml-2.png?v=2", "/assets/perfumes/personna-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/personna-30ml-1.png?v=2", "/assets/perfumes/personna-30ml-2.png?v=2", "/assets/perfumes/personna-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/personna-50ml-1.png?v=2", "/assets/perfumes/personna-50ml-2.png?v=2", "/assets/perfumes/personna-50ml-3.png?v=2"]
     },
     traces: ["Mandarin", "Bergamot", "Rose", "Cardamom", "Patchouli"]
   },
@@ -177,11 +177,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 659, 30: 1199, 50: 1489 },
     mrps: { 10: 779, 30: 1409, 50: 1859 },
     badge: "exclusive",
-    img: "/assets/perfumes/purple-oud-50ml-1.png",
+    img: "/assets/perfumes/purple-oud-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/purple-oud-10ml-1.png", "/assets/perfumes/purple-oud-10ml-2.png", "/assets/perfumes/purple-oud-10ml-3.png"],
-      30: ["/assets/perfumes/purple-oud-30ml-1.png", "/assets/perfumes/purple-oud-30ml-2.png", "/assets/perfumes/purple-oud-30ml-3.png"],
-      50: ["/assets/perfumes/purple-oud-50ml-1.png", "/assets/perfumes/purple-oud-50ml-2.png", "/assets/perfumes/purple-oud-50ml-3.png"]
+      10: ["/assets/perfumes/purple-oud-10ml-1.png?v=2", "/assets/perfumes/purple-oud-10ml-2.png?v=2", "/assets/perfumes/purple-oud-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/purple-oud-30ml-1.png?v=2", "/assets/perfumes/purple-oud-30ml-2.png?v=2", "/assets/perfumes/purple-oud-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/purple-oud-50ml-1.png?v=2", "/assets/perfumes/purple-oud-50ml-2.png?v=2", "/assets/perfumes/purple-oud-50ml-3.png?v=2"]
     },
     traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"]
   },
@@ -198,11 +198,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 559, 30: 1287, 50: 1593 },
     mrps: { 10: 779, 30: 1809, 50: 2259 },
     badge: "new",
-    img: "/assets/perfumes/rich-50ml-1.png",
+    img: "/assets/perfumes/rich-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/rich-10ml-1.png", "/assets/perfumes/rich-10ml-2.png", "/assets/perfumes/rich-10ml-3.png"],
-      30: ["/assets/perfumes/rich-30ml-1.png", "/assets/perfumes/rich-30ml-2.png", "/assets/perfumes/rich-30ml-3.png"],
-      50: ["/assets/perfumes/rich-50ml-1.png", "/assets/perfumes/rich-50ml-2.png", "/assets/perfumes/rich-50ml-3.png"]
+      10: ["/assets/perfumes/rich-10ml-1.png?v=2", "/assets/perfumes/rich-10ml-2.png?v=2", "/assets/perfumes/rich-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/rich-30ml-1.png?v=2", "/assets/perfumes/rich-30ml-2.png?v=2", "/assets/perfumes/rich-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/rich-50ml-1.png?v=2", "/assets/perfumes/rich-50ml-2.png?v=2", "/assets/perfumes/rich-50ml-3.png?v=2"]
     },
     traces: ["Bergamot", "Mandarin", "Spiced Rose", "Patchouli", "Amber Musk"]
   },
@@ -219,11 +219,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 459, 30: 999, 50: 1149 },
     mrps: { 10: 649, 30: 1409, 50: 2099 },
     badge: "bestseller",
-    img: "/assets/perfumes/seductive-50ml-1.png",
+    img: "/assets/perfumes/seductive-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/seductive-10ml-1.png", "/assets/perfumes/seductive-10ml-2.png", "/assets/perfumes/seductive-10ml-3.png"],
-      30: ["/assets/perfumes/seductive-30ml-1.png", "/assets/perfumes/seductive-30ml-2.png", "/assets/perfumes/seductive-30ml-3.png"],
-      50: ["/assets/perfumes/seductive-50ml-1.png", "/assets/perfumes/seductive-50ml-2.png", "/assets/perfumes/seductive-50ml-3.png"]
+      10: ["/assets/perfumes/seductive-10ml-1.png?v=2", "/assets/perfumes/seductive-10ml-2.png?v=2", "/assets/perfumes/seductive-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/seductive-30ml-1.png?v=2", "/assets/perfumes/seductive-30ml-2.png?v=2", "/assets/perfumes/seductive-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/seductive-50ml-1.png?v=2", "/assets/perfumes/seductive-50ml-2.png?v=2", "/assets/perfumes/seductive-50ml-3.png?v=2"]
     },
     traces: ["Citric Limon", "Fresh Lavender", "Spicy Floral", "Patchouli", "Amber"]
   },
@@ -240,11 +240,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 659, 30: 1493, 50: 2889 },
     mrps: { 10: 779, 30: 2089, 50: 4069 },
     badge: "bestseller",
-    img: "/assets/perfumes/white-oud-50ml-1.png",
+    img: "/assets/perfumes/white-oud-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/white-oud-10ml-1.png", "/assets/perfumes/white-oud-10ml-2.png", "/assets/perfumes/white-oud-10ml-3.png"],
-      30: ["/assets/perfumes/white-oud-30ml-1.png", "/assets/perfumes/white-oud-30ml-2.png", "/assets/perfumes/white-oud-30ml-3.png"],
-      50: ["/assets/perfumes/white-oud-50ml-1.png", "/assets/perfumes/white-oud-50ml-2.png", "/assets/perfumes/white-oud-50ml-3.png"]
+      10: ["/assets/perfumes/white-oud-10ml-1.png?v=2", "/assets/perfumes/white-oud-10ml-2.png?v=2", "/assets/perfumes/white-oud-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/white-oud-30ml-1.png?v=2", "/assets/perfumes/white-oud-30ml-2.png?v=2", "/assets/perfumes/white-oud-30ml-3.png?v=2"],
+      50: ["/assets/perfumes/white-oud-50ml-1.png?v=2", "/assets/perfumes/white-oud-50ml-2.png?v=2", "/assets/perfumes/white-oud-50ml-3.png?v=2"]
     },
     traces: ["Essence of Oud", "Lavender", "Pink Pepper", "Vetiver", "Labdanum"]
   }
