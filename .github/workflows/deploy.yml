@@ -6,6 +6,11 @@ on:
       - main
       - dev
 
+concurrency:
+  group: cloud-run-deployment
+  cancel-in-progress: false
+
+
 jobs:
   deploy-backend:
     name: Deploy Backend to Cloud Run
