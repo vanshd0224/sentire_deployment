@@ -169,26 +169,20 @@ export default function App() {
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "bestsellers" ? (
-        <PerfumesPage
+        <BestSellersPage
           onBackToHome={() => handleNavigate("home")}
-          onOpenBundleModal={openBundleModal}
-          initialFilters={{ category: "bestsellers" }}
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => setIsCartOpen(true)}
-          onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "new-arrivals" ? (
-        <PerfumesPage
+        <NewArrivalsPage
           onBackToHome={() => handleNavigate("home")}
-          onOpenBundleModal={openBundleModal}
-          initialFilters={{ category: "new" }}
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => setIsCartOpen(true)}
-          onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "about" ? (
         <AboutPage
