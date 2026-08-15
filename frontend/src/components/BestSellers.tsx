@@ -19,7 +19,7 @@ const products: ProductItem[] = [
     id: "seductive",
     name: "SEDUCTIVE",
     notes: "Citric Limon • Fresh Lavender • Velvet Amber",
-    image: "/assets/seductive.png?v=8",
+    image: "/assets/seductive.png?v=10",
     badge: "Best Seller",
     rating: 4.91,
     reviewsCount: 165,
@@ -33,7 +33,7 @@ const products: ProductItem[] = [
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Cambodian Oud • Saffron • Amethyst Rose",
-    image: "/assets/purple-oud-arrival.png?v=8",
+    image: "/assets/purple-oud-arrival.png?v=10",
     badge: "Exclusive",
     rating: 4.95,
     reviewsCount: 98,
@@ -47,7 +47,7 @@ const products: ProductItem[] = [
     id: "calantha",
     name: "CALANTHA",
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
-    image: "/assets/calantha.png?v=8",
+    image: "/assets/calantha.png?v=10",
     badge: "Best Seller",
     rating: 4.85,
     reviewsCount: 116,
@@ -61,7 +61,7 @@ const products: ProductItem[] = [
     id: "mirai",
     name: "MIRAI",
     notes: "Zesty Lemon • Lavender • Earthy Patchouli",
-    image: "/assets/mirai.png?v=8",
+    image: "/assets/mirai.png?v=10",
     badge: "Best Seller",
     rating: 4.87,
     reviewsCount: 132,
@@ -69,20 +69,6 @@ const products: ProductItem[] = [
       10: { price: 459, originalPrice: 649 },
       30: { price: 1199, originalPrice: 1809 },
       50: { price: 1679, originalPrice: 2349 },
-    },
-  },
-  {
-    id: "deep-crush",
-    name: "DEEP CRUSH",
-    notes: "Lavender • Tobacco Woods • Sandalwood Amber",
-    image: "/assets/deep-crush.png?v=8",
-    badge: "Best Seller",
-    rating: 4.9,
-    reviewsCount: 142,
-    prices: {
-      10: { price: 350, originalPrice: 419 },
-      30: { price: 899, originalPrice: 1319 },
-      50: { price: 1085, originalPrice: 1539 },
     },
   },
 ];
@@ -98,6 +84,7 @@ interface BestSellersProps {
   onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
   onOpenCart?: () => void;
   onOpenPerfumesPage?: (size?: number, mood?: string, category?: string, collection?: string) => void;
+  onOpenBestSellersPage?: () => void;
 }
 
 export default function BestSellers({
@@ -107,6 +94,7 @@ export default function BestSellers({
   onUpdateCartQuantity,
   onOpenCart: _onOpenCart,
   onOpenPerfumesPage,
+  onOpenBestSellersPage,
 }: BestSellersProps) {
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [addedToast, setAddedToast] = useState<string | null>(null);
@@ -145,7 +133,13 @@ export default function BestSellers({
             <SectionHeading title="BEST SELLERS" subtitle="Discover our most coveted, iconic fragrance creations." />
           </div>
           <button
-            onClick={() => onOpenPerfumesPage?.(undefined, undefined, "bestsellers")}
+            onClick={() => {
+              if (onOpenBestSellersPage) {
+                onOpenBestSellersPage();
+              } else {
+                onOpenPerfumesPage?.(undefined, undefined, "bestsellers");
+              }
+            }}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
@@ -153,7 +147,7 @@ export default function BestSellers({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((p) => {
             const currentSize = selectedSizes[p.id] || 50;
             const priceInfo = p.prices[currentSize] || p.prices[50];
