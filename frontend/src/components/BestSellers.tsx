@@ -1,302 +1,142 @@
-import { ALL_PERFUMES } from "../data/perfumes";
+import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
 import { useState } from "react";
 import SectionHeading from "./SectionHeading";
 import type { CartItem } from "./CartDrawer";
-import { PerfumeProduct, getPerfumeProductById } from "../data/perfumes";
-
-interface ProductItem {
-  id: string;
-  name: string;
-  notes: string;
-  image: string;
-  badge: string;
-  rating: number;
-  reviewsCount: number;
-  prices: Record<number, { price: number; originalPrice: number }>;
-  outOfStockSizes?: number[];
-}
-
-const products: ProductItem[] = [
-  {
-    id: "deep-crush",
-    name: "DEEP CRUSH",
-    notes: "Lavender • Tobacco Woods • Sandalwood Amber",
-    image: "/assets/deep-crush.png",
-    badge: "Best Seller",
-    rating: 4.9,
-    reviewsCount: 142,
-    prices: {
-      10: { price: 799, originalPrice: 1199 },
-      30: { price: 1499, originalPrice: 2199 },
-      50: { price: 2499, originalPrice: 3499 },
-    },
-  },
-  {
-    id: "purple-oud",
-    name: "PURPLE OUD",
-    notes: "Cambodian Oud • Saffron • Amethyst Rose",
-    image: "/assets/purple-oud.png",
-    badge: "Crown Jewel",
-    rating: 4.95,
-    reviewsCount: 98,
-    prices: {
-      50: { price: 4999, originalPrice: 6999 },
-    },
-    outOfStockSizes: [10, 30],
-  },
-  {
-    id: "calantha",
-    name: "CALANTHA",
-    notes: "Blooming Jasmine • Rose • Sandalwood Amber",
-    image: "/assets/calantha.png",
-    badge: "Best Seller",
-    rating: 4.85,
-    reviewsCount: 116,
-    prices: {
-      10: { price: 799, originalPrice: 1199 },
-      30: { price: 1499, originalPrice: 2199 },
-      50: { price: 2499, originalPrice: 3499 },
-    },
-  },
-  {
-    id: "seductive",
-    name: "SEDUCTIVE",
-    notes: "Citric Limon • Fresh Lavender • Patchouli Amber",
-    image: "/assets/seductive.png",
-    badge: "Best Seller",
-    rating: 4.9,
-    reviewsCount: 164,
-    prices: {
-      10: { price: 799, originalPrice: 1199 },
-      30: { price: 1499, originalPrice: 2199 },
-      50: { price: 2499, originalPrice: 3499 },
-    },
-  },
-];
 
 interface BestSellersProps {
-  cartItems?: CartItem[];
-  onAddToCart?: (product: { id: string; name: string; img: string }, size: number, price: number) => void;
-  onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
-  onNavigate?: (page: "home" | "perfumes" | "bestsellers") => void;
   onSelectProduct?: (product: PerfumeProduct) => void;
+  cartItems?: CartItem[];
+  onAddToCart?: (
+    product: { id: string; name: string; num?: string; img: string },
+    size: number,
+    price: number
+  ) => void;
+  onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
+  onOpenCart?: () => void;
+  onOpenPerfumesPage?: (size?: number, mood?: string, category?: string, collection?: string) => void;
 }
 
 export default function BestSellers({
+  onSelectProduct,
   cartItems = [],
   onAddToCart,
   onUpdateCartQuantity,
-  onNavigate,
-  onSelectProduct,
+  onOpenCart: _onOpenCart,
+  onOpenPerfumesPage,
 }: BestSellersProps) {
-  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({
-    "deep-crush": 50,
-    "purple-oud": 50,
-    "calantha": 50,
-    "seductive": 50,
-  });
+  const bestSellers = ALL_PERFUMES.filter(p => p.badge === "bestseller" || ["calantha", "deep-crush", "seductive", "white-oud"].includes(p.id));
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
+  const [addedToast, setAddedToast] = useState<string | null>(null);
 
-  const getItemQuantity = (productId: string, size: number): number => {
+  const handleSizeSelect = (productId: string, size: number) => {
+    setSelectedSizes((prev) => ({ ...prev, [productId]: size }));
+  };
+
+  const getQuantity = (productId: string, size: number) => {
     const item = cartItems.find((ci) => ci.productId === productId && ci.size === size);
     return item ? item.quantity : 0;
   };
 
-  const setCardSize = (productId: string, size: number) => {
-    setSelectedSizes((prev) => ({ ...prev, [productId]: size }));
-  };
-
-  const handleSelectProduct = (productId: string) => {
-    const fullProduct = getPerfumeProductById(productId);
-    if (fullProduct && onSelectProduct) {
-      onSelectProduct(fullProduct);
-    }
+  const showToast = (msg: string) => {
+    setAddedToast(msg);
+    setTimeout(() => setAddedToast(null), 2500);
   };
 
   return (
-    <section id="best-sellers" className="w-full bg-cream px-3 sm:px-6 py-10 sm:py-20 reveal-fade-up">
-      <div className="mx-auto max-w-[1440px]">
-        <SectionHeading title="Best Sellers" subtitle="Most cherished creations crafted for timeless presence" />
+    <section className="bg-[#fbf9f5] py-16 sm:py-24 text-ink relative">
+      {addedToast && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#c89b5a]/40 bg-[#120e0a] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+          <span className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#c89b5a] animate-pulse" />
+            {addedToast}
+          </span>
+        </div>
+      )}
 
-        <div className="mt-6 sm:mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6">
-            {products.slice(0, 4).map((product) => {
-              const currentSize = selectedSizes[product.id] || 50;
-              const priceInfo = product.prices[currentSize] || product.prices[50];
-              const qty = getItemQuantity(product.id, currentSize);
-              const formattedNotes = product.notes.replace(/•/g, "·");
-              const discountPercent = Math.round(
-                ((priceInfo.originalPrice - priceInfo.price) / priceInfo.originalPrice) * 100
-              );
-
-              return (
-                <div
-                  key={product.id}
-                  className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-2.5 sm:p-5 shadow-sm hover:border-[#c89b5a]/60 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden"
-                >
-                  {/* Subtle ambient light glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#c89b5a]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                  {/* Media container - Expanded aspect ratio & prominent bottle scaling */}
-                  <div>
-                    <div
-                      onClick={() => handleSelectProduct(product.id)}
-                      className="relative w-full aspect-[4/5] rounded-xl bg-gradient-to-b from-[#fbf8f3] to-[#f4ede2] overflow-hidden flex items-center justify-center cursor-pointer border border-black/5"
-                      title={`View details for ${product.name}`}
-                    >
-                      {/* Badge Top Left - Compact & Never Colliding */}
-                      {product.badge && (
-                        <span className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-[#1a120a] to-[#0d0906] text-[#c89b5a] text-[7.5px] sm:text-[8.5px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-0.5 sm:py-1 border border-[#c89b5a]/50 shadow-md">
-                          {product.badge}
-                        </span>
-                      )}
-
-                      {/* Rating Bottom Right - Beautiful Frosted Glass, zero overlap with top badge */}
-                      <span className="absolute bottom-2 right-2 z-10 rounded-full bg-black/75 backdrop-blur-md text-[#f5f0e8] text-[8px] sm:text-[9.5px] font-bold px-2 py-0.5 shadow-sm border border-white/15 flex items-center gap-1">
-                        <span className="text-amber-400 text-[9px] sm:text-[10px]">★</span> {product.rating}
-                      </span>
-
-                      {/* Full prominent perfume bottle photo */}
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                      />
-
-                      {/* Quick View overlay */}
-                      <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none backdrop-blur-[2px]">
-                        <span className="bg-white text-ink text-[9.5px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full shadow-lg border border-[#c89b5a]/50 flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                          <span>Quick View</span>
-                          <span className="text-[#c89b5a]">✦</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="mt-3 text-center">
-                      <h3
-                        onClick={() => handleSelectProduct(product.id)}
-                        className="font-sans text-xs sm:text-[14px] font-bold uppercase tracking-wider text-ink hover:text-[#c89b5a] transition-colors cursor-pointer inline-block truncate max-w-full"
-                        title={`View info for ${product.name}`}
-                      >
-                        {product.name}
-                      </h3>
-                      <p
-                        onClick={() => handleSelectProduct(product.id)}
-                        className="text-[9.5px] sm:text-[11px] text-ink/60 mt-0.5 truncate cursor-pointer hover:text-ink/90 transition-colors"
-                      >
-                        {formattedNotes}
-                      </p>
-
-                      {/* Text Button to View Info */}
-                      <button
-                        type="button"
-                        onClick={() => handleSelectProduct(product.id)}
-                        className="mt-1 mb-1.5 inline-flex items-center justify-center gap-1 text-[9px] sm:text-[9.5px] font-bold tracking-wider text-[#c89b5a] hover:text-ink uppercase transition-colors cursor-pointer"
-                        title={`View scent info for ${product.name}`}
-                      >
-                        <span>View Scent Pyramid</span>
-                        <span aria-hidden="true">→</span>
-                      </button>
-
-                      {/* Size Pills */}
-                      <div className="flex items-center justify-center gap-1 sm:gap-1.5 my-1.5">
-                        {[10, 30, 50].map((sz) => {
-                          const isOutOfStock = !product.prices[sz] || product.outOfStockSizes?.includes(sz);
-                          const isSelected = currentSize === sz;
-
-                          if (isOutOfStock) {
-                            return (
-                              <button
-                                key={sz}
-                                disabled
-                                type="button"
-                                className="rounded px-2 sm:px-2.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[9px] font-semibold tracking-wider bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none"
-                                title="Out of stock in this size"
-                              >
-                                {sz}ML
-                              </button>
-                            );
-                          }
-
-                          return (
-                            <button
-                              key={sz}
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setCardSize(product.id, sz);
-                              }}
-                              className={`rounded px-2 sm:px-2.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[9px] font-bold tracking-wider border transition-all cursor-pointer ${
-                                isSelected
-                                  ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907] shadow-sm scale-105"
-                                  : "bg-[#fdfbf7] text-[#1e1e1e] border-black/15 hover:border-[#c89b5a] hover:text-[#c89b5a]"
-                              }`}
-                            >
-                              {sz}ML
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Pricing & Add to Cart */}
-                  <div className="mt-1 text-center">
-                    <div className="flex items-baseline justify-center gap-1.5 text-center">
-                      <span className="font-bold text-xs sm:text-sm text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
-                      <span className="text-[9.5px] sm:text-[10px] text-ink/45 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
-                      <span className="text-[8.5px] sm:text-[9px] font-bold text-[#c89b5a] uppercase">{discountPercent}% OFF</span>
-                    </div>
-
-                    {qty > 0 ? (
-                      <div className="mt-2 flex items-center justify-between rounded-lg bg-[#0b0907] text-white border border-[#c89b5a]/50 px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-md">
-                        <button
-                          onClick={() => onUpdateCartQuantity?.(product.id, currentSize, -1)}
-                          className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center text-xs sm:text-sm font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
-                          aria-label="Decrease quantity"
-                        >
-                          −
-                        </button>
-                        <span className="text-[9.5px] sm:text-[10px] font-bold text-[#f5f0e8] tracking-wider uppercase">
-                          {qty} <span className="text-[8px] sm:text-[8.5px] font-normal text-[#c89b5a] uppercase">In Bag</span>
-                        </span>
-                        <button
-                          onClick={() => onUpdateCartQuantity?.(product.id, currentSize, 1)}
-                          className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center text-xs sm:text-sm font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
-                          aria-label="Increase quantity"
-                        >
-                          +
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          if (onAddToCart) {
-                            onAddToCart({ id: product.id, name: product.name, img: product.image }, currentSize, priceInfo.price);
-                          } else {
-                            onNavigate?.("bestsellers");
-                          }
-                        }}
-                        className="btn-luxe-card mt-1.5"
-                      >
-                        Add to Bag • {currentSize}ml
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between mb-12">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+              HAUTE PARFUMERIE
+            </span>
+            <SectionHeading title="BEST SELLERS" subtitle="Discover our most coveted, iconic fragrance creations." />
           </div>
+          <button
+            onClick={() => onOpenPerfumesPage?.(undefined, undefined, "bestsellers")}
+            className="hidden sm:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors"
+          >
+            <span>Explore All</span>
+            <span>→</span>
+          </button>
         </div>
 
-        <div className="mt-10 sm:mt-12 flex justify-center">
-          <button
-            onClick={() => onNavigate?.("bestsellers")}
-            className="btn-luxe-ghost"
-            style={{ padding: "12px 30px", fontSize: "10.5px" }}
-          >
-            Explore All Best Sellers →
-          </button>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          {bestSellers.slice(0, 4).map((p) => {
+            const currentSize = selectedSizes[p.id] || 50;
+            const price = p.prices[currentSize] || p.prices[10];
+            const mrp = p.mrps?.[currentSize] || Math.round(price * 1.35);
+            const qty = getQuantity(p.id, currentSize);
+
+            return (
+              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-3 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+                <div>
+                  <div
+                    onClick={() => onSelectProduct?.(p)}
+                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
+                  >
+                    <img src={p.img} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <span className="absolute top-2 left-2 rounded-full bg-[#120e0a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#c89b5a]">
+                      Best Seller
+                    </span>
+                  </div>
+
+                  <div className="mt-3 text-center">
+                    <h3 onClick={() => onSelectProduct?.(p)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                      {p.name}
+                    </h3>
+                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.desc}</p>
+                  </div>
+
+                  <div className="flex justify-center gap-1.5 my-2">
+                    {p.sizes.map((sz) => (
+                      <button
+                        key={sz}
+                        onClick={() => handleSizeSelect(p.id, sz)}
+                        className={`rounded px-2.5 py-1 text-[9px] font-bold border transition-all cursor-pointer ${
+                          currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
+                        }`}
+                      >
+                        {sz}ML
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex items-baseline justify-center gap-2 mt-1">
+                    <span className="font-bold text-sm text-ink">₹{price.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{mrp.toLocaleString("en-IN")}</span>
+                  </div>
+                </div>
+
+                {qty > 0 ? (
+                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-2 py-1.5">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a]">−</button>
+                    <span className="text-[10px] font-bold text-[#e2c48e]">{qty} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a]">+</button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      onAddToCart?.({ id: p.id, name: p.name, num: p.num, img: p.img }, currentSize, price);
+                      showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
+                    }}
+                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
+                  >
+                    Add to Bag
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
