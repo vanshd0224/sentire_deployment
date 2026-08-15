@@ -19,7 +19,7 @@ const products: ProductItem[] = [
     id: "seductive",
     name: "SEDUCTIVE",
     notes: "Citric Limon • Fresh Lavender • Velvet Amber",
-    image: "/assets/purple-oud-bestseller.png?v=7",
+    image: "/assets/seductive.png?v=8",
     badge: "Best Seller",
     rating: 4.91,
     reviewsCount: 165,
@@ -33,7 +33,7 @@ const products: ProductItem[] = [
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Cambodian Oud • Saffron • Amethyst Rose",
-    image: "/assets/purple-oud-arrival.png?v=7",
+    image: "/assets/purple-oud-arrival.png?v=8",
     badge: "Exclusive",
     rating: 4.95,
     reviewsCount: 98,
@@ -47,7 +47,7 @@ const products: ProductItem[] = [
     id: "calantha",
     name: "CALANTHA",
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
-    image: "/assets/calantha.png?v=7",
+    image: "/assets/calantha.png?v=8",
     badge: "Best Seller",
     rating: 4.85,
     reviewsCount: 116,
@@ -61,7 +61,7 @@ const products: ProductItem[] = [
     id: "mirai",
     name: "MIRAI",
     notes: "Zesty Lemon • Lavender • Earthy Patchouli",
-    image: "/assets/mirai.png?v=7",
+    image: "/assets/mirai.png?v=8",
     badge: "Best Seller",
     rating: 4.87,
     reviewsCount: 132,
@@ -75,7 +75,7 @@ const products: ProductItem[] = [
     id: "deep-crush",
     name: "DEEP CRUSH",
     notes: "Lavender • Tobacco Woods • Sandalwood Amber",
-    image: "/assets/deep-crush.png?v=7",
+    image: "/assets/deep-crush.png?v=8",
     badge: "Best Seller",
     rating: 4.9,
     reviewsCount: 142,
@@ -146,7 +146,7 @@ export default function BestSellers({
           </div>
           <button
             onClick={() => onOpenPerfumesPage?.(undefined, undefined, "bestsellers")}
-            className="hidden sm:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors"
+            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
             <span>→</span>

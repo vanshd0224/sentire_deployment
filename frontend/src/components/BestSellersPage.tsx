@@ -1,16 +1,10 @@
-import { ALL_PERFUMES } from "../data/perfumes";
-import { useState, useMemo } from "react";
-import type { PerfumeProduct } from "./PerfumesPage";
+import { useState } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import type { CartItem } from "./CartDrawer";
-
-// EXACT 6 BEST SELLER PRODUCTS LIST (SEDUCTIVE, PURPLE OUD, CALANTHA, MIRAI, DEEP CRUSH, WHITE OUD)
-const BEST_SELLER_PRODUCTS: PerfumeProduct[] = ALL_PERFUMES.filter(p => p.badge === "bestseller" || ["calantha", "deep-crush", "seductive", "white-oud", "mirai"].includes(p.id));
+import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
 
 interface BestSellersPageProps {
-  onBackToHome?: () => void;
-  onOpenBundleModal?: () => void;
-  onNavigate?: (page: string) => void;
+  onBackToHome: () => void;
   cartItems?: CartItem[];
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
@@ -23,279 +17,131 @@ interface BestSellersPageProps {
 
 export default function BestSellersPage({
   onBackToHome,
-  onOpenBundleModal: _onOpenBundleModal,
-  onNavigate,
   cartItems = [],
   onAddToCart,
   onUpdateCartQuantity,
-  onOpenCart,
+  onOpenCart: _onOpenCart,
 }: BestSellersPageProps) {
-  const [selectedProductSizes, setSelectedProductSizes] = useState<Record<string, number>>({});
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedSizeFilter, setSelectedSizeFilter] = useState<number | null>(null);
-  const [selectedMood, setSelectedMood] = useState<string>("all");
-  const [selectedScent, setSelectedScent] = useState<string>("all");
-  const [sortOption, setSortOption] = useState<string>("rank");
+  const [selectedProductSizes, setSelectedProductSizes] = useState<Record<string, number>>({});
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  const handleProductSizeSelect = (productId: string, size: number) => {
-    setSelectedProductSizes((prev) => ({ ...prev, [productId]: size }));
-  };
+  const bestSellers = ALL_PERFUMES.filter((p) =>
+    ["seductive", "purple-oud", "calantha", "mirai", "deep-crush", "white-oud", "0809"].includes(p.id)
+  );
 
   const getItemQuantity = (productId: string, size: number): number => {
     const item = cartItems.find((ci) => ci.productId === productId && ci.size === size);
     return item ? item.quantity : 0;
   };
 
-  const getProductSize = (p: PerfumeProduct): number => {
-    if (selectedProductSizes[p.id] && p.sizes.includes(selectedProductSizes[p.id] as any)) {
-      return selectedProductSizes[p.id];
-    }
-    if (selectedSizeFilter) {
-      if (p.sizes.includes(selectedSizeFilter as any)) {
-        return selectedSizeFilter;
-      }
-    }
-    const outStock = p.outOfStockSizes || [];
-    if (p.sizes.includes(50) && !outStock.includes(50)) {
-      return 50;
-    }
-    const inStock = p.sizes.filter((s) => !outStock.includes(s));
-    if (inStock.length > 0) {
-      return inStock[inStock.length - 1];
-    }
-    return p.sizes[0];
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2500);
   };
 
-  const filteredProducts = useMemo(() => {
-    let list = BEST_SELLER_PRODUCTS.filter((p) => {
-      if (selectedCategory === "woody" && p.scentFamily !== "woody") return false;
-      if (selectedCategory === "floral" && p.scentFamily !== "floral") return false;
-      if (selectedCategory === "oriental" && p.scentFamily !== "oriental") return false;
-      if (selectedCategory === "exclusive" && p.badge !== "exclusive") return false;
-
-      if (selectedMood !== "all" && !p.moods.includes(selectedMood)) return false;
-      if (selectedScent !== "all" && p.scentFamily !== selectedScent) return false;
-      if (selectedSizeFilter && !p.sizes.includes(selectedSizeFilter as any)) return false;
-      return true;
-    });
-
-    const copy = [...list];
-    if (sortOption === "price-asc") {
-      return copy.sort((a, b) => a.prices[a.sizes[0]] - b.prices[b.sizes[0]]);
-    }
-    if (sortOption === "price-desc") {
-      return copy.sort((a, b) => b.prices[b.sizes[0]] - a.prices[a.sizes[0]]);
-    }
-    return copy;
-  }, [selectedCategory, selectedSizeFilter, selectedMood, selectedScent, sortOption]);
-
   return (
-    <div className="min-h-screen bg-cream text-ink pb-24">
-      {/* Toast notification */}
+    <div className="min-h-screen w-full bg-[#fbf9f5] text-ink font-sans">
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-2xl border border-gold/40 bg-[#120e0a] px-6 py-4 text-white shadow-2xl animate-bounce">
-          <span className="text-xl">✨</span>
-          <span className="text-xs font-semibold tracking-wide text-gold">{toastMessage}</span>
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#c89b5a]/40 bg-[#120e0a] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+          <span className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#c89b5a] animate-pulse" />
+            {toastMessage}
+          </span>
         </div>
       )}
 
-      {/* ELEGANT MINIMALIST PAGE HEADER (HERO REMOVED AS REQUESTED) */}
-      <section className="bg-cream pt-8 pb-6 border-b border-black/10">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-gold mb-3">
-            <button onClick={onBackToHome} className="hover:underline cursor-pointer text-gold">
-              Home
-            </button>
-            <span>/</span>
-            <span className="text-ink/60">Best Sellers</span>
-          </div>
-
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold block mb-1">
-                👑 HAUTE PARFUMERIE · TOP 6 BEST SELLERS
-              </span>
-              <h1 className="font-display text-3xl sm:text-4xl text-ink font-medium tracking-tight">
-                Best Sellers
-              </h1>
-              <p className="mt-1 text-xs sm:text-sm text-ink/60 font-light max-w-xl">
-                Our 6 most coveted Extraits de Parfum — Seductive, Purple Oud, Calantha, Mirai, Deep Crush, and White Oud.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => onNavigate?.("byob")}
-                className="rounded-full border border-gold/60 bg-gold/10 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-gold hover:bg-gold hover:text-white transition-all cursor-pointer shadow-xs"
-              >
-                BYOB Bundle Builder →
-              </button>
-            </div>
-          </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-20">
+        <div className="mb-8 flex items-center gap-2.5 text-[11px] uppercase tracking-[0.18em] text-ink/40">
+          <button onClick={onBackToHome} className="hover:text-[#c89b5a] transition-colors cursor-pointer">
+            Home
+          </button>
+          <span className="text-[#c89b5a]/50">•</span>
+          <span className="text-ink font-semibold tracking-[0.2em]">Best Sellers</span>
         </div>
-      </section>
 
-      {/* PROPERLY PLACED STICKY FILTER BAR (SCROLLS CLEANLY UNDER STICKY NAVBAR) */}
-      <section className="sticky top-[71px] z-30 border-b border-black/10 bg-cream/95 backdrop-blur-md py-3 shadow-xs">
-        <div className="mx-auto max-w-[1440px] px-6 lg:px-12 flex flex-wrap items-center justify-between gap-4">
-          {/* Scent & Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 overflow-x-auto no-scrollbar py-1">
-            {[
-              { id: "all", label: "All 6 Best Sellers" },
-              { id: "woody", label: "Woody & Oud" },
-              { id: "floral", label: "Floral & Gourmand" },
-              { id: "oriental", label: "Oriental & Spice" },
-              { id: "exclusive", label: "50 ML Exclusives" },
-            ].map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`rounded-full px-4 py-1.5 text-xs font-semibold tracking-wider transition-all cursor-pointer ${
-                  selectedCategory === cat.id
-                    ? "bg-ink text-white shadow-md"
-                    : "bg-white text-ink/70 border border-black/10 hover:border-gold hover:text-gold"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Controls: Mood, Scent, Size Filter & Sort */}
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Mood Dropdown */}
-            <select
-              value={selectedMood}
-              onChange={(e) => setSelectedMood(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
-            >
-              <option value="all">All Moods</option>
-              <option value="party">Party & Glamour</option>
-              <option value="regular">Everyday Signature</option>
-              <option value="sports">Sports & Fresh</option>
-              <option value="date-night">Date Night</option>
-              <option value="casual">Casual & Relaxed</option>
-            </select>
-
-            {/* Scent Dropdown */}
-            <select
-              value={selectedScent}
-              onChange={(e) => setSelectedScent(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
-            >
-              <option value="all">All Scent Families</option>
-              <option value="woody">Woody & Oud</option>
-              <option value="floral">Floral Bouquet</option>
-              <option value="oriental">Oriental & Spicy</option>
-              <option value="fresh">Fresh & Aquatic</option>
-            </select>
-
-            {/* Size Pills */}
-            <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-black/10">
-              <button
-                onClick={() => setSelectedSizeFilter(null)}
-                className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                  selectedSizeFilter === null ? "bg-gold text-white" : "text-ink/60 hover:text-ink"
-                }`}
-              >
-                All Sizes
-              </button>
-              {[10, 30, 50].map((sz) => (
-                <button
-                  key={sz}
-                  onClick={() => setSelectedSizeFilter(sz)}
-                  className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                    selectedSizeFilter === sz ? "bg-gold text-white" : "text-ink/60 hover:text-ink"
-                  }`}
-                >
-                  {sz} ML
-                </button>
-              ))}
-            </div>
-
-            {/* Sort Select */}
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="rounded-xl border border-black/15 bg-white px-3.5 py-1.5 text-xs font-semibold text-ink outline-none focus:border-gold cursor-pointer"
-            >
-              <option value="rank">Sort by Rank</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      {/* BEST SELLERS GRID CATALOG */}
-      <section className="mx-auto max-w-[1440px] px-2.5 sm:px-6 lg:px-12 py-2 sm:py-12">
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-black/10">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold block mb-1">
-              TOP RATED FORMULATIONS
-            </span>
-            <h2 className="font-display text-2xl sm:text-3xl text-ink font-normal tracking-tight">
-              Showing {filteredProducts.length} Best Sellers
-            </h2>
-          </div>
-          <span className="text-xs font-medium tracking-wider text-ink/40 uppercase">
-            100% Authentic Extrait de Parfum
+        <div className="mb-12">
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+            TOP RATED FORMULATIONS
           </span>
+          <h1 className="font-display text-3xl sm:text-4xl text-ink font-normal tracking-tight">
+            Best Sellers Collection
+          </h1>
+          <p className="text-sm text-ink/60 mt-2 max-w-2xl">
+            Our most coveted Extraits de Parfum — formulated with rare ingredients for extraordinary sillage and longevity.
+          </p>
         </div>
 
-        <div className="fraganote-grid">
-          {filteredProducts.map((p) => {
-            const currentSize = getProductSize(p);
-            const currentPrice = p.prices[currentSize];
-            const isOutOfStock = p.outOfStockSizes?.includes(currentSize as any) ?? false;
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {bestSellers.map((p) => {
+            const currentSize = selectedProductSizes[p.id] || 50;
+            const currentPrice = p.prices[currentSize] || p.prices[50];
+            const currentMrp = p.mrps?.[currentSize] || Math.round(currentPrice * 1.35);
             const qtyInBag = getItemQuantity(p.id, currentSize);
-            const notesString = p.traces && p.traces.length > 0 ? p.traces.slice(0, 2).join(" | ") : p.desc;
-            const badgeText = p.badge === "exclusive" ? "EXCLUSIVE" : "BEST SELLER";
 
             return (
-              <div key={p.id} className="fraganote-card">
+              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
-                  <div onClick={() => setSelectedDetailProduct(p)} className="fraganote-media-box cursor-pointer">
-                    <img src={p.img} alt={p.name} loading="lazy" />
-                    {badgeText && <span className="fraganote-badge">{badgeText}</span>}
+                  <div
+                    onClick={() => setSelectedDetailProduct(p)}
+                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
+                  >
+                    <img src={p.img} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <span className="absolute top-2 left-2 rounded-full bg-[#120e0a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#c89b5a]">
+                      Best Seller
+                    </span>
                   </div>
-                  <div onClick={() => setSelectedDetailProduct(p)} className="cursor-pointer">
-                    <h3 className="fraganote-title">{p.name.toUpperCase()} {currentSize}ML</h3>
-                    <p className="fraganote-notes">{notesString}</p>
-                    <div className="fraganote-price-row">
-                      <span className="fraganote-price-current">₹{currentPrice.toLocaleString()}</span>
-                      <span className="fraganote-price-mrp">MRP ₹{(p.mrps && p.mrps[currentSize] ? p.mrps[currentSize] : Math.round(currentPrice * 1.35)).toLocaleString()}</span>
-                    </div>
+
+                  <div className="mt-3 text-center">
+                    <h3 onClick={() => setSelectedDetailProduct(p)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                      {p.name}
+                    </h3>
+                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.desc}</p>
+                  </div>
+
+                  <div className="flex justify-center gap-1.5 my-2">
+                    {p.sizes.map((sz) => (
+                      <button
+                        key={sz}
+                        onClick={() => setSelectedProductSizes((prev) => ({ ...prev, [p.id]: sz }))}
+                        className={`rounded px-2.5 py-1 text-[9px] font-bold border transition-all cursor-pointer ${
+                          currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
+                        }`}
+                      >
+                        {sz}ML
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex items-baseline justify-center gap-2 mt-1">
+                    <span className="font-bold text-sm text-ink">₹{currentPrice.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{currentMrp.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
-                {isOutOfStock ? (
-                  <button disabled className="fraganote-btn opacity-50 cursor-not-allowed">Out of Stock</button>
-                ) : qtyInBag > 0 ? (
-                  <div className="w-full mt-2 flex items-center justify-between border border-black bg-black text-white py-1 px-2.5 rounded-md text-[10px] font-bold">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-white hover:text-gold px-1.5">−</button>
-                    <span>{qtyInBag} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-white hover:text-gold px-1.5">+</button>
+
+                {qtyInBag > 0 ? (
+                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-2 py-1.5">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a]">−</button>
+                    <span className="text-[10px] font-bold text-[#e2c48e]">{qtyInBag} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a]">+</button>
                   </div>
                 ) : (
-                  <button onClick={() => { onAddToCart?.({ id: p.id, name: p.name, num: p.num, img: p.img }, currentSize, currentPrice); showToast(`Added ${p.name} to Bag`); }} className="fraganote-btn">
-                    Add to cart
+                  <button
+                    onClick={() => {
+                      onAddToCart?.({ id: p.id, name: p.name, img: p.img }, currentSize, currentPrice);
+                      showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
+                    }}
+                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
+                  >
+                    Add to Bag
                   </button>
                 )}
               </div>
             );
           })}
         </div>
-      </section>
+      </div>
 
-      {/* Product Detail Modal */}
       {selectedDetailProduct && (
         <ProductDetailModal
           product={selectedDetailProduct}
@@ -303,9 +149,7 @@ export default function BestSellersPage({
           cartItems={cartItems}
           onAddToCart={onAddToCart}
           onUpdateCartQuantity={onUpdateCartQuantity}
-          onOpenCart={onOpenCart}
-          onSelectProduct={(prod) => setSelectedDetailProduct(prod)}
-          allProducts={BEST_SELLER_PRODUCTS}
+          allProducts={ALL_PERFUMES}
         />
       )}
     </div>
