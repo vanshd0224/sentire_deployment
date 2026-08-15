@@ -133,13 +133,7 @@ export default function BestSellers({
             <SectionHeading title="BEST SELLERS" subtitle="Discover our most coveted, iconic fragrance creations." />
           </div>
           <button
-            onClick={() => {
-              if (onOpenBestSellersPage) {
-                onOpenBestSellersPage();
-              } else {
-                onOpenPerfumesPage?.(undefined, undefined, "bestsellers");
-              }
-            }}
+            onClick={() => onOpenPerfumesPage?.(undefined, undefined, "bestsellers")}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
