@@ -19,7 +19,7 @@ const products: ProductItem[] = [
     id: "seductive",
     name: "SEDUCTIVE",
     notes: "Citric Limon • Fresh Lavender • Velvet Amber",
-    image: "/assets/seductive.png?v=10",
+    image: "/assets/seductive.png?v=12",
     badge: "Best Seller",
     rating: 4.91,
     reviewsCount: 165,
@@ -33,7 +33,7 @@ const products: ProductItem[] = [
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Cambodian Oud • Saffron • Amethyst Rose",
-    image: "/assets/purple-oud-arrival.png?v=10",
+    image: "/assets/purple-oud-arrival.png?v=12",
     badge: "Exclusive",
     rating: 4.95,
     reviewsCount: 98,
@@ -47,7 +47,7 @@ const products: ProductItem[] = [
     id: "calantha",
     name: "CALANTHA",
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
-    image: "/assets/calantha.png?v=10",
+    image: "/assets/calantha.png?v=12",
     badge: "Best Seller",
     rating: 4.85,
     reviewsCount: 116,
@@ -61,7 +61,7 @@ const products: ProductItem[] = [
     id: "mirai",
     name: "MIRAI",
     notes: "Zesty Lemon • Lavender • Earthy Patchouli",
-    image: "/assets/mirai.png?v=10",
+    image: "/assets/mirai.png?v=12",
     badge: "Best Seller",
     rating: 4.87,
     reviewsCount: 132,
@@ -83,8 +83,7 @@ interface BestSellersProps {
   ) => void;
   onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
   onOpenCart?: () => void;
-  onOpenPerfumesPage?: (size?: number, mood?: string, category?: string, collection?: string) => void;
-  onOpenBestSellersPage?: () => void;
+  onNavigate?: (page: any, filterOptions?: any) => void;
 }
 
 export default function BestSellers({
@@ -93,8 +92,7 @@ export default function BestSellers({
   onAddToCart,
   onUpdateCartQuantity,
   onOpenCart: _onOpenCart,
-  onOpenPerfumesPage,
-  onOpenBestSellersPage,
+  onNavigate,
 }: BestSellersProps) {
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [addedToast, setAddedToast] = useState<string | null>(null);
@@ -133,7 +131,7 @@ export default function BestSellers({
             <SectionHeading title="BEST SELLERS" subtitle="Discover our most coveted, iconic fragrance creations." />
           </div>
           <button
-            onClick={() => onNavigate ? onNavigate("bestsellers") : onOpenPerfumesPage?.(undefined, undefined, "bestsellers")}
+            onClick={() => onNavigate?.("bestsellers")}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
@@ -200,7 +198,7 @@ export default function BestSellers({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
+                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
                   >
                     Add to Bag
                   </button>

@@ -19,7 +19,7 @@ const products: ProductItem[] = [
     id: "rich",
     name: "RICH",
     notes: "Opulent Bergamot • Spiced Rose • Velvet Amber Musk",
-    image: "/assets/rich.png?v=10",
+    image: "/assets/rich.png?v=12",
     badge: "New Launch",
     rating: 4.93,
     reviewsCount: 54,
@@ -33,7 +33,7 @@ const products: ProductItem[] = [
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Smoky Cambodian Oud • Fiery Saffron • Amethyst Rose",
-    image: "/assets/purple-oud-arrival.png?v=10",
+    image: "/assets/purple-oud-arrival.png?v=12",
     badge: "Exclusive",
     rating: 4.95,
     reviewsCount: 88,
@@ -47,7 +47,7 @@ const products: ProductItem[] = [
     id: "calantha",
     name: "CALANTHA",
     notes: "Blooming Florals • Jasmine • Sandalwood Amber",
-    image: "/assets/calantha.png?v=10",
+    image: "/assets/calantha.png?v=12",
     badge: "New Release",
     rating: 4.88,
     reviewsCount: 112,
@@ -61,7 +61,7 @@ const products: ProductItem[] = [
     id: "herrlich",
     name: "HERRLICH",
     notes: "Fresh Bergamot • Jasmine Rose • Dark Chocolate",
-    image: "/assets/herrlich.png?v=10",
+    image: "/assets/herrlich.png?v=12",
     badge: "New Launch",
     rating: 4.92,
     reviewsCount: 48,
@@ -83,8 +83,7 @@ interface NewArrivalsProps {
   ) => void;
   onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
   onOpenCart?: () => void;
-  onOpenPerfumesPage?: (size?: number, mood?: string, category?: string, collection?: string) => void;
-  onOpenNewArrivalsPage?: () => void;
+  onNavigate?: (page: any, filterOptions?: any) => void;
 }
 
 export default function NewArrivals({
@@ -93,8 +92,7 @@ export default function NewArrivals({
   onAddToCart,
   onUpdateCartQuantity,
   onOpenCart: _onOpenCart,
-  onOpenPerfumesPage,
-  onOpenNewArrivalsPage,
+  onNavigate,
 }: NewArrivalsProps) {
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [addedToast, setAddedToast] = useState<string | null>(null);
@@ -133,7 +131,7 @@ export default function NewArrivals({
             <SectionHeading title="NEW ARRIVALS" subtitle="Experience our latest luxury formulations and extraits." />
           </div>
           <button
-            onClick={() => onNavigate ? onNavigate("new-arrivals") : onOpenPerfumesPage?.(undefined, undefined, "new")}
+            onClick={() => onNavigate?.("new-arrivals")}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
@@ -200,7 +198,7 @@ export default function NewArrivals({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40"
+                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
                   >
                     Add to Bag
                   </button>
