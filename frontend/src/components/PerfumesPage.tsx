@@ -50,7 +50,7 @@ const EXCLUSIVE_PURPLE_OUD: PerfumeProduct = {
   moods: ["party", "date-night"],
   sizes: [10, 30, 50],
   outOfStockSizes: [10, 30],
-  prices: { 10: 799, 30: 1499, 50: 4999 },
+  prices: { 10: 799, 30: 1499, 50: 1489 },
   badge: "exclusive",
   img: "/assets/purple-oud.png",
   traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"],
@@ -851,7 +851,7 @@ export default function PerfumesPage({
                       <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[#c89b5a]/70 block">
                         Exclusive Edition
                       </span>
-                      <span className="font-display text-2xl sm:text-3xl font-normal text-[#c89b5a]">₹4,999</span>
+                      <div className="flex items-baseline gap-2"><span className="font-display text-2xl sm:text-3xl font-normal text-[#c89b5a]">₹1,489</span><span className="text-sm text-white/40 line-through">MRP ₹1,859</span></div>
                     </div>
 
                     <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
@@ -885,7 +885,7 @@ export default function PerfumesPage({
                               onAddToCart?.(
                                 { id: EXCLUSIVE_PURPLE_OUD.id, name: EXCLUSIVE_PURPLE_OUD.name, num: EXCLUSIVE_PURPLE_OUD.num, img: EXCLUSIVE_PURPLE_OUD.img },
                                 50,
-                                4999
+                                1489
                               );
                               showToast("Added Purple Oud (50 ML) to Bag");
                             }}
