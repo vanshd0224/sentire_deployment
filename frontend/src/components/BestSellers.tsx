@@ -12,29 +12,28 @@ interface ProductItem {
   rating: number;
   reviewsCount: number;
   prices: Record<number, { price: number; originalPrice: number }>;
-  outOfStockSizes?: number[];
 }
 
 const products: ProductItem[] = [
   {
-    id: "deep-crush",
-    name: "DEEP CRUSH",
-    notes: "Lavender • Tobacco Woods • Sandalwood Amber",
-    image: "/assets/deep-crush.png?v=3",
+    id: "seductive",
+    name: "SEDUCTIVE",
+    notes: "Citric Limon • Fresh Lavender • Velvet Amber",
+    image: "/assets/seductive.png?v=4",
     badge: "Best Seller",
-    rating: 4.9,
-    reviewsCount: 142,
+    rating: 4.91,
+    reviewsCount: 165,
     prices: {
-      10: { price: 350, originalPrice: 419 },
-      30: { price: 899, originalPrice: 1319 },
-      50: { price: 1085, originalPrice: 1539 },
+      10: { price: 459, originalPrice: 649 },
+      30: { price: 999, originalPrice: 1409 },
+      50: { price: 1149, originalPrice: 2099 },
     },
   },
   {
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Cambodian Oud • Saffron • Amethyst Rose",
-    image: "/assets/purple-oud.png?v=3",
+    image: "/assets/purple-oud-banner.png?v=4",
     badge: "Crown Jewel",
     rating: 4.95,
     reviewsCount: 98,
@@ -48,7 +47,7 @@ const products: ProductItem[] = [
     id: "calantha",
     name: "CALANTHA",
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
-    image: "/assets/calantha.png?v=3",
+    image: "/assets/calantha.png?v=4",
     badge: "Most Loved",
     rating: 4.85,
     reviewsCount: 116,
@@ -59,17 +58,31 @@ const products: ProductItem[] = [
     },
   },
   {
-    id: "white-oud",
-    name: "WHITE OUD",
-    notes: "Essence of Oud • Pink Pepper • Luminous Amber",
-    image: "/assets/white-oud.png?v=3",
-    badge: "Iconic Scent",
-    rating: 4.88,
-    reviewsCount: 104,
+    id: "mirai",
+    name: "MIRAI",
+    notes: "Zesty Lemon • Lavender • Earthy Patchouli",
+    image: "/assets/mirai.png?v=4",
+    badge: "Customer Favorite",
+    rating: 4.87,
+    reviewsCount: 132,
     prices: {
-      10: { price: 659, originalPrice: 779 },
-      30: { price: 1493, originalPrice: 2089 },
-      50: { price: 2889, originalPrice: 4069 },
+      10: { price: 459, originalPrice: 649 },
+      30: { price: 1199, originalPrice: 1809 },
+      50: { price: 1679, originalPrice: 2349 },
+    },
+  },
+  {
+    id: "deep-crush",
+    name: "DEEP CRUSH",
+    notes: "Lavender • Tobacco Woods • Sandalwood Amber",
+    image: "/assets/deep-crush.png?v=4",
+    badge: "Iconic Scent",
+    rating: 4.9,
+    reviewsCount: 142,
+    prices: {
+      10: { price: 350, originalPrice: 419 },
+      30: { price: 899, originalPrice: 1319 },
+      50: { price: 1085, originalPrice: 1539 },
     },
   },
 ];
@@ -140,7 +153,7 @@ export default function BestSellers({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
           {products.map((p) => {
             const currentSize = selectedSizes[p.id] || 50;
             const priceInfo = p.prices[currentSize] || p.prices[50];

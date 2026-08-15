@@ -883,7 +883,7 @@ export default function PerfumesPage({
                           <button
                             onClick={() => {
                               onAddToCart?.(
-                                { id: EXCLUSIVE_PURPLE_OUD.id, name: EXCLUSIVE_PURPLE_OUD.name, num: EXCLUSIVE_PURPLE_OUD.num, img: EXCLUSIVE_PURPLE_OUD.img },
+                                { id: EXCLUSIVE_PURPLE_OUD.id, name: EXCLUSIVE_PURPLE_OUD.name, num: EXCLUSIVE_PURPLE_OUD.num, img: "/assets/purple-oud-banner.png?v=4" },
                                 50,
                                 1489
                               );
@@ -911,7 +911,7 @@ export default function PerfumesPage({
                     className="relative aspect-square w-full max-w-[280px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#c89b5a]/30 bg-[#14100b] p-3 sm:p-4 shadow-2xl group cursor-pointer"
                   >
                     <img
-                      src={EXCLUSIVE_PURPLE_OUD.img}
+                      src={"/assets/purple-oud-banner.png?v=4"}
                       alt="Purple Oud"
                       className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                     />
