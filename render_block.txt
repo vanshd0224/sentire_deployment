@@ -1,151 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
-import AnnouncementBar from "./components/AnnouncementBar";
-import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
-import Hero from "./components/Hero";
-import TrustBadges from "./components/TrustBadges";
-import WatchAndBuy from "./components/WatchAndBuy";
-import RetailerBadges from "./components/RetailerBadges";
-import ShopByCategory from "./components/ShopByCategory";
-import BestSellers from "./components/BestSellers";
-import NewArrivals from "./components/NewArrivals";
-import CelebrityReacts from "./components/CelebrityReacts";
-import PromoSplit from "./components/PromoSplit";
-import Newsletter from "./components/Newsletter";
-import InstagramSection from "./components/InstagramSection";
-import Footer from "./components/Footer";
-import BundleBuilderModal from "./components/BundleBuilderModal";
-import PerfumesPage from "./components/PerfumesPage";
-import BestSellersPage from "./components/BestSellersPage";
-import NewArrivalsPage from "./components/NewArrivalsPage";
-import AboutPage from "./components/AboutPage";
-import ByobPage from "./components/ByobPage";
-import PersonalisationPage from "./components/PersonalisationPage";
-import CartDrawer, { CartItem } from "./components/CartDrawer";
-import MobileBottomNav from "./components/MobileBottomNav";
-import AccountDrawerModal from "./components/AccountDrawerModal";
-import AccountPage from "./components/AccountPage";
-import ClientServicesPage from "./components/ClientServicesPage";
-import TrackOrderPage from "./components/TrackOrderPage";
-import { auth } from "./lib/firebase";
-
-export type PageName =
-  | "home"
-  | "perfumes"
-  | "bestsellers"
-  | "new-arrivals"
-  | "about"
-  | "byob"
-  | "personalisation"
-  | "client-services"
-  | "track-order"
-  | "account";
-
-export default function App() {
-  const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<PerfumeFilterOptions | undefined>(undefined);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
-
-  const [currentPage, setCurrentPage] = useState<PageName>(() => {
-    const hash = window.location.hash;
-    const path = window.location.pathname;
-    if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#about" || path.includes("about")) return "about";
-    if (hash === "#byob" || path.includes("byob")) return "byob";
-    if (hash === "#personalisation" || path.includes("personalisation")) return "personalisation";
-    if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
-    if (hash === "#bestsellers" || path.includes("bestsellers")) return "bestsellers";
-    if (hash === "#perfumes" || path.includes("perfumes")) return "perfumes";
-    if (hash === "#client-services" || path.includes("client-services")) return "client-services";
-    if (hash === "#track-order" || path.includes("track-order")) return "track-order";
-    return "home";
-  });
-
-  const handleAccountClick = () => {
-    if (auth.currentUser) {
-      setCurrentPage("account");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      setIsAccountOpen(true);
-    }
-  };
-
-  const handleNavigate = (
-    page: PageName,
-    filters?: PerfumeFilterOptions
-  ) => {
-    setCurrentPage(page);
-    setActiveFilters(filters);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleAddToCart = (item: any) => {
-    const qtyToAdd = item.quantity ?? 1;
-    const safePrice = typeof item.price === "number" ? item.price : 2499;
-    const safeSize = typeof item.size === "number" ? item.size : 50;
-    const safeProductId = item.productId || item.id || "perfume-1";
-    const safeName = item.name || item.product || "Luxury Extrait de Parfum";
-    const safeImage = item.image || item.img || item.swatch || "/images/product-white-oud.jpg";
-
-    const newItem = {
-      id: `${safeProductId}-${safeSize}`,
-      productId: safeProductId,
-      name: safeName,
-      size: safeSize,
-      price: safePrice,
-      image: safeImage,
-      img: safeImage,
-      quantity: qtyToAdd,
-    };
-
-    setCartItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (i) => i.productId === safeProductId && i.size === safeSize
-      );
-      if (existingIndex > -1) {
-        const updated = [...prev];
-        updated[existingIndex] = {
-          ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + qtyToAdd,
-        };
-        return updated;
-      }
-      return [...prev, newItem];
-    });
-    setIsCartOpen(true);
-  };
-
-  const handleUpdateCartQuantity = (productId: string, size: number, delta: number) => {
-    setCartItems((prev) => {
-      return prev
-        .map((item) => {
-          if (item.productId === productId && item.size === size) {
-            const newQty = item.quantity + delta;
-            return newQty > 0 ? { ...item, quantity: newQty } : null;
-          }
-          return item;
-        })
-        .filter((item): item is CartItem => item !== null);
-    });
-  };
-
-  const handleRemoveCartItem = (productId: string, size: number) => {
-    setCartItems((prev) =>
-      prev.filter((item) => !(item.productId === productId && item.size === size))
-    );
-  };
-
-  const openBundleModal = () => setIsBundleModalOpen(true);
-  const closeBundleModal = () => setIsBundleModalOpen(false);
-
-  const totalCartCount = useMemo(
-    () => cartItems.reduce((sum, item) => sum + item.quantity, 0),
-    [cartItems]
-  );
-
-  return (
+return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
       <AnnouncementBar />
       <Navbar
@@ -169,10 +22,9 @@ export default function App() {
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "bestsellers" ? (
-        <PerfumesPage
+        <BestSellersPage
           onBackToHome={() => handleNavigate("home")}
-          onOpenBundleModal={openBundleModal}
-          initialFilters={{ category: "bestsellers" }}
+          onNavigate={handleNavigate}
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
@@ -180,10 +32,9 @@ export default function App() {
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "new-arrivals" ? (
-        <PerfumesPage
+        <NewArrivalsPage
           onBackToHome={() => handleNavigate("home")}
-          onOpenBundleModal={openBundleModal}
-          initialFilters={{ category: "new" }}
+          onNavigate={handleNavigate}
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}

@@ -133,7 +133,7 @@ export default function NewArrivals({
             <SectionHeading title="NEW ARRIVALS" subtitle="Experience our latest luxury formulations and extraits." />
           </div>
           <button
-            onClick={() => onOpenPerfumesPage?.(undefined, undefined, "new")}
+            onClick={() => onNavigate ? onNavigate("new-arrivals") : onOpenPerfumesPage?.(undefined, undefined, "new")}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
