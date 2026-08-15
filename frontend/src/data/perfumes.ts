@@ -142,7 +142,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
         '/assets/perfumes/0809-10ml-2.png?v=10',
         '/assets/perfumes/0809-10ml-3.png?v=10'
       ],
-      30: ["/assets/perfumes/0809-30ml-1.png?v=2", "/assets/perfumes/0809-30ml-2.png?v=2", "/assets/perfumes/0809-30ml-3.png?v=2"],
+      30: [
+        '/assets/perfumes/0809-30ml-1.png?v=10',
+        '/assets/perfumes/0809-30ml-2.png?v=10',
+        '/assets/perfumes/0809-30ml-3.png?v=10'
+      ],
       50: ["/assets/perfumes/0809-50ml-1.png?v=2", "/assets/perfumes/0809-50ml-2.png?v=2", "/assets/perfumes/0809-50ml-3.png?v=2"]
     },
     traces: ["Sichuan Pepper", "Lavender", "Star Anise", "Nutmeg", "Ambroxan"]
