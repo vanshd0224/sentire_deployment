@@ -660,40 +660,65 @@ export default function CartDrawer({
             {/* Checkout CTA */}
             <button
               className="sentire-checkout-btn salon-stagger-6 cursor-pointer"
-              onClick={() => {
+              onClick={async () => {
                 if (items.length === 0) return;
 
-                // Create and submit native HTML form POST to Shopify
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "https://hbj1d0-99.myshopify.com/cart/add";
+                try {
+                  const graphqlUrl = "https://hbj1d0-99.myshopify.com/api/2026-07/graphql.json";
+                  const lines = items.map((item) => {
+                    const rawVariantId =
+                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
+                      item.productId;
+                    const merchandiseId = String(rawVariantId).startsWith("gid://")
+                      ? String(rawVariantId)
+                      : `gid://shopify/ProductVariant/${rawVariantId}`;
+                    return {
+                      merchandiseId,
+                      quantity: item.quantity,
+                    };
+                  });
 
-                items.forEach((item, index) => {
-                  const variantId =
-                    SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
-                    item.productId;
+                  const query = `
+                    mutation cartCreate($input: CartInput!) {
+                      cartCreate(input: $input) {
+                        cart {
+                          checkoutUrl
+                        }
+                        userErrors {
+                          field
+                          message
+                        }
+                      }
+                    }
+                  `;
 
-                  const idInput = document.createElement("input");
-                  idInput.type = "hidden";
-                  idInput.name = `items[${index}][id]`;
-                  idInput.value = String(variantId);
-                  form.appendChild(idInput);
+                  const res = await fetch(graphqlUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query, variables: { input: { lines } } }),
+                  });
 
-                  const qtyInput = document.createElement("input");
-                  qtyInput.type = "hidden";
-                  qtyInput.name = `items[${index}][quantity]`;
-                  qtyInput.value = String(item.quantity);
-                  form.appendChild(qtyInput);
-                });
+                  const data = await res.json();
+                  const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
 
-                const returnInput = document.createElement("input");
-                returnInput.type = "hidden";
-                returnInput.name = "return_to";
-                returnInput.value = "/checkout";
-                form.appendChild(returnInput);
+                  if (checkoutUrl) {
+                    window.location.href = checkoutUrl;
+                    return;
+                  }
+                } catch (e) {
+                  console.error("Shopify Storefront Cart error:", e);
+                }
 
-                document.body.appendChild(form);
-                form.submit();
+                // Fallback to permalink if needed
+                const permalinkItems = items
+                  .map((item) => {
+                    const variantId =
+                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
+                      item.productId;
+                    return `${variantId}:${item.quantity}`;
+                  })
+                  .join(",");
+                window.location.href = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
