@@ -662,16 +662,25 @@ export default function CartDrawer({
               className="sentire-checkout-btn salon-stagger-6 cursor-pointer"
               onClick={() => {
                 if (items.length === 0) return;
-                const permalinkItems = items
-                  .map((item) => {
-                    const variantId =
-                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
-                      `${item.productId}-${item.size}`;
-                    return `${variantId}:${item.quantity}`;
-                  })
-                  .join(",");
-                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}?checkout`;
-                window.location.href = checkoutUrl;
+                if (items.length === 1) {
+                  const item = items[0];
+                  const variantId =
+                    SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
+                    item.productId;
+                  const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/add?id=${variantId}&quantity=${item.quantity}`;
+                  window.location.href = checkoutUrl;
+                } else {
+                  const permalinkItems = items
+                    .map((item) => {
+                      const variantId =
+                        SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
+                        item.productId;
+                      return `${variantId}:${item.quantity}`;
+                    })
+                    .join(",");
+                  const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                  window.location.href = checkoutUrl;
+                }
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
