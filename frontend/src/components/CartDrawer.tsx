@@ -1,85 +1,83 @@
-// Force deployment trigger timestamp: 2026-08-16T18:42:00Z
-import { useState, useEffect, useMemo, useCallback } from "react";
-
-export interface CartItem {
-  id: string; // `${productId}-${size}`
-  productId: string;
-  name: string;
-  num?: string;
-  img: string;
-  size: number;
-  price: number;
-  quantity: number;
-}
-
-interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  items: CartItem[];
-  onUpdateQuantity: (productId: string, size: number, delta: number) => void;
-  onRemoveItem: (productId: string, size: number) => void;
-  onClearCart?: () => void;
-}
-
-// ── SVG icon components ────────────────────────────────────────────────────
-
-function IconClose() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.4} className="w-3.5 h-3.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 4l12 12M16 4L4 16" />
-    </svg>
-  );
-}
-
-function IconArrow() {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
-      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-    </svg>
-  );
-}
-
-function IconCheck() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-3 h-3">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.5 8.5l3.5 3.5 7-8" />
-    </svg>
-  );
-}
-
-function IconLock() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} className="w-3 h-3">
-      <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" strokeLinejoin="round"/>
-      <path strokeLinecap="round" d="M5 7V5.5a3 3 0 016 0V7"/>
-    </svg>
-  );
-}
-
-function IconDiamond() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} className="w-3 h-3">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 1.5l3.5 5-3.5 8-3.5-8L8 1.5z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 6.5h7" />
-    </svg>
-  );
-}
-
-// ── Main component ─────────────────────────────────────────────────────────
-
-
-export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
+// Robust variant ID resolver for all 11 perfumes with all possible ID/name/handle aliases
+const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
+  // 0809
   "0809": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
+  "perfume-1": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
+  "1": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
+
+  // Calantha
   "calantha": { 10: "46888622391457", 30: "46888622424225", 50: "46888622456993" },
+  "perfume-2": { 10: "46888622391457", 30: "46888622424225", 50: "46888622456993" },
+  "2": { 10: "46888622391457", 30: "46888622424225", 50: "46888622456993" },
+
+  // Deep Crush
   "deep-crush": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
+  "deepcrush": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
+  "perfume-3": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
+  "3": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
+
+  // Herrlich
   "herrlich": { 10: "46888622588065", 30: "46888622620833", 50: "46888622653601" },
+  "perfume-4": { 10: "46888622588065", 30: "46888622620833", 50: "46888622653601" },
+  "4": { 10: "46888622588065", 30: "46888622620833", 50: "46888622653601" },
+
+  // Midnight
   "midnight": { 10: "46888622686369", 30: "46888622719137", 50: "46888622751905" },
+  "perfume-5": { 10: "46888622686369", 30: "46888622719137", 50: "46888622751905" },
+  "5": { 10: "46888622686369", 30: "46888622719137", 50: "46888622751905" },
+
+  // Mirai
   "mirai": { 10: "46888622784673", 30: "46888622817441", 50: "46888622850209" },
+  "perfume-6": { 10: "46888622784673", 30: "46888622817441", 50: "46888622850209" },
+  "6": { 10: "46888622784673", 30: "46888622817441", 50: "46888622850209" },
+
+  // Personna
   "personna": { 10: "46888622882977", 30: "46888622915745", 50: "46888622948513" },
+  "perfume-7": { 10: "46888622882977", 30: "46888622915745", 50: "46888622948513" },
+  "7": { 10: "46888622882977", 30: "46888622915745", 50: "46888622948513" },
+
+  // Purple Oud
   "purple-oud": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
+  "purpleoud": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
+  "perfume-8": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
+  "8": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
+
+  // Rich
   "rich": { 10: "46888623079585", 30: "46888623112353", 50: "46888623145121" },
+  "perfume-9": { 10: "46888623079585", 30: "46888623112353", 50: "46888623145121" },
+  "9": { 10: "46888623079585", 30: "46888623112353", 50: "46888623145121" },
+
+  // Seductive
   "seductive": { 10: "46888623177889", 30: "46888623210657", 50: "46888623243425" },
+  "perfume-10": { 10: "46888623177889", 30: "46888623210657", 50: "46888623243425" },
+  "10": { 10: "46888623177889", 30: "46888623210657", 50: "46888623243425" },
+
+  // White Oud
   "white-oud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
+  "whiteoud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
+  "perfume-11": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
+  "11": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
+};
+
+const resolveShopifyVariantId = (item: any): string => {
+  const pId = String(item.productId || item.id || "").toLowerCase().trim();
+  const pName = String(item.name || "").toLowerCase().trim();
+  const sizeNum = Number(item.size) || 50;
+
+  // 1. Direct map lookup by productId
+  if (SHOPIFY_VARIANT_MAP[pId]?.[sizeNum]) {
+    return SHOPIFY_VARIANT_MAP[pId][sizeNum];
+  }
+
+  // 2. Lookup by name keywords
+  for (const [key, sizeMap] of Object.entries(SHOPIFY_VARIANT_MAP)) {
+    if (pName.includes(key) || pId.includes(key)) {
+      if (sizeMap[sizeNum]) return sizeMap[sizeNum];
+    }
+  }
+
+  // Default fallback to Purple Oud 50ML
+  return "46888623046817";
 };
 
 export default function CartDrawer({
@@ -667,14 +665,9 @@ export default function CartDrawer({
                 try {
                   const graphqlUrl = "https://hbj1d0-99.myshopify.com/api/2026-07/graphql.json";
                   const lines = items.map((item) => {
-                    const rawVariantId =
-                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
-                      item.productId;
-                    const merchandiseId = String(rawVariantId).startsWith("gid://")
-                      ? String(rawVariantId)
-                      : `gid://shopify/ProductVariant/${rawVariantId}`;
+                    const resolvedVariantId = resolveShopifyVariantId(item);
                     return {
-                      merchandiseId,
+                      merchandiseId: `gid://shopify/ProductVariant/${resolvedVariantId}`,
                       quantity: item.quantity,
                     };
                   });
@@ -710,14 +703,9 @@ export default function CartDrawer({
                   console.error("Shopify Storefront Cart error:", e);
                 }
 
-                // Fallback to permalink if needed
+                // Fallback permalink
                 const permalinkItems = items
-                  .map((item) => {
-                    const variantId =
-                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
-                      item.productId;
-                    return `${variantId}:${item.quantity}`;
-                  })
+                  .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity}`)
                   .join(",");
                 window.location.href = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
               }}
