@@ -6,5 +6,5 @@ files = os.listdir(artifacts_dir)
 files_sorted = sorted(files, key=lambda f: os.path.getmtime(os.path.join(artifacts_dir, f)), reverse=True)
 
 print("=== ALL RECENT FILES IN USER UPLOADED ===")
-for i, f in enumerate(files_sorted[:15]):
+for i, f in enumerate(files_sorted[:25]):
     print(f"[{i}] {f} -> {os.path.getmtime(os.path.join(artifacts_dir, f))}")
