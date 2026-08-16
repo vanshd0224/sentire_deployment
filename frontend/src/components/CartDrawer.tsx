@@ -696,35 +696,15 @@ export default function CartDrawer({
               onClick={() => {
                 if (items.length === 0) return;
 
-                // Create and submit native HTML form POST directly to Shopify /cart/add
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "https://hbj1d0-99.myshopify.com/cart/add";
+                const permalinkItems = items
+                  .map((item) => {
+                    const variantId = resolveShopifyVariantId(item);
+                    return `${variantId}:${item.quantity}`;
+                  })
+                  .join(",");
 
-                items.forEach((item, index) => {
-                  const variantId = resolveShopifyVariantId(item);
-
-                  const idInput = document.createElement("input");
-                  idInput.type = "hidden";
-                  idInput.name = `items[${index}][id]`;
-                  idInput.value = String(variantId);
-                  form.appendChild(idInput);
-
-                  const qtyInput = document.createElement("input");
-                  qtyInput.type = "hidden";
-                  qtyInput.name = `items[${index}][quantity]`;
-                  qtyInput.value = String(item.quantity);
-                  form.appendChild(qtyInput);
-                });
-
-                const returnInput = document.createElement("input");
-                returnInput.type = "hidden";
-                returnInput.name = "return_to";
-                returnInput.value = "/checkout";
-                form.appendChild(returnInput);
-
-                document.body.appendChild(form);
-                form.submit();
+                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                window.location.href = checkoutUrl;
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
