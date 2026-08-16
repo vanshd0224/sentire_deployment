@@ -1,3 +1,4 @@
+// Force deployment trigger timestamp: 2026-08-16T18:42:00Z
 import { useState, useEffect, useMemo, useCallback } from "react";
 
 export interface CartItem {
