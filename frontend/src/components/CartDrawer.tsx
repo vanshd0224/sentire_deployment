@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
 // Robust variant ID resolver for all 11 perfumes with all possible ID/name/handle aliases
 const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
