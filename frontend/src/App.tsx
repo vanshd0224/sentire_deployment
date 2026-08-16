@@ -81,13 +81,13 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleAddToCart = (item: any) => {
-    const qtyToAdd = item.quantity ?? 1;
-    const safePrice = typeof item.price === "number" ? item.price : 2499;
-    const safeSize = typeof item.size === "number" ? item.size : 50;
-    const safeProductId = item.productId || item.id || "perfume-1";
-    const safeName = item.name || item.product || "Luxury Extrait de Parfum";
-    const safeImage = item.image || item.img || item.swatch || "/images/product-white-oud.jpg";
+  const handleAddToCart = (item: any, sizeArg?: number, priceArg?: number) => {
+    const qtyToAdd = item?.quantity ?? 1;
+    const safePrice = typeof priceArg === "number" ? priceArg : typeof item?.price === "number" ? item.price : 1489;
+    const safeSize = typeof sizeArg === "number" ? sizeArg : typeof item?.size === "number" ? item.size : 50;
+    const safeProductId = item?.productId || item?.id || "perfume-1";
+    const safeName = item?.name || item?.product || "Luxury Extrait de Parfum";
+    const safeImage = item?.image || item?.img || item?.swatch || "/assets/purple-oud-arrival.png";
 
     const newItem = {
       id: `${safeProductId}-${safeSize}`,
@@ -330,7 +330,7 @@ export default function App() {
                     handleAddToCart({
                       productId: selectedProductModal.id,
                       name: selectedProductModal.name,
-                      price: selectedProductModal.prices?.[50]?.price || selectedProductModal.price || 2499,
+                      price: selectedProductModal.prices?.[50]?.price || selectedProductModal.price || 1489,
                       originalPrice: selectedProductModal.prices?.[50]?.originalPrice || 3299,
                       image: selectedProductModal.image,
                       size: 50,
