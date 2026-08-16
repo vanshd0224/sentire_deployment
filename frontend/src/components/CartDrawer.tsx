@@ -662,16 +662,38 @@ export default function CartDrawer({
               className="sentire-checkout-btn salon-stagger-6 cursor-pointer"
               onClick={() => {
                 if (items.length === 0) return;
-                const permalinkItems = items
-                  .map((item) => {
-                    const variantId =
-                      SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
-                      item.productId;
-                    return `${variantId}:${item.quantity}`;
-                  })
-                  .join(",");
-                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}?checkout=true`;
-                window.location.href = checkoutUrl;
+
+                // Create and submit native HTML form POST to Shopify
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "https://hbj1d0-99.myshopify.com/cart/add";
+
+                items.forEach((item, index) => {
+                  const variantId =
+                    SHOPIFY_VARIANT_MAP[item.productId]?.[item.size] ||
+                    item.productId;
+
+                  const idInput = document.createElement("input");
+                  idInput.type = "hidden";
+                  idInput.name = `items[${index}][id]`;
+                  idInput.value = String(variantId);
+                  form.appendChild(idInput);
+
+                  const qtyInput = document.createElement("input");
+                  qtyInput.type = "hidden";
+                  qtyInput.name = `items[${index}][quantity]`;
+                  qtyInput.value = String(item.quantity);
+                  form.appendChild(qtyInput);
+                });
+
+                const returnInput = document.createElement("input");
+                returnInput.type = "hidden";
+                returnInput.name = "return_to";
+                returnInput.value = "/checkout";
+                form.appendChild(returnInput);
+
+                document.body.appendChild(form);
+                form.submit();
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
