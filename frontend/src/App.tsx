@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -114,6 +115,9 @@ export default function App() {
       }
       return [...prev, newItem];
     });
+    
+    // Trigger real-time Shopify Storefront GraphQL mutation (cartCreate / cartLinesAdd)
+    syncAddToCartToShopifyStorefront(newItem, qtyToAdd);
     setIsCartOpen(true);
   };
 

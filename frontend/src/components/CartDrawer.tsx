@@ -696,6 +696,13 @@ export default function CartDrawer({
               onClick={() => {
                 if (items.length === 0) return;
 
+                const storedCheckoutUrl = localStorage.getItem("shopify_checkout_url");
+                if (storedCheckoutUrl && storedCheckoutUrl.includes("myshopify.com")) {
+                  console.log("Navigating to stored Shopify Storefront checkoutUrl:", storedCheckoutUrl);
+                  window.location.href = storedCheckoutUrl;
+                  return;
+                }
+
                 const permalinkItems = items
                   .map((item) => {
                     const variantId = resolveShopifyVariantId(item);
