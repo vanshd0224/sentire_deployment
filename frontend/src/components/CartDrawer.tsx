@@ -693,55 +693,38 @@ export default function CartDrawer({
             {/* Checkout CTA */}
             <button
               className="sentire-checkout-btn salon-stagger-6 cursor-pointer"
-              onClick={async () => {
+              onClick={() => {
                 if (items.length === 0) return;
 
-                try {
-                  const graphqlUrl = "https://hbj1d0-99.myshopify.com/api/2026-07/graphql.json";
-                  const lines = items.map((item) => {
-                    const resolvedVariantId = resolveShopifyVariantId(item);
-                    return {
-                      merchandiseId: `gid://shopify/ProductVariant/${resolvedVariantId}`,
-                      quantity: item.quantity,
-                    };
-                  });
+                // Create and submit native HTML form POST directly to Shopify /cart/add
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "https://hbj1d0-99.myshopify.com/cart/add";
 
-                  const query = `
-                    mutation cartCreate($input: CartInput!) {
-                      cartCreate(input: $input) {
-                        cart {
-                          checkoutUrl
-                        }
-                        userErrors {
-                          field
-                          message
-                        }
-                      }
-                    }
-                  `;
+                items.forEach((item, index) => {
+                  const variantId = resolveShopifyVariantId(item);
 
-                  const res = await fetch(graphqlUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ query, variables: { input: { lines } } }),
-                  });
+                  const idInput = document.createElement("input");
+                  idInput.type = "hidden";
+                  idInput.name = `items[${index}][id]`;
+                  idInput.value = String(variantId);
+                  form.appendChild(idInput);
 
-                  const data = await res.json();
-                  const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+                  const qtyInput = document.createElement("input");
+                  qtyInput.type = "hidden";
+                  qtyInput.name = `items[${index}][quantity]`;
+                  qtyInput.value = String(item.quantity);
+                  form.appendChild(qtyInput);
+                });
 
-                  if (checkoutUrl) {
-                    window.location.href = checkoutUrl;
-                    return;
-                  }
-                } catch (e) {
-                  console.error("Shopify Storefront Cart error:", e);
-                }
+                const returnInput = document.createElement("input");
+                returnInput.type = "hidden";
+                returnInput.name = "return_to";
+                returnInput.value = "/checkout";
+                form.appendChild(returnInput);
 
-                // Fallback permalink
-                const permalinkItems = items
-                  .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity}`)
-                  .join(",");
-                window.location.href = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                document.body.appendChild(form);
+                form.submit();
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
