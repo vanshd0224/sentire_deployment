@@ -13,6 +13,7 @@ export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
   // Deep Crush
   "deep-crush": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
   "deepcrush": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
+  "deep crush": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
   "perfume-3": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
   "3": { 10: "46888622489761", 30: "46888622522529", 50: "46888622555297" },
 
@@ -39,6 +40,7 @@ export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
   // Purple Oud
   "purple-oud": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
   "purpleoud": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
+  "purple oud": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
   "perfume-8": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
   "8": { 10: "46888622981281", 30: "46888623014049", 50: "46888623046817" },
 
@@ -55,6 +57,7 @@ export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
   // White Oud
   "white-oud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
   "whiteoud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
+  "white oud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
   "perfume-11": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
   "11": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
 };
@@ -64,12 +67,16 @@ export const resolveShopifyVariantId = (item: any): string => {
   const pName = String(item?.name || "").toLowerCase().trim();
   const sizeNum = Number(item?.size) || 50;
 
+  const normalizedId = pId.replace(/[\s\-_]/g, "");
+  const normalizedName = pName.replace(/[\s\-_]/g, "");
+
   if (SHOPIFY_VARIANT_MAP[pId]?.[sizeNum]) {
     return SHOPIFY_VARIANT_MAP[pId][sizeNum];
   }
 
   for (const [key, sizeMap] of Object.entries(SHOPIFY_VARIANT_MAP)) {
-    if (pName.includes(key) || pId.includes(key)) {
+    const normKey = key.replace(/[\s\-_]/g, "");
+    if (normalizedName.includes(normKey) || normalizedId.includes(normKey)) {
       if (sizeMap[sizeNum]) return sizeMap[sizeNum];
     }
   }
