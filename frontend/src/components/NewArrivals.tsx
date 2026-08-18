@@ -139,7 +139,7 @@ export default function NewArrivals({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
           {products.map((p) => {
             const currentSize = selectedSizes[p.id] || 50;
             const priceInfo = p.prices[currentSize] || p.prices[50];
@@ -147,31 +147,31 @@ export default function NewArrivals({
             const fullProd = ALL_PERFUMES.find(ap => ap.id === p.id);
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+              <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
                   <div
                     onClick={() => fullProd && onSelectProduct?.(fullProd)}
-                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
+                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden p-1.5 sm:p-2 flex items-center justify-center cursor-pointer"
                   >
                     <img src={p.image} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
-                    <span className="absolute top-2 left-2 rounded-full bg-[#c89b5a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
+                    <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 rounded-full bg-[#c89b5a] px-2 sm:px-2.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-black">
                       {p.badge}
                     </span>
                   </div>
 
-                  <div className="mt-3 text-center">
-                    <h3 onClick={() => fullProd && onSelectProduct?.(fullProd)} className="font-display text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                  <div className="mt-2 sm:mt-3 text-center">
+                    <h3 onClick={() => fullProd && onSelectProduct?.(fullProd)} className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
                       {p.name}
                     </h3>
-                    <p className="text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
+                    <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
 
-                  <div className="flex justify-center gap-1.5 my-2">
+                  <div className="flex justify-center gap-1 sm:gap-1.5 my-1.5 sm:my-2">
                     {[10, 30, 50].map((sz) => (
                       <button
                         key={sz}
                         onClick={() => handleSizeSelect(p.id, sz)}
-                        className={`rounded px-2.5 py-1 text-[9px] font-bold border transition-all cursor-pointer ${
+                        className={`rounded px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[8px] sm:text-[9px] font-bold border transition-all cursor-pointer ${
                           currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
                         }`}
                       >
@@ -180,16 +180,16 @@ export default function NewArrivals({
                     ))}
                   </div>
 
-                  <div className="flex items-baseline justify-center gap-2 mt-1">
-                    <span className="font-bold text-sm text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
-                    <span className="text-[10px] text-ink/40 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
+                  <div className="flex items-baseline justify-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1">
+                    <span className="font-bold text-xs sm:text-sm text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
+                    <span className="text-[9px] sm:text-[10px] text-ink/40 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
 
                 {qty > 0 ? (
-                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-2 py-1.5">
+                  <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 sm:px-2 py-1 sm:py-1.5">
                     <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a]">−</button>
-                    <span className="text-[10px] font-bold text-[#e2c48e]">{qty} IN BAG</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-[#e2c48e]">{qty} IN BAG</span>
                     <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a]">+</button>
                   </div>
                 ) : (
@@ -198,7 +198,7 @@ export default function NewArrivals({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
+                    className="mt-2 sm:mt-3 w-full rounded-md bg-[#0b0907] py-1.5 sm:py-2 text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
                   >
                     Add to Bag
                   </button>
