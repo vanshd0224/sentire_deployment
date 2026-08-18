@@ -87,6 +87,12 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
     const existingCartId = localStorage.getItem("shopify_cart_id");
 
+    const storefrontToken = (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (storefrontToken) {
+      headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
+    }
+
     if (!existingCartId) {
       // 1. Create new cart with cartCreate mutation
       const mutation = `
@@ -117,7 +123,7 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
       const res = await fetch(graphqlUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ query: mutation, variables })
       });
 
@@ -157,7 +163,7 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
       const res = await fetch(graphqlUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ query: mutation, variables })
       });
 
