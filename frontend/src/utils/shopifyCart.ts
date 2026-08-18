@@ -169,9 +169,41 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
       const data = await res.json();
       const updatedCart = data?.data?.cartLinesAdd?.cart;
+      const userErrors = data?.data?.cartLinesAdd?.userErrors || [];
+
       if (updatedCart?.checkoutUrl) {
         localStorage.setItem("shopify_checkout_url", updatedCart.checkoutUrl);
         console.log("Shopify Storefront cartLinesAdd Success:", updatedCart);
+      } else if (userErrors.length > 0 || !updatedCart) {
+        // Stale or invalid Cart ID recovery: Clear stale ID and create new cart
+        console.warn("Stale Shopify Cart ID detected. Creating fresh cart...", userErrors);
+        localStorage.removeItem("shopify_cart_id");
+        localStorage.removeItem("shopify_checkout_url");
+
+        // Re-call cartCreate
+        const createMutation = `
+          mutation cartCreate($input: CartInput!) {
+            cartCreate(input: $input) {
+              cart { id checkoutUrl }
+              userErrors { field message }
+            }
+          }
+        `;
+        const createRes = await fetch(graphqlUrl, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            query: createMutation,
+            variables: { input: { lines: [{ merchandiseId, quantity }] } }
+          })
+        });
+        const createData = await createRes.json();
+        const freshCart = createData?.data?.cartCreate?.cart;
+        if (freshCart?.id && freshCart?.checkoutUrl) {
+          localStorage.setItem("shopify_cart_id", freshCart.id);
+          localStorage.setItem("shopify_checkout_url", freshCart.checkoutUrl);
+          console.log("Shopify Storefront Cart Recovery Success:", freshCart);
+        }
       }
     }
   } catch (e) {
