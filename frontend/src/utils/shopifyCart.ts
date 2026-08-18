@@ -65,7 +65,7 @@ export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
 export const resolveShopifyVariantId = (item: any): string => {
   const pId = String(item?.productId || item?.id || "").toLowerCase().trim();
   const pName = String(item?.name || "").toLowerCase().trim();
-  const sizeNum = Number(item?.size) || 50;
+  const sizeNum = parseInt(String(item?.size || "").replace(/\D/g, ""), 10) || 50;
 
   const normalizedId = pId.replace(/[\s\-_]/g, "");
   const normalizedName = pName.replace(/[\s\-_]/g, "");
