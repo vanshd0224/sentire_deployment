@@ -198,7 +198,7 @@ export default function MobileBottomNav({
               <line x1="12" y1="4" x2="12" y2="6.5" />
             </svg>
           </span>
-          <span className="snav-label">The 21</span>
+          <span className="snav-label">Perfumes</span>
         </button>
 
         {/* Center: BYOB Bundle */}
