@@ -696,17 +696,23 @@ export default function CartDrawer({
               onClick={() => {
                 if (items.length === 0) return;
 
-                // Dynamically build Shopify cart permalink from current items for a 100% fresh, un-expired checkout session
-                const permalinkItems = items
-                  .map((item) => {
-                    const variantId = resolveShopifyVariantId(item);
-                    return `${variantId}:${item.quantity}`;
-                  })
-                  .join(",");
+                const savedCheckoutUrl = localStorage.getItem("shopify_checkout_url");
+                let checkoutUrl = "";
 
-                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                if (savedCheckoutUrl && (savedCheckoutUrl.includes("/cart/c/") || savedCheckoutUrl.includes("/checkouts/"))) {
+                  checkoutUrl = savedCheckoutUrl;
+                } else {
+                  const permalinkItems = items
+                    .map((item) => {
+                      const variantId = resolveShopifyVariantId(item);
+                      return `${variantId}:${item.quantity}`;
+                    })
+                    .join(",");
+                  checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                }
+
                 console.log("[Checkout Debug] Current Cart Items:", items);
-                console.log("[Checkout Debug] Navigating to Shopify Direct Checkout URL:", checkoutUrl);
+                console.log("[Checkout Debug] Navigating to Shopify Checkout URL:", checkoutUrl);
                 window.location.href = checkoutUrl;
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
