@@ -191,10 +191,15 @@ const THIRTY_ML_PRODUCTS: PerfumeProduct[] = [
     fullDesc: "Zephyrine by SENTIRE By PC captures the essence of a gentle breeze, offering a scent that is light, airy, and utterly captivating. Opens with top notes of fresh lemon and bergamot for immediate clarity. The heart reveals delicate jasmine, lavender, rosemary, and thyme, settling gracefully into warm, comforting base notes of resinous amber and smooth sandalwood.",
     scentFamily: "floral",
     moods: ["casual", "regular"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/zephyrine.jpg",
+    sizes: [10, 30],
+    outOfStockSizes: [],
+    prices: { 10: 799, 30: 1499 },
+    mrps: { 10: 999, 30: 1999 },
+    img: "/assets/perfumes/zephyrine-30ml-1.png?v=2",
+    sizeImages: {
+      10: ["/assets/perfumes/zephyrine-10ml-1.png?v=2", "/assets/perfumes/zephyrine-10ml-2.png?v=2", "/assets/perfumes/zephyrine-10ml-3.png?v=2"],
+      30: ["/assets/perfumes/zephyrine-30ml-1.png?v=2", "/assets/perfumes/zephyrine-30ml-2.png?v=2", "/assets/perfumes/zephyrine-30ml-3.png?v=2"]
+    },
     traces: ["Lemon", "Bergamot", "Jasmine", "Rosemary", "Smooth Sandalwood"],
   },
 ];
