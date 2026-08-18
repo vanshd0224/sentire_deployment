@@ -1,13 +1,16 @@
 import urllib.request
 import json
-import http.cookiejar
 
-# Test creating cart via Storefront API and following every redirect
-url_gql = "https://hbj1d0-99.myshopify.com/api/2026-07/graphql.json"
+shop = "hbj1d0-99.myshopify.com"
+url = f"https://{shop}/api/2026-07/graphql.json"
 
-query = """
-mutation cartCreate($input: CartInput!) {
-  cartCreate(input: $input) {
+mutation = """
+mutation {
+  cartCreate(input: {
+    lines: [
+      { merchandiseId: "gid://shopify/ProductVariant/46888622293153", quantity: 1 }
+    ]
+  }) {
     cart {
       id
       checkoutUrl
@@ -16,43 +19,36 @@ mutation cartCreate($input: CartInput!) {
 }
 """
 
-variables = {"input": {"lines": [{"merchandiseId": "gid://shopify/ProductVariant/46888623046817", "quantity": 1}]}}
-payload = json.dumps({"query": query, "variables": variables}).encode("utf-8")
-headers_gql = {"Content-Type": "application/json", "Accept": "application/json"}
+req = urllib.request.Request(url, data=json.dumps({"query": mutation}).encode(), headers={"Content-Type": "application/json"})
+with urllib.request.urlopen(req) as resp:
+    res = json.loads(resp.read().decode())
+    cart = res["data"]["cartCreate"]["cart"]
+    checkout_url = cart["checkoutUrl"]
+    print("Generated Checkout URL:", checkout_url)
 
-print("=== 1. CREATING CART VIA STOREFRONT API ===")
-req_gql = urllib.request.Request(url_gql, data=payload, headers=headers_gql, method="POST")
+print("\n=== STEP-BY-STEP REDIRECT INSPECTION ===")
 
-try:
-    with urllib.request.urlopen(req_gql) as resp:
-        body = json.loads(resp.read().decode("utf-8"))
-        checkout_url = body.get("data", {}).get("cartCreate", {}).get("cart", {}).get("checkoutUrl")
-        print("Generated Storefront checkoutUrl:", checkout_url)
+curr_url = checkout_url
+for step in range(10):
+    req_step = urllib.request.Request(curr_url, headers={
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    })
+    
+    class StopRedirectHandler(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            print(f"Step {step+1}: Code {code} -> Location: {newurl}")
+            return None # Stop redirecting
 
-        print("\n=== 2. TRACING REDIRECTS FOR STOREFRONT checkoutUrl WITHOUT COOKIES ===")
-        class NoCookieTraceHandler(urllib.request.HTTPRedirectHandler):
-            def redirect_request(self, req, fp, code, msg, headers, newurl):
-                print(f"  Redirect Code {code} -> Location: {newurl}")
-                return super().redirect_request(req, fp, code, msg, headers, newurl)
-
-        opener_no_cookie = urllib.request.build_opener(NoCookieTraceHandler)
-        opener_no_cookie.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')]
-
-        try:
-            resp_no_cookie = opener_no_cookie.open(checkout_url)
-            print("  Final Code:", resp_no_cookie.getcode())
-            print("  Final URL:", resp_no_cookie.geturl())
-        except Exception as e:
-            print("  Error:", e)
-
-        print("\n=== 3. TRACING REDIRECTS FOR DIRECT PERMALINK (/cart/VARIANT_ID:QTY) ===")
-        permalink_url = "https://hbj1d0-99.myshopify.com/cart/46888623046817:1"
-        try:
-            resp_perm = opener_no_cookie.open(permalink_url)
-            print("  Permalink Final Code:", resp_perm.getcode())
-            print("  Permalink Final URL:", resp_perm.geturl())
-        except Exception as e:
-            print("  Permalink Error:", e)
-
-except Exception as e:
-    print("GraphQL Error:", e)
+    opener = urllib.request.build_opener(StopRedirectHandler)
+    try:
+        r = opener.open(req_step)
+        print(f"Final Step {step+1}: Status {r.status} -> URL: {r.geturl()}")
+        break
+    except urllib.error.HTTPError as e:
+        if e.code in (301, 302, 303, 307, 308):
+            location = e.headers.get("Location")
+            print(f"Step {step+1}: Code {e.code} -> Redirecting to: {location}")
+            curr_url = location
+        else:
+            print(f"Step {step+1}: HTTP Error {e.code}: {e.reason}")
+            break

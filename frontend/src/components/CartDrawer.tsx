@@ -696,19 +696,7 @@ export default function CartDrawer({
               onClick={() => {
                 if (items.length === 0) return;
 
-                const storedCartId = localStorage.getItem("shopify_cart_id");
-                const storedCheckoutUrl = localStorage.getItem("shopify_checkout_url");
-
-                console.log("[Checkout Debug] localStorage shopify_cart_id:", storedCartId);
-                console.log("[Checkout Debug] localStorage shopify_checkout_url:", storedCheckoutUrl);
-
-                if (storedCheckoutUrl && storedCheckoutUrl.includes("myshopify.com")) {
-                  console.log("[Checkout Action] Navigating to stored Storefront checkout URL:", storedCheckoutUrl);
-                  window.location.href = storedCheckoutUrl;
-                  return;
-                }
-
-                // Fallback: Generate direct Shopify permalink URL with exact variant IDs & quantities
+                // Dynamically build Shopify cart permalink from current items for a 100% fresh, un-expired checkout session
                 const permalinkItems = items
                   .map((item) => {
                     const variantId = resolveShopifyVariantId(item);
@@ -716,9 +704,10 @@ export default function CartDrawer({
                   })
                   .join(",");
 
-                const permalinkUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
-                console.log("[Checkout Action] Navigating to Shopify Permalink URL:", permalinkUrl);
-                window.location.href = permalinkUrl;
+                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+                console.log("[Checkout Debug] Current Cart Items:", items);
+                console.log("[Checkout Debug] Navigating to Shopify Direct Checkout URL:", checkoutUrl);
+                window.location.href = checkoutUrl;
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
