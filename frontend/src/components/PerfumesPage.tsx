@@ -56,153 +56,7 @@ const EXCLUSIVE_PURPLE_OUD: PerfumeProduct = {
   traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"],
 };
 
-const THIRTY_ML_PRODUCTS: PerfumeProduct[] = [
-  {
-    id: "bijou",
-    num: "No. 12",
-    name: "Bijou",
-    desc: "Scintillating Jewels · Floral & Sandalwood",
-    fullDesc: "Bijou by SENTIRE By PC transcends traditional gender boundaries to embody sophistication and glamour. Inspired by the scintillating world of precious jewels, this unisex fragrance is designed to ignite the senses and create an unforgettable experience. The scent opens with delicate floral notes that evoke elegance, captivating the senses with an enchanting aroma. As it evolves, it reveals a warm and sensual finish with notes of sandalwood, patchouli, vanilla, and musk that wrap you in an aura of pure luxury.",
-    scentFamily: "floral",
-    moods: ["casual", "regular"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/bijou.jpg",
-    traces: ["Floral Bouquet", "Sandalwood", "Patchouli", "Vanilla", "Musk"],
-  },
-  {
-    id: "dapper",
-    num: "No. 13",
-    name: "Dapper",
-    desc: "Bold Tobacco, Clove & Cedarwood",
-    fullDesc: "Dapper is an exquisite fragrance that transcends gender norms, enveloping the wearer in an aura of sophistication and timeless elegance. The olfactory embodiment of the contemporary individual who effortlessly commands attention, it opens with invigorating notes of tobacco, clove, and cedarwood. As Dapper unfolds, the heart reveals a harmonious blend of spices and woods, leaving a warm embrace of cedarwood and sandalwood that lingers delicately on the skin.",
-    scentFamily: "fresh",
-    moods: ["sports", "regular"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/dapper.jpg",
-    traces: ["Tobacco", "Clove", "Cedarwood", "Sandalwood"],
-  },
-  {
-    id: "le-chocolat",
-    num: "No. 14",
-    name: "Le Chocolat",
-    desc: "Decadent Dark Cocoa, Creamy Vanilla & Cinnamon",
-    fullDesc: "Le Chocolat by SENTIRE By PC is a decadent and indulgent fragrance that celebrates the rich, complex, and utterly irresistible aroma of chocolate. Opens with top notes of dark chocolate and cocoa, creating an immediate sense of warmth and richness. The heart reveals a blend of creamy vanilla and spicy cinnamon, grounded by base accords of amber, sandalwood, and sensual musk that transport you to a world of pure indulgence.",
-    scentFamily: "oriental",
-    moods: ["date-night", "casual"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/le-chocolat.jpg",
-    traces: ["Dark Chocolate", "Cocoa", "Creamy Vanilla", "Cinnamon", "Sandalwood"],
-  },
-  {
-    id: "pc-leather",
-    num: "No. 15",
-    name: "PC Leather",
-    desc: "Fine Italian Leather & Warm Woody Spices",
-    fullDesc: "PC Leather is an opulent fragrance capturing the luxurious essence of fine leather. Designed for individuals who appreciate sophistication and timeless style, it features a rich blend of leather notes, complemented by hints of warm spices and woody undertones. Opens with an intense leather aroma, unfolding into a harmonious heart of spices and woods exuding warmth and depth with notes of sandalwood, amber, and musk.",
-    scentFamily: "woody",
-    moods: ["party", "date-night"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/pc-leather.jpg",
-    traces: ["Fine Leather", "Warm Spices", "Sandalwood", "Amber", "Musk"],
-  },
-  {
-    id: "quantillion",
-    num: "No. 16",
-    name: "Quantillion",
-    desc: "Vibrant Mandarin, Rose & Opulent Amberwood",
-    fullDesc: "Quantillion by SENTIRE By PC is a fragrance that embodies the essence of sophistication and luxury. Designed for those who seek a scent that exuded elegance, it opens with top notes of bergamot and mandarin that provide an immediate sense of freshness. The heart reveals a rich blend of rose, jasmine, black pepper, and cardamom, concluding on grounded accords of patchouli, vetiver, and opulent amberwood.",
-    scentFamily: "citrus",
-    moods: ["sports", "casual"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/quantillion.jpg",
-    traces: ["Mandarin", "Bergamot", "Rose", "Cardamom", "Amberwood"],
-  },
-  {
-    id: "reiz",
-    num: "No. 17",
-    name: "Reiz",
-    desc: "Effervescent Lemon, Cinnamon & Mysterious Musk",
-    fullDesc: "Reiz embodies the charm and confidence of the modern individual. Meticulously crafted to radiate sophistication and allure, it opens with an effervescent blend of juicy lemon and zesty orange. As Reiz unfolds, the heart reveals enchanting notes of cinnamon and cardamom, concluding with a mysterious musk base that provides a comforting and intriguing essence lingering delicately on the skin.",
-    scentFamily: "fresh",
-    moods: ["regular", "sports"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/reiz.jpg",
-    traces: ["Juicy Lemon", "Zesty Orange", "Cinnamon", "Cardamom", "Musk"],
-  },
-  {
-    id: "sent-aura",
-    num: "No. 18",
-    name: "Sent-Aura",
-    desc: "Fresh Pear, Green Tea & Ethereal Violet",
-    fullDesc: "Sent-Aura by SENTIRE By PC captures the essence of ethereal beauty and spiritual tranquility. Designed for those who appreciate the delicate balance between elegance and serenity, it opens with top notes of bergamot and pear. The heart reveals a harmonious blend of lily of the valley, green tea, violet, and jasmine, settling onto warm, comforting base notes of amber and cedarwood.",
-    scentFamily: "floral",
-    moods: ["regular", "casual"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/sent-aura.jpg",
-    traces: ["Pear", "Bergamot", "Green Tea", "Lily of Valley", "Cedarwood"],
-  },
-  {
-    id: "vanaco",
-    num: "No. 19",
-    name: "Vanaco",
-    desc: "Exhilarating Citrus, Black Pepper & Earthy Oakmoss",
-    fullDesc: "Vanaco by SENTIRE By PC is a fragrance that embodies the spirit of adventure and the allure of the unknown. Opens with a vibrant burst of citrus—lemon and grapefruit—that immediately invigorates the senses. As the citrus notes begin to mellow, the heart reveals black pepper, cardamom, lavender, and geranium, supported by rich earthy base accords of vetiver, patchouli, oakmoss, and warm amber.",
-    scentFamily: "ambar",
-    moods: ["date-night", "regular"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/vanaco.jpg",
-    traces: ["Lemon", "Grapefruit", "Black Pepper", "Cardamom", "Oakmoss"],
-  },
-  {
-    id: "woo-dy",
-    num: "No. 20",
-    name: "Woo-Dy",
-    desc: "Crisp Cedarwood, Cypress & Creamy Sandalwood",
-    fullDesc: "Woo-Dy by SENTIRE By PC is a sophisticated and earthy fragrance that captures the essence of nature's finest woods. Opens with top notes of fresh cedarwood and cypress, evoking the serene and calming atmosphere of a dense forest. The heart reveals creamy sandalwood and smoky vetiver, concluding on warm, resinous base accords of amber and musk that linger beautifully.",
-    scentFamily: "woody",
-    moods: ["casual", "regular"],
-    sizes: [10, 30, 50],
-    outOfStockSizes: [50],
-    prices: { 10: 799, 30: 1499, 50: 2499 },
-    img: "/assets/woo-dy.jpg",
-    traces: ["Cedarwood", "Cypress", "Sandalwood", "Vetiver", "Resinous Amber"],
-  },
-  {
-    id: "zephyrine",
-    num: "No. 21",
-    name: "Zephyrine",
-    desc: "Airy Citrus Breeze, Jasmine & Smooth Sandalwood",
-    fullDesc: "Zephyrine by SENTIRE By PC captures the essence of a gentle breeze, offering a scent that is light, airy, and utterly captivating. Opens with top notes of fresh lemon and bergamot for immediate clarity. The heart reveals delicate jasmine, lavender, rosemary, and thyme, settling gracefully into warm, comforting base notes of resinous amber and smooth sandalwood.",
-    scentFamily: "floral",
-    moods: ["casual", "regular"],
-    sizes: [10, 30],
-    outOfStockSizes: [],
-    prices: { 10: 799, 30: 1499 },
-    mrps: { 10: 999, 30: 1999 },
-    img: "/assets/perfumes/zephyrine-30ml-1.png?v=2",
-    sizeImages: {
-      10: ["/assets/perfumes/zephyrine-10ml-1.png?v=2", "/assets/perfumes/zephyrine-10ml-2.png?v=2", "/assets/perfumes/zephyrine-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/zephyrine-30ml-1.png?v=2", "/assets/perfumes/zephyrine-30ml-2.png?v=2", "/assets/perfumes/zephyrine-30ml-3.png?v=2"]
-    },
-    traces: ["Lemon", "Bergamot", "Jasmine", "Rosemary", "Smooth Sandalwood"],
-  },
-];
+const THIRTY_ML_PRODUCTS: PerfumeProduct[] = [];
 
 import type { CartItem } from "./CartDrawer";
 
@@ -325,17 +179,17 @@ export default function PerfumesPage({
   };
 
   const allProductsList = useMemo(
-    () => [EXCLUSIVE_PURPLE_OUD, ...ALL_SIZES_PRODUCTS, ...THIRTY_ML_PRODUCTS],
+    () => ALL_PERFUMES,
     []
   );
 
   const filteredAllSizes = useMemo(
-    () => sortProducts(ALL_SIZES_PRODUCTS.filter(filterProduct)),
+    () => sortProducts(ALL_PERFUMES.filter(filterProduct)),
     [selectedCategory, selectedMood, selectedSizes, selectedScents, selectedCollection, sortOption]
   );
   const filteredThirtyMl = useMemo(
-    () => sortProducts(THIRTY_ML_PRODUCTS.filter(filterProduct)),
-    [selectedCategory, selectedMood, selectedSizes, selectedScents, selectedCollection, sortOption]
+    () => [],
+    []
   );
   const filteredUnifiedList = useMemo(
     () => sortProducts(allProductsList.filter(filterProduct)),
