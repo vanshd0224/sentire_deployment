@@ -184,12 +184,12 @@ export default function PerfumesPage({
   );
 
   const filteredAllSizes = useMemo(
-    () => sortProducts(ALL_PERFUMES.filter(filterProduct)),
+    () => sortProducts(ALL_PERFUMES.filter((p) => p.sizes.includes(50)).filter(filterProduct)),
     [selectedCategory, selectedMood, selectedSizes, selectedScents, selectedCollection, sortOption]
   );
   const filteredThirtyMl = useMemo(
-    () => [],
-    []
+    () => sortProducts(ALL_PERFUMES.filter((p) => !p.sizes.includes(50)).filter(filterProduct)),
+    [selectedCategory, selectedMood, selectedSizes, selectedScents, selectedCollection, sortOption]
   );
   const filteredUnifiedList = useMemo(
     () => sortProducts(allProductsList.filter(filterProduct)),
