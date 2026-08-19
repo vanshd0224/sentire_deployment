@@ -114,6 +114,8 @@ const IconDiamond = ({ className = "w-4 h-4" }: { className?: string }) => (
 );
 
 
+import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
+
 export default function CartDrawer({
   isOpen,
   onClose,
@@ -123,6 +125,7 @@ export default function CartDrawer({
   onClearCart,
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
   // Close on Escape
   useEffect(() => {
@@ -692,28 +695,41 @@ export default function CartDrawer({
 
             {/* Checkout CTA */}
             <button
-              className="sentire-checkout-btn salon-stagger-6 cursor-pointer"
-              onClick={() => {
-                if (items.length === 0) return;
+              className={`sentire-checkout-btn salon-stagger-6 cursor-pointer flex items-center justify-center gap-2 ${
+                isRedirecting ? "opacity-75 cursor-wait" : ""
+              }`}
+              disabled={isRedirecting || items.length === 0}
+              onClick={async () => {
+                if (items.length === 0 || isRedirecting) return;
+                setIsRedirecting(true);
 
-                // Build 100% fresh real-time Shopify cart permalink directly from current cart items
-                const permalinkItems = items
-                  .map((item) => {
-                    const variantId = resolveShopifyVariantId(item);
-                    return `${variantId}:${item.quantity}`;
-                  })
-                  .join(",");
-
-                const checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
-
-                console.log("[Checkout Debug] Current Cart Items:", items);
-                console.log("[Checkout Debug] Navigating to Fresh Shopify Permalink Checkout URL:", checkoutUrl);
-                window.location.href = checkoutUrl;
+                try {
+                  console.log("[Checkout Debug] Starting async GraphQL cart creation for items:", items);
+                  const checkoutUrl = await createOrGetShopifyCheckoutUrl(items);
+                  console.log("[Checkout Debug] Redirecting to confirmed Shopify Checkout URL:", checkoutUrl);
+                  if (checkoutUrl) {
+                    window.location.href = checkoutUrl;
+                  } else {
+                    setIsRedirecting(false);
+                  }
+                } catch (err) {
+                  console.error("[Checkout Debug Error] Redirection failed:", err);
+                  setIsRedirecting(false);
+                }
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
-              Proceed to Checkout
-              <span className="cta-arrow" aria-hidden="true"><IconArrow /></span>
+              {isRedirecting ? (
+                <>
+                  <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-2 border-white border-t-transparent" />
+                  <span>Redirecting to Shopify...</span>
+                </>
+              ) : (
+                <>
+                  <span>Proceed to Checkout</span>
+                  <span className="cta-arrow" aria-hidden="true"><IconArrow /></span>
+                </>
+              )}
             </button>
 
             {/* Trust signals */}

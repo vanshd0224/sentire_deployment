@@ -217,3 +217,61 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
     console.log("Shopify Storefront Sync Notice:", e);
   }
 };
+
+// Asynchronously create a fresh GraphQL Shopify Cart with exact items and await response to eliminate race conditions
+export const createOrGetShopifyCheckoutUrl = async (items: any[]): Promise<string> => {
+  if (!items || items.length === 0) return "";
+
+  try {
+    const shopDomain = "hbj1d0-99.myshopify.com";
+    const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
+    const storefrontToken = (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (storefrontToken) {
+      headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
+    }
+
+    const lines = items.map((item) => ({
+      merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
+      quantity: Number(item.quantity) || 1
+    }));
+
+    const mutation = `
+      mutation cartCreate($input: CartInput!) {
+        cartCreate(input: $input) {
+          cart {
+            id
+            checkoutUrl
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    const res = await fetch(graphqlUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ query: mutation, variables: { input: { lines } } })
+    });
+
+    const data = await res.json();
+    const newCart = data?.data?.cartCreate?.cart;
+    if (newCart?.checkoutUrl) {
+      localStorage.setItem("shopify_cart_id", newCart.id);
+      localStorage.setItem("shopify_checkout_url", newCart.checkoutUrl);
+      console.log("[Checkout Async Success] GraphQL Cart Created:", newCart);
+      return newCart.checkoutUrl;
+    }
+  } catch (err) {
+    console.error("[Checkout Async Warning] GraphQL Cart Creation error, using permalink fallback:", err);
+  }
+
+  // Fallback to real-time permalink if GraphQL fetch fails
+  const permalinkItems = items
+    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity}`)
+    .join(",");
+  return `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+};
