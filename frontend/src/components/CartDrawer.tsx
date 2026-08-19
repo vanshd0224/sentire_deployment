@@ -126,7 +126,6 @@ export default function CartDrawer({
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
-  const [debugTrace, setDebugTrace] = useState<string[]>([]);
 
   // Close on Escape
   useEffect(() => {
@@ -694,19 +693,6 @@ export default function CartDrawer({
               </span>
             </div>
 
-            {/* Mobile On-Screen Debug Diagnostic Overlay */}
-            {debugTrace.length > 0 && (
-              <div className="mb-3 rounded-lg border border-[#c89b5a]/40 bg-[#0b0907] p-2.5 text-[10px] font-mono text-[#c89b5a] leading-relaxed shadow-lg">
-                <div className="font-bold border-b border-[#c89b5a]/20 pb-1 mb-1 text-white uppercase tracking-wider flex items-center justify-between">
-                  <span>📱 Live Phone Debug Log</span>
-                  <span className="text-[9px] text-[#c89b5a]/70">Step {debugTrace.length}/5</span>
-                </div>
-                {debugTrace.map((logItem, idx) => (
-                  <div key={idx} className="truncate text-white/90">• {logItem}</div>
-                ))}
-              </div>
-            )}
-
             {/* Checkout CTA */}
             <button
               className={`sentire-checkout-btn salon-stagger-6 cursor-pointer flex items-center justify-center gap-2 ${
@@ -717,33 +703,17 @@ export default function CartDrawer({
                 if (items.length === 0 || isRedirecting) return;
                 setIsRedirecting(true);
 
-                const trace: string[] = [];
-                const addLog = (msg: string) => {
-                  trace.push(msg);
-                  setDebugTrace([...trace]);
-                };
-
-                addLog(`1. Click Registered (${items.length} items)`);
-                const sampleVariantId = resolveShopifyVariantId(items[0]);
-                addLog(`2. Item: ${items[0]?.name || items[0]?.id} (${items[0]?.size}ML) -> VariantID: ${sampleVariantId}`);
-                addLog("3. Calling Cloud Run Backend Proxy...");
-
                 const winRef = window;
                 createOrGetShopifyCheckoutUrl(items)
                   .then((checkoutUrl) => {
                     if (checkoutUrl) {
-                      addLog(`4. Server Returned URL: ${checkoutUrl.substring(0, 35)}...`);
-                      addLog("5. Triggering Window Location Redirect...");
-                      setTimeout(() => {
-                        winRef.location.href = checkoutUrl;
-                      }, 200);
+                      winRef.location.href = checkoutUrl;
                     } else {
-                      addLog("❌ ERROR: Empty Checkout URL returned");
                       setIsRedirecting(false);
                     }
                   })
                   .catch((err) => {
-                    addLog(`❌ ERROR: ${err?.message || "Network call failed"}`);
+                    console.error("[Checkout Error]", err);
                     setIsRedirecting(false);
                   });
               }}
