@@ -699,23 +699,25 @@ export default function CartDrawer({
                 isRedirecting ? "opacity-75 cursor-wait" : ""
               }`}
               disabled={isRedirecting || items.length === 0}
-              onClick={async () => {
+              onClick={() => {
                 if (items.length === 0 || isRedirecting) return;
                 setIsRedirecting(true);
 
-                try {
-                  console.log("[Option B Backend Proxy] Requesting signed checkout URL for items:", items);
-                  const checkoutUrl = await createOrGetShopifyCheckoutUrl(items);
-                  console.log("[Option B Backend Proxy] Navigating to signed checkout URL:", checkoutUrl);
-                  if (checkoutUrl) {
-                    window.location.href = checkoutUrl;
-                  } else {
+                const winRef = window;
+                console.log("[Mobile Gesture Sync] Requesting signed checkout URL for items:", items);
+                createOrGetShopifyCheckoutUrl(items)
+                  .then((checkoutUrl) => {
+                    console.log("[Mobile Gesture Sync] Navigating to signed checkout URL:", checkoutUrl);
+                    if (checkoutUrl) {
+                      winRef.location.href = checkoutUrl;
+                    } else {
+                      setIsRedirecting(false);
+                    }
+                  })
+                  .catch((err) => {
+                    console.error("[Mobile Gesture Error] Checkout failed:", err);
                     setIsRedirecting(false);
-                  }
-                } catch (err) {
-                  console.error("[Option B Error] Checkout failed:", err);
-                  setIsRedirecting(false);
-                }
+                  });
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
