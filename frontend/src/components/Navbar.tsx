@@ -186,7 +186,7 @@ export default function Navbar({
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-3 sm:px-6 lg:px-12">
 
           {/* Left: Mobile Hamburger + Animated Logo */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 mr-2 md:mr-6 lg:mr-8">
             <button
               aria-label="Toggle Mobile Navigation"
               onClick={() => setMobileNavOpen(true)}
@@ -208,7 +208,7 @@ export default function Navbar({
           </div>
 
           {/* ── Main Navigation Links ── */}
-          <nav className="hidden items-center gap-4 lg:gap-7 md:flex">
+          <nav className="hidden items-center gap-2.5 lg:gap-5 xl:gap-7 md:flex shrink-0">
             {navLinks.map((link) => {
               const showMega = Boolean(link.mega && currentPage !== "perfumes");
               const isCurrent =

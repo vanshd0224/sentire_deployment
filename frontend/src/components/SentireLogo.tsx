@@ -19,20 +19,20 @@ export default function SentireLogo({
 }: SentireLogoProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Height scaling - Enlarged for maximum brand prominence
+  // Height scaling - Optimized for luxury proportions without overlapping nav items
   const getScale = () => {
     if (height) return typeof height === "number" ? `${height}px` : height;
     switch (variant) {
       case "compact":
-        return "32px";
+        return "24px";
       case "navbar":
-        return "46px"; // Prominent, clear, enlarged header logo
+        return "32px"; // Perfect proportion for header navbar
       case "footer":
-        return "58px";
+        return "48px";
       case "hero":
-        return "88px";
+        return "72px";
       default:
-        return "46px";
+        return "32px";
     }
   };
 
@@ -59,17 +59,17 @@ export default function SentireLogo({
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative inline-flex items-center justify-center select-none group transition-all duration-300 ${
+      className={`relative inline-flex items-center justify-center select-none group transition-all duration-300 shrink-0 ${
         onClick ? "cursor-pointer" : ""
       } ${className}`}
       aria-label="Sentire by PC Logo"
     >
-      <div className="relative inline-flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+      <div className="relative inline-flex items-center justify-center transition-all duration-300 group-hover:scale-105 shrink-0">
         <img
           src={getLogoSrc()}
           alt="SENTIRE ® By PC"
           style={{ height: logoHeight, width: "auto" }}
-          className="block object-contain max-h-[60px] md:max-h-[70px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.15)]"
+          className="block object-contain max-h-[30px] sm:max-h-[34px] md:max-h-[38px] max-w-[150px] sm:max-w-[190px] md:max-w-[220px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.15)] shrink-0"
         />
       </div>
     </div>
