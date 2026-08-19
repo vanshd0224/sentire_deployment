@@ -218,7 +218,45 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
   }
 };
 
-// Asynchronously create a fresh GraphQL Shopify Cart with exact items and await response to eliminate race conditions
+// Option A: Native HTML Form POST Checkout redirect supporting multi-item, multi-quantity, multi-variant carts
+export const redirectToShopifyFormCheckout = (items: any[]) => {
+  if (!items || items.length === 0) return;
+
+  const shopDomain = "hbj1d0-99.myshopify.com";
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://${shopDomain}/cart/add`;
+  form.style.display = "none";
+
+  items.forEach((item, index) => {
+    const variantId = resolveShopifyVariantId(item);
+    const qty = Number(item.quantity) || 1;
+
+    const idInput = document.createElement("input");
+    idInput.type = "hidden";
+    idInput.name = `items[${index}][id]`;
+    idInput.value = variantId;
+    form.appendChild(idInput);
+
+    const qtyInput = document.createElement("input");
+    qtyInput.type = "hidden";
+    qtyInput.name = `items[${index}][quantity]`;
+    qtyInput.value = String(qty);
+    form.appendChild(qtyInput);
+  });
+
+  const returnToInput = document.createElement("input");
+  returnToInput.type = "hidden";
+  returnToInput.name = "return_to";
+  returnToInput.value = "/checkout";
+  form.appendChild(returnToInput);
+
+  document.body.appendChild(form);
+  console.log("[Option A Checkout] Submitting Native Multi-Item Form POST to Shopify...");
+  form.submit();
+};
+
+// Asynchronously create a fresh GraphQL Shopify Cart or fallback to Option A Form POST
 export const createOrGetShopifyCheckoutUrl = async (items: any[]): Promise<string> => {
   if (!items || items.length === 0) return "";
 
@@ -266,12 +304,10 @@ export const createOrGetShopifyCheckoutUrl = async (items: any[]): Promise<strin
       return newCart.checkoutUrl;
     }
   } catch (err) {
-    console.error("[Checkout Async Warning] GraphQL Cart Creation error, using permalink fallback:", err);
+    console.error("[Checkout Async Warning] GraphQL Cart Creation error, calling Option A form fallback:", err);
   }
 
-  // Fallback to real-time permalink if GraphQL fetch fails
-  const permalinkItems = items
-    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity}`)
-    .join(",");
-  return `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+  // Option A Form POST execution
+  redirectToShopifyFormCheckout(items);
+  return "";
 };

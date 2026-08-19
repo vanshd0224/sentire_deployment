@@ -114,7 +114,7 @@ const IconDiamond = ({ className = "w-4 h-4" }: { className?: string }) => (
 );
 
 
-import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
+import { createOrGetShopifyCheckoutUrl, redirectToShopifyFormCheckout } from "../utils/shopifyCart";
 
 export default function CartDrawer({
   isOpen,
@@ -699,23 +699,11 @@ export default function CartDrawer({
                 isRedirecting ? "opacity-75 cursor-wait" : ""
               }`}
               disabled={isRedirecting || items.length === 0}
-              onClick={async () => {
+              onClick={() => {
                 if (items.length === 0 || isRedirecting) return;
                 setIsRedirecting(true);
-
-                try {
-                  console.log("[Checkout Debug] Starting async GraphQL cart creation for items:", items);
-                  const checkoutUrl = await createOrGetShopifyCheckoutUrl(items);
-                  console.log("[Checkout Debug] Redirecting to confirmed Shopify Checkout URL:", checkoutUrl);
-                  if (checkoutUrl) {
-                    window.location.href = checkoutUrl;
-                  } else {
-                    setIsRedirecting(false);
-                  }
-                } catch (err) {
-                  console.error("[Checkout Debug Error] Redirection failed:", err);
-                  setIsRedirecting(false);
-                }
+                console.log("[Option A Checkout Test] Submitting Native Multi-Item Form POST for items:", items);
+                redirectToShopifyFormCheckout(items);
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
