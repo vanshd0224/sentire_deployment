@@ -16,39 +16,6 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Sentire Parfums Live Shopify Checkout Redirection -->
-    <script>
-      (function() {
-        const SHOPIFY_CHECKOUT_URL = 'https://hbj1d0-99.myshopify.com/cart';
-
-        function attachCheckoutRedirect() {
-          const buttons = document.querySelectorAll('button, a');
-          buttons.forEach(btn => {
-            const text = (btn.textContent || '').toUpperCase();
-            if (text.includes('PROCEED TO CHECKOUT') || text.includes('CHECKOUT')) {
-              btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Redirecting to Live Shopify Checkout:', SHOPIFY_CHECKOUT_URL);
-                window.location.href = SHOPIFY_CHECKOUT_URL;
-              }, true);
-            }
-          });
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', attachCheckoutRedirect);
-        } else {
-          attachCheckoutRedirect();
-        }
-
-        const observer = new MutationObserver(() => {
-          attachCheckoutRedirect();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-      })();
-    </script>
-
         <!-- Sentire Parfums - 4-in-1 AI Concierge Luxury Suite -->
     <style>
   #sentire-suite-container {
