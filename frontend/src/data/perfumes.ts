@@ -30,11 +30,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 399, 30: 900, 50: 1085 },
     mrps: { 10: 449, 30: 1409, 50: 1539 },
     badge: "bestseller",
-    img: "/assets/perfumes/calantha-50ml-1.png?v=2",
+    img: "/assets/perfumes/calantha-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/calantha-10ml-1.png?v=2", "/assets/perfumes/calantha-10ml-2.png?v=2", "/assets/perfumes/calantha-10ml-3.png?v=2"],
       30: ["/assets/perfumes/calantha-30ml-1.png?v=2", "/assets/perfumes/calantha-30ml-2.png?v=2", "/assets/perfumes/calantha-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/calantha-50ml-1.png?v=2", "/assets/perfumes/calantha-50ml-2.png?v=2", "/assets/perfumes/calantha-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/calantha-50ml-3.png?v=3", "/assets/perfumes/calantha-50ml-1.png?v=2", "/assets/perfumes/calantha-50ml-2.png?v=2"]
     },
     traces: ["Jasmine", "Rose", "Lily of Valley", "Sandalwood", "Amber"]
   },
