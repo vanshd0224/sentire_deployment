@@ -81,12 +81,13 @@ export default function Hero({ onNavigate }: HeroProps) {
 
       {/* Full-bleed background image with smooth slow zoom */}
       <picture>
-        <source media="(max-width: 767px)" srcSet="/images/mobile-hero.png" />
+        <source media="(max-width: 767px)" srcSet="/images/mobile-hero.png" width="768" height="1024" />
         <img
           src="/images/hero-celestial.png"
-          alt="Sentire Celestial Perfume"
-          aria-hidden
+          alt="Sentire by PC artisanal luxury perfume flacon with 35%+ perfume oil concentration and custom laser bottle engraving"
           fetchPriority="high"
+          width="1920"
+          height="1080"
           className="hero-bg-img absolute inset-0 w-full h-full select-none pointer-events-none object-cover"
           style={{
             objectPosition: "center 20%",

@@ -19,7 +19,10 @@ class UploadService {
    * Returns public GCS URL or mock fallback URL in unconfigured dev mode
    */
   async uploadPersonalizationImage(fileBuffer, originalFilename, mimeType) {
-    const filename = `personalizations/${Date.now()}_${path.basename(originalFilename || 'image.jpg')}`;
+    const crypto = require('crypto');
+    const randomId = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString('hex');
+    const safeExt = path.extname(originalFilename || '.jpg') || '.jpg';
+    const filename = `personalizations/${Date.now()}_${randomId}${safeExt}`;
 
     if (!process.env.GCS_BUCKET_NAME || process.env.GCS_BUCKET_NAME === 'mock-gcs-bucket') {
       logger.warn('GCS_BUCKET_NAME unconfigured. Returning mock GCS upload URL.');

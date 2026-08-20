@@ -1,0 +1,43 @@
+# ==============================================================================
+# Sentire by PC - Production Robots.txt
+# https://sentireparfums.com
+# ==============================================================================
+
+# Search Engine Crawlers (Google, Bing, DuckDuckGo, Yahoo, etc.)
+User-agent: *
+Allow: /
+Allow: /perfumes
+Allow: /bestsellers
+Allow: /new-arrivals
+Allow: /about
+Allow: /byob
+Allow: /personalisation
+Allow: /client-services
+Allow: /track-order
+Allow: /assets/
+Allow: /images/
+Allow: /logos/
+
+# Exclude Private & Non-Indexable Paths
+Disallow: /account
+Disallow: /checkout
+Disallow: /cart
+Disallow: /uploads/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*?*preview*
+Disallow: /*?*session*
+Disallow: /*?*token*
+
+# AI Scraper & Dataset Crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# Canonical XML Sitemap
+Sitemap: https://sentireparfums.com/sitemap.xml

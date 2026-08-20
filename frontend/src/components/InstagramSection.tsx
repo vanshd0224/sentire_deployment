@@ -125,7 +125,9 @@ export default function InstagramSection() {
               {/* Thumbnail */}
               <img
                 src={post.thumb}
-                alt=""
+                alt={`Sentire by PC luxury fragrance experience reel ${i + 1}`}
+                width="300"
+                height="300"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
               />

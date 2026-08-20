@@ -393,7 +393,9 @@ export default function ProductDetailModal({
             <div className="relative aspect-square sm:aspect-[4/5] max-h-60 sm:max-h-96 w-full overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md">
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
-                alt={product.name}
+                alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
+                width="500"
+                height="600"
                 className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
               />
               {product.badge && (
@@ -414,8 +416,9 @@ export default function ProductDetailModal({
                       ? "border-[#c89b5a] scale-105 shadow-md ring-2 ring-[#c89b5a]/30"
                       : "border-transparent opacity-70 hover:opacity-100"
                   }`}
+                  aria-label={`Select fragrance view ${idx + 1}`}
                 >
-                  <img src={img} alt="Thumbnail" className="h-full w-full object-contain" />
+                  <img src={img} alt={`Sentire ${product.name} view ${idx + 1}`} width="80" height="80" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
@@ -1034,7 +1037,9 @@ export default function ProductDetailModal({
                     <div className="aspect-[4/5] rounded-xl bg-[#f5efe6] p-4 flex items-center justify-center mb-3 overflow-hidden">
                       <img
                         src={rec.img}
-                        alt={rec.name}
+                        alt={`Sentire ${rec.name} luxury perfume flacon with 35%+ oil concentration`}
+                        width="250"
+                        height="300"
                         className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>

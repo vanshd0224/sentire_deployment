@@ -44,7 +44,9 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
               <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-2xl shadow-lg border border-[#c89b5a]/30 bg-[#120d09] group-hover:border-[#c89b5a] group-hover:shadow-[0_16px_36px_rgba(200,155,90,0.22)] transition-all duration-500">
                 <img
                   src={cat.image}
-                  alt={cat.title}
+                  alt={`Sentire ${cat.title} - ${cat.subtitle} luxury perfume collection`}
+                  width="320"
+                  height="400"
                   className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   loading="lazy"
                 />

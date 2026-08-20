@@ -253,9 +253,11 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
                     >
                       <img
                         src={reel.thumb}
-                        alt={reel.product}
+                        alt={`Sentire ${reel.product} luxury fragrance application and sillage demonstration`}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
                         loading="lazy"
+                        width="220"
+                        height="330"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
 
@@ -277,7 +279,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
                     {/* Product info */}
                     <div className="mt-3 flex items-center gap-2">
                       <div className="relative h-8 w-8 sm:h-10 sm:w-10 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-[#f4eee6] p-0.5 shadow-sm">
-                        <img src={reel.swatch} alt="" className="h-full w-full object-contain" />
+                        <img src={reel.swatch} alt={`Sentire ${reel.product} flacon`} width="40" height="40" className="h-full w-full object-contain" />
                       </div>
                       <div className="min-w-0">
                         <p className="truncate text-[10.5px] sm:text-[12px] font-bold tracking-wide text-ink uppercase leading-tight group-hover:text-[#c89b5a] transition-colors">

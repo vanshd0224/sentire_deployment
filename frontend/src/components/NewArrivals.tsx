@@ -149,16 +149,31 @@ export default function NewArrivals({
             return (
               <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
-                  <div
-                    onClick={() => fullProd && onSelectProduct?.(fullProd)}
-                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
+                  <a
+                    href={`/perfumes?id=${p.id}`}
+                    onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                    aria-label={`View Sentire ${p.name} personalised perfume details`}
+                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer block"
                   >
-                    <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  </div>
+                    <img
+                      src={p.image}
+                      alt={`Sentire ${p.name} new arrival extrait de parfum with 35%+ perfume oil concentration and bottle engraving`}
+                      loading="lazy"
+                      width="300"
+                      height="300"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </a>
 
                   <div className="mt-2 sm:mt-3 text-center">
-                    <h3 onClick={() => fullProd && onSelectProduct?.(fullProd)} className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
-                      {p.name}
+                    <h3 className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
+                      <a
+                        href={`/perfumes?id=${p.id}`}
+                        onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                        className="hover:text-[#c89b5a]"
+                      >
+                        {p.name}
+                      </a>
                     </h3>
                     <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
