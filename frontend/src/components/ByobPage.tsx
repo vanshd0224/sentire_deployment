@@ -32,7 +32,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "12+ Hours",
     mood: "Magnetic · Intense · Opulent",
     occasion: "Evening Gala & Midnight Affairs",
-    concentration: "Extrait de Parfum (30% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "calantha",
@@ -51,7 +51,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "10+ Hours",
     mood: "Romantic · Alluring · Ethereal",
     occasion: "Intimate Dinners & Sunset Rituals",
-    concentration: "Extrait de Parfum (28% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "rich",
@@ -70,7 +70,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "14+ Hours",
     mood: "Majestic · Regal · Unforgettable",
     occasion: "Black Tie & Special Celebrations",
-    concentration: "Extrait de Parfum (32% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "herrlich",
@@ -89,7 +89,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "14+ Hours",
     mood: "Sophisticated · Commanding · Refined",
     occasion: "Executive Meetings & Private Soirées",
-    concentration: "Extrait de Parfum (30% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "seductive",
@@ -108,7 +108,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "12+ Hours",
     mood: "Intimate · Addictive · Hypnotic",
     occasion: "Late Rendezvous & Candlelit Evenings",
-    concentration: "Extrait de Parfum (30% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "white-oud",
@@ -127,7 +127,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "10+ Hours",
     mood: "Luminous · Serene · Sublime",
     occasion: "Daytime Elegance & Spring Galas",
-    concentration: "Extrait de Parfum (28% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "midnight",
@@ -146,7 +146,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "10+ Hours",
     mood: "Mysterious · Cool · Captivating",
     occasion: "Starlight Walks & Midnight Lounges",
-    concentration: "Extrait de Parfum (26% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "mirai",
@@ -165,7 +165,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "8+ Hours",
     mood: "Radiant · Joyful · Refreshing",
     occasion: "Morning Rituals & Summer Escapes",
-    concentration: "Extrait de Parfum (25% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   },
   {
     id: "deep-crush",
@@ -184,7 +184,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
     longevity: "12+ Hours",
     mood: "Passionate · Hypnotic · Warm",
     occasion: "Autumn Evenings & Fireside Whispers",
-    concentration: "Extrait de Parfum (29% Oil Concentration)"
+    concentration: "Extrait de Parfum (35% Oil Concentration)"
   }
 ];
 
@@ -199,7 +199,7 @@ const FAQS = [
   },
   {
     q: "Are all perfumes in the bundle full-size 50ML Extraits?",
-    a: "Every fragrance in our bundle builder is a full-size 50 ML Extrait de Parfum crafted with haute-parfumerie oil concentrations (25% to 32%) for extraordinary longevity."
+    a: "Every fragrance in our bundle builder is a full-size 50 ML Extrait de Parfum crafted with haute-parfumerie oil concentrations (35%) for extraordinary longevity."
   },
   {
     q: "How does complimentary bottle personalisation work?",

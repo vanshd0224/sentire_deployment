@@ -84,7 +84,7 @@ const FAQS = [
   },
   {
     q: "Is Sentire Extrait de Parfum long-lasting?",
-    a: "All Sentire fragrances are formulated at high Extrait de Parfum concentration (25%+ imported oil concentration), delivering 12 to 24+ hours of projection on skin and clothing.",
+    a: "All Sentire fragrances are formulated at high Extrait de Parfum concentration (35% imported oil concentration), delivering 12 to 24+ hours of projection on skin and clothing.",
   },
 ];
 

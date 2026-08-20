@@ -151,7 +151,7 @@ export default function AboutPage({
   const [selectedNote, setSelectedNote] = useState<ScentNote>(BASE_NOTES[0]);
   
   // Extrait Concentration Interactive Slider State (12% to 30%)
-  const [concentration, setConcentration] = useState<number>(21);
+  const [concentration, setConcentration] = useState<number>(35);
   
   // Audio Ambience Soundscape State
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
@@ -284,7 +284,7 @@ export default function AboutPage({
             {[
               { id: "ch1", no: 1, label: "01 Conviction" },
               { id: "ch2", no: 2, label: "02 Founder" },
-              { id: "ch3", no: 3, label: "03 21% Extrait" },
+              { id: "ch3", no: 3, label: "03 35% Extrait" },
               { id: "ch4", no: 4, label: "04 Olfactory Lab" },
               { id: "ch5", no: 5, label: "05 Kannauj Alchemy" },
               { id: "ch6", no: 6, label: "06 Wardrobe" },
@@ -361,13 +361,13 @@ export default function AboutPage({
           </h1>
 
           <p className="max-w-2xl text-sm sm:text-base md:text-lg text-[#f8f5f1]/80 leading-relaxed font-light mb-10">
-            Founded in Jaipur by entrepreneur Pranav Chaudhary, <strong className="text-white font-medium">SENTIRE By PC</strong> redefines niche perfumery. We synthesize French floral distillation with rare Indian Oud resins at an uncompromising <span className="text-[#e5c158] font-semibold">21%+ Extrait de Parfum</span> concentration.
+            Founded in Jaipur by entrepreneur Pranav Chaudhary, <strong className="text-white font-medium">SENTIRE By PC</strong> redefines niche perfumery. We synthesize French floral distillation with rare Indian Oud resins at an uncompromising <span className="text-[#e5c158] font-semibold">35%+ Extrait de Parfum</span> concentration.
           </p>
 
           {/* Live Telemetry Ticker Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-3xl mb-12">
             {[
-              { stat: "21%", label: "Extrait Oil Concentration", sub: "Highest Industry Tier" },
+              { stat: "35%", label: "Extrait Oil Concentration", sub: "Highest Industry Tier" },
               { stat: "100%", label: "Wild Indian Assam Oud", sub: "Ethically Harvested" },
               { stat: "24+ Hrs", label: "Skin Projection Radius", sub: "Unrivaled Longevity" },
               { stat: "4,200+", label: "Verified 5-Star Reviews", sub: "Pan-India Devotees" },
@@ -421,7 +421,7 @@ export default function AboutPage({
               <div className="p-6 rounded-2xl border border-[#c89b5a]/30 bg-[radial-gradient(ellipse_at_top_left,rgba(200,155,90,0.12)_0%,transparent_70%)] backdrop-blur-xl">
                 <div className="text-xs font-bold uppercase tracking-wider text-[#c89b5a] mb-2">FOUNDER'S CORE CONVICTION</div>
                 <blockquote className="font-serif text-lg sm:text-xl italic text-white leading-snug">
-                  "Luxury perfumery in India was broken—split between cheap short-lived synthetic sprays and hyper-inflated foreign designer brands. We created SENTIRE to deliver uncompromised 21% Extrait craftsmanship."
+                  "Luxury perfumery in India was broken—split between cheap short-lived synthetic sprays and hyper-inflated foreign designer brands. We created SENTIRE to deliver uncompromised 35% Extrait craftsmanship."
                 </blockquote>
                 <div className="text-xs font-bold text-white/70 mt-3">— Pranav Chaudhary ("PC"), Founder &amp; Visionary</div>
               </div>
@@ -430,7 +430,7 @@ export default function AboutPage({
             {/* 3 Pillars Glass Cards */}
             <div className="lg:col-span-5 grid grid-cols-1 gap-4">
               {[
-                { title: "Sensory Perception", desc: "Formulated with 25%+ pure essence oils reacting dynamically with your skin lipids." },
+                { title: "Sensory Perception", desc: "Formulated with 35%+ pure essence oils reacting dynamically with your skin lipids." },
                 { title: "Empathy in Craft", desc: "Sourced directly from sustainable harvesters in Assam, Kannauj, Grasse & Calabria." },
                 { title: "Everyday Signature", desc: "Luxury made accessible without multi-tier middleman distributor markups." },
               ].map((pillar, idx) => (
@@ -538,7 +538,7 @@ export default function AboutPage({
         </div>
       </section>
 
-      {/* ── CHAPTER 03: THE 21% EXTRAIT OBSESSION (INTERACTIVE SLIDER) ── */}
+      {/* ── CHAPTER 03: THE 35% EXTRAIT OBSESSION (INTERACTIVE SLIDER) ── */}
       <section id="ch3" className="relative w-full border-t border-white/10 bg-[#080503] py-24 px-6 lg:px-16">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-4">
@@ -581,8 +581,8 @@ export default function AboutPage({
                   <div className="flex justify-between text-[10px] text-white/40 mt-1 uppercase font-bold">
                     <span>10% Eau de Toilette</span>
                     <span>15% Eau de Parfum</span>
-                    <span className="text-[#e5c158]">21%+ SENTIRE Extrait</span>
-                    <span>30% Pure Essence</span>
+                    <span className="text-[#e5c158]">35%+ SENTIRE Extrait</span>
+                    <span>35% Pure Essence</span>
                   </div>
                 </div>
 
@@ -603,7 +603,7 @@ export default function AboutPage({
                   <div className="rounded-xl bg-white/5 p-3 text-center">
                     <div className="text-[10px] text-white/50 uppercase font-bold">Resin Purity</div>
                     <div className="text-lg font-bold font-serif text-white mt-1">
-                      {concentration < 21 ? "Standard" : "Haute Grade"}
+                      {concentration < 35 ? "Standard" : "Haute Grade"}
                     </div>
                   </div>
                 </div>
@@ -630,14 +630,14 @@ export default function AboutPage({
 
                 <div className="relative z-10">
                   <div className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#c89b5a] mb-2">
-                    {concentration >= 21 ? "★ SENTIRE EXTRAIT THRESHOLD ACHIEVED" : "STANDARD COMMERCE CONCENTRATION"}
+                    {concentration >= 35 ? "★ SENTIRE EXTRAIT THRESHOLD ACHIEVED" : "STANDARD COMMERCE CONCENTRATION"}
                   </div>
                   <div className="font-serif text-2xl font-bold text-white mb-2">
-                    {concentration >= 21 ? "Unrivaled Scent Signature" : "Short-lived Surface Spray"}
+                    {concentration >= 35 ? "Unrivaled Scent Signature" : "Short-lived Surface Spray"}
                   </div>
                   <p className="text-xs text-[#f8f5f1]/80 font-light max-w-sm">
-                    {concentration >= 21
-                      ? "At 21%+ oil concentration, natural oud resins bond deeply with skin lipids to release evolving olfactory accords for up to 24 hours."
+                    {concentration >= 35
+                      ? "At 35%+ oil concentration, natural oud resins bond deeply with skin lipids to release evolving olfactory accords for up to 24 hours."
                       : "Lower oil concentration results in high alcohol evaporation, losing subtle heart and base notes within hours."}
                   </p>
                 </div>

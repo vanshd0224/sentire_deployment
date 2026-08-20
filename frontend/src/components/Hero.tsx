@@ -155,7 +155,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             <span className="text-amber-400">★</span> 4.9 | 10k+ Wearers
           </span>
           <span className="inline-flex items-center gap-1 rounded-full bg-white/10 border border-white/20 px-3 py-1 text-[8.5px] font-medium uppercase tracking-wider text-white/90 backdrop-blur-md">
-            30% Extrait de Parfum
+            35% Extrait de Parfum
           </span>
         </div>
 
