@@ -43,27 +43,7 @@
       rel="stylesheet"
     />
 
-    <!-- Staging Environment Indexation Protection -->
-    <script>
-      (function() {
-        try {
-          var host = window.location.hostname || '';
-          // If on the official production domain, strictly ensure index, follow
-          if (host === 'sentirebypc.com' || host === 'www.sentirebypc.com' || host.indexOf('sentirebypc.com') !== -1) {
-            return;
-          }
-          // Only apply noindex on isolated staging/run.app instances
-          if (host.indexOf('run.app') !== -1 || host.indexOf('localhost') !== -1 || host.indexOf('127.0.0.1') !== -1) {
-            var robotsMeta = document.querySelector('meta[name="robots"]');
-            if (robotsMeta) robotsMeta.setAttribute('content', 'noindex, nofollow');
-            var googlebotMeta = document.querySelector('meta[name="googlebot"]');
-            if (googlebotMeta) googlebotMeta.setAttribute('content', 'noindex, nofollow');
-            var bingbotMeta = document.querySelector('meta[name="bingbot"]');
-            if (bingbotMeta) bingbotMeta.setAttribute('content', 'noindex, nofollow');
-          }
-        } catch (e) {}
-      })();
-    </script>
+
 
     <!-- Initial Server-Rendered JSON-LD Structured Data Graph -->
     <script type="application/ld+json" id="sentire-initial-jsonld">

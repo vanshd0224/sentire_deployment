@@ -60,13 +60,7 @@ export function getPageMetadata(
     sizes?: number[];
   } | null
 ): PageMetadata {
-  const host = typeof window !== "undefined" ? (window.location.hostname || "") : "";
-  const isProduction = host.includes("sentirebypc.com");
-  const isStaging = !isProduction && (host.includes("run.app") || host.includes("localhost") || host.includes("127.0.0.1"));
-
-  const defaultRobots = isStaging
-    ? "noindex, nofollow"
-    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  const defaultRobots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
   // Product Detail Modal or Deep-linked Product Page
   if (product && product.name) {

@@ -44,14 +44,13 @@ export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadPr
     }
 
     // 3. Robots Directives
-    const host = typeof window !== "undefined" ? (window.location.hostname || "") : "";
-    const isProduction = host.includes("sentirebypc.com");
-    const isStaging = !isProduction && (host.includes("run.app") || host.includes("localhost") || host.includes("127.0.0.1"));
-
-    const robotsValue = isStaging ? "noindex, nofollow" : meta.robots;
-    updateMetaTag("name", "robots", robotsValue);
-    updateMetaTag("name", "googlebot", robotsValue);
-    updateMetaTag("name", "bingbot", robotsValue);
+    if (meta.robots && meta.robots.includes("noindex")) {
+      updateMetaTag("name", "robots", "noindex, nofollow");
+    } else {
+      updateMetaTag("name", "robots", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+      updateMetaTag("name", "googlebot", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+      updateMetaTag("name", "bingbot", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+    }
 
     // 4. Canonical Link
     updateLinkTag("canonical", meta.canonical);
