@@ -393,7 +393,19 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 799, 30: 1499 },
     mrps: { 10: 999, 30: 1999 },
     badge: "new",
-    img: "/assets/quantillion.jpg",
+    img: "/assets/perfumes/quantillion-30ml-1.png?v=2",
+    sizeImages: {
+      10: [
+        "/assets/perfumes/quantillion-10ml-1.png?v=2",
+        "/assets/perfumes/quantillion-10ml-2.png?v=2",
+        "/assets/perfumes/quantillion-10ml-3.png?v=2"
+      ],
+      30: [
+        "/assets/perfumes/quantillion-30ml-1.png?v=2",
+        "/assets/perfumes/quantillion-30ml-2.png?v=2",
+        "/assets/perfumes/quantillion-30ml-3.png?v=2"
+      ]
+    },
     traces: ["Mandarin", "Bergamot", "Rose", "Cardamom", "Amberwood"]
   },
   {
