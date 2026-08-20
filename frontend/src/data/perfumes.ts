@@ -253,7 +253,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     img: "/assets/perfumes/white-oud-50ml-1.png?v=2",
     sizeImages: {
       10: ["/assets/perfumes/white-oud-10ml-1.png?v=2", "/assets/perfumes/white-oud-10ml-2.png?v=2", "/assets/perfumes/white-oud-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/white-oud-30ml-1.png?v=2", "/assets/perfumes/white-oud-30ml-2.png?v=2", "/assets/perfumes/white-oud-30ml-3.png?v=2"],
+      30: ["/assets/perfumes/white-oud-30ml-1.png?v=5", "/assets/perfumes/white-oud-30ml-2.png?v=5", "/assets/perfumes/white-oud-30ml-3.png?v=5"],
       50: ["/assets/perfumes/white-oud-50ml-1.png?v=2", "/assets/perfumes/white-oud-50ml-2.png?v=2", "/assets/perfumes/white-oud-50ml-3.png?v=2"]
     },
     traces: ["Essence of Oud", "Lavender", "Pink Pepper", "Vetiver", "Labdanum"]
