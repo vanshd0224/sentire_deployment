@@ -60,11 +60,9 @@ export function getPageMetadata(
     sizes?: number[];
   } | null
 ): PageMetadata {
-  const isStaging =
-    typeof window !== "undefined" &&
-    (window.location.hostname.includes("run.app") ||
-      window.location.hostname.includes("localhost") ||
-      window.location.hostname.includes("127.0.0.1"));
+  const host = typeof window !== "undefined" ? (window.location.hostname || "") : "";
+  const isProduction = host.includes("sentirebypc.com");
+  const isStaging = !isProduction && (host.includes("run.app") || host.includes("localhost") || host.includes("127.0.0.1"));
 
   const defaultRobots = isStaging
     ? "noindex, nofollow"

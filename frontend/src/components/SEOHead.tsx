@@ -44,14 +44,14 @@ export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadPr
     }
 
     // 3. Robots Directives
-    const isStaging =
-      window.location.hostname.includes("run.app") ||
-      window.location.hostname.includes("localhost") ||
-      window.location.hostname.includes("127.0.0.1");
+    const host = typeof window !== "undefined" ? (window.location.hostname || "") : "";
+    const isProduction = host.includes("sentirebypc.com");
+    const isStaging = !isProduction && (host.includes("run.app") || host.includes("localhost") || host.includes("127.0.0.1"));
 
     const robotsValue = isStaging ? "noindex, nofollow" : meta.robots;
     updateMetaTag("name", "robots", robotsValue);
     updateMetaTag("name", "googlebot", robotsValue);
+    updateMetaTag("name", "bingbot", robotsValue);
 
     // 4. Canonical Link
     updateLinkTag("canonical", meta.canonical);
