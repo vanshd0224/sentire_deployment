@@ -232,7 +232,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     img: "/assets/perfumes/seductive-50ml-2.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/seductive-10ml-1.png?v=2", "/assets/perfumes/seductive-10ml-2.png?v=2", "/assets/perfumes/seductive-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/seductive-30ml-1.png?v=2", "/assets/perfumes/seductive-30ml-2.png?v=2", "/assets/perfumes/seductive-30ml-3.png?v=2"],
+      30: ["/assets/perfumes/seductive-30ml-1.png?v=5", "/assets/perfumes/seductive-30ml-2.png?v=5", "/assets/perfumes/seductive-30ml-3.png?v=5"],
       50: ["/assets/perfumes/seductive-50ml-2.png?v=3", "/assets/perfumes/seductive-50ml-1.png?v=2", "/assets/perfumes/seductive-50ml-3.png?v=2"]
     },
     traces: ["Citric Limon", "Fresh Lavender", "Spicy Floral", "Patchouli", "Amber"]
