@@ -211,7 +211,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     img: "/assets/perfumes/rich-50ml-1.png?v=2",
     sizeImages: {
       10: ["/assets/perfumes/rich-10ml-1.png?v=2", "/assets/perfumes/rich-10ml-2.png?v=2", "/assets/perfumes/rich-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/rich-30ml-1.png?v=2", "/assets/perfumes/rich-30ml-2.png?v=2", "/assets/perfumes/rich-30ml-3.png?v=2"],
+      30: ["/assets/perfumes/rich-30ml-1.png?v=5", "/assets/perfumes/rich-30ml-2.png?v=5", "/assets/perfumes/rich-30ml-3.png?v=5"],
       50: ["/assets/perfumes/rich-50ml-1.png?v=2", "/assets/perfumes/rich-50ml-2.png?v=2", "/assets/perfumes/rich-50ml-3.png?v=2"]
     },
     traces: ["Bergamot", "Mandarin", "Spiced Rose", "Patchouli", "Amber Musk"]
