@@ -154,9 +154,6 @@ export default function BestSellers({
                     className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
                     <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 rounded-full bg-[#120e0a] px-2 sm:px-2.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-[#c89b5a]">
-                      {p.badge}
-                    </span>
                   </div>
 
                   <div className="mt-2 sm:mt-3 text-center">
