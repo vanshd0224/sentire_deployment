@@ -51,11 +51,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 350, 30: 899, 50: 1085 },
     mrps: { 10: 419, 30: 1319, 50: 1539 },
     badge: "bestseller",
-    img: "/assets/perfumes/deep-crush-50ml-2.png?v=3",
+    img: "/assets/perfumes/deep-crush-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/deep-crush-10ml-1.png?v=2", "/assets/perfumes/deep-crush-10ml-2.png?v=2", "/assets/perfumes/deep-crush-10ml-3.png?v=2"],
       30: ["/assets/perfumes/deep-crush-30ml-1.png?v=2", "/assets/perfumes/deep-crush-30ml-2.png?v=2", "/assets/perfumes/deep-crush-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/deep-crush-50ml-2.png?v=3", "/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/deep-crush-50ml-3.png?v=3", "/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-2.png?v=2"]
     },
     traces: ["Lavender", "Rose", "Tobacco", "Sandalwood", "Amber"]
   },
@@ -72,11 +72,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 550, 30: 1499, 50: 2196 },
     mrps: { 10: 639, 30: 2129, 50: 3069 },
     badge: "new",
-    img: "/assets/perfumes/herrlich-50ml-1.png?v=2",
+    img: "/assets/perfumes/herrlich-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/herrlich-10ml-1.png?v=2", "/assets/perfumes/herrlich-10ml-2.png?v=2", "/assets/perfumes/herrlich-10ml-3.png?v=2"],
       30: ["/assets/perfumes/herrlich-30ml-1.png?v=2", "/assets/perfumes/herrlich-30ml-2.png?v=2", "/assets/perfumes/herrlich-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/herrlich-50ml-1.png?v=2", "/assets/perfumes/herrlich-50ml-2.png?v=2", "/assets/perfumes/herrlich-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/herrlich-50ml-3.png?v=3", "/assets/perfumes/herrlich-50ml-1.png?v=2", "/assets/perfumes/herrlich-50ml-2.png?v=2"]
     },
     traces: ["Bergamot", "Peach", "Jasmine", "Rose", "Dark Chocolate"]
   },
@@ -114,11 +114,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 459, 30: 1199, 50: 1679 },
     mrps: { 10: 649, 30: 1809, 50: 2349 },
     badge: "bestseller",
-    img: "/assets/perfumes/mirai-50ml-1.png?v=2",
+    img: "/assets/perfumes/mirai-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/mirai-10ml-1.png?v=2", "/assets/perfumes/mirai-10ml-2.png?v=2", "/assets/perfumes/mirai-10ml-3.png?v=2"],
       30: ["/assets/perfumes/mirai-30ml-1.png?v=2", "/assets/perfumes/mirai-30ml-2.png?v=2", "/assets/perfumes/mirai-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/mirai-50ml-1.png?v=2", "/assets/perfumes/mirai-50ml-2.png?v=2", "/assets/perfumes/mirai-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/mirai-50ml-3.png?v=3", "/assets/perfumes/mirai-50ml-1.png?v=2", "/assets/perfumes/mirai-50ml-2.png?v=2"]
     },
     traces: ["Lemon", "Bergamot", "Lavender", "Black Pepper", "Patchouli"]
   },
@@ -189,11 +189,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 659, 30: 1199, 50: 1489 },
     mrps: { 10: 779, 30: 1409, 50: 1859 },
     badge: "exclusive",
-    img: "/assets/perfumes/purple-oud-50ml-1.png?v=2",
+    img: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/purple-oud-10ml-1.png?v=2", "/assets/perfumes/purple-oud-10ml-2.png?v=2", "/assets/perfumes/purple-oud-10ml-3.png?v=2"],
       30: ["/assets/perfumes/purple-oud-30ml-1.png?v=2", "/assets/perfumes/purple-oud-30ml-2.png?v=2", "/assets/perfumes/purple-oud-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/purple-oud-50ml-1.png?v=2", "/assets/perfumes/purple-oud-50ml-2.png?v=2", "/assets/perfumes/purple-oud-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/purple-oud-50ml-2.png?v=3", "/assets/perfumes/purple-oud-50ml-1.png?v=2", "/assets/perfumes/purple-oud-50ml-3.png?v=2"]
     },
     traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"]
   },
