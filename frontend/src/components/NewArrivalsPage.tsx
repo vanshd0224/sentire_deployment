@@ -371,6 +371,7 @@ export default function NewArrivalsPage({
           cartItems={cartItems}
           onAddToCart={onAddToCart}
           onUpdateCartQuantity={onUpdateCartQuantity}
+          onSelectProduct={(p) => setSelectedDetailProduct(p)}
           allProducts={ALL_PERFUMES}
         />
       )}

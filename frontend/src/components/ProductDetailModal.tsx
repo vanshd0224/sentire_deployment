@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeProduct } from "./PerfumesPage";
 import type { CartItem } from "./CartDrawer";
 
@@ -117,7 +117,9 @@ export default function ProductDetailModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [product, onClose]);
 
-  // Reset selected size & image index when product changes (Default to largest available IN-STOCK size)
+  const modalContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset selected size, image index & scroll modal to top when product changes
   useEffect(() => {
     if (product && product.sizes && product.sizes.length > 0) {
       const outStock = product.outOfStockSizes || [];
@@ -127,6 +129,10 @@ export default function ProductDetailModal({
       setSelectedImageIndex(0);
       setSelectedNote(null);
       setNotifySubmitted(false);
+
+      if (modalContainerRef.current) {
+        modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   }, [product]);
 
@@ -339,7 +345,7 @@ export default function ProductDetailModal({
       <div className="fixed inset-0" onClick={onClose} />
 
       {/* Modal Card Window / Mobile Bottom Sheet */}
-      <div className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#c89b5a]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1e1e1e] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury">
+      <div ref={modalContainerRef} className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#c89b5a]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1e1e1e] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury">
         {/* Mobile Drag Handle Bar */}
         <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />
         {/* Sticky Header Action Buttons (Close Button + Share Button directly below it) */}
@@ -1016,7 +1022,12 @@ export default function ProductDetailModal({
               {recommendedProducts.map((rec) => (
                 <div
                   key={rec.id}
-                  onClick={() => onSelectProduct?.(rec)}
+                  onClick={() => {
+                    if (modalContainerRef.current) {
+                      modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                    onSelectProduct?.(rec);
+                  }}
                   className="group rounded-2xl border border-[#e8e2d9] bg-white p-4 transition-all duration-300 hover:shadow-xl hover:border-[#c89b5a]/50 hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
                 >
                   <div>
