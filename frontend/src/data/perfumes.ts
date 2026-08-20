@@ -184,15 +184,13 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     fullDesc: "Purple Oud is a majestic composition of smoky Cambodian oud, fiery saffron threads, and velvety amethyst rose.",
     scentFamily: "woody",
     moods: ["party", "date-night"],
-    sizes: [10, 30, 50],
+    sizes: [50],
     outOfStockSizes: [],
-    prices: { 10: 659, 30: 1199, 50: 1489 },
-    mrps: { 10: 779, 30: 1409, 50: 1859 },
+    prices: { 50: 1489 },
+    mrps: { 50: 1859 },
     badge: "exclusive",
     img: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     sizeImages: {
-      10: ["/assets/perfumes/purple-oud-10ml-1.png?v=2", "/assets/perfumes/purple-oud-10ml-2.png?v=2", "/assets/perfumes/purple-oud-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/purple-oud-30ml-1.png?v=2", "/assets/perfumes/purple-oud-30ml-2.png?v=2", "/assets/perfumes/purple-oud-30ml-3.png?v=2"],
       50: ["/assets/perfumes/purple-oud-50ml-2.png?v=3", "/assets/perfumes/purple-oud-50ml-1.png?v=2", "/assets/perfumes/purple-oud-50ml-3.png?v=2"]
     },
     traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"]
