@@ -95,7 +95,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     badge: "new",
     img: "/assets/perfumes/midnight-50ml-1.png?v=2",
     sizeImages: {
-      10: ["/assets/perfumes/midnight-10ml-1.png?v=2", "/assets/perfumes/midnight-10ml-2.png?v=2", "/assets/perfumes/midnight-10ml-3.png?v=2"],
+      10: ["/assets/perfumes/midnight-10ml-2.png?v=3", "/assets/perfumes/midnight-10ml-1.png?v=2", "/assets/perfumes/midnight-10ml-3.png?v=2"],
       30: ["/assets/perfumes/midnight-30ml-1.png?v=2", "/assets/perfumes/midnight-30ml-2.png?v=2", "/assets/perfumes/midnight-30ml-3.png?v=2"],
       50: ["/assets/perfumes/midnight-50ml-1.png?v=2", "/assets/perfumes/midnight-50ml-2.png?v=2", "/assets/perfumes/midnight-50ml-3.png?v=2"]
     },
@@ -116,7 +116,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     badge: "bestseller",
     img: "/assets/perfumes/mirai-50ml-3.png?v=3",
     sizeImages: {
-      10: ["/assets/perfumes/mirai-10ml-1.png?v=2", "/assets/perfumes/mirai-10ml-2.png?v=2", "/assets/perfumes/mirai-10ml-3.png?v=2"],
+      10: ["/assets/perfumes/mirai-10ml-2.png?v=3", "/assets/perfumes/mirai-10ml-1.png?v=2", "/assets/perfumes/mirai-10ml-3.png?v=2"],
       30: ["/assets/perfumes/mirai-30ml-1.png?v=2", "/assets/perfumes/mirai-30ml-2.png?v=2", "/assets/perfumes/mirai-30ml-3.png?v=2"],
       50: ["/assets/perfumes/mirai-50ml-3.png?v=3", "/assets/perfumes/mirai-50ml-1.png?v=2", "/assets/perfumes/mirai-50ml-2.png?v=2"]
     },
