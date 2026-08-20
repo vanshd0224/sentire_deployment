@@ -51,11 +51,11 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     prices: { 10: 350, 30: 899, 50: 1085 },
     mrps: { 10: 419, 30: 1319, 50: 1539 },
     badge: "bestseller",
-    img: "/assets/perfumes/deep-crush-50ml-1.png?v=2",
+    img: "/assets/perfumes/deep-crush-50ml-2.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/deep-crush-10ml-1.png?v=2", "/assets/perfumes/deep-crush-10ml-2.png?v=2", "/assets/perfumes/deep-crush-10ml-3.png?v=2"],
       30: ["/assets/perfumes/deep-crush-30ml-1.png?v=2", "/assets/perfumes/deep-crush-30ml-2.png?v=2", "/assets/perfumes/deep-crush-30ml-3.png?v=2"],
-      50: ["/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-2.png?v=2", "/assets/perfumes/deep-crush-50ml-3.png?v=2"]
+      50: ["/assets/perfumes/deep-crush-50ml-2.png?v=3", "/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-3.png?v=2"]
     },
     traces: ["Lavender", "Rose", "Tobacco", "Sandalwood", "Amber"]
   },
