@@ -11,7 +11,7 @@ export const ORGANIZATION_SCHEMA = {
   "@type": "Organization",
   "@id": `${PRODUCTION_DOMAIN}/#organization`,
   "name": "Sentire by PC",
-  "alternateName": ["Sentire Parfums", "Sentire Perfumes"],
+  "alternateName": "Sentire",
   "url": PRODUCTION_DOMAIN,
   "logo": {
     "@type": "ImageObject",

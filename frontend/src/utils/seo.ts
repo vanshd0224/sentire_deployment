@@ -1,10 +1,11 @@
 /**
  * Sentire by PC - Technical SEO Metadata Engine
  * Generates unique, accurate, high-intent metadata for every indexable route.
+ * Preferred Production Domain: https://sentirebypc.com/
  * Strictly preserves the visible frontend while maximizing search visibility.
  */
 
-export const PRODUCTION_DOMAIN = "https://sentireparfums.com";
+export const PRODUCTION_DOMAIN = "https://sentirebypc.com";
 
 export interface PageMetadata {
   title: string;
@@ -91,13 +92,13 @@ export function getPageMetadata(
   switch (page) {
     case "home":
       return {
-        title: "Personalised Perfume with Photo Engraving | Sentire by PC",
-        description: "Shop premium personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, long-lasting performance and express delivery.",
+        title: "Sentire by PC | Personalised Perfumes with Photo Engraving",
+        description: "Discover Sentire by PC personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, premium presentation and express delivery.",
         canonical: `${PRODUCTION_DOMAIN}/`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Personalised Perfume with Photo Engraving | Sentire by PC",
-        ogDescription: "Shop premium personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, long-lasting performance and express delivery.",
+        ogTitle: "Sentire by PC | Personalised Perfumes with Photo Engraving",
+        ogDescription: "Discover Sentire by PC personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, premium presentation and express delivery.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
         keywords: BASE_KEYWORDS,
@@ -105,16 +106,16 @@ export function getPageMetadata(
 
     case "perfumes":
       return {
-        title: "Personalised Perfumes with Photo Engraving | Sentire",
+        title: "Personalised Perfumes with Photo Engraving | Sentire by PC",
         description: "Create a premium personalised perfume with your photo or name laser-engraved on the bottle. Explore long-lasting fragrances with express delivery options.",
         canonical: `${PRODUCTION_DOMAIN}/perfumes`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Personalised Perfumes with Photo Engraving | Sentire",
-        ogDescription: "Explore 11 signature extraits de parfum with complimentary laser photo and name engraving. 35%+ perfume oil concentration for eternal sillage.",
+        ogTitle: "Personalised Perfumes & Luxury Extraits | Sentire by PC",
+        ogDescription: "Explore our collection of artisanal perfumes crafted with 35%+ perfume oil concentration and bespoke laser engraving in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
-        keywords: `personalised perfume collection, custom engraved perfume bottles, ${BASE_KEYWORDS}`,
+        keywords: `perfumes catalog, buy perfume online India, custom perfume, ${BASE_KEYWORDS}`,
       };
 
     case "bestsellers":
@@ -124,11 +125,11 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/bestsellers`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Best-Selling Luxury Fragrances | Sentire by PC",
-        ogDescription: "Top-rated perfumes with 35%+ perfume oil concentration, photo laser engraving, and express delivery.",
-        ogImage: `${PRODUCTION_DOMAIN}/assets/perfumes/calantha-50ml-1.png?v=2`,
+        ogTitle: "Best-Selling Perfumes | Sentire by PC",
+        ogDescription: "Discover Jaipur's most coveted luxury fragrances with 35%+ oil concentration and bespoke laser etching.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/product-white-oud.jpg`,
         twitterCard: "summary_large_image",
-        keywords: `bestselling perfume, top rated perfumes India, ${BASE_KEYWORDS}`,
+        keywords: `best selling perfume, top fragrances India, long lasting perfume, ${BASE_KEYWORDS}`,
       };
 
     case "new-arrivals":
@@ -138,25 +139,11 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/new-arrivals`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "New Fragrance Arrivals | 35%+ Perfume Oil | Sentire by PC",
-        ogDescription: "Latest haute parfumerie releases with custom photo engraving and express delivery options.",
-        ogImage: `${PRODUCTION_DOMAIN}/assets/perfumes/purple-oud-50ml-1.png?v=2`,
+        ogTitle: "New Perfume Arrivals | Sentire by PC",
+        ogDescription: "Unveiling new luxury extraits de parfum with 35%+ concentration and custom flacon engraving.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
-        keywords: `new perfumes, latest fragrance arrivals, ${BASE_KEYWORDS}`,
-      };
-
-    case "personalisation":
-      return {
-        title: "Personalised Perfumes with Photo Engraving | Sentire",
-        description: "Create a premium personalised perfume with your photo or name laser-engraved on the bottle. Explore long-lasting fragrances with express delivery options.",
-        canonical: `${PRODUCTION_DOMAIN}/personalisation`,
-        robots: defaultRobots,
-        ogType: "website",
-        ogTitle: "Atelier Personalisation Studio | Sentire by PC",
-        ogDescription: "Bespoke laser engraving studio: high-precision photo etching and custom name personalization on luxury perfume bottles.",
-        ogImage: `${PRODUCTION_DOMAIN}/assets/purple-oud.png`,
-        twitterCard: "summary_large_image",
-        keywords: `photo engraved perfume bottle, laser photo etching perfume, custom perfume gift, ${BASE_KEYWORDS}`,
+        keywords: `new perfume releases, latest luxury fragrances, new perfume arrivals India, ${BASE_KEYWORDS}`,
       };
 
     case "byob":
@@ -166,11 +153,25 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/byob`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Build Your Own Perfume Box | Sentire by PC",
-        ogDescription: "Curate a personalized perfume gift box with your choice of artisanal fragrances and premium gift presentation.",
-        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        ogTitle: "Build Your Own Fragrance Box | Sentire by PC",
+        ogDescription: "Curate a personalized discovery set of luxury perfumes with custom presentation and express delivery.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/build-bundle.png`,
         twitterCard: "summary_large_image",
-        keywords: `perfume gift box, custom perfume set, personalised perfume gift, ${BASE_KEYWORDS}`,
+        keywords: `custom perfume box, perfume gift box, fragrance discovery set, personalised perfume gift, ${BASE_KEYWORDS}`,
+      };
+
+    case "personalisation":
+      return {
+        title: "Personalised Perfumes with Photo Engraving | Sentire by PC",
+        description: "Create a premium personalised perfume with your photo or name laser-engraved on the bottle. Explore long-lasting fragrances with express delivery options.",
+        canonical: `${PRODUCTION_DOMAIN}/personalisation`,
+        robots: defaultRobots,
+        ogType: "website",
+        ogTitle: "Bespoke Laser Photo & Name Engraving Atelier | Sentire by PC",
+        ogDescription: "Upload your photo or enter your custom name for precision laser etching on premium perfume bottles.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
+        twitterCard: "summary_large_image",
+        keywords: `photo engraved perfume, laser engraved perfume bottle, personalised perfume with photo, custom name perfume, ${BASE_KEYWORDS}`,
       };
 
     case "about":
@@ -180,11 +181,11 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/about`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "About Sentire by PC | Artisanal Fragrance House in Jaipur",
-        ogDescription: "10,000+ bottles crafted offline in Jaipur. Uncompromising 35%+ perfume oil concentration and bespoke bottle personalization.",
+        ogTitle: "Our Heritage & Craftsmanship | Sentire by PC",
+        ogDescription: "Born in Jaipur, India. Over 10,000 perfume bottles handcrafted with 35%+ oil concentration and bespoke engraving.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
-        keywords: `about Sentire by PC, perfume shop Jaipur, Jaipur luxury perfume, ${BASE_KEYWORDS}`,
+        keywords: `about sentire by pc, jaipur perfumery, luxury perfumes jaipur, ${BASE_KEYWORDS}`,
       };
 
     case "client-services":
@@ -194,11 +195,11 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/client-services`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Client Services & Support | Sentire by PC",
-        ogDescription: "Assistance with orders, express shipping, engraving customisation, and customer care.",
+        ogTitle: "Client Services & Concierge | Sentire by PC",
+        ogDescription: "Dedicated private client concierge, express delivery timelines, and return policy details.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
-        keywords: `Sentire customer service, perfume delivery tracking, ${BASE_KEYWORDS}`,
+        keywords: `client care, customer support, express perfume shipping, returns policy, ${BASE_KEYWORDS}`,
       };
 
     case "track-order":
@@ -209,36 +210,30 @@ export function getPageMetadata(
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Track Your Order | Sentire by PC",
-        ogDescription: "Real-time dispatch and delivery tracking for your bespoke perfume order.",
+        ogDescription: "Live tracking for your Sentire luxury perfume shipment.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
-        keywords: `track perfume order, express delivery tracking Sentire, ${BASE_KEYWORDS}`,
+        keywords: `track perfume order, delivery tracking, courier status, ${BASE_KEYWORDS}`,
       };
 
     case "account":
-    case "checkout":
-    case "cart":
       return {
         title: "Your Account | Sentire by PC",
         description: "Manage your Sentire by PC account, VIP rewards, and order history.",
         canonical: `${PRODUCTION_DOMAIN}/account`,
         robots: "noindex, nofollow",
         ogType: "website",
-        ogTitle: "Account | Sentire by PC",
-        ogDescription: "Private customer account area.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
       };
 
     default:
       return {
-        title: "Personalised Perfume with Photo Engraving | Sentire by PC",
-        description: "Shop premium personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, long-lasting performance and express delivery.",
+        title: "Sentire by PC | Personalised Perfumes with Photo Engraving",
+        description: "Discover Sentire by PC personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, premium presentation and express delivery.",
         canonical: `${PRODUCTION_DOMAIN}/`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Personalised Perfume with Photo Engraving | Sentire by PC",
-        ogDescription: "Shop premium personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, long-lasting performance and express delivery.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
         keywords: BASE_KEYWORDS,

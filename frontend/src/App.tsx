@@ -28,6 +28,7 @@ import AccountPage from "./components/AccountPage";
 import ClientServicesPage from "./components/ClientServicesPage";
 import TrackOrderPage from "./components/TrackOrderPage";
 import SEOHead from "./components/SEOHead";
+import { ALL_PERFUMES } from "./data/perfumes";
 import { auth } from "./lib/firebase";
 
 export type PageName =
@@ -52,18 +53,39 @@ export default function App() {
 
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#about" || path.includes("about")) return "about";
+    if (hash === "#about" || path.includes("about") || path.includes("our-story")) return "about";
     if (hash === "#byob" || path.includes("byob")) return "byob";
     if (hash === "#personalisation" || path.includes("personalisation")) return "personalisation";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
-    if (hash === "#bestsellers" || path.includes("bestsellers")) return "bestsellers";
-    if (hash === "#perfumes" || path.includes("perfumes")) return "perfumes";
-    if (hash === "#client-services" || path.includes("client-services")) return "client-services";
+    if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
+    if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
+    if (hash === "#client-services" || path.includes("client-services") || path.includes("contact")) return "client-services";
     if (hash === "#track-order" || path.includes("track-order")) return "track-order";
     return "home";
   });
+
+  useEffect(() => {
+    // Handle deep-linked or legacy product URL: /products/calantha or /perfumes?id=calantha
+    const path = window.location.pathname.toLowerCase();
+    const params = new URLSearchParams(window.location.search);
+    const idFromQuery = params.get("id");
+
+    let targetProductId = idFromQuery;
+    if (!targetProductId && (path.startsWith("/products/") || path.startsWith("/product/"))) {
+      targetProductId = path.split("/")[2]?.replace(/\/$/, "");
+    }
+
+    if (targetProductId) {
+      const match = ALL_PERFUMES.find(
+        (p) => p.id.toLowerCase() === targetProductId?.toLowerCase()
+      );
+      if (match) {
+        setSelectedProductModal(match);
+      }
+    }
+  }, []);
 
   const handleAccountClick = () => {
     if (auth.currentUser) {

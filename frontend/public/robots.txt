@@ -1,6 +1,6 @@
 # ==============================================================================
 # Sentire by PC - Production Robots.txt
-# https://sentireparfums.com
+# https://sentirebypc.com
 # ==============================================================================
 
 # Search Engine Crawlers (Google, Bing, DuckDuckGo, Yahoo, etc.)
@@ -40,4 +40,4 @@ User-agent: Bytespider
 Disallow: /
 
 # Canonical XML Sitemap
-Sitemap: https://sentireparfums.com/sitemap.xml
+Sitemap: https://sentirebypc.com/sitemap.xml
