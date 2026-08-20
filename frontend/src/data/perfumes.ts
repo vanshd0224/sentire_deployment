@@ -33,7 +33,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     img: "/assets/perfumes/calantha-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/calantha-10ml-1.png?v=2", "/assets/perfumes/calantha-10ml-2.png?v=2", "/assets/perfumes/calantha-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/calantha-30ml-1.png?v=2", "/assets/perfumes/calantha-30ml-2.png?v=2", "/assets/perfumes/calantha-30ml-3.png?v=2"],
+      30: ["/assets/perfumes/calantha-30ml-2.png?v=3", "/assets/perfumes/calantha-30ml-1.png?v=2", "/assets/perfumes/calantha-30ml-3.png?v=2"],
       50: ["/assets/perfumes/calantha-50ml-3.png?v=3", "/assets/perfumes/calantha-50ml-1.png?v=2", "/assets/perfumes/calantha-50ml-2.png?v=2"]
     },
     traces: ["Jasmine", "Rose", "Lily of Valley", "Sandalwood", "Amber"]
@@ -54,7 +54,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     img: "/assets/perfumes/deep-crush-50ml-3.png?v=3",
     sizeImages: {
       10: ["/assets/perfumes/deep-crush-10ml-1.png?v=2", "/assets/perfumes/deep-crush-10ml-2.png?v=2", "/assets/perfumes/deep-crush-10ml-3.png?v=2"],
-      30: ["/assets/perfumes/deep-crush-30ml-1.png?v=2", "/assets/perfumes/deep-crush-30ml-2.png?v=2", "/assets/perfumes/deep-crush-30ml-3.png?v=2"],
+      30: ["/assets/perfumes/deep-crush-30ml-2.png?v=3", "/assets/perfumes/deep-crush-30ml-1.png?v=2", "/assets/perfumes/deep-crush-30ml-3.png?v=2"],
       50: ["/assets/perfumes/deep-crush-50ml-3.png?v=3", "/assets/perfumes/deep-crush-50ml-1.png?v=2", "/assets/perfumes/deep-crush-50ml-2.png?v=2"]
     },
     traces: ["Lavender", "Rose", "Tobacco", "Sandalwood", "Amber"]
