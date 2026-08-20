@@ -337,8 +337,8 @@ export default function PerfumesPage({
         {/* Pricing & Cart Stepper */}
         <div className="mt-2 text-center">
           <div className="flex items-baseline justify-center gap-1.5 text-center">
-            <span className="font-bold text-xs sm:text-sm text-ink">₹{currentPrice.toLocaleString()}</span>
-            <span className="text-[10px] text-ink/40 line-through">MRP ₹{(p.mrps && p.mrps[currentSize] ? p.mrps[currentSize] : Math.round(currentPrice * 1.35)).toLocaleString()}</span>
+            <span className="font-sans font-bold text-xs sm:text-sm text-ink tabular-nums inline-flex items-baseline gap-0.5">₹{currentPrice.toLocaleString()}</span>
+            <span className="font-sans text-[10px] text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">MRP ₹{(p.mrps && p.mrps[currentSize] ? p.mrps[currentSize] : Math.round(currentPrice * 1.35)).toLocaleString()}</span>
           </div>
 
           {isOutOfStock ? (
@@ -710,7 +710,7 @@ export default function PerfumesPage({
                       <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[#c89b5a]/70 block">
                         Exclusive Edition
                       </span>
-                      <div className="flex items-baseline gap-2"><span className="font-display text-2xl sm:text-3xl font-normal text-[#c89b5a]">₹1,489</span><span className="text-sm text-white/40 line-through">MRP ₹1,859</span></div>
+                      <div className="flex items-baseline gap-3"><span className="font-sans font-bold text-2xl sm:text-3xl text-[#c89b5a] tracking-tight inline-flex items-baseline gap-0.5">₹1,489</span><span className="font-sans text-sm text-white/40 line-through inline-flex items-baseline gap-0.5">MRP ₹1,859</span></div>
                     </div>
 
                     <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">

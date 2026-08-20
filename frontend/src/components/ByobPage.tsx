@@ -1098,7 +1098,7 @@ export default function ByobPage({ onBackToHome, onAddToCart, onOpenCart, onOpen
               <div className="text-right space-y-1">
                 <div className="flex items-center justify-end gap-3">
                   <span className="text-xs text-[#837D74] line-through">₹{rawTotal.toLocaleString("en-IN")}</span>
-                  <span className="font-serif-luxe text-3xl text-[#FBF9F5]">₹{finalPrice.toLocaleString("en-IN")}</span>
+                  <span className="font-sans font-bold text-3xl text-[#FBF9F5] tracking-tight tabular-nums inline-flex items-baseline gap-0.5">₹{finalPrice.toLocaleString("en-IN")}</span>
                 </div>
                 <span className="text-[10px] font-mono text-[#C8A55B]">YOU SAVE ₹{discount} WITH BUNDLE</span>
               </div>

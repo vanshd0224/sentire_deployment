@@ -336,8 +336,8 @@ export default function NewArrivalsPage({
                   </div>
 
                   <div className="flex items-baseline justify-center gap-2 my-2">
-                    <span className="font-bold text-base text-ink">₹{priceInfo.price.toLocaleString("en-IN")}</span>
-                    <span className="text-xs text-ink/40 line-through">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
+                    <span className="font-sans font-bold text-base text-ink tabular-nums inline-flex items-baseline gap-0.5">₹{priceInfo.price.toLocaleString("en-IN")}</span>
+                    <span className="font-sans text-xs text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
 

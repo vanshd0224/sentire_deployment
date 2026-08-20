@@ -389,10 +389,10 @@ export default function ProductDetailModal({
 
             {/* Price & Discounts */}
             <div className="flex items-baseline gap-3 pt-2 border-t border-black/8">
-              <span className="font-display text-3xl font-bold text-[#1e1e1e]">
+              <span className="font-sans font-bold text-3xl text-[#1e1e1e] tracking-tight tabular-nums inline-flex items-baseline gap-0.5">
                 ₹{currentPrice.toLocaleString("en-IN")}
               </span>
-              <span className="text-sm text-[#1e1e1e]/40 line-through">₹{originalPrice.toLocaleString("en-IN")}</span>
+              <span className="font-sans text-sm text-[#1e1e1e]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">₹{originalPrice.toLocaleString("en-IN")}</span>
               <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
                 {discountPercent}% OFF
               </span>
@@ -963,7 +963,7 @@ export default function ProductDetailModal({
                     <p className="text-xs text-[#1e1e1e]/60 font-light truncate">{rec.desc}</p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-black/8 flex items-center justify-between">
-                    <span className="font-display text-sm font-bold text-[#1e1e1e]">₹{rec.prices[50] || rec.prices[30] || 799}</span>
+                    <span className="font-sans font-bold text-sm text-[#1e1e1e] tabular-nums inline-flex items-baseline gap-0.5">₹{rec.prices[50] || rec.prices[30] || 799}</span>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#c89b5a]">View Product →</span>
                   </div>
                 </div>
