@@ -54,6 +54,39 @@ export default function ProductDetailModal({
   const [selectedNote, setSelectedNote] = useState<ScentNote | null>(null);
   const [notifyEmail, setNotifyEmail] = useState<string>("");
   const [notifySubmitted, setNotifySubmitted] = useState<boolean>(false);
+  const [copiedShareLink, setCopiedShareLink] = useState<boolean>(false);
+
+  const handleShare = async (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!product) return;
+
+    const shareUrl = window.location.href;
+    const shareTitle = `SENTIRE By PC - ${product.name}`;
+    const shareText = `Discover ${product.name} Extrait de Parfum by SENTIRE By PC. Luxury 35% oil concentration.`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        showToast("Shared successfully!");
+        return;
+      } catch (err) {
+        // User cancelled or share failed, fallback to copy
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopiedShareLink(true);
+      showToast("Link copied to clipboard! 🔗");
+      setTimeout(() => setCopiedShareLink(false), 2500);
+    } catch (err) {
+      showToast("Link copied to clipboard! 🔗");
+    }
+  };
 
   // Review Form State
   const [isWritingReview, setIsWritingReview] = useState<boolean>(false);
@@ -309,16 +342,36 @@ export default function ProductDetailModal({
       <div className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#c89b5a]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1e1e1e] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury">
         {/* Mobile Drag Handle Bar */}
         <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />
-        {/* Sticky Close Button */}
-        <button
-          onClick={onClose}
-          className="sticky top-4 right-4 z-30 float-right flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#1e1e1e]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#c89b5a] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
-          aria-label="Close modal"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-        </button>
+        {/* Sticky Header Action Buttons (Close Button + Share Button directly below it) */}
+        <div className="sticky top-4 right-4 z-30 float-right flex flex-col items-center gap-2.5">
+          {/* 1. Close Button (✕) */}
+          <button
+            onClick={onClose}
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#1e1e1e]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#c89b5a] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
+            aria-label="Close modal"
+            title="Close"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* 2. Share Button (directly below Cross button) */}
+          <button
+            onClick={handleShare}
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#1e1e1e]/80 shadow-lg backdrop-blur-md transition-all hover:bg-[#c89b5a] hover:text-white cursor-pointer active:scale-95 touch-manipulation border border-black/5"
+            aria-label="Share product"
+            title="Share this perfume"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            </svg>
+          </button>
+        </div>
 
         {/* ── BREADCRUMB ── */}
         <div className="px-6 pt-6 pb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#1e1e1e]/40">
@@ -379,11 +432,29 @@ export default function ProductDetailModal({
                 {product.name}
               </h1>
 
-              {/* Star rating summary */}
-              <div className="flex items-center gap-2 mt-2">
-                <div className="flex text-amber-500 text-sm">★★★★★</div>
-                <span className="text-xs font-semibold text-[#1e1e1e]">4.9</span>
-                <span className="text-xs text-[#1e1e1e]/40">({productReviews.length} Verified Reviews)</span>
+              {/* Star rating summary & Share action */}
+              <div className="flex items-center justify-between gap-2 mt-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex text-amber-500 text-sm">★★★★★</div>
+                  <span className="text-xs font-semibold text-[#1e1e1e]">4.9</span>
+                  <span className="text-xs text-[#1e1e1e]/40">({productReviews.length} Verified Reviews)</span>
+                </div>
+
+                <button
+                  onClick={handleShare}
+                  className="flex items-center gap-1.5 rounded-full border border-[#c89b5a]/40 bg-[#c89b5a]/10 px-3.5 py-1 text-[11px] font-bold text-[#c89b5a] hover:bg-[#c89b5a] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
+                  title="Share this perfume"
+                  aria-label="Share this perfume"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                  </svg>
+                  <span>{copiedShareLink ? "Copied!" : "Share"}</span>
+                </button>
               </div>
             </div>
 
