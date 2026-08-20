@@ -245,7 +245,7 @@ export default function PerfumesPage({
           {/* Media box */}
           <div
             onClick={() => setSelectedDetailProduct(p)}
-            className="relative w-full aspect-square rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
+            className="relative w-full aspect-square rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
             title={`View info for ${p.name}`}
           >
             {badgeText && (
@@ -257,7 +257,7 @@ export default function PerfumesPage({
               src={(p.sizeImages && p.sizeImages[currentSize]?.[0]) || p.img}
               alt={p.name}
               loading="lazy"
-              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
               <span className="bg-white/95 text-ink text-[9px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md border border-[#c89b5a]/40">

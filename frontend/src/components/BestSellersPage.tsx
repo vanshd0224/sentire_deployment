@@ -320,9 +320,9 @@ export default function BestSellersPage({
                 <div>
                   <div
                     onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
-                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden p-2 flex items-center justify-center cursor-pointer"
+                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
-                    <img src={p.image} alt={p.name} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                    <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-2 left-2 rounded-full bg-[#120e0a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#c89b5a]">
                       {p.badge}
                     </span>
