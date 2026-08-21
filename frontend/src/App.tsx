@@ -64,10 +64,29 @@ export default function App() {
     return "home";
   });
 
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      const hash = window.location.hash;
+      if (hash === "#account" || path.includes("account")) setCurrentPage("account");
+      else if (hash === "#about" || path.includes("about")) setCurrentPage("about");
+      else if (hash === "#byob" || path.includes("byob")) setCurrentPage("byob");
+      else if (hash === "#personalisation" || path.includes("personalisation")) setCurrentPage("personalisation");
+      else if (hash === "#new-arrivals" || path.includes("new-arrivals")) setCurrentPage("new-arrivals");
+      else if (hash === "#bestsellers" || path.includes("bestsellers")) setCurrentPage("bestsellers");
+      else if (hash === "#perfumes" || path.includes("perfumes")) setCurrentPage("perfumes");
+      else if (hash === "#client-services" || path.includes("client-services")) setCurrentPage("client-services");
+      else if (hash === "#track-order" || path.includes("track-order")) setCurrentPage("track-order");
+      else setCurrentPage("home");
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
   const handleAccountClick = () => {
     if (auth.currentUser) {
-      setCurrentPage("account");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      handleNavigate("account");
     } else {
       setIsAccountOpen(true);
     }
@@ -79,6 +98,14 @@ export default function App() {
   ) => {
     setCurrentPage(page);
     setActiveFilters(filters);
+    const targetPath = page === "home" ? "/" : `/${page}`;
+    if (window.location.pathname !== targetPath) {
+      try {
+        window.history.pushState(null, "", targetPath);
+      } catch (e) {
+        console.error("Could not update history state", e);
+      }
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
