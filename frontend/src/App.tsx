@@ -85,12 +85,29 @@ export default function App() {
         setSelectedProductModal(match);
       }
     }
+
+    const handlePopState = () => {
+      const popPath = window.location.pathname;
+      const hash = window.location.hash;
+      if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
+      else if (hash === "#about" || popPath.includes("about")) setCurrentPage("about");
+      else if (hash === "#byob" || popPath.includes("byob")) setCurrentPage("byob");
+      else if (hash === "#personalisation" || popPath.includes("personalisation")) setCurrentPage("personalisation");
+      else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
+      else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
+      else if (hash === "#perfumes" || popPath.includes("perfumes")) setCurrentPage("perfumes");
+      else if (hash === "#client-services" || popPath.includes("client-services")) setCurrentPage("client-services");
+      else if (hash === "#track-order" || popPath.includes("track-order")) setCurrentPage("track-order");
+      else setCurrentPage("home");
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   const handleAccountClick = () => {
     if (auth.currentUser) {
-      setCurrentPage("account");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      handleNavigate("account");
     } else {
       setIsAccountOpen(true);
     }
@@ -102,6 +119,14 @@ export default function App() {
   ) => {
     setCurrentPage(page);
     setActiveFilters(filters);
+    const targetPath = page === "home" ? "/" : `/${page}`;
+    if (window.location.pathname !== targetPath) {
+      try {
+        window.history.pushState(null, "", targetPath);
+      } catch (e) {
+        console.error("Could not update history state", e);
+      }
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
