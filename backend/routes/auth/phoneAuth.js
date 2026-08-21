@@ -37,14 +37,20 @@ router.post('/send-otp', async (req, res) => {
 
     logger.info(`Sending OTP for ${cleanPhone} via MSG91...`);
 
-    // Call MSG91 Send OTP API
+    // Call MSG91 Send OTP API (Widget Engine - No DLT required)
     try {
-      const msg91Url = `https://control.msg91.com/api/v5/otp?template_id=${MSG91_WIDGET_ID}&mobile=${mobileWithoutPlus}&authkey=${MSG91_AUTH_KEY}`;
-      const msg91Res = await fetch(msg91Url, {
+      const msg91Res = await fetch('https://control.msg91.com/api/v5/otp', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+          'authkey': MSG91_AUTH_KEY,
+          'tokenAuth': MSG91_TOKEN_AUTH,
+          'widgetId': MSG91_WIDGET_ID
+        },
+        body: JSON.stringify({
+          mobile: mobileWithoutPlus,
+          otp: generatedOtp
+        })
       });
       const msg91Data = await msg91Res.json();
       logger.info(`MSG91 Send OTP Response for ${cleanPhone}:`, msg91Data);
