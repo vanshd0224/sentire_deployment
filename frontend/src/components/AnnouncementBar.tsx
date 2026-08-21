@@ -1,14 +1,6 @@
 const items = [
   // ── Promo messages ──────────────────────────────────
   {
-    text: "Extra 5% Off on Prepaid Orders",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-3.5 w-3.5 shrink-0">
-        <path d="M12 2l2.5 4.5L20 7.5l-4 4 .9 5.5L12 14.5 7.1 17l.9-5.5-4-4 5.5-1z" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
     text: "Use Code PC100 — ₹100 Off on Orders Above ₹999",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-3.5 w-3.5 shrink-0">
