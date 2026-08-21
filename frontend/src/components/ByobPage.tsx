@@ -188,7 +188,7 @@ export const BYOB_50ML_PERFUMES: ByobPerfume[] = [
 const BYOB_FAQS = [
   {
     q: "How does the SENTIRE Build Your Own Bundle work?",
-    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Signature 4-bottle set). Next, explore our haute-parfumerie collection and select your scents. Personalise your set with custom monogramming, and receive exclusive bundle savings up to ₹400 automatically applied at checkout."
+    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Quatuor 4-bottle set). Next, explore our signature 50ML collection and select your scents, and receive exclusive bundle savings up to ₹400 automatically applied at checkout."
   },
   {
     q: "How are bundle discounts applied?",
