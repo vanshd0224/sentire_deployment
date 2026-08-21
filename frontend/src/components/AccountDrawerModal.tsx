@@ -99,6 +99,14 @@ export default function AccountDrawerModal({
     setLoading(true);
 
     try {
+      // 1. Trigger MSG91 JS SDK Widget SendOTP (Without DLT)
+      const cleanMobile = `91${cleanDigits}`;
+      if (typeof (window as any).sendOtp === 'function') {
+        (window as any).sendOtp(cleanMobile, (s: any) => console.log('SDK Send Success:', s), (f: any) => console.log('SDK Send Fail:', f));
+      } else if (typeof (window as any).initSendOTP === 'function') {
+        (window as any).initSendOTP({ identifier: cleanMobile });
+      }
+
       const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
         ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/send-otp'
         : '/auth/send-otp';
