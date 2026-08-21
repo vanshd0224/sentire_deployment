@@ -251,9 +251,14 @@ export default function AccountDrawerModal({
                 </span>
                 <input
                   type="tel"
-                  placeholder="Enter Mobile Number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter 10-digit Mobile Number"
+                  maxLength={10}
+                  value={phoneNumber.replace(/[^0-9]/g, "").replace(/^91/, "").slice(0, 10)}
+                  onChange={(e) => {
+                    const raw = e.target.value.replace(/[^0-9]/g, "");
+                    const clean = raw.length > 10 && raw.startsWith("91") ? raw.slice(2, 12) : raw.slice(0, 10);
+                    setPhoneNumber(clean);
+                  }}
                   className="w-full px-4 py-3 text-sm text-[#1e1e1e] bg-transparent outline-none font-medium placeholder-[#aaa]"
                   required
                 />
