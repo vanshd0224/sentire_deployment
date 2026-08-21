@@ -304,7 +304,7 @@ export default function AccountDrawerModal({
             <p className="text-xs text-[#666666] mb-6">
               Verification code sent to{" "}
               <strong className="text-[#1e1e1e] font-semibold">
-                +91 {phoneNumber || "9461094671"}
+                {phoneNumber ? (phoneNumber.startsWith('+91') ? `+91 ${phoneNumber.replace('+91', '')}` : phoneNumber) : "+91 9461094671"}
               </strong>{" "}
               <button
                 onClick={() => setViewMode("login")}
