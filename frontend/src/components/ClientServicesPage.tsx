@@ -246,8 +246,8 @@ export default function ClientServicesPage({
                 <span className="text-xl">📞</span>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">CALL CLIENT SERVICES</h4>
                 <p className="text-[11px] text-ink/60 mt-1">Speak directly with our team</p>
-                <a href="tel:+919876543210" className="font-display text-base font-semibold text-[#c89b5a] mt-2 block hover:underline">
-                  +91 98765 43210
+                <a href="tel:+919950891935" className="font-display text-base font-semibold text-[#c89b5a] mt-2 block hover:underline">
+                  +91 99508 91935
                 </a>
               </div>
               <span className="text-[9.5px] text-ink/40 mt-3 block">Mon – Sat | 10:00 AM – 7:00 PM IST</span>
@@ -273,7 +273,7 @@ export default function ClientServicesPage({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">WHATSAPP CARE</h4>
                 <p className="text-[11px] text-ink/60 mt-1">Instant messaging concierge</p>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/919950891935"
                   target="_blank"
                   rel="noreferrer"
                   className="font-display text-sm font-semibold text-[#c89b5a] mt-2 block hover:underline"
