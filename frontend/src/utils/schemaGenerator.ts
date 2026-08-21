@@ -60,13 +60,15 @@ export const WEBSITE_SCHEMA = {
 };
 
 export const JAIPUR_STORE_SCHEMA = {
-  "@type": "Store",
+  "@type": ["Store", "LocalBusiness"],
   "@id": `${PRODUCTION_DOMAIN}/#jaipur-store`,
-  "name": "Sentire by PC - Jaipur Flagship Atelier",
+  "name": "Sentire by PC - Luxury Perfumes & Laser Engraving Jaipur",
   "image": `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
   "url": PRODUCTION_DOMAIN,
   "telephone": "+91-98765-43210",
-  "priceRange": "₹₹₹",
+  "priceRange": "₹₹ - ₹₹₹",
+  "currenciesAccepted": "INR",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Net Banking",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "M.I. Road",
@@ -94,6 +96,16 @@ export const JAIPUR_STORE_SCHEMA = {
       ],
       "opens": "10:30",
       "closes": "21:00"
+    }
+  ],
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Jaipur"
+    },
+    {
+      "@type": "Country",
+      "name": "India"
     }
   ],
   "hasOfferCatalog": {
