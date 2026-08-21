@@ -9,10 +9,10 @@ class ChatbotService {
     const defaultKey = Buffer.from("QVEuQWI4Uk42TE1Sc25MeFNFQlZBSWxOZjhqVTNVSExGTmpiMnFiSUcyamRsOWVIYXBLNnc=", "base64").toString("utf-8");
     this.apiKey = process.env.GEMINI_API_KEY || defaultKey;
     this.candidateModels = [
-      "gemini-3.5-flash",
-      "gemini-3.7-flash",
-      "gemini-3.6-flash",
-      "gemma-4-31b-it"
+      "gemini-1.5-flash",
+      "gemini-2.0-flash",
+      "gemini-1.5-pro",
+      "gemini-2.0-flash-lite"
     ];
     logger.info('Multi-Model Fallback RAG LLM Engine Active with live API key');
   }
@@ -30,7 +30,7 @@ class ChatbotService {
         if (fText.includes(w)) score += 1;
       });
       if (score > 0 || q.includes(f.name.toLowerCase()) || q.includes(f.family.toLowerCase())) {
-        matchedProfiles.push(`- **${f.name}** (${f.family}): ${f.desc} [Available Bottle Formats: ${f.sizes.join(', ')}]`);
+        matchedProfiles.push(`- **${f.name}** (${f.family}): ${f.desc} [Available Sizes: ${f.sizes.join(', ')}]`);
       }
     });
 
@@ -43,28 +43,36 @@ class ChatbotService {
     return matchedProfiles.join('\n');
   }
 
-  // ── CREATIVE LLM RAG PROMPT BUILDER ─────────────────────────────────────
+  // ── CREATIVE LLM RAG PROMPT BUILDER (UNIQUE & DYNAMIC ANSWERS) ───────────
   _buildRAGPrompt(userQuestion, retrievedContext) {
-    return `You are "Sentire AI" — a creative, articulate luxury fragrance concierge for luxury perfume house "SENTIRE By PC".
+    return `You are "Sentire AI" — an elite, highly articulate luxury fragrance concierge for luxury perfume house "SENTIRE By PC".
 
-OFFICIAL SENTIRE BRAND KNOWLEDGE:
+OFFICIAL SENTIRE BRAND KNOWLEDGE (GROUNDING DATASET):
 - 11 Core Signature Extraits de Parfum:
 ${retrievedContext}
-- Bottle Size Formats: 50 ML Signature Bottle (Lead recommendation), 30 ML Travel Format, 10 ML Purse Spray. (Note: Purple Oud is 50 ML only).
-- Product Personalisation: 100% COMPLIMENTARY Laser Engraving on all 50 ML bottles. Supports BOTH Custom Text Engraving (names, initials, dates, quotes) AND Image & Photo Engraving (custom portraits, line-art, or photos laser-etched directly onto the glass bottle!).
-- Shipping & Policy: Complimentary Express Shipping across India above ₹999, Cash on Delivery (COD), 5% OFF on prepaid orders.
+- Bottle Formats: 50 ML Signature Bottle (Primary recommendation), 30 ML Travel Format, 10 ML Purse Spray. (IMPORTANT: Purple Oud is 50 ML ONLY).
+- Personalisation & Engraving: 100% COMPLIMENTARY Laser Engraving on all 50 ML bottles. Supports BOTH Custom Text Engraving (names, initials, dates, quotes) AND Image & Photo Engraving (custom portraits, line-art, or photos laser-etched directly onto glass!).
+- Special Offers & Discounts:
+  • Code "PC100": ₹100 OFF on orders above ₹999
+  • Code "PC200": ₹200 OFF on orders above ₹1,999
+  • BYOB (Build Your Own Box) Multi-Bottle Discounts: 2 bottles = ₹150 OFF, 3 bottles = ₹250 OFF, 4 bottles = ₹400 OFF.
+  • Shipping: Express Shipping across India above ₹999, Cash on Delivery (COD) available.
 
-LLM INSTRUCTIONS FOR CREATIVE DIVERSITY:
-1. DYNAMIC & CREATIVE THINKING:
-   Never copy or repeat static template phrases. Use your full LLM intelligence to write a fresh, unique, elegant recommendation tailored specifically to the user's scenario.
+STRICT INSTRUCTIONS FOR RESPONSE QUALITY & UNICKNESS:
+1. DYNAMIC & NON-REPETITIVE WRITING:
+   - Every response MUST be completely unique, fresh, and tailored specifically to the user's question.
+   - NEVER repeat pre-canned template phrases or generic copy-paste text.
+   - Adopt a warm, sophisticated, luxurious tone like a master perfumer concierge.
 
-2. CONTEXT INTEGRATION:
-   If the user asks about perfumes, occasions, gifting, or notes, recommend the most fitting Sentire 50 ML extraits de parfum using your scent reasoning.
-   If the user asks about personalisation, engraving, image engraving, or photo engraving, enthusiastically highlight BOTH Text Engraving AND Image/Photo Engraving!
-   If the user asks an outside/general question, answer intelligently using your internal training data.
+2. DATASET ACCURACY FIRST:
+   - If the user's question can be answered from the SENTIRE BRAND KNOWLEDGE dataset (perfumes, notes, sizes, laser photo-engraving, coupons, shipping, BYOB box), provide the exact facts directly from the dataset.
+
+3. LLM KNOWLEDGE SYNTHESIS:
+   - If the user asks something beyond the dataset (e.g. fragrance layering, occasion styling, gifting advice by personality, climate/season selection, longevity science, or general questions), combine your internal fragrance expertise with Sentire products to give a deeply helpful, intelligent, and relevant answer.
+   - Do NOT provide irrelevant, canned, or off-topic responses.
 
 User Question: "${userQuestion}"
-Write a fresh, articulate, highly engaging response:`;
+Write a fresh, elegant, articulate, and completely unique response:`;
   }
 
   async processChat({ message, sessionId, customerId, cartId }) {
@@ -94,7 +102,11 @@ Write a fresh, articulate, highly engaging response:`;
             const payload = {
               contents: [{
                 parts: [{ text: prompt }]
-              }]
+              }],
+              generationConfig: {
+                temperature: 0.7,
+                topP: 0.95
+              }
             };
 
             const res = await fetch(url, {
@@ -138,57 +150,48 @@ Write a fresh, articulate, highly engaging response:`;
   _getRAGFallback(message, context) {
     const q = message.toLowerCase().trim();
 
-    // 1. Outside / General Knowledge Questions
-    if (q.includes('quantum') || q.includes('physics') || q.includes('science') || q.includes('math') || q.includes('code') || q.includes('history') || q.includes('who is') || q.includes('what is') || q.includes('explain')) {
-      if (q.includes('quantum')) {
-        return "Quantum entanglement is a phenomenon in physics where particles remain interconnected regardless of distance. Much like fine perfumery, where a signature scent connects an unseen moment directly to emotion and memory! How may I guide your fragrance exploration today?";
-      }
-      return `That is a fascinating topic! As the fragrance concierge for **SENTIRE By PC**, I specialize in scent compositions, artisanal notes, and bottle engraving. Is there a particular perfume note or gift scenario I can assist you with today?`;
+    // 1. Engraving & Personalisation
+    if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom') || q.includes('name')) {
+      const engravingPhrases = [
+        "Product Personalisation at **SENTIRE By PC** is 100% complimentary on all 50 ML signature bottles! You can choose custom text engraving (names, dates, quotes) OR high-definition photo/portrait laser etching directly on the glass bottle.",
+        "We offer complimentary 3D laser engraving on every 50 ML bottle! This includes custom text, initials, or high-precision photo and portrait engraving laser-etched onto your glass bottle.",
+        "Make your bottle truly one-of-a-kind with Sentire's complimentary laser engraving! We customize 50 ML bottles with bespoke text, special dates, or custom photo & portrait laser engraving."
+      ];
+      return engravingPhrases[Math.floor(Math.random() * engravingPhrases.length)];
     }
 
-    // 2. Pricing & Offers
-    if (q.includes('pric') || q.includes('cost') || q.includes('rate') || q.includes('how much') || q.includes('mrp') || q.includes('offer') || q.includes('discount')) {
-      return "Our luxury extraits de parfum are priced as follows:\n" +
-        "• **50 ML Signature Bottle**: ₹2,499 – ₹4,999 (Includes 100% Free Laser & Photo Engraving!)\n" +
-        "• **30 ML Travel Format**: ₹1,499 – ₹1,699\n" +
-        "• **10 ML Purse Spray**: ₹799\n" +
-        "We also offer **5% OFF** on all prepaid orders + Complimentary Express Shipping across India above ₹999!";
+    // 2. Pricing, Coupons & Offers
+    if (q.includes('coupon') || q.includes('code') || q.includes('offer') || q.includes('discount') || q.includes('pric') || q.includes('cost')) {
+      return "Here are our current active offers & discounts at **SENTIRE By PC**:\n" +
+        "• **Code PC100**: ₹100 OFF on orders above ₹999\n" +
+        "• **Code PC200**: ₹200 OFF on orders above ₹1,999\n" +
+        "• **BYOB Box Discounts**: Get up to ₹400 OFF when bundling 2, 3, or 4 bottles!\n" +
+        "• **Complimentary Shipping**: Free express delivery across India on orders above ₹999.";
     }
 
-    // 3. Engraving & Personalisation
-    if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom')) {
-      return "Product Personalisation at **Sentire by PC** is **100% COMPLIMENTARY** on all 50 ML signature bottles! Options include:\n" +
-        "1. **Text & Name Engraving**: Engrave names, initials, dates, or custom quotes.\n" +
-        "2. **Image & Photo Engraving**: High-precision laser etching of portraits, photos, line-art, or logos directly onto the glass bottle!";
-    }
-
-    // 4. Greetings
-    if (['hi', 'hello', 'hey', 'greetings', 'hola', 'namaste'].includes(q) || q.startsWith('hi ') || q.startsWith('hello ')) {
-      return "Greetings! Welcome to **Sentire by PC**. I am your luxury fragrance concierge. How may I assist your scent journey today?";
-    }
-
-    // 5. Occasion Routers
+    // 3. Occasion Routers
     if (q.includes('party') || q.includes('night') || q.includes('evening') || q.includes('club')) {
-      return "For high-energy parties and evening soirees, **Midnight (50 ML)** and **Rich (50 ML)** command the room. Midnight opens with blackcurrant and tuberose over a deep vanilla musk base, while Rich exudes opulent bergamot, spiced rose, and velvet amber!";
+      return "For evening galas and high-energy nights, **Midnight (50 ML)** and **Rich (50 ML)** are standout choices. Midnight pairs blackcurrant with tuberose and vanilla musk, while Rich delivers fresh bergamot over spiced rose and amber.";
     }
 
     if (q.includes('office') || q.includes('work') || q.includes('fresh') || q.includes('daily')) {
-      return "For an uplifting, clean daily signature, **Mirai (50 ML)** and **0809 (50 ML)** are unrivaled. Mirai combines bright lemon, bergamot, and earthy patchouli, while 0809 pairs Sichuan pepper with soothing lavender and ambroxan.";
+      return "For a sophisticated daily signature at work, **Mirai (50 ML)** and **0809 (50 ML)** offer crisp, uplifting projection. Mirai brings zesty lemon and earthy patchouli, while 0809 pairs lavender with spicy Sichuan pepper.";
     }
 
     if (q.includes('date') || q.includes('romance') || q.includes('intimate')) {
-      return "For romantic date nights, **Deep Crush (50 ML)** and **Seductive (50 ML)** create an unforgettable aura. Deep Crush blends lavender with warm tobacco woods, while Seductive offers citric limon and velvet amber.";
+      return "For intimate date nights, **Deep Crush (50 ML)** and **Seductive (50 ML)** craft a magnetic aura. Deep Crush blends lavender with warm tobacco woods, while Seductive offers fresh limon and velvet amber.";
     }
 
-    // 6. Specific Perfume Mentions
+    // 4. Specific Perfume Mentions
     const coreList = sentireDataset.core_eleven_fragrances;
     const match = coreList.find(f => q.includes(f.name.toLowerCase()));
     if (match) {
-      return `**${match.name} (50 ML Extrait de Parfum)** is an exquisite ${match.family} scent featuring notes of ${match.desc}. It is available in 50 ML, 30 ML, and 10 ML formats, with complimentary laser engraving on all 50 ML bottles.`;
+      const isPurple = match.name.toLowerCase().includes('purple');
+      return `**${match.name} (50 ML Extrait de Parfum)** is an exquisite ${match.family} scent. ${match.desc} Available in ${match.sizes.join(', ')} formats, featuring complimentary laser text & photo engraving on all 50 ML bottles.`;
     }
 
-    const core = coreList[Math.floor(Math.random() * coreList.length)];
-    return `Discover **${core.name} (50 ML Extrait de Parfum)** — a luxury ${core.family} creation featuring notes of ${core.desc}. Would you like to explore matching scent notes or bottle formats?`;
+    const randomCore = coreList[Math.floor(Math.random() * coreList.length)];
+    return `Discover **${randomCore.name} (50 ML Extrait de Parfum)** — a luxury ${randomCore.family} creation: ${randomCore.desc}. How may I help tailor your scent selection today?`;
   }
 
   async _saveMessage(sessionId, customerId, role, text) {
