@@ -32,7 +32,7 @@ export const ALL_PERFUMES: PerfumeProduct[] = [
     badge: "bestseller",
     img: "/assets/perfumes/calantha-50ml-3.png?v=3",
     sizeImages: {
-      10: ["/assets/perfumes/calantha-10ml-1.png?v=2", "/assets/perfumes/calantha-10ml-2.png?v=2", "/assets/perfumes/calantha-10ml-3.png?v=2"],
+      10: ["/assets/perfumes/calantha-10ml-1.png?v=5", "/assets/perfumes/calantha-10ml-2.png?v=5", "/assets/perfumes/calantha-10ml-3.png?v=5"],
       30: ["/assets/perfumes/calantha-30ml-2.png?v=3", "/assets/perfumes/calantha-30ml-1.png?v=2", "/assets/perfumes/calantha-30ml-3.png?v=2"],
       50: ["/assets/perfumes/calantha-50ml-3.png?v=3", "/assets/perfumes/calantha-50ml-1.png?v=2", "/assets/perfumes/calantha-50ml-2.png?v=2"]
     },
