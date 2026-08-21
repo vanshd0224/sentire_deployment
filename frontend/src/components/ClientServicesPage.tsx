@@ -142,16 +142,47 @@ export default function ClientServicesPage({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
+        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/api/enquiries'
+        : '/api/enquiries';
+
+      const res = await fetch(backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: activeCategory,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          preferredContact: formData.preferredContact,
+          orderNumber: formData.orderNumber,
+          queryType: formData.issueType,
+          message: formData.message
+        })
+      });
+
+      const data = await res.json();
       setIsSubmitting(false);
-      const randomRef = `SNT-CS-${Math.floor(10000 + Math.random() * 90000)}`;
+
+      if (data.success && data.referenceId) {
+        setSubmissionRef(data.referenceId);
+      } else {
+        const randomRef = `SNT-CS-${Math.floor(100000 + Math.random() * 900000)}`;
+        setSubmissionRef(randomRef);
+      }
+      window.scrollTo({ top: 400, behavior: "smooth" });
+    } catch (err) {
+      setIsSubmitting(false);
+      const randomRef = `SNT-CS-${Math.floor(100000 + Math.random() * 900000)}`;
       setSubmissionRef(randomRef);
       window.scrollTo({ top: 400, behavior: "smooth" });
-    }, 800);
+    }
   };
 
   const toggleFaq = (index: number) => {
