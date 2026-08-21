@@ -87,7 +87,7 @@ export default function AccountDrawerModal({
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-    const cleanDigits = phoneInput.replace(/[^0-9]/g, "");
+    const cleanDigits = phoneNumber.replace(/[^0-9]/g, "");
 
     if (cleanDigits.length !== 10) {
       setErrorMessage("Please enter a valid 10-digit mobile number.");
@@ -99,7 +99,7 @@ export default function AccountDrawerModal({
     setLoading(true);
 
     try {
-      const backendUrl = window.location.hostname.includes('run.app')
+      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
         ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/send-otp'
         : '/auth/send-otp';
 
@@ -112,12 +112,12 @@ export default function AccountDrawerModal({
       console.log("OTP Send notice:", err.message);
     } finally {
       setLoading(false);
-      setStep("OTP_INPUT");
+      setViewMode("otp");
       setResendTimer(30);
     }
   };
 
-    const handleVerifyOtp = async (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
     const enteredOtp = otpValues.join("");
@@ -130,13 +130,23 @@ export default function AccountDrawerModal({
     setLoading(true);
 
     try {
-      if (confirmationResult) {
-        await confirmationResult.confirm(enteredOtp);
-      } else {
-        try { await signInAnonymously(auth); } catch(e) {}
+      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
+        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/verify-otp'
+        : '/auth/verify-otp';
+
+      const verifyRes = await fetch(backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber, code: enteredOtp })
+      });
+      const verifyData = await verifyRes.json();
+
+      if (verifyData && !verifyData.success && verifyData.error) {
+        setErrorMessage(verifyData.error);
+        return;
       }
     } catch (err: any) {
-      try { await signInAnonymously(auth); } catch (anonErr) {}
+      console.log("OTP Verify notice:", err.message);
     } finally {
       setLoading(false);
       localStorage.setItem("sentire_user_phone", phoneNumber || "9079603729");
@@ -180,7 +190,7 @@ export default function AccountDrawerModal({
     newVals[index] = val.slice(-1);
     setOtpValues(newVals);
     if (val && index < 3) {
-      document.getElementById(`otp-input-\${index + 1}`)?.focus();
+      document.getElementById(`otp-input-${index + 1}`)?.focus();
     }
   };
 
@@ -313,7 +323,7 @@ export default function AccountDrawerModal({
                 {otpValues.map((digit, idx) => (
                   <input
                     key={idx}
-                    id={`otp-input-\${idx}`}
+                    id={`otp-input-${idx}`}
                     type="text"
                     maxLength={1}
                     value={digit}
@@ -331,7 +341,7 @@ export default function AccountDrawerModal({
                   onClick={() => setResendTimer(30)}
                   className="text-[#c89b5a] font-semibold underline disabled:opacity-50 cursor-pointer"
                 >
-                  Resend OTP {resendTimer > 0 ? `(\${resendTimer}s)` : ""}
+                  Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
                 </button>
               </div>
 
