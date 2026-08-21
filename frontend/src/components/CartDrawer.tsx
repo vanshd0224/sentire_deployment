@@ -157,6 +157,49 @@ export default function CartDrawer({
     [items]
   );
 
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponInput, setCouponInput] = useState<string>("");
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
+
+  const couponDiscount = useMemo(() => {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
+    if (appliedCoupon === "PC200" && subtotal >= 1999) return 200;
+    return 0;
+  }, [appliedCoupon, subtotal]);
+
+  const handleApplyCoupon = (codeToApply?: string) => {
+    const code = (codeToApply || couponInput).trim().toUpperCase();
+    setCouponError(null);
+    setCouponSuccess(null);
+
+    if (code === "PC100") {
+      if (subtotal < 999) {
+        setCouponError("PC100 requires a minimum order of ₹999");
+        return;
+      }
+      setAppliedCoupon("PC100");
+      setCouponSuccess("Code PC100 applied! ₹100 OFF");
+    } else if (code === "PC200") {
+      if (subtotal < 1999) {
+        setCouponError("PC200 requires a minimum order of ₹1,999");
+        return;
+      }
+      setAppliedCoupon("PC200");
+      setCouponSuccess("Code PC200 applied! ₹200 OFF");
+    } else {
+      setCouponError("Invalid promo code");
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput("");
+    setCouponError(null);
+    setCouponSuccess(null);
+  };
+
   const FREE_SHIPPING_THRESHOLD = 999;
   const progressPercent = Math.min(
     100,
@@ -165,7 +208,7 @@ export default function CartDrawer({
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const isFreeShippingUnlocked = subtotal >= FREE_SHIPPING_THRESHOLD && items.length > 0;
   const shippingCost = items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 99;
-  const finalTotal = subtotal + shippingCost;
+  const finalTotal = Math.max(0, subtotal - couponDiscount + shippingCost);
 
   const handleQuantityChange = useCallback(
     (item: CartItem, delta: number) => {
@@ -641,7 +684,92 @@ export default function CartDrawer({
 
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface px-6 pt-4.5 pb-5 shrink-0 salon-stagger-5">
+          <footer className="cart-footer-surface px-6 pt-4 pb-5 shrink-0 salon-stagger-5">
+            {/* Promo Code Input & Badges */}
+            <div className="mb-3.5">
+              <div className="flex items-center justify-between mb-1.5">
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "8.5px",
+                    fontWeight: 600,
+                    letterSpacing: "0.20em",
+                    textTransform: "uppercase",
+                    color: "#C89A46",
+                  }}
+                >
+                  Promo / Coupon Code
+                </span>
+              </div>
+
+              {appliedCoupon ? (
+                <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/30 rounded-lg px-3 py-1.5 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-[#0B0907] font-mono tracking-wider">{appliedCoupon}</span>
+                    <span className="text-[#C89A46] font-medium">(-₹{couponDiscount})</span>
+                  </div>
+                  <button
+                    onClick={handleRemoveCoupon}
+                    className="text-gray-500 hover:text-red-500 font-bold text-sm px-1"
+                    title="Remove Code"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="Enter PC100 or PC200"
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleApplyCoupon();
+                      }}
+                      className="flex-1 bg-black/5 border border-black/15 rounded-lg px-3 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907]"
+                    />
+                    <button
+                      onClick={() => handleApplyCoupon()}
+                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded-lg px-3 py-1 text-xs font-medium uppercase tracking-wider cursor-pointer"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  {/* Quick Code Pills */}
+                  <div className="flex items-center gap-1.5 mt-2">
+                    <button
+                      onClick={() => handleApplyCoupon("PC100")}
+                      className={`text-[9.5px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                        subtotal >= 999
+                          ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
+                          : "bg-black/5 text-gray-400 border-black/10"
+                      }`}
+                    >
+                      PC100 (₹100 OFF &gt; ₹999)
+                    </button>
+                    <button
+                      onClick={() => handleApplyCoupon("PC200")}
+                      className={`text-[9.5px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                        subtotal >= 1999
+                          ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
+                          : "bg-black/5 text-gray-400 border-black/10"
+                      }`}
+                    >
+                      PC200 (₹200 OFF &gt; ₹1999)
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {couponError && (
+                <p className="text-[10px] text-red-500 mt-1 font-sans">{couponError}</p>
+              )}
+              {couponSuccess && (
+                <p className="text-[10px] text-emerald-600 mt-1 font-sans font-medium">{couponSuccess}</p>
+              )}
+            </div>
+
             <p
               style={{
                 fontFamily: "var(--font-sans)",
@@ -650,13 +778,13 @@ export default function CartDrawer({
                 letterSpacing: "0.20em",
                 textTransform: "uppercase",
                 color: "rgba(25,20,15,0.38)",
-                marginBottom: "12px",
+                marginBottom: "8px",
               }}
             >
               Order Summary
             </p>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between items-baseline">
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "rgba(25,20,15,0.58)" }}>
                   Subtotal
@@ -665,6 +793,17 @@ export default function CartDrawer({
                   ₹{(subtotal || 0).toLocaleString()}
                 </span>
               </div>
+
+              {couponDiscount > 0 && (
+                <div className="flex justify-between items-baseline">
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "#C89A46", fontWeight: 500 }}>
+                    Promo Discount ({appliedCoupon})
+                  </span>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12.5px", color: "#C89A46", fontWeight: 600 }}>
+                    -₹{couponDiscount.toLocaleString()}
+                  </span>
+                </div>
+              )}
 
               <div className="flex justify-between items-baseline">
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "rgba(25,20,15,0.58)" }}>
@@ -704,7 +843,7 @@ export default function CartDrawer({
                 setIsRedirecting(true);
 
                 const winRef = window;
-                createOrGetShopifyCheckoutUrl(items)
+                createOrGetShopifyCheckoutUrl(items, appliedCoupon || undefined)
                   .then((checkoutUrl) => {
                     if (checkoutUrl) {
                       winRef.location.href = checkoutUrl;
