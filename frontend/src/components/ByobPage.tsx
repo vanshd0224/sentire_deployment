@@ -191,7 +191,7 @@ const LUXURY_PERFUMES: LuxuryPerfume[] = [
 const FAQS = [
   {
     q: "How does the SENTIRE Build Your Own Bundle work?",
-    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Signature 4-bottle set). Next, explore our haute-parfumerie collection and select your scents. Personalise your set with custom monogramming, and receive exclusive bundle savings up to ₹300 automatically applied at checkout."
+    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Signature 4-bottle set). Next, explore our haute-parfumerie collection and select your scents. Personalise your set with custom monogramming, and receive exclusive bundle savings up to ₹400 automatically applied at checkout."
   },
   {
     q: "Can I select the same fragrance multiple times in one bundle?",
@@ -279,7 +279,7 @@ export default function ByobPage({ onBackToHome, onAddToCart, onOpenCart, onOpen
   const progressPercent = Math.round((filledCount / bundleSize) * 100);
 
   const rawTotal = selected.reduce((sum, item) => sum + (item?.price || 0), 0);
-  const discount = bundleSize === 2 ? 100 : bundleSize === 3 ? 200 : 300;
+  const discount = bundleSize === 2 ? 150 : bundleSize === 3 ? 250 : 400;
   const finalPrice = Math.max(0, rawTotal - (isComplete ? discount : 0));
 
   // Trigger Toast Notification
