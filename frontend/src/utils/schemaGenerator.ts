@@ -6,6 +6,7 @@
 
 import { PRODUCTION_DOMAIN } from "./seo";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
+import { getPerfumeReviewStats } from "../data/reviews";
 
 export const ORGANIZATION_SCHEMA = {
   "@type": "Organization",
@@ -253,6 +254,8 @@ export function generateProductSchema(product: PerfumeProduct) {
     };
   });
 
+  const stats = getPerfumeReviewStats(product.id);
+
   return {
     "@type": "ProductGroup",
     "@id": `${canonicalUrl}#productgroup`,
@@ -264,6 +267,13 @@ export function generateProductSchema(product: PerfumeProduct) {
     },
     "image": fullImageUrl,
     "productGroupID": `SENTIRE-GRP-${product.id.toUpperCase()}`,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": stats.averageRating,
+      "reviewCount": stats.count,
+      "bestRating": "5",
+      "worstRating": "1"
+    },
     "variesBy": ["https://schema.org/size"],
     "hasVariant": variants
   };

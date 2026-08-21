@@ -828,26 +828,7 @@ export default function PerfumesPage({
       </>
     )}
 
-        {/* ── SECTION 4: LUXURY BRAND PROMISE & BUNDLE BANNERS ── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-          <div className="rounded-xl border border-black/8 bg-white p-6 text-center space-y-2 shadow-xs">
-            <span className="text-2xl block">📦</span>
-            <h4 className="font-display text-lg text-ink font-medium">Complimentary Shipping</h4>
-            <p className="text-xs text-ink/60 font-light">
-              Free insured express delivery on all orders above ₹999 across India.
-            </p>
-          </div>
 
-          <div className="rounded-xl border border-black/8 bg-white p-6 text-center space-y-2 shadow-xs">
-            <span className="text-2xl block">✨</span>
-            <h4 className="font-display text-lg text-ink font-medium">Haute Samples Included</h4>
-            <p className="text-xs text-ink/60 font-light">
-              Receive two complimentary 2ml extrait samples with every full-size bottle.
-            </p>
-          </div>
-
-
-        </section>
       </main>
 
       {/* ── RESPONSIVE FILTER DRAWER / MOBILE BOTTOM SHEET ── */}

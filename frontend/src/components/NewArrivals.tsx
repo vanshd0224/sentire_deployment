@@ -22,7 +22,7 @@ const products: ProductItem[] = [
     image: "/assets/rich.png?v=12",
     badge: "New Launch",
     rating: 4.93,
-    reviewsCount: 54,
+    reviewsCount: 51,
     prices: {
       10: { price: 559, originalPrice: 779 },
       30: { price: 1287, originalPrice: 1809 },
@@ -36,7 +36,7 @@ const products: ProductItem[] = [
     image: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     badge: "Exclusive",
     rating: 4.95,
-    reviewsCount: 88,
+    reviewsCount: 60,
     prices: {
       50: { price: 1489, originalPrice: 1859 },
     },
@@ -48,7 +48,7 @@ const products: ProductItem[] = [
     image: "/assets/calantha.png?v=12",
     badge: "New Release",
     rating: 4.88,
-    reviewsCount: 112,
+    reviewsCount: 52,
     prices: {
       10: { price: 399, originalPrice: 449 },
       30: { price: 900, originalPrice: 1409 },
@@ -62,7 +62,7 @@ const products: ProductItem[] = [
     image: "/assets/herrlich.png?v=12",
     badge: "New Launch",
     rating: 4.92,
-    reviewsCount: 48,
+    reviewsCount: 46,
     prices: {
       10: { price: 550, originalPrice: 639 },
       30: { price: 1499, originalPrice: 2129 },

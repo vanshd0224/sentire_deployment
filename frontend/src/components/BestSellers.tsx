@@ -21,8 +21,8 @@ const products: ProductItem[] = [
     notes: "Citric Limon • Fresh Lavender • Velvet Amber",
     image: "/assets/seductive.png?v=12",
     badge: "Best Seller",
-    rating: 4.91,
-    reviewsCount: 165,
+    rating: 4.93,
+    reviewsCount: 59,
     prices: {
       10: { price: 459, originalPrice: 649 },
       30: { price: 999, originalPrice: 1409 },
@@ -36,7 +36,7 @@ const products: ProductItem[] = [
     image: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     badge: "Exclusive",
     rating: 4.95,
-    reviewsCount: 98,
+    reviewsCount: 60,
     prices: {
       50: { price: 1489, originalPrice: 1859 },
     },
@@ -47,8 +47,8 @@ const products: ProductItem[] = [
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
     image: "/assets/calantha.png?v=12",
     badge: "Best Seller",
-    rating: 4.85,
-    reviewsCount: 116,
+    rating: 4.88,
+    reviewsCount: 52,
     prices: {
       10: { price: 399, originalPrice: 449 },
       30: { price: 900, originalPrice: 1409 },
@@ -61,8 +61,8 @@ const products: ProductItem[] = [
     notes: "Lavender • Tobacco Woods • Sandalwood Amber",
     image: "/assets/deep-crush.png?v=12",
     badge: "Best Seller",
-    rating: 4.89,
-    reviewsCount: 142,
+    rating: 4.91,
+    reviewsCount: 54,
     prices: {
       10: { price: 350, originalPrice: 419 },
       30: { price: 899, originalPrice: 1319 },
