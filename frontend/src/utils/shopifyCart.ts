@@ -257,29 +257,36 @@ export const redirectToShopifyFormCheckout = (items: any[]) => {
 };
 
 // Asynchronously create a fresh GraphQL Shopify Cart via Server-Side Cloud Run Backend Proxy
-export const createOrGetShopifyCheckoutUrl = async (items: any[]): Promise<string> => {
+export const createOrGetShopifyCheckoutUrl = async (items: any[], discountCode?: string): Promise<string> => {
   if (!items || items.length === 0) return "";
 
+  let checkoutUrl = "";
   try {
     const backendUrl = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "https://ecommerce-backend-1041917436859.asia-south1.run.app";
     const res = await fetch(`${backendUrl}/checkout/create-cart`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items, discountCode })
     });
 
     const data = await res.json();
     if (data?.checkoutUrl) {
-      console.log("[Option B Server Proxy Success] Signed Checkout URL:", data.checkoutUrl);
-      return data.checkoutUrl;
+      checkoutUrl = data.checkoutUrl;
     }
   } catch (err) {
     console.error("[Option B Server Proxy Warning] Call error:", err);
   }
 
-  // Fallback direct permalink
-  const permalinkItems = items
-    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
-    .join(",");
-  return `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+  if (!checkoutUrl) {
+    const permalinkItems = items
+      .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
+      .join(",");
+    checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
+  }
+
+  if (discountCode) {
+    checkoutUrl += (checkoutUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
+  }
+
+  return checkoutUrl;
 };
