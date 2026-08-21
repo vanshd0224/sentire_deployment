@@ -187,8 +187,8 @@ export const BYOB_50ML_PERFUMES: ByobPerfume[] = [
 
 const BYOB_FAQS = [
   {
-    q: "Why are all fragrances in the BYOB set 50ML Extraits?",
-    a: "Every perfume in our BYOB collection is a full-size 50 ML Grand Flacon crafted with 35%+ pure perfume oil concentration for intense 12-14+ hour longevity."
+    q: "How does the SENTIRE Build Your Own Bundle work?",
+    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Signature 4-bottle set). Next, explore our haute-parfumerie collection and select your scents. Personalise your set with custom monogramming, and receive exclusive bundle savings up to ₹400 automatically applied at checkout."
   },
   {
     q: "How are bundle discounts applied?",
