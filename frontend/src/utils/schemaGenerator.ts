@@ -12,14 +12,14 @@ export const ORGANIZATION_SCHEMA = {
   "@type": "Organization",
   "@id": `${PRODUCTION_DOMAIN}/#organization`,
   "name": "Sentire by PC",
-  "alternateName": "Sentire",
+  "alternateName": "Sentire Fragrances",
   "url": PRODUCTION_DOMAIN,
   "logo": {
     "@type": "ImageObject",
     "url": `${PRODUCTION_DOMAIN}/assets/logo.png`,
-    "caption": "Sentire by PC Luxury Fragrance House"
+    "caption": "Sentire by PC — Premium Perfumes with Laser Engraving, Jaipur"
   },
-  "description": "Indian artisanal luxury fragrance house crafting extraits de parfum with 35%+ perfume oil concentration and complimentary laser bottle photo & name engraving.",
+  "description": "Jaipur-based artisanal luxury fragrance house crafting extraits de parfum with complimentary laser bottle photo & name engraving.",
   "foundingLocation": {
     "@type": "Place",
     "address": {
@@ -31,9 +31,9 @@ export const ORGANIZATION_SCHEMA = {
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+91-98765-43210",
+    "telephone": "+919950891935",
     "contactType": "customer service",
-    "email": "support@sentirebypc.com",
+    "email": "sentirebypc@gmail.com",
     "areaServed": "IN",
     "availableLanguage": ["English", "Hindi"]
   },
@@ -63,25 +63,26 @@ export const WEBSITE_SCHEMA = {
 export const JAIPUR_STORE_SCHEMA = {
   "@type": ["Store", "LocalBusiness"],
   "@id": `${PRODUCTION_DOMAIN}/#jaipur-store`,
-  "name": "Sentire by PC - Luxury Perfumes & Laser Engraving Jaipur",
+  "name": "Sentire by PC",
   "image": `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
   "url": PRODUCTION_DOMAIN,
-  "telephone": "+91-98765-43210",
-  "priceRange": "₹₹ - ₹₹₹",
+  "telephone": "+919950891935",
+  "email": "sentirebypc@gmail.com",
+  "priceRange": "₹799 - ₹4999",
   "currenciesAccepted": "INR",
-  "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Net Banking",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Net Banking, COD",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "M.I. Road",
+    "streetAddress": "First Floor, 109-110, Beriwal Tower, Subhash Nagar Shopping Centre",
     "addressLocality": "Jaipur",
     "addressRegion": "Rajasthan",
-    "postalCode": "302001",
+    "postalCode": "302016",
     "addressCountry": "IN"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 26.9124,
-    "longitude": 75.7873
+    "latitude": 26.9108,
+    "longitude": 75.7650
   },
   "openingHoursSpecification": [
     {
