@@ -39,12 +39,11 @@ router.post('/send-otp', async (req, res) => {
 
     // Call MSG91 Send OTP API
     try {
-      const msg91Url = `https://control.msg91.com/api/v5/otp?widgetId=${MSG91_WIDGET_ID}&mobile=${mobileWithoutPlus}&otp=${generatedOtp}`;
+      const msg91Url = `https://control.msg91.com/api/v5/otp?template_id=${MSG91_WIDGET_ID}&mobile=${mobileWithoutPlus}&authkey=${MSG91_AUTH_KEY}`;
       const msg91Res = await fetch(msg91Url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'authkey': MSG91_AUTH_KEY
+          'Content-Type': 'application/json'
         }
       });
       const msg91Data = await msg91Res.json();
