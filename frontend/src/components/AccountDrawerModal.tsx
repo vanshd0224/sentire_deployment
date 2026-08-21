@@ -285,14 +285,6 @@ export default function AccountDrawerModal({
                 <span>Continue with Google</span>
               </button>
             </div>
-
-            {/* Offer Badge */}
-            <div className="mt-8 pt-4 border-t border-[#f0ebe3] flex items-center justify-center gap-2 bg-[#f9f7f4] p-3 rounded-xl">
-              <span className="text-base">⭐</span>
-              <span className="text-xs font-medium text-[#444444]">
-                Free try-me sample with every order
-              </span>
-            </div>
           </div>
         )}
 
