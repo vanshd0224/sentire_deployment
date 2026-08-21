@@ -135,7 +135,9 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
                   <path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6z" />
                 </svg>
-                +91 98765 43210
+                <a href="tel:+919950891935" className="hover:text-[#c89b5a] transition-colors">
+                  +91 99508 91935
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
