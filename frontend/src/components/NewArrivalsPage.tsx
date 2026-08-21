@@ -45,13 +45,11 @@ const NEW_ARRIVALS_DATA: DisplayProduct[] = [
     id: "purple-oud",
     name: "PURPLE OUD",
     notes: "Smoky Cambodian Oud • Fiery Saffron • Amethyst Rose",
-    image: "/assets/purple-oud-arrival.png?v=11",
+    image: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     badge: "EXCLUSIVE",
     family: "woody",
     mood: "party",
     prices: {
-      10: { price: 659, originalPrice: 779 },
-      30: { price: 1199, originalPrice: 1409 },
       50: { price: 1489, originalPrice: 1859 },
     },
   },
@@ -296,10 +294,12 @@ export default function NewArrivalsPage({
         {/* Grid of Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((p) => {
-            const currentSize = selectedSizes[p.id] || 50;
-            const priceInfo = p.prices[currentSize] || p.prices[50];
-            const qty = getItemQuantity(p.id, currentSize);
             const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
+            const availableSizes = fullProd?.sizes || Object.keys(p.prices).map(Number);
+            const currentSize = selectedSizes[p.id] || (availableSizes.includes(50) ? 50 : availableSizes[0]);
+            const priceInfo = p.prices[currentSize] || p.prices[availableSizes[0]] || { price: 999, originalPrice: 1409 };
+            const qty = getItemQuantity(p.id, currentSize);
+            const displayImage = (fullProd?.sizeImages && (fullProd.sizeImages[currentSize as keyof typeof fullProd.sizeImages]?.[0] || (fullProd.sizeImages as any)[String(currentSize)]?.[0])) || fullProd?.img || p.image;
 
             return (
               <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
@@ -308,7 +308,7 @@ export default function NewArrivalsPage({
                     onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
                     className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
-                    <img src={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={displayImage} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-2 left-2 rounded-full bg-[#c89b5a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
                       {p.badge}
                     </span>
@@ -322,7 +322,7 @@ export default function NewArrivalsPage({
                   </div>
 
                   <div className="flex justify-center gap-1.5 my-3">
-                    {[10, 30, 50].map((sz) => (
+                    {availableSizes.map((sz) => (
                       <button
                         key={sz}
                         onClick={() => setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))}
