@@ -9,10 +9,10 @@ class ChatbotService {
     const defaultKey = Buffer.from("QVEuQWI4Uk42TE1Sc25MeFNFQlZBSWxOZjhqVTNVSExGTmpiMnFiSUcyamRsOWVIYXBLNnc=", "base64").toString("utf-8");
     this.apiKey = process.env.GEMINI_API_KEY || defaultKey;
     this.candidateModels = [
-      "gemini-3.5-flash",
-      "gemini-3.7-flash",
-      "gemini-3.6-flash",
-      "gemma-4-31b-it"
+      "gemini-1.5-flash",
+      "gemini-2.0-flash",
+      "gemini-1.5-pro",
+      "gemini-2.0-flash-lite"
     ];
     logger.info('Multi-Model Fallback RAG LLM Engine Active with live API key');
   }
