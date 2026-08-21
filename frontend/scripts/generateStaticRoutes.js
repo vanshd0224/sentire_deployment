@@ -118,7 +118,8 @@ export function buildStaticRoutes() {
     }
     const routeHtml = generateHtml(baseHtml, route);
     fs.writeFileSync(path.resolve(routeDir, 'index.html'), routeHtml, 'utf8');
-    console.log(`Generated public/${route.path}/index.html`);
+    fs.writeFileSync(path.resolve(publicDir, `${route.path}.html`), routeHtml, 'utf8');
+    console.log(`Generated public/${route.path}/index.html and public/${route.path}.html`);
   });
 
   // 2. If dist exists, also generate in dist directory with built assets
@@ -131,9 +132,11 @@ export function buildStaticRoutes() {
       }
       const distRouteHtml = generateHtml(distIndexHtml, route);
       fs.writeFileSync(path.resolve(distRouteDir, 'index.html'), distRouteHtml, 'utf8');
-      console.log(`Generated dist/${route.path}/index.html`);
+      fs.writeFileSync(path.resolve(distDir, `${route.path}.html`), distRouteHtml, 'utf8');
+      console.log(`Generated dist/${route.path}/index.html and dist/${route.path}.html`);
     });
   }
 }
 
 buildStaticRoutes();
+

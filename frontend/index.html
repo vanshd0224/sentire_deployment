@@ -48,7 +48,6 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
     <!-- Initial Server-Rendered JSON-LD Structured Data Graph -->
     <script type="application/ld+json" id="sentire-initial-jsonld">
     {
@@ -149,6 +148,18 @@
       ]
     }
     </script>
+
+    <!-- MSG91 OTP Widget Engine (Without DLT) -->
+    <script type="text/javascript">
+      var configuration = {
+        widgetId: "3668756c6855323939333039",
+        tokenAuth: "562962T3pkOoGcL6a884028P1",
+        exposeMethods: true,
+        success: function(data) { console.log('MSG91 Widget Success:', data); },
+        failure: function(error) { console.log('MSG91 Widget Error:', error); }
+      };
+    </script>
+    <script type="text/javascript" src="https://control.msg91.com/app/assets/otp-provider/otp-provider.js"></script>
   </head>
   <body class="bg-[#050505] text-[#f5f0e8] antialiased selection:bg-[#c89b5a]/30 selection:text-[#c89b5a]">
     <div id="root"></div>

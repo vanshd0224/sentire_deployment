@@ -25,34 +25,24 @@ const ALL_SIZES_PRODUCTS: PerfumeProduct[] = ALL_PERFUMES;
 
 const EXCLUSIVE_PURPLE_OUD: PerfumeProduct = {
   id: "purple-oud",
-    sizeImages: {
-      "10": [
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png"
-      ],
-      "30": [
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png"
-      ],
-      "50": [
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png",
-            "/assets/purple-oud.png"
-      ]
-},
-  num: "No. 11",
+  sizeImages: {
+    50: [
+      "/assets/perfumes/purple-oud-50ml-2.png?v=3",
+      "/assets/perfumes/purple-oud-50ml-1.png?v=2",
+      "/assets/perfumes/purple-oud-50ml-3.png?v=2"
+    ]
+  },
+  num: "No. 08",
   name: "Purple Oud",
   desc: "Smoky Cambodian Oud, Saffron & Amethyst Rose",
   fullDesc: "Purple Oud by SENTIRE By PC is a majestic, brooding composition created exclusively for connoisseurs of deep, magnetic sillage. Opens with smoky Cambodian oud and fiery saffron threads, evolving into a heart of velvety amethyst rose, and settling into a long-lasting base of warm amberwood and dark resinous accords.",
   scentFamily: "woody",
   moods: ["party", "date-night"],
-  sizes: [10, 30, 50],
-  outOfStockSizes: [10, 30],
-  prices: { 10: 799, 30: 1499, 50: 1489 },
+  sizes: [50],
+  outOfStockSizes: [],
+  prices: { 50: 1489 },
   badge: "exclusive",
-  img: "/assets/purple-oud.png",
+  img: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
   traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"],
 };
 
@@ -256,7 +246,7 @@ export default function PerfumesPage({
               </span>
             )}
             <img
-              src={(p.sizeImages && p.sizeImages[currentSize]?.[0]) || p.img}
+              src={(p.sizeImages && (p.sizeImages[currentSize]?.[0] || (p.sizeImages as any)[String(currentSize)]?.[0])) || p.img}
               alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
               loading="lazy"
               width="300"

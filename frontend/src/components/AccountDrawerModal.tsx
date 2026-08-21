@@ -87,7 +87,7 @@ export default function AccountDrawerModal({
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-    const cleanDigits = phoneInput.replace(/[^0-9]/g, "");
+    const cleanDigits = phoneNumber.replace(/[^0-9]/g, "");
 
     if (cleanDigits.length !== 10) {
       setErrorMessage("Please enter a valid 10-digit mobile number.");
@@ -99,7 +99,15 @@ export default function AccountDrawerModal({
     setLoading(true);
 
     try {
-      const backendUrl = window.location.hostname.includes('run.app')
+      // 1. Trigger MSG91 JS SDK Widget SendOTP (Without DLT)
+      const cleanMobile = `91${cleanDigits}`;
+      if (typeof (window as any).sendOtp === 'function') {
+        (window as any).sendOtp(cleanMobile, (s: any) => console.log('SDK Send Success:', s), (f: any) => console.log('SDK Send Fail:', f));
+      } else if (typeof (window as any).initSendOTP === 'function') {
+        (window as any).initSendOTP({ identifier: cleanMobile });
+      }
+
+      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
         ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/send-otp'
         : '/auth/send-otp';
 
@@ -112,12 +120,12 @@ export default function AccountDrawerModal({
       console.log("OTP Send notice:", err.message);
     } finally {
       setLoading(false);
-      setStep("OTP_INPUT");
+      setViewMode("otp");
       setResendTimer(30);
     }
   };
 
-    const handleVerifyOtp = async (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
     const enteredOtp = otpValues.join("");
@@ -130,13 +138,23 @@ export default function AccountDrawerModal({
     setLoading(true);
 
     try {
-      if (confirmationResult) {
-        await confirmationResult.confirm(enteredOtp);
-      } else {
-        try { await signInAnonymously(auth); } catch(e) {}
+      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
+        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/verify-otp'
+        : '/auth/verify-otp';
+
+      const verifyRes = await fetch(backendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber, code: enteredOtp })
+      });
+      const verifyData = await verifyRes.json();
+
+      if (verifyData && !verifyData.success && verifyData.error) {
+        setErrorMessage(verifyData.error);
+        return;
       }
     } catch (err: any) {
-      try { await signInAnonymously(auth); } catch (anonErr) {}
+      console.log("OTP Verify notice:", err.message);
     } finally {
       setLoading(false);
       localStorage.setItem("sentire_user_phone", phoneNumber || "9079603729");
@@ -180,7 +198,7 @@ export default function AccountDrawerModal({
     newVals[index] = val.slice(-1);
     setOtpValues(newVals);
     if (val && index < 3) {
-      document.getElementById(`otp-input-\${index + 1}`)?.focus();
+      document.getElementById(`otp-input-${index + 1}`)?.focus();
     }
   };
 
@@ -241,9 +259,14 @@ export default function AccountDrawerModal({
                 </span>
                 <input
                   type="tel"
-                  placeholder="Enter Mobile Number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter 10-digit Mobile Number"
+                  maxLength={10}
+                  value={phoneNumber.replace(/[^0-9]/g, "").replace(/^91/, "").slice(0, 10)}
+                  onChange={(e) => {
+                    const raw = e.target.value.replace(/[^0-9]/g, "");
+                    const clean = raw.length > 10 && raw.startsWith("91") ? raw.slice(2, 12) : raw.slice(0, 10);
+                    setPhoneNumber(clean);
+                  }}
                   className="w-full px-4 py-3 text-sm text-[#1e1e1e] bg-transparent outline-none font-medium placeholder-[#aaa]"
                   required
                 />
@@ -294,7 +317,7 @@ export default function AccountDrawerModal({
             <p className="text-xs text-[#666666] mb-6">
               Verification code sent to{" "}
               <strong className="text-[#1e1e1e] font-semibold">
-                +91 {phoneNumber || "9461094671"}
+                {phoneNumber ? (phoneNumber.startsWith('+91') ? `+91 ${phoneNumber.replace('+91', '')}` : phoneNumber) : "+91 9461094671"}
               </strong>{" "}
               <button
                 onClick={() => setViewMode("login")}
@@ -313,7 +336,7 @@ export default function AccountDrawerModal({
                 {otpValues.map((digit, idx) => (
                   <input
                     key={idx}
-                    id={`otp-input-\${idx}`}
+                    id={`otp-input-${idx}`}
                     type="text"
                     maxLength={1}
                     value={digit}
@@ -331,7 +354,7 @@ export default function AccountDrawerModal({
                   onClick={() => setResendTimer(30)}
                   className="text-[#c89b5a] font-semibold underline disabled:opacity-50 cursor-pointer"
                 >
-                  Resend OTP {resendTimer > 0 ? `(\${resendTimer}s)` : ""}
+                  Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
                 </button>
               </div>
 
