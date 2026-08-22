@@ -42,7 +42,7 @@ function resolveVariantId(item) {
 // POST /checkout/create-cart
 router.post('/create-cart', async (req, res) => {
   try {
-    const { items } = req.body;
+    const { items, discountCode } = req.body;
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'No items provided' });
     }
@@ -54,6 +54,11 @@ router.post('/create-cart', async (req, res) => {
       merchandiseId: `gid://shopify/ProductVariant/${resolveVariantId(item)}`,
       quantity: Number(item.quantity) || 1
     }));
+
+    const input = { lines };
+    if (discountCode) {
+      input.discountCodes = [discountCode];
+    }
 
     const mutation = `
       mutation cartCreate($input: CartInput!) {
@@ -73,27 +78,37 @@ router.post('/create-cart', async (req, res) => {
     const response = await fetch(graphqlUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: mutation, variables: { input: { lines } } })
+      body: JSON.stringify({ query: mutation, variables: { input } })
     });
 
     const data = await response.json();
-    const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+    let checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
 
     if (checkoutUrl) {
+      if (discountCode && !checkoutUrl.includes("discount=")) {
+        checkoutUrl += (checkoutUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
+      }
       return res.status(200).json({ success: true, checkoutUrl });
     }
 
     // Fallback to permalink URL
     const permalinkItems = items.map(item => `${resolveVariantId(item)}:${item.quantity || 1}`).join(',');
-    const permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
+    let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
+    if (discountCode) {
+      permalinkUrl += `?discount=${encodeURIComponent(discountCode)}`;
+    }
     return res.status(200).json({ success: true, checkoutUrl: permalinkUrl });
 
   } catch (error) {
     console.error('[Backend Checkout Proxy Error]:', error);
     const shopDomain = process.env.SHOPIFY_SHOP || 'hbj1d0-99.myshopify.com';
-    const items = req.body?.items || [];
-    const permalinkItems = items.map(item => `${resolveVariantId(item)}:${item.quantity || 1}`).join(',');
-    const permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
+    const { items, discountCode } = req.body || {};
+    const itemsArr = Array.isArray(items) ? items : [];
+    const permalinkItems = itemsArr.map(item => `${resolveVariantId(item)}:${item.quantity || 1}`).join(',');
+    let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
+    if (discountCode) {
+      permalinkUrl += `?discount=${encodeURIComponent(discountCode)}`;
+    }
     return res.status(200).json({ success: true, checkoutUrl: permalinkUrl });
   }
 });

@@ -249,10 +249,13 @@ export default function ProductDetailModal({
 
   // Gallery Images for Product (3-3 Photos per size: 10ML, 30ML, 50ML)
   const galleryImages = useMemo(() => {
-    if (product && product.sizeImages && product.sizeImages[selectedSize]) {
-      return product.sizeImages[selectedSize];
+    if (!product) return [];
+    if (product.sizeImages) {
+      if (product.sizeImages[selectedSize]) return product.sizeImages[selectedSize];
+      if ((product.sizeImages as any)[String(selectedSize)]) return (product.sizeImages as any)[String(selectedSize)];
     }
-    return [product?.img || "", product?.img || "", product?.img || ""];
+    const fallbackImg = product.img || (product as any).image || "/assets/perfumes/purple-oud-50ml-2.png?v=3";
+    return [fallbackImg, fallbackImg, fallbackImg];
   }, [product, selectedSize]);
 
   // Recommended products (excluding current)

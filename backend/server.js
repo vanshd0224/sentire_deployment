@@ -93,6 +93,7 @@ app.use('/affiliates', affiliates.publicRoutes);
 app.use('/admin/affiliates', affiliates.adminRoutes);
 app.use('/leads', leadsRouter);
 app.use('/checkout', require('./routes/checkout'));
+app.use('/api/enquiries', require('./routes/enquiry'));
 
 // Fallback 404 handler
 app.use((req, res) => {
