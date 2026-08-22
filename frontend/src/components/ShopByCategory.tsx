@@ -4,7 +4,7 @@ import type { PerfumeFilterOptions } from "./Navbar";
 const categories = [
   { title: "New Arrivals", subtitle: "Discover The Unseen", image: "/images/curated-new-arrivals.jpg", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
   { title: "Best Sellers", subtitle: "Most Loved Essentials", image: "/images/curated-best-sellers.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
-  { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/category-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
+  { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/curated-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
   { title: "Build Your Own Bundle", subtitle: "Curate Your Perfect Set", image: "/images/curated-byob.jpg", isByob: true },
 ];
 
