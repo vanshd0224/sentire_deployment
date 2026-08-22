@@ -588,14 +588,14 @@ export default function Hero({ onNavigate }: HeroProps) {
             </p>
           </div>
 
-          {/* Dual Action CTA Buttons (Properly placed where the 3 feature points were) */}
+          {/* Dual Action CTA Buttons (Properly placed in left column where the 3 points were) */}
           <div
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "8.46%",
-              top: "45.50%",
-              width: "clamp(210px, 48vw, 360px)",
-              gap: "clamp(10px, 2.8vw, 16px)",
+              top: "43.50%",
+              width: "min(300px, 50%)",
+              gap: "10px",
             }}
           >
             {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
@@ -604,38 +604,42 @@ export default function Hero({ onNavigate }: HeroProps) {
               onClick={handleCtaClick}
               className="hero-cta-primary w-full flex items-center justify-center rounded-none shadow-md"
               style={{
-                height: "clamp(42px, 11vw, 54px)",
+                height: "44px",
                 backgroundColor: "#211008",
                 backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
                 border: "1.5px solid #B88638",
                 boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
-                padding: "0 clamp(10px, 2.5vw, 20px)",
+                padding: "0 12px",
                 textDecoration: "none",
                 boxSizing: "border-box",
+                overflow: "hidden",
               }}
             >
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(10px, 2.7vw, 14px)",
+                  fontSize: "11px",
                   fontWeight: 600,
                   letterSpacing: "0.10em",
                   color: "#E7B65B",
                   textTransform: "uppercase",
-                  marginRight: "clamp(6px, 1.5vw, 10px)",
+                  marginRight: "8px",
                   whiteSpace: "nowrap",
+                  lineHeight: 1,
                 }}
               >
                 SHOP RAKHI GIFTS
               </span>
               <svg
+                width="14"
+                height="10"
                 viewBox="0 0 24 12"
                 fill="none"
                 stroke="#E7B65B"
-                strokeWidth="1.8"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-[clamp(11px, 2.4vw, 16px)] h-auto flex-shrink-0"
+                style={{ width: "14px", height: "10px", minWidth: "14px", maxWidth: "14px", flexShrink: 0 }}
               >
                 <line x1="1" y1="6" x2="22" y2="6" />
                 <polyline points="16 1 22 6 16 11" />
@@ -648,39 +652,43 @@ export default function Hero({ onNavigate }: HeroProps) {
               onClick={handlePersonalisationClick}
               className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer shadow-sm"
               style={{
-                height: "clamp(42px, 11vw, 54px)",
+                height: "44px",
                 backgroundColor: "rgba(246, 228, 208, 0.94)",
                 backdropFilter: "blur(8px)",
                 WebkitBackdropFilter: "blur(8px)",
                 border: "1.5px solid #9E8066",
                 boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
-                padding: "0 clamp(8px, 2vw, 16px)",
+                padding: "0 10px",
                 boxSizing: "border-box",
+                overflow: "hidden",
               }}
             >
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(8.5px, 2.3vw, 12px)",
+                  fontSize: "9.5px",
                   fontWeight: 600,
-                  letterSpacing: "0.06em",
+                  letterSpacing: "0.05em",
                   color: "#21150F",
                   textTransform: "uppercase",
-                  marginRight: "clamp(4px, 1vw, 8px)",
+                  marginRight: "6px",
                   whiteSpace: "nowrap",
+                  lineHeight: 1,
                 }}
               >
                 PRODUCT PERSONALISATION
               </span>
               {/* Elegant Edit / Laser Pen Icon */}
               <svg
+                width="12"
+                height="12"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#21150F"
-                strokeWidth="1.8"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-[clamp(10px, 2vw, 14px)] h-auto flex-shrink-0"
+                style={{ width: "12px", height: "12px", minWidth: "12px", maxWidth: "12px", flexShrink: 0 }}
               >
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
