@@ -588,42 +588,41 @@ export default function Hero({ onNavigate }: HeroProps) {
             </p>
           </div>
 
-          {/* Dual Action Buttons (Placed in left content column below supporting message) */}
+          {/* Dual Action CTA Buttons (Properly placed where the 3 feature points were) */}
           <div
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "8.46%",
-              top: "41.80%",
-              width: "43%",
-              maxWidth: "320px",
-              gap: "clamp(6px, 1.6vw, 12px)",
+              top: "45.50%",
+              width: "clamp(210px, 48vw, 360px)",
+              gap: "clamp(10px, 2.8vw, 16px)",
             }}
           >
             {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
             <a
               href="#perfumes"
               onClick={handleCtaClick}
-              className="hero-cta-primary w-full flex items-center justify-center rounded-none"
+              className="hero-cta-primary w-full flex items-center justify-center rounded-none shadow-md"
               style={{
-                height: "clamp(34px, 4.8vw, 46px)",
+                height: "clamp(42px, 11vw, 54px)",
                 backgroundColor: "#211008",
                 backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
                 border: "1.5px solid #B88638",
-                boxShadow: "0 4px 16px rgba(33, 16, 8, 0.28)",
-                padding: "0 clamp(6px, 1.4vw, 12px)",
+                boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
+                padding: "0 clamp(10px, 2.5vw, 20px)",
                 textDecoration: "none",
-                letterSpacing: "0.06em",
+                boxSizing: "border-box",
               }}
             >
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(8px, 2.15vw, 12px)",
+                  fontSize: "clamp(10px, 2.7vw, 14px)",
                   fontWeight: 600,
-                  letterSpacing: "0.06em",
+                  letterSpacing: "0.10em",
                   color: "#E7B65B",
                   textTransform: "uppercase",
-                  marginRight: "clamp(4px, 1vw, 8px)",
+                  marginRight: "clamp(6px, 1.5vw, 10px)",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -633,10 +632,10 @@ export default function Hero({ onNavigate }: HeroProps) {
                 viewBox="0 0 24 12"
                 fill="none"
                 stroke="#E7B65B"
-                strokeWidth="1.6"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-[clamp(8px, 1.4vw, 13px)] h-auto flex-shrink-0"
+                className="w-[clamp(11px, 2.4vw, 16px)] h-auto flex-shrink-0"
               >
                 <line x1="1" y1="6" x2="22" y2="6" />
                 <polyline points="16 1 22 6 16 11" />
@@ -647,27 +646,27 @@ export default function Hero({ onNavigate }: HeroProps) {
             <button
               type="button"
               onClick={handlePersonalisationClick}
-              className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer"
+              className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer shadow-sm"
               style={{
-                height: "clamp(34px, 4.8vw, 46px)",
-                backgroundColor: "rgba(246, 228, 208, 0.92)",
+                height: "clamp(42px, 11vw, 54px)",
+                backgroundColor: "rgba(246, 228, 208, 0.94)",
                 backdropFilter: "blur(8px)",
                 WebkitBackdropFilter: "blur(8px)",
                 border: "1.5px solid #9E8066",
                 boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
-                padding: "0 clamp(4px, 1.2vw, 10px)",
-                letterSpacing: "0.03em",
+                padding: "0 clamp(8px, 2vw, 16px)",
+                boxSizing: "border-box",
               }}
             >
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(7px, 1.85vw, 10.5px)",
+                  fontSize: "clamp(8.5px, 2.3vw, 12px)",
                   fontWeight: 600,
-                  letterSpacing: "0.03em",
+                  letterSpacing: "0.06em",
                   color: "#21150F",
                   textTransform: "uppercase",
-                  marginRight: "clamp(3px, 0.8vw, 6px)",
+                  marginRight: "clamp(4px, 1vw, 8px)",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -678,10 +677,10 @@ export default function Hero({ onNavigate }: HeroProps) {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#21150F"
-                strokeWidth="1.7"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-[clamp(8px, 1.2vw, 12px)] h-auto flex-shrink-0"
+                className="w-[clamp(10px, 2vw, 14px)] h-auto flex-shrink-0"
               >
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
