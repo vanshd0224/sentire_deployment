@@ -1,11 +1,70 @@
-@import url("https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Italiana&family=Italianno&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap");
 @import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   LOCAL BUNDLED HAUTE PARFUMERIE FONTS (Zero Network Latency)
+   ═══════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/CormorantGaramond-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/CormorantGaramond-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/CormorantGaramond-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Allura";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Allura-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+}
 
 @theme {
   --font-serif: "Cormorant Garamond", "EB Garamond", serif;
-  --font-display: "Bodoni Moda", "Cormorant Garamond", "Playfair Display", serif;
+  --font-display: "Cormorant Garamond", "Playfair Display", serif;
   --font-sans: "Montserrat", "Inter", "Manrope", sans-serif;
-  --font-script: "Allura", "Great Vibes", cursive;
+  --font-script: "Allura", cursive;
   --font-cinzel: "Cinzel", "Cormorant Garamond", serif;
   --font-garamond: "Cormorant Garamond", "EB Garamond", serif;
   --font-montserrat: "Montserrat", "Inter", sans-serif;

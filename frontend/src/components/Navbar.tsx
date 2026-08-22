@@ -179,36 +179,80 @@ export default function Navbar({
         .nav-icon-btn svg { position: relative; z-index: 1; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         .nav-icon-btn:hover svg { transform: scale(1.12); }
         .nav-icon-btn.active { background: #0b0907; color: #c89b5a; box-shadow: 0 0 0 1px rgba(200,155,90,.45), 0 4px 16px rgba(0,0,0,.2); }
-        .nav-icon-btn.active::before { transform: scale(0); }
+        @media (max-width: 900px) {
+          .sentire-mobile-hamburger { display: flex !important; }
+          .sentire-mobile-logo { display: flex !important; }
+          .sentire-desktop-logo { display: none !important; }
+          .sentire-desktop-nav { display: none !important; }
+          .sentire-desktop-account { display: none !important; }
+          .sentire-desktop-divider { display: none !important; }
+        }
+        @media (min-width: 901px) {
+          .sentire-mobile-hamburger { display: none !important; }
+          .sentire-mobile-logo { display: none !important; }
+          .sentire-desktop-logo { display: block !important; }
+          .sentire-desktop-nav { display: flex !important; }
+          .sentire-desktop-account { display: flex !important; }
+          .sentire-desktop-divider { display: block !important; }
+        }
       `}</style>
 
-      <header className="sticky top-0 z-50 w-full border-b border-[#c89b5a]/20 bg-white/95 backdrop-blur-2xl shadow-xs transition-all">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-3 sm:px-6 lg:px-12">
+      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-[#FEFDFB] transition-all">
+        <div
+          className="mx-auto flex max-w-[1440px] items-center justify-between relative"
+          style={{
+            paddingLeft: "clamp(16px, 4.86vw, 42px)",
+            paddingRight: "clamp(16px, 4.86vw, 42px)",
+            height: "clamp(56px, 5vw, 76px)",
+            minHeight: "clamp(56px, 5vw, 76px)",
+          }}
+        >
 
-          {/* Left: Mobile Hamburger + Animated Logo */}
+          {/* Left: Mobile Hamburger / Desktop Logo container */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 mr-2 md:mr-6 lg:mr-8">
             <button
               aria-label="Toggle Mobile Navigation"
               onClick={() => setMobileNavOpen(true)}
-              className="flex md:!hidden lg:!hidden nav-icon-btn shrink-0"
+              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#21150F]"
+              style={{
+                width: "clamp(32px, 5.1vw, 44px)",
+                height: "clamp(32px, 4.4vw, 38px)",
+                padding: 0,
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" className="h-5 w-5">
-                <path d="M4 6h16M4 12h16M4 18h16" />
+              <svg viewBox="0 0 28 20" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" className="w-[85%] h-auto">
+                <line x1="1" y1="2" x2="27" y2="2" />
+                <line x1="1" y1="10" x2="27" y2="10" />
+                <line x1="1" y1="18" x2="27" y2="18" />
               </svg>
             </button>
 
-            {/* Motion Animated Logo */}
+            {/* Desktop Brand Logo (Shown on left on Desktop) */}
+            <div className="sentire-desktop-logo shrink-0">
+              <SentireLogo
+                variant="navbar"
+                theme="light"
+                animated={true}
+                onClick={() => onNavigate?.("home")}
+                className="shrink-0"
+              />
+            </div>
+          </div>
+
+          {/* Mobile Centered Brand Logo */}
+          <div className="sentire-mobile-logo absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto items-center justify-center">
             <SentireLogo
               variant="navbar"
-              theme="light"
-              animated={true}
+              theme="gold"
+              animated={false}
               onClick={() => onNavigate?.("home")}
+              height="clamp(26px, 5.56vw, 48px)"
               className="shrink-0"
             />
           </div>
 
-          {/* ── Main Navigation Links ── */}
-          <nav className="hidden items-center gap-2.5 lg:gap-5 xl:gap-7 md:flex shrink-0">
+          {/* ── Main Navigation Links (Desktop) ── */}
+          <nav className="sentire-desktop-nav items-center gap-2.5 lg:gap-5 xl:gap-7 shrink-0">
             {navLinks.map((link) => {
               const showMega = Boolean(link.mega && currentPage !== "perfumes");
               const isCurrent =
@@ -288,55 +332,113 @@ export default function Navbar({
           </nav>
 
           {/* ── Action Icons Suite ── */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Expanding search bar */}
-            <div className="relative">
-              <div
-                className="flex items-center overflow-hidden rounded-full"
-                style={{
-                  width: searchOpen ? "280px" : "40px",
-                  background: searchOpen ? "#f5f0e8" : "transparent",
-                  boxShadow: searchOpen ? "0 0 0 1.5px rgba(200,155,90,.45), 0 6px 24px rgba(0,0,0,.08)" : "none",
-                  transition: "width .35s cubic-bezier(.4,0,.2,1), background .2s, box-shadow .2s",
-                }}
-              >
-                <button
-                  aria-label="Search Fragrances"
-                  onClick={() => {
-                    setSearchOpen((p) => !p);
-                    if (searchOpen) setSearchQuery("");
-                  }}
-                  className={`nav-icon-btn shrink-0 ${searchOpen ? "active" : ""}`}
-                  style={{ width: 40, height: 40, borderRadius: "50%" }}
-                  title="Search (Ctrl+K)"
-                >
-                  {searchOpen ? (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" className="h-[16px] w-[16px]">
-                      <path d="M18 6 6 18M6 6l12 12" />
-                    </svg>
-                  ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" className="h-[17px] w-[17px]">
-                      <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
-                    </svg>
-                  )}
-                </button>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Search Icon Button (Fixed size, opens overlay) */}
+            <button
+              aria-label="Search Fragrances"
+              onClick={() => setSearchOpen(true)}
+              className="nav-icon-btn shrink-0"
+              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              title="Search (Ctrl+K)"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" className="h-[18px] w-[18px]">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+
+            <div className="sentire-desktop-divider h-5 w-px bg-ink/12" />
+
+            {/* Account Icon (Desktop only; Mobile uses drawer and bottom nav) */}
+            <button
+              aria-label="Account Login / Profile"
+              id="navbar-account-btn"
+              onClick={onOpenAccount}
+              className="sentire-desktop-account nav-icon-btn shrink-0"
+              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              title="Account & Orders"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" className="h-[18px] w-[18px]">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </button>
+
+            {/* Cart Button */}
+            <button
+              aria-label={`Shopping Bag (${cartCount} items)`}
+              onClick={onOpenCart}
+              className={`nav-icon-btn relative shrink-0 ${cartPop ? "animate-[badgePop_0.4s_ease-out]" : ""}`}
+              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              title="Shopping Bag"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#18130f] text-[9px] font-bold text-[#f5e3cd] shadow-md border border-[#c89b5a]/40">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* ── Seamless Full Header Search Bar Overlay (Never Overflows Frame) ── */}
+          {searchOpen && (
+            <div className="absolute inset-0 z-50 bg-[#FEFDFB] flex items-center justify-between px-4 sm:px-8 max-w-[1440px] mx-auto border-b border-[#c89b5a]/30 shadow-md animate-fadeIn">
+              <div className="flex items-center gap-3 flex-1 mr-4">
+                <span className="text-[#c89b5a] shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+                  </svg>
+                </span>
                 <input
                   ref={searchRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search notes, woody, oud…"
-                  className="w-full bg-transparent pr-3 text-[12px] text-[#1e1e1e] placeholder-ink/40 outline-none"
-                  style={{ opacity: searchOpen ? 1 : 0, pointerEvents: searchOpen ? "auto" : "none", transition: "opacity .2s ease .1s", fontFamily: "var(--font-sans)" }}
-                  onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
+                  placeholder="Search fragrances, notes (e.g. oud, amber, vanilla, floral)..."
+                  className="w-full bg-transparent text-sm sm:text-base text-ink placeholder:text-ink/40 outline-none font-sans font-medium"
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setSearchOpen(false);
+                      setSearchQuery("");
+                    }
+                  }}
                 />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="text-xs uppercase tracking-wider text-ink/50 hover:text-ink font-semibold px-2 py-1 cursor-pointer"
+                  >
+                    Clear
+                  </button>
+                )}
               </div>
 
+              {/* Close Search Button */}
+              <button
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchQuery("");
+                }}
+                className="nav-icon-btn shrink-0 text-ink/70 hover:text-ink"
+                aria-label="Close search"
+                title="Close (Esc)"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="h-5 w-5">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+
               {/* Live Search Results Dropdown Popover */}
-              {searchOpen && searchQuery.trim() !== "" && (
-                <div className="absolute right-0 top-full mt-2.5 z-50 w-84 sm:w-96 rounded-2xl border border-[#c89b5a]/40 bg-[#fdfbf8] p-3.5 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[420px] overflow-y-auto luxury-scrollbar">
+              {searchQuery.trim() !== "" && (
+                <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#c89b5a]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
                   <div className="flex items-center justify-between border-b border-black/8 pb-2 px-2 mb-2.5">
-                    <span className="text-[9.5px] font-bold uppercase tracking-[0.22em] text-[#c89b5a]">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#c89b5a]">
                       Olfactory Discovery ({searchResults.length})
                     </span>
                     <button
@@ -353,7 +455,7 @@ export default function Navbar({
                       <p className="text-[10.5px] text-[#c89b5a] mt-1">Try "Oud", "Lavender", "Amber", or "Floral"</p>
                     </div>
                   ) : (
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {searchResults.map((product) => (
                         <div
                           key={product.id}
@@ -397,48 +499,7 @@ export default function Navbar({
                 </div>
               )}
             </div>
-
-            <div className="hidden h-5 w-px bg-ink/12 sm:block" />
-
-            {/* Account Icon */}
-            <button
-              aria-label="Account Login / Profile"
-              id="navbar-account-btn"
-              className="nav-icon-btn flex cursor-pointer"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onOpenAccount?.(); }}
-              title="Account & Orders"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" className="h-[18px] w-[18px]">
-                <circle cx="12" cy="8" r="3.5" /><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6" />
-              </svg>
-            </button>
-
-            {/* Shopping Bag Icon */}
-            <button
-              aria-label="Shopping Bag"
-              className="nav-icon-btn relative cursor-pointer"
-              onClick={() => onOpenCart?.()}
-              title="View Shopping Bag"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" className="h-[18px] w-[18px]">
-                <path d="M6 8h12l-1 12.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20.5z" />
-                <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-              </svg>
-              {cartCount > 0 && (
-                <span
-                  className="absolute -right-1 -top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full text-[8.5px] font-bold text-white shadow-md"
-                  style={{
-                    background: "linear-gradient(135deg,#c89b5a,#d4af37)",
-                    boxShadow: "0 2px 8px rgba(200,155,90,.6)",
-                    animation: cartPop ? "badgePop .38s cubic-bezier(0.34,1.56,0.64,1) both" : "none",
-                    fontFamily: "var(--font-sans)",
-                  }}
-                >
-                  {cartCount}
-                </span>
-              )}
-            </button>
-          </div>
+          )}
         </div>
 
         {/* ── Mega Menu ── */}
