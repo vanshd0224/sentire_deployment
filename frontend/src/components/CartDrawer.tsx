@@ -238,7 +238,7 @@ export default function CartDrawer({
   );
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const isFreeShippingUnlocked = subtotal >= FREE_SHIPPING_THRESHOLD && items.length > 0;
-  const shippingCost = items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 99;
+  const shippingCost = items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 100;
   const finalTotal = Math.max(0, subtotal - couponDiscount + shippingCost);
 
   const handleQuantityChange = useCallback(
@@ -846,7 +846,7 @@ export default function CartDrawer({
                   </span>
                 ) : (
                   <span style={{ fontFamily: "var(--font-sans)", fontSize: "12.5px", color: "#18130F", fontWeight: 500 }}>
-                    ₹99
+                    ₹100
                   </span>
                 )}
               </div>
