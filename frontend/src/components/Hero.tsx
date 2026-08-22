@@ -499,7 +499,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           <div
             className="absolute"
             style={{
-              left: "8.46%",
+              left: "6.0%",
               top: "5.10%",
               width: "80%",
             }}
@@ -524,7 +524,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           <div
             className="absolute"
             style={{
-              left: "8.46%",
+              left: "6.0%",
               top: "19.55%",
               width: "80%",
             }}
@@ -549,7 +549,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           <div
             className="absolute flex items-center"
             style={{
-              left: "8.46%",
+              left: "6.0%",
               top: "31.84%",
               width: "34.8%",
             }}
@@ -568,7 +568,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           <div
             className="absolute"
             style={{
-              left: "8.46%",
+              left: "6.0%",
               top: "35.12%",
               width: "70%",
             }}
@@ -588,13 +588,13 @@ export default function Hero({ onNavigate }: HeroProps) {
             </p>
           </div>
 
-          {/* Dual Action CTA Buttons (Properly placed in left column where the 3 points were) */}
+          {/* Dual Action CTA Buttons (Properly placed in left column with clear bottle margin) */}
           <div
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
-              left: "8.46%",
+              left: "6.0%",
               top: "43.50%",
-              width: "min(300px, 50%)",
+              width: "min(280px, 47%)",
               gap: "10px",
             }}
           >
@@ -609,7 +609,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
                 border: "1.5px solid #B88638",
                 boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
-                padding: "0 12px",
+                padding: "0 10px",
                 textDecoration: "none",
                 boxSizing: "border-box",
                 overflow: "hidden",
@@ -618,12 +618,12 @@ export default function Hero({ onNavigate }: HeroProps) {
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "11px",
+                  fontSize: "10.5px",
                   fontWeight: 600,
-                  letterSpacing: "0.10em",
+                  letterSpacing: "0.08em",
                   color: "#E7B65B",
                   textTransform: "uppercase",
-                  marginRight: "8px",
+                  marginRight: "6px",
                   whiteSpace: "nowrap",
                   lineHeight: 1,
                 }}
@@ -631,15 +631,15 @@ export default function Hero({ onNavigate }: HeroProps) {
                 SHOP RAKHI GIFTS
               </span>
               <svg
-                width="14"
-                height="10"
+                width="13"
+                height="9"
                 viewBox="0 0 24 12"
                 fill="none"
                 stroke="#E7B65B"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ width: "14px", height: "10px", minWidth: "14px", maxWidth: "14px", flexShrink: 0 }}
+                style={{ width: "13px", height: "9px", minWidth: "13px", maxWidth: "13px", flexShrink: 0 }}
               >
                 <line x1="1" y1="6" x2="22" y2="6" />
                 <polyline points="16 1 22 6 16 11" />
@@ -658,7 +658,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 WebkitBackdropFilter: "blur(8px)",
                 border: "1.5px solid #9E8066",
                 boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
-                padding: "0 10px",
+                padding: "0 8px",
                 boxSizing: "border-box",
                 overflow: "hidden",
               }}
@@ -666,12 +666,12 @@ export default function Hero({ onNavigate }: HeroProps) {
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "9.5px",
+                  fontSize: "9px",
                   fontWeight: 600,
-                  letterSpacing: "0.05em",
+                  letterSpacing: "0.04em",
                   color: "#21150F",
                   textTransform: "uppercase",
-                  marginRight: "6px",
+                  marginRight: "5px",
                   whiteSpace: "nowrap",
                   lineHeight: 1,
                 }}
@@ -680,15 +680,15 @@ export default function Hero({ onNavigate }: HeroProps) {
               </span>
               {/* Elegant Edit / Laser Pen Icon */}
               <svg
-                width="12"
-                height="12"
+                width="11"
+                height="11"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#21150F"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ width: "12px", height: "12px", minWidth: "12px", maxWidth: "12px", flexShrink: 0 }}
+                style={{ width: "11px", height: "11px", minWidth: "11px", maxWidth: "11px", flexShrink: 0 }}
               >
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
