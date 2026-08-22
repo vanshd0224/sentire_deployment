@@ -127,6 +127,37 @@ export default function CartDrawer({
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
 
+  // Reset isRedirecting state on Browser Back Button (BFCache pageshow), visibilitychange, or drawer/items state change
+  useEffect(() => {
+    const handlePageShow = () => {
+      setIsRedirecting(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        setIsRedirecting(false);
+      }
+    };
+
+    const handlePopState = () => {
+      setIsRedirecting(false);
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsRedirecting(false);
+  }, [isOpen, items.length]);
+
   // Close on Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
