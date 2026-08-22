@@ -588,237 +588,103 @@ export default function Hero({ onNavigate }: HeroProps) {
             </p>
           </div>
 
-          {/* 3 Vertically Stacked Feature Benefits (Left Side) */}
+          {/* Dual Action Buttons (Placed in left content column below supporting message) */}
           <div
-            className="absolute flex flex-col justify-between"
+            className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "8.46%",
-              top: "44.80%",
-              width: "48%",
-              height: "23.5%",
+              top: "43.20%",
+              width: "44%",
+              maxWidth: "380px",
+              gap: "clamp(8px, 1.4vw, 14px)",
             }}
           >
-            {/* Feature 01: Photo & Name Engraving */}
-            <div className="flex items-center gap-[clamp(8px,2.2vw,18px)]">
-              <div
-                className="flex items-center justify-center rounded-full flex-shrink-0"
+            {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
+            <a
+              href="#perfumes"
+              onClick={handleCtaClick}
+              className="hero-cta-primary w-full flex items-center justify-center rounded-none"
+              style={{
+                height: "clamp(38px, 5.2vw, 56px)",
+                backgroundColor: "#211008",
+                backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
+                border: "1.5px solid #B88638",
+                boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
+                padding: "0 clamp(10px, 1.8vw, 18px)",
+                textDecoration: "none",
+              }}
+            >
+              <span
                 style={{
-                  width: "clamp(28px, 7.88vw, 68px)",
-                  height: "clamp(28px, 7.88vw, 68px)",
-                  backgroundColor: "rgba(247, 235, 222, 0.9)",
-                  border: "1px solid rgba(184, 134, 56, 0.35)",
-                  boxShadow: "0 2px 8px rgba(33, 21, 15, 0.08)",
-                  color: "#21150F",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "clamp(9px, 2.2vw, 15px)",
+                  fontWeight: 500,
+                  letterSpacing: "0.16em",
+                  color: "#E7B65B",
+                  textTransform: "uppercase",
+                  marginRight: "clamp(6px, 1.2vw, 12px)",
+                  whiteSpace: "nowrap",
                 }}
               >
-                {/* Photo & Name Engraving Icon */}
-                <svg
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-[52%] h-[52%]"
-                >
-                  <rect x="7" y="5" width="18" height="22" rx="2" />
-                  <circle cx="16" cy="13" r="3.5" />
-                  <path d="M11 23c0-2.8 2.2-5 5-5s5 2.2 5 5" />
-                  <path d="M13 2.5h6" />
-                </svg>
-              </div>
-              <div
-                className="hero-usp text-left leading-tight"
-                style={{
-                  fontSize: "clamp(9.5px, 2.78vw, 24px)",
-                  lineHeight: 1.22,
-                  color: "#21150F",
-                  fontWeight: 400,
-                }}
+                SHOP RAKHI GIFTS
+              </span>
+              <svg
+                viewBox="0 0 24 12"
+                fill="none"
+                stroke="#E7B65B"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-[clamp(10px, 1.8vw, 18px)] h-auto flex-shrink-0"
               >
-                Photo &amp; Name
-                <br />
-                Engraving
-              </div>
-            </div>
+                <line x1="1" y1="6" x2="22" y2="6" />
+                <polyline points="16 1 22 6 16 11" />
+              </svg>
+            </a>
 
-            {/* Feature 02: 35%+ Perfume Oil Concentration */}
-            <div className="flex items-center gap-[clamp(8px,2.2vw,18px)]">
-              <div
-                className="flex items-center justify-center rounded-full flex-shrink-0"
+            {/* Secondary CTA Button: PRODUCT PERSONALISATION ✎ */}
+            <button
+              type="button"
+              onClick={handlePersonalisationClick}
+              className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer"
+              style={{
+                height: "clamp(38px, 5.2vw, 56px)",
+                backgroundColor: "rgba(246, 228, 208, 0.92)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1.5px solid #9E8066",
+                boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
+                padding: "0 clamp(8px, 1.5vw, 16px)",
+              }}
+            >
+              <span
                 style={{
-                  width: "clamp(28px, 7.88vw, 68px)",
-                  height: "clamp(28px, 7.88vw, 68px)",
-                  backgroundColor: "rgba(247, 235, 222, 0.9)",
-                  border: "1px solid rgba(184, 134, 56, 0.35)",
-                  boxShadow: "0 2px 8px rgba(33, 21, 15, 0.08)",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "clamp(8.5px, 2.05vw, 14px)",
+                  fontWeight: 500,
+                  letterSpacing: "0.12em",
                   color: "#21150F",
+                  textTransform: "uppercase",
+                  marginRight: "clamp(4px, 1vw, 8px)",
+                  whiteSpace: "nowrap",
                 }}
               >
-                {/* Perfume Oil Droplet Icon */}
-                <svg
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-[52%] h-[52%]"
-                >
-                  <path d="M16 4C16 4 7 15.5 7 21.5C7 26.5 11 30 16 30C21 30 25 26.5 25 21.5C25 15.5 16 4 16 4Z" />
-                  <path d="M16 11c0 0-4 4.5-4 8" strokeWidth="1.2" opacity="0.6" />
-                </svg>
-              </div>
-              <div
-                className="hero-usp text-left leading-tight"
-                style={{
-                  fontSize: "clamp(9.5px, 2.78vw, 24px)",
-                  lineHeight: 1.22,
-                  color: "#21150F",
-                  fontWeight: 400,
-                }}
+                PRODUCT PERSONALISATION
+              </span>
+              {/* Elegant Edit / Laser Pen Icon */}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#21150F"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-[clamp(9px, 1.5vw, 15px)] h-auto flex-shrink-0"
               >
-                35%+ Perfume Oil
-                <br />
-                Concentration
-              </div>
-            </div>
-
-            {/* Feature 03: Express Delivery */}
-            <div className="flex items-center gap-[clamp(8px,2.2vw,18px)]">
-              <div
-                className="flex items-center justify-center rounded-full flex-shrink-0"
-                style={{
-                  width: "clamp(28px, 7.88vw, 68px)",
-                  height: "clamp(28px, 7.88vw, 68px)",
-                  backgroundColor: "rgba(247, 235, 222, 0.9)",
-                  border: "1px solid rgba(184, 134, 56, 0.35)",
-                  boxShadow: "0 2px 8px rgba(33, 21, 15, 0.08)",
-                  color: "#21150F",
-                }}
-              >
-                {/* Express Delivery Truck Icon */}
-                <svg
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-[54%] h-[54%]"
-                >
-                  <rect x="2" y="9" width="17" height="13" rx="1" />
-                  <path d="M19 13h5l4 4v5h-9V13z" />
-                  <circle cx="8.5" cy="23.5" r="2.5" />
-                  <circle cx="23.5" cy="23.5" r="2.5" />
-                  <line x1="2" y1="6" x2="10" y2="6" strokeWidth="1.4" />
-                  <line x1="4" y1="3" x2="8" y2="3" strokeWidth="1.4" />
-                </svg>
-              </div>
-              <div
-                className="hero-usp text-left leading-tight"
-                style={{
-                  fontSize: "clamp(9.5px, 2.78vw, 24px)",
-                  lineHeight: 1.22,
-                  color: "#21150F",
-                  fontWeight: 400,
-                }}
-              >
-                Express
-                <br />
-                Delivery
-              </div>
-            </div>
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+              </svg>
+            </button>
           </div>
-
-          {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
-          <a
-            href="#perfumes"
-            onClick={handleCtaClick}
-            className="hero-cta-primary absolute pointer-events-auto flex items-center justify-center rounded-none"
-            style={{
-              left: "8.46%",
-              right: "8.46%",
-              top: "84.57%",
-              height: "clamp(38px, 5.86vw, 84px)",
-              backgroundColor: "#211008",
-              backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
-              border: "1.5px solid #B88638",
-              boxShadow: "0 4px 20px rgba(33, 16, 8, 0.35)",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: "clamp(9px, 2.55vw, 22px)",
-                fontWeight: 500,
-                letterSpacing: "0.28em",
-                color: "#E7B65B",
-                textTransform: "uppercase",
-                marginRight: "clamp(8px, 2vw, 16px)",
-                paddingLeft: "4px",
-              }}
-            >
-              SHOP RAKHI GIFTS
-            </span>
-            <svg
-              viewBox="0 0 24 12"
-              fill="none"
-              stroke="#E7B65B"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-[clamp(12px,2.2vw,22px)] h-auto flex-shrink-0"
-            >
-              <line x1="1" y1="6" x2="22" y2="6" />
-              <polyline points="16 1 22 6 16 11" />
-            </svg>
-          </a>
-
-          {/* Secondary CTA Button: PRODUCT PERSONALISATION ✎ */}
-          <button
-            type="button"
-            onClick={handlePersonalisationClick}
-            className="hero-cta-secondary absolute pointer-events-auto flex items-center justify-center rounded-none"
-            style={{
-              left: "8.46%",
-              right: "8.46%",
-              top: "91.55%",
-              height: "clamp(39px, 6.07vw, 87px)",
-              backgroundColor: "rgba(246, 228, 208, 0.92)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1.5px solid #9E8066",
-              boxShadow: "0 4px 16px rgba(33, 16, 8, 0.1)",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: "clamp(9px, 2.55vw, 22px)",
-                fontWeight: 500,
-                letterSpacing: "0.24em",
-                color: "#21150F",
-                textTransform: "uppercase",
-                marginRight: "clamp(6px, 1.4vw, 12px)",
-                paddingLeft: "4px",
-              }}
-            >
-              PRODUCT PERSONALISATION
-            </span>
-            {/* Elegant Edit / Laser Pen Icon */}
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#21150F"
-              strokeWidth="1.7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-[clamp(10px,1.8vw,18px)] h-auto flex-shrink-0"
-            >
-              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-            </svg>
-          </button>
         </div>
       </div>
     </section>
