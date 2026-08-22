@@ -61,6 +61,9 @@ interface NavbarProps {
   onOpenAccount?: () => void;
   onOpenCart?: () => void;
   onSelectProduct?: (product: any) => void;
+  isSearchOpen?: boolean;
+  onToggleSearch?: () => void;
+  onCloseSearch?: () => void;
 }
 
 export const SEARCHABLE_PRODUCTS = [
@@ -95,14 +98,28 @@ export default function Navbar({
   onOpenAccount,
   onOpenCart,
   onSelectProduct,
+  isSearchOpen,
+  onToggleSearch,
+  onCloseSearch,
 }: NavbarProps) {
   const [megaOpen, setMegaOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [internalSearchOpen, setInternalSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [cartPop, setCartPop] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const searchOpen = isSearchOpen !== undefined ? isSearchOpen : internalSearchOpen;
+  const setSearchOpen = (val: boolean) => {
+    if (val) {
+      if (onToggleSearch) onToggleSearch();
+      else setInternalSearchOpen(true);
+    } else {
+      if (onCloseSearch) onCloseSearch();
+      else setInternalSearchOpen(false);
+    }
+  };
 
   const openMega  = () => { if (closeTimer.current) clearTimeout(closeTimer.current); setMegaOpen(true); };
   const closeMega = () => { closeTimer.current = setTimeout(() => setMegaOpen(false), 140); };
@@ -112,15 +129,17 @@ export default function Navbar({
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setSearchOpen((prev) => !prev);
+        setSearchOpen(!searchOpen);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [searchOpen]);
 
   useEffect(() => {
-    if (searchOpen) setTimeout(() => searchRef.current?.focus(), 80);
+    if (searchOpen) {
+      setTimeout(() => searchRef.current?.focus(), 100);
+    }
   }, [searchOpen]);
 
   useEffect(() => {
@@ -435,28 +454,37 @@ export default function Navbar({
               </button>
 
               {/* Live Search Results Dropdown Popover */}
-              {searchQuery.trim() !== "" && (
-                <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#c89b5a]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
-                  <div className="flex items-center justify-between border-b border-black/8 pb-2 px-2 mb-2.5">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#c89b5a]">
-                      Olfactory Discovery ({searchResults.length})
-                    </span>
+              <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#c89b5a]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
+                <div className="flex items-center justify-between border-b border-black/8 pb-2 px-2 mb-2.5">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#c89b5a]">
+                    {searchQuery.trim() === "" ? "Curated Fragrance Suggestions" : `Olfactory Discovery (${searchResults.length})`}
+                  </span>
+                  {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
                       className="text-[10.5px] text-ink/50 hover:text-ink cursor-pointer font-medium"
                     >
                       Clear
                     </button>
-                  </div>
+                  )}
+                </div>
 
-                  {searchResults.length === 0 ? (
-                    <div className="py-8 text-center text-xs text-ink/60 font-medium">
-                      <p>No fragrances found for "{searchQuery}"</p>
-                      <p className="text-[10.5px] text-[#c89b5a] mt-1">Try "Oud", "Lavender", "Amber", or "Floral"</p>
+                {searchQuery.trim() === "" ? (
+                  <div>
+                    <p className="text-[11px] text-ink/60 mb-2 px-1">Popular searches & signature extraits:</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {["White Oud", "Deep Crush", "Calantha", "Rich", "Purple Oud", "Seductive", "Sports Mode"].map((tag) => (
+                        <button
+                          key={tag}
+                          onClick={() => setSearchQuery(tag)}
+                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#f3ece0] text-[#21150F] hover:bg-[#c89b5a] hover:text-white transition-colors cursor-pointer border border-[#c89b5a]/20"
+                        >
+                          {tag}
+                        </button>
+                      ))}
                     </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {searchResults.map((product) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {SEARCHABLE_PRODUCTS.slice(0, 4).map((product) => (
                         <div
                           key={product.id}
                           onClick={() => {
@@ -467,37 +495,72 @@ export default function Navbar({
                           }}
                           className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#c89b5a] hover:shadow-md transition-all cursor-pointer group"
                         >
-                          <div className="h-12 w-12 shrink-0 rounded-lg bg-[#f6f2ec] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                          <div className="h-11 w-11 shrink-0 rounded-lg bg-[#f6f2ec] p-1 flex items-center justify-center overflow-hidden border border-black/5">
                             <img src={product.img} alt={product.name} className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-300" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[8px] font-bold uppercase tracking-wider text-[#c89b5a] block">
-                                {product.num}
-                              </span>
-                              <span className="text-[8px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#c89b5a]/10 text-[#c89b5a] border border-[#c89b5a]/20">
-                                {product.scentFamily}
-                              </span>
-                            </div>
-                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#c89b5a] transition-colors mt-0.5">
+                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#c89b5a] transition-colors">
                               {product.name}
                             </h4>
-                            <p className="text-[10px] text-ink/55 truncate mt-0.5">{product.notes}</p>
+                            <p className="text-[10px] text-ink/55 truncate">{product.notes}</p>
                           </div>
                           <div className="text-right shrink-0">
                             <span className="text-xs font-bold text-ink block">
                               ₹{product.price.toLocaleString()}
                             </span>
-                            <span className="text-[9px] text-[#c89b5a] font-medium group-hover:underline">
-                              View Scent →
-                            </span>
                           </div>
                         </div>
                       ))}
                     </div>
-                  )}
-                </div>
-              )}
+                  </div>
+                ) : searchResults.length === 0 ? (
+                  <div className="py-8 text-center text-xs text-ink/60 font-medium">
+                    <p>No fragrances found for "{searchQuery}"</p>
+                    <p className="text-[10.5px] text-[#c89b5a] mt-1">Try "Oud", "Lavender", "Amber", or "Floral"</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {searchResults.map((product) => (
+                      <div
+                        key={product.id}
+                        onClick={() => {
+                          onNavigate?.("perfumes");
+                          onSelectProduct?.(product);
+                          setSearchOpen(false);
+                          setSearchQuery("");
+                        }}
+                        className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#c89b5a] hover:shadow-md transition-all cursor-pointer group"
+                      >
+                        <div className="h-12 w-12 shrink-0 rounded-lg bg-[#f6f2ec] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                          <img src={product.img} alt={product.name} className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-300" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[8px] font-bold uppercase tracking-wider text-[#c89b5a] block">
+                              {product.num}
+                            </span>
+                            <span className="text-[8px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#c89b5a]/10 text-[#c89b5a] border border-[#c89b5a]/20">
+                              {product.scentFamily}
+                            </span>
+                          </div>
+                          <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#c89b5a] transition-colors mt-0.5">
+                            {product.name}
+                          </h4>
+                          <p className="text-[10px] text-ink/55 truncate mt-0.5">{product.notes}</p>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className="text-xs font-bold text-ink block">
+                            ₹{product.price.toLocaleString()}
+                          </span>
+                          <span className="text-[9px] text-[#c89b5a] font-medium group-hover:underline">
+                            View Scent →
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

@@ -50,6 +50,7 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
 
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
@@ -209,6 +210,10 @@ export default function App() {
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAccount={handleAccountClick}
+        onSelectProduct={(p) => setSelectedProductModal(p)}
+        isSearchOpen={isSearchOpen}
+        onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
+        onCloseSearch={() => setIsSearchOpen(false)}
       />
 
       {currentPage === "perfumes" ? (
@@ -309,7 +314,10 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           onOpenAccount={handleAccountClick}
           onOpenBundleModal={openBundleModal}
-          onToggleSearch={() => handleNavigate("perfumes")}
+          onToggleSearch={() => {
+            setIsSearchOpen(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
           cartCount={totalCartCount}
         />
       )}

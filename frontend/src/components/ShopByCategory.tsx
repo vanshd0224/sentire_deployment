@@ -2,10 +2,10 @@ import SectionHeading from "./SectionHeading";
 import type { PerfumeFilterOptions } from "./Navbar";
 
 const categories = [
-  { title: "New Arrivals", subtitle: "Latest Masterpieces", image: "/images/purple-oud-arrival.png", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
-  { title: "Best Sellers", subtitle: "Iconic House Signatures", image: "/images/product-white-oud.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
+  { title: "New Arrivals", subtitle: "Discover The Unseen", image: "/images/curated-new-arrivals.jpg", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
+  { title: "Best Sellers", subtitle: "Most Loved Essentials", image: "/images/curated-best-sellers.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
   { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/category-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
-  { title: "BYOB Discovery Box", subtitle: "Curate Custom Coffret", image: "/images/build-bundle.png", isByob: true },
+  { title: "Build Your Own Bundle", subtitle: "Curate Your Perfect Set", image: "/images/curated-byob.jpg", isByob: true },
 ];
 
 interface ShopByCategoryProps {
