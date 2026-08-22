@@ -27,14 +27,14 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-        <!-- Sentire Parfums - 4-in-1 AI Concierge Luxury Suite -->
+    <!-- Sentire Parfums - 4-in-1 AI Concierge Luxury Suite -->
     <style>
   #sentire-suite-container {
     position: fixed;
     bottom: 82px;
-    right: 16px;
+    right: 18px;
     z-index: 999999;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
   }
 
   @media (min-width: 769px) {
@@ -45,23 +45,37 @@
   }
 
   #sentire-suite-trigger {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: #111111;
-    color: #C8A96A;
-    border: 1.5px solid #C8A96A;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, #1f1a14 0%, #0b0907 100%);
+    color: #c89b5a;
+    border: 1.5px solid #c89b5a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 15px rgba(200, 155, 90, 0.25);
     cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   #sentire-suite-trigger:hover {
-    transform: scale(1.08);
-    box-shadow: 0 10px 30px rgba(200, 169, 106, 0.4);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9), 0 0 22px rgba(200, 155, 90, 0.45);
+    border-color: #d4af37;
+  }
+
+  #sentire-suite-trigger .online-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #10b981;
+    border: 2.5px solid #0b0907;
+    box-shadow: 0 0 8px #10b981;
   }
 
   #sentire-suite-modal {
@@ -69,62 +83,117 @@
     position: fixed;
     bottom: 145px;
     right: 16px;
-    width: 390px;
+    width: 400px;
     max-width: calc(100vw - 32px);
-    height: 540px;
-    max-height: calc(100vh - 160px);
-    background: #111111;
-    border: 1px solid rgba(200, 169, 106, 0.35);
-    border-radius: 20px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+    height: 570px;
+    max-height: calc(100vh - 150px);
+    background: #0b0907;
+    border: 1px solid rgba(200, 155, 90, 0.35);
+    border-radius: 24px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 30px rgba(200, 155, 90, 0.12);
     flex-direction: column;
     overflow: hidden;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px);
+    animation: suiteFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes suiteFadeUp {
+    from { opacity: 0; transform: translateY(18px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   @media (min-width: 769px) {
     #sentire-suite-modal {
-      bottom: 90px;
+      bottom: 94px;
       right: 28px;
-      width: 430px;
-      height: 580px;
+      width: 440px;
+      height: 610px;
     }
+  }
+
+  .suite-quick-chip {
+    background: rgba(200, 155, 90, 0.08);
+    color: #e5dfd5;
+    border: 1px solid rgba(200, 155, 90, 0.22);
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .suite-quick-chip:hover {
+    background: rgba(200, 155, 90, 0.22);
+    color: #ffffff;
+    border-color: #c89b5a;
+    transform: translateY(-1px);
   }
 </style>
 
 <div id="sentire-suite-container">
-  <button id="sentire-suite-trigger" title="Sentire AI Concierge">
-    <span style="font-size: 24px; line-height: 1;">✨</span>
+  <button id="sentire-suite-trigger" title="House of Sentire Concierge">
+    <div class="online-dot"></div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" opacity="0.4"/>
+      <path d="M9 7h6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/>
+      <path d="M10 4h4a1 1 0 0 1 1 1v2h-6V5a1 1 0 0 1 1-1z"/>
+      <circle cx="12" cy="13" r="1.5" fill="currentColor" stroke="none"/>
+    </svg>
   </button>
 
   <div id="sentire-suite-modal">
     <!-- Header -->
-    <div style="padding: 16px 20px; background: #181818; border-bottom: 1px solid rgba(200,169,106,0.2); display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <h3 style="margin: 0; color: #FFFFFF; font-family: 'Playfair Display', serif; font-size: 16px; letter-spacing: 0.04em;">Sentire Luxury Concierge</h3>
-        <p style="margin: 3px 0 0; color: #C8A96A; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em;">Powered by Gemini AI & 840 Q&A Dataset</p>
+    <div style="padding: 16px 20px; background: linear-gradient(180deg, #18130f 0%, #110d09 100%); border-bottom: 1px solid rgba(200, 155, 90, 0.22); display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; items-center; gap: 12px;">
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(200, 155, 90, 0.15); border: 1px solid #c89b5a; display: flex; align-items: center; justify-content: center; color: #c89b5a; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px;">
+          S
+        </div>
+        <div>
+          <h3 style="margin: 0; color: #FFFFFF; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; letter-spacing: 0.04em;">House of Sentire</h3>
+          <p style="margin: 2px 0 0; color: #c89b5a; font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; display: flex; align-items: center; gap: 4px;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+            Private Olfactory Concierge • Online
+          </p>
+        </div>
       </div>
-      <button id="sentire-suite-close" style="background: none; border: none; color: #888; font-size: 24px; cursor: pointer; padding: 0 4px;">&times;</button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button id="sentire-suite-refresh" title="Clear Chat" style="background: none; border: none; color: rgba(255,255,255,0.5); font-size: 16px; cursor: pointer; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">↻</button>
+        <button id="sentire-suite-close" title="Close" style="background: none; border: none; color: rgba(255,255,255,0.5); font-size: 20px; cursor: pointer; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">&times;</button>
+      </div>
     </div>
 
     <!-- Navigation Tabs -->
-    <div style="display: flex; background: #141414; border-bottom: 1px solid rgba(200,169,106,0.15); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;">
-      <button class="suite-tab active" data-tab="tab-chat" style="flex: 1; padding: 12px 4px; background: none; border: none; color: #C8A96A; border-bottom: 2px solid #C8A96A; cursor: pointer;">🤖 AI Chat</button>
-      <button class="suite-tab" data-tab="tab-recommend" style="flex: 1; padding: 12px 4px; background: none; border: none; color: #888; cursor: pointer;">✨ Scent Finder</button>
-      <button class="suite-tab" data-tab="tab-loyalty" style="flex: 1; padding: 12px 4px; background: none; border: none; color: #888; cursor: pointer;">💎 VIP Rewards</button>
-      <button class="suite-tab" data-tab="tab-upload" style="flex: 1; padding: 12px 4px; background: none; border: none; color: #888; cursor: pointer;">📸 Engraving</button>
+    <div style="display: flex; background: #0f0c09; border-bottom: 1px solid rgba(200, 155, 90, 0.15); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 6px;">
+      <button class="suite-tab active" data-tab="tab-chat" style="flex: 1; padding: 10px 4px; background: none; border: none; color: #c89b5a; border-bottom: 2px solid #c89b5a; cursor: pointer; transition: all 0.2s;">💬 AI Chat</button>
+      <button class="suite-tab" data-tab="tab-recommend" style="flex: 1; padding: 10px 4px; background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s;">✨ Scent Finder</button>
+      <button class="suite-tab" data-tab="tab-loyalty" style="flex: 1; padding: 10px 4px; background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s;">💎 VIP Perks</button>
+      <button class="suite-tab" data-tab="tab-upload" style="flex: 1; padding: 10px 4px; background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.2s;">✒️ Engraving</button>
     </div>
 
     <!-- TAB 1: AI CHATBOT -->
-    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
-      <div id="suite-chat-messages" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
-        <div style="background: rgba(200,169,106,0.08); border: 1px solid rgba(200,169,106,0.25); border-radius: 14px; padding: 14px; color: #E0E0E0; line-height: 1.5;">
-          Greetings! I am your <strong>Sentire Fragrance Master</strong>. Ask me anything about our 11 core signature scents, scent notes, gifting, or seasonal recommendations!
+    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; bg: #0b0907;">
+      <div id="suite-chat-messages" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 12.5px;">
+        <!-- Welcome Card -->
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.1) 0%, rgba(15, 12, 9, 0.8) 100%); border: 1px solid rgba(200, 155, 90, 0.28); border-radius: 16px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', serif; font-size: 15px; color: #ffffff; font-weight: 600;">Welcome to the House of Sentire ✨</p>
+          I am your private fragrance master. Ask me anything about our <strong>11 signature 35%+ pure oil extraits</strong>, bespoke photo bottle engraving, or occasion curation.
+        </div>
+
+        <!-- Quick Topic Chips -->
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;">
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Recommend a perfume for romantic date night')">🌹 Evening &amp; Seduction</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Best perfume for office and daily wear')">💼 Office &amp; Clean Woods</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('How does complimentary photo engraving work?')">✒️ Photo Engraving</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Show active discount codes and BYOB offers')">🎁 Coupons &amp; Offers</button>
         </div>
       </div>
-      <div style="padding: 12px; background: #181818; border-top: 1px solid rgba(200,169,106,0.2); display: flex; gap: 8px;">
-        <input id="suite-chat-input" type="text" placeholder="Ask AI about scents, notes, gifts..." style="flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 10px 14px; border-radius: 20px; font-size: 12px; outline: none;"/>
-        <button id="suite-chat-send" style="background: #C8A96A; color: #000; border: none; padding: 0 18px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;">Send</button>
+
+      <!-- Chat Input Footer -->
+      <div style="padding: 14px 16px; background: #120e0a; border-top: 1px solid rgba(200, 155, 90, 0.2); display: flex; gap: 10px; align-items: center;">
+        <input id="suite-chat-input" type="text" placeholder="Describe a mood, note, or occasion..." style="flex: 1; background: #070504; border: 1px solid rgba(200, 155, 90, 0.35); color: #f8f5f1; padding: 11px 16px; border-radius: 22px; font-size: 12px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#c89b5a'" onblur="this.style.borderColor='rgba(200, 155, 90, 0.35)'"/>
+        <button id="suite-chat-send" style="background: #c89b5a; color: #0b0907; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#d4af37';" onmouseout="this.style.transform='scale(1)'; this.style.background='#c89b5a';">➔</button>
       </div>
     </div>
 
@@ -359,25 +428,47 @@
     return "Thank you for asking! <strong>Sentire by PC</strong> offers 11 extraits de parfum starting at ₹799. Would you like a recommendation for a specific occasion, season, or gifting recipient?";
   }
 
-    async function sendChatMessage(text) {
+  const refreshBtn = document.getElementById('sentire-suite-refresh');
+  if (refreshBtn && chatMessages) {
+    refreshBtn.addEventListener('click', () => {
+      chatMessages.innerHTML = `
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.1) 0%, rgba(15, 12, 9, 0.8) 100%); border: 1px solid rgba(200, 155, 90, 0.28); border-radius: 16px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', serif; font-size: 15px; color: #ffffff; font-weight: 600;">Welcome to the House of Sentire ✨</p>
+          I am your private fragrance master. Ask me anything about our <strong>11 signature 35%+ pure oil extraits</strong>, bespoke photo bottle engraving, or occasion curation.
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;">
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Recommend a perfume for romantic date night')">🌹 Evening &amp; Seduction</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Best perfume for office and daily wear')">💼 Office &amp; Clean Woods</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('How does complimentary photo engraving work?')">✒️ Photo Engraving</button>
+          <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Show active discount codes and BYOB offers')">🎁 Coupons &amp; Offers</button>
+        </div>
+      `;
+    });
+  }
+
+  window.sendChatMessageFromChip = function(txt) {
+    sendChatMessage(txt);
+  };
+
+  async function sendChatMessage(text) {
     if (!text || !text.trim() || !chatMessages) return;
     const userText = text.trim();
 
     // 1. Render User Message Bubble
     const userDiv = document.createElement('div');
-    userDiv.style.cssText = 'align-self: flex-end; background: #C89A46; color: #000; padding: 10px 14px; border-radius: 14px; max-width: 80%; font-weight: 500; font-size: 13px; shadow: 0 2px 8px rgba(0,0,0,0.15);';
+    userDiv.style.cssText = 'align-self: flex-end; background: #c89b5a; color: #0b0907; padding: 10px 15px; border-radius: 18px 18px 2px 18px; max-width: 82%; font-weight: 600; font-size: 12.5px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); line-height: 1.4;';
     userDiv.textContent = userText;
     chatMessages.appendChild(userDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // 2. Render Bot Thinking Bubble (1-Shot Clean State)
+    // 2. Render Bot Thinking Bubble
     const botDiv = document.createElement('div');
-    botDiv.style.cssText = 'align-self: flex-start; background: #1e1e1e; color: #f8f5f1; padding: 10px 14px; border-radius: 14px; max-width: 85%; line-height: 1.5; font-size: 13px; border: 1px solid rgba(200,155,90,0.25);';
-    botDiv.innerHTML = '<span style="color:#C89A46; font-style:italic;">Gemini AI is thinking... ✨</span>';
+    botDiv.style.cssText = 'align-self: flex-start; background: #130f0b; color: #f8f5f1; padding: 12px 16px; border-radius: 18px 18px 18px 2px; max-width: 88%; line-height: 1.6; font-size: 12.5px; border: 1px solid rgba(200,155,90,0.25); box-shadow: 0 6px 20px rgba(0,0,0,0.4);';
+    botDiv.innerHTML = '<span style="color:#c89b5a; font-style:italic;">Crafting your olfactory response... ✨</span>';
     chatMessages.appendChild(botDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // 3. Fetch Final Gemini 3.5 Flash LLM Response from Backend
+    // 3. Fetch Final Gemini Response from Backend
     try {
       const backendUrl = window.location.hostname.includes('run.app') 
         ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/chat'
