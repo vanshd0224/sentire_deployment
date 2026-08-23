@@ -41,13 +41,13 @@ const navLinks = [
       },
     },
   },
-  { label: "Best Sellers", href: "#best-sellers", filter: { category: "bestsellers" } },
-  { label: "New Arrivals", href: "#new-arrivals", filter: { category: "bestsellers" } },
-  { label: "BYOB Box", href: "#" },
-  { label: "Product Personalisation", href: "#" },
-  { label: "About Us", href: "#about" },
-  { label: "Client Services", href: "#client-services" },
-  { label: "Track Order", href: "#" },
+  { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
+  { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
+  { label: "BYOB Box", href: "/byob" },
+  { label: "Product Personalisation", href: "/personalisation" },
+  { label: "About Us", href: "/about" },
+  { label: "Client Services", href: "/client-services" },
+  { label: "Track Order", href: "/track-order" },
 ];
 
 interface NavbarProps {
@@ -594,8 +594,10 @@ export default function Navbar({
                         <ul className="space-y-1">
                           {cat.items.map((item) => (
                             <li key={item.label}>
-                              <button
-                                onClick={() => {
+                              <a
+                                href={item.filter?.size ? `/perfumes?size=${item.filter.size}` : `/perfumes?mood=${item.filter?.mood || 'all'}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
                                   setMegaOpen(false);
                                   onNavigate?.("perfumes", item.filter);
                                 }}
@@ -615,7 +617,7 @@ export default function Navbar({
                                   className="h-3.5 w-3.5 translate-x-0 text-ink/20 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:text-[#c89b5a] group-hover:opacity-100">
                                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                              </button>
+                              </a>
                             </li>
                           ))}
                         </ul>
@@ -624,8 +626,10 @@ export default function Navbar({
                   </div>
 
                   {/* Featured Card - Full Bleed Editorial Luxury */}
-                  <button
-                    onClick={() => {
+                  <a
+                    href="/perfumes?id=purple-oud"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setMegaOpen(false);
                       onNavigate?.("perfumes", featured.filter);
                     }}
@@ -636,7 +640,9 @@ export default function Navbar({
                     <div className="relative h-full min-h-[320px] w-full overflow-hidden">
                       <img
                         src={featured.img}
-                        alt={featured.name}
+                        alt={`Sentire ${featured.name} Extrait de Parfum 50ml flacon`}
+                        width="320"
+                        height="400"
                         className="h-full w-full object-cover opacity-75 transition-all duration-700 ease-out group-hover:scale-108 group-hover:opacity-90"
                       />
                       {/* Ambient gradient overlay */}
@@ -671,7 +677,7 @@ export default function Navbar({
                         </div>
                       </div>
                     </div>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -700,9 +706,11 @@ export default function Navbar({
 
               <div className="mt-6 space-y-1">
                 {navLinks.map((link) => (
-                  <button
+                  <a
                     key={link.label}
-                    onClick={() => {
+                    href={link.href || "/"}
+                    onClick={(e) => {
+                      e.preventDefault();
                       setMobileNavOpen(false);
                       if (link.label === "Perfumes") onNavigate?.("perfumes");
                       else if (link.label === "Best Sellers") onNavigate?.("bestsellers");
@@ -718,7 +726,7 @@ export default function Navbar({
                   >
                     <span>{link.label}</span>
                     <span className="text-[#c89b5a]">→</span>
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
