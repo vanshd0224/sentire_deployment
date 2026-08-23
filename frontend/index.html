@@ -52,17 +52,17 @@
     width: 58px;
     height: 58px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1f1812 0%, #110c08 100%);
+    background: linear-gradient(135deg, #241c14 0%, #0e0b08 100%);
     color: #c89b5a;
     border: 1.5px solid #c89b5a;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 18px rgba(200, 155, 90, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(200, 155, 90, 0.35);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   #sentire-suite-trigger:hover {
     transform: scale(1.08) translateY(-2px);
-    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), 0 0 25px rgba(200, 155, 90, 0.5);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.95), 0 0 28px rgba(200, 155, 90, 0.55);
     border-color: #d4af37;
   }
 
@@ -74,7 +74,7 @@
     height: 12px;
     border-radius: 50%;
     background: #10b981;
-    border: 2.5px solid #1f1812;
+    border: 2.5px solid #0e0b08;
     box-shadow: 0 0 8px #10b981;
   }
 
@@ -87,10 +87,12 @@
     max-width: calc(100vw - 32px);
     height: 570px;
     max-height: calc(100vh - 150px);
-    background: #faf7f2;
-    border: 1px solid rgba(200, 155, 90, 0.45);
-    border-radius: 24px;
-    box-shadow: 0 25px 80px rgba(18, 14, 10, 0.35), 0 0 30px rgba(200, 155, 90, 0.15);
+    background: rgba(14, 11, 8, 0.96);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1.5px solid #c89b5a;
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 35px rgba(200, 155, 90, 0.2);
     flex-direction: column;
     overflow: hidden;
     animation: suiteFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -115,23 +117,24 @@
   }
 
   .suite-quick-chip {
-    background: #efe8de;
-    color: #332a22;
-    border: 1px solid #d6c7b2;
+    background: rgba(200, 155, 90, 0.12);
+    color: #c89b5a;
+    border: 1px solid rgba(200, 155, 90, 0.35);
     padding: 8px 14px;
     border-radius: 20px;
     font-size: 11.5px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     white-space: nowrap;
   }
 
   .suite-quick-chip:hover {
     background: #c89b5a;
-    color: #ffffff;
+    color: #0e0b08;
     border-color: #c89b5a;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(200, 155, 90, 0.3);
   }
 
   /* Pulse Dot Animation for AI Typing */
@@ -157,7 +160,7 @@
   <button id="sentire-suite-trigger" title="Sentire Fragrance Assistant">
     <div class="online-dot"></div>
     <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; pointer-events: none;">
-      <!-- Luxury Gold Flacon Icon -->
+      <!-- Luxury Gold Bottle Icon -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 10H15V20C15 21.1046 14.1046 22 13 22H11C9.89543 22 9 21.1046 9 20V10Z" stroke="#c89b5a" stroke-width="1.8"/>
         <path d="M10 6H14V10H10V6Z" stroke="#c89b5a" stroke-width="1.5"/>
@@ -169,7 +172,7 @@
 
   <div id="sentire-suite-modal">
     <!-- Header -->
-    <div style="padding: 16px 20px; background: linear-gradient(180deg, #17130e 0%, #100b07 100%); border-bottom: 1px solid rgba(200, 155, 90, 0.35); display: flex; justify-content: space-between; align-items: center;">
+    <div style="padding: 16px 20px; background: linear-gradient(180deg, #1f1812 0%, #0e0b08 100%); border-bottom: 1px solid rgba(200, 155, 90, 0.3); display: flex; justify-content: space-between; align-items: center;">
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(200, 155, 90, 0.15); border: 1.5px solid #c89b5a; display: flex; align-items: center; justify-content: center; color: #c89b5a; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 17px;">
           S
@@ -188,12 +191,12 @@
       </div>
     </div>
 
-    <!-- AI CHATBOT (COZY & LUXURY PARCHMENT CONTAINER) -->
-    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; background: #faf7f2;">
+    <!-- AI CHATBOT (DARK LUXURY GOLD GLASSMORPHISM CONTAINER) -->
+    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; background: #0e0b08;">
       <div id="suite-chat-messages" style="flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
         <!-- Welcome Card -->
-        <div style="background: #f4eee6; border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #332a22; line-height: 1.6; font-weight: 400; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #18130f; font-weight: 600;">Welcome to Sentire by PC</p>
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(18, 14, 10, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600;">Welcome to Sentire by PC</p>
           Hello! I am your private fragrance master powered by luxury AI. Ask me about our 11 extraits de parfum, bespoke photo bottle engraving, or occasion curation.
         </div>
 
@@ -207,9 +210,9 @@
       </div>
 
       <!-- Chat Input Footer -->
-      <div style="padding: 14px 16px; background: #f0eadf; border-top: 1px solid rgba(200, 155, 90, 0.25); display: flex; gap: 10px; align-items: center;">
-        <input id="suite-chat-input" type="text" placeholder="Describe a mood, note, or occasion..." style="flex: 1; background: #ffffff; border: 1px solid #d6c7b2; color: #18130f; padding: 11px 16px; border-radius: 22px; font-size: 12.5px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#c89b5a'" onblur="this.style.borderColor='#d6c7b2'"/>
-        <button id="suite-chat-send" style="background: #c89b5a; color: #ffffff; border: none; padding: 0 20px; height: 38px; border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='#b58948'" onmouseout="this.style.background='#c89b5a'">Send</button>
+      <div style="padding: 14px 16px; background: #15100b; border-top: 1px solid rgba(200, 155, 90, 0.25); display: flex; gap: 10px; align-items: center;">
+        <input id="suite-chat-input" type="text" placeholder="Describe a mood, note, or occasion..." style="flex: 1; background: #070504; border: 1px solid rgba(200, 155, 90, 0.35); color: #f8f5f1; padding: 11px 16px; border-radius: 22px; font-size: 12.5px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#c89b5a'" onblur="this.style.borderColor='rgba(200, 155, 90, 0.35)'"/>
+        <button id="suite-chat-send" style="background: #c89b5a; color: #0e0b08; border: none; padding: 0 20px; height: 38px; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='#d4af37'" onmouseout="this.style.background='#c89b5a'">Send</button>
       </div>
     </div>
   </div>
@@ -241,8 +244,8 @@
   if (refreshBtn && chatMessages) {
     refreshBtn.addEventListener('click', () => {
       chatMessages.innerHTML = `
-        <div style="background: #f4eee6; border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #332a22; line-height: 1.6; font-weight: 400; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #18130f; font-weight: 600;">Welcome to Sentire by PC</p>
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(18, 14, 10, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600;">Welcome to Sentire by PC</p>
           Hello! I am your private fragrance master powered by luxury AI. Ask me about our 11 extraits de parfum, bespoke photo bottle engraving, or occasion curation.
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;">
@@ -309,14 +312,14 @@
 
     // 1. Render User Message Bubble
     const userDiv = document.createElement('div');
-    userDiv.style.cssText = 'align-self: flex-end; background: #c89b5a; color: #ffffff; padding: 11px 16px; border-radius: 18px 18px 2px 18px; max-width: 82%; font-weight: 500; font-size: 12.5px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); line-height: 1.4;';
+    userDiv.style.cssText = 'align-self: flex-end; background: linear-gradient(135deg, #c89b5a 0%, #b58948 100%); color: #0e0b08; padding: 11px 16px; border-radius: 18px 18px 2px 18px; max-width: 82%; font-weight: 600; font-size: 12.5px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); line-height: 1.4;';
     userDiv.textContent = userText;
     chatMessages.appendChild(userDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     // 2. Render AI Typing Dots
     const botDiv = document.createElement('div');
-    botDiv.style.cssText = 'align-self: flex-start; background: #f4eee6; color: #332a22; padding: 14px 18px; border-radius: 18px 18px 18px 2px; max-width: 88%; line-height: 1.6; font-size: 12.5px; border: 1px solid rgba(200,155,90,0.35); box-shadow: 0 4px 15px rgba(0,0,0,0.03);';
+    botDiv.style.cssText = 'align-self: flex-start; background: rgba(22, 17, 12, 0.92); color: #f0eadf; padding: 14px 18px; border-radius: 18px 18px 18px 2px; max-width: 88%; line-height: 1.6; font-size: 12.5px; border: 1px solid rgba(200, 155, 90, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.4);';
     botDiv.innerHTML = '<div style="display:flex; align-items:center; gap:4px; padding:4px 0;"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
     chatMessages.appendChild(botDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
