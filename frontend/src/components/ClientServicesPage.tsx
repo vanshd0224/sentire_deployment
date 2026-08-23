@@ -248,7 +248,10 @@ export default function ClientServicesPage({
               <div className="h-64 w-full rounded-xl overflow-hidden bg-[#1f1913] flex items-center justify-center relative mb-5">
                 <img
                   src="/assets/white-oud.png"
-                  alt="Sentire Packaging & Client Services"
+                  alt="Sentire by PC luxury packaging and private client concierge services in Jaipur"
+                  width="300"
+                  height="300"
+                  loading="lazy"
                   className="h-full w-full object-contain p-4 hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#16120e] via-transparent to-transparent opacity-60" />

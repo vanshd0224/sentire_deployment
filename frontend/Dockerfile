@@ -13,9 +13,7 @@ RUN npm run build
 FROM nginx:alpine AS runner
 
 COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Configure Nginx to listen on port 8080 with SPA routing fallback
-RUN sed -i 's/listen       80;/listen       8080;/g' /etc/nginx/conf.d/default.conf || true
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
 

@@ -40,6 +40,8 @@ router.post('/personalization-image', (req, res) => {
         req.file.mimetype
       );
 
+      res.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
+      res.set('Cache-Control', 'private, no-cache, no-store, must-revalidate');
       return res.status(200).json({ imageUrl });
     } catch (uploadErr) {
       logger.error(`Error uploading personalization image: ${uploadErr.message}`);

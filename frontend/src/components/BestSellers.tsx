@@ -21,8 +21,8 @@ const products: ProductItem[] = [
     notes: "Citric Limon • Fresh Lavender • Velvet Amber",
     image: "/assets/seductive.png?v=12",
     badge: "Best Seller",
-    rating: 4.91,
-    reviewsCount: 165,
+    rating: 4.93,
+    reviewsCount: 59,
     prices: {
       10: { price: 459, originalPrice: 649 },
       30: { price: 999, originalPrice: 1409 },
@@ -36,7 +36,7 @@ const products: ProductItem[] = [
     image: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
     badge: "Exclusive",
     rating: 4.95,
-    reviewsCount: 98,
+    reviewsCount: 60,
     prices: {
       50: { price: 1489, originalPrice: 1859 },
     },
@@ -47,8 +47,8 @@ const products: ProductItem[] = [
     notes: "Blooming Jasmine • Rose • Sandalwood Amber",
     image: "/assets/calantha.png?v=12",
     badge: "Best Seller",
-    rating: 4.85,
-    reviewsCount: 116,
+    rating: 4.88,
+    reviewsCount: 52,
     prices: {
       10: { price: 399, originalPrice: 449 },
       30: { price: 900, originalPrice: 1409 },
@@ -61,8 +61,8 @@ const products: ProductItem[] = [
     notes: "Lavender • Tobacco Woods • Sandalwood Amber",
     image: "/assets/deep-crush.png?v=12",
     badge: "Best Seller",
-    rating: 4.89,
-    reviewsCount: 142,
+    rating: 4.91,
+    reviewsCount: 54,
     prices: {
       10: { price: 350, originalPrice: 419 },
       30: { price: 899, originalPrice: 1319 },
@@ -149,16 +149,31 @@ export default function BestSellers({
             return (
               <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
                 <div>
-                  <div
-                    onClick={() => fullProd && onSelectProduct?.(fullProd)}
-                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
+                  <a
+                    href={`/perfumes?id=${p.id}`}
+                    onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                    aria-label={`View Sentire ${p.name} personalised perfume details`}
+                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer block"
                   >
-                    <img src={displayImage} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  </div>
+                    <img
+                      src={displayImage}
+                      alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
+                      loading="lazy"
+                      width="300"
+                      height="300"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </a>
 
                   <div className="mt-2 sm:mt-3 text-center">
-                    <h3 onClick={() => fullProd && onSelectProduct?.(fullProd)} className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
-                      {p.name}
+                    <h3 className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
+                      <a
+                        href={`/perfumes?id=${p.id}`}
+                        onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                        className="hover:text-[#c89b5a]"
+                      >
+                        {p.name}
+                      </a>
                     </h3>
                     <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>

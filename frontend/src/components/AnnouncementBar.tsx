@@ -52,8 +52,21 @@ const Separator = () => (
 
 export default function AnnouncementBar() {
   return (
-    <div className="w-full bg-[#080705] text-[#f8f5f1] border-b border-[#c89b5a]/15 overflow-hidden select-none">
-      {/* Mobile single-line rotating ticker / desktop marquee */}
+    <>
+      <style>{`
+        @media (max-width: 900px) {
+          .sentire-announcement-bar {
+            display: none !important;
+          }
+        }
+        @media (min-width: 901px) {
+          .sentire-announcement-bar {
+            display: block !important;
+          }
+        }
+      `}</style>
+      <div className="sentire-announcement-bar w-full bg-[#080705] text-[#f8f5f1] border-b border-[#c89b5a]/15 overflow-hidden select-none">
+        {/* Mobile single-line rotating ticker / desktop marquee */}
       <div className="relative h-7 flex items-center overflow-x-auto hide-scrollbar snap-x snap-mandatory">
         <div className="ticker-track flex items-center py-1 text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-sans font-medium">
           {/* First copy */}
@@ -75,5 +88,6 @@ export default function AnnouncementBar() {
         </div>
       </div>
     </div>
+    </>
   );
 }

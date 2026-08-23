@@ -1,299 +1,702 @@
-import { useEffect, useRef } from "react";
-
-const PARTICLES = [
-  { left: "6%",  top: "60%", size: 3, dur: 12, delay: 0   },
-  { left: "18%", top: "45%", size: 2.5, dur: 15, delay: 1.2 },
-  { left: "12%", top: "28%", size: 3.5, dur: 14, delay: 2.8 },
-  { left: "30%", top: "72%", size: 2, dur: 16, delay: 0.5 },
-  { left: "22%", top: "20%", size: 3, dur: 13, delay: 2.0 },
-  { left: "38%", top: "80%", size: 2.5, dur: 18, delay: 3.5 },
-  { left: "85%", top: "35%", size: 3, dur: 14, delay: 1.0 },
-  { left: "92%", top: "65%", size: 2, dur: 17, delay: 2.4 },
-];
+import React, { useEffect, useRef } from "react";
 
 interface HeroProps {
-  onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "byob" | "personalisation", filters?: any) => void;
+  onNavigate?: (
+    page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "byob" | "personalisation" | "client-services" | "track-order" | "account",
+    filters?: any
+  ) => void;
 }
 
 export default function Hero({ onNavigate }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = sectionRef.current?.querySelector<HTMLImageElement>(".hero-bg-img");
+    const el = sectionRef.current?.querySelector<HTMLImageElement>(".hero-clean-bg");
     if (!el) return;
     const t = setTimeout(() => {
-      el.style.transform = "scale(1)";
-    }, 100);
+      el.style.opacity = "1";
+    }, 50);
     return () => clearTimeout(t);
   }, []);
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate("perfumes");
+    } else {
+      const perfumesEl = document.getElementById("perfumes");
+      if (perfumesEl) {
+        perfumesEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  const handlePersonalisationClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate("personalisation");
+    }
+  };
 
   return (
     <section
       id="top"
       ref={sectionRef}
-      className="relative w-full overflow-hidden select-none"
+      aria-label="Sentire by PC Bespoke Rakhi Fragrance Gifting"
+      className="hero-section relative w-full overflow-hidden select-none bg-[#F3DFC5]"
       style={{
-        height: "clamp(560px, 88svh, 92svh)",
-        background: "#080604",
+        width: "100%",
+        height: "calc(100vh - 96px)",
+        minHeight: "calc(100vh - 96px)",
+        backgroundColor: "#F3DFC5",
+        WebkitFontSmoothing: "antialiased",
+        textRendering: "geometricPrecision",
       }}
     >
       <style>{`
-        @media (max-width: 767px) {
-          .hero-section { height: 88svh !important; min-height: 540px !important; }
-          .hero-bg-img {
-            object-position: 72% center !important;
-          }
-          .hero-content-mobile {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 28px 20px 96px;
-            z-index: 4;
-          }
-          .hero-content-desktop { display: none !important; }
+        /* ═════════════════════════════════════════════════════════════════
+           TYPOGRAPHY SYSTEM (Cormorant Garamond 300/400 + Allura + Montserrat)
+           ═════════════════════════════════════════════════════════════════ */
+        .hero-title {
+          font-family: "Cormorant Garamond", serif !important;
+          font-weight: 300 !important;
+          font-style: normal !important;
+          color: #2B160F !important;
+          line-height: 0.94 !important;
+          letter-spacing: -0.015em !important;
+        }
 
-          .hero-headline-mobile {
-            font-size: 42px;
-            line-height: 0.94;
-            letter-spacing: -0.02em;
-            color: #f8f5f1;
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.75);
-            margin: 0;
-          }
+        .hero-script {
+          font-family: "Allura", cursive !important;
+          font-weight: 400 !important;
+          font-style: normal !important;
+          color: #A66B18 !important;
+          line-height: 0.88 !important;
+          letter-spacing: 0.01em !important;
+        }
 
-          .hero-cta-mobile {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 22px;
+        .hero-description {
+          font-family: "Cormorant Garamond", serif !important;
+          font-weight: 400 !important;
+          font-style: normal !important;
+          color: #382219 !important;
+          line-height: 1.25 !important;
+          letter-spacing: -0.005em !important;
+        }
+
+        .hero-usp {
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 500 !important;
+          color: #2C211C !important;
+          line-height: 1.25 !important;
+        }
+
+        /* Primary Button: SHOP RAKHI GIFTS */
+        .hero-cta-primary {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #28150E;
+          color: #E7B65B;
+          border: 1.5px solid #B88638;
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 500 !important;
+          letter-spacing: 0.16em;
+          text-transform: uppercase !important;
+          box-shadow: 0 4px 20px rgba(40, 21, 14, 0.22);
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .hero-cta-primary::after {
+          content: "";
+          position: absolute;
+          inset: 3px;
+          border: 1px solid rgba(184, 134, 56, 0.45);
+          pointer-events: none;
+          transition: all 0.35s ease;
+        }
+        .hero-cta-primary:hover {
+          background-color: #1a0d08;
+          border-color: #d4a34e;
+          box-shadow: 0 8px 30px rgba(184, 134, 56, 0.35);
+          transform: translateY(-1.5px);
+        }
+        .hero-cta-primary:hover::after {
+          border-color: rgba(231, 182, 91, 0.85);
+          inset: 4px;
+        }
+
+        /* Secondary Button: PRODUCT PERSONALISATION */
+        .hero-cta-secondary {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(243, 223, 197, 0.55);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          color: #28150E;
+          border: 1.5px solid #B88638;
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 500 !important;
+          letter-spacing: 0.14em;
+          text-transform: uppercase !important;
+          box-shadow: 0 4px 16px rgba(40, 21, 14, 0.08);
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .hero-cta-secondary::after {
+          content: "";
+          position: absolute;
+          inset: 3px;
+          border: 1px solid rgba(184, 134, 56, 0.35);
+          pointer-events: none;
+          transition: all 0.35s ease;
+        }
+        .hero-cta-secondary:hover {
+          background-color: #28150E;
+          color: #E7B65B;
+          border-color: #d4a34e;
+          box-shadow: 0 8px 24px rgba(184, 134, 56, 0.3);
+          transform: translateY(-1.5px);
+        }
+        .hero-cta-secondary:hover::after {
+          border-color: rgba(231, 182, 91, 0.85);
+          inset: 4px;
+        }
+
+        @media (max-width: 900px) {
+          .hero-section {
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+          }
+          .hero-desktop-content {
+            display: none !important;
+          }
+          .hero-mobile-content {
+            display: block !important;
           }
         }
-        @media (min-width: 768px) {
-          .hero-content-mobile { display: none !important; }
-          .hero-content-desktop { display: flex !important; }
-          .hero-section { height: clamp(540px, 55vw, 700px) !important; }
+        @media (min-width: 901px) {
+          .hero-section {
+            height: calc(100vh - 96px) !important;
+            min-height: calc(100vh - 96px) !important;
+            max-height: none !important;
+          }
+          .hero-desktop-content {
+            display: flex !important;
+          }
+          .hero-mobile-content {
+            display: none !important;
+          }
         }
       `}</style>
 
-      {/* Full-bleed background image with smooth slow zoom */}
-      <picture>
-        <source media="(max-width: 767px)" srcSet="/images/mobile-hero.png" />
+      {/* ═════════════════════════════════════════════════════════════════
+          FULL-BLEED PHOTOGRAPHIC STILL-LIFE BACKGROUND (DESKTOP)
+          ═════════════════════════════════════════════════════════════════ */}
+      <picture className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
+        <source srcSet="/images/hero-rakhi-clean.webp" type="image/webp" />
+        <source srcSet="/images/hero-rakhi-clean.png" type="image/png" />
         <img
-          src="/images/hero-celestial.png"
-          alt="Sentire Celestial Perfume"
-          aria-hidden
+          src="/images/hero-rakhi-clean.png"
+          alt="Sentire by PC Rakhi Luxury Fragrance Gifting Still Life"
           fetchPriority="high"
-          className="hero-bg-img absolute inset-0 w-full h-full select-none pointer-events-none object-cover"
+          width="1672"
+          height="941"
+          className="hero-clean-bg absolute inset-0 w-full h-full object-cover object-right md:object-center select-none pointer-events-none"
           style={{
-            objectPosition: "center 20%",
-            transform: "scale(1.03)",
-            transformOrigin: "center center",
-            transition: "transform 14s cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: "opacity 0.6s ease-out",
           }}
           draggable={false}
         />
       </picture>
 
-      {/* Left directional overlay — cinematic dark gradient for high contrast */}
+      {/* Top-Left Subtle Ornamental Mandala Motif (DESKTOP) */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(100deg, rgba(5,4,2,0.94) 0%, rgba(8,6,3,0.82) 28%, rgba(12,9,4,0.45) 54%, rgba(15,10,4,0.1) 78%, transparent 100%)",
-          zIndex: 2,
-        }}
-      />
+        className="hidden md:block absolute top-0 left-0 pointer-events-none select-none opacity-20"
+        style={{ width: "24%", maxWidth: "320px", aspectRatio: "1/1", zIndex: 3 }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-[#D7AD72]">
+          <circle cx="0" cy="0" r="190" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="165" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
+          <circle cx="0" cy="0" r="140" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="115" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+          <circle cx="0" cy="0" r="90" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="65" stroke="currentColor" strokeWidth="0.5" />
+          {Array.from({ length: 16 }).map((_, i) => {
+            const angle = (i * 90) / 16;
+            const rad = (angle * Math.PI) / 180;
+            const x1 = Math.cos(rad) * 65;
+            const y1 = Math.sin(rad) * 65;
+            const x2 = Math.cos(rad) * 140;
+            const y2 = Math.sin(rad) * 140;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.5" />;
+          })}
+        </svg>
+      </div>
 
-      {/* Mobile vignette gradient */}
+      {/* ═════════════════════════════════════════════════════════════════
+          DESKTOP EDITORIAL CONTENT LAYER (Full-Bleed, Adjusted Spacing)
+          ═════════════════════════════════════════════════════════════════ */}
       <div
-        className="absolute inset-0 pointer-events-none md:hidden"
+        className="hero-desktop-content absolute inset-0 flex flex-col justify-center"
         style={{
-          background:
-            "linear-gradient(to top, rgba(4,3,2,0.98) 0%, rgba(6,4,2,0.88) 32%, rgba(8,5,2,0.52) 58%, rgba(10,6,2,0.15) 80%, transparent 100%)",
-          zIndex: 3,
+          paddingLeft: "clamp(36px, 7.5vw, 125px)",
+          paddingTop: "clamp(28px, 4.5vh, 60px)",
+          paddingBottom: "clamp(28px, 4.5vh, 60px)",
+          paddingRight: "46%", // Clear space for the perfume still life on right
+          zIndex: 6,
         }}
-      />
-
-      {/* Bottom transition blend */}
-      <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{
-          height: "90px",
-          background: "linear-gradient(to bottom, transparent, rgba(8,6,4,0.5) 60%, rgba(6,4,2,0.9))",
-          zIndex: 3,
-        }}
-      />
-
-      {/* Floating gold mist particles */}
-      {PARTICLES.map((p, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className="absolute rounded-full pointer-events-none"
+      >
+        {/* Main Headline */}
+        <h1
+          className="hero-title m-0"
           style={{
-            left: p.left,
-            top: p.top,
-            width: p.size,
-            height: p.size,
-            background: "radial-gradient(circle, rgba(212,175,55,0.95) 0%, rgba(200,155,90,0.3) 70%, transparent)",
-            animation: `heroParticleFloat ${p.dur}s ${p.delay}s ease-in-out infinite`,
-            opacity: 0,
-            zIndex: 2,
+            fontSize: "clamp(52px, 5.2vw, 90px)",
+            lineHeight: 0.94,
           }}
-        />
-      ))}
-
-      {/* ── MOBILE Content Layout ── */}
-      <div className="hero-content-mobile">
-        {/* Rating & Concentration Badges */}
-        <div className="hero-eyebrow flex items-center gap-2 mb-2 flex-wrap" style={{ opacity: 0 }}>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#c89b5a]/20 border border-[#c89b5a]/45 px-3 py-1 text-[8.5px] font-bold uppercase tracking-wider text-[#d4af37] backdrop-blur-md shadow-sm">
-            <span className="text-amber-400">★</span> 4.9 | 10k+ Wearers
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-white/10 border border-white/20 px-3 py-1 text-[8.5px] font-medium uppercase tracking-wider text-white/90 backdrop-blur-md">
-            35% Extrait de Parfum
-          </span>
-        </div>
-
-        {/* Headline */}
-        <h1 className="hero-headline hero-headline-mobile" style={{ opacity: 0 }}>
-          Born in<br />
-          <em className="text-gold-shimmer" style={{ fontStyle: "italic", textShadow: "0 0 50px rgba(212,175,55,0.6)", fontWeight: 400 }}>
-            Heaven,
-          </em>
+        >
+          A Pure
           <br />
-          Worn on Earth.
+          Rakhi Gesture
         </h1>
 
-        {/* Subline */}
-        <div className="hero-subtitle flex items-center gap-3 mt-3" style={{ opacity: 0 }}>
-          <span style={{ width: "24px", height: "1px", flexShrink: 0, background: "linear-gradient(90deg, #d4af37, rgba(212,175,55,0.2))" }} />
-          <p style={{ fontSize: "10px", letterSpacing: "0.14em", color: "rgba(248,240,220,0.82)", textTransform: "uppercase", fontFamily: "var(--font-sans)", fontWeight: 400, margin: 0 }}>
-            Crafted in France.&nbsp;&nbsp;14+ Hr Longevity.
-          </p>
+        {/* Script Subheadline */}
+        <div
+          className="hero-script select-none"
+          style={{
+            fontSize: "clamp(44px, 4.2vw, 70px)",
+            lineHeight: 0.88,
+            marginTop: "clamp(4px, 0.6vw, 10px)",
+            transform: "translateY(-2px)",
+          }}
+        >
+          Wrapped in Fragrance
         </div>
 
-        {/* Mobile CTAs */}
-        <div className="hero-cta hero-cta-mobile" style={{ opacity: 0 }}>
+        {/* Ornamental Divider */}
+        <div
+          className="flex items-center my-3"
+          style={{
+            maxWidth: "480px",
+            marginTop: "clamp(12px, 1.8vh, 22px)",
+            marginBottom: "clamp(12px, 1.8vh, 22px)",
+          }}
+          aria-hidden="true"
+        >
+          <div className="flex-1 h-[1px] bg-[#35221A] opacity-60" />
+          <div className="mx-2.5 flex items-center justify-center">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0L10 5L5 10L0 5L5 0Z" fill="#35221A" />
+            </svg>
+          </div>
+          <div className="flex-1 h-[1px] bg-[#35221A] opacity-60" />
+        </div>
+
+        {/* Supporting Sentence */}
+        <p
+          className="hero-description m-0"
+          style={{
+            fontSize: "clamp(18px, 1.55vw, 26px)",
+            lineHeight: 1.25,
+          }}
+        >
+          Personalized. Festive. Made for your bond.
+        </p>
+
+        {/* 3-Column USP Row */}
+        <div
+          className="grid grid-cols-3 items-center"
+          style={{
+            maxWidth: "490px",
+            marginTop: "clamp(18px, 2.6vh, 34px)",
+            marginBottom: "clamp(22px, 3vh, 40px)",
+          }}
+        >
+          {/* Col 1: Photo & Name Engraving */}
+          <div className="flex flex-col items-center text-center px-1.5">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="24" height="30" viewBox="0 0 28 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="7" y="2" width="14" height="6" rx="1" />
+                <rect x="3" y="8" width="22" height="24" rx="2" />
+                <line x1="14" y1="15" x2="14" y2="25" />
+                <line x1="9" y1="20" x2="19" y2="20" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              Photo &amp; Name
+              <br />
+              Engraving
+            </div>
+          </div>
+
+          {/* Col 2: 35%+ Perfume Oil Concentration */}
+          <div className="flex flex-col items-center text-center px-1.5 border-l border-r border-[#382219]/25">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="22" height="30" viewBox="0 0 26 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 3C13 3 3 15.5 3 22C3 27.5 7.5 31 13 31C18.5 31 23 27.5 23 22C23 15.5 13 3 13 3Z" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              35%+ Perfume Oil
+              <br />
+              Concentration
+            </div>
+          </div>
+
+          {/* Col 3: Express Delivery */}
+          <div className="flex flex-col items-center text-center px-1.5">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="28" height="30" viewBox="0 0 32 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="17" cy="18" r="11" />
+                <polyline points="17 12 17 18 21 20" />
+                <line x1="17" y1="3" x2="17" y2="7" />
+                <line x1="3" y1="12" x2="7" y2="12" strokeWidth="1.2" />
+                <line x1="1" y1="17" x2="6" y2="17" strokeWidth="1.2" />
+                <line x1="4" y1="22" x2="8" y2="22" strokeWidth="1.2" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              Express
+              <br />
+              Delivery
+            </div>
+          </div>
+        </div>
+
+        {/* Dual Action Buttons Row */}
+        <div className="flex items-center flex-wrap gap-3.5">
+          {/* Primary CTA: SHOP RAKHI GIFTS */}
           <a
             href="#perfumes"
-            onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate("perfumes"); } }}
-            className="btn-luxe-gold w-full text-center"
-            style={{ height: "48px", fontSize: "10.5px" }}
+            onClick={handleCtaClick}
+            className="hero-cta-primary"
+            style={{
+              padding: "0 clamp(18px, 1.6vw, 28px)",
+              height: "clamp(46px, 3.6vw, 56px)",
+            }}
           >
-            Explore Fragrance House
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden style={{ flexShrink: 0 }}>
-              <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <span
+              style={{
+                fontSize: "clamp(12px, 0.95vw, 15px)",
+                marginRight: "10px",
+                paddingLeft: "2px",
+              }}
+            >
+              SHOP RAKHI GIFTS
+            </span>
+            <svg width="18" height="10" viewBox="0 0 22 12" fill="none" className="text-[#E7B65B] flex-shrink-0">
+              <path d="M1 6H20M15 1L20 6L15 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <a
-            href="#personalisation"
-            onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate("personalisation"); } }}
-            className="btn-luxe-ghost w-full text-center"
-            style={{ height: "46px", fontSize: "10px" }}
-          >
-            Product Personalisation
-          </a>
-        </div>
 
-        {/* Mobile Quick Fragrance Discovery Chips */}
-        <div className="mt-4 overflow-x-auto hide-scrollbar flex items-center gap-2 pb-1">
+          {/* Secondary CTA: PRODUCT PERSONALISATION */}
           <button
-            onClick={() => onNavigate?.("bestsellers")}
-            className="shrink-0 rounded-full border border-[#d4af37]/50 bg-[#120d09]/95 px-3.5 py-1.5 text-[8.5px] font-bold tracking-widest uppercase text-[#d4af37] backdrop-blur-md active:scale-95 transition-all shadow-sm"
+            type="button"
+            onClick={handlePersonalisationClick}
+            className="hero-cta-secondary"
+            style={{
+              padding: "0 clamp(16px, 1.4vw, 24px)",
+              height: "clamp(46px, 3.6vw, 56px)",
+            }}
           >
-            ✨ Bestsellers
-          </button>
-          <button
-            onClick={() => onNavigate?.("perfumes", { size: 10 })}
-            className="shrink-0 rounded-full border border-[#c89b5a]/35 bg-black/70 px-3 py-1.5 text-[8.5px] font-semibold tracking-widest uppercase text-[#f8f5f1] backdrop-blur-md active:scale-95 transition-all"
-          >
-            📦 10ml Discovery
-          </button>
-          <button
-            onClick={() => onNavigate?.("perfumes", { mood: "date-night" })}
-            className="shrink-0 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 text-[8.5px] font-medium tracking-widest uppercase text-white/90 backdrop-blur-md active:scale-95 transition-all"
-          >
-            🌙 Date Night
-          </button>
-          <button
-            onClick={() => onNavigate?.("perfumes", { size: 50 })}
-            className="shrink-0 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 text-[8.5px] font-medium tracking-widest uppercase text-white/90 backdrop-blur-md active:scale-95 transition-all"
-          >
-            👑 Royal Ouds
-          </button>
-          <button
-            onClick={() => onNavigate?.("perfumes", { mood: "sports" })}
-            className="shrink-0 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 text-[8.5px] font-medium tracking-widest uppercase text-white/90 backdrop-blur-md active:scale-95 transition-all"
-          >
-            🌊 Aquatic Fresh
+            <span
+              style={{
+                fontSize: "clamp(12px, 0.95vw, 15px)",
+                marginRight: "8px",
+                paddingLeft: "2px",
+              }}
+            >
+              PRODUCT PERSONALISATION
+            </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="flex-shrink-0">
+              <path d="M12 20h9" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
         </div>
       </div>
 
-      {/* ── DESKTOP Content Layout ── */}
+      {/* ═════════════════════════════════════════════════════════════════
+          MOBILE 1:1 REPLICA HERO LAYOUT (< 900px)
+          Exact 1:1 Replica matching reference 863 × 1551 px canvas
+          ═════════════════════════════════════════════════════════════════ */}
       <div
-        className="hero-content-desktop hero-content-panel absolute top-0 bottom-0 left-0 flex flex-col justify-center"
+        className="hero-mobile-content relative w-full overflow-hidden select-none"
         style={{
-          width: "54%",
-          paddingLeft: "clamp(36px, 5.5vw, 92px)",
-          paddingRight: "24px",
-          paddingBottom: "clamp(24px, 3.5vw, 40px)",
-          zIndex: 4,
+          width: "100%",
+          aspectRatio: "863 / 1432",
+          backgroundColor: "#F3DFC5",
         }}
       >
-        <div className="hero-eyebrow mb-4 flex items-center gap-3.5" style={{ opacity: 0 }}>
-          <span style={{ display: "block", width: "44px", height: "1px", flexShrink: 0, background: "linear-gradient(90deg, #d4af37, rgba(212,175,55,0.2))" }} />
-          <p style={{ fontSize: "clamp(9px, 0.75vw, 11px)", letterSpacing: "0.32em", color: "#d4af37", textTransform: "uppercase", margin: 0, fontFamily: "var(--font-sans)", fontWeight: 700 }}>
-            Haute Parfumerie Française
-          </p>
+        {/* Clean Photographic Still-Life Background */}
+        <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
+          <source srcSet="/images/mobile-hero-rakhi.webp" type="image/webp" />
+          <source srcSet="/images/mobile-hero-rakhi.png" type="image/png" />
+          <img
+            src="/images/mobile-hero-rakhi.png"
+            alt="Sentire by PC Rakhi Luxury Fragrance Gifting Mobile Still Life"
+            fetchPriority="high"
+            width="863"
+            height="1432"
+            className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+            style={{
+              objectPosition: "center 0px",
+            }}
+            draggable={false}
+          />
+        </picture>
+
+        {/* Subtle Top-Left Decorative Line-Art Motif (Opacity 5-8%) */}
+        <div
+          className="absolute top-0 left-0 pointer-events-none select-none"
+          style={{
+            width: "35%",
+            aspectRatio: "1/1",
+            opacity: 0.07,
+            zIndex: 3,
+          }}
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-[#B87919]">
+            <circle cx="0" cy="0" r="190" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="165" stroke="currentColor" strokeWidth="0.6" strokeDasharray="3 3" />
+            <circle cx="0" cy="0" r="140" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="115" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" />
+            <circle cx="0" cy="0" r="90" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="65" stroke="currentColor" strokeWidth="0.6" />
+            {Array.from({ length: 16 }).map((_, i) => {
+              const angle = (i * 90) / 16;
+              const rad = (angle * Math.PI) / 180;
+              const x1 = Math.cos(rad) * 65;
+              const y1 = Math.sin(rad) * 65;
+              const x2 = Math.cos(rad) * 140;
+              const y2 = Math.sin(rad) * 140;
+              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.6" />;
+            })}
+          </svg>
         </div>
 
-        <h1
-          className="hero-headline font-display uppercase"
-          style={{ fontSize: "clamp(40px, 5.5vw, 72px)", letterSpacing: "-0.03em", lineHeight: 0.9, margin: 0, color: "#f8f5f1", textShadow: "0 6px 40px rgba(0,0,0,0.6)", opacity: 0 }}
-        >
-          Born in<br />
-          <em className="text-gold-shimmer" style={{ fontStyle: "italic", textShadow: "0 0 60px rgba(212,175,55,0.55)", fontWeight: 400 }}>
-            Heaven,
-          </em>
-          <br />Worn on Earth.
-        </h1>
+        {/* ── Mobile Hero Editorial Layer (Absolute Positioning locked to 863x1432) ── */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          
+          {/* Main Headline: A Pure / Rakhi Gesture */}
+          <div
+            className="absolute"
+            style={{
+              left: "6.0%",
+              top: "5.10%",
+              width: "80%",
+            }}
+          >
+            <h1
+              className="hero-title m-0 text-left"
+              style={{
+                fontSize: "clamp(38px, 10.89vw, 94px)",
+                lineHeight: 0.96,
+                letterSpacing: "-0.015em",
+                color: "#21150F",
+                fontWeight: 300,
+              }}
+            >
+              A Pure
+              <br />
+              Rakhi Gesture
+            </h1>
+          </div>
 
-        <div className="hero-subtitle mt-6" style={{ opacity: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <span style={{ width: "32px", height: "1px", flexShrink: 0, background: "rgba(212,175,55,0.75)" }} />
-            <p style={{ fontSize: "clamp(11px, 0.9vw, 13.5px)", letterSpacing: "0.14em", color: "rgba(248,240,220,0.82)", textTransform: "uppercase", fontFamily: "var(--font-sans)", fontWeight: 300, margin: 0 }}>
-              Rare Botanicals.&nbsp;&nbsp;Celestial Accords.&nbsp;&nbsp;14+ Hr Longevity.
+          {/* Script Subhead: Wrapped in / Fragrance */}
+          <div
+            className="absolute"
+            style={{
+              left: "6.0%",
+              top: "19.55%",
+              width: "80%",
+            }}
+          >
+            <div
+              className="hero-script text-left select-none"
+              style={{
+                fontSize: "clamp(28px, 7.88vw, 68px)",
+                lineHeight: 0.92,
+                color: "#B87919",
+                fontWeight: 400,
+                letterSpacing: "0.01em",
+              }}
+            >
+              Wrapped in
+              <br />
+              Fragrance
+            </div>
+          </div>
+
+          {/* Decorative Divider: ──────── ✦ ──────── */}
+          <div
+            className="absolute flex items-center"
+            style={{
+              left: "6.0%",
+              top: "31.84%",
+              width: "34.8%",
+            }}
+            aria-hidden="true"
+          >
+            <div className="flex-1 h-[1px] bg-[#35221A] opacity-55" />
+            <div className="mx-2 flex items-center justify-center flex-shrink-0">
+              <svg width="8" height="8" viewBox="0 0 10 10" fill="none" className="w-[clamp(6px,1vw,9px)] h-[clamp(6px,1vw,9px)]">
+                <path d="M5 0L10 5L5 10L0 5L5 0Z" fill="#35221A" />
+              </svg>
+            </div>
+            <div className="flex-1 h-[1px] bg-[#35221A] opacity-55" />
+          </div>
+
+          {/* Supporting Message: Personalized. Festive. / Made for your bond. */}
+          <div
+            className="absolute"
+            style={{
+              left: "6.0%",
+              top: "35.12%",
+              width: "70%",
+            }}
+          >
+            <p
+              className="hero-description m-0 text-left"
+              style={{
+                fontSize: "clamp(13px, 3.48vw, 30px)",
+                lineHeight: 1.28,
+                color: "#2E1E16",
+                fontWeight: 400,
+              }}
+            >
+              Personalized. Festive.
+              <br />
+              Made for your bond.
             </p>
           </div>
-        </div>
 
-        <div className="hero-cta mt-9 flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
-          <a
-            href="#perfumes"
-            onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate("perfumes"); } }}
-            className="btn-luxe-gold shadow-xl"
+          {/* Dual Action CTA Buttons (Properly placed in left column with clear bottle margin) */}
+          <div
+            className="absolute flex flex-col justify-start pointer-events-auto"
+            style={{
+              left: "6.0%",
+              top: "43.50%",
+              width: "min(280px, 47%)",
+              gap: "10px",
+            }}
           >
-            Explore Fragrance House
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden style={{ flexShrink: 0 }}>
-              <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+            {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
+            <a
+              href="#perfumes"
+              onClick={handleCtaClick}
+              className="hero-cta-primary w-full flex items-center justify-center rounded-none shadow-md"
+              style={{
+                height: "44px",
+                backgroundColor: "#211008",
+                backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
+                border: "1.5px solid #B88638",
+                boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
+                padding: "0 10px",
+                textDecoration: "none",
+                boxSizing: "border-box",
+                overflow: "hidden",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "10.5px",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  color: "#E7B65B",
+                  textTransform: "uppercase",
+                  marginRight: "6px",
+                  whiteSpace: "nowrap",
+                  lineHeight: 1,
+                }}
+              >
+                SHOP RAKHI GIFTS
+              </span>
+              <svg
+                width="13"
+                height="9"
+                viewBox="0 0 24 12"
+                fill="none"
+                stroke="#E7B65B"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ width: "13px", height: "9px", minWidth: "13px", maxWidth: "13px", flexShrink: 0 }}
+              >
+                <line x1="1" y1="6" x2="22" y2="6" />
+                <polyline points="16 1 22 6 16 11" />
+              </svg>
+            </a>
 
-          <a
-            href="#personalisation"
-            onClick={(e) => { if (onNavigate) { e.preventDefault(); onNavigate("personalisation"); } }}
-            className="btn-luxe-ghost"
-          >
-            Product Personalisation
-          </a>
+            {/* Secondary CTA Button: PRODUCT PERSONALISATION ✎ */}
+            <button
+              type="button"
+              onClick={handlePersonalisationClick}
+              className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer shadow-sm"
+              style={{
+                height: "44px",
+                backgroundColor: "rgba(246, 228, 208, 0.94)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1.5px solid #9E8066",
+                boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
+                padding: "0 8px",
+                boxSizing: "border-box",
+                overflow: "hidden",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "9px",
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  color: "#21150F",
+                  textTransform: "uppercase",
+                  marginRight: "5px",
+                  whiteSpace: "nowrap",
+                  lineHeight: 1,
+                }}
+              >
+                PRODUCT PERSONALISATION
+              </span>
+              {/* Elegant Edit / Laser Pen Icon */}
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#21150F"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ width: "11px", height: "11px", minWidth: "11px", maxWidth: "11px", flexShrink: 0 }}
+              >
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+

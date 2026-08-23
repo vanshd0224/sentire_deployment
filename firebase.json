@@ -1,18 +1,102 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "frontend/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+    "headers": [
+      {
+        "source": "**/*.@(js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
+        ]
+      },
       {
         "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/perfumes",
+        "destination": "/perfumes.html"
+      },
+      {
+        "source": "/perfumes/**",
+        "destination": "/perfumes.html"
+      },
+      {
+        "source": "/about",
+        "destination": "/about.html"
+      },
+      {
+        "source": "/personalisation",
+        "destination": "/personalisation.html"
+      },
+      {
+        "source": "/bestsellers",
+        "destination": "/bestsellers.html"
+      },
+      {
+        "source": "/new-arrivals",
+        "destination": "/new-arrivals.html"
+      },
+      {
+        "source": "/byob",
+        "destination": "/byob.html"
+      },
+      {
+        "source": "/client-services",
+        "destination": "/client-services.html"
+      },
+      {
+        "source": "/track-order",
+        "destination": "/track-order.html"
+      },
+      {
+        "source": "/chat",
         "run": {
-          "serviceId": "ecommerce-frontend",
+          "serviceId": "ecommerce-backend",
           "region": "asia-south1"
         }
+      },
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "ecommerce-backend",
+          "region": "asia-south1"
+        }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }

@@ -2,10 +2,10 @@ import SectionHeading from "./SectionHeading";
 import type { PerfumeFilterOptions } from "./Navbar";
 
 const categories = [
-  { title: "New Arrivals", subtitle: "Latest Masterpieces", image: "/images/purple-oud-arrival.png", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
-  { title: "Best Sellers", subtitle: "Iconic House Signatures", image: "/images/product-white-oud.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
-  { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/category-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
-  { title: "BYOB Discovery Box", subtitle: "Curate Custom Coffret", image: "/images/build-bundle.png", isByob: true },
+  { title: "New Arrivals", subtitle: "Discover The Unseen", image: "/images/curated-new-arrivals.jpg", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
+  { title: "Best Sellers", subtitle: "Most Loved Essentials", image: "/images/curated-best-sellers.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
+  { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/curated-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
+  { title: "Build Your Own Bundle", subtitle: "Curate Your Perfect Set", image: "/images/curated-byob.jpg", isByob: true },
 ];
 
 interface ShopByCategoryProps {
@@ -44,7 +44,9 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
               <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-2xl shadow-lg border border-[#c89b5a]/30 bg-[#120d09] group-hover:border-[#c89b5a] group-hover:shadow-[0_16px_36px_rgba(200,155,90,0.22)] transition-all duration-500">
                 <img
                   src={cat.image}
-                  alt={cat.title}
+                  alt={`Sentire ${cat.title} - ${cat.subtitle} luxury perfume collection`}
+                  width="320"
+                  height="400"
                   className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   loading="lazy"
                 />

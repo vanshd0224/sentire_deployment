@@ -27,6 +27,7 @@ import AccountDrawerModal from "./components/AccountDrawerModal";
 import AccountPage from "./components/AccountPage";
 import ClientServicesPage from "./components/ClientServicesPage";
 import TrackOrderPage from "./components/TrackOrderPage";
+import SEOHead from "./components/SEOHead";
 import ProductDetailModal from "./components/ProductDetailModal";
 import { ALL_PERFUMES } from "./data/perfumes";
 import { auth } from "./lib/firebase";
@@ -49,36 +50,56 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
 
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
-    const path = window.location.pathname;
+    const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#about" || path.includes("about")) return "about";
+    if (hash === "#about" || path.includes("about") || path.includes("our-story")) return "about";
     if (hash === "#byob" || path.includes("byob")) return "byob";
     if (hash === "#personalisation" || path.includes("personalisation")) return "personalisation";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
-    if (hash === "#bestsellers" || path.includes("bestsellers")) return "bestsellers";
-    if (hash === "#perfumes" || path.includes("perfumes")) return "perfumes";
-    if (hash === "#client-services" || path.includes("client-services")) return "client-services";
+    if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
+    if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
+    if (hash === "#client-services" || path.includes("client-services") || path.includes("contact")) return "client-services";
     if (hash === "#track-order" || path.includes("track-order")) return "track-order";
     return "home";
   });
 
   useEffect(() => {
+    // Handle deep-linked or legacy product URL: /products/calantha or /perfumes?id=calantha
+    const path = window.location.pathname.toLowerCase();
+    const params = new URLSearchParams(window.location.search);
+    const idFromQuery = params.get("id");
+
+    let targetProductId = idFromQuery;
+    if (!targetProductId && (path.startsWith("/products/") || path.startsWith("/product/"))) {
+      targetProductId = path.split("/")[2]?.replace(/\/$/, "");
+    }
+
+    if (targetProductId) {
+      const match = ALL_PERFUMES.find(
+        (p) => p.id.toLowerCase() === targetProductId?.toLowerCase()
+      );
+      if (match) {
+        setSelectedProductModal(match);
+      }
+    }
+
     const handlePopState = () => {
-      const path = window.location.pathname;
+      const popPath = window.location.pathname;
       const hash = window.location.hash;
-      if (hash === "#account" || path.includes("account")) setCurrentPage("account");
-      else if (hash === "#about" || path.includes("about")) setCurrentPage("about");
-      else if (hash === "#byob" || path.includes("byob")) setCurrentPage("byob");
-      else if (hash === "#personalisation" || path.includes("personalisation")) setCurrentPage("personalisation");
-      else if (hash === "#new-arrivals" || path.includes("new-arrivals")) setCurrentPage("new-arrivals");
-      else if (hash === "#bestsellers" || path.includes("bestsellers")) setCurrentPage("bestsellers");
-      else if (hash === "#perfumes" || path.includes("perfumes")) setCurrentPage("perfumes");
-      else if (hash === "#client-services" || path.includes("client-services")) setCurrentPage("client-services");
-      else if (hash === "#track-order" || path.includes("track-order")) setCurrentPage("track-order");
+      if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
+      else if (hash === "#about" || popPath.includes("about")) setCurrentPage("about");
+      else if (hash === "#byob" || popPath.includes("byob")) setCurrentPage("byob");
+      else if (hash === "#personalisation" || popPath.includes("personalisation")) setCurrentPage("personalisation");
+      else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
+      else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
+      else if (hash === "#perfumes" || popPath.includes("perfumes")) setCurrentPage("perfumes");
+      else if (hash === "#client-services" || popPath.includes("client-services")) setCurrentPage("client-services");
+      else if (hash === "#track-order" || popPath.includes("track-order")) setCurrentPage("track-order");
       else setCurrentPage("home");
     };
 
@@ -180,6 +201,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
+      <SEOHead currentPage={currentPage} selectedProductModal={selectedProductModal} />
       <AnnouncementBar />
       <Navbar
         onOpenBundleModal={openBundleModal}
@@ -188,6 +210,10 @@ export default function App() {
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAccount={handleAccountClick}
+        onSelectProduct={(p) => setSelectedProductModal(p)}
+        isSearchOpen={isSearchOpen}
+        onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
+        onCloseSearch={() => setIsSearchOpen(false)}
       />
 
       {currentPage === "perfumes" ? (
@@ -288,7 +314,10 @@ export default function App() {
           onOpenCart={() => setIsCartOpen(true)}
           onOpenAccount={handleAccountClick}
           onOpenBundleModal={openBundleModal}
-          onToggleSearch={() => handleNavigate("perfumes")}
+          onToggleSearch={() => {
+            setIsSearchOpen(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
           cartCount={totalCartCount}
         />
       )}

@@ -233,10 +233,12 @@ export default function PerfumesPage({
         {/* Top Content */}
         <div>
           {/* Media box */}
-          <div
-            onClick={() => setSelectedDetailProduct(p)}
-            className="relative w-full aspect-square rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
+          <a
+            href={`/perfumes?id=${p.id}`}
+            onClick={(e) => { e.preventDefault(); setSelectedDetailProduct(p); }}
+            className="relative w-full aspect-square rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer block"
             title={`View info for ${p.name}`}
+            aria-label={`View Sentire ${p.name} personalised perfume details`}
           >
             {badgeText && (
               <span className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-[#1a120a] to-[#0d0906] text-[#c89b5a] text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 border border-[#c89b5a]/40 shadow-sm">
@@ -245,8 +247,10 @@ export default function PerfumesPage({
             )}
             <img
               src={(p.sizeImages && (p.sizeImages[currentSize]?.[0] || (p.sizeImages as any)[String(currentSize)]?.[0])) || p.img}
-              alt={p.name}
+              alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
               loading="lazy"
+              width="300"
+              height="300"
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
@@ -254,16 +258,21 @@ export default function PerfumesPage({
                 Quick View
               </span>
             </div>
-          </div>
+          </a>
 
           {/* Details */}
           <div className="mt-3 text-center">
             <h3
-              onClick={() => setSelectedDetailProduct(p)}
               className="font-sans text-xs sm:text-sm font-bold uppercase tracking-wider text-ink hover:text-[#c89b5a] transition-colors cursor-pointer inline-block truncate max-w-full"
               title={`View info for ${p.name}`}
             >
-              {p.name}
+              <a
+                href={`/perfumes?id=${p.id}`}
+                onClick={(e) => { e.preventDefault(); setSelectedDetailProduct(p); }}
+                className="hover:text-[#c89b5a]"
+              >
+                {p.name}
+              </a>
             </h3>
             <p
               onClick={() => setSelectedDetailProduct(p)}
@@ -761,7 +770,9 @@ export default function PerfumesPage({
                   >
                     <img
                       src={"/assets/purple-oud-banner.png?v=6"}
-                      alt="Purple Oud"
+                      alt="Sentire Purple Oud 50ml limited edition extrait de parfum with 35%+ perfume oil concentration and laser bottle engraving"
+                      width="400"
+                      height="400"
                       className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -817,26 +828,7 @@ export default function PerfumesPage({
       </>
     )}
 
-        {/* ── SECTION 4: LUXURY BRAND PROMISE & BUNDLE BANNERS ── */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-          <div className="rounded-xl border border-black/8 bg-white p-6 text-center space-y-2 shadow-xs">
-            <span className="text-2xl block">📦</span>
-            <h4 className="font-display text-lg text-ink font-medium">Complimentary Shipping</h4>
-            <p className="text-xs text-ink/60 font-light">
-              Free insured express delivery on all orders above ₹999 across India.
-            </p>
-          </div>
 
-          <div className="rounded-xl border border-black/8 bg-white p-6 text-center space-y-2 shadow-xs">
-            <span className="text-2xl block">✨</span>
-            <h4 className="font-display text-lg text-ink font-medium">Haute Samples Included</h4>
-            <p className="text-xs text-ink/60 font-light">
-              Receive two complimentary 2ml extrait samples with every full-size bottle.
-            </p>
-          </div>
-
-
-        </section>
       </main>
 
       {/* ── RESPONSIVE FILTER DRAWER / MOBILE BOTTOM SHEET ── */}
@@ -968,7 +960,9 @@ export default function PerfumesPage({
             <div className="aspect-[4/5] rounded-xl bg-[#f4eee6] p-4 flex items-center justify-center">
               <img
                 src={quickViewProduct.img}
-                alt={quickViewProduct.name}
+                alt={`Sentire ${quickViewProduct.name} luxury perfume flacon with 35%+ perfume oil concentration and laser engraving`}
+                width="350"
+                height="450"
                 className="h-full w-full object-contain"
               />
             </div>

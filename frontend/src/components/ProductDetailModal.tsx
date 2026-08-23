@@ -1,16 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeProduct } from "./PerfumesPage";
 import type { CartItem } from "./CartDrawer";
-
-interface Review {
-  id: string;
-  author: string;
-  rating: number;
-  date: string;
-  title: string;
-  comment: string;
-  verified: boolean;
-}
+import { getPerfumeReviews, getPerfumeReviewStats, type Review } from "../data/reviews";
 
 interface ScentNote {
   name: string;
@@ -97,6 +88,7 @@ export default function ProductDetailModal({
 
   // Local reviews state per product
   const [customReviews, setCustomReviews] = useState<Record<string, Review[]>>({});
+  const [visibleReviewsCount, setVisibleReviewsCount] = useState<number>(6);
 
   // Product Personalisation State
   const [isPersonalising, setIsPersonalising] = useState<boolean>(false);
@@ -129,6 +121,7 @@ export default function ProductDetailModal({
       setSelectedImageIndex(0);
       setSelectedNote(null);
       setNotifySubmitted(false);
+      setVisibleReviewsCount(6);
 
       if (modalContainerRef.current) {
         modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -235,39 +228,23 @@ export default function ProductDetailModal({
     return { top: topNotes, heart: heartNotes, base: baseNotes };
   }, [product]);
 
-  // Default Customer Reviews for this product
+  // Verified Customer Reviews for this product
   const productReviews: Review[] = useMemo(() => {
     if (!product) return [];
-    const baseReviews: Review[] = [
-      {
-        id: "r1",
-        author: "Aarav Sharma",
-        rating: 5,
-        date: "2 days ago",
-        title: "Absolute Masterpiece! Unbelievable Sillage",
-        comment: `I have been wearing ${product.name} for special evenings and the compliments haven't stopped. The dry down notes linger effortlessly for over 14 hours!`,
-        verified: true,
-      },
-      {
-        id: "r2",
-        author: "Priya Nair",
-        rating: 5,
-        date: "1 week ago",
-        title: "Pure Luxury in a Bottle",
-        comment: `The opening is so refreshing and sophisticated. Housed in a gorgeous heavy-glass bottle. Best luxury perfume purchase I've made this year.`,
-        verified: true,
-      },
-      {
-        id: "r3",
-        author: "Vikramaditya K.",
-        rating: 5,
-        date: "2 weeks ago",
-        title: "Smells like a High-End Niche Parfumerie",
-        comment: `Unisex perfection. Extremely well blended with zero harsh synthetic notes. Definitely getting the 50ml bottle next time!`,
-        verified: true,
-      },
-    ];
+    const baseReviews = getPerfumeReviews(product.id);
     return [...(customReviews[product.id] || []), ...baseReviews];
+  }, [product, customReviews]);
+
+  // Dynamic review statistics
+  const reviewStats = useMemo(() => {
+    if (!product) {
+      return {
+        count: 0,
+        averageRating: 4.9,
+        ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+      };
+    }
+    return getPerfumeReviewStats(product.id, customReviews[product.id] || []);
   }, [product, customReviews]);
 
   // Gallery Images for Product (3-3 Photos per size: 10ML, 30ML, 50ML)
@@ -396,7 +373,9 @@ export default function ProductDetailModal({
             <div className="relative aspect-square sm:aspect-[4/5] max-h-60 sm:max-h-96 w-full overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md">
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
-                alt={product.name}
+                alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
+                width="500"
+                height="600"
                 className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
               />
               {product.badge && (
@@ -417,8 +396,9 @@ export default function ProductDetailModal({
                       ? "border-[#c89b5a] scale-105 shadow-md ring-2 ring-[#c89b5a]/30"
                       : "border-transparent opacity-70 hover:opacity-100"
                   }`}
+                  aria-label={`Select fragrance view ${idx + 1}`}
                 >
-                  <img src={img} alt="Thumbnail" className="h-full w-full object-contain" />
+                  <img src={img} alt={`Sentire ${product.name} view ${idx + 1}`} width="80" height="80" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
@@ -445,8 +425,8 @@ export default function ProductDetailModal({
               <div className="flex items-center justify-between gap-2 mt-2">
                 <div className="flex items-center gap-2">
                   <div className="flex text-amber-500 text-sm">★★★★★</div>
-                  <span className="text-xs font-semibold text-[#1e1e1e]">4.9</span>
-                  <span className="text-xs text-[#1e1e1e]/40">({productReviews.length} Verified Reviews)</span>
+                  <span className="text-xs font-semibold text-[#1e1e1e]">{reviewStats.averageRating.toFixed(1)}</span>
+                  <span className="text-xs text-[#1e1e1e]/40">({reviewStats.count} Verified Reviews)</span>
                 </div>
 
                 <button
@@ -1037,7 +1017,9 @@ export default function ProductDetailModal({
                     <div className="aspect-[4/5] rounded-xl bg-[#f5efe6] p-4 flex items-center justify-center mb-3 overflow-hidden">
                       <img
                         src={rec.img}
-                        alt={rec.name}
+                        alt={`Sentire ${rec.name} luxury perfume flacon with 35%+ oil concentration`}
+                        width="250"
+                        height="300"
                         className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
@@ -1064,8 +1046,8 @@ export default function ProductDetailModal({
               <h3 className="font-display text-2xl text-[#1e1e1e] font-medium">Customer Reviews</h3>
               <div className="flex items-center gap-3 mt-1">
                 <div className="flex text-amber-500 text-lg">★★★★★</div>
-                <span className="font-display text-xl font-bold text-[#1e1e1e]">4.9 out of 5</span>
-                <span className="text-xs text-[#1e1e1e]/50">Based on {productReviews.length} reviews</span>
+                <span className="font-display text-xl font-bold text-[#1e1e1e]">{reviewStats.averageRating.toFixed(1)} out of 5</span>
+                <span className="text-xs text-[#1e1e1e]/50">Based on {reviewStats.count} verified customer reviews</span>
               </div>
             </div>
 
@@ -1075,6 +1057,39 @@ export default function ProductDetailModal({
             >
               {isWritingReview ? "Cancel Review" : "Write a Review"}
             </button>
+          </div>
+
+          {/* Rating Breakdown & Highlights Box */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 rounded-2xl border border-black/8 bg-[#fbf9f5] p-5 sm:p-6">
+            <div className="sm:col-span-5 flex flex-col justify-center border-b sm:border-b-0 sm:border-r border-black/8 pb-4 sm:pb-0 sm:pr-6">
+              <div className="flex items-baseline gap-2">
+                <span className="font-display text-4xl sm:text-5xl font-bold text-[#1e1e1e]">{reviewStats.averageRating.toFixed(1)}</span>
+                <span className="text-xs text-[#1e1e1e]/50 font-medium">/ 5.0</span>
+              </div>
+              <div className="flex text-amber-500 text-sm mt-1">★★★★★</div>
+              <span className="text-xs font-semibold text-emerald-800 mt-2 flex items-center gap-1">
+                <span>✓</span> 100% Verified Purchases across India
+              </span>
+              <span className="text-[11px] text-[#1e1e1e]/50 mt-0.5">
+                {reviewStats.count} fragrance lovers rated this creation
+              </span>
+            </div>
+
+            <div className="sm:col-span-7 space-y-1.5 justify-center flex flex-col">
+              {[5, 4, 3, 2, 1].map((star) => {
+                const count = reviewStats.ratingBreakdown[star as keyof typeof reviewStats.ratingBreakdown] || 0;
+                const pct = reviewStats.count > 0 ? Math.round((count / reviewStats.count) * 100) : 0;
+                return (
+                  <div key={star} className="flex items-center gap-2 text-xs">
+                    <span className="w-12 text-[#1e1e1e]/70 font-medium text-[11px] shrink-0">{star} stars</span>
+                    <div className="h-2 flex-1 rounded-full bg-black/10 overflow-hidden">
+                      <div className="h-full rounded-full bg-[#c89b5a]" style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="w-9 text-right text-[11px] text-[#1e1e1e]/50 font-mono shrink-0">{pct}%</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Write Review Form */}
@@ -1146,9 +1161,9 @@ export default function ProductDetailModal({
           )}
 
           {/* Review List */}
-          <div className="space-y-6">
-            {productReviews.map((rev) => (
-              <div key={rev.id} className="rounded-2xl border border-black/8 bg-[#fdfbf7] p-6 space-y-2 shadow-2xs">
+          <div className="space-y-4">
+            {productReviews.slice(0, visibleReviewsCount).map((rev) => (
+              <div key={rev.id} className="rounded-2xl border border-black/8 bg-[#fdfbf7] p-5 sm:p-6 space-y-2 shadow-2xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-display font-medium text-[#1e1e1e]">{rev.author}</span>
@@ -1166,6 +1181,26 @@ export default function ProductDetailModal({
               </div>
             ))}
           </div>
+
+          {/* Load More Reviews Button */}
+          {visibleReviewsCount < productReviews.length && (
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setVisibleReviewsCount((prev) => Math.min(prev + 8, productReviews.length))}
+                className="rounded-full border border-[#c89b5a] bg-[#c89b5a]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                Load More Reviews (+8) · {productReviews.length - visibleReviewsCount} Remaining
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisibleReviewsCount(productReviews.length)}
+                className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#1e1e1e]/70 hover:border-black/30 hover:text-[#1e1e1e] transition-all cursor-pointer"
+              >
+                View All ({productReviews.length})
+              </button>
+            </div>
+          )}
         </div>
 
         {/* ── STICKY MOBILE COMMERCE ACTION BAR ── */}
