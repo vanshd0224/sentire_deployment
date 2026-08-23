@@ -16,9 +16,9 @@ const chatSchema = z.object({
 
 /**
  * POST /chat
- * Conversational AI chatbot route
+ * Conversational AI chatbot route (Unlimited RAG LLM response engine)
  */
-router.post('/', expensiveRouteLimiter, async (req, res) => {
+router.post('/', async (req, res) => {
   // Validate input
   const validation = chatSchema.safeParse(req.body);
   if (!validation.success) {
