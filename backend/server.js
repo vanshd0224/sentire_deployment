@@ -70,6 +70,11 @@ app.use((req, res, next) => {
 });
 app.use(express.urlencoded({ extended: true }));
 
+// Root endpoint redirect to main live website domain
+app.get('/', (req, res) => {
+  res.redirect(301, 'https://sentirebypc.com');
+});
+
 // Health Check Endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({

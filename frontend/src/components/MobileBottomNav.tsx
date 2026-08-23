@@ -255,11 +255,7 @@ export default function MobileBottomNav({
           {/* 3. CENTER: BYOB */}
           <button
             onClick={() => {
-              if (onOpenBundleModal) {
-                onOpenBundleModal();
-              } else {
-                onNavigate("byob");
-              }
+              onNavigate("byob");
             }}
             className={`snav-center${isByobActive ? " is-active" : ""}`}
             aria-label="Build your own bundle"
