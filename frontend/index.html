@@ -96,6 +96,10 @@
     animation: suiteFadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
+  #sentire-suite-modal.active {
+    display: flex !important;
+  }
+
   @keyframes suiteFadeUp {
     from { opacity: 0; transform: translateY(18px) scale(0.96); }
     to { opacity: 1; transform: translateY(0) scale(1); }
@@ -132,9 +136,9 @@
 </style>
 
 <div id="sentire-suite-container">
-  <button id="sentire-suite-trigger" title="Sentire Fragrance Assistant" onclick="window.toggleSentireSuiteModal(event)">
+  <button id="sentire-suite-trigger" title="Sentire Fragrance Assistant">
     <div class="online-dot"></div>
-    <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+    <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; pointer-events: none;">
       <!-- Luxury Gold Bottle Icon -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 10H15V20C15 21.1046 14.1046 22 13 22H11C9.89543 22 9 21.1046 9 20V10Z" stroke="#c89b5a" stroke-width="1.8"/>
@@ -162,7 +166,7 @@
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
         <button id="sentire-suite-refresh" title="Clear Chat" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 16px; cursor: pointer; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">Refresh</button>
-        <button id="sentire-suite-close" title="Close" onclick="window.toggleSentireSuiteModal(event)" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">&times;</button>
+        <button id="sentire-suite-close" title="Close" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">&times;</button>
       </div>
     </div>
 
@@ -195,28 +199,21 @@
 
 <script>
 (function() {
-  window.toggleSentireSuiteModal = function(e) {
-    if (e) e.stopPropagation();
+  document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('#sentire-suite-trigger');
+    const closeBtn = e.target.closest('#sentire-suite-close');
     const modal = document.getElementById('sentire-suite-modal');
-    if (!modal) return;
-    const currentDisplay = window.getComputedStyle(modal).display;
-    modal.style.display = currentDisplay === 'none' ? 'flex' : 'none';
-  };
 
-  const trigger = document.getElementById('sentire-suite-trigger');
-  const modal = document.getElementById('sentire-suite-modal');
-  const closeBtn = document.getElementById('sentire-suite-close');
-
-  if (trigger && modal) {
-    trigger.addEventListener('click', (e) => {
-      window.toggleSentireSuiteModal(e);
-    });
-  }
-  if (closeBtn && modal) {
-    closeBtn.addEventListener('click', (e) => {
-      window.toggleSentireSuiteModal(e);
-    });
-  }
+    if (trigger && modal) {
+      e.preventDefault();
+      e.stopPropagation();
+      modal.classList.toggle('active');
+    } else if (closeBtn && modal) {
+      e.preventDefault();
+      e.stopPropagation();
+      modal.classList.remove('active');
+    }
+  });
 
   const chatMessages = document.getElementById('suite-chat-messages');
   const chatInput = document.getElementById('suite-chat-input');
