@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Enquiry = require('../models/Enquiry');
 const logger = require('../utils/logger');
+const { sendEnquiryNotificationEmail } = require('../services/emailService');
 
 /**
  * POST /api/enquiries
@@ -42,6 +43,18 @@ router.post('/', async (req, res) => {
 
     await newEnquiry.save();
     logger.info(`New Client Enquiry Saved: ${referenceId} from ${email}`);
+
+    // Trigger instant Email notification to sentireforwork@gmail.com
+    sendEnquiryNotificationEmail({
+      referenceId,
+      firstName,
+      lastName,
+      email,
+      phone,
+      orderNumber,
+      queryType,
+      message
+    }).catch(err => logger.error('Async Enquiry Email Error:', err.message));
 
     return res.status(201).json({
       success: true,
