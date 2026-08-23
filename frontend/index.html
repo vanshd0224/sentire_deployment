@@ -172,32 +172,32 @@
 
   <div id="sentire-suite-modal">
     <!-- Header -->
-    <div style="padding: 16px 20px; background: linear-gradient(180deg, #1f1812 0%, #0e0b08 100%); border-bottom: 1px solid rgba(200, 155, 90, 0.3); display: flex; justify-content: space-between; align-items: center;">
+    <div style="padding: 16px 20px; background: linear-gradient(180deg, #1f1710 0%, #0a0705 100%); border-bottom: 1px solid rgba(200, 155, 90, 0.3); display: flex; justify-content: space-between; align-items: center;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(200, 155, 90, 0.15); border: 1.5px solid #c89b5a; display: flex; align-items: center; justify-content: center; color: #c89b5a; font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 17px;">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(200, 155, 90, 0.15); border: 1.5px solid #c89b5a; display: flex; align-items: center; justify-content: center; color: #c89b5a; font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px;">
           S
         </div>
         <div>
-          <h3 style="margin: 0; color: #FFFFFF; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; font-weight: 600; letter-spacing: 0.03em;">Sentire Olfactory Concierge</h3>
-          <p style="margin: 3px 0 0; color: #c89b5a; font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; display: flex; align-items: center; gap: 5px;">
+          <h3 style="margin: 0; color: #FFFFFF; font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">SENTIRE BY PC</h3>
+          <p style="margin: 3px 0 0; color: #c89b5a; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; display: flex; align-items: center; gap: 5px;">
             <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
-            AI Fragrance Master - Online
+            Haute Parfumerie Concierge
           </p>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
-        <button id="sentire-suite-refresh" title="Clear Chat" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 12px; transition: all 0.2s;" onmouseover="this.style.color='#c89b5a'; this.style.background='rgba(200,155,90,0.1)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'; this.style.background='none'">Refresh</button>
+        <button id="sentire-suite-refresh" title="Clear Chat" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 11px; cursor: pointer; padding: 4px 8px; border-radius: 12px; letter-spacing: 0.05em; transition: all 0.2s;" onmouseover="this.style.color='#c89b5a'; this.style.background='rgba(200,155,90,0.1)'" onmouseout="this.style.color='rgba(255,255,255,0.6)'; this.style.background='none'">Reset</button>
         <button id="sentire-suite-close" title="Close" style="background: none; border: none; color: rgba(255,255,255,0.6); font-size: 22px; cursor: pointer; padding: 2px 6px; transition: color 0.2s;" onmouseover="this.style.color='#c89b5a'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">&times;</button>
       </div>
     </div>
 
-    <!-- AI CHATBOT (DARK LUXURY GOLD GLASSMORPHISM CONTAINER) -->
-    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; background: #0e0b08;">
+    <!-- AI CHATBOT (HAUTE PARFUMERIE GLASSMORPHISM CONTAINER) -->
+    <div id="tab-chat" class="suite-content" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; background: #0a0705;">
       <div id="suite-chat-messages" style="flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
         <!-- Welcome Card -->
-        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(18, 14, 10, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
-          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600;">Welcome to Sentire by PC</p>
-          Hello! I am your private fragrance master powered by luxury AI. Ask me about our 11 extraits de parfum, bespoke photo bottle engraving, or occasion curation.
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(14, 10, 7, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #f3ede2; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600; letter-spacing: 0.02em;">Welcome to House of Sentire</p>
+          Greetings. I am your private fragrance master. How may I assist your scent discovery, bespoke bottle engraving, or occasion curation today?
         </div>
 
         <!-- Quick Topic Chips -->
@@ -210,9 +210,9 @@
       </div>
 
       <!-- Chat Input Footer -->
-      <div style="padding: 14px 16px; background: #15100b; border-top: 1px solid rgba(200, 155, 90, 0.25); display: flex; gap: 10px; align-items: center;">
-        <input id="suite-chat-input" type="text" placeholder="Describe a mood, note, or occasion..." style="flex: 1; background: #070504; border: 1px solid rgba(200, 155, 90, 0.35); color: #f8f5f1; padding: 11px 16px; border-radius: 22px; font-size: 12.5px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#c89b5a'" onblur="this.style.borderColor='rgba(200, 155, 90, 0.35)'"/>
-        <button id="suite-chat-send" style="background: #c89b5a; color: #0e0b08; border: none; padding: 0 20px; height: 38px; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='#d4af37'" onmouseout="this.style.background='#c89b5a'">Send</button>
+      <div style="padding: 14px 16px; background: #120e0a; border-top: 1px solid rgba(200, 155, 90, 0.25); display: flex; gap: 10px; align-items: center;">
+        <input id="suite-chat-input" type="text" placeholder="Ask about scents, notes, or gifting..." style="flex: 1; background: #060403; border: 1px solid rgba(200, 155, 90, 0.35); color: #f8f5f1; padding: 11px 16px; border-radius: 22px; font-size: 12.5px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#c89b5a'" onblur="this.style.borderColor='rgba(200, 155, 90, 0.35)'"/>
+        <button id="suite-chat-send" style="background: #c89b5a; color: #0a0705; border: none; padding: 0 20px; height: 38px; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" onmouseover="this.style.background='#d4af37'" onmouseout="this.style.background='#c89b5a'">Send</button>
       </div>
     </div>
   </div>
@@ -244,9 +244,9 @@
   if (refreshBtn && chatMessages) {
     refreshBtn.addEventListener('click', () => {
       chatMessages.innerHTML = `
-        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(18, 14, 10, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #e5dfd5; line-height: 1.6; font-weight: 300;">
-          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600;">Welcome to Sentire by PC</p>
-          Hello! I am your private fragrance master powered by luxury AI. Ask me about our 11 extraits de parfum, bespoke photo bottle engraving, or occasion curation.
+        <div style="background: linear-gradient(135deg, rgba(200, 155, 90, 0.12) 0%, rgba(14, 10, 7, 0.95) 100%); border: 1px solid rgba(200, 155, 90, 0.35); border-radius: 18px 18px 18px 4px; padding: 16px; color: #f3ede2; line-height: 1.6; font-weight: 300;">
+          <p style="margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 15.5px; color: #ffffff; font-weight: 600; letter-spacing: 0.02em;">Welcome to House of Sentire</p>
+          Greetings. I am your private fragrance master. How may I assist your scent discovery, bespoke bottle engraving, or occasion curation today?
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;">
           <button class="suite-quick-chip" onclick="window.sendChatMessageFromChip('Recommend a perfume for romantic date night')">Evening &amp; Romance</button>
