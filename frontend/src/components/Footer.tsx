@@ -37,6 +37,25 @@ function YoutubeIcon() {
 function MobileAccordionColumn({ title, links, onNavigate }: { title: string; links: string[]; onNavigate?: FooterProps["onNavigate"] }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const getLinkHref = (link: string, sectionTitle: string) => {
+    if (link === "Our Story" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal" || sectionTitle === "About") {
+      return "/about";
+    }
+    if (link === "All Perfumes" || link === "10ml" || link === "30ml" || link === "50ml") {
+      return "/perfumes";
+    }
+    if (link === "Best Sellers") {
+      return "/bestsellers";
+    }
+    if (link === "Track Your Order") {
+      return "/track-order";
+    }
+    if (link === "FAQs" || link === "Shipping & Delivery" || link === "Returns & Exchanges" || link === "Contact Us" || sectionTitle === "Help") {
+      return "/client-services";
+    }
+    return "/";
+  };
+
   return (
     <div className="border-b border-black/10 py-3 md:border-none md:py-0">
       <button
@@ -47,35 +66,38 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
         <span className="text-[#c89b5a] font-bold text-sm md:hidden">{isOpen ? "−" : "+"}</span>
       </button>
       <ul className={`mt-3 space-y-2.5 ${isOpen ? "block" : "hidden md:block"}`}>
-        {links.map((link) => (
-          <li key={link}>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                if (link === "Our Story" || title === "About") {
-                  onNavigate?.("about");
-                } else if (link === "All Perfumes" || link === "10ml" || link === "30ml" || link === "50ml") {
-                  onNavigate?.("perfumes");
-                } else if (link === "Best Sellers") {
-                  onNavigate?.("bestsellers");
-                } else if (link === "Track Your Order") {
-                  onNavigate?.("track-order");
-                } else if (
-                  link === "FAQs" ||
-                  link === "Shipping & Delivery" ||
-                  link === "Returns & Exchanges" ||
-                  link === "Contact Us"
-                ) {
-                  onNavigate?.("client-services");
-                }
-              }}
-              className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[#c89b5a]"
-            >
-              {link}
-            </a>
-          </li>
-        ))}
+        {links.map((link) => {
+          const href = getLinkHref(link, title);
+          return (
+            <li key={link}>
+              <a
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (link === "Our Story" || title === "About" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal") {
+                    onNavigate?.("about");
+                  } else if (link === "All Perfumes" || link === "10ml" || link === "30ml" || link === "50ml") {
+                    onNavigate?.("perfumes");
+                  } else if (link === "Best Sellers") {
+                    onNavigate?.("bestsellers");
+                  } else if (link === "Track Your Order") {
+                    onNavigate?.("track-order");
+                  } else if (
+                    link === "FAQs" ||
+                    link === "Shipping & Delivery" ||
+                    link === "Returns & Exchanges" ||
+                    link === "Contact Us"
+                  ) {
+                    onNavigate?.("client-services");
+                  }
+                }}
+                className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[#c89b5a]"
+              >
+                {link}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -108,14 +130,18 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <InstagramIcon />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/sentireforelite"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#c89b5a] hover:text-[#c89b5a] min-h-[44px] min-w-[44px]"
               >
                 <FacebookIcon />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/sentireforelite"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Youtube"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#c89b5a] hover:text-[#c89b5a] min-h-[44px] min-w-[44px]"
               >
@@ -144,7 +170,9 @@ export default function Footer({ onNavigate }: FooterProps) {
                   <rect x="3" y="5" width="18" height="14" rx="2" />
                   <path d="m4 7 8 6 8-6" />
                 </svg>
-                support@sentirebypc.com
+                <a href="mailto:support@sentirebypc.com" className="hover:text-[#c89b5a] transition-colors">
+                  support@sentirebypc.com
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
@@ -160,12 +188,12 @@ export default function Footer({ onNavigate }: FooterProps) {
 
       <div className="border-t border-black/10 bg-[#f4efe8]">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-5 py-4 text-[10.5px] text-ink/50 sm:flex-row sm:justify-between lg:px-12">
-          <p>© 2024 Sentire by PC. All Rights Reserved.</p>
+          <p>© 2026 Sentire by PC. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <a href="#" className="transition-colors duration-300 hover:text-[#c89b5a]">
+            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#c89b5a]">
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors duration-300 hover:text-[#c89b5a]">
+            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#c89b5a]">
               Terms & Conditions
             </a>
             <span className="flex items-center gap-1">
