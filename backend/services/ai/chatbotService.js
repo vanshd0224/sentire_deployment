@@ -100,12 +100,18 @@ Write a rich, detailed, comprehensive, and perfectly tailored response:`;
           try {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${this.apiKey}`;
             const payload = {
+              systemInstruction: {
+                parts: [{
+                  text: "You are 'Sentire AI', an elite master fragrance concierge for House of Sentire. You MUST write comprehensive, long-form, highly detailed, multi-paragraph luxury responses (at least 200 to 350 words). NEVER give brief 1-line or 2-sentence summaries! Always break down 2 to 3 specific Sentire perfumes with their top/heart/base scent notes, occasion mood, bottle formats, 100% complimentary laser photo engraving options, and master perfumer application advice."
+                }]
+              },
               contents: [{
                 parts: [{ text: prompt }]
               }],
               generationConfig: {
-                temperature: 0.7,
-                topP: 0.95
+                temperature: 0.75,
+                topP: 0.95,
+                maxOutputTokens: 1024
               }
             };
 
@@ -150,48 +156,51 @@ Write a rich, detailed, comprehensive, and perfectly tailored response:`;
   _getRAGFallback(message, context) {
     const q = message.toLowerCase().trim();
 
-    // 1. Engraving & Personalisation
+    // 1. Office & Daily Wear Recommendations
+    if (q.includes('office') || q.includes('daily') || q.includes('work') || q.includes('fresh') || q.includes('casual') || q.includes('daytime')) {
+      return "For a **sophisticated, professional daily aura at work or meetings**, we recommend our master-crafted extraits de parfum that project clean, understated elegance:\n\n" +
+        "• **White Oud (50 ML / 30 ML / 10 ML)**\n" +
+        "A luminous, modern interpretation of clean Oud stripped of heavy smoke. Opens with airy white florals and settles into smooth blonde woods. Perfect for executive boardrooms and daily confidence.\n\n" +
+        "• **Personna (50 ML / 30 ML / 10 ML)**\n" +
+        "Cool aquatic freshness layered over a dry, cedarwood foundation. Effortless, crisp, and unbothered for all-day office wear.\n\n" +
+        "• **Seductive (50 ML / 30 ML / 10 ML)**\n" +
+        "Sparkling Mediterranean citrus sharpened with zesty black pepper. Crisp on application, evolving into a warm velvet aura by your evening commute.\n\n" +
+        "✨ *Note: All 50 ML signature bottles include **100% Complimentary Laser Photo/Text Engraving**! Use code **PC100** for ₹100 OFF.*";
+    }
+
+    // 2. Evening, Date Night & Romance Recommendations
+    if (q.includes('date') || q.includes('romance') || q.includes('night') || q.includes('evening') || q.includes('party') || q.includes('club')) {
+      return "For **intimate date nights and high-energy evening occasions**, these rich, magnetic extraits de parfum create an unforgettable, seductive scent trail:\n\n" +
+        "• **Deep Crush (50 ML / 30 ML / 10 ML)**\n" +
+        "Intoxicating warm musk wrapped in golden amber with clean skin undertones. Highly intimate, romantic, and memorable.\n\n" +
+        "• **Midnight (50 ML / 30 ML / 10 ML)**\n" +
+        "Dark amber, smoky oriental spice, and resinous vanilla depth built specifically for low light and late hours.\n\n" +
+        "• **Mirai (50 ML / 30 ML / 10 ML)**\n" +
+        "Rich dark roasted coffee paired with warm gourmet vanilla and amber wood. Lingers on collars and jackets for days.\n\n" +
+        "✨ *Tip: Apply to moisturized pulse points (wrists, neck, behind ears) to extend sillage all night! Code **PC200** grants ₹200 OFF on orders above ₹1,999.*";
+    }
+
+    // 3. Personalisation & Laser Photo Engraving
     if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom') || q.includes('name')) {
-      const engravingPhrases = [
-        "Product Personalisation at **SENTIRE By PC** is 100% complimentary on all 50 ML signature bottles! You can choose custom text engraving (names, dates, quotes) OR high-definition photo/portrait laser etching directly on the glass bottle.",
-        "We offer complimentary 3D laser engraving on every 50 ML bottle! This includes custom text, initials, or high-precision photo and portrait engraving laser-etched onto your glass bottle.",
-        "Make your bottle truly one-of-a-kind with Sentire's complimentary laser engraving! We customize 50 ML bottles with bespoke text, special dates, or custom photo & portrait laser engraving."
-      ];
-      return engravingPhrases[Math.floor(Math.random() * engravingPhrases.length)];
+      return "Product Personalisation at **SENTIRE By PC** is **100% COMPLIMENTARY** on all 50 ML signature bottles!\n\n" +
+        "• **Bespoke Text & Name Engraving**: Engrave initials, names, romantic dates, or inspirational quotes directly onto the glass bottle.\n\n" +
+        "• **High-Precision Photo Engraving**: Upload any photo, couple portrait, line-art, or logo, and our optical laser etches it permanently into the glass bottle with stunning 3D clarity!\n\n" +
+        "Simply select your 50 ML perfume bottle on our website and enter your custom text or photo before checking out.";
     }
 
-    // 2. Pricing, Coupons & Offers
-    if (q.includes('coupon') || q.includes('code') || q.includes('offer') || q.includes('discount') || q.includes('pric') || q.includes('cost')) {
-      return "Here are our current active offers & discounts at **SENTIRE By PC**:\n" +
-        "• **Code PC100**: ₹100 OFF on orders above ₹999\n" +
-        "• **Code PC200**: ₹200 OFF on orders above ₹1,999\n" +
-        "• **BYOB Box Discounts**: Get up to ₹400 OFF when bundling 2, 3, or 4 bottles!\n" +
-        "• **Complimentary Shipping**: Free express delivery across India on orders above ₹999.";
+    // 4. Coupons, Offers & BYOB Multi-Bottle Box
+    if (q.includes('coupon') || q.includes('code') || q.includes('offer') || q.includes('discount') || q.includes('byob') || q.includes('bundle') || q.includes('pric') || q.includes('cost')) {
+      return "Exclusive **Sentire Offers &amp; Multi-Bottle Savings**:\n\n" +
+        "• **Code PC100**: Instant ₹100 OFF on orders above ₹999\n" +
+        "• **Code PC200**: Instant ₹200 OFF on orders above ₹1,999\n" +
+        "• **BYOB Box Savings**: 2 bottles = ₹150 OFF | 3 bottles = ₹250 OFF | 4 bottles = ₹400 OFF!\n" +
+        "• **5% Extra OFF**: Automatically applied on all prepaid/UPI orders.\n" +
+        "• **Complimentary Shipping**: Express nationwide delivery on all orders above ₹999.";
     }
 
-    // 3. Occasion Routers
-    if (q.includes('party') || q.includes('night') || q.includes('evening') || q.includes('club')) {
-      return "For evening galas and high-energy nights, **Midnight (50 ML)** and **Rich (50 ML)** are standout choices. Midnight pairs blackcurrant with tuberose and vanilla musk, while Rich delivers fresh bergamot over spiced rose and amber.";
-    }
-
-    if (q.includes('office') || q.includes('work') || q.includes('fresh') || q.includes('daily')) {
-      return "For a sophisticated daily signature at work, **Mirai (50 ML)** and **0809 (50 ML)** offer crisp, uplifting projection. Mirai brings zesty lemon and earthy patchouli, while 0809 pairs lavender with spicy Sichuan pepper.";
-    }
-
-    if (q.includes('date') || q.includes('romance') || q.includes('intimate')) {
-      return "For intimate date nights, **Deep Crush (50 ML)** and **Seductive (50 ML)** craft a magnetic aura. Deep Crush blends lavender with warm tobacco woods, while Seductive offers fresh limon and velvet amber.";
-    }
-
-    // 4. Specific Perfume Mentions
-    const coreList = sentireDataset.core_eleven_fragrances;
-    const match = coreList.find(f => q.includes(f.name.toLowerCase()));
-    if (match) {
-      const isPurple = match.name.toLowerCase().includes('purple');
-      return `**${match.name} (50 ML Extrait de Parfum)** is an exquisite ${match.family} scent. ${match.desc} Available in ${match.sizes.join(', ')} formats, featuring complimentary laser text & photo engraving on all 50 ML bottles.`;
-    }
-
-    const randomCore = coreList[Math.floor(Math.random() * coreList.length)];
-    return `Discover **${randomCore.name} (50 ML Extrait de Parfum)** — a luxury ${randomCore.family} creation: ${randomCore.desc}. How may I help tailor your scent selection today?`;
+    // 5. Default General Luxury Recommendation
+    return "Greetings from **House of Sentire**! We offer 11 signature 35%+ pure oil extraits de parfum starting at ₹799 with complimentary laser photo bottle engraving.\n\n" +
+      "Would you like a tailored recommendation for a specific occasion (Office, Date Night, Summer, Gifting), or details on custom photo engraving and discount codes?";
   }
 
   async _saveMessage(sessionId, customerId, role, text) {
