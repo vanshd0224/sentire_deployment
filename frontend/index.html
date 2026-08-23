@@ -281,29 +281,62 @@
   function getFallbackDynamicResponse(userText) {
     const q = userText.toLowerCase().trim();
 
+    // 1. Office & Daily Wear Recommendations
+    if (q.includes('office') || q.includes('daily') || q.includes('work') || q.includes('casual') || q.includes('daytime')) {
+      return "For <strong>Office &amp; Daily Wear</strong>, we recommend refined, elegant extraits de parfum that create an understated, clean aura:<br/><br/>" +
+        "• <strong>White Oud (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Clean Oud stripped back to something luminous and refined. Perfect for boardrooms and daily sophistication.<br/><br/>" +
+        "• <strong>Personna (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Cool aquatic freshness over a dry woody base. Clean, effortless, and unbothered for daytime wear.<br/><br/>" +
+        "• <strong>Seductive (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Bright citrus sharpened with zesty black pepper. Crisp on the open, warm by the end of your workday.<br/><br/>" +
+        "<em>Tip: All 50 ML signature bottles come with <strong>100% Complimentary Laser Photo/Name Engraving</strong>!</em>";
+    }
+
+    // 2. Evening, Date Night & Romance Recommendations
+    if (q.includes('even') || q.includes('roman') || q.includes('date') || q.includes('night') || q.includes('party') || q.includes('club')) {
+      return "For <strong>Evening &amp; Romantic Occasions</strong>, these rich, seductive extraits create an unforgettable, lingering scent trail:<br/><br/>" +
+        "• <strong>Deep Crush (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Warm musk wrapped in soft amber with clean skin freshness underneath. Highly intimate and intoxicating.<br/><br/>" +
+        "• <strong>Midnight (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Dark amber, smoky oriental spice, and warm resinous depth built specifically for low light and late hours.<br/><br/>" +
+        "• <strong>Mirai (50 ML / 30 ML / 10 ML)</strong><br/>" +
+        "Rich dark coffee and warm gourmet vanilla. Lingers on collars and jackets for days.<br/><br/>" +
+        "<em>Tip: Use code <strong>PC100</strong> for Rs. 100 OFF or <strong>PC200</strong> for Rs. 200 OFF at checkout!</em>";
+    }
+
+    // 3. Pricing, Formats & MRP
     if (q.includes('pric') || q.includes('cost') || q.includes('rate') || q.includes('rupee') || q.includes('rs') || q.includes('how much') || q.includes('mrp') || q.includes('buy') || q.includes('amount')) {
-      return "Our luxury extraits de parfum pricing:<br/><br/>" +
-        "- <strong>50 ML Signature Bottle</strong>: Rs. 2,499 to Rs. 4,999 (Includes free laser engraving!)<br/>" +
-        "- <strong>30 ML Travel Format</strong>: Rs. 1,699<br/>" +
-        "- <strong>10 ML Purse Spray</strong>: Rs. 799<br/><br/>" +
-        "We also offer 5% OFF on prepaid orders and complimentary express shipping above Rs. 999!";
+      return "Our luxury artisanal extraits de parfum (35%+ pure oil concentration) pricing breakdown:<br/><br/>" +
+        "• <strong>50 ML Signature Bottle</strong>: Rs. 2,499 to Rs. 4,999 (Includes free laser photo/text engraving!)<br/>" +
+        "• <strong>30 ML Travel Format</strong>: Rs. 1,699<br/>" +
+        "• <strong>10 ML Purse Spray</strong>: Rs. 799<br/><br/>" +
+        "We offer <strong>5% OFF on prepaid orders</strong> and <strong>Complimentary Express Shipping</strong> on all orders above Rs. 999!";
     }
 
-    if (['hi', 'hello', 'hey', 'greetings', 'hola', 'hy'].includes(q) || q.startsWith('hi ') || q.startsWith('hello ') || q.startsWith('hey ')) {
-      return "Hello! Welcome to <strong>Sentire by PC</strong>. How may I assist your fragrance selection today?";
-    }
-
-    if (q.includes('engrav') || q.includes('custom') || q.includes('name') || q.includes('photo') || q.includes('image')) {
+    // 4. Personalisation & Laser Photo Engraving
+    if (q.includes('engrav') || q.includes('custom') || q.includes('name') || q.includes('photo') || q.includes('image') || q.includes('portrait')) {
       return "Product Personalisation at <strong>Sentire by PC</strong> is <strong>100% COMPLIMENTARY</strong> on all 50 ML signature bottles:<br/><br/>" +
-        "- <strong>Text & Name Engraving</strong>: Engrave initials, names, dates, or quotes.<br/>" +
-        "- <strong>Photo Engraving</strong>: High-precision laser etching of custom photos or portraits directly onto the glass bottle!";
+        "• <strong>Custom Text & Name Engraving</strong>: Engrave initials, names, romantic dates, or personal quotes.<br/>" +
+        "• <strong>High-Precision Photo Engraving</strong>: Upload your favorite photo, couple portrait, or logo, and our optical laser etches it permanently into the glass bottle!<br/><br/>" +
+        "Simply select your 50 ML perfume bottle on the website to customize before checkout!";
     }
 
+    // 5. Coupons, Offers & BYOB Multi-Bottle Savings
+    if (q.includes('coupon') || q.includes('offer') || q.includes('code') || q.includes('discount') || q.includes('byob') || q.includes('bundle')) {
+      return "Active <strong>Sentire Exclusive Offers &amp; Coupons</strong>:<br/><br/>" +
+        "• <strong>Code PC100</strong>: Rs. 100 INSTANT OFF on orders above Rs. 999<br/>" +
+        "• <strong>Code PC200</strong>: Rs. 200 INSTANT OFF on orders above Rs. 1,999<br/>" +
+        "• <strong>BYOB Box Savings</strong>: 2 bottles = Rs. 150 OFF | 3 bottles = Rs. 250 OFF | 4 bottles = Rs. 400 OFF!<br/>" +
+        "• <strong>5% Extra OFF</strong> automatically applied on all UPI / Prepaid orders!";
+    }
+
+    // 6. Shipping & COD Delivery
     if (q.includes('shipp') || q.includes('deliver') || q.includes('cod') || q.includes('cash on delivery') || q.includes('track')) {
-      return "We offer <strong>Complimentary Express Shipping</strong> across India on all orders above Rs. 999, along with Cash on Delivery (COD) and 5% OFF on prepaid orders! Orders are delivered in 2-4 business days.";
+      return "We offer <strong>Complimentary Express Shipping</strong> across India on all orders above Rs. 999, along with Cash on Delivery (COD) and 5% OFF on prepaid orders! Orders are dispatched within 24 hours and delivered in 2-4 business days.";
     }
 
-    return "Thank you for reaching out! Sentire by PC offers 11 signature extraits de parfum starting at Rs. 799. Would you like a recommendation for a specific occasion, season, or gift?";
+    return "Greetings from <strong>House of Sentire</strong>! We offer 11 signature 35%+ oil concentration extraits de parfum starting at Rs. 799 with complimentary laser photo bottle engraving. Would you like a fragrance recommendation for a specific occasion, mood, or gift?";
   }
 
   async function sendChatMessage(text) {
