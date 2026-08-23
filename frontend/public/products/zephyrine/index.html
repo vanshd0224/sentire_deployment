@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="description" content="Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise Zephyrine (White Florals & Citrus) with complimentary laser photo or name bottle engraving in Jaipur." />
     <title>Zephyrine Extrait de Parfum | White Florals & Citrus | SENTIRE By PC</title>
     <link rel="canonical" href="https://sentirebypc.com/perfumes?id=zephyrine" />
@@ -481,17 +484,10 @@
   function sanitizeCleanText(str) {
     if (!str) return '';
     return str
-      .replace(/ГÇô/g, '–')
-      .replace(/Гçô/g, '–')
-      .replace(/Гé¼¿/g, '')
-      .replace(/Гé¼/g, 'Rs. ')
-      .replace(/ГÆ\|\|/g, '')
-      .replace(/ГÆÆ¦/g, '')
-      .replace(/=fï\|/g, '')
-      .replace(/=fÆ¦/g, '')
-      .replace(/=fÄû/g, '')
-      .replace(/ΓPtö/g, '')
-      .replace(/Å /g, '')
+      .replace(/ГÇô|Гçô|–|—/g, ' - ')
+      .replace(/Гé¼¿|Гé¼|₹/g, 'Rs. ')
+      .replace(/ГÆ\|\||ГÆÆ¦|=fï\||=fÆ¦|=fÄû|ΓPtö|Å /g, '')
+      .replace(/[\u0400-\u04FF]/g, '') // Wipes out all Cyrillic Mojibake artifacts (Г)
       .replace(/\n/g, '<br/>');
   }
 
