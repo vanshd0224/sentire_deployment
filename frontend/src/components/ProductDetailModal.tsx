@@ -268,7 +268,7 @@ export default function ProductDetailModal({
 
   const currentPrice = product.prices[selectedSize] || product.prices[product.sizes[0]] || 799;
   const originalPrice = product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] : Math.round(currentPrice * 1.35);
-  const discountPercent = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
+  const discountPercent = originalPrice > currentPrice && originalPrice > 0 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : 0;
 
   const handlePincodeCheck = (e: React.FormEvent) => {
     e.preventDefault();
