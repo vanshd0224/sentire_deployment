@@ -57,26 +57,38 @@ export default function App() {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#about" || path.includes("about") || path.includes("our-story")) return "about";
+    if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("35-percent")) return "about";
     if (hash === "#byob" || path.includes("byob")) return "byob";
-    if (hash === "#personalisation" || path.includes("personalisation")) return "personalisation";
+    if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "personalisation";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
     if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
     if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
-    if (hash === "#client-services" || path.includes("client-services") || path.includes("contact")) return "client-services";
+    if (hash === "#client-services" || path.includes("client-services") || path.includes("contact") || path.includes("faqs") || path.includes("shipping")) return "client-services";
     if (hash === "#track-order" || path.includes("track-order")) return "track-order";
     return "home";
   });
 
   useEffect(() => {
-    // Handle deep-linked or legacy product URL: /products/calantha or /perfumes?id=calantha
+    // Handle deep-linked or legacy product URL: /products/sentire-dapper-50-ml... or /perfumes?id=dapper
     const path = window.location.pathname.toLowerCase();
     const params = new URLSearchParams(window.location.search);
     const idFromQuery = params.get("id");
 
     let targetProductId = idFromQuery;
-    if (!targetProductId && (path.startsWith("/products/") || path.startsWith("/product/"))) {
-      targetProductId = path.split("/")[2]?.replace(/\/$/, "");
+    if (!targetProductId && (path.includes("/products/") || path.includes("/product/"))) {
+      const rawSlug = path.split("/").filter(Boolean).pop() || "";
+      const cleanSlug = rawSlug.replace(/^sentire-/, "");
+      
+      const foundPerfume = ALL_PERFUMES.find(
+        (p) =>
+          p.id.toLowerCase() === rawSlug.toLowerCase() ||
+          p.id.toLowerCase() === cleanSlug.toLowerCase() ||
+          cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
+          rawSlug.toLowerCase().includes(p.id.toLowerCase())
+      );
+      if (foundPerfume) {
+        targetProductId = foundPerfume.id;
+      }
     }
 
     if (targetProductId) {
@@ -89,16 +101,16 @@ export default function App() {
     }
 
     const handlePopState = () => {
-      const popPath = window.location.pathname;
+      const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
       if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
-      else if (hash === "#about" || popPath.includes("about")) setCurrentPage("about");
+      else if (hash === "#about" || popPath.includes("about") || popPath.includes("35-percent")) setCurrentPage("about");
       else if (hash === "#byob" || popPath.includes("byob")) setCurrentPage("byob");
-      else if (hash === "#personalisation" || popPath.includes("personalisation")) setCurrentPage("personalisation");
+      else if (hash === "#personalisation" || popPath.includes("personalisation") || popPath.includes("personalised-perfume")) setCurrentPage("personalisation");
       else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
       else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
-      else if (hash === "#perfumes" || popPath.includes("perfumes")) setCurrentPage("perfumes");
-      else if (hash === "#client-services" || popPath.includes("client-services")) setCurrentPage("client-services");
+      else if (hash === "#perfumes" || popPath.includes("perfumes") || popPath.includes("products")) setCurrentPage("perfumes");
+      else if (hash === "#client-services" || popPath.includes("client-services") || popPath.includes("contact")) setCurrentPage("client-services");
       else if (hash === "#track-order" || popPath.includes("track-order")) setCurrentPage("track-order");
       else setCurrentPage("home");
     };

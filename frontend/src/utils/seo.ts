@@ -33,6 +33,30 @@ export const BASE_KEYWORDS = [
   "express perfume delivery India"
 ].join(", ");
 
+const PRODUCT_SEO_SUBTITLES: Record<string, string> = {
+  "dapper": "Tobacco & Smoky Woods",
+  "woo-dy": "Cedarwood & Sandalwood",
+  "white-oud": "Clean Woody Oud & Lavender",
+  "purple-oud": "Cambodian Oud & Saffron",
+  "calantha": "Blooming Florals & Sandalwood",
+  "deep-crush": "Warm Musk & Tobacco Woods",
+  "herrlich": "Fresh Bergamot & Dark Chocolate",
+  "midnight": "Blackcurrant & Vanilla Musk",
+  "mirai": "Roasted Coffee & Sweet Vanilla",
+  "0809": "Sichuan Pepper & Earthy Vetiver",
+  "personna": "Aquatic Marine & Dry Woods",
+  "rich": "Icy Fruits & Polished Cedar",
+  "seductive": "Italian Limon & Black Pepper",
+  "zephyrine": "White Florals & Citrus",
+  "bijou": "Floral Bouquet & Warm Vanilla",
+  "le-chocolat": "Dark Cocoa & Creamy Vanilla",
+  "pc-leather": "Fine Italian Leather & Spices",
+  "quantillion": "Vibrant Mandarin & Amberwood",
+  "reiz": "Smoky Leather & Amber",
+  "sent-aura": "Aromatic Woods & Florals",
+  "vanaco": "Pure Madagascar Vanilla & Woods"
+};
+
 /**
  * Returns metadata configuration for a given page route and optional selected product.
  */
@@ -55,23 +79,52 @@ export function getPageMetadata(
   // Product Detail Modal or Deep-linked Product Page
   if (product && product.name) {
     const productName = product.name;
-    const familyTitle = product.scentFamily ? `${product.scentFamily.charAt(0).toUpperCase() + product.scentFamily.slice(1)} Fragrance` : "Extrait de Parfum";
+    const noteSubtitle = PRODUCT_SEO_SUBTITLES[product.id] || (product.desc ? product.desc.split('·')[0].trim() : "35%+ Extrait de Parfum");
     
     return {
-      title: `${productName} Extrait de Parfum | 35%+ Pure Oil Perfume | SENTIRE By PC`,
-      description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${productName} with complimentary laser photo or name bottle engraving.`,
+      title: `${productName} Extrait de Parfum | ${noteSubtitle} | SENTIRE By PC`,
+      description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${productName} (${noteSubtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
       canonical: `${PRODUCTION_DOMAIN}/perfumes?id=${product.id}`,
       robots: defaultRobots,
       ogType: "product",
-      ogTitle: `${productName} (35%+ Pure Oil Extrait) Photo-Engraved | SENTIRE By PC`,
+      ogTitle: `${productName} Extrait de Parfum (${noteSubtitle}) | SENTIRE By PC`,
       ogDescription: `Artisanal 35%+ perfume oil Extrait de Parfum outlasting standard 15% EDPs. Precision laser bottle etching and express delivery across India.`,
       ogImage: product.img || product.image || `${PRODUCTION_DOMAIN}/assets/perfumes/${product.id}-50ml-1.png?v=2`,
       twitterCard: "summary_large_image",
-      keywords: `${productName} extrait de parfum, personalised ${productName}, laser engraved ${productName}, ${productName} 35% oil, ${BASE_KEYWORDS}`,
+      keywords: `${productName} extrait de parfum, ${productName} perfume, personalised ${productName}, laser engraved ${productName}, ${productName} 35% oil, ${BASE_KEYWORDS}`,
     };
   }
 
   switch (page) {
+    case "pages/personalised-perfume":
+    case "personalised-perfume":
+      return {
+        title: "Personalised Perfumes with Photo & Name Bottle Engraving | SENTIRE By PC",
+        description: "Permanent optical laser bottle engraving on luxury 35%+ extraits de parfum. Upload couple portraits, personal photos, names or dates for complimentary glass etching.",
+        canonical: `${PRODUCTION_DOMAIN}/pages/personalised-perfume`,
+        robots: defaultRobots,
+        ogType: "article",
+        ogTitle: "Personalised Perfume with Laser Photo & Name Engraving | SENTIRE By PC",
+        ogDescription: "Discover bespoke laser photo flacon engraving in Jaipur. 100% complimentary on all 50ml 35%+ perfume oil extraits de parfum.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
+        twitterCard: "summary_large_image",
+        keywords: `personalised perfume India, photo engraved perfume bottle, name engraved perfume, custom perfume gift Jaipur, ${BASE_KEYWORDS}`,
+      };
+
+    case "pages/35-percent-extrait-de-parfum":
+    case "35-percent-extrait-de-parfum":
+      return {
+        title: "35%+ Extrait de Parfum Concentration Explained | SENTIRE By PC",
+        description: "Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.",
+        canonical: `${PRODUCTION_DOMAIN}/pages/35-percent-extrait-de-parfum`,
+        robots: defaultRobots,
+        ogType: "article",
+        ogTitle: "Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC",
+        ogDescription: "The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary_large_image",
+        keywords: `35% perfume oil concentration, extrait de parfum vs edp, long lasting perfume concentration, beast mode perfume India, ${BASE_KEYWORDS}`,
+      };
     case "home":
       return {
         title: "Personalised Extrait de Parfum & Luxury Perfumes | SENTIRE By PC",

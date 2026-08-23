@@ -43,6 +43,47 @@
         ]
       }
     ],
+    "redirects": [
+      { "source": "/products/sentire-dapper*", "destination": "/perfumes?id=dapper", "type": 301 },
+      { "source": "/products/sentire-woo-dy*", "destination": "/perfumes?id=woo-dy", "type": 301 },
+      { "source": "/products/sentire-calantha*", "destination": "/perfumes?id=calantha", "type": 301 },
+      { "source": "/products/sentire-deep-crush*", "destination": "/perfumes?id=deep-crush", "type": 301 },
+      { "source": "/products/sentire-herrlich*", "destination": "/perfumes?id=herrlich", "type": 301 },
+      { "source": "/products/sentire-midnight*", "destination": "/perfumes?id=midnight", "type": 301 },
+      { "source": "/products/sentire-mirai*", "destination": "/perfumes?id=mirai", "type": 301 },
+      { "source": "/products/sentire-o809*", "destination": "/perfumes?id=0809", "type": 301 },
+      { "source": "/products/sentire-0809*", "destination": "/perfumes?id=0809", "type": 301 },
+      { "source": "/products/sentire-personna*", "destination": "/perfumes?id=personna", "type": 301 },
+      { "source": "/products/sentire-purple-oud*", "destination": "/perfumes?id=purple-oud", "type": 301 },
+      { "source": "/products/sentire-rich*", "destination": "/perfumes?id=rich", "type": 301 },
+      { "source": "/products/sentire-seductive*", "destination": "/perfumes?id=seductive", "type": 301 },
+      { "source": "/products/sentire-white-oud*", "destination": "/perfumes?id=white-oud", "type": 301 },
+      { "source": "/products/sentire-zephyrine*", "destination": "/perfumes?id=zephyrine", "type": 301 },
+      { "source": "/products/sentire-bijou*", "destination": "/perfumes?id=bijou", "type": 301 },
+      { "source": "/products/sentire-vanaco*", "destination": "/perfumes?id=vanaco", "type": 301 },
+      { "source": "/products/sentire-sent-aura*", "destination": "/perfumes?id=sent-aura", "type": 301 },
+      { "source": "/products/sentire-le-chocolat*", "destination": "/perfumes?id=le-chocolat", "type": 301 },
+      { "source": "/products/sentire-pc-leather*", "destination": "/perfumes?id=pc-leather", "type": 301 },
+      { "source": "/products/sentire-reiz*", "destination": "/perfumes?id=reiz", "type": 301 },
+      { "source": "/products/sentire-quantillion*", "destination": "/perfumes?id=quantillion", "type": 301 },
+      { "source": "/products", "destination": "/perfumes", "type": 301 },
+      { "source": "/pages/about", "destination": "/about", "type": 301 },
+      { "source": "/pages/about-us", "destination": "/about", "type": 301 },
+      { "source": "/pages/our-story", "destination": "/about", "type": 301 },
+      { "source": "/pages/contact", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/contact-us", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/faqs", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/shipping-returns", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/privacy-policy", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/terms-of-service", "destination": "/client-services", "type": 301 },
+      { "source": "/pages/track-order", "destination": "/track-order", "type": 301 },
+      { "source": "/collections/all", "destination": "/perfumes", "type": 301 },
+      { "source": "/collections/best-sellers", "destination": "/bestsellers", "type": 301 },
+      { "source": "/collections/new-arrivals", "destination": "/new-arrivals", "type": 301 },
+      { "source": "/collections/perfumes", "destination": "/perfumes", "type": 301 },
+      { "source": "/collections/luxury-perfumes", "destination": "/perfumes", "type": 301 },
+      { "source": "/collections/**", "destination": "/perfumes", "type": 301 }
+    ],
     "rewrites": [
       {
         "source": "/perfumes",
@@ -59,6 +100,14 @@
       {
         "source": "/personalisation",
         "destination": "/personalisation.html"
+      },
+      {
+        "source": "/pages/personalised-perfume",
+        "destination": "/pages/personalised-perfume.html"
+      },
+      {
+        "source": "/pages/35-percent-extrait-de-parfum",
+        "destination": "/pages/35-percent-extrait-de-parfum.html"
       },
       {
         "source": "/bestsellers",
@@ -79,6 +128,10 @@
       {
         "source": "/track-order",
         "destination": "/track-order.html"
+      },
+      {
+        "source": "/products/**",
+        "destination": "/perfumes.html"
       },
       {
         "source": "/chat",

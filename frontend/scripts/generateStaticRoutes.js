@@ -18,6 +18,7 @@ const PERFUMES_DATA = [
     num: "No. 01",
     name: "Calantha",
     desc: "Blooming Florals · Sandalwood & Amber",
+    subtitle: "Blooming Florals & Sandalwood",
     fullDesc: "Calantha captures the essence of blooming flowers in a luxurious, timeless scent that transcends traditional gender boundaries. Features delicate florals, jasmine, rose, and warm Mysore sandalwood.",
     scentFamily: "floral",
     sizes: [10, 30, 50],
@@ -31,6 +32,7 @@ const PERFUMES_DATA = [
     num: "No. 02",
     name: "Deep Crush",
     desc: "Invigorating Lavender & Warm Tobacco Woods",
+    subtitle: "Warm Musk & Tobacco Woods",
     fullDesc: "Deep Crush is a captivating fragrance designed for the modern individual. Welcomed by lavender and rose, revealing warm tobacco and musky amber.",
     scentFamily: "floral",
     sizes: [10, 30, 50],
@@ -44,6 +46,7 @@ const PERFUMES_DATA = [
     num: "No. 03",
     name: "Herrlich",
     desc: "Fresh Fruits, Bouquet & Decadent Chocolate",
+    subtitle: "Fresh Bergamot & Dark Chocolate",
     fullDesc: "Herrlich is a luxurious perfume presenting fresh bergamot and peach top notes, a heart of jasmine and rose, and a base of dark chocolate.",
     scentFamily: "woody",
     sizes: [10, 30, 50],
@@ -57,6 +60,7 @@ const PERFUMES_DATA = [
     num: "No. 04",
     name: "Midnight",
     desc: "Blackcurrant, Tuberose & Sensual Vanilla Musk",
+    subtitle: "Blackcurrant & Vanilla Musk",
     fullDesc: "Midnight encapsulates the allure of the night, beginning with bergamot and blackcurrant, transitioning into rich tuberose and warm vanilla musk.",
     scentFamily: "woody",
     sizes: [10, 30, 50],
@@ -70,6 +74,7 @@ const PERFUMES_DATA = [
     num: "No. 05",
     name: "Mirai",
     desc: "Bright Citrus, Lavender & Earthy Patchouli",
+    subtitle: "Roasted Coffee & Sweet Vanilla",
     fullDesc: "Mirai unfolds with crisp, sparkling citrus and calming lavender, deepening into a heart of aromatic woods and a grounding patchouli dry-down.",
     scentFamily: "woody",
     sizes: [10, 30, 50],
@@ -83,6 +88,7 @@ const PERFUMES_DATA = [
     num: "No. 06",
     name: "0809",
     desc: "Sichuan Pepper, Earthy Vetiver & Ambroxan",
+    subtitle: "Sichuan Pepper & Earthy Vetiver",
     fullDesc: "0809 is an assertive, ultra-masculine extrait. Fresh-spicy opening with Sichuan pepper leading into clean aromatic vetiver and an intoxicating Ambroxan trail.",
     scentFamily: "fresh",
     sizes: [10, 30, 50],
@@ -96,6 +102,7 @@ const PERFUMES_DATA = [
     num: "No. 07",
     name: "Personna",
     desc: "Mandarin, Black Pepper & Empowering Patchouli",
+    subtitle: "Aquatic Marine & Dry Woods",
     fullDesc: "Personna is crafted for distinction. Zesty mandarin and cracked black pepper meet an earthy base of rich patchouli and amber.",
     scentFamily: "fresh",
     sizes: [10, 30, 50],
@@ -109,6 +116,7 @@ const PERFUMES_DATA = [
     num: "No. 08",
     name: "Purple Oud",
     desc: "Smoky Cambodian Oud, Saffron & Amethyst Rose",
+    subtitle: "Cambodian Oud & Saffron",
     fullDesc: "Purple Oud by SENTIRE By PC is a majestic composition created for connoisseurs of deep, magnetic sillage. Features smoky Cambodian oud, saffron, and velvety amethyst rose.",
     scentFamily: "woody",
     sizes: [50],
@@ -122,6 +130,7 @@ const PERFUMES_DATA = [
     num: "No. 09",
     name: "Rich",
     desc: "Opulent Bergamot, Spiced Rose & Velvet Musk",
+    subtitle: "Icy Fruits & Polished Cedar",
     fullDesc: "Rich delivers uncompromising luxury. A radiant citrus-spice opening followed by damask rose, velvety woods, and warm amber musk.",
     scentFamily: "ambar",
     sizes: [10, 30, 50],
@@ -135,6 +144,7 @@ const PERFUMES_DATA = [
     num: "No. 10",
     name: "Seductive",
     desc: "Citric Limon, Fresh Lavender & Velvet Amber",
+    subtitle: "Italian Limon & Black Pepper",
     fullDesc: "Seductive is an intoxicating blend designed for unforgettable evenings. Bright Italian limon and lavender settle into a deep amber-patchouli base.",
     scentFamily: "oriental",
     sizes: [10, 30, 50],
@@ -148,6 +158,7 @@ const PERFUMES_DATA = [
     num: "No. 11",
     name: "White Oud",
     desc: "Smoky Oud, Soothing Lavender & Resinous Amber",
+    subtitle: "Clean Woody Oud & Lavender",
     fullDesc: "White Oud balances ethereal freshness with sacred woods. Soft lavender top notes lead to pure white agarwood resin and warm amber.",
     scentFamily: "woody",
     sizes: [10, 30, 50],
@@ -155,6 +166,62 @@ const PERFUMES_DATA = [
     badge: null,
     img: "/assets/perfumes/white-oud-50ml-1.png?v=2",
     traces: ["Essence of Oud", "Lavender", "Labdanum", "Amber"]
+  },
+  {
+    id: "dapper",
+    num: "No. 14",
+    name: "Dapper",
+    desc: "Bold Tobacco, Clove & Cedarwood",
+    subtitle: "Tobacco & Smoky Woods",
+    fullDesc: "Dapper is an exquisite fragrance that transcends gender norms, enveloping the wearer in an aura of sophistication, warm tobacco, and aromatic woods.",
+    scentFamily: "woody",
+    sizes: [10, 30],
+    prices: { 10: 799, 30: 1499 },
+    badge: "new",
+    img: "/assets/perfumes/dapper-30ml-1.png?v=2",
+    traces: ["Tobacco", "Clove", "Cedarwood", "Sandalwood"]
+  },
+  {
+    id: "woo-dy",
+    num: "No. 20",
+    name: "Woo-Dy",
+    desc: "Cedarwood, Cypress, Vetiver & Amber Musk",
+    subtitle: "Cedarwood & Sandalwood",
+    fullDesc: "Woo-Dy is a deep balsamic woods formulation with grounding earthen depth and beast-mode sillage.",
+    scentFamily: "woody",
+    sizes: [10, 30],
+    prices: { 10: 799, 30: 1499 },
+    badge: "new",
+    img: "/assets/perfumes/woo-dy-30ml-1.png?v=2",
+    traces: ["Cedarwood", "Cypress", "Vetiver", "Amber Musk"]
+  },
+  {
+    id: "zephyrine",
+    num: "No. 12",
+    name: "Zephyrine",
+    desc: "White Florals, Sparkling Citrus & Amber",
+    subtitle: "White Florals & Citrus",
+    fullDesc: "Zephyrine captures an airy breeze of pristine white florals with an energizing zest of sun-kissed citrus.",
+    scentFamily: "fresh",
+    sizes: [10, 30],
+    prices: { 10: 799, 30: 1499 },
+    badge: "new",
+    img: "/assets/perfumes/zephyrine-30ml-1.png?v=2",
+    traces: ["White Florals", "Citrus", "Amber", "Musk"]
+  },
+  {
+    id: "bijou",
+    num: "No. 13",
+    name: "Bijou",
+    desc: "Floral Bouquet, Sandalwood & Vanilla",
+    subtitle: "Floral Bouquet & Warm Vanilla",
+    fullDesc: "Bijou is an opulent jewel in high-concentration perfumery, blending tender blossoms with warm vanilla and Mysore sandalwood.",
+    scentFamily: "floral",
+    sizes: [10, 30],
+    prices: { 10: 799, 30: 1499 },
+    badge: "new",
+    img: "/assets/perfumes/bijou-30ml-1.png?v=2",
+    traces: ["Floral Bouquet", "Sandalwood", "Patchouli", "Vanilla"]
   }
 ];
 
@@ -264,7 +331,7 @@ const routes = [
           ${PERFUMES_DATA.map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
               <a href="/perfumes?id=${p.id}" class="block">
-                <img src="${p.img}" alt="Sentire ${p.name} Extrait de Parfum 50ml bottle" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
+                <img src="${p.img}" alt="Sentire ${p.name} Extrait de Parfum bottle" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.num} · ${p.desc}</p>
                 <p class="text-sm font-semibold mt-2">Starts at ₹${p.prices[p.sizes[0]]} (${p.sizes[0]}ML)</p>
@@ -322,7 +389,7 @@ const routes = [
                 <img src="${p.img}" alt="Sentire ${p.name} Best Seller" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.desc}</p>
-                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (50ML)</p>
+                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (${p.sizes[p.sizes.length - 1]}ML)</p>
               </a>
             </article>
           `).join('')}
@@ -364,7 +431,7 @@ const routes = [
                 <img src="${p.img}" alt="Sentire ${p.name} New Arrival" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.desc}</p>
-                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (50ML)</p>
+                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (${p.sizes[p.sizes.length - 1]}ML)</p>
               </a>
             </article>
           `).join('')}
@@ -399,6 +466,7 @@ const routes = [
       <section class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-ink">Custom 35%+ Perfume Discovery Sets & Gift Boxes</h1>
         <p class="mt-2 text-ink/70">Build your bespoke fragrance wardrobe by mixing and matching 10ml, 30ml, and 50ml flacons in our signature gold-embossed coffret packaging.</p>
+        <p class="mt-4"><a href="/perfumes" class="text-gold font-semibold underline">Explore all perfumes to build your box</a></p>
       </section>
     `,
     getSchema: () => ({
@@ -479,6 +547,189 @@ const routes = [
     })
   },
   {
+    path: 'pages/personalised-perfume',
+    title: 'Personalised Perfumes with Photo & Name Bottle Engraving | SENTIRE By PC',
+    description: 'Permanent optical laser bottle engraving on luxury 35%+ extraits de parfum. Upload couple portraits, personal photos, names or dates for complimentary glass etching.',
+    ogTitle: 'Personalised Perfume with Laser Photo & Name Engraving | SENTIRE By PC',
+    ogDescription: 'Discover bespoke laser photo flacon engraving in Jaipur. 100% complimentary on all 50ml 35%+ perfume oil extraits de parfum.',
+    image: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
+    heading: 'Personalised Perfumes & Flacon Laser Engraving Atelier',
+    subheading: 'High-Definition Laser Photo Etching, Couple Portraits & Monograms on Luxury Perfume Bottles',
+    contentHtml: `
+      <section class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-ink">Personalised Perfumes with Photo & Name Bottle Engraving</h1>
+        <p class="mt-4 text-ink/80 text-lg leading-relaxed">
+          At <strong>SENTIRE By PC</strong>, fragrance is elevated into an intimate, permanent work of art. Our dedicated Jaipur engraving atelier uses optical laser technology to etch high-resolution photographs, couple portraits, names, wedding anniversaries, or custom monograms directly onto the glass flacon of every 50ml 35%+ Extrait de Parfum bottle.
+        </p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="border border-black/10 rounded-2xl p-6 bg-white shadow-sm">
+            <h2 class="text-2xl font-bold text-ink">1. High-Definition Photo Engraving</h2>
+            <p class="mt-2 text-ink/70">
+              Upload any photograph from your phone—wedding memories, romantic couple portraits, anniversary pictures, or corporate logos. Our optical fiber lasers etch microscopic tonal gradations into the flacon glass without damaging the fragrance integrity.
+            </p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 bg-white shadow-sm">
+            <h2 class="text-2xl font-bold text-ink">2. Custom Typography & Monograms</h2>
+            <p class="mt-2 text-ink/70">
+              Etch initials, names, significant dates, or personal poetry. Choose from refined serif, modern sans-serif, or ornate script fonts permanently rendered in subtle translucent frost.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 bg-cream p-8 rounded-2xl border border-black/5">
+          <h2 class="text-2xl font-bold text-ink">Why Personalised Perfume from SENTIRE By PC?</h2>
+          <ul class="mt-4 space-y-3 text-ink/80">
+            <li><strong>100% Complimentary:</strong> Laser bottle engraving is provided at no extra cost on all 50ml signature flacons.</li>
+            <li><strong>Rare 35%+ Extrait Concentration:</strong> Your personalized bottle contains true artisanal extrait with 12+ hour beast-mode longevity.</li>
+            <li><strong>Zero Delay Express Shipping:</strong> In-house Jaipur engraving is finished within 24 hours with express courier dispatch across India.</li>
+            <li><strong>The Ultimate Luxury Gift:</strong> Perfect for weddings, Raksha Bandhan, Valentine's Day, anniversaries, and executive corporate gifting.</li>
+          </ul>
+          <p class="mt-6">
+            <a href="/perfumes" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
+              Choose a Fragrance to Personalise
+            </a>
+          </p>
+        </div>
+
+        <div class="mt-12 space-y-6">
+          <h2 class="text-2xl font-bold text-ink">Frequently Asked Questions</h2>
+          <div class="border-t border-black/10 pt-4">
+            <h3 class="font-bold text-lg">How do I submit my photo for bottle engraving?</h3>
+            <p class="text-ink/70 mt-1">Select any 50ml perfume on the store, click Personalise, and upload your high-resolution image directly or send it via WhatsApp after placing your order.</p>
+          </div>
+          <div class="border-t border-black/10 pt-4">
+            <h3 class="font-bold text-lg">Will the laser engraving ever fade or peel off?</h3>
+            <p class="text-ink/70 mt-1">No. The etching is permanently carved into the physical glass structure and will never peel, fade, or wash off.</p>
+          </div>
+          <div class="border-t border-black/10 pt-4">
+            <h3 class="font-bold text-lg">Can I engrave on 10ml and 30ml sizes?</h3>
+            <p class="text-ink/70 mt-1">Laser photo engraving is engineered specifically for our heavy 50ml glass flacons to ensure optical clarity and detail.</p>
+          </div>
+        </div>
+      </section>
+    `,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "Personalised Perfumes", "item": `${PRODUCTION_DOMAIN}/pages/personalised-perfume` }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I submit my photo for perfume bottle engraving?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Select any 50ml perfume on the store, click Personalise, and upload your high-resolution image directly or send it via WhatsApp after placing your order."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will the laser engraving ever fade or peel off?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The etching is permanently carved into the physical glass structure and will never peel, fade, or wash off."
+              }
+            }
+          ]
+        }
+      ]
+    })
+  },
+  {
+    path: 'pages/35-percent-extrait-de-parfum',
+    title: '35%+ Extrait de Parfum Concentration Explained | SENTIRE By PC',
+    description: 'Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.',
+    ogTitle: 'Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC',
+    ogDescription: 'The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: 'The 35%+ Extrait de Parfum Craftsmanship Standard',
+    subheading: 'Why SENTIRE Refuses to Dilute Fragrances to 15% Eau de Parfum',
+    contentHtml: `
+      <section class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-ink">35%+ Extrait de Parfum Concentration Explained</h1>
+        <p class="mt-4 text-ink/80 text-lg leading-relaxed">
+          In commercial perfumery, most luxury designer fragrances are formulated as <strong>Eau de Parfum (EDP)</strong> containing only 12% to 18% aromatic oil compounds, with the remainder consisting of denatured alcohol and water. While cheap to produce, low-concentration perfumes evaporate rapidly in hot and humid climates like India.
+        </p>
+
+        <div class="mt-8 border border-black/10 rounded-2xl overflow-hidden shadow-sm">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead class="bg-black/5 text-ink">
+              <tr>
+                <th class="p-4 font-bold border-b border-black/10">Fragrance Grade</th>
+                <th class="p-4 font-bold border-b border-black/10">Oil Concentration</th>
+                <th class="p-4 font-bold border-b border-black/10">Typical Longevity</th>
+                <th class="p-4 font-bold border-b border-black/10">Hot Climate Performance</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-black/10 text-ink/80">
+              <tr>
+                <td class="p-4">Eau de Cologne (EDC)</td>
+                <td class="p-4">3% – 5%</td>
+                <td class="p-4">1 – 2 Hours</td>
+                <td class="p-4">Fades instantly</td>
+              </tr>
+              <tr>
+                <td class="p-4">Eau de Toilette (EDT)</td>
+                <td class="p-4">5% – 12%</td>
+                <td class="p-4">3 – 5 Hours</td>
+                <td class="p-4">Weak projection</td>
+              </tr>
+              <tr>
+                <td class="p-4">Eau de Parfum (EDP)</td>
+                <td class="p-4">12% – 18%</td>
+                <td class="p-4">5 – 7 Hours</td>
+                <td class="p-4">Moderate fade</td>
+              </tr>
+              <tr class="bg-[#8C6228]/10 font-semibold text-ink">
+                <td class="p-4">SENTIRE Extrait de Parfum</td>
+                <td class="p-4">35%+ Pure Fragrance Oil</td>
+                <td class="p-4">12+ Hours (Days on fabric)</td>
+                <td class="p-4">Beast-Mode Trail</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-12 space-y-6">
+          <h2 class="text-2xl font-bold text-ink">The Sillage Science of 35%+ Concentration</h2>
+          <p class="text-ink/80 leading-relaxed">
+            By infusing <strong>35%+ pure perfume oil</strong> into every batch in Jaipur, SENTIRE By PC slows the molecular evaporation curve. Top notes of Italian citrus and exotic spices transition smoothly into luscious floral and gourmand hearts without an overwhelming alcohol spike. The rich base notes—such as Cambodian agarwood, Mysore sandalwood, and warm amber—cling intimately to skin and textile fibers for over 24 hours.
+          </p>
+          <p class="mt-4">
+            <a href="/perfumes" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
+              Explore 35%+ Extraits de Parfum
+            </a>
+          </p>
+        </div>
+      </section>
+    `,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "35%+ Extrait Standard", "item": `${PRODUCTION_DOMAIN}/pages/35-percent-extrait-de-parfum` }
+          ]
+        }
+      ]
+    })
+  },
+  {
     path: 'about',
     title: 'About Sentire by PC | 35%+ Pure Oil Fragrance House Jaipur',
     description: 'Born in Jaipur with 10,000+ bottles crafted offline. Sentire by PC is one of India\'s only perfume houses bottling 35%+ pure perfume oil extraits with laser engraving.',
@@ -491,6 +742,7 @@ const routes = [
       <section class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-ink">About SENTIRE By PC — Jaipur Haute Parfumerie</h1>
         <p class="mt-2 text-ink/70">Born in the heritage city of Jaipur, Sentire by PC was founded with a singular conviction: luxury fragrance must never compromise on raw concentration. Where standard commercial perfumes dilute to 12-18% EDP, Sentire bottles pure 35%+ Extrait de Parfum.</p>
+        <p class="mt-4 text-ink/70">With over 10,000 flacons handcrafted in our atelier and trusted across India, Sentire merges the rich heritage of Rajasthan with modern optical laser technology.</p>
       </section>
     `,
     getSchema: () => ({
@@ -545,27 +797,6 @@ const routes = [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
             { "@type": "ListItem", "position": 2, "name": "Client Services", "item": `${PRODUCTION_DOMAIN}/client-services` }
           ]
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "How can I track my order?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Enter your order ID or tracking AWB on our Track Order page for real-time status."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What is your shipping timeframe?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Orders are dispatched within 24 hours from Jaipur and delivered within 2-4 business days across India."
-              }
-            }
-          ]
         }
       ]
     })
@@ -602,9 +833,74 @@ const routes = [
   }
 ];
 
+// Add individual product static routes for all fragrances
+PERFUMES_DATA.forEach(p => {
+  routes.push({
+    path: `products/${p.id}`,
+    title: `${p.name} Extrait de Parfum | ${p.subtitle} | SENTIRE By PC`,
+    description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${p.name} (${p.subtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
+    ogTitle: `${p.name} Extrait de Parfum (${p.subtitle}) | SENTIRE By PC`,
+    ogDescription: `Artisanal 35%+ perfume oil Extrait de Parfum outlasting standard 15% EDPs. Precision laser bottle etching and express delivery across India.`,
+    image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
+    heading: `${p.name} Extrait de Parfum`,
+    subheading: `35%+ Perfume Oil Concentration · ${p.desc}`,
+    contentHtml: `
+      <article class="max-w-5xl mx-auto px-4 py-8">
+        <header>
+          <p class="text-xs font-semibold text-gold uppercase tracking-widest">${p.num} · ${p.scentFamily} Fragrance</p>
+          <h1 class="text-3xl md:text-4xl font-bold text-ink mt-1">${p.name} Extrait de Parfum</h1>
+          <p class="text-lg text-ink/70 mt-2">${p.desc}</p>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+          <div>
+            <img src="${p.img}" alt="SENTIRE ${p.name} 35% Extrait de Parfum Flacon" class="w-full aspect-square object-contain bg-white rounded-2xl border border-black/10" width="400" height="400" />
+          </div>
+          <div class="space-y-4">
+            <h2 class="text-xl font-bold text-ink">Olfactory Profile & Longevity</h2>
+            <p class="text-ink/80 leading-relaxed">${p.fullDesc}</p>
+            <div class="border-t border-black/10 pt-3">
+              <h3 class="font-bold text-sm text-ink">Signature Accords & Notes</h3>
+              <p class="text-sm text-ink/70">${p.traces.join(' · ')}</p>
+            </div>
+            <div class="border-t border-black/10 pt-3">
+              <h3 class="font-bold text-sm text-ink">Available Sizes & Pricing</h3>
+              <ul class="text-sm text-ink/70 mt-1">
+                ${p.sizes.map(s => `<li><strong>${s}ml Flacon:</strong> ₹${p.prices[s]}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="pt-4">
+              <a href="/perfumes?id=${p.id}" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
+                Order ${p.name} Online with Free Engraving
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    `,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` },
+            { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes?id=${p.id}` }
+          ]
+        },
+        generateProductSchemaJson(p)
+      ]
+    })
+  });
+});
+
 function generateHtml(templateHtml, route) {
   let html = templateHtml;
-  const canonicalUrl = `${PRODUCTION_DOMAIN}/${route.path}`;
+  const canonicalUrl = route.path.startsWith('products/')
+    ? `${PRODUCTION_DOMAIN}/perfumes?id=${route.path.replace('products/', '')}`
+    : `${PRODUCTION_DOMAIN}/${route.path}`;
 
   // Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`);
@@ -638,7 +934,12 @@ function generateHtml(templateHtml, route) {
 
   // Pre-render semantic HTML inside root for crawlers
   if (route.contentHtml) {
-    html = html.replace('<div id="root"></div>', `<div id="root"><noscript>${route.contentHtml}</noscript></div>`);
+    // If index.html already has noscript in root, replace it
+    if (html.includes('<div id="root"><noscript>')) {
+      html = html.replace(/<div id="root"><noscript>[\s\S]*?<\/noscript><\/div>/, `<div id="root"><noscript>${route.contentHtml}</noscript></div>`);
+    } else {
+      html = html.replace('<div id="root"></div>', `<div id="root"><noscript>${route.contentHtml}</noscript></div>`);
+    }
   }
 
   return html;
@@ -676,5 +977,3 @@ export function buildStaticRoutes() {
 }
 
 buildStaticRoutes();
-
-

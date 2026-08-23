@@ -504,7 +504,9 @@ export default function Hero({ onNavigate }: HeroProps) {
               width: "80%",
             }}
           >
-            <h1
+            <div
+              role="heading"
+              aria-level={1}
               className="hero-title m-0 text-left"
               style={{
                 fontSize: "clamp(38px, 10.89vw, 94px)",
@@ -517,7 +519,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               A Pure
               <br />
               Rakhi Gesture
-            </h1>
+            </div>
           </div>
 
           {/* Script Subhead: Wrapped in / Fragrance */}
