@@ -57,8 +57,8 @@ export default function App() {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("35-percent")) return "about";
-    if (hash === "#byob" || path.includes("byob")) return "byob";
+    if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
+    if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";
     if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "personalisation";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
     if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
@@ -68,26 +68,50 @@ export default function App() {
     return "home";
   });
 
+  const handleOpenProductModal = (product: any) => {
+    setSelectedProductModal(product);
+    if (product && product.id) {
+      try {
+        window.history.pushState(null, "", `/perfumes/${product.id}`);
+      } catch (e) {}
+    }
+  };
+
+  const handleCloseProductModal = () => {
+    setSelectedProductModal(null);
+    if (window.location.pathname.startsWith("/perfumes/")) {
+      try {
+        window.history.pushState(null, "", "/perfumes");
+      } catch (e) {}
+    }
+  };
+
   useEffect(() => {
-    // Handle deep-linked or legacy product URL: /products/sentire-dapper-50-ml... or /perfumes?id=dapper
+    // Handle deep-linked or permanent product URL: /perfumes/dapper or legacy /products/sentire-dapper...
     const path = window.location.pathname.toLowerCase();
     const params = new URLSearchParams(window.location.search);
     const idFromQuery = params.get("id");
 
     let targetProductId = idFromQuery;
-    if (!targetProductId && (path.includes("/products/") || path.includes("/product/"))) {
-      const rawSlug = path.split("/").filter(Boolean).pop() || "";
-      const cleanSlug = rawSlug.replace(/^sentire-/, "");
-      
-      const foundPerfume = ALL_PERFUMES.find(
-        (p) =>
-          p.id.toLowerCase() === rawSlug.toLowerCase() ||
-          p.id.toLowerCase() === cleanSlug.toLowerCase() ||
-          cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
-          rawSlug.toLowerCase().includes(p.id.toLowerCase())
-      );
-      if (foundPerfume) {
-        targetProductId = foundPerfume.id;
+    if (!targetProductId) {
+      if (path.startsWith("/perfumes/")) {
+        const perfumeSlug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
+        const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === perfumeSlug.toLowerCase());
+        if (found) targetProductId = found.id;
+      } else if (path.includes("/products/") || path.includes("/product/")) {
+        const rawSlug = path.split("/").filter(Boolean).pop() || "";
+        const cleanSlug = rawSlug.replace(/^sentire-/, "").split(".")[0];
+        
+        const foundPerfume = ALL_PERFUMES.find(
+          (p) =>
+            p.id.toLowerCase() === rawSlug.toLowerCase() ||
+            p.id.toLowerCase() === cleanSlug.toLowerCase() ||
+            cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
+            rawSlug.toLowerCase().includes(p.id.toLowerCase())
+        );
+        if (foundPerfume) {
+          targetProductId = foundPerfume.id;
+        }
       }
     }
 
@@ -104,8 +128,8 @@ export default function App() {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
       if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
-      else if (hash === "#about" || popPath.includes("about") || popPath.includes("35-percent")) setCurrentPage("about");
-      else if (hash === "#byob" || popPath.includes("byob")) setCurrentPage("byob");
+      else if (hash === "#about" || popPath.includes("about") || popPath.includes("extrait-de-parfum") || popPath.includes("35-percent")) setCurrentPage("about");
+      else if (hash === "#byob" || popPath.includes("byob") || popPath.includes("build-your-own-bundle")) setCurrentPage("byob");
       else if (hash === "#personalisation" || popPath.includes("personalisation") || popPath.includes("personalised-perfume")) setCurrentPage("personalisation");
       else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
       else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
@@ -113,6 +137,12 @@ export default function App() {
       else if (hash === "#client-services" || popPath.includes("client-services") || popPath.includes("contact")) setCurrentPage("client-services");
       else if (hash === "#track-order" || popPath.includes("track-order")) setCurrentPage("track-order");
       else setCurrentPage("home");
+
+      if (popPath.startsWith("/perfumes/")) {
+        const slug = popPath.replace("/perfumes/", "").split("/")[0].split(".")[0];
+        const match = ALL_PERFUMES.find((p) => p.id.toLowerCase() === slug.toLowerCase());
+        if (match) setSelectedProductModal(match);
+      }
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -222,7 +252,7 @@ export default function App() {
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAccount={handleAccountClick}
-        onSelectProduct={(p) => setSelectedProductModal(p)}
+        onSelectProduct={handleOpenProductModal}
         isSearchOpen={isSearchOpen}
         onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
         onCloseSearch={() => setIsSearchOpen(false)}
@@ -301,14 +331,14 @@ export default function App() {
             onAddToCart={handleAddToCart}
             onUpdateCartQuantity={handleUpdateCartQuantity}
             onNavigate={handleNavigate}
-            onSelectProduct={(p) => setSelectedProductModal(p)}
+            onSelectProduct={handleOpenProductModal}
           />
           <NewArrivals
             cartItems={cartItems}
             onAddToCart={handleAddToCart}
             onUpdateCartQuantity={handleUpdateCartQuantity}
             onNavigate={handleNavigate}
-            onSelectProduct={(p) => setSelectedProductModal(p)}
+            onSelectProduct={handleOpenProductModal}
           />
           <CelebrityReacts />
           <TrustBadges />
@@ -351,7 +381,7 @@ export default function App() {
       {selectedProductModal && (
         <ProductDetailModal
           product={ALL_PERFUMES.find(ap => ap.id === selectedProductModal.id) || selectedProductModal}
-          onClose={() => setSelectedProductModal(null)}
+          onClose={handleCloseProductModal}
           cartItems={cartItems}
           onAddToCart={(prod, size, price) => {
             handleAddToCart({
@@ -362,15 +392,15 @@ export default function App() {
               image: prod.img,
               size: size,
             });
-            setSelectedProductModal(null);
+            handleCloseProductModal();
             setIsCartOpen(true);
           }}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => {
-            setSelectedProductModal(null);
+            handleCloseProductModal();
             setIsCartOpen(true);
           }}
-          onSelectProduct={(p) => setSelectedProductModal(p)}
+          onSelectProduct={handleOpenProductModal}
           allProducts={ALL_PERFUMES}
         />
       )}

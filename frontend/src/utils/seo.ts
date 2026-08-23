@@ -84,7 +84,7 @@ export function getPageMetadata(
     return {
       title: `${productName} Extrait de Parfum | ${noteSubtitle} | SENTIRE By PC`,
       description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${productName} (${noteSubtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
-      canonical: `${PRODUCTION_DOMAIN}/perfumes?id=${product.id}`,
+      canonical: `${PRODUCTION_DOMAIN}/perfumes/${product.id}`,
       robots: defaultRobots,
       ogType: "product",
       ogTitle: `${productName} Extrait de Parfum (${noteSubtitle}) | SENTIRE By PC`,
@@ -98,32 +98,34 @@ export function getPageMetadata(
   switch (page) {
     case "pages/personalised-perfume":
     case "personalised-perfume":
+    case "personalisation":
       return {
-        title: "Personalised Perfumes with Photo & Name Bottle Engraving | SENTIRE By PC",
+        title: "Personalised Perfume with Photo Engraving | SENTIRE By PC",
         description: "Permanent optical laser bottle engraving on luxury 35%+ extraits de parfum. Upload couple portraits, personal photos, names or dates for complimentary glass etching.",
-        canonical: `${PRODUCTION_DOMAIN}/pages/personalised-perfume`,
+        canonical: `${PRODUCTION_DOMAIN}/personalised-perfume`,
         robots: defaultRobots,
         ogType: "article",
-        ogTitle: "Personalised Perfume with Laser Photo & Name Engraving | SENTIRE By PC",
+        ogTitle: "Personalised Perfume with Photo & Name Engraving | SENTIRE By PC",
         ogDescription: "Discover bespoke laser photo flacon engraving in Jaipur. 100% complimentary on all 50ml 35%+ perfume oil extraits de parfum.",
         ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
         twitterCard: "summary_large_image",
-        keywords: `personalised perfume India, photo engraved perfume bottle, name engraved perfume, custom perfume gift Jaipur, ${BASE_KEYWORDS}`,
+        keywords: `personalised perfume, personalised perfume India, photo engraved perfume, image engraved perfume, personalised perfume with photo, perfume bottle photo engraving, custom image engraved perfume, name engraved perfume, custom perfume bottle, personalised perfume gift, personalised fragrance gift India, ${BASE_KEYWORDS}`,
       };
 
     case "pages/35-percent-extrait-de-parfum":
     case "35-percent-extrait-de-parfum":
+    case "extrait-de-parfum":
       return {
-        title: "35%+ Extrait de Parfum Concentration Explained | SENTIRE By PC",
+        title: "Extrait de Parfum India | 35%+ Pure Fragrance Oil | SENTIRE By PC",
         description: "Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.",
-        canonical: `${PRODUCTION_DOMAIN}/pages/35-percent-extrait-de-parfum`,
+        canonical: `${PRODUCTION_DOMAIN}/extrait-de-parfum`,
         robots: defaultRobots,
         ogType: "article",
         ogTitle: "Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC",
         ogDescription: "The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
-        keywords: `35% perfume oil concentration, extrait de parfum vs edp, long lasting perfume concentration, beast mode perfume India, ${BASE_KEYWORDS}`,
+        keywords: `extrait de parfum India, 35% perfume oil concentration, extrait de parfum vs edp, long lasting perfume concentration, beast mode perfume India, ${BASE_KEYWORDS}`,
       };
     case "home":
       return {
@@ -195,19 +197,6 @@ export function getPageMetadata(
         keywords: `custom perfume gift box, 35% perfume discovery set, ${BASE_KEYWORDS}`,
       };
 
-    case "personalisation":
-      return {
-        title: "Photo & Name Engraved 35%+ Extrait Perfumes | SENTIRE By PC",
-        description: "Personalise your 35%+ high-concentration extrait de parfum bottle with precision photo or name laser engraving. Uncompromising longevity and bespoke luxury.",
-        canonical: `${PRODUCTION_DOMAIN}/personalisation`,
-        robots: defaultRobots,
-        ogType: "website",
-        ogTitle: "Bespoke Laser Photo & Name Engraving Atelier | SENTIRE By PC",
-        ogDescription: "Precision laser etching of customer photos and custom typography directly on 35%+ perfume oil extraits de parfum flacons.",
-        ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
-        twitterCard: "summary_large_image",
-        keywords: `photo engraved perfume, laser engraved perfume bottle, 35% concentration engraved perfume, ${BASE_KEYWORDS}`,
-      };
 
     case "about":
       return {

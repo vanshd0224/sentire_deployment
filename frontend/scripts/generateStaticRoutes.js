@@ -276,7 +276,7 @@ const STORE_SCHEMA = {
 };
 
 function generateProductSchemaJson(p) {
-  const canonicalUrl = `${PRODUCTION_DOMAIN}/perfumes?id=${p.id}`;
+  const canonicalUrl = `${PRODUCTION_DOMAIN}/perfumes/${p.id}`;
   return {
     "@type": "ProductGroup",
     "@id": `${canonicalUrl}#productgroup`,
@@ -300,7 +300,7 @@ function generateProductSchemaJson(p) {
       "name": `SENTIRE ${p.name} Extrait de Parfum (${size}ml)`,
       "sku": `SENTIRE-${p.id.toUpperCase()}-${size}ML`,
       "image": `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
-      "description": `${p.desc} — 35%+ perfume oil concentration.`,
+      "description": `${p.desc} — 35%+ pure perfume oil concentration formulated in Jaipur. Includes complimentary laser photo/name bottle engraving on 50ml flacons.`,
       "offers": {
         "@type": "Offer",
         "url": canonicalUrl,
@@ -308,7 +308,12 @@ function generateProductSchemaJson(p) {
         "price": p.prices[size] || 1499,
         "availability": "https://schema.org/InStock",
         "seller": { "@id": `${PRODUCTION_DOMAIN}/#organization` }
-      }
+      },
+      "additionalProperty": [
+        { "@type": "PropertyValue", "name": "Perfume Oil Concentration", "value": "35%+" },
+        { "@type": "PropertyValue", "name": "Personalisation", "value": size === 50 ? "Complimentary Laser Photo & Name Engraving" : "Standard Luxury Flacon" },
+        { "@type": "PropertyValue", "name": "Fragrance Family", "value": p.scentFamily }
+      ]
     }))
   };
 }
@@ -317,7 +322,7 @@ const routes = [
   {
     path: 'perfumes',
     title: '35%+ Perfume Oil Extraits & Personalised Perfumes | SENTIRE By PC',
-    description: 'Explore 11 signature extraits de parfum formulated with rare 35%+ perfume oil concentration for beast-mode longevity. Includes complimentary laser photo engraving.',
+    description: 'Explore signature extraits de parfum formulated with rare 35%+ perfume oil concentration for beast-mode longevity. Includes complimentary laser photo engraving.',
     ogTitle: '35%+ Pure Oil Extrait de Parfum Catalog | SENTIRE By PC',
     ogDescription: 'Artisanal high-concentration perfumes formulated with 35%+ pure fragrance oils and bespoke laser flacon engraving in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
@@ -330,7 +335,7 @@ const routes = [
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           ${PERFUMES_DATA.map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
-              <a href="/perfumes?id=${p.id}" class="block">
+              <a href="/perfumes/${p.id}" class="block">
                 <img src="${p.img}" alt="Sentire ${p.name} Extrait de Parfum bottle" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.num} · ${p.desc}</p>
@@ -361,7 +366,7 @@ const routes = [
           "itemListElement": PERFUMES_DATA.map((p, idx) => ({
             "@type": "ListItem",
             "position": idx + 1,
-            "url": `${PRODUCTION_DOMAIN}/perfumes?id=${p.id}`,
+            "url": `${PRODUCTION_DOMAIN}/perfumes/${p.id}`,
             "name": `SENTIRE ${p.name} Extrait de Parfum`
           }))
         },
@@ -371,25 +376,25 @@ const routes = [
   },
   {
     path: 'bestsellers',
-    title: 'Best-Selling 35%+ Perfume Oil Extraits | SENTIRE By PC',
-    description: 'Shop Jaipur\'s most coveted signature extraits de parfum crafted with 35%+ pure perfume oil concentration for all-day sillage, luxury packaging, and express delivery.',
-    ogTitle: 'Best-Selling 35%+ Pure Oil Perfumes | SENTIRE By PC',
-    ogDescription: 'Our highest-performing extraits de parfum featuring 35%+ perfume oil concentration and precision laser bottle etching.',
-    image: `${PRODUCTION_DOMAIN}/images/product-white-oud.jpg`,
-    heading: 'Best-Selling Extraits de Parfum',
-    subheading: 'Iconic Creations Outlasting Standard 15% EDPs',
+    title: 'Best Selling Luxury Perfumes & Extraits | SENTIRE By PC',
+    description: 'Shop India\'s top-rated 35%+ extraits de parfum: White Oud, Calantha, Deep Crush, and Seductive. Long lasting fragrance with complimentary photo engraving.',
+    ogTitle: 'Best Selling 35%+ Extraits de Parfum | SENTIRE By PC',
+    ogDescription: 'Top-rated perfumes formulated with 35%+ pure perfume oil for all-day sillage.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: 'Most Loved Fragrance Essentials',
+    subheading: 'Curated Customer Favorites · 35%+ Perfume Oil Concentration',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Best-Selling 35%+ Extrait de Parfum Fragrances</h1>
-        <p class="mt-2 text-ink/70">Discover our most celebrated signature fragrances crafted with 35%+ pure oil concentration for maximum longevity.</p>
+        <h1 class="text-3xl font-bold text-ink">Best Selling Luxury Extraits de Parfum</h1>
+        <p class="mt-2 text-ink/70">Discover our most celebrated fragrance profiles, handcrafted in Jaipur with 35%+ pure perfume oil concentration.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          ${PERFUMES_DATA.filter(p => p.badge === 'bestseller' || p.id === 'purple-oud').map(p => `
+          ${PERFUMES_DATA.filter(p => p.badge === 'bestseller').map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
-              <a href="/perfumes?id=${p.id}" class="block">
-                <img src="${p.img}" alt="Sentire ${p.name} Best Seller" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
+              <a href="/perfumes/${p.id}">
+                <img src="${p.img}" alt="Sentire ${p.name} Best Seller Perfume" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.desc}</p>
-                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (${p.sizes[p.sizes.length - 1]}ML)</p>
+                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[0]]}</p>
               </a>
             </article>
           `).join('')}
@@ -413,25 +418,25 @@ const routes = [
   },
   {
     path: 'new-arrivals',
-    title: 'New 35%+ Extrait de Parfum Arrivals | SENTIRE By PC',
-    description: 'Discover new artisanal master releases formulated with 35%+ perfume oil concentration and complimentary laser photo engraving directly on the glass bottle.',
-    ogTitle: 'New 35%+ Perfume Oil Releases | SENTIRE By PC',
-    ogDescription: 'The latest high-concentration extraits de parfum with rare olfactory accords and bespoke laser flacon etching.',
-    image: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
-    heading: 'New Extrait de Parfum Arrivals',
-    subheading: 'Latest Artisanal Master Releases with 35%+ Fragrance Oils',
+    title: 'New Arrivals Luxury Perfumes | Discover The Unseen | SENTIRE By PC',
+    description: 'Explore new 35%+ extrait de parfum releases: Midnight, Herrlich, Rich, Dapper, Woo-Dy, and Zephyrine with bespoke photo bottle engraving in Jaipur.',
+    ogTitle: 'New Fragrance Releases | SENTIRE By PC',
+    ogDescription: 'Fresh formulations, rare notes, and uncompromising 35%+ perfume oil concentration.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: 'New Arrivals — Discover The Unseen',
+    subheading: 'Latest High-Concentration Master Creations',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">New 35%+ Extrait de Parfum Arrivals</h1>
-        <p class="mt-2 text-ink/70">Unveiling new master perfumery releases featuring rare olfactory accords and bespoke laser flacon etching.</p>
+        <h1 class="text-3xl font-bold text-ink">New Arrivals — Haute Parfumerie Masterpieces</h1>
+        <p class="mt-2 text-ink/70">Unveiling our newest artisanal formulations, crafted with rare naturals and 35%+ pure fragrance oils in Jaipur.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          ${PERFUMES_DATA.filter(p => p.badge === 'new' || p.badge === 'exclusive').map(p => `
+          ${PERFUMES_DATA.filter(p => p.badge === 'new').map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
-              <a href="/perfumes?id=${p.id}" class="block">
-                <img src="${p.img}" alt="Sentire ${p.name} New Arrival" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
+              <a href="/perfumes/${p.id}">
+                <img src="${p.img}" alt="Sentire ${p.name} New Arrival Perfume" class="w-full aspect-square object-contain" width="300" height="300" loading="lazy" />
                 <h2 class="text-xl font-bold mt-3">${p.name}</h2>
                 <p class="text-xs text-ink/60">${p.desc}</p>
-                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[p.sizes.length - 1]]} (${p.sizes[p.sizes.length - 1]}ML)</p>
+                <p class="text-sm font-semibold mt-2">₹${p.prices[p.sizes[0]]}</p>
               </a>
             </article>
           `).join('')}
@@ -455,18 +460,26 @@ const routes = [
   },
   {
     path: 'byob',
-    title: 'Custom 35%+ Perfume Gift Box & Sets | SENTIRE By PC',
-    description: 'Build a bespoke luxury discovery box with curated 10ml, 30ml, and 50ml extraits de parfum featuring 35%+ perfume oil concentration and luxury gift presentation.',
-    ogTitle: 'Build Your Own 35%+ Extrait Discovery Box | SENTIRE By PC',
-    ogDescription: 'Curate a personalized set of 35%+ high-concentration extraits de parfum with custom gift coffret presentation.',
-    image: `${PRODUCTION_DOMAIN}/images/build-bundle.png`,
-    heading: 'Build Your Own Luxury Discovery Box',
-    subheading: 'Curate Your Bespoke 35%+ Extrait de Parfum Gift Set',
+    title: 'Build Your Own Perfume Bundle | Custom Gift Set | SENTIRE By PC',
+    description: 'Create your bespoke fragrance coffret. Choose 2, 3, or 4 signature 35%+ extraits de parfum with instant multi-bottle discounts and complimentary engraving.',
+    ogTitle: 'Build Your Own Perfume Bundle | SENTIRE By PC',
+    ogDescription: 'Curate a custom luxury fragrance set and save up to ₹400 on 35%+ extraits de parfum.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: 'Build Your Own Discovery Coffret',
+    subheading: 'Curate 2 to 4 Extraits de Parfum with Automatic Multi-Bottle Savings',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Custom 35%+ Perfume Discovery Sets & Gift Boxes</h1>
-        <p class="mt-2 text-ink/70">Build your bespoke fragrance wardrobe by mixing and matching 10ml, 30ml, and 50ml flacons in our signature gold-embossed coffret packaging.</p>
-        <p class="mt-4"><a href="/perfumes" class="text-gold font-semibold underline">Explore all perfumes to build your box</a></p>
+        <h1 class="text-3xl font-bold text-ink">Build Your Own Custom Perfume Bundle</h1>
+        <p class="mt-2 text-ink/70">Select your favorite extraits de parfum (10ml, 30ml, or 50ml) to create a custom luxury gift box.</p>
+        <div class="mt-6 p-6 bg-cream border border-black/10 rounded-2xl">
+          <h2 class="text-xl font-bold">Bundle Savings Structure:</h2>
+          <ul class="mt-3 space-y-2 text-ink/80">
+            <li><strong>2 Bottles:</strong> Instant ₹150 OFF</li>
+            <li><strong>3 Bottles:</strong> Instant ₹250 OFF</li>
+            <li><strong>4 Bottles:</strong> Instant ₹400 OFF</li>
+            <li><strong>Plus:</strong> 5% extra discount on all UPI / Prepaid checkouts.</li>
+          </ul>
+        </div>
       </section>
     `,
     getSchema: () => ({
@@ -478,34 +491,153 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Build Your Own Box", "item": `${PRODUCTION_DOMAIN}/byob` }
+            { "@type": "ListItem", "position": 2, "name": "Build Your Own Bundle", "item": `${PRODUCTION_DOMAIN}/byob` }
           ]
         }
       ]
     })
   },
   {
-    path: 'personalisation',
-    title: 'Photo & Name Engraved 35%+ Extrait Perfumes | SENTIRE By PC',
-    description: 'Personalise your 35%+ high-concentration extrait de parfum bottle with precision photo or name laser engraving. Uncompromising longevity and bespoke luxury.',
-    ogTitle: 'Bespoke Laser Photo & Name Engraving Atelier | SENTIRE By PC',
-    ogDescription: 'Precision laser etching of customer photos and custom typography directly on 35%+ perfume oil extraits de parfum flacons.',
+    path: 'personalised-perfume',
+    title: 'Personalised Perfume with Photo Engraving | SENTIRE By PC',
+    description: 'Turn your memories into an engraved perfume bottle. Laser photo and name bottle engraving on 35%+ extraits de parfum in Jaipur. 100% complimentary on 50ml flacons.',
+    ogTitle: 'Personalised Perfume with Photo & Name Engraving | SENTIRE By PC',
+    ogDescription: 'Permanent optical laser photo etching and name engraving directly on luxury 35%+ perfume oil glass flacons in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
-    heading: 'Bespoke Perfume Bottle Laser Engraving Atelier',
-    subheading: 'High-Precision Photo, Monogram & Name Laser Glass Etching in Jaipur',
+    heading: 'Personalised Perfume with Photo & Name Engraving',
+    subheading: 'Turn Your Memories Into an Engraved Perfume Bottle · High-Definition Laser Atelier in Jaipur',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Photo & Name Engraved 35%+ Extrait de Parfum Bottles</h1>
-        <p class="mt-2 text-ink/70">Our Jaipur atelier provides complimentary high-definition laser bottle engraving on all 50ml flacons. Upload any photo, couple portrait, or custom name for permanent glass etching.</p>
-        <div class="mt-8 space-y-4">
-          <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
-          <div class="border-t border-black/10 pt-4">
-            <h3 class="font-bold">Can I engrave both a photograph and a name on the bottle?</h3>
-            <p class="text-sm text-ink/70">Yes, our laser etching technology supports simultaneous portrait rendering and elegant typography.</p>
-          </div>
-          <div class="border-t border-black/10 pt-4">
-            <h3 class="font-bold">Does bottle engraving delay shipping?</h3>
-            <p class="text-sm text-ink/70">No. Engraving is completed in-house within 24 hours at our Jaipur facility.</p>
+        <header>
+          <h1 class="text-3xl md:text-4xl font-bold text-ink">Personalised Perfume with Photo & Name Engraving</h1>
+          <p class="mt-3 text-lg text-ink/80 leading-relaxed">
+            At <strong>SENTIRE By PC</strong>, your most cherished memories are permanently immortalized on glass. Our dedicated Jaipur engraving atelier uses high-precision optical fiber lasers to engrave high-definition photographs, couple portraits, names, wedding dates, or personal monograms directly onto the glass flacon of every 50ml 35%+ Extrait de Parfum bottle.
+          </p>
+        </header>
+
+        <div class="mt-10 space-y-12">
+          <section aria-labelledby="turn-memories">
+            <h2 id="turn-memories" class="text-2xl font-bold text-ink">Turn Your Memories Into an Engraved Perfume Bottle</h2>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              Unlike temporary paper stickers or metallic transfers, our optical laser physically carves into the crystalline molecular lattice of the heavy glass flacon. The result is a stunning frosted, 3D relief photograph that will never scratch, peel, or fade over decades of use.
+            </p>
+          </section>
+
+          <section aria-labelledby="how-it-works">
+            <h2 id="how-it-works" class="text-2xl font-bold text-ink">How Image Engraving Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">1. Choose Fragrance</h3>
+                <p class="text-sm text-ink/70 mt-1">Select from our 35%+ pure perfume oil collection (e.g. White Oud, Dapper, Purple Oud, Calantha).</p>
+              </div>
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">2. Select 50ml Flacon</h3>
+                <p class="text-sm text-ink/70 mt-1">Personalisation is 100% complimentary on all 50ml signature heavy glass bottles.</p>
+              </div>
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">3. Upload Image / Photo</h3>
+                <p class="text-sm text-ink/70 mt-1">Upload your favorite photograph, couple portrait, wedding snapshot, or custom artwork directly.</p>
+              </div>
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">4. Optical Laser Calibration</h3>
+                <p class="text-sm text-ink/70 mt-1">Our master technician adjusts focal depth and grayscale contrast for crisp optical detail.</p>
+              </div>
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">5. 3D Laser Glass Etching</h3>
+                <p class="text-sm text-ink/70 mt-1">Permanent high-resolution engraving is executed in-house with zero heat damage to the fragrance.</p>
+              </div>
+              <div class="border border-black/10 rounded-2xl p-5 bg-white">
+                <h3 class="font-bold text-gold text-lg">6. Velvet Presentation Box</h3>
+                <p class="text-sm text-ink/70 mt-1">Packaged in our signature warm nude luxury presentation box ready for gifting.</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm font-semibold text-ink">
+              7. <strong>Express Dispatch Across India:</strong> Engraving is completed within 24 hours in Jaipur with insured express shipping.
+            </p>
+          </section>
+
+          <section aria-labelledby="photo-engraving-tech">
+            <h2 id="photo-engraving-tech" class="text-2xl font-bold text-ink">Photo Engraving Requirements & Technology</h2>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              Any clear, well-lit digital photo taken with a smartphone or camera works beautifully. We recommend high-contrast portraits, couple photos, or pet images against clear backgrounds. Our software dynamically balances shadow and highlight tones to ensure facial expressions and fine hair strands are razor sharp on glass.
+            </p>
+          </section>
+
+          <section aria-labelledby="name-engraving-tech">
+            <h2 id="name-engraving-tech" class="text-2xl font-bold text-ink">Name & Typography Engraving</h2>
+            <p class="mt-2 text-ink/70 leading-relaxed">
+              Pair your photograph with custom name typography, romantic anniversary dates, initials, or bespoke poetry. Choose between classic serif, contemporary minimalist sans, or elegant calligraphy.
+            </p>
+          </section>
+
+          <section aria-labelledby="why-sentire-personalisation">
+            <h2 id="why-sentire-personalisation" class="text-2xl font-bold text-ink">Why Choose a Personalised SENTIRE Perfume</h2>
+            <ul class="mt-3 space-y-2 text-ink/80">
+              <li>• <strong>100% Complimentary:</strong> Never pay extra fees for custom photo or name etching on 50ml bottles.</li>
+              <li>• <strong>35%+ Pure Fragrance Oil:</strong> The world-class fragrance inside outlasts standard 15% EDPs for 12+ hours.</li>
+              <li>• <strong>Jaipur Craftsmanship:</strong> Handcrafted and engraved in-house in Rajasthan with rigorous quality control.</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="perfect-for-gifting">
+            <h2 id="perfect-for-gifting" class="text-2xl font-bold text-ink">Perfect for Gifting</h2>
+            <p class="mt-2 text-ink/70">
+              An engraved perfume bottle is one of the most emotional, memorable gifts you can give. Ideal for:
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 text-sm font-semibold text-ink">
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">🎂 Birthdays</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">💍 Anniversaries & Weddings</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">💖 Valentine's Day</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">🪢 Raksha Bandhan</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">👩‍❤️‍👨 Couple Keepsakes</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">🤝 Friendship Milestones</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">🏢 VIP Corporate Gifting</div>
+              <div class="p-3 bg-white border border-black/10 rounded-xl text-center">🎓 Graduations & Promotions</div>
+            </div>
+          </section>
+
+          <section aria-labelledby="faqs-heading">
+            <h2 id="faqs-heading" class="text-2xl font-bold text-ink">Frequently Asked Questions</h2>
+            <div class="space-y-4 mt-4">
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Can I engrave a photograph onto the perfume bottle?</h3>
+                <p class="text-ink/70 mt-1">Yes! Our high-precision optical fiber laser etches portraits, couple photos, pet pictures, or custom logos directly into the glass with micro-detail.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">What type of photo works best?</h3>
+                <p class="text-ink/70 mt-1">Clear, well-lit digital photos with good contrast between the subjects and background render with the highest visual clarity.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Can I engrave both an image and a name?</h3>
+                <p class="text-ink/70 mt-1">Yes, our laser system supports simultaneous portrait rendering and custom name/date typography on the same flacon.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Does engraving fade or wash off?</h3>
+                <p class="text-ink/70 mt-1">No. The etching is permanently engraved into the glass flacon and will never peel, fade, or wash off.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Which perfume bottle sizes support image engraving?</h3>
+                <p class="text-ink/70 mt-1">Image and photo engraving is available exclusively on our heavy 50ml signature flacons to ensure sufficient glass surface area and optical clarity.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">How long does personalization take?</h3>
+                <p class="text-ink/70 mt-1">All engraving is performed in-house at our Jaipur atelier within 24 hours, ensuring zero shipping delays.</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Can I preview my engraving?</h3>
+                <p class="text-ink/70 mt-1">Yes, you can upload your photo during checkout or preview the layout with our concierge on WhatsApp (+91 99508 91935).</p>
+              </div>
+              <div class="border-t border-black/10 pt-4">
+                <h3 class="font-bold text-lg">Is image engraving available for every fragrance?</h3>
+                <p class="text-ink/70 mt-1">Yes! All 50ml perfumes in our catalogue are eligible for complimentary photo and name laser bottle engraving.</p>
+              </div>
+            </div>
+          </section>
+
+          <div class="pt-6 text-center">
+            <a href="/perfumes" class="inline-block bg-[#8C6228] text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-[#a87c3b] transition">
+              Select Your 50ml Perfume & Personalise Now
+            </a>
           </div>
         </div>
       </section>
@@ -519,7 +651,7 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Personalisation", "item": `${PRODUCTION_DOMAIN}/personalisation` }
+            { "@type": "ListItem", "position": 2, "name": "Personalised Perfumes", "item": `${PRODUCTION_DOMAIN}/personalised-perfume` }
           ]
         },
         {
@@ -527,18 +659,66 @@ const routes = [
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "Can I engrave both a photograph and a name on the perfume bottle?",
+              "name": "Can I engrave a photograph onto the perfume bottle?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, our laser etching technology supports simultaneous portrait rendering and elegant typography."
+                "text": "Yes! Our high-precision optical fiber laser etches portraits, couple photos, pet pictures, or custom logos directly into the glass with micro-detail."
               }
             },
             {
               "@type": "Question",
-              "name": "Does bottle engraving delay shipping?",
+              "name": "What type of photo works best?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Engraving is completed in-house within 24 hours at our Jaipur facility."
+                "text": "Clear, well-lit digital photos with good contrast between the subjects and background render with the highest visual clarity."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I engrave both an image and a name?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our laser system supports simultaneous portrait rendering and custom name/date typography on the same flacon."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does engraving fade or wash off?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The etching is permanently engraved into the glass flacon and will never peel, fade, or wash off."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which perfume bottle sizes support image engraving?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Image and photo engraving is available exclusively on our heavy 50ml signature flacons to ensure sufficient glass surface area and optical clarity."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does personalization take?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "All engraving is performed in-house at our Jaipur atelier within 24 hours, ensuring zero shipping delays."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I preview my engraving?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, you can upload your photo during checkout or preview the layout with our concierge on WhatsApp (+91 99508 91935)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is image engraving available for every fragrance?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! All 50ml perfumes in our catalogue are eligible for complimentary photo and name laser bottle engraving."
               }
             }
           ]
@@ -548,119 +728,33 @@ const routes = [
   },
   {
     path: 'pages/personalised-perfume',
-    title: 'Personalised Perfumes with Photo & Name Bottle Engraving | SENTIRE By PC',
-    description: 'Permanent optical laser bottle engraving on luxury 35%+ extraits de parfum. Upload couple portraits, personal photos, names or dates for complimentary glass etching.',
-    ogTitle: 'Personalised Perfume with Laser Photo & Name Engraving | SENTIRE By PC',
-    ogDescription: 'Discover bespoke laser photo flacon engraving in Jaipur. 100% complimentary on all 50ml 35%+ perfume oil extraits de parfum.',
+    title: 'Personalised Perfume with Photo Engraving | SENTIRE By PC',
+    description: 'Turn your memories into an engraved perfume bottle. Laser photo and name bottle engraving on 35%+ extraits de parfum in Jaipur.',
+    canonicalUrl: `${PRODUCTION_DOMAIN}/personalised-perfume`,
+    ogTitle: 'Personalised Perfume with Photo & Name Engraving | SENTIRE By PC',
+    ogDescription: 'Permanent optical laser photo etching and name engraving directly on luxury 35%+ perfume oil glass flacons in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
     heading: 'Personalised Perfumes & Flacon Laser Engraving Atelier',
-    subheading: 'High-Definition Laser Photo Etching, Couple Portraits & Monograms on Luxury Perfume Bottles',
-    contentHtml: `
-      <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Personalised Perfumes with Photo & Name Bottle Engraving</h1>
-        <p class="mt-4 text-ink/80 text-lg leading-relaxed">
-          At <strong>SENTIRE By PC</strong>, fragrance is elevated into an intimate, permanent work of art. Our dedicated Jaipur engraving atelier uses optical laser technology to etch high-resolution photographs, couple portraits, names, wedding anniversaries, or custom monograms directly onto the glass flacon of every 50ml 35%+ Extrait de Parfum bottle.
-        </p>
-
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="border border-black/10 rounded-2xl p-6 bg-white shadow-sm">
-            <h2 class="text-2xl font-bold text-ink">1. High-Definition Photo Engraving</h2>
-            <p class="mt-2 text-ink/70">
-              Upload any photograph from your phone—wedding memories, romantic couple portraits, anniversary pictures, or corporate logos. Our optical fiber lasers etch microscopic tonal gradations into the flacon glass without damaging the fragrance integrity.
-            </p>
-          </div>
-
-          <div class="border border-black/10 rounded-2xl p-6 bg-white shadow-sm">
-            <h2 class="text-2xl font-bold text-ink">2. Custom Typography & Monograms</h2>
-            <p class="mt-2 text-ink/70">
-              Etch initials, names, significant dates, or personal poetry. Choose from refined serif, modern sans-serif, or ornate script fonts permanently rendered in subtle translucent frost.
-            </p>
-          </div>
-        </div>
-
-        <div class="mt-12 bg-cream p-8 rounded-2xl border border-black/5">
-          <h2 class="text-2xl font-bold text-ink">Why Personalised Perfume from SENTIRE By PC?</h2>
-          <ul class="mt-4 space-y-3 text-ink/80">
-            <li><strong>100% Complimentary:</strong> Laser bottle engraving is provided at no extra cost on all 50ml signature flacons.</li>
-            <li><strong>Rare 35%+ Extrait Concentration:</strong> Your personalized bottle contains true artisanal extrait with 12+ hour beast-mode longevity.</li>
-            <li><strong>Zero Delay Express Shipping:</strong> In-house Jaipur engraving is finished within 24 hours with express courier dispatch across India.</li>
-            <li><strong>The Ultimate Luxury Gift:</strong> Perfect for weddings, Raksha Bandhan, Valentine's Day, anniversaries, and executive corporate gifting.</li>
-          </ul>
-          <p class="mt-6">
-            <a href="/perfumes" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
-              Choose a Fragrance to Personalise
-            </a>
-          </p>
-        </div>
-
-        <div class="mt-12 space-y-6">
-          <h2 class="text-2xl font-bold text-ink">Frequently Asked Questions</h2>
-          <div class="border-t border-black/10 pt-4">
-            <h3 class="font-bold text-lg">How do I submit my photo for bottle engraving?</h3>
-            <p class="text-ink/70 mt-1">Select any 50ml perfume on the store, click Personalise, and upload your high-resolution image directly or send it via WhatsApp after placing your order.</p>
-          </div>
-          <div class="border-t border-black/10 pt-4">
-            <h3 class="font-bold text-lg">Will the laser engraving ever fade or peel off?</h3>
-            <p class="text-ink/70 mt-1">No. The etching is permanently carved into the physical glass structure and will never peel, fade, or wash off.</p>
-          </div>
-          <div class="border-t border-black/10 pt-4">
-            <h3 class="font-bold text-lg">Can I engrave on 10ml and 30ml sizes?</h3>
-            <p class="text-ink/70 mt-1">Laser photo engraving is engineered specifically for our heavy 50ml glass flacons to ensure optical clarity and detail.</p>
-          </div>
-        </div>
-      </section>
-    `,
-    getSchema: () => ({
-      "@context": "https://schema.org",
-      "@graph": [
-        ORGANIZATION_SCHEMA,
-        STORE_SCHEMA,
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Personalised Perfumes", "item": `${PRODUCTION_DOMAIN}/pages/personalised-perfume` }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "How do I submit my photo for perfume bottle engraving?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Select any 50ml perfume on the store, click Personalise, and upload your high-resolution image directly or send it via WhatsApp after placing your order."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Will the laser engraving ever fade or peel off?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No. The etching is permanently carved into the physical glass structure and will never peel, fade, or wash off."
-              }
-            }
-          ]
-        }
-      ]
-    })
+    subheading: 'High-Definition Laser Photo Etching, Couple Portraits & Monograms',
+    contentHtml: `<p>Redirecting to <a href="/personalised-perfume">Personalised Perfumes</a>...</p>`
   },
   {
-    path: 'pages/35-percent-extrait-de-parfum',
-    title: '35%+ Extrait de Parfum Concentration Explained | SENTIRE By PC',
+    path: 'extrait-de-parfum',
+    title: 'Extrait de Parfum India | 35%+ Pure Fragrance Oil | SENTIRE By PC',
     description: 'Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.',
     ogTitle: 'Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC',
     ogDescription: 'The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.',
     image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'The 35%+ Extrait de Parfum Craftsmanship Standard',
+    heading: '35%+ Extrait de Parfum Standard | The Science of Sillage',
     subheading: 'Why SENTIRE Refuses to Dilute Fragrances to 15% Eau de Parfum',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">35%+ Extrait de Parfum Concentration Explained</h1>
-        <p class="mt-4 text-ink/80 text-lg leading-relaxed">
-          In commercial perfumery, most luxury designer fragrances are formulated as <strong>Eau de Parfum (EDP)</strong> containing only 12% to 18% aromatic oil compounds, with the remainder consisting of denatured alcohol and water. While cheap to produce, low-concentration perfumes evaporate rapidly in hot and humid climates like India.
-        </p>
+        <header>
+          <h1 class="text-3xl md:text-4xl font-bold text-ink">35%+ Extrait de Parfum Standard | The Science of Sillage</h1>
+          <p class="mt-4 text-ink/80 text-lg leading-relaxed">
+            In commercial perfumery, most designer perfumes are diluted to <strong>Eau de Parfum (EDP)</strong> containing only 12% to 18% fragrance compounds, with the rest being denatured alcohol and water. While inexpensive to bottle, low-concentration perfumes evaporate within hours in warm and humid Indian climates.
+          </p>
+        </header>
 
         <div class="mt-8 border border-black/10 rounded-2xl overflow-hidden shadow-sm">
           <table class="w-full text-left border-collapse text-sm">
@@ -669,7 +763,7 @@ const routes = [
                 <th class="p-4 font-bold border-b border-black/10">Fragrance Grade</th>
                 <th class="p-4 font-bold border-b border-black/10">Oil Concentration</th>
                 <th class="p-4 font-bold border-b border-black/10">Typical Longevity</th>
-                <th class="p-4 font-bold border-b border-black/10">Hot Climate Performance</th>
+                <th class="p-4 font-bold border-b border-black/10">Performance in Tropical Climates</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-black/10 text-ink/80">
@@ -677,7 +771,7 @@ const routes = [
                 <td class="p-4">Eau de Cologne (EDC)</td>
                 <td class="p-4">3% – 5%</td>
                 <td class="p-4">1 – 2 Hours</td>
-                <td class="p-4">Fades instantly</td>
+                <td class="p-4">Fades almost instantly</td>
               </tr>
               <tr>
                 <td class="p-4">Eau de Toilette (EDT)</td>
@@ -704,7 +798,7 @@ const routes = [
         <div class="mt-12 space-y-6">
           <h2 class="text-2xl font-bold text-ink">The Sillage Science of 35%+ Concentration</h2>
           <p class="text-ink/80 leading-relaxed">
-            By infusing <strong>35%+ pure perfume oil</strong> into every batch in Jaipur, SENTIRE By PC slows the molecular evaporation curve. Top notes of Italian citrus and exotic spices transition smoothly into luscious floral and gourmand hearts without an overwhelming alcohol spike. The rich base notes—such as Cambodian agarwood, Mysore sandalwood, and warm amber—cling intimately to skin and textile fibers for over 24 hours.
+            By infusing <strong>35%+ pure perfume oil</strong> into every batch in Jaipur, SENTIRE By PC slows the molecular evaporation curve. Top notes transition smoothly into luscious floral and gourmand hearts without an overwhelming alcohol spike. The rich base notes—such as Cambodian agarwood, Mysore sandalwood, and warm amber—cling intimately to skin and textile fibers for over 24 hours.
           </p>
           <p class="mt-4">
             <a href="/perfumes" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
@@ -723,11 +817,23 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "35%+ Extrait Standard", "item": `${PRODUCTION_DOMAIN}/pages/35-percent-extrait-de-parfum` }
+            { "@type": "ListItem", "position": 2, "name": "35%+ Extrait Standard", "item": `${PRODUCTION_DOMAIN}/extrait-de-parfum` }
           ]
         }
       ]
     })
+  },
+  {
+    path: 'pages/35-percent-extrait-de-parfum',
+    title: 'Extrait de Parfum India | 35%+ Pure Fragrance Oil | SENTIRE By PC',
+    description: 'Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.',
+    canonicalUrl: `${PRODUCTION_DOMAIN}/extrait-de-parfum`,
+    ogTitle: 'Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC',
+    ogDescription: 'The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: '35%+ Extrait de Parfum Concentration Explained',
+    subheading: 'Why SENTIRE Refuses to Dilute Fragrances to 15% Eau de Parfum',
+    contentHtml: `<p>Redirecting to <a href="/extrait-de-parfum">35%+ Extrait de Parfum Standard</a>...</p>`
   },
   {
     path: 'about',
@@ -833,10 +939,10 @@ const routes = [
   }
 ];
 
-// Add individual product static routes for all fragrances
+// Add individual permanent product static routes for all fragrances: /perfumes/[id]
 PERFUMES_DATA.forEach(p => {
   routes.push({
-    path: `products/${p.id}`,
+    path: `perfumes/${p.id}`,
     title: `${p.name} Extrait de Parfum | ${p.subtitle} | SENTIRE By PC`,
     description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${p.name} (${p.subtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
     ogTitle: `${p.name} Extrait de Parfum (${p.subtitle}) | SENTIRE By PC`,
@@ -853,7 +959,7 @@ PERFUMES_DATA.forEach(p => {
         </header>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
           <div>
-            <img src="${p.img}" alt="SENTIRE ${p.name} 35% Extrait de Parfum Flacon" class="w-full aspect-square object-contain bg-white rounded-2xl border border-black/10" width="400" height="400" />
+            <img src="${p.img}" alt="SENTIRE ${p.name} 35% Extrait de Parfum Flacon with Laser Photo Engraving" class="w-full aspect-square object-contain bg-white rounded-2xl border border-black/10" width="400" height="400" />
           </div>
           <div class="space-y-4">
             <h2 class="text-xl font-bold text-ink">Olfactory Profile & Longevity</h2>
@@ -863,14 +969,26 @@ PERFUMES_DATA.forEach(p => {
               <p class="text-sm text-ink/70">${p.traces.join(' · ')}</p>
             </div>
             <div class="border-t border-black/10 pt-3">
+              <h3 class="font-bold text-sm text-ink">Fragrance Specifications</h3>
+              <ul class="text-sm text-ink/70 mt-1 space-y-1">
+                <li><strong>Concentration:</strong> 35%+ Pure Perfume Oil (Extrait de Parfum)</li>
+                <li><strong>Sillage:</strong> 12+ Hours Longevity (Days on textile fabrics)</li>
+                <li><strong>Personalisation:</strong> 100% Complimentary Laser Photo & Name Flacon Engraving</li>
+                <li><strong>Origin:</strong> Handcrafted in Jaipur Atelier, Rajasthan</li>
+              </ul>
+            </div>
+            <div class="border-t border-black/10 pt-3">
               <h3 class="font-bold text-sm text-ink">Available Sizes & Pricing</h3>
               <ul class="text-sm text-ink/70 mt-1">
                 ${p.sizes.map(s => `<li><strong>${s}ml Flacon:</strong> ₹${p.prices[s]}</li>`).join('')}
               </ul>
             </div>
-            <div class="pt-4">
-              <a href="/perfumes?id=${p.id}" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
-                Order ${p.name} Online with Free Engraving
+            <div class="pt-4 flex flex-wrap gap-3">
+              <a href="/perfumes/${p.id}" class="inline-block bg-[#8C6228] text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-[#a87c3b] transition">
+                Order ${p.name} with Free Photo Engraving
+              </a>
+              <a href="/personalised-perfume" class="inline-block border border-[#8C6228] text-[#8C6228] px-6 py-3 rounded-full font-bold hover:bg-[#8C6228]/5 transition">
+                Learn About Photo Engraving
               </a>
             </div>
           </div>
@@ -887,7 +1005,37 @@ PERFUMES_DATA.forEach(p => {
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
             { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` },
-            { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes?id=${p.id}` }
+            { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes/${p.id}` }
+          ]
+        },
+        generateProductSchemaJson(p)
+      ]
+    })
+  });
+
+  // Also maintain /products/[id] with canonical pointing to /perfumes/[id]
+  routes.push({
+    path: `products/${p.id}`,
+    title: `${p.name} Extrait de Parfum | ${p.subtitle} | SENTIRE By PC`,
+    description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${p.name} (${p.subtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
+    canonicalUrl: `${PRODUCTION_DOMAIN}/perfumes/${p.id}`,
+    ogTitle: `${p.name} Extrait de Parfum (${p.subtitle}) | SENTIRE By PC`,
+    ogDescription: `Artisanal 35%+ perfume oil Extrait de Parfum outlasting standard 15% EDPs. Precision laser bottle etching and express delivery across India.`,
+    image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
+    heading: `${p.name} Extrait de Parfum`,
+    subheading: `35%+ Perfume Oil Concentration · ${p.desc}`,
+    contentHtml: `<p>Redirecting to <a href="/perfumes/${p.id}">SENTIRE ${p.name} Extrait de Parfum</a>...</p>`,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` },
+            { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes/${p.id}` }
           ]
         },
         generateProductSchemaJson(p)
@@ -898,9 +1046,7 @@ PERFUMES_DATA.forEach(p => {
 
 function generateHtml(templateHtml, route) {
   let html = templateHtml;
-  const canonicalUrl = route.path.startsWith('products/')
-    ? `${PRODUCTION_DOMAIN}/perfumes?id=${route.path.replace('products/', '')}`
-    : `${PRODUCTION_DOMAIN}/${route.path}`;
+  const canonicalUrl = route.canonicalUrl || `${PRODUCTION_DOMAIN}/${route.path}`;
 
   // Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`);

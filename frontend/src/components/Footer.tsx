@@ -2,10 +2,10 @@ import { useState } from "react";
 import SentireLogo from "./SentireLogo";
 
 interface FooterProps {
-  onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "client-services" | "track-order") => void;
+  onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "personalisation" | "byob" | "client-services" | "track-order") => void;
 }
 
-const shopLinks = ["All Perfumes", "10ml", "30ml", "50ml", "Best Sellers"];
+const shopLinks = ["All Perfumes", "Personalised Perfumes", "35%+ Extrait Standard", "Best Sellers", "Build Your Own Bundle"];
 const helpLinks = ["FAQs", "Shipping & Delivery", "Returns & Exchanges", "Track Your Order", "Contact Us"];
 const aboutLinks = ["Our Story", "Ingredients", "Craftsmanship", "Sustainability", "Journal"];
 
@@ -38,10 +38,13 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
   const [isOpen, setIsOpen] = useState(false);
 
   const getLinkHref = (link: string, sectionTitle: string) => {
+    if (link === "Personalised Perfumes") return "/personalised-perfume";
+    if (link === "35%+ Extrait Standard") return "/extrait-de-parfum";
+    if (link === "Build Your Own Bundle") return "/byob";
     if (link === "Our Story" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal" || sectionTitle === "About") {
       return "/about";
     }
-    if (link === "All Perfumes" || link === "10ml" || link === "30ml" || link === "50ml") {
+    if (link === "All Perfumes") {
       return "/perfumes";
     }
     if (link === "Best Sellers") {
@@ -74,9 +77,15 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                 href={href}
                 onClick={(e) => {
                   e.preventDefault();
-                  if (link === "Our Story" || title === "About" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal") {
+                  if (link === "Personalised Perfumes") {
+                    onNavigate?.("personalisation");
+                  } else if (link === "35%+ Extrait Standard") {
                     onNavigate?.("about");
-                  } else if (link === "All Perfumes" || link === "10ml" || link === "30ml" || link === "50ml") {
+                  } else if (link === "Build Your Own Bundle") {
+                    onNavigate?.("byob");
+                  } else if (link === "Our Story" || title === "About" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal") {
+                    onNavigate?.("about");
+                  } else if (link === "All Perfumes") {
                     onNavigate?.("perfumes");
                   } else if (link === "Best Sellers") {
                     onNavigate?.("bestsellers");

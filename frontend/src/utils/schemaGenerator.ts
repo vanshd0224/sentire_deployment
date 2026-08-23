@@ -189,7 +189,7 @@ export const RETURN_POLICY_SCHEMA = {
 export function generateProductSchema(product: PerfumeProduct) {
   const defaultSize = product.sizes.includes(50) ? 50 : product.sizes[0];
   const primaryPrice = product.prices[defaultSize] || 2499;
-  const canonicalUrl = `${PRODUCTION_DOMAIN}/perfumes?id=${product.id}`;
+  const canonicalUrl = `${PRODUCTION_DOMAIN}/perfumes/${product.id}`;
   const fullImageUrl = product.img.startsWith("http")
     ? product.img
     : `${PRODUCTION_DOMAIN}${product.img.split("?")[0]}`;
