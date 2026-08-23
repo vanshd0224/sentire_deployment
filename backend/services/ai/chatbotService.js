@@ -156,16 +156,12 @@ Write a rich, detailed, comprehensive, and perfectly tailored response:`;
   _getRAGFallback(message, context) {
     const q = message.toLowerCase().trim();
 
-    // 1. Office & Daily Wear Recommendations
-    if (q.includes('office') || q.includes('daily') || q.includes('work') || q.includes('fresh') || q.includes('casual') || q.includes('daytime')) {
-      return "For a **sophisticated, professional daily aura at work or meetings**, we recommend our master-crafted extraits de parfum that project clean, understated elegance:\n\n" +
-        "• **White Oud (50 ML / 30 ML / 10 ML)**\n" +
-        "A luminous, modern interpretation of clean Oud stripped of heavy smoke. Opens with airy white florals and settles into smooth blonde woods. Perfect for executive boardrooms and daily confidence.\n\n" +
-        "• **Personna (50 ML / 30 ML / 10 ML)**\n" +
-        "Cool aquatic freshness layered over a dry, cedarwood foundation. Effortless, crisp, and unbothered for all-day office wear.\n\n" +
-        "• **Seductive (50 ML / 30 ML / 10 ML)**\n" +
-        "Sparkling Mediterranean citrus sharpened with zesty black pepper. Crisp on application, evolving into a warm velvet aura by your evening commute.\n\n" +
-        "✨ *Note: All 50 ML signature bottles include **100% Complimentary Laser Photo/Text Engraving**! Use code **PC100** for ₹100 OFF.*";
+    // 1. Personalisation & Laser Photo Engraving (Checked FIRST so "how does photo engraving work" is not caught by "work")
+    if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom') || q.includes('name') || q.includes('portrait')) {
+      return "Product Personalisation at **SENTIRE By PC** is **100% COMPLIMENTARY** on all 50 ML signature bottles!\n\n" +
+        "• **Bespoke Text & Name Engraving**: Engrave initials, names, romantic dates, or inspirational quotes directly onto the glass bottle.\n\n" +
+        "• **High-Precision Photo Engraving**: Upload any photo, couple portrait, line-art, or logo, and our optical laser etches it permanently into the glass bottle with stunning 3D clarity!\n\n" +
+        "Simply select your 50 ML perfume bottle on our website and enter your custom text or photo before checking out.";
     }
 
     // 2. Evening, Date Night & Romance Recommendations
@@ -180,12 +176,16 @@ Write a rich, detailed, comprehensive, and perfectly tailored response:`;
         "✨ *Tip: Apply to moisturized pulse points (wrists, neck, behind ears) to extend sillage all night! Code **PC200** grants ₹200 OFF on orders above ₹1,999.*";
     }
 
-    // 3. Personalisation & Laser Photo Engraving
-    if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom') || q.includes('name')) {
-      return "Product Personalisation at **SENTIRE By PC** is **100% COMPLIMENTARY** on all 50 ML signature bottles!\n\n" +
-        "• **Bespoke Text & Name Engraving**: Engrave initials, names, romantic dates, or inspirational quotes directly onto the glass bottle.\n\n" +
-        "• **High-Precision Photo Engraving**: Upload any photo, couple portrait, line-art, or logo, and our optical laser etches it permanently into the glass bottle with stunning 3D clarity!\n\n" +
-        "Simply select your 50 ML perfume bottle on our website and enter your custom text or photo before checking out.";
+    // 3. Office & Daily Wear Recommendations
+    if (q.includes('office') || q.includes('daily') || q.includes('daytime') || q.includes('formal') || q.includes('meeting') || /\bworkplace\b|\bworkday\b/.test(q)) {
+      return "For a **sophisticated, professional daily aura at work or meetings**, we recommend our master-crafted extraits de parfum that project clean, understated elegance:\n\n" +
+        "• **White Oud (50 ML / 30 ML / 10 ML)**\n" +
+        "A luminous, modern interpretation of clean Oud stripped of heavy smoke. Opens with airy white florals and settles into smooth blonde woods. Perfect for executive boardrooms and daily confidence.\n\n" +
+        "• **Personna (50 ML / 30 ML / 10 ML)**\n" +
+        "Cool aquatic freshness layered over a dry, cedarwood foundation. Effortless, crisp, and unbothered for all-day office wear.\n\n" +
+        "• **Seductive (50 ML / 30 ML / 10 ML)**\n" +
+        "Sparkling Mediterranean citrus sharpened with zesty black pepper. Crisp on application, evolving into a warm velvet aura by your evening commute.\n\n" +
+        "✨ *Note: All 50 ML signature bottles include **100% Complimentary Laser Photo/Text Engraving**! Use code **PC100** for ₹100 OFF.*";
     }
 
     // 4. Coupons, Offers & BYOB Multi-Bottle Box
