@@ -431,7 +431,8 @@
   function sanitizeCleanText(str) {
     if (!str) return '';
     return str
-      .replace(/Гçô/g, '-')
+      .replace(/ГÇô/g, '–')
+      .replace(/Гçô/g, '–')
       .replace(/Гé¼¿/g, '')
       .replace(/Гé¼/g, 'Rs. ')
       .replace(/ГÆ\|\|/g, '')
@@ -446,6 +447,11 @@
 
   function getFallbackDynamicResponse(userText) {
     const q = userText.toLowerCase().trim();
+
+    // 0. Intelligent AI Greetings Handler
+    if (['hi', 'hello', 'hey', 'greetings', 'hola', 'hy', 'hii', 'heyy', 'hiii'].includes(q) || q.startsWith('hi ') || q.startsWith('hello ') || q.startsWith('hey ') || q.startsWith('hii ')) {
+      return "Greetings! Welcome to <strong>House of Sentire</strong>. I am your private fragrance concierge powered by Google Gemini AI.<br/><br/>Whether you are seeking a signature extrait de parfum for daily office wear, an intoxicating scent for romantic date nights, or bespoke 3D laser photo engraving on your bottle — how may I curate your olfactory journey today?";
+    }
 
     // 1. Personalisation & Laser Photo Engraving (Checked FIRST so photo questions take top priority)
     if (q.includes('engrav') || q.includes('custom') || q.includes('name') || q.includes('photo') || q.includes('image') || q.includes('portrait')) {
