@@ -116,6 +116,29 @@ const IconDiamond = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 
+export interface CartItem {
+  id: string;
+  productId: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image?: string;
+  img?: string;
+  size: number;
+  quantity: number;
+  num?: string;
+  variantId?: string;
+}
+
+export interface CartDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  items: CartItem[];
+  onUpdateQuantity: (productId: string, size: number, delta: number) => void;
+  onRemoveItem: (productId: string, size: number) => void;
+  onClearCart?: () => void;
+}
+
 export default function CartDrawer({
   isOpen,
   onClose,
@@ -126,6 +149,72 @@ export default function CartDrawer({
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponInput, setCouponInput] = useState<string>("");
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
+
+  // Touch gesture & smooth closing state (for mobile right-side swipe-to-dismiss)
+  const [touchOffset, setTouchOffset] = useState<number>(0);
+  const [isClosing, setIsClosing] = useState<boolean>(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const isDraggingHorizontally = useRef<boolean>(false);
+
+  const handleCloseSmooth = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      setTouchOffset(0);
+      onClose();
+    }, 280);
+  }, [onClose]);
+
+  // Touch handlers for mobile swipe-to-close
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (window.innerWidth >= 768) return;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isDraggingHorizontally.current = false;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null || window.innerWidth >= 768) return;
+    const deltaX = e.touches[0].clientX - touchStartX.current;
+    const deltaY = e.touches[0].clientY - touchStartY.current;
+
+    // Detect horizontal swipe intention vs vertical scroll
+    if (!isDraggingHorizontally.current) {
+      if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        isDraggingHorizontally.current = true;
+      } else if (Math.abs(deltaY) > 10) {
+        touchStartX.current = null;
+        touchStartY.current = null;
+        return;
+      }
+    }
+
+    if (isDraggingHorizontally.current) {
+      // Swiping rightwards (positive deltaX) to dismiss
+      if (deltaX > 0) {
+        setTouchOffset(deltaX);
+      } else {
+        setTouchOffset(0);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (window.innerWidth >= 768) return;
+    if (touchOffset > 75) {
+      handleCloseSmooth();
+    } else {
+      setTouchOffset(0);
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+    isDraggingHorizontally.current = false;
+  };
 
   // Reset isRedirecting state on Browser Back Button (BFCache pageshow), visibilitychange, or drawer/items state change
   useEffect(() => {
@@ -156,16 +245,18 @@ export default function CartDrawer({
 
   useEffect(() => {
     setIsRedirecting(false);
+    setIsClosing(false);
+    setTouchOffset(0);
   }, [isOpen, items.length]);
 
   // Close on Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) onClose();
+      if (e.key === "Escape" && isOpen) handleCloseSmooth();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, handleCloseSmooth]);
 
   // Lock background scroll
   useEffect(() => {
@@ -187,11 +278,6 @@ export default function CartDrawer({
     () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
     [items]
   );
-
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
-  const [couponInput, setCouponInput] = useState<string>("");
-  const [couponError, setCouponError] = useState<string | null>(null);
-  const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
 
   const couponDiscount = useMemo(() => {
     if (!appliedCoupon) return 0;
@@ -256,55 +342,70 @@ export default function CartDrawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end md:items-stretch justify-end"
+      className="fixed inset-0 z-50 flex items-stretch justify-end"
       role="dialog"
       aria-modal="true"
       aria-label="Shopping Bag"
     >
       {/* ── Backdrop ─────────────────────────────────────────────────── */}
       <div
-        className="absolute inset-0 cart-backdrop-luxury cart-backdrop-animate cursor-pointer"
-        onClick={onClose}
+        className={`absolute inset-0 cart-backdrop-luxury cart-backdrop-animate cursor-pointer transition-opacity duration-300 ${
+          isClosing ? "opacity-0" : "opacity-100"
+        }`}
+        onClick={handleCloseSmooth}
         aria-hidden="true"
       />
 
       {/* ── Drawer Panel ─────────────────────────────────────────────── */}
       <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          transform:
+            touchOffset > 0 && !isClosing
+              ? `translateX(${touchOffset}px)`
+              : undefined,
+          transition: isClosing
+            ? "transform 280ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease"
+            : touchOffset > 0
+            ? "none"
+            : undefined,
+        }}
         className={[
-          "relative z-10 flex flex-col h-[94vh] md:h-full",
-          "w-full md:w-[clamp(440px,32vw,520px)] max-w-full md:max-w-[540px]",
+          "relative z-10 flex flex-col h-full h-[100dvh]",
+          "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
           "cart-drawer-surface",
-          "rounded-t-2xl md:rounded-none",
-          "cart-sheet-enter md:cart-salon-enter",
+          "rounded-none",
+          isClosing
+            ? "translate-x-full opacity-90"
+            : "cart-mobile-drawer-enter md:cart-salon-enter",
           "overflow-hidden",
         ].join(" ")}
       >
-        {/* Mobile drag handle */}
-        <div className="w-9 h-1 rounded-full bg-black/12 mx-auto mt-2.5 mb-0.5 md:hidden shrink-0" />
-
         {/* ══ HEADER ══════════════════════════════════════════════════ */}
-        <header className="cart-header-surface sticky top-0 z-20 px-6 pt-5 pb-4 shrink-0 salon-stagger-1">
+        <header className="cart-header-surface sticky top-0 z-20 px-5 md:px-6 pt-4 md:pt-5 pb-3.5 md:pb-4 shrink-0 salon-stagger-1">
           {/* Eyebrow */}
           <p
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "8.5px",
-              fontWeight: 500,
+              fontSize: "8px",
+              fontWeight: 600,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
               color: "#C89A46",
-              marginBottom: "6px",
+              marginBottom: "5px",
             }}
           >
             Your Private Selection
           </p>
 
           {/* Title row */}
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-baseline gap-2.5 min-w-0">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
               <h2
-                className="font-display leading-none"
-                style={{ fontSize: "24px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
+                className="font-display leading-tight"
+                style={{ fontSize: "21px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
               >
                 Shopping Bag
               </h2>
@@ -317,7 +418,7 @@ export default function CartDrawer({
               {items.length > 0 && onClearCart && (
                 <button
                   onClick={onClearCart}
-                  className="sentire-remove-btn"
+                  className="sentire-remove-btn text-[10px] md:text-xs"
                   title="Clear all items"
                   aria-label="Clear all items from bag"
                 >
@@ -325,8 +426,8 @@ export default function CartDrawer({
                 </button>
               )}
               <button
-                onClick={onClose}
-                className="sentire-close-btn"
+                onClick={handleCloseSmooth}
+                className="sentire-close-btn w-9 h-9 md:w-10 md:h-10"
                 aria-label="Close shopping bag"
               >
                 <IconClose />
@@ -339,40 +440,55 @@ export default function CartDrawer({
         <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0">
 
           {/* ══ DELIVERY PRIVILEGE ══════════════════════════════════ */}
-          <div className="cart-delivery-band px-6 py-4 salon-stagger-2">
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "8.5px",
-                fontWeight: 500,
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                color: "rgba(25,20,15,0.40)",
-                marginBottom: "8px",
-              }}
-            >
-              ✦&nbsp; Private Delivery
-            </p>
+          <div className="cart-delivery-band px-5 md:px-6 py-3.5 md:py-4 salon-stagger-2">
+            <div className="flex items-center justify-between gap-2 mb-1.5">
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "8px",
+                  fontWeight: 600,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "rgba(25,20,15,0.45)",
+                }}
+              >
+                ✦&nbsp; Private Delivery
+              </p>
+              {isFreeShippingUnlocked && (
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "8px",
+                    fontWeight: 600,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "#C89A46",
+                  }}
+                >
+                  Unlocked
+                </span>
+              )}
+            </div>
 
             {isFreeShippingUnlocked ? (
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p
                     className="font-display"
-                    style={{ fontSize: "14px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
+                    style={{ fontSize: "13.5px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
                   >
                     Complimentary Express Delivery
                   </p>
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: "10.5px",
-                      color: "rgba(25,20,15,0.50)",
+                      fontSize: "10px",
+                      color: "rgba(25,20,15,0.55)",
                       marginTop: "1px",
                       fontWeight: 400,
                     }}
                   >
-                    Unlocked for your order
+                    Unlocked for your signature order
                   </p>
                 </div>
                 <div
@@ -382,6 +498,7 @@ export default function CartDrawer({
                     height: "20px",
                     borderRadius: "50%",
                     border: "1px solid rgba(190,143,66,0.55)",
+                    background: "rgba(200,154,70,0.12)",
                     color: "#C89A46",
                   }}
                 >
@@ -392,15 +509,15 @@ export default function CartDrawer({
               <div>
                 <p
                   className="font-display"
-                  style={{ fontSize: "14px", fontWeight: 400, color: "#0B0907" }}
+                  style={{ fontSize: "13.5px", fontWeight: 400, color: "#0B0907" }}
                 >
                   Express Delivery
                 </p>
                 <p
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "10.5px",
-                    color: "rgba(25,20,15,0.50)",
+                    fontSize: "10px",
+                    color: "rgba(25,20,15,0.55)",
                     marginTop: "1px",
                     fontWeight: 400,
                   }}
@@ -413,7 +530,7 @@ export default function CartDrawer({
             )}
 
             {/* Progress bar */}
-            <div className="cart-progress-track mt-3">
+            <div className="cart-progress-track mt-2.5">
               <div
                 className="cart-progress-fill"
                 style={{ width: `${progressPercent}%` }}
@@ -434,34 +551,18 @@ export default function CartDrawer({
                 </span>
               )}
             </div>
-
-            {isFreeShippingUnlocked && (
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "8.5px",
-                  fontWeight: 500,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "#C89A46",
-                  marginTop: "6px",
-                }}
-              >
-                Complete
-              </p>
-            )}
           </div>
 
           {/* ══ CART ITEMS / EMPTY STATE ════════════════════════════ */}
-          <div className="px-6 py-5 salon-stagger-3">
+          <div className="px-5 md:px-6 py-4 md:py-5 salon-stagger-3">
 
             {items.length === 0 ? (
 
               /* ── Empty State ── */
-              <div className="flex flex-col items-center text-center py-10 space-y-5">
+              <div className="flex flex-col items-center text-center py-12 md:py-16 space-y-4 md:space-y-5">
                 <div
                   style={{
-                    width: "40px",
+                    width: "36px",
                     height: "1px",
                     background: "rgba(190,143,66,0.40)",
                     margin: "0 auto",
@@ -472,8 +573,8 @@ export default function CartDrawer({
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: "8.5px",
-                      fontWeight: 500,
+                      fontSize: "8px",
+                      fontWeight: 600,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
                       color: "#C89A46",
@@ -483,17 +584,17 @@ export default function CartDrawer({
                   </p>
                   <h3
                     className="font-display"
-                    style={{ fontSize: "22px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
+                    style={{ fontSize: "20px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
                   >
                     Your bag awaits<br />its first fragrance.
                   </h3>
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
-                      fontSize: "11px",
+                      fontSize: "10.5px",
                       lineHeight: "1.6",
                       color: "rgba(25,20,15,0.50)",
-                      maxWidth: "240px",
+                      maxWidth: "230px",
                       margin: "0 auto",
                       fontWeight: 400,
                     }}
@@ -503,18 +604,18 @@ export default function CartDrawer({
                 </div>
 
                 <button
-                  onClick={onClose}
-                  className="sentire-checkout-btn"
-                  style={{ maxWidth: "260px", height: "46px", fontSize: "9.5px" }}
+                  onClick={handleCloseSmooth}
+                  className="sentire-checkout-btn mt-2"
+                  style={{ maxWidth: "240px", height: "44px", fontSize: "9px" }}
                   aria-label="Explore the perfume library"
                 >
-                  Explore the Perfume Library
+                  Explore Fragrances
                   <span className="cta-arrow"><IconArrow /></span>
                 </button>
 
                 <div
                   style={{
-                    width: "40px",
+                    width: "36px",
                     height: "1px",
                     background: "rgba(190,143,66,0.40)",
                     margin: "0 auto",
@@ -529,29 +630,29 @@ export default function CartDrawer({
                 <p
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "8.5px",
-                    fontWeight: 500,
+                    fontSize: "8px",
+                    fontWeight: 600,
                     letterSpacing: "0.20em",
                     textTransform: "uppercase",
-                    color: "rgba(25,20,15,0.38)",
-                    marginBottom: "18px",
+                    color: "rgba(25,20,15,0.40)",
+                    marginBottom: "14px",
                   }}
                 >
-                  Your Selection
+                  Your Fragrances ({items.length})
                 </p>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {items.map((item, idx) => {
                     const isAnimating = animatingItemId === item.id;
                     return (
                       <div
                         key={item.id}
                         style={{
-                          animation: `salonFadeUp 420ms cubic-bezier(0.22,1,0.36,1) ${idx * 60 + 150}ms both`,
+                          animation: `salonFadeUp 380ms cubic-bezier(0.22,1,0.36,1) ${idx * 50 + 100}ms both`,
                         }}
                       >
                         {/* Product row */}
-                        <div className="flex gap-4 items-start">
+                        <div className="flex gap-3.5 md:gap-4 items-start">
 
                           {/* Image */}
                           <div className="cart-product-img-frame">
@@ -559,6 +660,7 @@ export default function CartDrawer({
                               src={item.img || (item as any).image}
                               alt={item.name}
                               draggable={false}
+                              loading="lazy"
                             />
                           </div>
 
@@ -570,12 +672,12 @@ export default function CartDrawer({
                               <p
                                 style={{
                                   fontFamily: "var(--font-sans)",
-                                  fontSize: "8.5px",
+                                  fontSize: "8px",
                                   fontWeight: 600,
-                                  letterSpacing: "0.20em",
+                                  letterSpacing: "0.18em",
                                   textTransform: "uppercase",
                                   color: "#C89A46",
-                                  marginBottom: "4px",
+                                  marginBottom: "2px",
                                 }}
                               >
                                 {item.num}
@@ -584,13 +686,13 @@ export default function CartDrawer({
 
                             {/* Product name */}
                             <h3
-                              className="font-display leading-tight"
+                              className="font-display leading-tight truncate"
                               style={{
-                                fontSize: "19px",
+                                fontSize: "17px",
                                 fontWeight: 400,
                                 color: "#0B0907",
                                 letterSpacing: "-0.01em",
-                                marginBottom: "3px",
+                                marginBottom: "2px",
                               }}
                             >
                               {item.name}
@@ -600,12 +702,12 @@ export default function CartDrawer({
                             <p
                               style={{
                                 fontFamily: "var(--font-sans)",
-                                fontSize: "8.5px",
+                                fontSize: "8px",
                                 fontWeight: 500,
-                                letterSpacing: "0.16em",
+                                letterSpacing: "0.14em",
                                 textTransform: "uppercase",
-                                color: "rgba(25,20,15,0.45)",
-                                marginBottom: "8px",
+                                color: "rgba(25,20,15,0.48)",
+                                marginBottom: "6px",
                               }}
                             >
                               Eau de Parfum&nbsp;·&nbsp;{item.size}&nbsp;ML
@@ -615,68 +717,53 @@ export default function CartDrawer({
                             <p
                               style={{
                                 fontFamily: "var(--font-sans)",
-                                fontSize: "14px",
-                                fontWeight: 500,
+                                fontSize: "13.5px",
+                                fontWeight: 600,
                                 color: "#18130F",
                                 letterSpacing: "0.01em",
                                 fontVariantNumeric: "tabular-nums",
-                                marginBottom: "12px",
+                                marginBottom: "10px",
                               }}
                             >
                               ₹{(item.price || 0).toLocaleString()}
                             </p>
 
                             {/* Controls row */}
-                            <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center justify-between gap-2">
 
                               {/* Quantity control */}
-                              <div>
-                                <p
-                                  style={{
-                                    fontFamily: "var(--font-sans)",
-                                    fontSize: "7.5px",
-                                    fontWeight: 500,
-                                    letterSpacing: "0.18em",
-                                    textTransform: "uppercase",
-                                    color: "rgba(25,20,15,0.35)",
-                                    marginBottom: "4px",
-                                  }}
+                              <div className="sentire-qty-control" role="group" aria-label={`Quantity for ${item.name}`}>
+                                <button
+                                  className="sentire-qty-btn"
+                                  onClick={() => handleQuantityChange(item, -1)}
+                                  aria-label={`Decrease quantity of ${item.name}`}
                                 >
-                                  Quantity
-                                </p>
-                                <div className="sentire-qty-control" role="group" aria-label={`Quantity for ${item.name}`}>
-                                  <button
-                                    className="sentire-qty-btn"
-                                    onClick={() => handleQuantityChange(item, -1)}
-                                    aria-label={`Decrease quantity of ${item.name}`}
-                                  >
-                                    −
-                                  </button>
-                                  <span
-                                    className={`sentire-qty-num ${isAnimating ? "qty-num-flip" : ""}`}
-                                    aria-live="polite"
-                                    aria-label={`${item.quantity} items`}
-                                  >
-                                    {String(item.quantity).padStart(2, "0")}
-                                  </span>
-                                  <button
-                                    className="sentire-qty-btn"
-                                    onClick={() => handleQuantityChange(item, 1)}
-                                    aria-label={`Increase quantity of ${item.name}`}
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                                  −
+                                </button>
+                                <span
+                                  className={`sentire-qty-num text-xs font-semibold ${isAnimating ? "qty-num-flip" : ""}`}
+                                  aria-live="polite"
+                                  aria-label={`${item.quantity} items`}
+                                >
+                                  {String(item.quantity).padStart(2, "0")}
+                                </span>
+                                <button
+                                  className="sentire-qty-btn"
+                                  onClick={() => handleQuantityChange(item, 1)}
+                                  aria-label={`Increase quantity of ${item.name}`}
+                                >
+                                  +
+                                </button>
                               </div>
 
                               {/* Item total + remove */}
-                              <div className="flex flex-col items-end gap-1.5">
+                              <div className="flex flex-col items-end gap-1">
                                 {item.quantity > 1 && (
                                   <p
                                     style={{
                                       fontFamily: "var(--font-sans)",
-                                      fontSize: "12.5px",
-                                      fontWeight: 500,
+                                      fontSize: "11.5px",
+                                      fontWeight: 600,
                                       color: "#18130F",
                                       fontVariantNumeric: "tabular-nums",
                                     }}
@@ -698,7 +785,7 @@ export default function CartDrawer({
 
                         {/* Divider */}
                         {idx < items.length - 1 && (
-                          <div className="cart-ornament-divider mt-6">
+                          <div className="cart-ornament-divider mt-4 md:mt-6">
                             ✦
                           </div>
                         )}
@@ -715,16 +802,16 @@ export default function CartDrawer({
 
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface px-6 pt-4 pb-5 shrink-0 salon-stagger-5">
+          <footer className="cart-footer-surface px-5 md:px-6 pt-3.5 md:pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] md:pb-5 shrink-0 salon-stagger-5 border-t border-black/8">
             {/* Promo Code Input & Badges */}
-            <div className="mb-3.5">
-              <div className="flex items-center justify-between mb-1.5">
+            <div className="mb-3">
+              <div className="flex items-center justify-between mb-1">
                 <span
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: "8.5px",
+                    fontSize: "8px",
                     fontWeight: 600,
-                    letterSpacing: "0.20em",
+                    letterSpacing: "0.18em",
                     textTransform: "uppercase",
                     color: "#C89A46",
                   }}
@@ -734,14 +821,14 @@ export default function CartDrawer({
               </div>
 
               {appliedCoupon ? (
-                <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/30 rounded-lg px-3 py-1.5 text-xs">
+                <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/30 rounded-lg px-2.5 py-1.5 text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-[#0B0907] font-mono tracking-wider">{appliedCoupon}</span>
-                    <span className="text-[#C89A46] font-medium">(-₹{couponDiscount})</span>
+                    <span className="font-semibold text-[#0B0907] font-mono tracking-wider text-[11px]">{appliedCoupon}</span>
+                    <span className="text-[#C89A46] font-semibold text-[11px]">(-₹{couponDiscount})</span>
                   </div>
                   <button
                     onClick={handleRemoveCoupon}
-                    className="text-gray-500 hover:text-red-500 font-bold text-sm px-1"
+                    className="text-gray-500 hover:text-red-500 font-bold text-base px-1.5 leading-none cursor-pointer"
                     title="Remove Code"
                   >
                     ×
@@ -749,29 +836,29 @@ export default function CartDrawer({
                 </div>
               ) : (
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <input
                       type="text"
-                      placeholder="Enter PC100 or PC200"
+                      placeholder="Enter promo code"
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 bg-black/5 border border-black/15 rounded-lg px-3 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907]"
+                      className="flex-1 bg-black/5 border border-black/15 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907] h-8"
                     />
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded-lg px-3 py-1 text-xs font-medium uppercase tracking-wider cursor-pointer"
+                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-3 py-1 text-[10px] font-semibold uppercase tracking-wider cursor-pointer h-8"
                     >
                       Apply
                     </button>
                   </div>
                   {/* Quick Code Pills */}
-                  <div className="flex items-center gap-1.5 mt-2">
+                  <div className="flex items-center gap-1.5 mt-1.5">
                     <button
                       onClick={() => handleApplyCoupon("PC100")}
-                      className={`text-[9.5px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                      className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 999
                           ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
                           : "bg-black/5 text-gray-400 border-black/10"
@@ -781,7 +868,7 @@ export default function CartDrawer({
                     </button>
                     <button
                       onClick={() => handleApplyCoupon("PC200")}
-                      className={`text-[9.5px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                      className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 1999
                           ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
                           : "bg-black/5 text-gray-400 border-black/10"
@@ -794,71 +881,58 @@ export default function CartDrawer({
               )}
 
               {couponError && (
-                <p className="text-[10px] text-red-500 mt-1 font-sans">{couponError}</p>
+                <p className="text-[9.5px] text-red-500 mt-1 font-sans">{couponError}</p>
               )}
               {couponSuccess && (
-                <p className="text-[10px] text-emerald-600 mt-1 font-sans font-medium">{couponSuccess}</p>
+                <p className="text-[9.5px] text-emerald-600 mt-1 font-sans font-medium">{couponSuccess}</p>
               )}
             </div>
 
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "8.5px",
-                fontWeight: 500,
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                color: "rgba(25,20,15,0.38)",
-                marginBottom: "8px",
-              }}
-            >
-              Order Summary
-            </p>
-
-            <div className="space-y-1.5">
+            {/* Order Summary Rows */}
+            <div className="space-y-1.5 pt-1">
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "rgba(25,20,15,0.58)" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(25,20,15,0.60)" }}>
                   Subtotal
                 </span>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "12.5px", color: "#18130F", fontWeight: 500 }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#18130F", fontWeight: 500 }}>
                   ₹{(subtotal || 0).toLocaleString()}
                 </span>
               </div>
 
               {couponDiscount > 0 && (
                 <div className="flex justify-between items-baseline">
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "#C89A46", fontWeight: 500 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "#C89A46", fontWeight: 500 }}>
                     Promo Discount ({appliedCoupon})
                   </span>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12.5px", color: "#C89A46", fontWeight: 600 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#C89A46", fontWeight: 600 }}>
                     -₹{couponDiscount.toLocaleString()}
                   </span>
                 </div>
               )}
 
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11.5px", color: "rgba(25,20,15,0.58)" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(25,20,15,0.60)" }}>
                   Express Delivery
                 </span>
                 {isFreeShippingUnlocked ? (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "10px", fontWeight: 500, letterSpacing: "0.10em", textTransform: "uppercase", color: "#C89A46" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "9.5px", fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "#C89A46" }}>
                     Complimentary
                   </span>
                 ) : (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12.5px", color: "#18130F", fontWeight: 500 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#18130F", fontWeight: 500 }}>
                     ₹100
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="cart-summary-rule" />
+            <div className="cart-summary-rule my-2.5" />
 
-            <div className="flex justify-between items-baseline mb-4">
-              <span className="font-display" style={{ fontSize: "15px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}>
+            <div className="flex justify-between items-baseline mb-3">
+              <span className="font-display" style={{ fontSize: "14px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}>
                 Estimated Total
               </span>
-              <span className="font-display" style={{ fontSize: "21px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.02em" }}>
+              <span className="font-display" style={{ fontSize: "19px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.02em" }}>
                 ₹{(finalTotal || 0).toLocaleString()}
               </span>
             </div>
@@ -904,34 +978,25 @@ export default function CartDrawer({
 
             {/* Trust signals */}
             <div
-              className="flex items-center justify-center gap-4 mt-3"
+              className="flex items-center justify-center gap-3 mt-2.5"
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: "8.5px",
-                fontWeight: 400,
-                letterSpacing: "0.16em",
+                fontSize: "8px",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(25,20,15,0.35)",
+                color: "rgba(25,20,15,0.40)",
               }}
             >
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-1">
                 <IconLock aria-hidden="true" />
                 Secure Checkout
               </span>
-              <span style={{ color: "rgba(25,20,15,0.18)" }}>◇</span>
-              <span className="flex items-center gap-1.5">
+              <span style={{ color: "rgba(25,20,15,0.20)" }}>◇</span>
+              <span className="flex items-center gap-1">
                 <IconDiamond aria-hidden="true" />
                 Authentic Sentire
               </span>
-            </div>
-
-            {/* Sentire signature line */}
-            <div className="flex items-center gap-3 mt-4" style={{ color: "rgba(190,143,66,0.30)" }}>
-              <div style={{ flex: 1, height: "1px", background: "rgba(25,20,15,0.07)" }} />
-              <span className="font-display" style={{ fontSize: "12px", fontWeight: 400, letterSpacing: "0.12em", color: "rgba(190,143,66,0.45)" }}>
-                S
-              </span>
-              <div style={{ flex: 1, height: "1px", background: "rgba(25,20,15,0.07)" }} />
             </div>
           </footer>
         )}

@@ -843,7 +843,7 @@ a {
   to   { opacity: 1; }
 }
 .cart-backdrop-animate {
-  animation: cartBackdropIn 480ms ease-out forwards;
+  animation: cartBackdropIn 400ms ease-out forwards;
 }
 
 @keyframes cartSalonEnter {
@@ -858,6 +858,19 @@ a {
 }
 .cart-salon-enter {
   animation: cartSalonEnter 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cartMobileDrawerEnter {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.cart-mobile-drawer-enter {
+  animation: cartMobileDrawerEnter 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
 }
 
 @keyframes cartSheetUp {
@@ -970,6 +983,13 @@ a {
   overflow: hidden;
   position: relative;
 }
+@media (max-width: 767px) {
+  .cart-product-img-frame {
+    width: 78px;
+    height: 94px;
+    border-radius: 6px;
+  }
+}
 .cart-product-img-frame img {
   width: 100%;
   height: 100%;
@@ -992,6 +1012,12 @@ a {
   background: #F8F4EC;
   overflow: hidden;
 }
+@media (max-width: 767px) {
+  .sentire-qty-control {
+    height: 32px;
+    min-width: 98px;
+  }
+}
 .sentire-qty-btn {
   width: 36px;
   height: 100%;
@@ -1007,6 +1033,12 @@ a {
   border: none;
   outline: none;
   flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .sentire-qty-btn {
+    width: 30px;
+    font-size: 14px;
+  }
 }
 .sentire-qty-btn:hover {
   background: rgba(25, 20, 15, 0.08);
