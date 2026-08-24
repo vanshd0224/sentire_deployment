@@ -394,10 +394,9 @@
   function sanitizeCleanText(str) {
     if (!str) return '';
     return str
-      .replace(/ГÇô|Гçô|–|—/g, ' - ')
-      .replace(/Гé¼¿|Гé¼|₹/g, 'Rs. ')
-      .replace(/ГÆ\|\||ГÆÆ¦|=fï\||=fÆ¦|=fÄû|ΓPtö|Å /g, '')
-      .replace(/[\u0400-\u04FF]/g, '') // Wipes out all Cyrillic Mojibake artifacts (Г)
+      .replace(/[\u2013\u2014]/g, ' - ')
+      .replace(/\u20B9/g, 'Rs. ')
+      .replace(/[\u0400-\u04FF\u0370-\u03FF]/g, '')
       .replace(/\n/g, '<br/>');
   }
 
