@@ -421,12 +421,11 @@ export default function PersonalisationPage({
           </p>
 
           <h1 className="font-display text-3xl font-light leading-[1.08] tracking-tight text-[#f8f5f1] sm:text-5xl lg:text-6xl">
-            Personalise Your{" "}
-            <em className="font-serif not-italic text-[#c89b5a]">Fragrance</em>
+            Product <em className="font-serif not-italic text-[#c89b5a]">Personalisation</em>
           </h1>
 
-          <p className="mt-4 text-sm font-light leading-relaxed text-[#f8f5f1]/55 sm:text-base">
-            Create a bespoke signature bottle — crafted uniquely for you.
+          <p className="mt-4 text-sm font-light leading-relaxed text-[#f8f5f1]/70 sm:text-base">
+            Personalise your SENTIRE perfume with photo and name laser engraving.
           </p>
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#c89b5a]/40 bg-[#c89b5a]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#c89b5a] shadow-sm">
             <span>✨</span> Personalisation Available Exclusively on 50ML Luxury Flacons

@@ -77,10 +77,10 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
             Order Tracking & Dispatch Status
           </span>
           <h1 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-[0.08em] text-white">
-            Track Your Sentire Delivery
+            Track Your Order
           </h1>
           <p className="mt-4 text-xs sm:text-sm text-white/70 leading-relaxed max-w-xl mx-auto font-sans">
-            Enter your Sentire Order Number (e.g. <span className="text-[#c89b5a]">SNT-84920</span>) or courier AWB tracking code below to check your package’s journey from our Jaipur maison to your door.
+            Track your SENTIRE By PC order and view the latest delivery status. Enter your Sentire Order Number (e.g. <span className="text-[#c89b5a]">SNT-84920</span>) or courier AWB tracking code below.
           </p>
 
           {/* Track Form */}

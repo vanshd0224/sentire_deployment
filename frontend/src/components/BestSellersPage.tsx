@@ -175,7 +175,7 @@ export default function BestSellersPage({
             Best Sellers
           </h1>
           <p className="text-sm text-ink/60 mt-2 max-w-3xl">
-            Our 6 most coveted Extraits de Parfum — Seductive, Purple Oud, Calantha, Mirai, Deep Crush, and White Oud.
+            Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.
           </p>
         </div>
 

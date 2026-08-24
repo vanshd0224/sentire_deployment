@@ -100,16 +100,16 @@ export function getPageMetadata(
     case "personalised-perfume":
     case "personalisation":
       return {
-        title: "Personalised Perfume with Photo Engraving | SENTIRE By PC",
-        description: "Permanent optical laser bottle engraving on luxury 35%+ extraits de parfum. Upload couple portraits, personal photos, names or dates for complimentary glass etching.",
+        title: "Product Personalisation | SENTIRE By PC",
+        description: "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
         canonical: `${PRODUCTION_DOMAIN}/personalised-perfume`,
         robots: defaultRobots,
         ogType: "article",
-        ogTitle: "Personalised Perfume with Photo & Name Engraving | SENTIRE By PC",
-        ogDescription: "Discover bespoke laser photo flacon engraving in Jaipur. 100% complimentary on all 50ml 35%+ perfume oil extraits de parfum.",
+        ogTitle: "Product Personalisation | SENTIRE By PC",
+        ogDescription: "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
         twitterCard: "summary_large_image",
-        keywords: `personalised perfume, personalised perfume India, photo engraved perfume, image engraved perfume, personalised perfume with photo, perfume bottle photo engraving, custom image engraved perfume, name engraved perfume, custom perfume bottle, personalised perfume gift, personalised fragrance gift India, ${BASE_KEYWORDS}`,
+        keywords: `product personalisation, personalised perfume, personalised perfume India, photo engraved perfume, image engraved perfume, name engraved perfume, custom perfume bottle, personalised perfume gift, ${BASE_KEYWORDS}`,
       };
 
     case "pages/35-percent-extrait-de-parfum":
@@ -143,73 +143,72 @@ export function getPageMetadata(
 
     case "perfumes":
       return {
-        title: "35%+ Perfume Oil Extraits & Personalised Perfumes | SENTIRE By PC",
-        description: "Explore 11 signature extraits de parfum formulated with rare 35%+ perfume oil concentration for beast-mode longevity. Includes complimentary laser photo engraving.",
+        title: "All Perfumes | 35%+ Extrait de Parfum | SENTIRE By PC",
+        description: "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving.",
         canonical: `${PRODUCTION_DOMAIN}/perfumes`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "35%+ Pure Oil Extrait de Parfum Catalog | SENTIRE By PC",
-        ogDescription: "Artisanal high-concentration perfumes formulated with 35%+ pure fragrance oils and bespoke laser flacon engraving in Jaipur.",
+        ogTitle: "All Perfumes | SENTIRE By PC",
+        ogDescription: "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
-        keywords: `35% perfume oil concentration, extrait de parfum India, long lasting perfume for men, ${BASE_KEYWORDS}`,
+        keywords: `all perfumes, 35% perfume oil concentration, extrait de parfum India, long lasting perfume for men, ${BASE_KEYWORDS}`,
       };
 
     case "bestsellers":
       return {
-        title: "Best-Selling 35%+ Perfume Oil Extraits | SENTIRE By PC",
-        description: "Shop Jaipur's most coveted signature extraits de parfum crafted with 35%+ pure perfume oil concentration for all-day sillage, luxury packaging, and express delivery.",
+        title: "Best Sellers | SENTIRE By PC",
+        description: "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
         canonical: `${PRODUCTION_DOMAIN}/bestsellers`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Best-Selling 35%+ Pure Oil Perfumes | SENTIRE By PC",
-        ogDescription: "Our highest-performing extraits de parfum featuring 35%+ perfume oil concentration and precision laser bottle etching.",
+        ogTitle: "Best Sellers | SENTIRE By PC",
+        ogDescription: "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
         ogImage: `${PRODUCTION_DOMAIN}/images/product-white-oud.jpg`,
         twitterCard: "summary_large_image",
-        keywords: `best long lasting perfume India, 35% oil concentration bestsellers, ${BASE_KEYWORDS}`,
+        keywords: `best sellers, best long lasting perfume India, 35% oil concentration bestsellers, ${BASE_KEYWORDS}`,
       };
 
     case "new-arrivals":
       return {
-        title: "New 35%+ Extrait de Parfum Arrivals | SENTIRE By PC",
-        description: "Discover new artisanal master releases formulated with 35%+ perfume oil concentration and complimentary laser photo engraving directly on the glass bottle.",
+        title: "New Arrivals | SENTIRE By PC",
+        description: "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
         canonical: `${PRODUCTION_DOMAIN}/new-arrivals`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "New 35%+ Perfume Oil Releases | SENTIRE By PC",
-        ogDescription: "The latest high-concentration extraits de parfum with rare olfactory accords and bespoke laser flacon etching.",
+        ogTitle: "New Arrivals | SENTIRE By PC",
+        ogDescription: "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
         ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
-        keywords: `new extrait de parfum, 35% concentration releases, ${BASE_KEYWORDS}`,
+        keywords: `new arrivals, new extrait de parfum, 35% concentration releases, ${BASE_KEYWORDS}`,
       };
 
     case "byob":
       return {
-        title: "Custom 35%+ Perfume Gift Box & Sets | SENTIRE By PC",
-        description: "Build a bespoke luxury discovery box with curated 10ml, 30ml, and 50ml extraits de parfum featuring 35%+ perfume oil concentration and luxury gift presentation.",
+        title: "Build Your Own Bundle | SENTIRE By PC",
+        description: "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
         canonical: `${PRODUCTION_DOMAIN}/byob`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Build Your Own 35%+ Extrait Discovery Box | SENTIRE By PC",
-        ogDescription: "Curate a personalized set of 35%+ high-concentration extraits de parfum with custom gift coffret presentation.",
+        ogTitle: "Build Your Own Bundle | SENTIRE By PC",
+        ogDescription: "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
         ogImage: `${PRODUCTION_DOMAIN}/images/build-bundle.png`,
         twitterCard: "summary_large_image",
-        keywords: `custom perfume gift box, 35% perfume discovery set, ${BASE_KEYWORDS}`,
+        keywords: `build your own bundle, custom perfume gift box, 35% perfume discovery set, ${BASE_KEYWORDS}`,
       };
-
 
     case "about":
       return {
-        title: "About Sentire by PC | 35%+ Pure Oil Fragrance House Jaipur",
+        title: "About SENTIRE | Jaipur Haute Parfumerie | SENTIRE By PC",
         description: "Born in Jaipur with 10,000+ bottles crafted offline. Sentire by PC is one of India's only perfume houses bottling 35%+ pure perfume oil extraits with laser engraving.",
         canonical: `${PRODUCTION_DOMAIN}/about`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "The 35%+ Perfume Oil Craftsmanship | SENTIRE By PC",
+        ogTitle: "About SENTIRE | SENTIRE By PC",
         ogDescription: "Why Sentire refuses to dilute to 15% EDP. 35%+ pure fragrance oil formulation combined with bespoke laser bottle engraving in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
-        keywords: `about sentire by pc, 35% perfume oil jaipur, luxury perfumery jaipur, ${BASE_KEYWORDS}`,
+        keywords: `about sentire by pc, about sentire, 35% perfume oil jaipur, luxury perfumery jaipur, ${BASE_KEYWORDS}`,
       };
 
     case "client-services":
@@ -219,7 +218,7 @@ export function getPageMetadata(
         canonical: `${PRODUCTION_DOMAIN}/client-services`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "Private Client Concierge & Support | SENTIRE By PC",
+        ogTitle: "Client Services | SENTIRE By PC",
         ogDescription: "Dedicated concierge for Sentire by PC artisanal extraits de parfum and custom engraved orders.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
@@ -228,16 +227,16 @@ export function getPageMetadata(
 
     case "track-order":
       return {
-        title: "Track Your Perfume Order | SENTIRE By PC",
-        description: "Track real-time courier status and express delivery updates for your Sentire by PC 35%+ extrait de parfum and laser-engraved orders.",
+        title: "Track Your Order | SENTIRE By PC",
+        description: "Track your SENTIRE By PC order and view the latest delivery status.",
         canonical: `${PRODUCTION_DOMAIN}/track-order`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Track Your Order | SENTIRE By PC",
-        ogDescription: "Live tracking for your Sentire luxury perfume shipment.",
+        ogDescription: "Track your SENTIRE By PC order and view the latest delivery status.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
-        keywords: `track perfume order, delivery tracking, ${BASE_KEYWORDS}`,
+        keywords: `track your order, track order, delivery tracking, ${BASE_KEYWORDS}`,
       };
 
     case "account":

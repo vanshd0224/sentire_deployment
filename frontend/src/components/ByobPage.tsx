@@ -386,11 +386,11 @@ export default function ByobPage({
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-[#0b0907]">
-            COMPOSE YOUR <span className="italic font-serif text-[#c89b5a] font-normal">50ML WARDROBE.</span>
+            Build Your Own <span className="italic font-serif text-[#c89b5a] font-normal">Bundle</span>
           </h1>
 
           <p className="mx-auto max-w-xl text-xs sm:text-sm text-[#57534e] leading-relaxed">
-            Curate a luxury presentation box of our signature <strong>50 ML Grand Flacons</strong>. Handcrafted with <strong>35%+ pure French perfume oils</strong> for 12+ hour longevity. Includes complimentary gift box and automatic bundle savings.
+            Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection. Handcrafted with <strong>35%+ pure perfume oils</strong> for 12+ hour longevity. Includes complimentary gift coffret and automatic bundle savings.
           </p>
 
           {/* Value Badges */}

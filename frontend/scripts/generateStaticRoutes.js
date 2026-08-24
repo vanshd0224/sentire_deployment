@@ -321,16 +321,16 @@ function generateProductSchemaJson(p) {
 const routes = [
   {
     path: 'perfumes',
-    title: '35%+ Perfume Oil Extraits & Personalised Perfumes | SENTIRE By PC',
-    description: 'Explore signature extraits de parfum formulated with rare 35%+ perfume oil concentration for beast-mode longevity. Includes complimentary laser photo engraving.',
-    ogTitle: '35%+ Pure Oil Extrait de Parfum Catalog | SENTIRE By PC',
-    ogDescription: 'Artisanal high-concentration perfumes formulated with 35%+ pure fragrance oils and bespoke laser flacon engraving in Jaipur.',
+    title: 'All Perfumes | 35%+ Extrait de Parfum | SENTIRE By PC',
+    description: 'Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.',
+    ogTitle: 'All Perfumes | SENTIRE By PC',
+    ogDescription: 'Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
-    heading: 'Artisanal Extrait de Parfum Collection',
+    heading: 'All Perfumes',
     subheading: 'Rare 35%+ Perfume Oil Concentration · Eternal Sillage · Jaipur Atelier Craftsmanship',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">35%+ Pure Oil Extraits de Parfum & Personalised Perfumes</h1>
+        <h1 class="text-3xl font-bold text-ink">All Perfumes — 35%+ Extrait de Parfum Collection</h1>
         <p class="mt-2 text-ink/70">Every bottle by SENTIRE By PC is formulated with 35%+ pure perfume oil concentration for superior 12+ hour sillage. Complimentary photo and name laser engraving is available on all 50ml flacons.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           ${PERFUMES_DATA.map(p => `
@@ -356,7 +356,7 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` }
+            { "@type": "ListItem", "position": 2, "name": "All Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` }
           ]
         },
         {
@@ -376,17 +376,17 @@ const routes = [
   },
   {
     path: 'bestsellers',
-    title: 'Best Selling Luxury Perfumes & Extraits | SENTIRE By PC',
-    description: 'Shop India\'s top-rated 35%+ extraits de parfum: White Oud, Calantha, Deep Crush, and Seductive. Long lasting fragrance with complimentary photo engraving.',
-    ogTitle: 'Best Selling 35%+ Extraits de Parfum | SENTIRE By PC',
-    ogDescription: 'Top-rated perfumes formulated with 35%+ pure perfume oil for all-day sillage.',
-    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'Most Loved Fragrance Essentials',
+    title: 'Best Sellers | SENTIRE By PC',
+    description: 'Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.',
+    ogTitle: 'Best Sellers | SENTIRE By PC',
+    ogDescription: 'Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.',
+    image: `${PRODUCTION_DOMAIN}/images/product-white-oud.jpg`,
+    heading: 'Best Sellers',
     subheading: 'Curated Customer Favorites · 35%+ Perfume Oil Concentration',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Best Selling Luxury Extraits de Parfum</h1>
-        <p class="mt-2 text-ink/70">Discover our most celebrated fragrance profiles, handcrafted in Jaipur with 35%+ pure perfume oil concentration.</p>
+        <h1 class="text-3xl font-bold text-ink">Best Sellers</h1>
+        <p class="mt-2 text-ink/70">Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           ${PERFUMES_DATA.filter(p => p.badge === 'bestseller').map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
@@ -418,17 +418,17 @@ const routes = [
   },
   {
     path: 'new-arrivals',
-    title: 'New Arrivals Luxury Perfumes | Discover The Unseen | SENTIRE By PC',
-    description: 'Explore new 35%+ extrait de parfum releases: Midnight, Herrlich, Rich, Dapper, Woo-Dy, and Zephyrine with bespoke photo bottle engraving in Jaipur.',
-    ogTitle: 'New Fragrance Releases | SENTIRE By PC',
-    ogDescription: 'Fresh formulations, rare notes, and uncompromising 35%+ perfume oil concentration.',
-    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'New Arrivals — Discover The Unseen',
+    title: 'New Arrivals | SENTIRE By PC',
+    description: 'Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.',
+    ogTitle: 'New Arrivals | SENTIRE By PC',
+    ogDescription: 'Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.',
+    image: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
+    heading: 'New Arrivals',
     subheading: 'Latest High-Concentration Master Creations',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">New Arrivals — Haute Parfumerie Masterpieces</h1>
-        <p class="mt-2 text-ink/70">Unveiling our newest artisanal formulations, crafted with rare naturals and 35%+ pure fragrance oils in Jaipur.</p>
+        <h1 class="text-3xl font-bold text-ink">New Arrivals</h1>
+        <p class="mt-2 text-ink/70">Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           ${PERFUMES_DATA.filter(p => p.badge === 'new').map(p => `
             <article class="border border-black/10 rounded-2xl p-4 bg-white">
@@ -460,17 +460,17 @@ const routes = [
   },
   {
     path: 'byob',
-    title: 'Build Your Own Perfume Bundle | Custom Gift Set | SENTIRE By PC',
-    description: 'Create your bespoke fragrance coffret. Choose 2, 3, or 4 signature 35%+ extraits de parfum with instant multi-bottle discounts and complimentary engraving.',
-    ogTitle: 'Build Your Own Perfume Bundle | SENTIRE By PC',
-    ogDescription: 'Curate a custom luxury fragrance set and save up to ₹400 on 35%+ extraits de parfum.',
+    title: 'Build Your Own Bundle | SENTIRE By PC',
+    description: 'Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.',
+    ogTitle: 'Build Your Own Bundle | SENTIRE By PC',
+    ogDescription: 'Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.',
     image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'Build Your Own Discovery Coffret',
+    heading: 'Build Your Own Bundle',
     subheading: 'Curate 2 to 4 Extraits de Parfum with Automatic Multi-Bottle Savings',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Build Your Own Custom Perfume Bundle</h1>
-        <p class="mt-2 text-ink/70">Select your favorite extraits de parfum (10ml, 30ml, or 50ml) to create a custom luxury gift box.</p>
+        <h1 class="text-3xl font-bold text-ink">Build Your Own Bundle</h1>
+        <p class="mt-2 text-ink/70">Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.</p>
         <div class="mt-6 p-6 bg-cream border border-black/10 rounded-2xl">
           <h2 class="text-xl font-bold">Bundle Savings Structure:</h2>
           <ul class="mt-3 space-y-2 text-ink/80">
@@ -499,19 +499,19 @@ const routes = [
   },
   {
     path: 'personalised-perfume',
-    title: 'Personalised Perfume with Photo Engraving | SENTIRE By PC',
-    description: 'Turn your memories into an engraved perfume bottle. Laser photo and name bottle engraving on 35%+ extraits de parfum in Jaipur. 100% complimentary on 50ml flacons.',
-    ogTitle: 'Personalised Perfume with Photo & Name Engraving | SENTIRE By PC',
-    ogDescription: 'Permanent optical laser photo etching and name engraving directly on luxury 35%+ perfume oil glass flacons in Jaipur.',
+    title: 'Product Personalisation | SENTIRE By PC',
+    description: 'Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.',
+    ogTitle: 'Product Personalisation | SENTIRE By PC',
+    ogDescription: 'Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
-    heading: 'Personalised Perfume with Photo & Name Engraving',
-    subheading: 'Turn Your Memories Into an Engraved Perfume Bottle · High-Definition Laser Atelier in Jaipur',
+    heading: 'Product Personalisation',
+    subheading: 'Personalise your SENTIRE perfume with photo and name laser engraving.',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
         <header>
-          <h1 class="text-3xl md:text-4xl font-bold text-ink">Personalised Perfume with Photo & Name Engraving</h1>
+          <h1 class="text-3xl md:text-4xl font-bold text-ink">Product Personalisation</h1>
           <p class="mt-3 text-lg text-ink/80 leading-relaxed">
-            At <strong>SENTIRE By PC</strong>, our dedicated Jaipur atelier provides complimentary high-precision laser engraving on every 50ml signature perfume bottle. Personalise your fragrance with a cherished photograph, couple portrait, custom name, wedding date, or initials permanently etched directly onto the glass flacon.
+            Personalise your SENTIRE perfume with photo and name laser engraving. At <strong>SENTIRE By PC</strong>, our dedicated Jaipur atelier provides complimentary high-precision laser engraving on every 50ml signature perfume bottle. Personalise your fragrance with a cherished photograph, couple portrait, custom name, wedding date, or initials permanently etched directly onto the glass flacon.
           </p>
         </header>
 
@@ -837,16 +837,16 @@ const routes = [
   },
   {
     path: 'about',
-    title: 'About Sentire by PC | 35%+ Pure Oil Fragrance House Jaipur',
+    title: 'About SENTIRE | Jaipur Haute Parfumerie | SENTIRE By PC',
     description: 'Born in Jaipur with 10,000+ bottles crafted offline. Sentire by PC is one of India\'s only perfume houses bottling 35%+ pure perfume oil extraits with laser engraving.',
-    ogTitle: 'The 35%+ Perfume Oil Craftsmanship | SENTIRE By PC',
+    ogTitle: 'About SENTIRE | SENTIRE By PC',
     ogDescription: 'Why Sentire refuses to dilute to 15% EDP. 35%+ pure fragrance oil formulation combined with bespoke laser bottle engraving in Jaipur.',
     image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'The House of SENTIRE By PC',
+    heading: 'About SENTIRE',
     subheading: 'Haute Parfumerie Jaipur · 35%+ Oil Concentration Craftsmanship',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">About SENTIRE By PC — Jaipur Haute Parfumerie</h1>
+        <h1 class="text-3xl font-bold text-ink">About SENTIRE — Jaipur Haute Parfumerie</h1>
         <p class="mt-2 text-ink/70">Born in the heritage city of Jaipur, Sentire by PC was founded with a singular conviction: luxury fragrance must never compromise on raw concentration. Where standard commercial perfumes dilute to 12-18% EDP, Sentire bottles pure 35%+ Extrait de Parfum.</p>
         <p class="mt-4 text-ink/70">With over 10,000 flacons handcrafted in our atelier and trusted across India, Sentire merges the rich heritage of Rajasthan with modern optical laser technology.</p>
       </section>
@@ -860,7 +860,7 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "About Us", "item": `${PRODUCTION_DOMAIN}/about` }
+            { "@type": "ListItem", "position": 2, "name": "About SENTIRE", "item": `${PRODUCTION_DOMAIN}/about` }
           ]
         }
       ]
@@ -870,7 +870,7 @@ const routes = [
     path: 'client-services',
     title: 'Client Services & Express Delivery | SENTIRE By PC',
     description: 'Private client concierge, express shipping timelines, returns policy, and care guidance for Sentire 35%+ extraits de parfum and engraved flacons.',
-    ogTitle: 'Private Client Concierge & Support | SENTIRE By PC',
+    ogTitle: 'Client Services | SENTIRE By PC',
     ogDescription: 'Dedicated concierge for Sentire by PC artisanal extraits de parfum and custom engraved orders.',
     image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
     heading: 'Private Client Concierge & Services',
@@ -909,17 +909,17 @@ const routes = [
   },
   {
     path: 'track-order',
-    title: 'Track Your Perfume Order | SENTIRE By PC',
-    description: 'Track real-time courier status and express delivery updates for your Sentire by PC 35%+ extrait de parfum and laser-engraved orders.',
+    title: 'Track Your Order | SENTIRE By PC',
+    description: 'Track your SENTIRE By PC order and view the latest delivery status.',
     ogTitle: 'Track Your Order | SENTIRE By PC',
-    ogDescription: 'Live tracking for your Sentire luxury perfume shipment.',
+    ogDescription: 'Track your SENTIRE By PC order and view the latest delivery status.',
     image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
-    heading: 'Track Your Luxury Perfume Shipment',
+    heading: 'Track Your Order',
     subheading: 'Live Courier Updates with Express Insurance',
     contentHtml: `
       <section class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-ink">Track Your Fragrance Shipment</h1>
-        <p class="mt-2 text-ink/70">Enter your Sentire Order Number (e.g. SNT-12345) to view live courier tracking updates.</p>
+        <h1 class="text-3xl font-bold text-ink">Track Your Order</h1>
+        <p class="mt-2 text-ink/70">Track your SENTIRE By PC order and view the latest delivery status. Enter your Sentire Order Number (e.g. SNT-12345) to view live courier tracking updates.</p>
       </section>
     `,
     getSchema: () => ({
@@ -931,7 +931,7 @@ const routes = [
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Track Order", "item": `${PRODUCTION_DOMAIN}/track-order` }
+            { "@type": "ListItem", "position": 2, "name": "Track Your Order", "item": `${PRODUCTION_DOMAIN}/track-order` }
           ]
         }
       ]
@@ -993,6 +993,17 @@ PERFUMES_DATA.forEach(p => {
             </div>
           </div>
         </div>
+        <nav class="mt-12 pt-8 border-t border-black/10 text-center" aria-label="Explore Sentire Collections">
+          <p class="text-xs font-bold uppercase tracking-widest text-[#8C6228]">Explore SENTIRE</p>
+          <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs font-semibold">
+            <a href="/perfumes" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">All Perfumes</a>
+            <a href="/bestsellers" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Best Sellers</a>
+            <a href="/new-arrivals" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">New Arrivals</a>
+            <a href="/personalised-perfume" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Product Personalisation</a>
+            <a href="/byob" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Build Your Own Bundle</a>
+            <a href="/track-order" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Track Your Order</a>
+          </div>
+        </nav>
       </article>
     `,
     getSchema: () => ({

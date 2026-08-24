@@ -5,253 +5,288 @@
   <!-- 1. Homepage -->
   <url>
     <loc>https://sentirebypc.com/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://sentirebypc.com/images/hero-celestial.png</image:loc>
-      <image:title>Sentire by PC | Personalised Perfumes with Photo Engraving</image:title>
+      <image:title>SENTIRE By PC | 35%+ Extrait de Parfum &amp; Photo Engraving</image:title>
       <image:caption>Sentire by PC artisanal luxury perfume flacon with custom laser photo engraving</image:caption>
     </image:image>
   </url>
 
-  <!-- 2. Main Collection Pages -->
+  <!-- 2. Primary Commercial & Sitelink Canonical Pages -->
   <url>
     <loc>https://sentirebypc.com/perfumes</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
     <image:image>
       <image:loc>https://sentirebypc.com/images/purple-oud-arrival.png</image:loc>
-      <image:title>Personalised Perfumes with Photo Engraving | Sentire by PC</image:title>
+      <image:title>All Perfumes | 35%+ Extrait de Parfum Collection | SENTIRE By PC</image:title>
       <image:caption>11 Core Signature Extrait de Parfum Collection with 35%+ perfume oil concentration</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/personalisation</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/bestsellers</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/purple-oud.png</image:loc>
-      <image:title>Atelier Bespoke Laser Engraving Studio | Sentire by PC</image:title>
-      <image:caption>High-precision laser photo and name etching directly on luxury perfume glass bottles</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/bestsellers</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-    <image:image>
       <image:loc>https://sentirebypc.com/assets/perfumes/calantha-50ml-1.png?v=2</image:loc>
-      <image:title>Best-Selling Luxury Fragrances | Sentire by PC</image:title>
-      <image:caption>Top-rated perfumes crafted with 35%+ oil concentration</image:caption>
+      <image:title>Best Sellers | SENTIRE By PC</image:title>
+      <image:caption>Best-selling luxury perfumes crafted with 35%+ oil concentration</image:caption>
     </image:image>
   </url>
 
   <url>
     <loc>https://sentirebypc.com/new-arrivals</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.95</priority>
     <image:image>
       <image:loc>https://sentirebypc.com/assets/perfumes/purple-oud-50ml-1.png?v=2</image:loc>
-      <image:title>New Fragrance Arrivals | 35%+ Perfume Oil | Sentire by PC</image:title>
+      <image:title>New Arrivals | SENTIRE By PC</image:title>
       <image:caption>Latest extrait de parfum releases with bottle laser engraving</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/byob</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/personalised-perfume</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.95</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/images/hero-celestial.png</image:loc>
-      <image:title>Build Your Own Perfume Box | Sentire by PC</image:title>
-      <image:caption>Custom bespoke fragrance gift set curation</image:caption>
+      <image:loc>https://sentirebypc.com/images/category-personalisation.jpg</image:loc>
+      <image:title>Product Personalisation | SENTIRE By PC</image:title>
+      <image:caption>High-precision laser photo and name etching directly on luxury perfume glass bottles in Jaipur</image:caption>
     </image:image>
   </url>
 
-  <!-- 3. Informational & Heritage Pages -->
   <url>
-    <loc>https://sentirebypc.com/about</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://sentirebypc.com/byob</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/images/build-bundle.png</image:loc>
+      <image:title>Build Your Own Bundle | SENTIRE By PC</image:title>
+      <image:caption>Custom bespoke fragrance gift coffret curation</image:caption>
+    </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/client-services</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/extrait-de-parfum</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/images/hero-celestial.png</image:loc>
+      <image:title>35%+ Extrait de Parfum Standard | SENTIRE By PC</image:title>
+      <image:caption>The science of sillage, longevity and 35%+ perfume oil concentration</image:caption>
+    </image:image>
   </url>
 
   <url>
     <loc>https://sentirebypc.com/track-order</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
-  </url>
-
-  <!-- 4. Individual Perfume Product Pages -->
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=calantha</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/about</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/client-services</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- 3. Individual Perfume Canonical Product Pages -->
+  <url>
+    <loc>https://sentirebypc.com/perfumes/calantha</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/calantha-50ml-1.png?v=2</image:loc>
-      <image:title>Calantha Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Calantha floral extrait de parfum with 35%+ oil concentration and custom photo engraving</image:caption>
+      <image:loc>https://sentirebypc.com/assets/perfumes/calantha-50ml-3.png</image:loc>
+      <image:title>Calantha Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Calantha floral extrait de parfum with 35%+ oil concentration and photo engraving</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/perfumes?id=deep-crush</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/perfumes/deep-crush</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/deep-crush-50ml-1.png?v=2</image:loc>
-      <image:title>Deep Crush Personalised Perfume | Sentire by PC</image:title>
+      <image:loc>https://sentirebypc.com/assets/perfumes/deep-crush-50ml-3.png</image:loc>
+      <image:title>Deep Crush Extrait de Parfum | SENTIRE By PC</image:title>
       <image:caption>Deep Crush warm musk and lavender extrait de parfum with laser engraving</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/perfumes?id=herrlich</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/perfumes/herrlich</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/herrlich-50ml-1.png?v=2</image:loc>
-      <image:title>Herrlich Personalised Perfume | Sentire by PC</image:title>
+      <image:loc>https://sentirebypc.com/assets/perfumes/herrlich-50ml-3.png</image:loc>
+      <image:title>Herrlich Extrait de Parfum | SENTIRE By PC</image:title>
       <image:caption>Herrlich fresh fruits and dark chocolate luxury perfume bottle</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/perfumes?id=midnight</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/perfumes/midnight</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/midnight-50ml-1.png?v=2</image:loc>
-      <image:title>Midnight Personalised Perfume | Sentire by PC</image:title>
+      <image:loc>https://sentirebypc.com/assets/perfumes/midnight-50ml-1.png</image:loc>
+      <image:title>Midnight Extrait de Parfum | SENTIRE By PC</image:title>
       <image:caption>Midnight dark spicy oriental extrait de parfum with 35%+ perfume oil concentration</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/perfumes?id=mirai</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/mirai-50ml-1.png?v=2</image:loc>
-      <image:title>Mirai Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Mirai sweet gourmand coffee and vanilla perfume flacon</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=0809</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/0809-50ml-1.png?v=2</image:loc>
-      <image:title>0809 Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>0809 fresh aromatic spice perfume bottle with custom laser engraving</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=personna</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/personna-50ml-1.png?v=2</image:loc>
-      <image:title>Personna Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Personna aquatic woody perfume with 35%+ perfume oil concentration</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=purple-oud</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/purple-oud-50ml-1.png?v=2</image:loc>
-      <image:title>Purple Oud Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Purple Oud Cambodian oud, saffron and amethyst rose signature 50ml flacon</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=rich</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/rich-50ml-1.png?v=2</image:loc>
-      <image:title>Rich Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Rich opulent bergamot and spiced rose extrait de parfum with photo engraving</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=seductive</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/seductive-50ml-1.png?v=2</image:loc>
-      <image:title>Seductive Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Seductive fresh spicy citrus luxury perfume bottle with laser engraving</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=white-oud</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/white-oud-50ml-1.png?v=2</image:loc>
-      <image:title>White Oud Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>White Oud clean woody oud extrait de parfum with 35%+ perfume oil concentration</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://sentirebypc.com/perfumes?id=zephyrine</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/perfumes/mirai</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/zephyrine-30ml-1.png?v=2</image:loc>
-      <image:title>Zephyrine Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Zephyrine airy citrus breeze and smooth sandalwood luxury perfume</image:caption>
+      <image:loc>https://sentirebypc.com/assets/perfumes/mirai-50ml-2.png</image:loc>
+      <image:title>Mirai Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Mirai warm coffee, vanilla and lavender extrait de parfum</image:caption>
     </image:image>
   </url>
 
   <url>
-    <loc>https://sentirebypc.com/perfumes?id=bijou</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://sentirebypc.com/perfumes/0809</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://sentirebypc.com/assets/perfumes/bijou-30ml-1.png?v=2</image:loc>
-      <image:title>Bijou Personalised Perfume | Sentire by PC</image:title>
-      <image:caption>Bijou floral and sandalwood jewel-inspired unisex fragrance</image:caption>
+      <image:loc>https://sentirebypc.com/assets/perfumes/0809-50ml-1.png</image:loc>
+      <image:title>0809 Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>0809 assertive fresh-spicy masculine extrait with Sichuan pepper</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/personna</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/personna-50ml-2.png</image:loc>
+      <image:title>Personna Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Personna aquatic marine and cedarwood luxury fragrance</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/purple-oud</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/purple-oud-50ml-2.png</image:loc>
+      <image:title>Purple Oud Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Purple Oud smoky Cambodian oud and velvet amethyst rose extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/rich</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/rich-50ml-1.png</image:loc>
+      <image:title>Rich Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Rich opulent citrus-spice and velvet amber musk extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/seductive</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/seductive-50ml-2.png</image:loc>
+      <image:title>Seductive Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Seductive Italian limon, sparkling citrus and black pepper extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/white-oud</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/white-oud-50ml-1.png</image:loc>
+      <image:title>White Oud Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>White Oud pure white agarwood resin and soothing lavender extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/dapper</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/dapper-30ml-1.png</image:loc>
+      <image:title>Dapper Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Dapper bold tobacco, clove and cedarwood luxury extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/woo-dy</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/woo-dy-30ml-1.png</image:loc>
+      <image:title>Woo-Dy Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Woo-Dy cedarwood, cypress, vetiver and amber musk extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/zephyrine</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/zephyrine-30ml-1.png</image:loc>
+      <image:title>Zephyrine Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Zephyrine pristine white florals with sun-kissed citrus extrait</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://sentirebypc.com/perfumes/bijou</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://sentirebypc.com/assets/perfumes/bijou-30ml-1.png</image:loc>
+      <image:title>Bijou Extrait de Parfum | SENTIRE By PC</image:title>
+      <image:caption>Bijou floral bouquet, warm vanilla and Mysore sandalwood extrait</image:caption>
     </image:image>
   </url>
 

@@ -161,7 +161,7 @@ export default function NewArrivalsPage({
             New Arrivals
           </h1>
           <p className="text-sm text-ink/60 mt-2 max-w-3xl">
-            Experience our latest luxury formulations and extraits — Rich, Purple Oud, Calantha, Herrlich, and Midnight.
+            Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.
           </p>
         </div>
 

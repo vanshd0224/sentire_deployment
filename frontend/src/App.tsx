@@ -13,6 +13,7 @@ import CelebrityReacts from "./components/CelebrityReacts";
 import PromoSplit from "./components/PromoSplit";
 import Newsletter from "./components/Newsletter";
 import InstagramSection from "./components/InstagramSection";
+import ExploreSentireSection from "./components/ExploreSentireSection";
 import Footer from "./components/Footer";
 import BundleBuilderModal from "./components/BundleBuilderModal";
 import PerfumesPage from "./components/PerfumesPage";
@@ -365,6 +366,7 @@ export default function App() {
           <CelebrityReacts />
           <TrustBadges />
           <Newsletter />
+          <ExploreSentireSection onNavigate={handleNavigate} />
           <InstagramSection />
         </main>
       )}

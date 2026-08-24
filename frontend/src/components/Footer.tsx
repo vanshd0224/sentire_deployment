@@ -5,9 +5,9 @@ interface FooterProps {
   onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "personalisation" | "byob" | "client-services" | "track-order") => void;
 }
 
-const shopLinks = ["All Perfumes", "Personalised Perfumes", "35%+ Extrait Standard", "Best Sellers", "Build Your Own Bundle"];
-const helpLinks = ["FAQs", "Shipping & Delivery", "Returns & Exchanges", "Track Your Order", "Contact Us"];
-const aboutLinks = ["Our Story", "Ingredients", "Craftsmanship", "Sustainability", "Journal"];
+const shopLinks = ["All Perfumes", "Best Sellers", "New Arrivals", "Product Personalisation", "Build Your Own Bundle", "35%+ Extrait Standard"];
+const helpLinks = ["Track Your Order", "Client Services", "FAQs", "Shipping & Delivery", "Returns & Exchanges"];
+const aboutLinks = ["About SENTIRE", "Our Story", "Craftsmanship", "Sustainability"];
 
 function InstagramIcon() {
   return (
@@ -38,22 +38,17 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
   const [isOpen, setIsOpen] = useState(false);
 
   const getLinkHref = (link: string, sectionTitle: string) => {
-    if (link === "Personalised Perfumes") return "/personalised-perfume";
+    if (link === "Product Personalisation" || link === "Personalised Perfumes") return "/personalised-perfume";
     if (link === "35%+ Extrait Standard") return "/extrait-de-parfum";
     if (link === "Build Your Own Bundle") return "/byob";
-    if (link === "Our Story" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal" || sectionTitle === "About") {
+    if (link === "All Perfumes") return "/perfumes";
+    if (link === "Best Sellers") return "/bestsellers";
+    if (link === "New Arrivals") return "/new-arrivals";
+    if (link === "Track Your Order") return "/track-order";
+    if (link === "About SENTIRE" || link === "Our Story" || link === "Craftsmanship" || link === "Sustainability" || sectionTitle === "About") {
       return "/about";
     }
-    if (link === "All Perfumes") {
-      return "/perfumes";
-    }
-    if (link === "Best Sellers") {
-      return "/bestsellers";
-    }
-    if (link === "Track Your Order") {
-      return "/track-order";
-    }
-    if (link === "FAQs" || link === "Shipping & Delivery" || link === "Returns & Exchanges" || link === "Contact Us" || sectionTitle === "Help") {
+    if (link === "Client Services" || link === "FAQs" || link === "Shipping & Delivery" || link === "Returns & Exchanges" || sectionTitle === "Help") {
       return "/client-services";
     }
     return "/";
@@ -77,25 +72,27 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                 href={href}
                 onClick={(e) => {
                   e.preventDefault();
-                  if (link === "Personalised Perfumes") {
+                  if (link === "Product Personalisation" || link === "Personalised Perfumes") {
                     onNavigate?.("personalisation");
                   } else if (link === "35%+ Extrait Standard") {
                     onNavigate?.("about");
                   } else if (link === "Build Your Own Bundle") {
                     onNavigate?.("byob");
-                  } else if (link === "Our Story" || title === "About" || link === "Ingredients" || link === "Craftsmanship" || link === "Sustainability" || link === "Journal") {
-                    onNavigate?.("about");
                   } else if (link === "All Perfumes") {
                     onNavigate?.("perfumes");
                   } else if (link === "Best Sellers") {
                     onNavigate?.("bestsellers");
+                  } else if (link === "New Arrivals") {
+                    onNavigate?.("new-arrivals");
                   } else if (link === "Track Your Order") {
                     onNavigate?.("track-order");
+                  } else if (link === "About SENTIRE" || link === "Our Story" || title === "About" || link === "Craftsmanship" || link === "Sustainability") {
+                    onNavigate?.("about");
                   } else if (
+                    link === "Client Services" ||
                     link === "FAQs" ||
                     link === "Shipping & Delivery" ||
-                    link === "Returns & Exchanges" ||
-                    link === "Contact Us"
+                    link === "Returns & Exchanges"
                   ) {
                     onNavigate?.("client-services");
                   }

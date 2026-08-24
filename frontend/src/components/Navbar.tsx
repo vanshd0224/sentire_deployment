@@ -10,7 +10,8 @@ export interface PerfumeFilterOptions {
 
 const navLinks = [
   {
-    label: "Perfumes",
+    label: "All Perfumes",
+    href: "/perfumes",
     mega: {
       categories: [
         {
@@ -43,11 +44,9 @@ const navLinks = [
   },
   { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
   { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
-  { label: "BYOB Box", href: "/byob" },
-  { label: "Product Personalisation", href: "/personalisation" },
-  { label: "About Us", href: "/about" },
-  { label: "Client Services", href: "/client-services" },
-  { label: "Track Order", href: "/track-order" },
+  { label: "Product Personalisation", href: "/personalised-perfume" },
+  { label: "Build Your Own Bundle", href: "/byob" },
+  { label: "Track Your Order", href: "/track-order" },
 ];
 
 interface NavbarProps {
@@ -275,14 +274,12 @@ export default function Navbar({
             {navLinks.map((link) => {
               const showMega = Boolean(link.mega && currentPage !== "perfumes");
               const isCurrent =
-                (currentPage === "perfumes" && link.label === "Perfumes") ||
+                (currentPage === "perfumes" && (link.label === "All Perfumes" || link.label === "Perfumes")) ||
                 (currentPage === "bestsellers" && link.label === "Best Sellers") ||
                 (currentPage === "new-arrivals" && link.label === "New Arrivals") ||
-                (currentPage === "about" && link.label === "About Us") ||
-                (currentPage === "byob" && link.label.includes("BYOB")) ||
-                (currentPage === "personalisation" && link.label.includes("Personalisation")) ||
-                (currentPage === "client-services" && link.label === "Client Services") ||
-                (currentPage === "track-order" && link.label.includes("Track"));
+                (currentPage === "personalisation" && link.label === "Product Personalisation") ||
+                (currentPage === "byob" && link.label === "Build Your Own Bundle") ||
+                (currentPage === "track-order" && link.label === "Track Your Order");
 
               return (
                 <div
@@ -294,7 +291,7 @@ export default function Navbar({
                   <a
                     href={link.href || "#"}
                     onClick={(e) => {
-                      if (link.label === "Perfumes") {
+                      if (link.label === "All Perfumes" || link.label === "Perfumes") {
                         e.preventDefault();
                         onNavigate?.("perfumes");
                         setMegaOpen(false);
@@ -306,23 +303,15 @@ export default function Navbar({
                         e.preventDefault();
                         onNavigate?.("new-arrivals");
                         setMegaOpen(false);
-                      } else if (link.label === "About Us") {
-                        e.preventDefault();
-                        onNavigate?.("about");
-                        setMegaOpen(false);
-                      } else if (link.label.includes("Personalisation")) {
+                      } else if (link.label === "Product Personalisation") {
                         e.preventDefault();
                         onNavigate?.("personalisation");
                         setMegaOpen(false);
-                      } else if (link.label.includes("BYOB")) {
+                      } else if (link.label === "Build Your Own Bundle") {
                         e.preventDefault();
                         onNavigate?.("byob");
                         setMegaOpen(false);
-                      } else if (link.label === "Client Services") {
-                        e.preventDefault();
-                        onNavigate?.("client-services");
-                        setMegaOpen(false);
-                      } else if (link.label.includes("Track")) {
+                      } else if (link.label === "Track Your Order") {
                         e.preventDefault();
                         onNavigate?.("track-order");
                         setMegaOpen(false);
@@ -712,14 +701,12 @@ export default function Navbar({
                     onClick={(e) => {
                       e.preventDefault();
                       setMobileNavOpen(false);
-                      if (link.label === "Perfumes") onNavigate?.("perfumes");
+                      if (link.label === "All Perfumes" || link.label === "Perfumes") onNavigate?.("perfumes");
                       else if (link.label === "Best Sellers") onNavigate?.("bestsellers");
                       else if (link.label === "New Arrivals") onNavigate?.("new-arrivals");
-                      else if (link.label === "About Us") onNavigate?.("about");
-                      else if (link.label.includes("Personalisation")) onNavigate?.("personalisation");
-                      else if (link.label.includes("BYOB")) onNavigate?.("byob");
-                      else if (link.label === "Client Services") onNavigate?.("client-services");
-                      else if (link.label.includes("Track")) onNavigate?.("track-order");
+                      else if (link.label === "Product Personalisation") onNavigate?.("personalisation");
+                      else if (link.label === "Build Your Own Bundle") onNavigate?.("byob");
+                      else if (link.label === "Track Your Order") onNavigate?.("track-order");
                       else onNavigate?.("home");
                     }}
                     className="w-full text-left py-3 px-3 rounded-lg text-sm font-semibold uppercase tracking-wider text-ink hover:bg-black/5 hover:text-[#c89b5a] transition-all flex items-center justify-between"

@@ -30,7 +30,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
               : cat.page === "new-arrivals"
               ? "/new-arrivals"
               : cat.page === "personalisation"
-              ? "/personalisation"
+              ? "/personalised-perfume"
               : "/perfumes";
 
             return (
