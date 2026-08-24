@@ -93,25 +93,42 @@ export default function App() {
     const idFromQuery = params.get("id");
 
     let targetProductId = idFromQuery;
-    if (!targetProductId) {
-      if (path.startsWith("/perfumes/")) {
-        const perfumeSlug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
-        const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === perfumeSlug.toLowerCase());
-        if (found) targetProductId = found.id;
-      } else if (path.includes("/products/") || path.includes("/product/")) {
-        const rawSlug = path.split("/").filter(Boolean).pop() || "";
-        const cleanSlug = rawSlug.replace(/^sentire-/, "").split(".")[0];
-        
-        const foundPerfume = ALL_PERFUMES.find(
-          (p) =>
-            p.id.toLowerCase() === rawSlug.toLowerCase() ||
-            p.id.toLowerCase() === cleanSlug.toLowerCase() ||
-            cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
-            rawSlug.toLowerCase().includes(p.id.toLowerCase())
-        );
-        if (foundPerfume) {
-          targetProductId = foundPerfume.id;
-        }
+    let shouldNormalizeUrl = false;
+    let normalizedId = "";
+
+    if (idFromQuery) {
+      const cleanSlug = idFromQuery.replace(/^sentire-/, "").split(".")[0];
+      const found = ALL_PERFUMES.find(
+        (p) =>
+          p.id.toLowerCase() === idFromQuery.toLowerCase() ||
+          p.id.toLowerCase() === cleanSlug.toLowerCase() ||
+          cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
+          idFromQuery.toLowerCase().includes(p.id.toLowerCase())
+      );
+      if (found) {
+        targetProductId = found.id;
+        normalizedId = found.id;
+        shouldNormalizeUrl = true;
+      }
+    } else if (path.startsWith("/perfumes/")) {
+      const perfumeSlug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
+      const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === perfumeSlug.toLowerCase());
+      if (found) targetProductId = found.id;
+    } else if (path.includes("/products/") || path.includes("/product/")) {
+      const rawSlug = path.split("/").filter(Boolean).pop() || "";
+      const cleanSlug = rawSlug.replace(/^sentire-/, "").split(".")[0];
+      
+      const foundPerfume = ALL_PERFUMES.find(
+        (p) =>
+          p.id.toLowerCase() === rawSlug.toLowerCase() ||
+          p.id.toLowerCase() === cleanSlug.toLowerCase() ||
+          cleanSlug.toLowerCase().startsWith(p.id.toLowerCase() + "-") ||
+          rawSlug.toLowerCase().includes(p.id.toLowerCase())
+      );
+      if (foundPerfume) {
+        targetProductId = foundPerfume.id;
+        normalizedId = foundPerfume.id;
+        shouldNormalizeUrl = true;
       }
     }
 
@@ -121,6 +138,11 @@ export default function App() {
       );
       if (match) {
         setSelectedProductModal(match);
+        if (shouldNormalizeUrl && normalizedId) {
+          try {
+            window.history.replaceState(null, "", `/perfumes/${normalizedId}`);
+          } catch (e) {}
+        }
       }
     }
 

@@ -511,7 +511,7 @@ const routes = [
         <header>
           <h1 class="text-3xl md:text-4xl font-bold text-ink">Personalised Perfume with Photo & Name Engraving</h1>
           <p class="mt-3 text-lg text-ink/80 leading-relaxed">
-            At <strong>SENTIRE By PC</strong>, your most cherished memories are permanently immortalized on glass. Our dedicated Jaipur engraving atelier uses high-precision optical fiber lasers to engrave high-definition photographs, couple portraits, names, wedding dates, or personal monograms directly onto the glass flacon of every 50ml 35%+ Extrait de Parfum bottle.
+            At <strong>SENTIRE By PC</strong>, our dedicated Jaipur atelier provides complimentary high-precision laser engraving on every 50ml signature perfume bottle. Personalise your fragrance with a cherished photograph, couple portrait, custom name, wedding date, or initials permanently etched directly onto the glass flacon.
           </p>
         </header>
 
@@ -519,7 +519,7 @@ const routes = [
           <section aria-labelledby="turn-memories">
             <h2 id="turn-memories" class="text-2xl font-bold text-ink">Turn Your Memories Into an Engraved Perfume Bottle</h2>
             <p class="mt-2 text-ink/70 leading-relaxed">
-              Unlike temporary paper stickers or metallic transfers, our optical laser physically carves into the crystalline molecular lattice of the heavy glass flacon. The result is a stunning frosted, 3D relief photograph that will never scratch, peel, or fade over decades of use.
+              High-precision laser engraving permanently etches your selected photograph and text directly onto the glass bottle. The frosted etching is durable, elegant, and will never peel, fade, or wash off.
             </p>
           </section>
 
@@ -539,12 +539,12 @@ const routes = [
                 <p class="text-sm text-ink/70 mt-1">Upload your favorite photograph, couple portrait, wedding snapshot, or custom artwork directly.</p>
               </div>
               <div class="border border-black/10 rounded-2xl p-5 bg-white">
-                <h3 class="font-bold text-gold text-lg">4. Optical Laser Calibration</h3>
-                <p class="text-sm text-ink/70 mt-1">Our master technician adjusts focal depth and grayscale contrast for crisp optical detail.</p>
+                <h3 class="font-bold text-gold text-lg">4. Laser Precision Calibration</h3>
+                <p class="text-sm text-ink/70 mt-1">Our technician optimizes photo contrast and typography alignment for maximum visual clarity on glass.</p>
               </div>
               <div class="border border-black/10 rounded-2xl p-5 bg-white">
-                <h3 class="font-bold text-gold text-lg">5. 3D Laser Glass Etching</h3>
-                <p class="text-sm text-ink/70 mt-1">Permanent high-resolution engraving is executed in-house with zero heat damage to the fragrance.</p>
+                <h3 class="font-bold text-gold text-lg">5. Permanent Glass Etching</h3>
+                <p class="text-sm text-ink/70 mt-1">Permanent high-resolution engraving is crafted in-house in our Jaipur atelier.</p>
               </div>
               <div class="border border-black/10 rounded-2xl p-5 bg-white">
                 <h3 class="font-bold text-gold text-lg">6. Velvet Presentation Box</h3>
@@ -1080,11 +1080,12 @@ function generateHtml(templateHtml, route) {
 
   // Pre-render semantic HTML inside root for crawlers
   if (route.contentHtml) {
-    // If index.html already has noscript in root, replace it
-    if (html.includes('<div id="root"><noscript>')) {
-      html = html.replace(/<div id="root"><noscript>[\s\S]*?<\/noscript><\/div>/, `<div id="root"><noscript>${route.contentHtml}</noscript></div>`);
+    if (/<div id="root">[\s\S]*?<\/noscript>\s*<\/div>/.test(html)) {
+      html = html.replace(/<div id="root">[\s\S]*?<\/noscript>\s*<\/div>/, `<div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+    } else if (/<div id="root">\s*<\/div>/.test(html)) {
+      html = html.replace(/<div id="root">\s*<\/div>/, `<div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     } else {
-      html = html.replace('<div id="root"></div>', `<div id="root"><noscript>${route.contentHtml}</noscript></div>`);
+      html = html.replace('<body>', `<body>\n    <div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     }
   }
 
