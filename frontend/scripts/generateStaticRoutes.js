@@ -1104,18 +1104,7 @@ function generateHtml(templateHtml, route) {
 }
 
 export function buildStaticRoutes() {
-  const baseHtml = fs.readFileSync(indexHtmlPath, 'utf8');
-
-  // 1. Generate in public directory
-  routes.forEach(route => {
-    const routeHtml = generateHtml(baseHtml, route);
-    const pubFilePath = path.resolve(publicDir, `${route.path}.html`);
-    fs.mkdirSync(path.dirname(pubFilePath), { recursive: true });
-    fs.writeFileSync(pubFilePath, routeHtml, 'utf8');
-    console.log(`Generated public/${route.path}.html`);
-  });
-
-  // 2. If dist exists, also generate in dist directory with built assets
+  // Always use compiled dist/index.html if available to ensure production bundle JS assets (/assets/index-xxx.js) are used instead of /src/main.tsx
   if (fs.existsSync(distDir)) {
     const distIndexHtml = fs.readFileSync(path.resolve(distDir, 'index.html'), 'utf8');
     routes.forEach(route => {
