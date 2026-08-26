@@ -284,17 +284,24 @@
         widgetId: "3668756c6855323939333039",
         tokenAuth: "562962T3pkOoGcL6a884028P1",
         exposeMethods: true,
-        success: function(data) { console.log('MSG91 Widget Success:', data); },
-        failure: function(error) { console.log('MSG91 Widget Error:', error); }
-      };
     </script>
-    <script type="text/javascript" src="https://control.msg91.com/app/assets/otp-provider/otp-provider.js"></script>
+    <script type="text/javascript" src="https://control.msg91.com/app/assets/otp-provider/otp-provider.js" defer></script>
+    <style>
+      html, body {
+        background-color: #050505 !important;
+        color: #f5f0e8 !important;
+      }
+      #root {
+        background-color: #050505 !important;
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body class="bg-[#050505] text-[#f5f0e8] antialiased selection:bg-[#c89b5a]/30 selection:text-[#c89b5a]">
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=4305047443093499&ev=PageView&noscript=1"
     /></noscript>
-    <div id="root">
+    <div id="root" style="background-color: #050505; min-height: 100vh;">
       <noscript>
 <p>Redirecting to <a href="/perfumes/midnight">SENTIRE Midnight Extrait de Parfum</a>...</p>
       </noscript>

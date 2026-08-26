@@ -1091,12 +1091,12 @@ function generateHtml(templateHtml, route) {
 
   // Pre-render semantic HTML inside root for crawlers
   if (route.contentHtml) {
-    if (/<div id="root">[\s\S]*?<\/noscript>\s*<\/div>/.test(html)) {
-      html = html.replace(/<div id="root">[\s\S]*?<\/noscript>\s*<\/div>/, `<div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
-    } else if (/<div id="root">\s*<\/div>/.test(html)) {
-      html = html.replace(/<div id="root">\s*<\/div>/, `<div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+    if (/<div id="root"[^>]*>[\s\S]*?<\/noscript>\s*<\/div>/.test(html)) {
+      html = html.replace(/<div id="root"[^>]*>[\s\S]*?<\/noscript>\s*<\/div>/, `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+    } else if (/<div id="root"[^>]*>\s*<\/div>/.test(html)) {
+      html = html.replace(/<div id="root"[^>]*>\s*<\/div>/, `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     } else {
-      html = html.replace('<body>', `<body>\n    <div id="root">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+      html = html.replace('<body>', `<body>\n    <div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     }
   }
 
