@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "url": "https://www.instagram.com/reel/DWKLAYhE7IH/",
+    "handle": "@sentireforelite",
+    "tag": "Aditya Rikhari Gifting",
+    "image": "/images/instagram/ig-1.jpg"
+  },
+  {
+    "id": 2,
+    "url": "https://www.instagram.com/reel/DWkyo3CiMTw/",
+    "handle": "@sentireforelite",
+    "tag": "Bespoke Engraving",
+    "image": "/images/instagram/ig-2.jpg"
+  },
+  {
+    "id": 3,
+    "url": "https://www.instagram.com/reel/DWmbB3Ukz0M/",
+    "handle": "@sentireforelite",
+    "tag": "35%+ Extrait Standard",
+    "image": "/images/instagram/ig-3.jpg"
+  },
+  {
+    "id": 4,
+    "url": "https://www.instagram.com/p/Dcc-eHmphhd/",
+    "handle": "@sentireforelite",
+    "tag": "Jaipur Laser Atelier",
+    "image": "/images/instagram/ig-4.jpg"
+  },
+  {
+    "id": 5,
+    "url": "https://www.instagram.com/reel/DWBygFPCYI7/",
+    "handle": "@sentireforelite",
+    "tag": "Luxury Unboxing",
+    "image": "/images/instagram/ig-5.jpg"
+  },
+  {
+    "id": 6,
+    "url": "https://www.instagram.com/p/DceZnyizv2x/",
+    "handle": "@sentireforelite",
+    "tag": "Signature Flacon",
+    "image": "/images/instagram/ig-6.jpg"
+  }
+]
