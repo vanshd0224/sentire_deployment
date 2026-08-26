@@ -1108,28 +1108,22 @@ export function buildStaticRoutes() {
 
   // 1. Generate in public directory
   routes.forEach(route => {
-    const routeDir = path.resolve(publicDir, route.path);
-    if (!fs.existsSync(routeDir)) {
-      fs.mkdirSync(routeDir, { recursive: true });
-    }
     const routeHtml = generateHtml(baseHtml, route);
-    fs.writeFileSync(path.resolve(routeDir, 'index.html'), routeHtml, 'utf8');
-    fs.writeFileSync(path.resolve(publicDir, `${route.path}.html`), routeHtml, 'utf8');
-    console.log(`Generated public/${route.path}/index.html and public/${route.path}.html`);
+    const pubFilePath = path.resolve(publicDir, `${route.path}.html`);
+    fs.mkdirSync(path.dirname(pubFilePath), { recursive: true });
+    fs.writeFileSync(pubFilePath, routeHtml, 'utf8');
+    console.log(`Generated public/${route.path}.html`);
   });
 
   // 2. If dist exists, also generate in dist directory with built assets
   if (fs.existsSync(distDir)) {
     const distIndexHtml = fs.readFileSync(path.resolve(distDir, 'index.html'), 'utf8');
     routes.forEach(route => {
-      const distRouteDir = path.resolve(distDir, route.path);
-      if (!fs.existsSync(distRouteDir)) {
-        fs.mkdirSync(distRouteDir, { recursive: true });
-      }
       const distRouteHtml = generateHtml(distIndexHtml, route);
-      fs.writeFileSync(path.resolve(distRouteDir, 'index.html'), distRouteHtml, 'utf8');
-      fs.writeFileSync(path.resolve(distDir, `${route.path}.html`), distRouteHtml, 'utf8');
-      console.log(`Generated dist/${route.path}/index.html and dist/${route.path}.html`);
+      const distFilePath = path.resolve(distDir, `${route.path}.html`);
+      fs.mkdirSync(path.dirname(distFilePath), { recursive: true });
+      fs.writeFileSync(distFilePath, distRouteHtml, 'utf8');
+      console.log(`Generated dist/${route.path}.html`);
     });
   }
 }

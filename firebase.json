@@ -1,6 +1,8 @@
 {
   "hosting": {
     "public": "frontend/dist",
+    "cleanUrls": true,
+    "trailingSlash": false,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -44,31 +46,11 @@
       }
     ],
     "redirects": [
-      { "source": "/products/*dapper*", "destination": "/perfumes/dapper", "type": 301 },
-      { "source": "/products/*woo-dy*", "destination": "/perfumes/woo-dy", "type": 301 },
-      { "source": "/products/*woody*", "destination": "/perfumes/woo-dy", "type": 301 },
-      { "source": "/products/*white-oud*", "destination": "/perfumes/white-oud", "type": 301 },
-      { "source": "/products/*purple-oud*", "destination": "/perfumes/purple-oud", "type": 301 },
-      { "source": "/products/*calantha*", "destination": "/perfumes/calantha", "type": 301 },
-      { "source": "/products/*deep-crush*", "destination": "/perfumes/deep-crush", "type": 301 },
-      { "source": "/products/*herrlich*", "destination": "/perfumes/herrlich", "type": 301 },
-      { "source": "/products/*midnight*", "destination": "/perfumes/midnight", "type": 301 },
-      { "source": "/products/*mirai*", "destination": "/perfumes/mirai", "type": 301 },
-      { "source": "/products/*0809*", "destination": "/perfumes/0809", "type": 301 },
-      { "source": "/products/*o809*", "destination": "/perfumes/0809", "type": 301 },
-      { "source": "/products/*personna*", "destination": "/perfumes/personna", "type": 301 },
-      { "source": "/products/*rich*", "destination": "/perfumes/rich", "type": 301 },
-      { "source": "/products/*seductive*", "destination": "/perfumes/seductive", "type": 301 },
-      { "source": "/products/*zephyrine*", "destination": "/perfumes/zephyrine", "type": 301 },
-      { "source": "/products/*bijou*", "destination": "/perfumes/bijou", "type": 301 },
-      { "source": "/products/*vanaco*", "destination": "/perfumes/vanaco", "type": 301 },
-      { "source": "/products/*sent-aura*", "destination": "/perfumes/sent-aura", "type": 301 },
-      { "source": "/products/*le-chocolat*", "destination": "/perfumes/le-chocolat", "type": 301 },
-      { "source": "/products/*pc-leather*", "destination": "/perfumes/pc-leather", "type": 301 },
-      { "source": "/products/*reiz*", "destination": "/perfumes/reiz", "type": 301 },
-      { "source": "/products/*quantillion*", "destination": "/perfumes/quantillion", "type": 301 },
-      { "source": "/products/**", "destination": "/perfumes", "type": 301 },
-      { "source": "/products", "destination": "/perfumes", "type": 301 },
+      { "source": "/aeo", "destination": "/ai-information", "type": 301 },
+      { "source": "/seo", "destination": "/ai-information", "type": 301 },
+      { "source": "/geo", "destination": "/ai-information", "type": 301 },
+      { "source": "/editorial-policy", "destination": "/ai-information", "type": 301 },
+      { "source": "/testing-methodology", "destination": "/pages/perfume-longevity-and-application-guide", "type": 301 },
       { "source": "/pages/personalised-perfume", "destination": "/personalised-perfume", "type": 301 },
       { "source": "/pages/35-percent-extrait-de-parfum", "destination": "/extrait-de-parfum", "type": 301 },
       { "source": "/pages/extrait-de-parfum", "destination": "/extrait-de-parfum", "type": 301 },
@@ -87,54 +69,9 @@
       { "source": "/collections/best-sellers", "destination": "/bestsellers", "type": 301 },
       { "source": "/collections/new-arrivals", "destination": "/new-arrivals", "type": 301 },
       { "source": "/collections/perfumes", "destination": "/perfumes", "type": 301 },
-      { "source": "/collections/luxury-perfumes", "destination": "/perfumes", "type": 301 },
-      { "source": "/collections/**", "destination": "/perfumes", "type": 301 }
+      { "source": "/collections/luxury-perfumes", "destination": "/perfumes", "type": 301 }
     ],
     "rewrites": [
-      {
-        "source": "/perfumes",
-        "destination": "/perfumes.html"
-      },
-      {
-        "source": "/perfumes/:id",
-        "destination": "/perfumes/:id.html"
-      },
-      {
-        "source": "/perfumes/**",
-        "destination": "/perfumes.html"
-      },
-      {
-        "source": "/personalised-perfume",
-        "destination": "/personalised-perfume.html"
-      },
-      {
-        "source": "/extrait-de-parfum",
-        "destination": "/extrait-de-parfum.html"
-      },
-      {
-        "source": "/about",
-        "destination": "/about.html"
-      },
-      {
-        "source": "/bestsellers",
-        "destination": "/bestsellers.html"
-      },
-      {
-        "source": "/new-arrivals",
-        "destination": "/new-arrivals.html"
-      },
-      {
-        "source": "/byob",
-        "destination": "/byob.html"
-      },
-      {
-        "source": "/client-services",
-        "destination": "/client-services.html"
-      },
-      {
-        "source": "/track-order",
-        "destination": "/track-order.html"
-      },
       {
         "source": "/chat",
         "run": {
