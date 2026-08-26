@@ -292,7 +292,7 @@ export default function NewArrivalsPage({
         </div>
 
         {/* Grid of Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {filteredProducts.map((p) => {
             const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
             const availableSizes = fullProd?.sizes || Object.keys(p.prices).map(Number);
