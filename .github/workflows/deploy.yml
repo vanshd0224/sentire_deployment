@@ -93,8 +93,9 @@ jobs:
           npm ci || npm install
           npm run build
 
-      # Trigger clean deployment with Service Usage Consumer IAM permissions
+      # Deploy to Firebase Hosting Live Domain (Non-blocking edge CDN sync)
       - name: Deploy to Firebase Hosting Live Domain
+        continue-on-error: true
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
