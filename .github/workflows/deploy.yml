@@ -82,4 +82,23 @@ jobs:
             --allow-unauthenticated \
             --port 8080
 
+      - name: Setup Node.js for Firebase Build
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Frontend Assets
+        run: |
+          cd frontend
+          npm ci || npm install
+          npm run build
+
+      - name: Deploy to Firebase Hosting Live Domain
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+          channelId: live
+          projectId: sentire-perfumes
+
 # Trigger clean dev deployment
