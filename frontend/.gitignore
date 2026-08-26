@@ -3,3 +3,16 @@ dist
 .env
 .env.local
 .DS_Store
+public/*.html
+public/perfumes
+public/products
+public/pages
+public/about
+public/bestsellers
+public/byob
+public/client-services
+public/extrait-de-parfum
+public/new-arrivals
+public/personalised-perfume
+public/track-order
+
