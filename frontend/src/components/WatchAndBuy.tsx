@@ -373,29 +373,29 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
       {/* ── Interactive Video Reel Modal Player ── */}
       {activeReel && (
         <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-2xl animate-fadeIn"
+          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/95 p-0 sm:p-4 md:p-6 backdrop-blur-2xl animate-fadeIn"
           onClick={() => setActiveReelIndex(null)}
         >
           <div
-            className="relative w-full max-w-sm sm:max-w-md md:max-w-lg aspect-[9/16] max-h-[85vh] rounded-3xl overflow-hidden shadow-2xl border border-[#c89b5a]/50 bg-black flex flex-col justify-between"
+            className="relative w-full h-full sm:h-auto sm:max-w-sm md:max-w-md aspect-[9/16] max-h-full sm:max-h-[85vh] rounded-none sm:rounded-3xl overflow-hidden shadow-2xl border-0 sm:border border-[#c89b5a]/50 bg-black flex flex-col justify-between"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Bar Controls */}
-            <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
-              <span className="rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[9px] font-bold tracking-widest text-[#d4af37] border border-white/20 uppercase">
+            {/* Top Bar Controls Gradient */}
+            <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 sm:p-5 bg-gradient-to-b from-black/90 via-black/40 to-transparent">
+              <span className="rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[9px] font-bold tracking-widest text-[#d4af37] border border-white/20 uppercase shadow-md">
                 {activeReel.badge}
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsMuted((p) => !p)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer shadow-md"
                   aria-label="Toggle mute"
                 >
                   {isMuted ? "🔇" : "🔊"}
                 </button>
                 <button
                   onClick={() => setActiveReelIndex(null)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer shadow-md"
                   aria-label="Close reel"
                 >
                   ✕
@@ -403,28 +403,30 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
               </div>
             </div>
 
-            {/* Video Player */}
+            {/* Instant Preloaded Faststart Video Player */}
             <video
               ref={videoRef}
               src={activeReel.video}
+              poster={activeReel.thumb}
               autoPlay
               loop
               playsInline
+              preload="auto"
               muted={isMuted}
               className="absolute inset-0 w-full h-full object-cover"
             />
 
             {/* Bottom Scrim & Product Action Drawer */}
-            <div className="relative z-20 mt-auto p-5 bg-gradient-to-t from-black via-black/80 to-transparent">
+            <div className="relative z-20 mt-auto p-4 sm:p-5 pb-8 sm:pb-5 bg-gradient-to-t from-black via-black/85 to-transparent">
               <div className="flex items-center gap-3 bg-white/10 backdrop-blur-xl p-3 rounded-2xl border border-white/20 shadow-2xl">
-                <div className="h-12 w-12 shrink-0 rounded-xl bg-white/90 p-1 flex items-center justify-center">
+                <div className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 rounded-xl bg-white/95 p-1 flex items-center justify-center shadow-md">
                   <img src={activeReel.swatch} alt={activeReel.product} className="h-full w-full object-contain" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-white uppercase tracking-wider truncate">
+                  <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider truncate">
                     {activeReel.product}
                   </h4>
-                  <p className="text-[10px] text-white/70 truncate">{activeReel.notes}</p>
+                  <p className="text-[9.5px] sm:text-[10px] text-white/70 truncate">{activeReel.notes}</p>
                   <div className="flex items-baseline gap-2 mt-0.5">
                     <span className="text-xs font-bold text-[#d4af37]">{activeReel.priceText}</span>
                     <span className="text-[10px] text-white/50 line-through">{activeReel.original}</span>
@@ -436,8 +438,8 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
                     setActiveReelIndex(null);
                     onOpenCart?.();
                   }}
-                  className="btn-luxe-gold shrink-0"
-                  style={{ padding: "10px 16px", fontSize: "9px" }}
+                  className="btn-luxe-gold shrink-0 cursor-pointer shadow-lg active:scale-95"
+                  style={{ padding: "9px 15px", fontSize: "9px" }}
                 >
                   Buy Now
                 </button>
@@ -447,16 +449,16 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
               <div className="flex items-center justify-between mt-3 px-2">
                 <button
                   onClick={handlePrevReel}
-                  className="text-xs text-white/70 hover:text-[#d4af37] font-semibold tracking-wider cursor-pointer"
+                  className="text-xs text-white/80 hover:text-[#d4af37] font-semibold tracking-wider cursor-pointer"
                 >
                   ← Prev Reel
                 </button>
-                <span className="text-[10px] text-white/50 font-mono">
+                <span className="text-[10px] text-white/60 font-mono">
                   {(activeReelIndex ?? 0) + 1} / {reels.length}
                 </span>
                 <button
                   onClick={handleNextReel}
-                  className="text-xs text-white/70 hover:text-[#d4af37] font-semibold tracking-wider cursor-pointer"
+                  className="text-xs text-white/80 hover:text-[#d4af37] font-semibold tracking-wider cursor-pointer"
                 >
                   Next Reel →
                 </button>
