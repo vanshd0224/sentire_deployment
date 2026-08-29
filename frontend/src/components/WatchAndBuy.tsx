@@ -433,22 +433,20 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
               </div>
             </div>
 
-            {/* Instant Preloaded Faststart Video Player with Click-to-Play Toggle */}
+            {/* Instant Preloaded Video Player with Click-to-Play Toggle */}
             <div className="absolute inset-0 w-full h-full cursor-pointer" onClick={togglePlayPause}>
               <video
                 ref={videoRef}
-                key={activeReel.id}
+                key={activeReel.video}
                 src={activeReel.video}
                 poster={activeReel.thumb}
                 autoPlay
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 muted={isMuted}
                 className="w-full h-full object-cover"
-              >
-                <source src={activeReel.video} type="video/mp4" />
-              </video>
+              />
 
               {/* Pause / Play Indicator Overlay */}
               {!isPlaying && (
