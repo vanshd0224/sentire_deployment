@@ -172,9 +172,39 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
   const [animated, setAnimated] = useState(true);
   const [activeReelIndex, setActiveReelIndex] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const transitioning = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (activeReelIndex !== null && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      setIsPlaying(true);
+      const p = videoRef.current.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play().catch(() => {});
+          }
+        });
+      }
+    }
+  }, [activeReelIndex]);
+
+  const togglePlayPause = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -403,18 +433,34 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
               </div>
             </div>
 
-            {/* Instant Preloaded Faststart Video Player */}
-            <video
-              ref={videoRef}
-              src={activeReel.video}
-              poster={activeReel.thumb}
-              autoPlay
-              loop
-              playsInline
-              preload="auto"
-              muted={isMuted}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            {/* Instant Preloaded Faststart Video Player with Click-to-Play Toggle */}
+            <div className="absolute inset-0 w-full h-full cursor-pointer" onClick={togglePlayPause}>
+              <video
+                ref={videoRef}
+                key={activeReel.id}
+                src={activeReel.video}
+                poster={activeReel.thumb}
+                autoPlay
+                loop
+                playsInline
+                preload="auto"
+                muted={isMuted}
+                className="w-full h-full object-cover"
+              >
+                <source src={activeReel.video} type="video/mp4" />
+              </video>
+
+              {/* Pause / Play Indicator Overlay */}
+              {!isPlaying && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-xs">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/70 text-[#d4af37] border border-[#d4af37]/60 shadow-2xl">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-8 w-8">
+                      <path d="M6 4l14 8-14 8V4z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Bottom Scrim & Product Action Drawer */}
             <div className="relative z-20 mt-auto p-4 sm:p-5 pb-8 sm:pb-5 bg-gradient-to-t from-black via-black/85 to-transparent">
