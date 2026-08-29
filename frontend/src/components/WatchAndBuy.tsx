@@ -16,8 +16,8 @@ export interface ReelProduct {
 const reels: ReelProduct[] = [
   {
     id: "calantha",
-    thumb: "/images/watch/watch-1.jpg",
-    video: "/videos/watch/watch-1.mp4",
+    thumb: "/images/watch/watch-5.jpg",
+    video: "/videos/watch/watch-5.mp4",
     product: "Calantha 50ml",
     notes: "Velvet Rose • Amethyst Oud • Warm Amber",
     price: 1199,
@@ -40,8 +40,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "herrlich",
-    thumb: "/images/watch/watch-3.jpg",
-    video: "/videos/watch/watch-3.mp4",
+    thumb: "/images/watch/watch-6.jpg",
+    video: "/videos/watch/watch-6.mp4",
     product: "Herrlich 50ml",
     notes: "Smoky Birch • Leather Accord • Golden Amber",
     price: 1199,
@@ -52,8 +52,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "midnight",
-    thumb: "/images/watch/watch-4.jpg",
-    video: "/videos/watch/watch-4.mp4",
+    thumb: "/images/watch/watch-10.jpg",
+    video: "/videos/watch/watch-10.mp4",
     product: "Midnight 50ml",
     notes: "Dark Violet • Midnight Jasmine • Cedarwood",
     price: 1199,
@@ -64,8 +64,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "mirai",
-    thumb: "/images/watch/watch-5.jpg",
-    video: "/videos/watch/watch-5.mp4",
+    thumb: "/images/watch/watch-8.jpg",
+    video: "/videos/watch/watch-8.mp4",
     product: "Mirai 50ml",
     notes: "White Tea • Cashmere Blossom • Soft Sandalwood",
     price: 1199,
@@ -76,8 +76,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "0809",
-    thumb: "/images/watch/watch-6.jpg",
-    video: "/videos/watch/watch-6.mp4",
+    thumb: "/images/watch/watch-7.jpg",
+    video: "/videos/watch/watch-7.mp4",
     product: "0809 Signature 50ml",
     notes: "Spiced Cinnamon • Tobacco Leaf • Vanilla Bean",
     price: 1199,
@@ -88,8 +88,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "personna",
-    thumb: "/images/watch/watch-7.jpg",
-    video: "/videos/watch/watch-7.mp4",
+    thumb: "/images/watch/watch-1.jpg",
+    video: "/videos/watch/watch-1.mp4",
     product: "Personna 50ml",
     notes: "Italian Bergamot • Iris Root • Oakmoss",
     price: 1199,
@@ -100,8 +100,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "purple-oud",
-    thumb: "/images/watch/watch-8.jpg",
-    video: "/videos/watch/watch-8.mp4",
+    thumb: "/images/watch/watch-3.jpg",
+    video: "/videos/watch/watch-3.mp4",
     product: "Purple Oud 50ml",
     notes: "Cambodian Oud • Amethyst Rose • Saffron",
     price: 1199,
@@ -112,8 +112,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "rich",
-    thumb: "/images/watch/watch-9.jpg",
-    video: "/videos/watch/watch-9.mp4",
+    thumb: "/images/watch/watch-4.jpg",
+    video: "/videos/watch/watch-4.mp4",
     product: "Rich 50ml",
     notes: "Golden Honey • Tonka Bean • Roasted Coffee",
     price: 1199,
@@ -124,8 +124,8 @@ const reels: ReelProduct[] = [
   },
   {
     id: "seductive",
-    thumb: "/images/watch/watch-10.jpg",
-    video: "/videos/watch/watch-10.mp4",
+    thumb: "/images/watch/watch-9.jpg",
+    video: "/videos/watch/watch-9.mp4",
     product: "Seductive 50ml",
     notes: "Red Plum • Orchid Petals • White Amber",
     price: 1199,
