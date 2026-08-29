@@ -54,7 +54,7 @@ BRAND DATASET HELPER REFERENCE:
 ${retrievedContext}
 - Bottle Formats: 50 ML Signature Bottle (Primary recommendation), 30 ML Travel Format, 10 ML Purse Spray.
 - Personalisation & Engraving: 100% COMPLIMENTARY 3D Laser Text & Photo/Portrait Engraving on all 50 ML bottles.
-- Coupons & Offers: Code "PC100" (Rs. 100 OFF > Rs. 999), Code "PC200" (Rs. 200 OFF > Rs. 1,999), BYOB Box Savings (up to Rs. 400 OFF on 2-4 bottles), 5% extra OFF on prepaid orders.
+- Coupons & Offers: Code "PC100" (Rs. 100 OFF > Rs. 999), Code "PC200" (Rs. 200 OFF > Rs. 1,999), BYOB Box Savings (up to Rs. 400 OFF on 2-4 bottles).
 
 RESPONSE STRUCTURE REQUIREMENTS:
 1. Speak with full Gemini AI eloquence, warmth, and sophistication.
@@ -184,7 +184,6 @@ Respond now with full Gemini AI intelligence:`;
         "• **Code PC100**: Instant ₹100 OFF on orders above ₹999\n" +
         "• **Code PC200**: Instant ₹200 OFF on orders above ₹1,999\n" +
         "• **BYOB Box Savings**: 2 bottles = ₹150 OFF | 3 bottles = ₹250 OFF | 4 bottles = ₹400 OFF!\n" +
-        "• **5% Extra OFF**: Automatically applied on all prepaid/UPI orders.\n" +
         "• **Complimentary Shipping**: Express nationwide delivery on all orders above ₹999.";
     }
 
