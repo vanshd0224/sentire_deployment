@@ -84,6 +84,38 @@ export default function PerfumesPage({
   const [quickViewProduct, setQuickViewProduct] = useState<PerfumeProduct | null>(null);
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
 
+  // Sync address bar URL whenever selectedDetailProduct opens or closes in PerfumesPage
+  useEffect(() => {
+    if (selectedDetailProduct) {
+      try {
+        const targetUrl = `/perfumes/${selectedDetailProduct.id}`;
+        if (window.location.pathname !== targetUrl) {
+          window.history.pushState(null, "", targetUrl);
+        }
+      } catch (e) {}
+    } else {
+      if (window.location.pathname.startsWith("/perfumes/")) {
+        try {
+          window.history.pushState(null, "", "/perfumes");
+        } catch (e) {}
+      }
+    }
+  }, [selectedDetailProduct]);
+
+  // Open modal if page is loaded directly at /perfumes/deep-crush, etc.
+  useEffect(() => {
+    const path = window.location.pathname.toLowerCase();
+    if (path.startsWith("/perfumes/")) {
+      const slug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
+      if (slug && slug !== "index" && slug !== "all") {
+        const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === slug.toLowerCase());
+        if (found) {
+          setSelectedDetailProduct(found);
+        }
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (initialFilters) {
       if (initialFilters.size !== undefined) {

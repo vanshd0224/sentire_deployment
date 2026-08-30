@@ -119,6 +119,24 @@ export default function BestSellersPage({
   onOpenCart: _onOpenCart,
 }: BestSellersPageProps) {
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
+
+  // Sync address bar URL whenever selectedDetailProduct opens or closes in BestSellersPage
+  useEffect(() => {
+    if (selectedDetailProduct) {
+      try {
+        const targetUrl = `/perfumes/${selectedDetailProduct.id}`;
+        if (window.location.pathname !== targetUrl) {
+          window.history.pushState(null, "", targetUrl);
+        }
+      } catch (e) {}
+    } else {
+      if (window.location.pathname.startsWith("/perfumes/")) {
+        try {
+          window.history.pushState(null, "", "/bestsellers");
+        } catch (e) {}
+      }
+    }
+  }, [selectedDetailProduct]);
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [activeCategoryPill, setActiveCategoryPill] = useState("all");
   const [selectedMood, setSelectedMood] = useState("all");

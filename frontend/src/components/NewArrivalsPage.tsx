@@ -105,6 +105,24 @@ export default function NewArrivalsPage({
   onOpenCart: _onOpenCart,
 }: NewArrivalsPageProps) {
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
+
+  // Sync address bar URL whenever selectedDetailProduct opens or closes in NewArrivalsPage
+  useEffect(() => {
+    if (selectedDetailProduct) {
+      try {
+        const targetUrl = `/perfumes/${selectedDetailProduct.id}`;
+        if (window.location.pathname !== targetUrl) {
+          window.history.pushState(null, "", targetUrl);
+        }
+      } catch (e) {}
+    } else {
+      if (window.location.pathname.startsWith("/perfumes/")) {
+        try {
+          window.history.pushState(null, "", "/new-arrivals");
+        } catch (e) {}
+      }
+    }
+  }, [selectedDetailProduct]);
   const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
   const [activeCategoryPill, setActiveCategoryPill] = useState("all");
   const [selectedMood, setSelectedMood] = useState("all");
