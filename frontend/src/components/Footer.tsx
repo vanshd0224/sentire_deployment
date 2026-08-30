@@ -48,9 +48,10 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
     if (link === "About SENTIRE" || link === "Our Story" || link === "Craftsmanship" || link === "Sustainability" || sectionTitle === "About") {
       return "/about";
     }
-    if (link === "Client Services" || link === "FAQs" || link === "Shipping & Delivery" || link === "Returns & Exchanges" || sectionTitle === "Help") {
-      return "/client-services";
-    }
+    if (link === "FAQs") return "/client-services#faqs";
+    if (link === "Shipping & Delivery") return "/client-services#shipping-delivery";
+    if (link === "Returns & Exchanges") return "/client-services#returns-exchanges";
+    if (link === "Client Services" || sectionTitle === "Help") return "/client-services";
     return "/";
   };
 
@@ -88,12 +89,21 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                     onNavigate?.("track-order");
                   } else if (link === "About SENTIRE" || link === "Our Story" || title === "About" || link === "Craftsmanship" || link === "Sustainability") {
                     onNavigate?.("about");
-                  } else if (
-                    link === "Client Services" ||
-                    link === "FAQs" ||
-                    link === "Shipping & Delivery" ||
-                    link === "Returns & Exchanges"
-                  ) {
+                  } else if (link === "FAQs") {
+                    try { window.history.pushState(null, "", "/client-services#faqs"); } catch(err){}
+                    onNavigate?.("client-services");
+                    setTimeout(() => {
+                      const el = document.getElementById("faqs-section");
+                      el?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else if (link === "Shipping & Delivery") {
+                    try { window.history.pushState(null, "", "/client-services#shipping-delivery"); } catch(err){}
+                    onNavigate?.("client-services");
+                  } else if (link === "Returns & Exchanges") {
+                    try { window.history.pushState(null, "", "/client-services#returns-exchanges"); } catch(err){}
+                    onNavigate?.("client-services");
+                  } else if (link === "Client Services") {
+                    try { window.history.pushState(null, "", "/client-services"); } catch(err){}
                     onNavigate?.("client-services");
                   }
                 }}

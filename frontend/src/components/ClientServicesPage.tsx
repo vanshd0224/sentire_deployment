@@ -98,6 +98,44 @@ export default function ClientServicesPage({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionRef, setSubmissionRef] = useState<string | null>(null);
 
+  // Auto-select category or scroll to FAQs based on URL hash / search
+  useEffect(() => {
+    const hash = window.location.hash.toLowerCase();
+    const search = window.location.search.toLowerCase();
+    const path = window.location.pathname.toLowerCase();
+
+    if (hash.includes("faq") || search.includes("faq") || path.includes("faq")) {
+      setTimeout(() => {
+        const el = document.getElementById("faqs-section");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else if (
+      hash.includes("shipping") ||
+      hash.includes("delivery") ||
+      search.includes("shipping") ||
+      search.includes("delivery") ||
+      path.includes("shipping")
+    ) {
+      setActiveCategory("delivery-tracking");
+      setTimeout(() => {
+        const el = document.getElementById("enquiry-form");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else if (
+      hash.includes("return") ||
+      hash.includes("exchange") ||
+      search.includes("return") ||
+      search.includes("exchange") ||
+      path.includes("return")
+    ) {
+      setActiveCategory("returns-exchanges");
+      setTimeout(() => {
+        const el = document.getElementById("enquiry-form");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    }
+  }, []);
+
   // General Form States
   const [formData, setFormData] = useState({
     firstName: "",
@@ -966,7 +1004,7 @@ export default function ClientServicesPage({
       </section>
 
       {/* ── Section 15: FAQ Accordion ── */}
-      <section className="py-20 px-5 lg:px-12 mx-auto max-w-[1000px]">
+      <section id="faqs-section" className="py-20 px-5 lg:px-12 mx-auto max-w-[1000px]">
         <div className="text-center max-w-xl mx-auto mb-12">
           <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
             CLIENT SERVICES FAQ
