@@ -964,10 +964,7 @@ export default function CartDrawer({
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
               {isRedirecting ? (
-                <>
-                  <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-2 border-white border-t-transparent" />
-                  <span>Redirecting to Shopify...</span>
-                </>
+                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#f5f0e8] border-t-transparent" />
               ) : (
                 <>
                   <span>Proceed to Checkout</span>

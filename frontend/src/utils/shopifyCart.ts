@@ -262,19 +262,24 @@ export const createOrGetShopifyCheckoutUrl = async (items: any[], discountCode?:
 
   let checkoutUrl = "";
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 350);
+
     const backendUrl = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "https://ecommerce-backend-1041917436859.asia-south1.run.app";
     const res = await fetch(`${backendUrl}/checkout/create-cart`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, discountCode })
+      body: JSON.stringify({ items, discountCode }),
+      signal: controller.signal
     });
 
+    clearTimeout(timeoutId);
     const data = await res.json();
     if (data?.checkoutUrl) {
       checkoutUrl = data.checkoutUrl;
     }
   } catch (err) {
-    console.error("[Option B Server Proxy Warning] Call error:", err);
+    // Fast fallback on timeout or error
   }
 
   if (!checkoutUrl) {
