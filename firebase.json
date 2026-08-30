@@ -73,20 +73,6 @@
     ],
     "rewrites": [
       {
-        "source": "/chat",
-        "run": {
-          "serviceId": "ecommerce-backend",
-          "region": "asia-south1"
-        }
-      },
-      {
-        "source": "/api/**",
-        "run": {
-          "serviceId": "ecommerce-backend",
-          "region": "asia-south1"
-        }
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
