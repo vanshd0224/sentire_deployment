@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ClientServicesPageProps {
   onBackToHome?: () => void;
   onNavigateToTrackOrder?: () => void;
   onNavigateToPerfumes?: () => void;
+  onNavigate?: (page: any) => void;
 }
 
 export type EnquiryCategory =

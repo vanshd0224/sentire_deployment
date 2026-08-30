@@ -186,7 +186,7 @@ export default function App() {
     setCurrentPage(page);
     setActiveFilters(filters);
     const targetPath = page === "home" ? "/" : `/${page}`;
-    if (window.location.pathname !== targetPath) {
+    if (window.location.pathname !== targetPath && !window.location.hash) {
       try {
         window.history.pushState(null, "", targetPath);
       } catch (e) {
