@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import SentireLogo from "./SentireLogo";
+import AnnouncementBar from "./AnnouncementBar";
 
 export interface PerfumeFilterOptions {
   size?: number;
@@ -215,6 +216,7 @@ export default function Navbar({
       `}</style>
 
       <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-[#FEFDFB] transition-all">
+        <AnnouncementBar />
         <div
           className="mx-auto flex max-w-[1440px] items-center justify-between relative"
           style={{
