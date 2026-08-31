@@ -358,44 +358,73 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
   form.submit();
 };
 
-// Asynchronously create a fresh GraphQL Shopify Cart via Server-Side Cloud Run Backend Proxy
+// Asynchronously create a fresh GraphQL Shopify Cart via direct Storefront API or permalink fallback
 export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCode?: string): Promise<string> => {
   if (!rawItems || rawItems.length === 0) return "";
 
   const items = prepareShopifyCheckoutItems(rawItems);
+  const shopDomain = "hbj1d0-99.myshopify.com";
+  const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
 
-  let checkoutUrl = "";
+  const lines = items.map((item) => ({
+    merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
+    quantity: Number(item.quantity) || 1
+  }));
+
+  const input: any = { lines };
+  if (discountCode) {
+    input.discountCodes = [discountCode];
+  }
+
+  const storefrontToken = (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (storefrontToken) {
+    headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
+  }
+
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 350);
+    const mutation = `
+      mutation cartCreate($input: CartInput!) {
+        cartCreate(input: $input) {
+          cart {
+            id
+            checkoutUrl
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
 
-    const backendUrl = (import.meta.env && import.meta.env.VITE_BACKEND_URL) || "https://ecommerce-backend-1041917436859.asia-south1.run.app";
-    const res = await fetch(`${backendUrl}/checkout/create-cart`, {
+    const res = await fetch(graphqlUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, discountCode }),
-      signal: controller.signal
+      headers,
+      body: JSON.stringify({ query: mutation, variables: { input } })
     });
 
-    clearTimeout(timeoutId);
     const data = await res.json();
-    if (data?.checkoutUrl) {
-      checkoutUrl = data.checkoutUrl;
+    const cart = data?.data?.cartCreate?.cart;
+    if (cart?.checkoutUrl) {
+      let finalUrl = cart.checkoutUrl;
+      if (discountCode && !finalUrl.includes("discount=")) {
+        finalUrl += (finalUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
+      }
+      console.log("[Direct Storefront Checkout Success]:", finalUrl);
+      return finalUrl;
     }
   } catch (err) {
-    // Fast fallback on timeout or error
+    console.error("Direct Storefront cartCreate Error:", err);
   }
 
-  if (!checkoutUrl) {
-    const permalinkItems = items
-      .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
-      .join(",");
-    checkoutUrl = `https://hbj1d0-99.myshopify.com/cart/${permalinkItems}`;
-  }
-
+  // Fast Fallback to Permalink URL
+  const permalinkItems = items
+    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
+    .join(",");
+  let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
   if (discountCode) {
-    checkoutUrl += (checkoutUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
+    permalinkUrl += (permalinkUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
   }
-
-  return checkoutUrl;
+  return permalinkUrl;
 };

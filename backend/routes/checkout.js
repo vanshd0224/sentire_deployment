@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
+const ENGRAVING_FEE_VARIANT_ID = "46947691659425";
+
 const SHOPIFY_VARIANT_MAP = {
   "0809": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
   "calantha": { 10: "46888622391457", 30: "46888622424225", 50: "46888622456993" },
@@ -14,13 +16,31 @@ const SHOPIFY_VARIANT_MAP = {
   "rich": { 10: "46888623079585", 30: "46888623112353", 50: "46888623145121" },
   "seductive": { 10: "46888623177889", 30: "46888623210657", 50: "46888623243425" },
   "white-oud": { 10: "46888623276193", 30: "46888623308961", 50: "46888623341729" },
-  "zephyrine": { 10: "46888622293153", 30: "46888622325921" }
+  "zephyrine": { 10: "46946124628129", 30: "46946124660897" },
+  "bijou": { 10: "46946155430049", 30: "46946155462817" },
+  "dapper": { 10: "46946174337185", 30: "46946174369953" },
+  "le-chocolat": { 10: "46946200354977", 30: "46946200387745" },
+  "pc-leather": { 10: "46946216509601", 30: "46946216542369" },
+  "quantillion": { 10: "46946240823457", 30: "46946240856225" },
+  "reiz": { 10: "46946264088737", 30: "46946264121505" },
+  "sent-aura": { 10: "46946279981217", 30: "46946280013985" },
+  "vanaco": { 10: "46946298298529", 30: "46946298331297" },
+  "woo-dy": { 10: "46946307014817", 30: "46946307047585" },
+  "custom-bottle-engraving": { 0: ENGRAVING_FEE_VARIANT_ID, 50: ENGRAVING_FEE_VARIANT_ID }
 };
 
 function resolveVariantId(item) {
+  if (item?.variantId) {
+    return item.variantId;
+  }
+
   const pId = String(item?.productId || item?.id || "").toLowerCase().trim();
   const pName = String(item?.name || "").toLowerCase().trim();
   const sizeNum = parseInt(String(item?.size || "").replace(/\D/g, ""), 10) || 50;
+
+  if (pId.includes("engraving") || pName.includes("engraving")) {
+    return ENGRAVING_FEE_VARIANT_ID;
+  }
 
   const normalizedId = pId.replace(/[\s\-_]/g, "");
   const normalizedName = pName.replace(/[\s\-_]/g, "");
@@ -50,12 +70,29 @@ router.post('/create-cart', async (req, res) => {
     const shopDomain = process.env.SHOPIFY_SHOP || 'hbj1d0-99.myshopify.com';
     const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
 
-    const lines = items.map((item) => ({
-      merchandiseId: `gid://shopify/ProductVariant/${resolveVariantId(item)}`,
-      quantity: Number(item.quantity) || 1
-    }));
+    const expandedLines = [];
+    let engravingCount = 0;
 
-    const input = { lines };
+    items.forEach((item) => {
+      const vid = resolveVariantId(item);
+      expandedLines.push({
+        merchandiseId: `gid://shopify/ProductVariant/${vid}`,
+        quantity: Number(item.quantity) || 1
+      });
+
+      if (item?.isPersonalised || item?.engravingText) {
+        engravingCount += (Number(item.quantity) || 1);
+      }
+    });
+
+    if (engravingCount > 0) {
+      expandedLines.push({
+        merchandiseId: `gid://shopify/ProductVariant/${ENGRAVING_FEE_VARIANT_ID}`,
+        quantity: engravingCount
+      });
+    }
+
+    const input = { lines: expandedLines };
     if (discountCode) {
       input.discountCodes = [discountCode];
     }
