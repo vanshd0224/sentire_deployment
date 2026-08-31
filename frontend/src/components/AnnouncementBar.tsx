@@ -1,6 +1,6 @@
 const items = [
   {
-    text: "COMPLIMENTARY SHIPPING ON ALL ORDERS ABOVE ₹999",
+    text: "PRODUCT PERSONALISATION AVAILABLE",
     icon: "♦",
   },
   {
@@ -13,10 +13,6 @@ const items = [
   },
   {
     text: "USE CODE PC200 FOR ₹200 OFF",
-    icon: "♦",
-  },
-  {
-    text: "COMPLIMENTARY LASER PHOTO & NAME ENGRAVING",
     icon: "♦",
   },
 ];
@@ -37,10 +33,7 @@ export default function AnnouncementBar() {
         .sentire-marquee-track {
           display: flex;
           width: max-content;
-          animation: marqueeScroll 25s linear infinite;
-        }
-        .sentire-marquee-track:hover {
-          animation-play-state: paused;
+          animation: marqueeScroll 20s linear infinite;
         }
       `}</style>
       <div className="sentire-announcement-bar w-full text-[#f8f5f1] overflow-hidden select-none py-1.5 z-50">
