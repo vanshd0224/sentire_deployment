@@ -22,6 +22,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
+        entryFileNames: "assets/app-v2-[hash].js",
+        chunkFileNames: "assets/chunk-[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
         manualChunks: {
           vendor: ["react", "react-dom"],
           firebase: ["firebase/app", "firebase/auth"],

@@ -1061,7 +1061,7 @@ function generateHtml(templateHtml, route) {
   const buildTimestamp = Date.now();
 
   // Cache-bust JS asset URL to force Edge CDN / Cloudflare to purge old cached JS bundles
-  html = html.replace(/src="(\/assets\/index-[^"]+\.js)"/g, `src="$1?v=${buildTimestamp}"`);
+  html = html.replace(/src="(\/assets\/(?:app-v2|index)-[^"]+\.js)"/g, `src="$1?v=${buildTimestamp}"`);
 
   // Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`);
