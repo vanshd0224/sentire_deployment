@@ -1,4 +1,4 @@
-import { PageName } from "../App";
+import type { PageName } from "../types/appTypes";
 
 interface MobileBottomNavProps {
   currentPage: PageName;

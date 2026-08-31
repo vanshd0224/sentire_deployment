@@ -32,17 +32,8 @@ import ProductDetailModal from "./components/ProductDetailModal";
 import { ALL_PERFUMES } from "./data/perfumes";
 import { auth } from "./lib/firebase";
 
-export type PageName =
-  | "home"
-  | "perfumes"
-  | "bestsellers"
-  | "new-arrivals"
-  | "about"
-  | "byob"
-  | "personalisation"
-  | "client-services"
-  | "track-order"
-  | "account";
+import type { PageName } from "./types/appTypes";
+export type { PageName };
 
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
