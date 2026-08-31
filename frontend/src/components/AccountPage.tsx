@@ -24,12 +24,15 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   const [user, setUser] = useState<User | null>(auth.currentUser);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   
-  // Stored Name & Profile Data
-  const storedName = localStorage.getItem("sentire_user_name") || user?.displayName || "Vansh Gupta";
+  // Stored Name & Profile Data (No hardcoded fake defaults!)
+  const storedName = localStorage.getItem("sentire_user_name") || user?.displayName || "";
+  const storedPhone = user?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
+  const storedEmail = user?.email || localStorage.getItem("sentire_user_email") || "";
+
   const [profileData, setProfileData] = useState({
-    firstName: storedName,
-    phone: user?.phoneNumber || localStorage.getItem("sentire_user_phone") || "+919079603729",
-    email: user?.email || "vgupta242004@gmail.com",
+    firstName: storedName || storedPhone || "Fragrance Connoisseur",
+    phone: storedPhone,
+    email: storedEmail,
   });
   const [isEditing, setIsEditing] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -41,7 +44,7 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   });
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [newAddr, setNewAddr] = useState({
-    name: storedName,
+    name: profileData.firstName,
     phone: profileData.phone,
     street: "",
     city: "",
@@ -52,9 +55,15 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
-      if (u?.displayName) {
-        setProfileData((prev) => ({ ...prev, firstName: u.displayName || prev.firstName }));
-      }
+      const name = u?.displayName || localStorage.getItem("sentire_user_name") || "";
+      const phone = u?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
+      const email = u?.email || localStorage.getItem("sentire_user_email") || "";
+
+      setProfileData({
+        firstName: name || phone || "Fragrance Connoisseur",
+        phone: phone,
+        email: email,
+      });
     });
     return () => unsub();
   }, []);
@@ -99,7 +108,11 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     localStorage.removeItem("sentire_is_logged_in");
     localStorage.removeItem("sentire_user_phone");
     localStorage.removeItem("sentire_user_name");
-    await signOut(auth);
+    localStorage.removeItem("sentire_user_email");
+    localStorage.removeItem("sentire_user_addresses");
+    try {
+      await signOut(auth);
+    } catch (e) {}
     setUser(null);
     onNavigate("home");
   };
