@@ -17,7 +17,7 @@ const INSTAGRAM_REELS = [
   {
     id: "4",
     url: "https://www.instagram.com/reel/DctGKrQymJp/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
-    thumb: "/images/instagram/ig-4.jpg",
+    thumb: "/images/instagram/ig-2.jpg",
   },
   {
     id: "5",
