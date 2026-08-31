@@ -153,6 +153,12 @@ export default function ProductDetailModal({
     setPhotoPreviewUrl(null);
   };
 
+  const hasPersonalisation = selectedSize === 50 && (isPersonalising || engravingText.trim() !== "" || (includeDate && engravingDate !== ""));
+  const basePrice = product ? (product.prices[selectedSize] || product.prices[product.sizes[0]] || 799) : 799;
+  const currentPrice = basePrice + (hasPersonalisation ? 200 : 0);
+  const originalPrice = product && product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] + (hasPersonalisation ? 200 : 0) : Math.round(currentPrice * 1.35);
+  const discountPercent = originalPrice > currentPrice && originalPrice > 0 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : 0;
+
   // Helper for cart quantity (matches exact size and personalisation status)
   const cartQty = useMemo(() => {
     if (!product) return 0;
@@ -270,12 +276,6 @@ export default function ProductDetailModal({
   }, [allProducts, product]);
 
   if (!product) return null;
-
-  const hasPersonalisation = selectedSize === 50 && (isPersonalising || engravingText.trim() !== "" || (includeDate && engravingDate !== ""));
-  const basePrice = product.prices[selectedSize] || product.prices[product.sizes[0]] || 799;
-  const currentPrice = basePrice + (hasPersonalisation ? 200 : 0);
-  const originalPrice = product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] + (hasPersonalisation ? 200 : 0) : Math.round(currentPrice * 1.35);
-  const discountPercent = originalPrice > currentPrice && originalPrice > 0 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : 0;
 
   const handlePincodeCheck = (e: React.FormEvent) => {
     e.preventDefault();
