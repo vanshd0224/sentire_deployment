@@ -51,7 +51,7 @@ export default function ProductDetailModal({
     if (e) e.stopPropagation();
     if (!product) return;
 
-    const shareUrl = window.location.href;
+    const shareUrl = `${window.location.origin}/perfumes/${product.id}`;
     const shareTitle = `SENTIRE By PC - ${product.name}`;
     const shareText = `Discover ${product.name} Extrait de Parfum by SENTIRE By PC. Luxury 35% oil concentration.`;
 

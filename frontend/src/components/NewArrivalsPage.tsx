@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import type { CartItem } from "./CartDrawer";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
@@ -106,8 +106,25 @@ export default function NewArrivalsPage({
 }: NewArrivalsPageProps) {
   const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
 
+  const isFirstRender = useRef(true);
+
   // Sync address bar URL whenever selectedDetailProduct opens or closes in NewArrivalsPage
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      const path = window.location.pathname.toLowerCase();
+      if (path.startsWith("/perfumes/")) {
+        const slug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
+        if (slug && slug !== "index" && slug !== "all") {
+          const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === slug.toLowerCase());
+          if (found) {
+            setSelectedDetailProduct(found);
+            return;
+          }
+        }
+      }
+    }
+
     if (selectedDetailProduct) {
       try {
         const targetUrl = `/perfumes/${selectedDetailProduct.id}`;
@@ -116,7 +133,7 @@ export default function NewArrivalsPage({
         }
       } catch (e) {}
     } else {
-      if (window.location.pathname.startsWith("/perfumes/")) {
+      if (window.location.pathname.startsWith("/perfumes/") && window.location.pathname !== "/perfumes") {
         try {
           window.history.pushState(null, "", "/new-arrivals");
         } catch (e) {}
