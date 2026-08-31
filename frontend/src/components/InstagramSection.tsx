@@ -6,12 +6,12 @@ const INSTAGRAM_REELS = [
   },
   {
     id: "2",
-    url: "https://www.instagram.com/reel/DWkyo3CiMTw/?igsi=MTNuaDFzZmd5Z2N2eQ==",
+    url: "https://www.instagram.com/reel/DctGKrQymJp/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
     thumb: "/images/instagram/ig-2.jpg",
   },
   {
     id: "3",
-    url: "https://www.instagram.com/reel/DWmbB3Ukz0M/?igsi=dDEyZGkzeXZwcXh3",
+    url: "https://www.instagram.com/reel/DctGKrQymJp/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
     thumb: "/images/instagram/ig-3.jpg",
   },
   {
