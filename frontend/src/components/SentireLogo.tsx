@@ -24,15 +24,15 @@ export default function SentireLogo({
     if (height) return typeof height === "number" ? `${height}px` : height;
     switch (variant) {
       case "compact":
-        return "32px";
+        return "36px";
       case "navbar":
-        return "44px"; // Prominent size for header navbar
+        return "58px"; // Prominent, bold size for header navbar
       case "footer":
-        return "56px";
+        return "68px";
       case "hero":
-        return "80px";
+        return "96px";
       default:
-        return "44px";
+        return "58px";
     }
   };
 
@@ -69,7 +69,7 @@ export default function SentireLogo({
           src={getLogoSrc()}
           alt="SENTIRE ® By PC"
           style={{ height: logoHeight, width: "auto" }}
-          className="block object-contain max-h-[44px] sm:max-h-[50px] md:max-h-[56px] max-w-[220px] sm:max-w-[260px] md:max-w-[320px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.2)] shrink-0"
+          className="block object-contain max-h-[54px] sm:max-h-[64px] md:max-h-[76px] max-w-[280px] sm:max-w-[340px] md:max-w-[400px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.25)] shrink-0"
         />
       </div>
     </div>
