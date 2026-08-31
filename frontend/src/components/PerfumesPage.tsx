@@ -1,5 +1,5 @@
 import { ALL_PERFUMES } from "../data/perfumes";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeFilterOptions } from "./Navbar";
 import ProductDetailModal from "./ProductDetailModal";
 
