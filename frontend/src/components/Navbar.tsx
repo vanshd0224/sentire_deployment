@@ -222,8 +222,8 @@ export default function Navbar({
           style={{
             paddingLeft: "clamp(16px, 4.86vw, 42px)",
             paddingRight: "clamp(16px, 4.86vw, 42px)",
-            height: "clamp(56px, 5vw, 76px)",
-            minHeight: "clamp(56px, 5vw, 76px)",
+            height: "clamp(70px, 6.8vw, 96px)",
+            minHeight: "clamp(70px, 6.8vw, 96px)",
           }}
         >
 
