@@ -44,6 +44,7 @@ export default function ProductDetailModal({
   const [isCheckingPincode, setIsCheckingPincode] = useState<boolean>(false);
   const [selectedNote, setSelectedNote] = useState<ScentNote | null>(null);
   const [notifyEmail, setNotifyEmail] = useState<string>("");
+  const [notifySubmitted, setNotifySubmitted] = useState<boolean>(false);
   const [copiedShareLink, setCopiedShareLink] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
