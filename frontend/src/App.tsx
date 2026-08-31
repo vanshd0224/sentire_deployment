@@ -273,7 +273,6 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
       <SEOHead currentPage={currentPage} selectedProductModal={selectedProductModal} />
-      <AnnouncementBar />
       <Navbar
         onOpenBundleModal={openBundleModal}
         onNavigate={handleNavigate}
