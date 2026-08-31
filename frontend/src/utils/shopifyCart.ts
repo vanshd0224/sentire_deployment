@@ -1,4 +1,6 @@
 // Official Shopify Storefront API Cart Manager
+import { trackAddToCart, trackInitiateCheckout } from "./analytics";
+
 export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
   // 0809
   "0809": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
@@ -190,6 +192,17 @@ export const resolveShopifyVariantId = (item: any): string => {
 // Shopify Storefront GraphQL cartCreate / cartLinesAdd mutation caller
 export const syncAddToCartToShopifyStorefront = async (item: any, quantity: number = 1) => {
   try {
+    // Fire Meta Pixel + GA4 AddToCart Event
+    try {
+      trackAddToCart({
+        id: item.productId || item.id || "perfume-1",
+        name: item.name || "Luxury Extrait de Parfum",
+        price: item.price || 1489,
+        quantity: quantity || 1,
+        variant: item.size || 50,
+      });
+    } catch (err) {}
+
     const shopDomain = "hbj1d0-99.myshopify.com";
     const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
     const numericVariantId = resolveShopifyVariantId(item);
@@ -324,6 +337,16 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
   if (!rawItems || rawItems.length === 0) return;
 
   const items = prepareShopifyCheckoutItems(rawItems);
+
+  // Track Meta Pixel InitiateCheckout Event
+  try {
+    const totalVal = items.reduce((acc, curr) => acc + (curr.price * (curr.quantity || 1)), 0);
+    trackInitiateCheckout(
+      items.map((i) => ({ id: i.productId || i.id, name: i.name, price: i.price, quantity: i.quantity || 1 })),
+      totalVal
+    );
+  } catch (e) {}
+
   const shopDomain = "hbj1d0-99.myshopify.com";
   const form = document.createElement("form");
   form.method = "POST";
@@ -363,6 +386,16 @@ export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCod
   if (!rawItems || rawItems.length === 0) return "";
 
   const items = prepareShopifyCheckoutItems(rawItems);
+
+  // Track Meta Pixel InitiateCheckout Event
+  try {
+    const totalVal = items.reduce((acc, curr) => acc + (curr.price * (curr.quantity || 1)), 0);
+    trackInitiateCheckout(
+      items.map((i) => ({ id: i.productId || i.id, name: i.name, price: i.price, quantity: i.quantity || 1 })),
+      totalVal
+    );
+  } catch (e) {}
+
   const shopDomain = "hbj1d0-99.myshopify.com";
   const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
 

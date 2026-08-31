@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeProduct } from "../types/appTypes";
 import type { CartItem } from "./CartDrawer";
 import { getPerfumeReviews, getPerfumeReviewStats, type Review } from "../data/reviews";
+import { trackViewContent } from "../utils/analytics";
 
 interface ScentNote {
   name: string;
@@ -126,6 +127,17 @@ export default function ProductDetailModal({
       setSelectedNote(null);
       setNotifySubmitted(false);
       setVisibleReviewsCount(6);
+
+      // Track Meta Pixel + GA4 ViewContent Event
+      try {
+        trackViewContent({
+          id: product.id,
+          name: product.name,
+          price: product.prices?.[50] || product.prices?.[30] || product.prices?.[10] || product.price || 1489,
+          category: product.scentFamily || "Perfumes",
+          variant: defaultSz,
+        });
+      } catch (err) {}
 
       if (modalContainerRef.current) {
         modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
