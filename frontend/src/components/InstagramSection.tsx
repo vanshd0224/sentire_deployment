@@ -16,7 +16,7 @@ const INSTAGRAM_REELS = [
   },
   {
     id: "4",
-    url: "https://www.instagram.com/p/Dcc-eHmphhd/?igsi=MmR2cXM1d3RqMGY2",
+    url: "https://www.instagram.com/reel/DctGKrQymJp/?utm_source=ig_web_copy_link&igsi=MzRlODBiNWFlZA==",
     thumb: "/images/instagram/ig-4.jpg",
   },
   {
