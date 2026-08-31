@@ -44,7 +44,6 @@ const navLinks = [
   },
   { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
   { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
-  { label: "Product Personalisation", href: "/personalised-perfume" },
   { label: "Build Your Own Bundle", href: "/byob" },
   { label: "Track Your Order", href: "/track-order" },
 ];

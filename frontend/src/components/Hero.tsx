@@ -34,7 +34,7 @@ export default function Hero({ onNavigate }: HeroProps) {
   const handlePersonalisationClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
-      onNavigate("personalisation");
+      onNavigate("perfumes");
     }
   };
 

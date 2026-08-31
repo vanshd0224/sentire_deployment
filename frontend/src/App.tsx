@@ -59,7 +59,7 @@ export default function App() {
     if (hash === "#account" || path.includes("account")) return "account";
     if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
     if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";
-    if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "personalisation";
+    if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "perfumes";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
     if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
     if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
@@ -204,8 +204,12 @@ export default function App() {
     const safeName = item?.name || item?.product || "Luxury Extrait de Parfum";
     const safeImage = item?.image || item?.img || item?.swatch || "/assets/purple-oud-arrival.png";
 
+    const isPersonalised = Boolean(item?.isPersonalised || item?.engravingText);
+    const engravingText = item?.engravingText || "";
+    const engravingDate = item?.engravingDate || "";
+
     const newItem = {
-      id: `${safeProductId}-${safeSize}`,
+      id: `${safeProductId}-${safeSize}${isPersonalised ? "-personalised" : ""}`,
       productId: safeProductId,
       name: safeName,
       size: safeSize,
@@ -213,17 +217,22 @@ export default function App() {
       image: safeImage,
       img: safeImage,
       quantity: qtyToAdd,
+      isPersonalised,
+      engravingText,
+      engravingDate,
     };
 
     setCartItems((prev) => {
       const existingIndex = prev.findIndex(
-        (i) => i.productId === safeProductId && i.size === safeSize
+        (i) => i.productId === safeProductId && i.size === safeSize && i.isPersonalised === isPersonalised
       );
       if (existingIndex > -1) {
         const updated = [...prev];
         updated[existingIndex] = {
           ...updated[existingIndex],
           quantity: updated[existingIndex].quantity + qtyToAdd,
+          engravingText: engravingText || updated[existingIndex].engravingText,
+          engravingDate: engravingDate || updated[existingIndex].engravingDate,
         };
         return updated;
       }

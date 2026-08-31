@@ -852,7 +852,7 @@ export default function AboutPage({
                 </p>
               </div>
               <button
-                onClick={() => onNavigate?.("personalisation")}
+                onClick={() => onNavigate?.("perfumes")}
                 className="w-full rounded-xl border border-[#c89b5a]/40 bg-[#c89b5a]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#e5c158] transition-all hover:bg-[#c89b5a] hover:text-black cursor-pointer"
               >
                 Personalize Bottle
@@ -873,7 +873,7 @@ export default function AboutPage({
                 </p>
               </div>
               <button
-                onClick={() => onNavigate?.("personalisation")}
+                onClick={() => onNavigate?.("perfumes")}
                 className="w-full rounded-xl border border-[#c89b5a]/40 bg-[#c89b5a]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#e5c158] transition-all hover:bg-[#c89b5a] hover:text-black cursor-pointer"
               >
                 Start Scent Quiz

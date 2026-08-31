@@ -5,7 +5,7 @@ interface FooterProps {
   onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "personalisation" | "byob" | "client-services" | "track-order") => void;
 }
 
-const shopLinks = ["All Perfumes", "Best Sellers", "New Arrivals", "Product Personalisation", "Build Your Own Bundle", "35%+ Extrait Standard"];
+const shopLinks = ["All Perfumes", "Best Sellers", "New Arrivals", "Build Your Own Bundle", "35%+ Extrait Standard"];
 const helpLinks = ["Track Your Order", "Client Services", "FAQs", "Shipping & Delivery", "Returns & Exchanges"];
 const aboutLinks = ["About SENTIRE", "Our Story", "Craftsmanship", "Sustainability"];
 

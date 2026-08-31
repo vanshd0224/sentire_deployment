@@ -93,8 +93,6 @@ export default function ProductDetailModal({
   // Product Personalisation State
   const [isPersonalising, setIsPersonalising] = useState<boolean>(false);
   const [engravingText, setEngravingText] = useState<string>("");
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
   const [includeDate, setIncludeDate] = useState<boolean>(false);
   const [engravingDate, setEngravingDate] = useState<string>("");
 
@@ -266,8 +264,10 @@ export default function ProductDetailModal({
 
   if (!product) return null;
 
-  const currentPrice = product.prices[selectedSize] || product.prices[product.sizes[0]] || 799;
-  const originalPrice = product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] : Math.round(currentPrice * 1.35);
+  const hasPersonalisation = selectedSize === 50 && (isPersonalising || engravingText.trim() !== "" || (includeDate && engravingDate !== ""));
+  const basePrice = product.prices[selectedSize] || product.prices[product.sizes[0]] || 799;
+  const currentPrice = basePrice + (hasPersonalisation ? 200 : 0);
+  const originalPrice = product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] + (hasPersonalisation ? 200 : 0) : Math.round(currentPrice * 1.35);
   const discountPercent = originalPrice > currentPrice && originalPrice > 0 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : 0;
 
   const handlePincodeCheck = (e: React.FormEvent) => {
@@ -611,14 +611,22 @@ export default function ProductDetailModal({
                       <button
                         onClick={() =>
                           onAddToCart?.(
-                            { id: product.id, name: product.name, num: product.num, img: product.img },
+                            {
+                              id: product.id,
+                              name: product.name,
+                              num: product.num,
+                              img: product.img,
+                              isPersonalised: hasPersonalisation,
+                              engravingText: hasPersonalisation ? engravingText.trim() : "",
+                              engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
+                            },
                             selectedSize,
                             currentPrice
                           )
                         }
                         className="flex-1 rounded-full border border-[#c89b5a]/50 bg-[#c89b5a]/15 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-[#c89b5a] hover:bg-[#c89b5a] hover:text-white transition-all shadow-md cursor-pointer"
                       >
-                        Add to Bag
+                        Add to Bag — ₹{currentPrice.toLocaleString("en-IN")}
                       </button>
                     )}
 
@@ -626,7 +634,15 @@ export default function ProductDetailModal({
                       onClick={() => {
                         if (cartQty === 0) {
                           onAddToCart?.(
-                            { id: product.id, name: product.name, num: product.num, img: product.img },
+                            {
+                              id: product.id,
+                              name: product.name,
+                              num: product.num,
+                              img: product.img,
+                              isPersonalised: hasPersonalisation,
+                              engravingText: hasPersonalisation ? engravingText.trim() : "",
+                              engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
+                            },
                             selectedSize,
                             currentPrice
                           );
@@ -680,7 +696,7 @@ export default function ProductDetailModal({
                     type="button"
                     onClick={() => setIsPersonalising(!isPersonalising)}
                     className={`w-full flex items-center justify-between rounded-xl border p-3.5 transition-all cursor-pointer ${
-                      isPersonalising || engravingText || photoFile || includeDate
+                      isPersonalising || engravingText || includeDate
                         ? "border-[#c89b5a] bg-[#c89b5a]/10 text-[#1e1e1e] shadow-md"
                         : "border-[#c89b5a]/40 bg-gradient-to-r from-[#c89b5a]/5 via-amber-500/5 to-[#c89b5a]/5 hover:border-[#c89b5a] hover:bg-[#c89b5a]/10 text-[#1e1e1e]"
                     }`}
@@ -694,20 +710,19 @@ export default function ProductDetailModal({
                           Product Personalisation
                         </span>
                         <span className="text-[11px] text-[#1e1e1e]/65 block mt-0.5">
-                          {engravingText || photoFile || includeDate
+                          {engravingText || includeDate
                             ? `Custom Engraving: ${[
                                 engravingText ? `"${engravingText}"` : null,
-                                photoFile ? `Photo: ${photoFile.name}` : null,
                                 includeDate && engravingDate ? `Date: ${engravingDate}` : null,
                               ]
                                 .filter(Boolean)
-                                .join(" • ")}`
-                            : "Add custom bottle name, photo & date engraving (+ Free)"}
+                                .join(" • ")} (+ ₹200)`
+                            : "Add custom bottle name & date engraving (+ ₹200)"}
                         </span>
                       </div>
                     </div>
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#c89b5a] hover:underline shrink-0 ml-2">
-                      {isPersonalising ? "Close" : (engravingText || photoFile || includeDate) ? "Edit" : "+ Add Free"}
+                      {isPersonalising ? "Close" : (engravingText || includeDate) ? "Edit (₹200)" : "+ Add (₹200)"}
                     </span>
                   </button>
                 )}
@@ -719,77 +734,27 @@ export default function ProductDetailModal({
                       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c89b5a]">
                         Custom Bottle Engraving
                       </span>
-                      <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                        COMPLIMENTARY
+                      <span className="text-[10px] font-semibold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                        + ₹200 FEE
                       </span>
                     </div>
 
                     {/* 1. Custom Name / Monogram Engraving */}
                     <div className="space-y-2">
                       <label className="text-[11px] font-semibold text-[#1e1e1e]/80 block">
-                        Custom Name or Monogram (Max 12 Characters)
+                        Custom Name or Monogram (Max 15 Characters)
                       </label>
                       <input
                         type="text"
-                        maxLength={12}
+                        maxLength={15}
                         value={engravingText}
                         onChange={(e) => setEngravingText(e.target.value)}
-                        placeholder="e.g. R.S. or ALEX"
+                        placeholder="e.g. R.S. ALEXANDER"
                         className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#1e1e1e] placeholder:text-[#1e1e1e]/30 focus:border-[#c89b5a] focus:outline-none shadow-xs font-serif tracking-widest uppercase"
                       />
                     </div>
 
-                    {/* 2. Photo Engraving Option */}
-                    <div className="space-y-2 pt-2 border-t border-black/8">
-                      <label className="text-[11px] font-semibold text-[#1e1e1e]/80 block">
-                        Photo / Artwork Engraving (.PDF, .JPEG, .PNG, .JPG)
-                      </label>
-
-                      {photoFile ? (
-                        <div className="flex items-center justify-between rounded-xl border border-[#c89b5a]/40 bg-[#c89b5a]/10 p-3 text-xs">
-                          <div className="flex items-center gap-2 overflow-hidden">
-                            {photoPreviewUrl && photoFile.type.startsWith("image/") ? (
-                              <img
-                                src={photoPreviewUrl}
-                                alt="Preview"
-                                className="h-9 w-9 rounded-lg object-cover border border-[#c89b5a]/40 shrink-0"
-                              />
-                            ) : (
-                              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#c89b5a]/20 text-[#c89b5a] font-bold">
-                                📄
-                              </span>
-                            )}
-                            <div className="truncate">
-                              <span className="font-semibold text-[#1e1e1e] block truncate">{photoFile.name}</span>
-                              <span className="text-[10px] text-[#1e1e1e]/50 block">
-                                {(photoFile.size / 1024).toFixed(1)} KB
-                              </span>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={removePhotoFile}
-                            className="rounded-lg bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-600 hover:bg-red-200 transition-all shrink-0 ml-2 cursor-pointer"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      ) : (
-                        <label className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[#c89b5a]/60 bg-white p-4 text-center hover:border-[#c89b5a] hover:bg-[#c89b5a]/5 transition-all cursor-pointer">
-                          <span className="text-xl mb-1">📷</span>
-                          <span className="text-xs font-semibold text-[#1e1e1e]">Upload Photo / Artwork File</span>
-                          <span className="text-[10px] text-[#1e1e1e]/50 mt-0.5">Supports PDF, JPEG, PNG, JPG</span>
-                          <input
-                            type="file"
-                            accept=".pdf,.jpeg,.png,.jpg"
-                            onChange={handlePhotoUpload}
-                            className="hidden"
-                          />
-                        </label>
-                      )}
-                    </div>
-
-                    {/* 3. Date Engraving Toggle & Picker */}
+                    {/* 2. Date Engraving Toggle & Picker */}
                     <div className="space-y-2.5 pt-2 border-t border-black/8">
                       <div className="flex items-center justify-between">
                         <label className="text-[11px] font-semibold text-[#1e1e1e]/80 block">

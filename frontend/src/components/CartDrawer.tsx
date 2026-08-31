@@ -49,6 +49,9 @@ export interface CartItem {
   quantity: number;
   num?: string;
   variantId?: string;
+  isPersonalised?: boolean;
+  engravingText?: string;
+  engravingDate?: string;
 }
 
 export interface CartDrawerProps {
@@ -643,11 +646,20 @@ export default function CartDrawer({
                                 color: "#18130F",
                                 letterSpacing: "0.01em",
                                 fontVariantNumeric: "tabular-nums",
-                                marginBottom: "10px",
+                                marginBottom: "4px",
                               }}
                             >
                               ₹{(item.price || 0).toLocaleString()}
                             </p>
+
+                            {/* Personalisation Badge & Notes */}
+                            {item.isPersonalised && (
+                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[#c89b5a]/30 bg-[#c89b5a]/10 px-2 py-1 text-[10px] text-[#18130F]">
+                                <span className="font-bold text-[#c89b5a] tracking-wider uppercase">✨ Personalised (+₹200)</span>
+                                {item.engravingText && <span>Name: <strong className="font-serif uppercase tracking-wider">{item.engravingText}</strong></span>}
+                                {item.engravingDate && <span>Date: <strong>{item.engravingDate}</strong></span>}
+                              </div>
+                            )}
 
                             {/* Controls row */}
                             <div className="flex items-center justify-between gap-2">

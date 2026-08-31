@@ -48,7 +48,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                   } else if (cat.page === "new-arrivals") {
                     onNavigate?.("new-arrivals");
                   } else if (cat.page === "personalisation") {
-                    onNavigate?.("personalisation");
+                    onNavigate?.("perfumes");
                   } else {
                     onNavigate?.("perfumes", cat.filter);
                   }
