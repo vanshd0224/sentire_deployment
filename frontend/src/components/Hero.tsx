@@ -156,14 +156,14 @@ export default function Hero({ onNavigate }: HeroProps) {
           JANMASTHAMI PURPLE OUD STILL-LIFE BACKGROUND (DESKTOP)
           ═════════════════════════════════════════════════════════════════ */}
       <picture className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
-        <source srcSet="/images/hero-bg.png" type="image/png" />
+        <source srcSet="/images/mobile-hero-rakhi.png" type="image/png" />
         <img
-          src="/images/hero-bg.png"
+          src="/images/mobile-hero-rakhi.png"
           alt="Sentire by PC Janmashtami Purple Oud Fragrance Still Life"
           fetchPriority="high"
           width="1672"
           height="941"
-          className="hero-clean-bg absolute inset-0 w-full h-full object-cover object-right md:object-center select-none pointer-events-none"
+          className="hero-clean-bg absolute inset-0 w-full h-full object-cover object-right md:object-right-bottom select-none pointer-events-none"
           style={{ transition: "opacity 0.6s ease-out" }}
           draggable={false}
         />
