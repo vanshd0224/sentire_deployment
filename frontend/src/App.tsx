@@ -223,20 +223,27 @@ export default function App() {
     };
 
     setCartItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (i) => i.productId === safeProductId && i.size === safeSize && i.isPersonalised === isPersonalised
+      // If adding a personalised bottle, replace any unpersonalised version of the same product & size!
+      const baseList = isPersonalised
+        ? prev.filter((i) => !(i.productId === safeProductId && i.size === safeSize && !i.isPersonalised))
+        : prev;
+
+      const existingIndex = baseList.findIndex(
+        (i) => i.productId === safeProductId && i.size === safeSize && Boolean(i.isPersonalised) === Boolean(isPersonalised)
       );
       if (existingIndex > -1) {
-        const updated = [...prev];
+        const updated = [...baseList];
         updated[existingIndex] = {
           ...updated[existingIndex],
           quantity: updated[existingIndex].quantity + qtyToAdd,
+          price: safePrice,
+          isPersonalised,
           engravingText: engravingText || updated[existingIndex].engravingText,
           engravingDate: engravingDate || updated[existingIndex].engravingDate,
         };
         return updated;
       }
-      return [...prev, newItem];
+      return [...baseList, newItem];
     });
     
     // Trigger real-time Shopify Storefront GraphQL mutation (cartCreate / cartLinesAdd)

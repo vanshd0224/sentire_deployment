@@ -148,12 +148,14 @@ export default function ProductDetailModal({
     setPhotoPreviewUrl(null);
   };
 
-  // Helper for cart quantity
+  // Helper for cart quantity (matches exact size and personalisation status)
   const cartQty = useMemo(() => {
     if (!product) return 0;
-    const item = cartItems.find((ci) => ci.productId === product.id && ci.size === selectedSize);
+    const item = cartItems.find(
+      (ci) => ci.productId === product.id && ci.size === selectedSize && Boolean(ci.isPersonalised) === Boolean(hasPersonalisation)
+    );
     return item ? item.quantity : 0;
-  }, [cartItems, product, selectedSize]);
+  }, [cartItems, product, selectedSize, hasPersonalisation]);
 
   // Comprehensive Scent Pyramid Notes & Tags
   const scentPyramid = useMemo(() => {
@@ -632,21 +634,19 @@ export default function ProductDetailModal({
 
                     <button
                       onClick={() => {
-                        if (cartQty === 0) {
-                          onAddToCart?.(
-                            {
-                              id: product.id,
-                              name: product.name,
-                              num: product.num,
-                              img: product.img,
-                              isPersonalised: hasPersonalisation,
-                              engravingText: hasPersonalisation ? engravingText.trim() : "",
-                              engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
-                            },
-                            selectedSize,
-                            currentPrice
-                          );
-                        }
+                        onAddToCart?.(
+                          {
+                            id: product.id,
+                            name: product.name,
+                            num: product.num,
+                            img: product.img,
+                            isPersonalised: hasPersonalisation,
+                            engravingText: hasPersonalisation ? engravingText.trim() : "",
+                            engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
+                          },
+                          selectedSize,
+                          currentPrice
+                        );
                         onOpenCart?.();
                         onClose();
                       }}
