@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "sentire-perfumes"
+  },
+  "targets": {
+    "sentire-perfumes": {
+      "hosting": {
+        "sentire-perfumes": [
+          "sentire-perfumes"
+        ]
+      }
+    }
+  }
+}
