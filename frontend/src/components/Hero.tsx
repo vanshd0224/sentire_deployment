@@ -552,7 +552,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute flex items-center"
             style={{
               left: "6.0%",
-              top: "31.84%",
+              top: "27.2%",
               width: "34.8%",
             }}
             aria-hidden="true"
@@ -571,15 +571,15 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute"
             style={{
               left: "6.0%",
-              top: "35.12%",
+              top: "29.5%",
               width: "70%",
             }}
           >
             <p
               className="hero-description m-0 text-left"
               style={{
-                fontSize: "clamp(13px, 3.48vw, 30px)",
-                lineHeight: 1.28,
+                fontSize: "clamp(12px, 3.2vw, 26px)",
+                lineHeight: 1.24,
                 color: "#2E1E16",
                 fontWeight: 400,
               }}
@@ -595,9 +595,9 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "6.0%",
-              top: "43.50%",
-              width: "min(280px, 47%)",
-              gap: "10px",
+              top: "35.8%",
+              width: "min(270px, 46%)",
+              gap: "8px",
             }}
           >
             {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
