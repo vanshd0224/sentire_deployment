@@ -69,7 +69,7 @@ export default function SentireLogo({
           src={getLogoSrc()}
           alt="SENTIRE ® By PC"
           style={{ height: logoHeight, width: "auto" }}
-          className="block object-contain max-h-[30px] sm:max-h-[34px] md:max-h-[38px] max-w-[150px] sm:max-w-[190px] md:max-w-[220px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.15)] shrink-0"
+          className="block object-contain max-h-[36px] sm:max-h-[42px] md:max-h-[46px] max-w-[200px] sm:max-w-[240px] md:max-w-[280px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.15)] shrink-0"
         />
       </div>
     </div>
