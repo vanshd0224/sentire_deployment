@@ -1061,46 +1061,46 @@ function generateHtml(templateHtml, route) {
   const buildTimestamp = Date.now();
 
   // Cache-bust JS asset URL to force Edge CDN / Cloudflare to purge old cached JS bundles
-  html = html.replace(/src="(\/assets\/(?:app-v2|index)-[^"]+\.js)"/g, `src="$1?v=${buildTimestamp}"`);
+  html = html.replace(/src="(\/assets\/(?:app-v2|index)-[^"]+\.js)"/g, (match, p1) => `src="${p1}?v=${buildTimestamp}"`);
 
   // Replace Title
-  html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`);
+  html = html.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${route.title}</title>`);
   
   // Replace Meta Description
-  html = html.replace(/<meta name="description" content="[\s\S]*?" \/>/, `<meta name="description" content="${route.description}" />`);
+  html = html.replace(/<meta name="description" content="[\s\S]*?" \/>/, () => `<meta name="description" content="${route.description}" />`);
   
   // Replace Canonical Link
-  html = html.replace(/<link rel="canonical" href="[\s\S]*?" \/>/, `<link rel="canonical" href="${canonicalUrl}" />`);
+  html = html.replace(/<link rel="canonical" href="[\s\S]*?" \/>/, () => `<link rel="canonical" href="${canonicalUrl}" />`);
   
   // Replace OG tags
-  html = html.replace(/<meta property="og:url" content="[\s\S]*?" \/>/, `<meta property="og:url" content="${canonicalUrl}" />`);
-  html = html.replace(/<meta property="og:title" content="[\s\S]*?" \/>/, `<meta property="og:title" content="${route.ogTitle}" />`);
-  html = html.replace(/<meta property="og:description" content="[\s\S]*?" \/>/, `<meta property="og:description" content="${route.ogDescription}" />`);
-  html = html.replace(/<meta property="og:image" content="[\s\S]*?" \/>/, `<meta property="og:image" content="${route.image}" />`);
+  html = html.replace(/<meta property="og:url" content="[\s\S]*?" \/>/, () => `<meta property="og:url" content="${canonicalUrl}" />`);
+  html = html.replace(/<meta property="og:title" content="[\s\S]*?" \/>/, () => `<meta property="og:title" content="${route.ogTitle}" />`);
+  html = html.replace(/<meta property="og:description" content="[\s\S]*?" \/>/, () => `<meta property="og:description" content="${route.ogDescription}" />`);
+  html = html.replace(/<meta property="og:image" content="[\s\S]*?" \/>/, () => `<meta property="og:image" content="${route.image}" />`);
 
   // Replace Twitter tags
-  html = html.replace(/<meta name="twitter:url" content="[\s\S]*?" \/>/, `<meta name="twitter:url" content="${canonicalUrl}" />`);
-  html = html.replace(/<meta name="twitter:title" content="[\s\S]*?" \/>/, `<meta name="twitter:title" content="${route.ogTitle}" />`);
-  html = html.replace(/<meta name="twitter:description" content="[\s\S]*?" \/>/, `<meta name="twitter:description" content="${route.ogDescription}" />`);
-  html = html.replace(/<meta name="twitter:image" content="[\s\S]*?" \/>/, `<meta name="twitter:image" content="${route.image}" />`);
+  html = html.replace(/<meta name="twitter:url" content="[\s\S]*?" \/>/, () => `<meta name="twitter:url" content="${canonicalUrl}" />`);
+  html = html.replace(/<meta name="twitter:title" content="[\s\S]*?" \/>/, () => `<meta name="twitter:title" content="${route.ogTitle}" />`);
+  html = html.replace(/<meta name="twitter:description" content="[\s\S]*?" \/>/, () => `<meta name="twitter:description" content="${route.ogDescription}" />`);
+  html = html.replace(/<meta name="twitter:image" content="[\s\S]*?" \/>/, () => `<meta name="twitter:image" content="${route.image}" />`);
 
-  // Replace JSON-LD schema
+  // Replace JSON-LD schema safely
   if (route.getSchema) {
     const schemaJson = JSON.stringify(route.getSchema(), null, 2);
     html = html.replace(
       /<script type="application\/ld\+json" id="sentire-dynamic-jsonld">[\s\S]*?<\/script>/,
-      `<script type="application/ld+json" id="sentire-dynamic-jsonld">\n${schemaJson}\n    </script>`
+      () => `<script type="application/ld+json" id="sentire-dynamic-jsonld">\n${schemaJson}\n    </script>`
     );
   }
 
-  // Pre-render semantic HTML inside root for crawlers
+  // Pre-render semantic HTML inside root for crawlers safely
   if (route.contentHtml) {
     if (/<div id="root"[^>]*>[\s\S]*?<\/noscript>\s*<\/div>/.test(html)) {
-      html = html.replace(/<div id="root"[^>]*>[\s\S]*?<\/noscript>\s*<\/div>/, `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+      html = html.replace(/<div id="root"[^>]*>[\s\S]*?<\/noscript>\s*<\/div>/, () => `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     } else if (/<div id="root"[^>]*>\s*<\/div>/.test(html)) {
-      html = html.replace(/<div id="root"[^>]*>\s*<\/div>/, `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+      html = html.replace(/<div id="root"[^>]*>\s*<\/div>/, () => `<div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     } else {
-      html = html.replace('<body>', `<body>\n    <div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
+      html = html.replace('<body>', () => `<body>\n    <div id="root" style="background-color: #050505; min-height: 100vh;">\n      <noscript>\n${route.contentHtml}\n      </noscript>\n    </div>`);
     }
   }
 
