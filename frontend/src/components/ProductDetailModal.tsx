@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import type { PerfumeProduct } from "./PerfumesPage";
+import type { PerfumeProduct } from "../types/appTypes";
 import type { CartItem } from "./CartDrawer";
 import { getPerfumeReviews, getPerfumeReviewStats, type Review } from "../data/reviews";
 

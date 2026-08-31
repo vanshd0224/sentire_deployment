@@ -3,23 +3,8 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeFilterOptions } from "./Navbar";
 import ProductDetailModal from "./ProductDetailModal";
 
-export interface PerfumeProduct {
-  id: string;
-  num: string;
-  name: string;
-  desc: string;
-  fullDesc?: string;
-  scentFamily: "woody" | "fresh" | "ambar" | "citrus" | "oriental" | "floral";
-  moods: string[];
-  sizes: (10 | 30 | 50)[];
-  outOfStockSizes?: (10 | 30 | 50)[];
-  prices: Record<number, number>;
-  mrps?: Record<number, number>;
-  badge?: "bestseller" | "new" | "exclusive" | null;
-  img: string;
-  sizeImages?: Record<number, string[]>;
-  traces: string[];
-}
+import type { PerfumeProduct } from "../types/appTypes";
+export type { PerfumeProduct };
 
 const ALL_SIZES_PRODUCTS: PerfumeProduct[] = ALL_PERFUMES;
 
