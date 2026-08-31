@@ -44,8 +44,13 @@ export default function ProductDetailModal({
   const [isCheckingPincode, setIsCheckingPincode] = useState<boolean>(false);
   const [selectedNote, setSelectedNote] = useState<ScentNote | null>(null);
   const [notifyEmail, setNotifyEmail] = useState<string>("");
-  const [notifySubmitted, setNotifySubmitted] = useState<boolean>(false);
   const [copiedShareLink, setCopiedShareLink] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   const handleShare = async (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -1194,6 +1199,13 @@ export default function ProductDetailModal({
             Add to Bag →
           </button>
         </div>
+
+        {/* Floating Toast Notification */}
+        {toastMessage && (
+          <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-[#120e0a] border border-[#c89b5a] px-6 py-2.5 text-xs font-bold text-[#c89b5a] shadow-2xl animate-in fade-in slide-in-from-bottom-4">
+            {toastMessage}
+          </div>
+        )}
       </div>
     </div>
   );
