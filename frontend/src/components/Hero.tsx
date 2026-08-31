@@ -55,92 +55,117 @@ export default function Hero({ onNavigate }: HeroProps) {
     >
       <style>{`
         /* ═════════════════════════════════════════════════════════════════
-           TYPOGRAPHY SYSTEM (Cormorant Garamond + Montserrat / Inter)
+           TYPOGRAPHY SYSTEM (Cormorant Garamond 300/400 + Allura + Montserrat)
            ═════════════════════════════════════════════════════════════════ */
-        .hero-janmashtami-title {
-          font-family: "Cormorant Garamond", Georgia, serif !important;
-          font-weight: 500 !important;
+        .hero-title {
+          font-family: "Cormorant Garamond", serif !important;
+          font-weight: 300 !important;
           font-style: normal !important;
-          color: #24133F !important;
-          line-height: 1.02 !important;
+          color: #2B160F !important;
+          line-height: 0.94 !important;
           letter-spacing: -0.015em !important;
-          text-shadow: 0 1px 2px rgba(36, 19, 63, 0.04);
         }
 
-        .hero-janmashtami-kicker {
-          font-family: "Montserrat", -apple-system, sans-serif !important;
-          font-weight: 500 !important;
-          color: #38241D !important;
-          letter-spacing: 0.035em !important;
-        }
-
-        .hero-janmashtami-body {
-          font-family: "Inter", "Montserrat", -apple-system, sans-serif !important;
+        .hero-script {
+          font-family: "Allura", cursive !important;
           font-weight: 400 !important;
-          color: #1F1535 !important;
-          line-height: 1.62 !important;
+          font-style: normal !important;
+          color: #A66B18 !important;
+          line-height: 0.88 !important;
+          letter-spacing: 0.01em !important;
+        }
+
+        .hero-description {
+          font-family: "Cormorant Garamond", serif !important;
+          font-weight: 400 !important;
+          font-style: normal !important;
+          color: #382219 !important;
+          line-height: 1.25 !important;
           letter-spacing: -0.005em !important;
         }
 
-        .hero-janmashtami-badge {
-          font-family: "Montserrat", "Inter", -apple-system, sans-serif !important;
-          font-style: normal !important;
+        .hero-usp {
+          font-family: "Montserrat", sans-serif !important;
           font-weight: 500 !important;
-          color: #945722 !important;
-          letter-spacing: 0.015em !important;
+          color: #2C211C !important;
+          line-height: 1.25 !important;
         }
 
-        /* Primary Button: Shop Now ➔ */
-        .hero-cta-shop-now {
+        /* Primary Button: SHOP RAKHI GIFTS */
+        .hero-cta-primary {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background-color: #251642;
-          background-image: linear-gradient(180deg, #2D1A4D 0%, #201239 100%);
-          color: #F8EEE7;
-          border: 1px solid rgba(200, 148, 57, 0.4);
-          border-radius: 10px;
+          background-color: #28150E;
+          color: #E7B65B;
+          border: 1.5px solid #B88638;
           font-family: "Montserrat", sans-serif !important;
           font-weight: 500 !important;
-          letter-spacing: 0.04em;
-          box-shadow: 0 6px 22px rgba(37, 22, 66, 0.28);
+          letter-spacing: 0.16em;
+          text-transform: uppercase !important;
+          box-shadow: 0 4px 20px rgba(40, 21, 14, 0.22);
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           text-decoration: none;
           cursor: pointer;
         }
-        .hero-cta-shop-now:hover {
-          background-color: #1c0e33;
-          border-color: #C89439;
-          box-shadow: 0 10px 30px rgba(37, 22, 66, 0.38);
+        .hero-cta-primary::after {
+          content: "";
+          position: absolute;
+          inset: 3px;
+          border: 1px solid rgba(184, 134, 56, 0.45);
+          pointer-events: none;
+          transition: all 0.35s ease;
+        }
+        .hero-cta-primary:hover {
+          background-color: #1a0d08;
+          border-color: #d4a34e;
+          box-shadow: 0 8px 30px rgba(184, 134, 56, 0.35);
           transform: translateY(-1.5px);
         }
+        .hero-cta-primary:hover::after {
+          border-color: rgba(231, 182, 91, 0.85);
+          inset: 4px;
+        }
 
-        /* Secondary Button: Explore Collection ➔ */
-        .hero-cta-explore {
+        /* Secondary Button: PRODUCT PERSONALISATION */
+        .hero-cta-secondary {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 249, 244, 0.65);
+          background: rgba(243, 223, 197, 0.55);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          color: #251642;
-          border: 1.5px solid #C89439;
-          border-radius: 10px;
+          color: #28150E;
+          border: 1.5px solid #B88638;
           font-family: "Montserrat", sans-serif !important;
           font-weight: 500 !important;
-          letter-spacing: 0.03em;
-          box-shadow: 0 4px 16px rgba(37, 22, 66, 0.06);
+          letter-spacing: 0.14em;
+          text-transform: uppercase !important;
+          box-shadow: 0 4px 16px rgba(40, 21, 14, 0.08);
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           text-decoration: none;
           cursor: pointer;
         }
-        .hero-cta-explore:hover {
-          background: rgba(255, 255, 255, 0.9);
-          border-color: #A87624;
-          box-shadow: 0 8px 24px rgba(200, 148, 57, 0.22);
+        .hero-cta-secondary::after {
+          content: "";
+          position: absolute;
+          inset: 3px;
+          border: 1px solid rgba(184, 134, 56, 0.35);
+          pointer-events: none;
+          transition: all 0.35s ease;
+        }
+        .hero-cta-secondary:hover {
+          background-color: #28150E;
+          color: #E7B65B;
+          border-color: #d4a34e;
+          box-shadow: 0 8px 24px rgba(184, 134, 56, 0.3);
           transform: translateY(-1.5px);
+        }
+        .hero-cta-secondary:hover::after {
+          border-color: rgba(231, 182, 91, 0.85);
+          inset: 4px;
         }
 
         @media (max-width: 900px) {
@@ -158,8 +183,8 @@ export default function Hero({ onNavigate }: HeroProps) {
         }
         @media (min-width: 901px) {
           .hero-section {
-            height: 100vh !important;
-            min-height: 720px !important;
+            height: calc(100vh - 96px) !important;
+            min-height: calc(100vh - 96px) !important;
             max-height: none !important;
           }
           .hero-desktop-content {
@@ -172,14 +197,14 @@ export default function Hero({ onNavigate }: HeroProps) {
       `}</style>
 
       {/* ═════════════════════════════════════════════════════════════════
-          FULL-BLEED PHOTOGRAPHIC JANMASHTAMI HERO BACKGROUND (DESKTOP)
+          FULL-BLEED PHOTOGRAPHIC STILL-LIFE BACKGROUND (DESKTOP)
           ═════════════════════════════════════════════════════════════════ */}
       <picture className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
-        <source srcSet="/images/hero-krishna-desktop.webp" type="image/webp" />
-        <source srcSet="/images/hero-krishna-desktop.png" type="image/png" />
+        <source srcSet="/images/hero-rakhi-clean.webp" type="image/webp" />
+        <source srcSet="/images/hero-rakhi-clean.png" type="image/png" />
         <img
-          src="/images/hero-krishna-desktop.png"
-          alt="SENTIRE By PC Janmashtami Luxury Perfume Collection"
+          src="/images/hero-rakhi-clean.png"
+          alt="Sentire by PC Rakhi Luxury Fragrance Gifting Still Life"
           fetchPriority="high"
           width="1672"
           height="941"
@@ -191,208 +216,244 @@ export default function Hero({ onNavigate }: HeroProps) {
         />
       </picture>
 
+      {/* Top-Left Subtle Ornamental Mandala Motif (DESKTOP) */}
+      <div
+        className="hidden md:block absolute top-0 left-0 pointer-events-none select-none opacity-20"
+        style={{ width: "24%", maxWidth: "320px", aspectRatio: "1/1", zIndex: 3 }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-[#D7AD72]">
+          <circle cx="0" cy="0" r="190" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="165" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
+          <circle cx="0" cy="0" r="140" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="115" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+          <circle cx="0" cy="0" r="90" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="0" cy="0" r="65" stroke="currentColor" strokeWidth="0.5" />
+          {Array.from({ length: 16 }).map((_, i) => {
+            const angle = (i * 90) / 16;
+            const rad = (angle * Math.PI) / 180;
+            const x1 = Math.cos(rad) * 65;
+            const y1 = Math.sin(rad) * 65;
+            const x2 = Math.cos(rad) * 140;
+            const y2 = Math.sin(rad) * 140;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.5" />;
+          })}
+        </svg>
+      </div>
+
       {/* ═════════════════════════════════════════════════════════════════
-          DESKTOP JANMASHTAMI EDITORIAL CONTENT LAYER (51-54% Left Content)
+          DESKTOP EDITORIAL CONTENT LAYER (Full-Bleed, Adjusted Spacing)
           ═════════════════════════════════════════════════════════════════ */}
       <div
         className="hero-desktop-content absolute inset-0 flex flex-col justify-center"
         style={{
-          paddingLeft: "clamp(48px, 10.2vw, 195px)",
-          paddingTop: "clamp(90px, 13vh, 140px)",
-          paddingBottom: "clamp(30px, 4vh, 60px)",
-          paddingRight: "46%", // Preserves right photographic focus on the perfume bottle
+          paddingLeft: "clamp(36px, 7.5vw, 125px)",
+          paddingTop: "clamp(28px, 4.5vh, 60px)",
+          paddingBottom: "clamp(28px, 4.5vh, 60px)",
+          paddingRight: "46%", // Clear space for the perfume still life on right
           zIndex: 6,
         }}
       >
-        {/* Kicker Eyebrow: Feather Motif + Celebrate Janmashtami in Fragrance */}
-        <div className="flex items-center gap-3 mb-2.5 sm:mb-3 select-none">
-          <img
-            src="/images/janmashtami/kicker-feather.png"
-            alt=""
-            aria-hidden="true"
-            className="h-[28px] sm:h-[34px] w-auto object-contain drop-shadow-[0_1px_3px_rgba(200,148,57,0.25)]"
-          />
-          <span
-            className="hero-janmashtami-kicker"
-            style={{
-              fontSize: "clamp(13px, 1.05vw, 17px)",
-              color: "#352219",
-              lineHeight: 1.2,
-            }}
-          >
-            Celebrate Janmashtami in Fragrance
-          </span>
-        </div>
-
-        {/* Main Headline: A Divine Scent / for Janmashtami */}
+        {/* Main Headline */}
         <h1
-          className="hero-janmashtami-title m-0"
+          className="hero-title m-0"
           style={{
-            fontSize: "clamp(54px, 5.3vw, 104px)",
-            lineHeight: 0.98,
-            marginBottom: "clamp(14px, 2vh, 24px)",
-            letterSpacing: "-0.015em",
+            fontSize: "clamp(52px, 5.2vw, 90px)",
+            lineHeight: 0.94,
           }}
         >
-          A Divine Scent
+          A Pure
           <br />
-          for Janmashtami
+          Rakhi Gesture
         </h1>
 
-        {/* Horizontal Gold Ornamental Divider with Central Motif */}
+        {/* Script Subheadline */}
         <div
-          className="flex items-center"
+          className="hero-script select-none"
           style={{
-            maxWidth: "520px",
-            width: "100%",
-            marginTop: "clamp(4px, 0.8vh, 10px)",
-            marginBottom: "clamp(16px, 2.4vh, 28px)",
+            fontSize: "clamp(44px, 4.2vw, 70px)",
+            lineHeight: 0.88,
+            marginTop: "clamp(4px, 0.6vw, 10px)",
+            transform: "translateY(-2px)",
+          }}
+        >
+          Wrapped in Fragrance
+        </div>
+
+        {/* Ornamental Divider */}
+        <div
+          className="flex items-center my-3"
+          style={{
+            maxWidth: "480px",
+            marginTop: "clamp(12px, 1.8vh, 22px)",
+            marginBottom: "clamp(12px, 1.8vh, 22px)",
           }}
           aria-hidden="true"
         >
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C89439]/10 via-[#C89439]/60 to-[#C89439]" />
-          <div className="mx-3 flex items-center justify-center shrink-0">
-            <img
-              src="/images/janmashtami/ornament-divider-flower.png"
-              alt=""
-              aria-hidden="true"
-              className="h-[15px] sm:h-[18px] w-auto object-contain"
-            />
+          <div className="flex-1 h-[1px] bg-[#35221A] opacity-60" />
+          <div className="mx-2.5 flex items-center justify-center">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0L10 5L5 10L0 5L5 0Z" fill="#35221A" />
+            </svg>
           </div>
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C89439] via-[#C89439]/60 to-[#C89439]/10" />
+          <div className="flex-1 h-[1px] bg-[#35221A] opacity-60" />
         </div>
 
-        {/* Body Paragraph */}
+        {/* Supporting Sentence */}
         <p
-          className="hero-janmashtami-body m-0"
+          className="hero-description m-0"
           style={{
-            fontSize: "clamp(15px, 1.15vw, 19px)",
-            lineHeight: 1.62,
-            maxWidth: "530px",
-            color: "#211638",
-            marginBottom: "clamp(18px, 2.6vh, 32px)",
+            fontSize: "clamp(18px, 1.55vw, 26px)",
+            lineHeight: 1.25,
           }}
         >
-          Immerse your senses in the soft elegance of Sentire by PC, inspired by devotion, beauty, and timeless celebration.
+          Personalized. Festive. Made for your bond.
         </p>
 
-        {/* Limited Festive Edition Badge (Gold Flute Icon + Accent) */}
-        <div className="flex items-center gap-3 mb-6 sm:mb-8 select-none">
-          <img
-            src="/images/janmashtami/flute-badge.png"
-            alt=""
-            aria-hidden="true"
-            className="h-[24px] sm:h-[28px] w-auto object-contain drop-shadow-[0_1px_3px_rgba(200,148,57,0.3)]"
-          />
-          <span
-            className="hero-janmashtami-badge"
-            style={{
-              fontSize: "clamp(14px, 1.05vw, 17px)",
-              color: "#8C5F22",
-            }}
-          >
-            Limited Festive Edition
-          </span>
+        {/* 3-Column USP Row */}
+        <div
+          className="grid grid-cols-3 items-center"
+          style={{
+            maxWidth: "490px",
+            marginTop: "clamp(18px, 2.6vh, 34px)",
+            marginBottom: "clamp(22px, 3vh, 40px)",
+          }}
+        >
+          {/* Col 1: Photo & Name Engraving */}
+          <div className="flex flex-col items-center text-center px-1.5">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="24" height="30" viewBox="0 0 28 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="7" y="2" width="14" height="6" rx="1" />
+                <rect x="3" y="8" width="22" height="24" rx="2" />
+                <line x1="14" y1="15" x2="14" y2="25" />
+                <line x1="9" y1="20" x2="19" y2="20" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              Photo &amp; Name
+              <br />
+              Engraving
+            </div>
+          </div>
+
+          {/* Col 2: 35%+ Perfume Oil Concentration */}
+          <div className="flex flex-col items-center text-center px-1.5 border-l border-r border-[#382219]/25">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="22" height="30" viewBox="0 0 26 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 3C13 3 3 15.5 3 22C3 27.5 7.5 31 13 31C18.5 31 23 27.5 23 22C23 15.5 13 3 13 3Z" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              35%+ Perfume Oil
+              <br />
+              Concentration
+            </div>
+          </div>
+
+          {/* Col 3: Express Delivery */}
+          <div className="flex flex-col items-center text-center px-1.5">
+            <div className="h-9 flex items-center justify-center mb-1.5 text-[#2C211C]">
+              <svg width="28" height="30" viewBox="0 0 32 34" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="17" cy="18" r="11" />
+                <polyline points="17 12 17 18 21 20" />
+                <line x1="17" y1="3" x2="17" y2="7" />
+                <line x1="3" y1="12" x2="7" y2="12" strokeWidth="1.2" />
+                <line x1="1" y1="17" x2="6" y2="17" strokeWidth="1.2" />
+                <line x1="4" y1="22" x2="8" y2="22" strokeWidth="1.2" />
+              </svg>
+            </div>
+            <div
+              className="hero-usp"
+              style={{ fontSize: "clamp(11px, 0.88vw, 14.5px)", lineHeight: 1.22 }}
+            >
+              Express
+              <br />
+              Delivery
+            </div>
+          </div>
         </div>
 
-        {/* Dual Call-to-Action Buttons Row */}
-        <div className="flex items-center gap-4 sm:gap-5 flex-wrap">
-          {/* Button 1: Shop Now ➔ */}
+        {/* Dual Action Buttons Row */}
+        <div className="flex items-center flex-wrap gap-3.5">
+          {/* Primary CTA: SHOP RAKHI GIFTS */}
           <a
             href="#perfumes"
             onClick={handleCtaClick}
-            className="hero-cta-shop-now"
+            className="hero-cta-primary"
             style={{
-              padding: "0 clamp(28px, 2.4vw, 42px)",
-              height: "clamp(48px, 3.6vw, 56px)",
+              padding: "0 clamp(18px, 1.6vw, 28px)",
+              height: "clamp(46px, 3.6vw, 56px)",
             }}
           >
             <span
               style={{
-                fontSize: "clamp(13.5px, 1.02vw, 16px)",
-                marginRight: "14px",
-                color: "#FFF9F4",
-                fontWeight: 500,
+                fontSize: "clamp(12px, 0.95vw, 15px)",
+                marginRight: "10px",
+                paddingLeft: "2px",
               }}
             >
-              Shop Now
+              SHOP RAKHI GIFTS
             </span>
-            <svg
-              width="19"
-              height="12"
-              viewBox="0 0 20 12"
-              fill="none"
-              stroke="#D0A24B"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-            >
-              <line x1="1" y1="6" x2="19" y2="6" />
-              <polyline points="13 1 19 6 13 11" />
+            <svg width="18" height="10" viewBox="0 0 22 12" fill="none" className="text-[#E7B65B] flex-shrink-0">
+              <path d="M1 6H20M15 1L20 6L15 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
 
-          {/* Button 2: Explore Collection ➔ */}
-          <a
-            href="#perfumes"
-            onClick={handleCtaClick}
-            className="hero-cta-explore"
+          {/* Secondary CTA: PRODUCT PERSONALISATION */}
+          <button
+            type="button"
+            onClick={handlePersonalisationClick}
+            className="hero-cta-secondary"
             style={{
-              padding: "0 clamp(24px, 2.2vw, 38px)",
-              height: "clamp(48px, 3.6vw, 56px)",
+              padding: "0 clamp(16px, 1.4vw, 24px)",
+              height: "clamp(46px, 3.6vw, 56px)",
             }}
           >
             <span
               style={{
-                fontSize: "clamp(13.5px, 1.02vw, 16px)",
-                marginRight: "14px",
-                color: "#251642",
-                fontWeight: 500,
+                fontSize: "clamp(12px, 0.95vw, 15px)",
+                marginRight: "8px",
+                paddingLeft: "2px",
               }}
             >
-              Explore Collection
+              PRODUCT PERSONALISATION
             </span>
-            <svg
-              width="19"
-              height="12"
-              viewBox="0 0 20 12"
-              fill="none"
-              stroke="#A87624"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="shrink-0 transition-transform duration-200 group-hover:translate-x-1"
-            >
-              <line x1="1" y1="6" x2="19" y2="6" />
-              <polyline points="13 1 19 6 13 11" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="flex-shrink-0">
+              <path d="M12 20h9" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
 
       {/* ═════════════════════════════════════════════════════════════════
           MOBILE 1:1 REPLICA HERO LAYOUT (< 900px)
-          Exact 1:1 Replica matching reference 941 × 1506 px canvas
+          Exact 1:1 Replica matching reference 863 × 1551 px canvas
           ═════════════════════════════════════════════════════════════════ */}
       <div
         className="hero-mobile-content relative w-full overflow-hidden select-none"
         style={{
           width: "100%",
-          aspectRatio: "941 / 1506",
-          backgroundColor: "#F2DCD9",
+          aspectRatio: "863 / 1432",
+          backgroundColor: "#F3DFC5",
         }}
       >
-        {/* Clean Photographic Still-Life Background Plate */}
+        {/* Clean Photographic Still-Life Background */}
         <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
-          <source srcSet="/images/mobile-hero-krishna.webp" type="image/webp" />
-          <source srcSet="/images/mobile-hero-krishna.png" type="image/png" />
+          <source srcSet="/images/mobile-hero-rakhi.webp" type="image/webp" />
+          <source srcSet="/images/mobile-hero-rakhi.png" type="image/png" />
           <img
-            src="/images/mobile-hero-krishna.png"
-            alt="SENTIRE By PC Janmashtami Luxury Fragrance Mobile Collection"
+            src="/images/mobile-hero-rakhi.png"
+            alt="Sentire by PC Rakhi Luxury Fragrance Gifting Mobile Still Life"
             fetchPriority="high"
-            width="941"
-            height="1506"
+            width="863"
+            height="1432"
             className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             style={{
               objectPosition: "center 0px",
@@ -401,280 +462,240 @@ export default function Hero({ onNavigate }: HeroProps) {
           />
         </picture>
 
-        {/* ── Mobile Hero Editorial Layer (Locked to 941x1506 Canvas) ── */}
+        {/* Subtle Top-Left Decorative Line-Art Motif (Opacity 5-8%) */}
+        <div
+          className="absolute top-0 left-0 pointer-events-none select-none"
+          style={{
+            width: "35%",
+            aspectRatio: "1/1",
+            opacity: 0.07,
+            zIndex: 3,
+          }}
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-[#B87919]">
+            <circle cx="0" cy="0" r="190" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="165" stroke="currentColor" strokeWidth="0.6" strokeDasharray="3 3" />
+            <circle cx="0" cy="0" r="140" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="115" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" />
+            <circle cx="0" cy="0" r="90" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="0" cy="0" r="65" stroke="currentColor" strokeWidth="0.6" />
+            {Array.from({ length: 16 }).map((_, i) => {
+              const angle = (i * 90) / 16;
+              const rad = (angle * Math.PI) / 180;
+              const x1 = Math.cos(rad) * 65;
+              const y1 = Math.sin(rad) * 65;
+              const x2 = Math.cos(rad) * 140;
+              const y2 = Math.sin(rad) * 140;
+              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="0.6" />;
+            })}
+          </svg>
+        </div>
+
+        {/* ── Mobile Hero Editorial Layer (Absolute Positioning locked to 863x1432) ── */}
         <div className="absolute inset-0 pointer-events-none z-10">
-
-          {/* 1. Festive Intro Label: Feather Graphic + "Celebrate Janmashtami in Fragrance" */}
-          <div
-            className="absolute flex items-center"
-            style={{
-              left: "14.0%",
-              top: "2.25%",
-              gap: "8px",
-            }}
-          >
-            <img
-              src="/images/janmashtami/kicker-feather.png"
-              alt=""
-              aria-hidden="true"
-              className="w-auto select-none pointer-events-none"
-              style={{
-                height: "clamp(18px, 4.4vw, 32px)",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 500,
-                color: "#85501F",
-                fontSize: "clamp(11px, 2.7vw, 20px)",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                lineHeight: 1,
-              }}
-            >
-              Celebrate Janmashtami in Fragrance
-            </span>
-          </div>
-
-          {/* 2. Main Headline: "A Divine Scent / for Janmashtami" */}
+          
+          {/* Main Headline: A Pure / Rakhi Gesture */}
           <div
             className="absolute"
             style={{
-              left: "13.5%",
-              top: "5.50%",
-              width: "75%",
+              left: "6.0%",
+              top: "5.10%",
+              width: "80%",
             }}
           >
-            <h1
-              className="m-0 text-left"
+            <div
+              role="heading"
+              aria-level={1}
+              className="hero-title m-0 text-left"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(34px, 8.7vw, 68px)",
-                lineHeight: 0.94,
+                fontSize: "clamp(38px, 10.89vw, 94px)",
+                lineHeight: 0.96,
                 letterSpacing: "-0.015em",
-                color: "#25163F",
-                fontWeight: 400,
+                color: "#21150F",
+                fontWeight: 300,
               }}
             >
-              A Divine Scent
+              A Pure
               <br />
-              for Janmashtami
-            </h1>
+              Rakhi Gesture
+            </div>
           </div>
 
-          {/* 3. Ornamental Divider with Central Floral Motif */}
+          {/* Script Subhead: Wrapped in / Fragrance */}
+          <div
+            className="absolute"
+            style={{
+              left: "6.0%",
+              top: "19.55%",
+              width: "80%",
+            }}
+          >
+            <div
+              className="hero-script text-left select-none"
+              style={{
+                fontSize: "clamp(28px, 7.88vw, 68px)",
+                lineHeight: 0.92,
+                color: "#B87919",
+                fontWeight: 400,
+                letterSpacing: "0.01em",
+              }}
+            >
+              Wrapped in
+              <br />
+              Fragrance
+            </div>
+          </div>
+
+          {/* Decorative Divider: ──────── ✦ ──────── */}
           <div
             className="absolute flex items-center"
             style={{
-              left: "14.0%",
-              top: "22.50%",
-              width: "70%",
+              left: "6.0%",
+              top: "27.2%",
+              width: "34.8%",
             }}
             aria-hidden="true"
           >
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D]/20 via-[#C7903D]/70 to-[#C7903D]" />
-            <div className="mx-2 flex items-center justify-center shrink-0">
-              <img
-                src="/images/janmashtami/ornament-divider-flower.png"
-                alt=""
-                aria-hidden="true"
-                className="w-auto object-contain"
-                style={{
-                  height: "clamp(12px, 3.2vw, 22px)",
-                }}
-              />
+            <div className="flex-1 h-[1px] bg-[#35221A] opacity-55" />
+            <div className="mx-2 flex items-center justify-center flex-shrink-0">
+              <svg width="8" height="8" viewBox="0 0 10 10" fill="none" className="w-[clamp(6px,1vw,9px)] h-[clamp(6px,1vw,9px)]">
+                <path d="M5 0L10 5L5 10L0 5L5 0Z" fill="#35221A" />
+              </svg>
             </div>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D] via-[#C7903D]/70 to-[#C7903D]/20" />
+            <div className="flex-1 h-[1px] bg-[#35221A] opacity-55" />
           </div>
 
-          {/* 4. Body Copy (3 lines exactly as specified) */}
+          {/* Supporting Message: Personalized. Festive. / Made for your bond. */}
           <div
             className="absolute"
             style={{
-              left: "14.0%",
-              top: "25.20%",
-              width: "72%",
+              left: "6.0%",
+              top: "29.5%",
+              width: "70%",
             }}
           >
             <p
-              className="m-0 text-left"
+              className="hero-description m-0 text-left"
               style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: "clamp(11px, 2.75vw, 20px)",
-                lineHeight: 1.44,
-                color: "#252047",
+                fontSize: "clamp(12px, 3.2vw, 26px)",
+                lineHeight: 1.24,
+                color: "#2E1E16",
                 fontWeight: 400,
-                letterSpacing: "-0.005em",
               }}
             >
-              Immerse your senses in the soft elegance
+              Personalized. Festive.
               <br />
-              of Sentire by PC, inspired by devotion,
-              <br />
-              beauty, and timeless celebration.
+              Made for your bond.
             </p>
           </div>
 
-          {/* 5. Limited Festive Edition Badge (Gold Flute Icon + Accent) */}
-          <div
-            className="absolute flex items-center"
-            style={{
-              left: "14.0%",
-              top: "34.10%",
-              gap: "8px",
-            }}
-          >
-            <img
-              src="/images/janmashtami/flute-badge.png"
-              alt=""
-              aria-hidden="true"
-              className="w-auto object-contain"
-              style={{
-                height: "clamp(16px, 4.0vw, 28px)",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 500,
-                color: "#8A571F",
-                fontSize: "clamp(11px, 2.7vw, 19px)",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                lineHeight: 1,
-              }}
-            >
-              Limited Festive Edition
-            </span>
-          </div>
-
-          {/* 6. CTA Buttons Container (Shop Now + Explore Collection) */}
+          {/* Dual Action CTA Buttons (Properly placed in left column with clear bottle margin) */}
           <div
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
-              left: "14.0%",
-              top: "38.80%",
-              width: "47.3%",
-              gap: "clamp(8px, 1.8vw, 14px)",
+              left: "6.0%",
+              top: "35.8%",
+              width: "min(270px, 46%)",
+              gap: "8px",
             }}
           >
-            {/* Primary CTA: "Shop Now" */}
+            {/* Primary CTA Button: SHOP RAKHI GIFTS ⟶ */}
             <a
               href="#perfumes"
               onClick={handleCtaClick}
-              className="w-full flex items-center justify-between transition-all duration-200 active:scale-[0.98]"
+              className="hero-cta-primary w-full flex items-center justify-center rounded-none shadow-md"
               style={{
-                height: "clamp(42px, 10.2vw, 76px)",
-                backgroundColor: "#2D1748",
-                borderRadius: "16px",
-                padding: "0 clamp(16px, 4.0vw, 32px)",
+                height: "44px",
+                backgroundColor: "#211008",
+                backgroundImage: "linear-gradient(180deg, #28150E 0%, #1D0E07 100%)",
+                border: "1.5px solid #B88638",
+                boxShadow: "0 4px 18px rgba(33, 16, 8, 0.3)",
+                padding: "0 10px",
                 textDecoration: "none",
                 boxSizing: "border-box",
-                boxShadow: "0 4px 16px rgba(45, 23, 72, 0.22)",
+                overflow: "hidden",
               }}
             >
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(13px, 3.4vw, 24px)",
-                  fontWeight: 500,
-                  color: "#E8BA59",
+                  fontSize: "10.5px",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  color: "#E7B65B",
+                  textTransform: "uppercase",
+                  marginRight: "6px",
                   whiteSpace: "nowrap",
                   lineHeight: 1,
                 }}
               >
-                Shop Now
+                SHOP RAKHI GIFTS
               </span>
               <svg
+                width="13"
+                height="9"
                 viewBox="0 0 24 12"
                 fill="none"
-                stroke="#E3B24E"
-                strokeWidth="1.8"
+                stroke="#E7B65B"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{
-                  width: "clamp(15px, 3.8vw, 26px)",
-                  height: "auto",
-                  flexShrink: 0,
-                }}
+                style={{ width: "13px", height: "9px", minWidth: "13px", maxWidth: "13px", flexShrink: 0 }}
               >
                 <line x1="1" y1="6" x2="22" y2="6" />
                 <polyline points="16 1 22 6 16 11" />
               </svg>
             </a>
 
-            {/* Secondary CTA: "Explore Collection" */}
+            {/* Secondary CTA Button: PRODUCT PERSONALISATION ✎ */}
             <button
               type="button"
-              onClick={() => onNavigate?.("perfumes")}
-              className="w-full flex items-center justify-between cursor-pointer transition-all duration-200 active:scale-[0.98]"
+              onClick={handlePersonalisationClick}
+              className="hero-cta-secondary w-full flex items-center justify-center rounded-none cursor-pointer shadow-sm"
               style={{
-                height: "clamp(40px, 9.6vw, 72px)",
-                backgroundColor: "#FAEEE8",
-                border: "1.5px solid #9D672F",
-                borderRadius: "16px",
-                padding: "0 clamp(16px, 4.0vw, 32px)",
+                height: "44px",
+                backgroundColor: "rgba(246, 228, 208, 0.94)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1.5px solid #9E8066",
+                boxShadow: "0 4px 14px rgba(33, 16, 8, 0.08)",
+                padding: "0 8px",
                 boxSizing: "border-box",
-                boxShadow: "0 2px 8px rgba(157, 103, 47, 0.08)",
+                overflow: "hidden",
               }}
             >
               <span
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(15px, 3.8vw, 27px)",
-                  fontWeight: 500,
-                  color: "#2B1B43",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "9px",
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  color: "#21150F",
+                  textTransform: "uppercase",
+                  marginRight: "5px",
                   whiteSpace: "nowrap",
                   lineHeight: 1,
                 }}
               >
-                Explore Collection
+                PRODUCT PERSONALISATION
               </span>
+              {/* Elegant Edit / Laser Pen Icon */}
               <svg
-                viewBox="0 0 24 12"
+                width="11"
+                height="11"
+                viewBox="0 0 24 24"
                 fill="none"
-                stroke="#2B1B43"
-                strokeWidth="1.8"
+                stroke="#21150F"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{
-                  width: "clamp(15px, 3.8vw, 26px)",
-                  height: "auto",
-                  flexShrink: 0,
-                }}
+                style={{ width: "11px", height: "11px", minWidth: "11px", maxWidth: "11px", flexShrink: 0 }}
               >
-                <line x1="1" y1="6" x2="22" y2="6" />
-                <polyline points="16 1 22 6 16 11" />
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
             </button>
           </div>
-
-          {/* 7. Bottom Double-Chevron Downward Indicator */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center select-none pointer-events-none"
-            style={{
-              top: "96.40%",
-            }}
-            aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 24 14"
-              fill="none"
-              stroke="#D6A94F"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                width: "clamp(16px, 3.8vw, 28px)",
-                height: "auto",
-              }}
-            >
-              <polyline points="4 2 12 8 20 2" />
-              <polyline points="4 7 12 13 20 7" />
-            </svg>
-          </div>
-
         </div>
       </div>
     </section>
