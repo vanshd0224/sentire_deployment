@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   signInAnonymously,
+  getRedirectResult,
 } from "firebase/auth";
 
 interface AccountDrawerModalProps {
@@ -30,6 +31,28 @@ export default function AccountDrawerModal({
   const [resendTimer, setResendTimer] = useState(30);
 
   const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
+
+  // Handle Google redirect auth completion
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          localStorage.setItem("sentire_is_logged_in", "true");
+          if (result.user.displayName) localStorage.setItem("sentire_user_name", result.user.displayName);
+          if (result.user.email) localStorage.setItem("sentire_user_email", result.user.email);
+          if (result.user.phoneNumber) localStorage.setItem("sentire_user_phone", result.user.phoneNumber);
+          onClose();
+          if (onSuccessLogin) {
+            onSuccessLogin();
+          } else {
+            window.location.hash = "#account";
+          }
+        }
+      })
+      .catch((err) => {
+        if (err?.message) setErrorMessage(err.message.replace("Firebase: ", ""));
+      });
+  }, []);
 
   // Reset state on open
   useEffect(() => {
@@ -149,8 +172,11 @@ export default function AccountDrawerModal({
       console.log("OTP Verify notice:", err.message);
     } finally {
       setLoading(false);
-      localStorage.setItem("sentire_user_phone", phoneNumber || "9079603729");
+      localStorage.setItem("sentire_user_phone", phoneNumber || "");
       localStorage.setItem("sentire_is_logged_in", "true");
+      if (!auth.currentUser?.displayName) {
+        localStorage.removeItem("sentire_user_name");
+      }
       onClose();
       if (onSuccessLogin) {
         onSuccessLogin();
@@ -169,16 +195,44 @@ export default function AccountDrawerModal({
 
     try {
       const result = await signInWithPopup(auth, provider);
-      if (result.user) {
+      if (result?.user) {
         localStorage.setItem("sentire_is_logged_in", "true");
+        if (result.user.displayName) {
+          localStorage.setItem("sentire_user_name", result.user.displayName);
+        }
+        if (result.user.email) {
+          localStorage.setItem("sentire_user_email", result.user.email);
+        }
+        if (result.user.phoneNumber) {
+          localStorage.setItem("sentire_user_phone", result.user.phoneNumber);
+        }
         onClose();
-        onSuccessLogin?.();
+        if (onSuccessLogin) {
+          onSuccessLogin();
+        } else {
+          window.location.hash = "#account";
+        }
       }
     } catch (err: any) {
+      console.error("[Google Auth Error]:", err);
+      if (err?.code === "auth/popup-closed-by-user") {
+        setErrorMessage("Sign-in cancelled.");
+        setLoading(false);
+        return;
+      }
+      if (err?.code === "auth/unauthorized-domain") {
+        setErrorMessage("Firebase Auth: Please authorize sentirebypc.com in Firebase Authentication Console.");
+        setLoading(false);
+        return;
+      }
+
+      // Try redirect fallback
       try {
         await signInWithRedirect(auth, provider);
       } catch (redirectErr: any) {
-        setErrorMessage("Could not sign in with Google.");
+        console.error("[Google Auth Redirect Error]:", redirectErr);
+        const msg = redirectErr?.message || err?.message || "Could not sign in with Google.";
+        setErrorMessage(msg.replace("Firebase: ", ""));
       }
     } finally {
       setLoading(false);
