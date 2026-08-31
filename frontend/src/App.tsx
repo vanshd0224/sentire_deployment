@@ -420,6 +420,9 @@ export default function App() {
               originalPrice: Math.round(price * 1.35),
               image: prod.img,
               size: size,
+              isPersonalised: prod.isPersonalised,
+              engravingText: prod.engravingText,
+              engravingDate: prod.engravingDate,
             });
             handleCloseProductModal();
             setIsCartOpen(true);
