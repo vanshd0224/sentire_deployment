@@ -6,6 +6,18 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <script>
+      (function() {
+        window.addEventListener('error', function(e) {
+          if (e && e.message && (e.message.indexOf('Cannot access') !== -1 || e.message.indexOf('initialization') !== -1)) {
+            if (!sessionStorage.getItem('cache_purged_retry')) {
+              sessionStorage.setItem('cache_purged_retry', '1');
+              window.location.reload(true);
+            }
+          }
+        });
+      })();
+    </script>
     <meta name="description" content="Discover India's rare 35%+ pure perfume oil extraits de parfum engineered for 12+ hour sillage. Customise with bespoke photo and name laser engraving in Jaipur." />
     <title>Sentire by PC</title>
     <link rel="canonical" href="https://sentirebypc.com/" />
