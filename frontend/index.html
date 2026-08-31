@@ -9,6 +9,21 @@
     <meta http-equiv="Expires" content="0" />
     <script>
       (function() {
+        // Automatically unregister legacy service workers and purge stale disk caches
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (var r of registrations) {
+              r.unregister();
+            }
+          }).catch(function() {});
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (var name of names) {
+              caches.delete(name);
+            }
+          }).catch(function() {});
+        }
         window.addEventListener('error', function(e) {
           if (e && e.message && (e.message.indexOf('Cannot access') !== -1 || e.message.indexOf('initialization') !== -1)) {
             if (!sessionStorage.getItem('cache_purged_retry')) {
