@@ -24,15 +24,15 @@ export default function SentireLogo({
     if (height) return typeof height === "number" ? `${height}px` : height;
     switch (variant) {
       case "compact":
-        return "24px";
-      case "navbar":
-        return "32px"; // Perfect proportion for header navbar
-      case "footer":
-        return "48px";
-      case "hero":
-        return "72px";
-      default:
         return "32px";
+      case "navbar":
+        return "44px"; // Prominent size for header navbar
+      case "footer":
+        return "56px";
+      case "hero":
+        return "80px";
+      default:
+        return "44px";
     }
   };
 
@@ -50,7 +50,7 @@ export default function SentireLogo({
       case "dark":
       case "auto":
       default:
-        return "/assets/sentire-logo-white-gold.png"; // Warm Ivory SENTIRE + Gold By PC
+        return "/assets/sentire-logo-gold.png";
     }
   };
 
@@ -69,7 +69,7 @@ export default function SentireLogo({
           src={getLogoSrc()}
           alt="SENTIRE ® By PC"
           style={{ height: logoHeight, width: "auto" }}
-          className="block object-contain max-h-[36px] sm:max-h-[42px] md:max-h-[46px] max-w-[200px] sm:max-w-[240px] md:max-w-[280px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.15)] shrink-0"
+          className="block object-contain max-h-[44px] sm:max-h-[50px] md:max-h-[56px] max-w-[220px] sm:max-w-[260px] md:max-w-[320px] w-auto transition-all duration-300 drop-shadow-[0_2px_12px_rgba(200,155,90,0.2)] shrink-0"
         />
       </div>
     </div>
