@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductDetailModal from "./ProductDetailModal";
 import type { CartItem } from "./CartDrawer";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
