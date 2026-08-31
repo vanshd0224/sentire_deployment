@@ -126,10 +126,46 @@ export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
   "21": { 10: "46946307014817", 30: "46946307047585" },
 };
 
+export const ENGRAVING_FEE_VARIANT_ID = "46947691659425";
+
+export const prepareShopifyCheckoutItems = (rawItems: any[]) => {
+  const expanded: any[] = [];
+  let engravingCount = 0;
+
+  rawItems.forEach((item) => {
+    expanded.push(item);
+    if (item.isPersonalised || item.engravingText) {
+      engravingCount += (item.quantity || 1);
+    }
+  });
+
+  if (engravingCount > 0) {
+    expanded.push({
+      id: "custom-bottle-engraving",
+      productId: "custom-bottle-engraving",
+      name: "Custom Bottle Engraving",
+      size: 0,
+      price: 200,
+      quantity: engravingCount,
+      variantId: ENGRAVING_FEE_VARIANT_ID,
+    });
+  }
+
+  return expanded;
+};
+
 export const resolveShopifyVariantId = (item: any): string => {
+  if (item?.variantId) {
+    return item.variantId;
+  }
+
   const pId = String(item?.productId || item?.id || "").toLowerCase().trim();
   const pName = String(item?.name || "").toLowerCase().trim();
   const sizeNum = parseInt(String(item?.size || "").replace(/\D/g, ""), 10) || 50;
+
+  if (pId.includes("engraving") || pName.includes("engraving")) {
+    return ENGRAVING_FEE_VARIANT_ID;
+  }
 
   const normalizedId = pId.replace(/[\s\-_]/g, "");
   const normalizedName = pName.replace(/[\s\-_]/g, "");
@@ -167,6 +203,14 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
       headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
     }
 
+    const lines: any[] = [{ merchandiseId, quantity }];
+    if (item?.isPersonalised || item?.engravingText) {
+      lines.push({
+        merchandiseId: `gid://shopify/ProductVariant/${ENGRAVING_FEE_VARIANT_ID}`,
+        quantity
+      });
+    }
+
     if (!existingCartId) {
       // 1. Create new cart with cartCreate mutation
       const mutation = `
@@ -186,12 +230,7 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
       const variables = {
         input: {
-          lines: [
-            {
-              merchandiseId,
-              quantity
-            }
-          ]
+          lines
         }
       };
 
@@ -227,12 +266,7 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 
       const variables = {
         cartId: existingCartId,
-        lines: [
-          {
-            merchandiseId,
-            quantity
-          }
-        ]
+        lines
       };
 
       const res = await fetch(graphqlUrl, {
@@ -268,7 +302,7 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
           headers,
           body: JSON.stringify({
             query: createMutation,
-            variables: { input: { lines: [{ merchandiseId, quantity }] } }
+            variables: { input: { lines } }
           })
         });
         const createData = await createRes.json();
@@ -286,9 +320,10 @@ export const syncAddToCartToShopifyStorefront = async (item: any, quantity: numb
 };
 
 // Option A: Native HTML Form POST Checkout redirect supporting multi-item, multi-quantity, multi-variant carts
-export const redirectToShopifyFormCheckout = (items: any[]) => {
-  if (!items || items.length === 0) return;
+export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
+  if (!rawItems || rawItems.length === 0) return;
 
+  const items = prepareShopifyCheckoutItems(rawItems);
   const shopDomain = "hbj1d0-99.myshopify.com";
   const form = document.createElement("form");
   form.method = "POST";
@@ -324,8 +359,10 @@ export const redirectToShopifyFormCheckout = (items: any[]) => {
 };
 
 // Asynchronously create a fresh GraphQL Shopify Cart via Server-Side Cloud Run Backend Proxy
-export const createOrGetShopifyCheckoutUrl = async (items: any[], discountCode?: string): Promise<string> => {
-  if (!items || items.length === 0) return "";
+export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCode?: string): Promise<string> => {
+  if (!rawItems || rawItems.length === 0) return "";
+
+  const items = prepareShopifyCheckoutItems(rawItems);
 
   let checkoutUrl = "";
   try {
