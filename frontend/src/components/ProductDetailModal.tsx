@@ -103,6 +103,40 @@ export default function ProductDetailModal({
   const [includeDate, setIncludeDate] = useState<boolean>(false);
   const [engravingDate, setEngravingDate] = useState<string>("");
 
+  // Lightbox & Swipe Gallery State
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+
+  const handleNextImage = () => {
+    setSelectedImageIndex((prev) => (prev < galleryImages.length - 1 ? prev + 1 : 0));
+  };
+
+  const handlePrevImage = () => {
+    setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : galleryImages.length - 1));
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 40) {
+      handleNextImage();
+    } else if (diff < -40) {
+      handlePrevImage();
+    }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   // Keyboard listener: close on ESC
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -389,15 +423,56 @@ export default function ProductDetailModal({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 lg:p-10">
           {/* LEFT COLUMN: MULTI-IMAGE GALLERY & SCENT PYRAMID ACCORD */}
           <div className="lg:col-span-6 space-y-6">
-            {/* Main Featured Image Box */}
-            <div className="relative aspect-square sm:aspect-[4/5] max-h-60 sm:max-h-96 w-full overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md">
+            {/* Main Featured Image Box with Touch Swipe & Click-to-Zoom Lightbox */}
+            <div
+              className="relative aspect-square sm:aspect-[4/5] max-h-60 sm:max-h-96 w-full overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md select-none cursor-zoom-in"
+              onClick={() => {
+                setIsLightboxOpen(true);
+                setIsZoomed(false);
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                 width="500"
                 height="600"
-                className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
               />
+
+              {/* Navigation Arrows for Desktop */}
+              {galleryImages.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrevImage();
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#c89b5a] hover:text-white active:scale-95 cursor-pointer"
+                    aria-label="Previous image"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNextImage();
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#c89b5a] hover:text-white active:scale-95 cursor-pointer"
+                    aria-label="Next image"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+
+              {/* Zoom Prompt Hint Pill */}
+              <span className="absolute bottom-3 right-3 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#d4af37] border border-white/20 shadow-md flex items-center gap-1">
+                🔍 Click to Zoom
+              </span>
+
               {product.badge && (
                 <span className="absolute top-4 left-4 rounded-full bg-[#120e0a] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.22em] text-[#c89b5a] shadow-md">
                   {product.badge}
@@ -1220,6 +1295,82 @@ export default function ProductDetailModal({
           </div>
         )}
       </div>
+
+      {/* ── High-Resolution Lightbox Zoom Modal ── */}
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/92 p-4 sm:p-8 backdrop-blur-xl animate-fadeIn select-none"
+          onClick={() => {
+            setIsLightboxOpen(false);
+            setIsZoomed(false);
+          }}
+        >
+          <div
+            className="relative max-w-5xl max-h-[92vh] w-full flex flex-col items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Toolbar Controls */}
+            <div className="absolute top-[-52px] right-0 flex items-center gap-3 z-30">
+              <button
+                onClick={() => setIsZoomed((z) => !z)}
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 text-white backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-wider hover:bg-[#c89b5a] hover:text-black transition-all cursor-pointer shadow-lg active:scale-95"
+              >
+                {isZoomed ? "🔍 Zoom Out" : "🔍 Zoom In"}
+              </button>
+              <button
+                onClick={() => {
+                  setIsLightboxOpen(false);
+                  setIsZoomed(false);
+                }}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md border border-white/30 hover:bg-red-600 transition-all cursor-pointer text-xl font-bold shadow-lg active:scale-95"
+                aria-label="Close Lightbox"
+                title="Close Lightbox (Esc)"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Lightbox Main Image Container */}
+            <div
+              className={`relative overflow-auto rounded-3xl max-h-[82vh] max-w-full border border-white/15 bg-black/80 shadow-[0_25px_90px_rgba(0,0,0,0.9)] flex items-center justify-center p-4 transition-all duration-300 ${
+                isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
+              }`}
+              onClick={() => setIsZoomed((z) => !z)}
+            >
+              <img
+                src={galleryImages[selectedImageIndex] || product.img}
+                alt={`Sentire ${product.name} high-resolution flacon view`}
+                className={`object-contain transition-transform duration-300 ease-out ${
+                  isZoomed ? "scale-175 sm:scale-200" : "max-h-[76vh] w-auto"
+                }`}
+              />
+            </div>
+
+            {/* Bottom Caption & Thumbnail Navigation */}
+            <div className="mt-4 flex items-center justify-between w-full max-w-md px-4">
+              <span className="text-xs font-bold tracking-widest text-[#d4af37] uppercase">
+                {product.name} • View {selectedImageIndex + 1} of {galleryImages.length}
+              </span>
+              <div className="flex items-center gap-2">
+                {galleryImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImageIndex(idx);
+                      setIsZoomed(false);
+                    }}
+                    className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                      selectedImageIndex === idx ? "w-8 bg-[#c89b5a]" : "w-2.5 bg-white/40 hover:bg-white/70"
+                    }`}
+                    aria-label={`View image ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
