@@ -313,14 +313,14 @@ export default function Hero({ onNavigate }: HeroProps) {
           {/* Headline */}
           <div
             className="absolute"
-            style={{ left: "6.0%", top: "8.5%", width: "82%" }}
+            style={{ left: "6.0%", top: "7.0%", width: "82%" }}
           >
             <div
               role="heading"
               aria-level={1}
               className="hero-title m-0 text-left"
               style={{
-                fontSize: "clamp(34px, 9.8vw, 86px)",
+                fontSize: "clamp(32px, 9.4vw, 82px)",
                 lineHeight: 0.96,
                 letterSpacing: "-0.015em",
                 color: "#21150F",
@@ -336,7 +336,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           {/* Divider */}
           <div
             className="absolute flex items-center"
-            style={{ left: "6.0%", top: "24.5%", width: "34.8%" }}
+            style={{ left: "6.0%", top: "21.0%", width: "34.8%" }}
             aria-hidden="true"
           >
             <div className="flex-1 h-[1px] bg-[#35221A] opacity-55" />
@@ -351,13 +351,13 @@ export default function Hero({ onNavigate }: HeroProps) {
           {/* Paragraph */}
           <div
             className="absolute"
-            style={{ left: "6.0%", top: "27.0%", width: "75%" }}
+            style={{ left: "6.0%", top: "23.2%", width: "75%" }}
           >
             <p
               className="hero-description m-0 text-left"
               style={{
-                fontSize: "clamp(12px, 3.2vw, 24px)",
-                lineHeight: 1.25,
+                fontSize: "clamp(11.5px, 3.0vw, 22px)",
+                lineHeight: 1.22,
                 color: "#2E1E16",
                 fontWeight: 400,
               }}
@@ -369,7 +369,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           {/* Festive Badge */}
           <div
             className="absolute flex items-center gap-1.5"
-            style={{ left: "6.0%", top: "37.5%", width: "70%" }}
+            style={{ left: "6.0%", top: "32.8%", width: "70%" }}
           >
             <span className="text-[10px]">🪈</span>
             <span className="text-[9.5px] font-sans font-bold tracking-[0.12em] uppercase text-[#A66B18]">
@@ -377,14 +377,14 @@ export default function Hero({ onNavigate }: HeroProps) {
             </span>
           </div>
 
-          {/* Dual Action Buttons (Positioned at 41.5% - COMPLETELY ABOVE BOTTLE CAP) */}
+          {/* Dual Action Buttons (Shifted UP to 36.5% - NO COLLISION WITH BOTTLE CAP) */}
           <div
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "6.0%",
-              top: "41.5%",
-              width: "min(270px, 46%)",
-              gap: "8px",
+              top: "36.5%",
+              width: "min(265px, 45%)",
+              gap: "7px",
             }}
           >
             <a
