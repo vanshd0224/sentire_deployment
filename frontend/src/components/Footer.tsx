@@ -99,9 +99,17 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                   } else if (link === "Shipping & Delivery") {
                     try { window.history.pushState(null, "", "/client-services#shipping-delivery"); } catch(err){}
                     onNavigate?.("client-services");
+                    setTimeout(() => {
+                      const el = document.getElementById("shipping-delivery");
+                      el?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
                   } else if (link === "Returns & Exchanges") {
                     try { window.history.pushState(null, "", "/client-services#returns-exchanges"); } catch(err){}
                     onNavigate?.("client-services");
+                    setTimeout(() => {
+                      const el = document.getElementById("returns-exchanges");
+                      el?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
                   } else if (link === "Client Services") {
                     try { window.history.pushState(null, "", "/client-services"); } catch(err){}
                     onNavigate?.("client-services");
