@@ -999,7 +999,6 @@ PERFUMES_DATA.forEach(p => {
             <a href="/perfumes" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">All Perfumes</a>
             <a href="/bestsellers" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Best Sellers</a>
             <a href="/new-arrivals" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">New Arrivals</a>
-            <a href="/personalised-perfume" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Product Personalisation</a>
             <a href="/byob" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Build Your Own Bundle</a>
             <a href="/track-order" class="px-4 py-2 rounded-full border border-black/10 hover:border-[#8C6228] transition">Track Your Order</a>
           </div>
