@@ -403,11 +403,11 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
       {/* ── Interactive Video Reel Modal Player ── */}
       {activeReel && (
         <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/95 p-0 sm:p-4 md:p-6 backdrop-blur-2xl animate-fadeIn"
+          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/60 p-0 sm:p-4 backdrop-blur-md animate-fadeIn"
           onClick={() => setActiveReelIndex(null)}
         >
           <div
-            className="relative w-full h-full sm:h-auto sm:max-w-sm md:max-w-md aspect-[9/16] max-h-full sm:max-h-[85vh] rounded-none sm:rounded-3xl overflow-hidden shadow-2xl border-0 sm:border border-[#c89b5a]/50 bg-black flex flex-col justify-between"
+            className="relative w-full h-full sm:h-auto sm:max-w-[380px] md:max-w-[400px] aspect-[9/16] max-h-full sm:max-h-[85vh] rounded-none sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.5)] border-0 sm:border border-[#c89b5a]/40 bg-black flex flex-col justify-between"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Bar Controls Gradient */}
