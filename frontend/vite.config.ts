@@ -22,7 +22,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
-        entryFileNames: "assets/app-v8-[hash].js",
+        entryFileNames: "assets/app-v9-[hash].js",
         chunkFileNames: "assets/chunk-[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
         manualChunks: {
