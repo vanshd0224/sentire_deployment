@@ -1,9 +1,5 @@
 const items = [
   {
-    text: "PRODUCT PERSONALISATION AVAILABLE",
-    icon: "♦",
-  },
-  {
     text: "COD AVAILABLE",
     icon: "♦",
   },
@@ -13,6 +9,10 @@ const items = [
   },
   {
     text: "USE CODE PC200 FOR ₹200 OFF",
+    icon: "♦",
+  },
+  {
+    text: "COMPLIMENTARY SHIPPING ON ALL ORDERS ABOVE ₹999",
     icon: "♦",
   },
 ];
