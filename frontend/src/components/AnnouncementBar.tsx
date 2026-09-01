@@ -1,14 +1,14 @@
 const items = [
   {
-    text: "COD AVAILABLE",
-    icon: "♦",
-  },
-  {
     text: "USE CODE PC100 FOR ₹100 OFF",
     icon: "♦",
   },
   {
     text: "USE CODE PC200 FOR ₹200 OFF",
+    icon: "♦",
+  },
+  {
+    text: "COMPLIMENTARY LASER PHOTO & NAME ENGRAVING",
     icon: "♦",
   },
   {
