@@ -119,7 +119,7 @@ export default function ClientServicesPage({
     ) {
       setActiveCategory("delivery-tracking");
       setTimeout(() => {
-        const el = document.getElementById("enquiry-form");
+        const el = document.getElementById("shipping-delivery");
         el?.scrollIntoView({ behavior: "smooth" });
       }, 150);
     } else if (
@@ -131,7 +131,7 @@ export default function ClientServicesPage({
     ) {
       setActiveCategory("returns-exchanges");
       setTimeout(() => {
-        const el = document.getElementById("enquiry-form");
+        const el = document.getElementById("returns-exchanges");
         el?.scrollIntoView({ behavior: "smooth" });
       }, 150);
     }
@@ -370,6 +370,104 @@ export default function ClientServicesPage({
               >
                 TRACK PACKAGE →
               </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section: Shipping & Delivery Policy Card ── */}
+      <section id="shipping-delivery" className="py-12 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24">
+        <div className="bg-white rounded-3xl border border-[#c89b5a]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
+            <div>
+              <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#c89b5a] block mb-1">
+                POLICY & DISPATCH CONCIERGE
+              </span>
+              <h2 className="font-display text-3xl font-semibold text-ink flex items-center gap-3">
+                <span>🚚</span> Shipping & Express Delivery
+              </h2>
+            </div>
+            <span className="px-4 py-1.5 rounded-full bg-[#f8f5f1] border border-[#c89b5a]/30 text-xs font-bold text-[#c89b5a] uppercase tracking-widest self-start md:self-auto">
+              Pan-India 28,000+ Pincodes
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">⚡</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">24-Hour Dispatch</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Handcrafted and precision-checked at our Jaipur atelier, dispatched within 24 hours of order placement.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">🚀</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">3-5 Day Express Transit</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Partnered with Bluedart & Delhivery express air couriers for swift 3 to 5 business day nationwide arrival.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">🎁</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Free Delivery Above ₹999</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Complimentary insured shipping on all orders above ₹999. Standard ₹99 delivery fee applies on smaller orders.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">🛡️</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Break-Proof Packaging</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Shipped in custom shock-absorbing eco-luxury presentation boxes to guarantee 100% bottle safety in transit.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section: Returns & Exchanges Policy Card ── */}
+      <section id="returns-exchanges" className="py-6 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24">
+        <div className="bg-white rounded-3xl border border-[#c89b5a]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
+            <div>
+              <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#c89b5a] block mb-1">
+                GUARANTEE & REPLACEMENT CONCIERGE
+              </span>
+              <h2 className="font-display text-3xl font-semibold text-ink flex items-center gap-3">
+                <span>↩️</span> Returns & Replacements Policy
+              </h2>
+            </div>
+            <span className="px-4 py-1.5 rounded-full bg-[#f8f5f1] border border-[#c89b5a]/30 text-xs font-bold text-[#c89b5a] uppercase tracking-widest self-start md:self-auto">
+              100% Transit Guarantee
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">🛡️</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Transit Damage Replacement</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                If your perfume flacon arrives damaged or leaking, we dispatch an immediate complimentary replacement without hassle.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">⏱️</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">7-Day Assistance Window</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Contact our Jaipur Client Services desk within 7 days of receiving your order to initiate an exchange or replacement request.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#fcfbf9] border border-black/5">
+              <span className="text-xl">📸</span>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Quick Photo Verification</h4>
+              <p className="text-xs text-ink/70 mt-1 leading-relaxed">
+                Simply upload 2 photos of the damaged package using our online form below for instant 1-step verification.
+              </p>
             </div>
           </div>
         </div>
