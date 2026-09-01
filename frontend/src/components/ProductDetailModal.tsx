@@ -468,11 +468,6 @@ export default function ProductDetailModal({
                 </>
               )}
 
-              {/* Zoom Prompt Hint Pill */}
-              <span className="absolute bottom-3 right-3 rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#d4af37] border border-white/20 shadow-md flex items-center gap-1">
-                🔍 Click to Zoom
-              </span>
-
               {product.badge && (
                 <span className="absolute top-4 left-4 rounded-full bg-[#120e0a] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.22em] text-[#c89b5a] shadow-md">
                   {product.badge}
@@ -1311,12 +1306,6 @@ export default function ProductDetailModal({
           >
             {/* Top Toolbar Controls */}
             <div className="absolute top-[-52px] right-0 flex items-center gap-3 z-30">
-              <button
-                onClick={() => setIsZoomed((z) => !z)}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 text-white backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-wider hover:bg-[#c89b5a] hover:text-black transition-all cursor-pointer shadow-lg active:scale-95"
-              >
-                {isZoomed ? "🔍 Zoom Out" : "🔍 Zoom In"}
-              </button>
               <button
                 onClick={() => {
                   setIsLightboxOpen(false);
