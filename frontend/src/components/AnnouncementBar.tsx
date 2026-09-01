@@ -8,7 +8,7 @@ const items = [
     icon: "♦",
   },
   {
-    text: "COMPLIMENTARY LASER NAME & DATE ENGRAVING",
+    text: "NAME & DATE ENGRAVING",
     icon: "♦",
   },
   {
