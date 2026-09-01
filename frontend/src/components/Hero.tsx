@@ -468,7 +468,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute flex items-center"
             style={{
               left: "14.0%",
-              top: "22.50%",
+              top: "16.50%",
               width: "70%",
             }}
             aria-hidden="true"
@@ -493,7 +493,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute"
             style={{
               left: "14.0%",
-              top: "25.20%",
+              top: "18.80%",
               width: "72%",
             }}
           >
@@ -502,7 +502,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontSize: "clamp(11px, 2.75vw, 20px)",
-                lineHeight: 1.44,
+                lineHeight: 1.40,
                 color: "#252047",
                 fontWeight: 400,
                 letterSpacing: "-0.005em",
@@ -521,7 +521,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute flex items-center"
             style={{
               left: "14.0%",
-              top: "30.80%",
+              top: "26.80%",
               gap: "8px",
             }}
           >
@@ -554,7 +554,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="absolute flex flex-col justify-start pointer-events-auto"
             style={{
               left: "14.0%",
-              top: "34.50%",
+              top: "30.50%",
               width: "47.3%",
               gap: "clamp(6px, 1.4vw, 12px)",
             }}
