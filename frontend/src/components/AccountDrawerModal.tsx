@@ -22,8 +22,9 @@ export default function AccountDrawerModal({
   onClose,
   onSuccessLogin,
 }: AccountDrawerModalProps) {
-  const [viewMode, setViewMode] = useState<"login" | "otp">("login");
+  const [viewMode, setViewMode] = useState<"login" | "otp" | "name-prompt">("login");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [inputName, setInputName] = useState("");
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -174,9 +175,13 @@ export default function AccountDrawerModal({
       setLoading(false);
       localStorage.setItem("sentire_user_phone", phoneNumber || "");
       localStorage.setItem("sentire_is_logged_in", "true");
-      if (!auth.currentUser?.displayName) {
-        localStorage.removeItem("sentire_user_name");
+
+      const existingName = localStorage.getItem("sentire_user_name") || auth.currentUser?.displayName;
+      if (!existingName || existingName.startsWith("+")) {
+        setViewMode("name-prompt");
+        return;
       }
+
       onClose();
       if (onSuccessLogin) {
         onSuccessLogin();
@@ -415,6 +420,52 @@ export default function AccountDrawerModal({
           </div>
         )}
 
+        {/* VIEW 3: NEW USER NAME PROMPT */}
+        {viewMode === "name-prompt" && (
+          <div>
+            <h3 className="text-lg font-display font-semibold text-[#1e1e1e] mb-1">
+              Welcome to Sentire! ✨
+            </h3>
+            <p className="text-xs text-[#666666] mb-6">
+              What should we call you? Enter your name to personalize your orders.
+            </p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const nameToSave = inputName.trim() || "Sentire Member";
+                localStorage.setItem("sentire_user_name", nameToSave);
+                if (auth.currentUser) {
+                  try { updateProfile(auth.currentUser, { displayName: nameToSave }); } catch(err){}
+                }
+                onClose();
+                if (onSuccessLogin) {
+                  onSuccessLogin();
+                } else {
+                  window.location.hash = "#account";
+                }
+              }}
+              className="space-y-4"
+            >
+              <input
+                type="text"
+                placeholder="Enter Your Full Name (e.g. Vansh Dhamija)"
+                value={inputName}
+                onChange={(e) => setInputName(e.target.value)}
+                className="w-full px-4 py-3.5 text-sm text-[#1e1e1e] bg-[#fcfbf9] border border-[#e5e5e5] rounded-xl outline-none focus:border-[#c89b5a] font-medium"
+                autoFocus
+                required
+              />
+
+              <button
+                type="submit"
+                className="w-full py-3.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+              >
+                Save & Continue →
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

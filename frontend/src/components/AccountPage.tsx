@@ -24,13 +24,14 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   const [user, setUser] = useState<User | null>(auth.currentUser);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   
-  // Stored Name & Profile Data (No hardcoded fake defaults!)
-  const storedName = localStorage.getItem("sentire_user_name") || user?.displayName || "";
+  // Stored Name & Profile Data (No raw phone number fallbacks!)
+  const rawStoredName = localStorage.getItem("sentire_user_name") || user?.displayName || "";
+  const storedName = rawStoredName.startsWith("+") ? "" : rawStoredName;
   const storedPhone = user?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
   const storedEmail = user?.email || localStorage.getItem("sentire_user_email") || "";
 
   const [profileData, setProfileData] = useState({
-    firstName: storedName || storedPhone || "Fragrance Connoisseur",
+    firstName: storedName || "Sentire Member",
     phone: storedPhone,
     email: storedEmail,
   });
@@ -55,12 +56,13 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
-      const name = u?.displayName || localStorage.getItem("sentire_user_name") || "";
+      const rawName = u?.displayName || localStorage.getItem("sentire_user_name") || "";
+      const name = rawName.startsWith("+") ? "" : rawName;
       const phone = u?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
       const email = u?.email || localStorage.getItem("sentire_user_email") || "";
 
       setProfileData({
-        firstName: name || phone || "Fragrance Connoisseur",
+        firstName: name || "Sentire Member",
         phone: phone,
         email: email,
       });
