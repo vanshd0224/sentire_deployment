@@ -783,21 +783,21 @@ export default function ProductDetailModal({
                   <button
                     type="button"
                     onClick={() => setIsPersonalising(!isPersonalising)}
-                    className={`w-full flex items-center justify-between rounded-xl border p-3.5 transition-all cursor-pointer ${
+                    className={`w-full flex items-center justify-between gap-2 rounded-xl border p-3 sm:p-3.5 transition-all cursor-pointer ${
                       isPersonalising || engravingText || includeDate
                         ? "border-[#c89b5a] bg-[#c89b5a]/10 text-[#1e1e1e] shadow-md"
                         : "border-[#c89b5a]/40 bg-gradient-to-r from-[#c89b5a]/5 via-amber-500/5 to-[#c89b5a]/5 hover:border-[#c89b5a] hover:bg-[#c89b5a]/10 text-[#1e1e1e]"
                     }`}
                   >
-                    <div className="flex items-center gap-3 text-left">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#c89b5a]/20 text-[#c89b5a] text-sm font-bold">
+                    <div className="flex items-center gap-2.5 text-left min-w-0 flex-1">
+                      <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#c89b5a]/20 text-[#c89b5a] text-xs sm:text-sm font-bold">
                         ✒️
                       </span>
-                      <div>
-                        <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#1e1e1e] block">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#1e1e1e] block truncate">
                           Product Personalisation
                         </span>
-                        <span className="text-[11px] text-[#1e1e1e]/65 block mt-0.5">
+                        <span className="text-[10px] sm:text-[11px] text-[#1e1e1e]/65 block mt-0.5 truncate">
                           {engravingText || includeDate
                             ? `Custom Engraving: ${[
                                 engravingText ? `"${engravingText}"` : null,
@@ -805,11 +805,11 @@ export default function ProductDetailModal({
                               ]
                                 .filter(Boolean)
                                 .join(" • ")} (+ ₹200)`
-                            : "Add custom bottle name & date engraving (+ ₹200)"}
+                            : "Add custom name & date engraving (+ ₹200)"}
                         </span>
                       </div>
                     </div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#c89b5a] hover:underline shrink-0 ml-2">
+                    <span className="text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-[#c89b5a] shrink-0 whitespace-nowrap bg-[#c89b5a]/15 px-2.5 py-1 rounded-lg">
                       {isPersonalising ? "Close" : (engravingText || includeDate) ? "Edit (₹200)" : "+ Add (₹200)"}
                     </span>
                   </button>
@@ -901,25 +901,25 @@ export default function ProductDetailModal({
             </div>
 
             {/* Pincode Delivery Estimator */}
-            <div className="rounded-2xl border border-black/10 bg-white p-4 space-y-3">
+            <div className="rounded-2xl border border-black/10 bg-white p-3.5 sm:p-4 space-y-3">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1e1e1e]/50 block">
                 DELIVERY &amp; AVAILABILITY CHECKER
               </span>
-              <form onSubmit={handlePincodeCheck} className="flex gap-2">
+              <form onSubmit={handlePincodeCheck} className="flex items-center gap-2 w-full">
                 <input
                   type="text"
                   maxLength={6}
                   placeholder="Enter 6-digit Pincode"
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value.replace(/[^\d]/g, ""))}
-                  className="flex-1 rounded-xl border border-black/15 bg-cream/50 px-4 py-2 text-xs font-medium outline-none focus:border-[#c89b5a]"
+                  className="flex-1 min-w-0 w-full rounded-xl border border-black/15 bg-cream/50 px-3 sm:px-4 py-2 text-xs font-medium outline-none focus:border-[#c89b5a]"
                 />
                 <button
                   type="submit"
                   disabled={isCheckingPincode}
-                  className="rounded-xl bg-[#1e1e1e] px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#c89b5a] transition-all cursor-pointer"
+                  className="shrink-0 rounded-xl bg-[#1e1e1e] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#c89b5a] transition-all cursor-pointer whitespace-nowrap"
                 >
-                  {isCheckingPincode ? "Checking..." : "Verify"}
+                  {isCheckingPincode ? "Checking..." : "VERIFY"}
                 </button>
               </form>
               {deliveryStatus && <p className="text-xs font-medium text-[#1e1e1e]/80 pt-1">{deliveryStatus}</p>}
