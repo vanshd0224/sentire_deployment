@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import SentireLogo from "./SentireLogo";
-import AnnouncementBar from "./AnnouncementBar";
 
 export interface PerfumeFilterOptions {
   size?: number;
@@ -45,6 +44,7 @@ const navLinks = [
   },
   { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
   { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
+  { label: "Product Personalisation", href: "/personalised-perfume" },
   { label: "Build Your Own Bundle", href: "/byob" },
   { label: "Track Your Order", href: "/track-order" },
 ];
@@ -202,7 +202,7 @@ export default function Navbar({
           .sentire-mobile-logo { display: flex !important; }
           .sentire-desktop-logo { display: none !important; }
           .sentire-desktop-nav { display: none !important; }
-          .sentire-desktop-account { display: none !important; }
+          .sentire-desktop-account { display: flex !important; }
           .sentire-desktop-divider { display: none !important; }
         }
         @media (min-width: 901px) {
@@ -213,60 +213,124 @@ export default function Navbar({
           .sentire-desktop-account { display: flex !important; }
           .sentire-desktop-divider { display: block !important; }
         }
+
+        /* ── Janmashtami Reference Theme Navigation ── */
+        .janmashtami-nav-header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          width: 100%;
+          background: linear-gradient(90deg, #F2DDDF 0%, #E8D3DC 100%);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          transition: all 0.3s ease;
+        }
+
+        @media (max-width: 900px) {
+          .janmashtami-nav-header {
+            height: 64px !important;
+            min-height: 64px !important;
+          }
+        }
+
+        @media (min-width: 901px) {
+          .janmashtami-nav-header {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 110px !important;
+            min-height: 110px !important;
+            background: rgba(247, 230, 222, 0.58) !important;
+            backdrop-filter: blur(6px) !important;
+            -webkit-backdrop-filter: blur(6px) !important;
+          }
+        }
+
+        .janmashtami-nav-bottom-border {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(200, 148, 57, 0.25) 0%, rgba(200, 148, 57, 0.85) 25%, rgba(200, 148, 57, 0.95) 50%, rgba(200, 148, 57, 0.85) 75%, rgba(200, 148, 57, 0.25) 100%);
+          pointer-events: none;
+          z-index: 20;
+        }
       `}</style>
 
-      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-[#FEFDFB] transition-all">
-        <AnnouncementBar />
+      <header className="janmashtami-nav-header w-full border-b border-[#C89439]/30 transition-all relative">
+        {/* Subtle Top-Left and Top-Right Indian Ornamental Corner Line Art */}
+        <img
+          src="/images/janmashtami/ornament-corner-tl.png"
+          alt=""
+          aria-hidden="true"
+          className="block absolute top-0 left-0 h-[60px] md:h-[105px] w-auto pointer-events-none select-none z-0 opacity-85"
+        />
+        <img
+          src="/images/janmashtami/ornament-corner-tr.png"
+          alt=""
+          aria-hidden="true"
+          className="block absolute top-0 right-0 h-[60px] md:h-[105px] w-auto pointer-events-none select-none z-0 opacity-85"
+        />
+
+        {/* Central Floral Motif on Bottom Border */}
+        <div className="block absolute bottom-[-7px] md:bottom-[-10px] left-1/2 -translate-x-1/2 z-30 pointer-events-none select-none">
+          <img
+            src="/images/janmashtami/ornament-nav-flower.png"
+            alt=""
+            aria-hidden="true"
+            className="h-[15px] md:h-[22px] w-auto drop-shadow-[0_1px_4px_rgba(200,148,57,0.3)]"
+          />
+        </div>
+
+        {/* Ornamental Bottom Gold Border */}
+        <div className="block janmashtami-nav-bottom-border" />
+
         <div
-          className="mx-auto flex max-w-[1440px] items-center justify-between relative"
+          className="mx-auto flex max-w-[1720px] items-center justify-between relative px-4 sm:px-8 md:px-12 lg:px-16"
           style={{
-            paddingLeft: "clamp(16px, 4.86vw, 42px)",
-            paddingRight: "clamp(16px, 4.86vw, 42px)",
-            height: "clamp(70px, 6.8vw, 96px)",
-            minHeight: "clamp(70px, 6.8vw, 96px)",
+            height: "100%",
+            minHeight: "clamp(56px, 5vw, 108px)",
           }}
         >
 
           {/* Left: Mobile Hamburger / Desktop Logo container */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 mr-2 md:mr-6 lg:mr-8">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0 mr-2 md:mr-4 lg:mr-6 z-10">
             <button
               aria-label="Toggle Mobile Navigation"
               onClick={() => setMobileNavOpen(true)}
-              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#21150F]"
+              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#25163F]"
               style={{
-                width: "clamp(32px, 5.1vw, 44px)",
-                height: "clamp(32px, 4.4vw, 38px)",
+                width: "36px",
+                height: "36px",
                 padding: 0,
               }}
             >
-              <svg viewBox="0 0 28 20" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" className="w-[85%] h-auto">
-                <line x1="1" y1="2" x2="27" y2="2" />
-                <line x1="1" y1="10" x2="27" y2="10" />
-                <line x1="1" y1="18" x2="27" y2="18" />
+              <svg viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="w-[20px] h-auto">
+                <line x1="1" y1="2" x2="23" y2="2" />
+                <line x1="1" y1="8" x2="23" y2="8" />
+                <line x1="1" y1="14" x2="23" y2="14" />
               </svg>
             </button>
 
-            {/* Desktop Brand Logo (Shown on left on Desktop) */}
-            <div className="sentire-desktop-logo shrink-0">
-              <SentireLogo
-                variant="navbar"
-                theme="light"
-                animated={true}
-                onClick={() => onNavigate?.("home")}
-                className="shrink-0"
+            {/* Desktop Brand Logo (Refined metallic warm-gold lettering matching reference) */}
+            <div className="sentire-desktop-logo shrink-0 cursor-pointer" onClick={() => onNavigate?.("home")}>
+              <img
+                src="/images/janmashtami/logo-gold-transparent.png"
+                alt="SENTIRE By PC"
+                className="h-[36px] lg:h-[42px] xl:h-[46px] w-auto object-contain drop-shadow-[0_1px_3px_rgba(200,148,57,0.15)] transition-transform duration-300 hover:scale-[1.02]"
               />
             </div>
           </div>
 
           {/* Mobile Centered Brand Logo */}
-          <div className="sentire-mobile-logo absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto items-center justify-center">
-            <SentireLogo
-              variant="navbar"
-              theme="gold"
-              animated={false}
+          <div className="sentire-mobile-logo absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto items-center justify-center z-10">
+            <img
+              src="/images/janmashtami/logo-gold-transparent.png"
+              alt="SENTIRE By PC"
               onClick={() => onNavigate?.("home")}
-              height="clamp(26px, 5.56vw, 48px)"
-              className="shrink-0"
+              className="h-[26px] sm:h-[30px] w-auto object-contain cursor-pointer"
             />
           </div>
 
@@ -320,74 +384,78 @@ export default function Navbar({
                         onNavigate?.("home");
                       }
                     }}
-                    className={`group relative flex items-center gap-1 text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
+                    className={`group relative flex items-center gap-1.5 text-[11.5px] lg:text-[12px] font-medium tracking-[0.14em] lg:tracking-[0.16em] uppercase transition-colors duration-200 py-1 font-['Montserrat',sans-serif] ${
                       isCurrent
-                        ? "text-[#c89b5a] font-bold"
-                        : "text-[#1e1e1e]/85 hover:text-[#c89b5a]"
+                        ? "text-[#C89439] font-semibold"
+                        : "text-[#251642] hover:text-[#C89439]"
                     }`}
                   >
                     {link.label}
                     {showMega && (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
-                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#c89b5a]" : ""}`}>
+                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#C89439]" : ""}`}>
                         <path d="m6 9 6 6 6-6" />
                       </svg>
                     )}
-                    <span className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#c89b5a] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`} />
+                    <span className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#C89439] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`} />
                   </a>
                 </div>
               );
             })}
           </nav>
 
-          {/* ── Action Icons Suite ── */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Search Icon Button (Fixed size, opens overlay) */}
+          {/* ── Action Icons Suite (Dark Aubergine #251642, Minimal, Balanced) ── */}
+          <div className="flex items-center gap-0.5 sm:gap-2 shrink-0 text-[#251642] z-10">
+            {/* Search Icon Button */}
             <button
               aria-label="Search Fragrances"
               onClick={() => setSearchOpen(true)}
-              className="nav-icon-btn shrink-0"
-              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              className="nav-icon-btn shrink-0 text-[#251642] hover:text-[#C89439]"
+              style={{ width: 38, height: 38, borderRadius: "50%" }}
               title="Search (Ctrl+K)"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" className="h-[18px] w-[18px]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" className="h-[19px] w-[19px]">
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
             </button>
 
-            <div className="sentire-desktop-divider h-5 w-px bg-ink/12" />
+            {/* Thin vertical separator */}
+            <div className="hidden md:block h-4 w-px bg-[#251642]/20 mx-0.5" />
 
-            {/* Account Icon (Desktop only; Mobile uses drawer and bottom nav) */}
+            {/* Account Icon */}
             <button
               aria-label="Account Login / Profile"
               id="navbar-account-btn"
               onClick={onOpenAccount}
-              className="sentire-desktop-account nav-icon-btn shrink-0"
-              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              className="sentire-desktop-account nav-icon-btn shrink-0 text-[#251642] hover:text-[#C89439]"
+              style={{ width: 38, height: 38, borderRadius: "50%" }}
               title="Account & Orders"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" className="h-[18px] w-[18px]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" className="h-[19px] w-[19px]">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </button>
 
-            {/* Cart Button */}
+            {/* Thin vertical separator */}
+            <div className="hidden md:block h-4 w-px bg-[#251642]/20 mx-0.5" />
+
+            {/* Shopping Bag Icon */}
             <button
               aria-label={`Shopping Bag (${cartCount} items)`}
               onClick={onOpenCart}
-              className={`nav-icon-btn relative shrink-0 ${cartPop ? "animate-[badgePop_0.4s_ease-out]" : ""}`}
-              style={{ width: 40, height: 40, borderRadius: "50%" }}
+              className={`nav-icon-btn relative shrink-0 text-[#251642] hover:text-[#C89439] ${cartPop ? "animate-[badgePop_0.4s_ease-out]" : ""}`}
+              style={{ width: 38, height: 38, borderRadius: "50%" }}
               title="Shopping Bag"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" className="h-[19px] w-[19px]">
                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
                 <path d="M3 6h18" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#18130f] text-[9px] font-bold text-[#f5e3cd] shadow-md border border-[#c89b5a]/40">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#251642] text-[9px] font-bold text-[#F8EEE7] shadow-md border border-[#C89439]/50">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
