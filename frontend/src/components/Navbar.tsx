@@ -215,7 +215,7 @@ export default function Navbar({
         }
       `}</style>
 
-      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-[#FEFDFB] transition-all">
+      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-white transition-all">
         <AnnouncementBar />
         <div
           className="mx-auto flex max-w-[1440px] items-center justify-between relative"
