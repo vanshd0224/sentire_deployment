@@ -26,7 +26,7 @@ export default function SentireLogo({
       case "compact":
         return "36px";
       case "navbar":
-        return "58px"; // Prominent, bold size for header navbar
+        return "68px"; // Prominent, bold size for header navbar
       case "footer":
         return "68px";
       case "hero":

@@ -265,7 +265,7 @@ export default function Navbar({
               theme="gold"
               animated={false}
               onClick={() => onNavigate?.("home")}
-              height="clamp(26px, 5.56vw, 48px)"
+              height="clamp(32px, 7.2vw, 54px)"
               className="shrink-0"
             />
           </div>
