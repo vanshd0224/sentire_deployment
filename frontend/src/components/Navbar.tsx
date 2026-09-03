@@ -45,6 +45,7 @@ const navLinks = [
   },
   { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
   { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
+  { label: "Discovery Set", href: "/discovery-set" },
   { label: "Build Your Own Bundle", href: "/byob" },
   { label: "Track Your Order", href: "/track-order" },
 ];
@@ -52,10 +53,10 @@ const navLinks = [
 interface NavbarProps {
   onOpenBundleModal?: () => void;
   onNavigate?: (
-    page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "byob" | "personalisation" | "client-services" | "track-order",
+    page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "discovery-set" | "about" | "byob" | "personalisation" | "client-services" | "track-order",
     filters?: PerfumeFilterOptions
   ) => void;
-  currentPage?: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "byob" | "personalisation" | "client-services" | "track-order";
+  currentPage?: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "discovery-set" | "about" | "byob" | "personalisation" | "client-services" | "track-order";
   cartCount?: number;
   onOpenAccount?: () => void;
   onOpenCart?: () => void;
@@ -271,13 +272,14 @@ export default function Navbar({
           </div>
 
           {/* ── Main Navigation Links (Desktop) ── */}
-          <nav className="sentire-desktop-nav items-center gap-2.5 lg:gap-5 xl:gap-7 shrink-0">
+          <nav className="sentire-desktop-nav items-center gap-2 sm:gap-3 lg:gap-4 xl:gap-6 shrink-0">
             {navLinks.map((link) => {
               const showMega = Boolean(link.mega && currentPage !== "perfumes");
               const isCurrent =
                 (currentPage === "perfumes" && (link.label === "All Perfumes" || link.label === "Perfumes")) ||
                 (currentPage === "bestsellers" && link.label === "Best Sellers") ||
                 (currentPage === "new-arrivals" && link.label === "New Arrivals") ||
+                (currentPage === "discovery-set" && link.label === "Discovery Set") ||
                 (currentPage === "personalisation" && link.label === "Product Personalisation") ||
                 (currentPage === "byob" && link.label === "Build Your Own Bundle") ||
                 (currentPage === "track-order" && link.label === "Track Your Order");
@@ -301,6 +303,13 @@ export default function Navbar({
                         onNavigate?.("bestsellers");
                         setMegaOpen(false);
                       } else if (link.label === "New Arrivals") {
+                        e.preventDefault();
+                        onNavigate?.("new-arrivals");
+                        setMegaOpen(false);
+                      } else if (link.label === "Discovery Set") {
+                        e.preventDefault();
+                        onNavigate?.("discovery-set" as any);
+                        setMegaOpen(false);
                         e.preventDefault();
                         onNavigate?.("new-arrivals");
                         setMegaOpen(false);
@@ -705,6 +714,7 @@ export default function Navbar({
                       if (link.label === "All Perfumes" || link.label === "Perfumes") onNavigate?.("perfumes");
                       else if (link.label === "Best Sellers") onNavigate?.("bestsellers");
                       else if (link.label === "New Arrivals") onNavigate?.("new-arrivals");
+                      else if (link.label === "Discovery Set") onNavigate?.("discovery-set" as any);
                       else if (link.label === "Product Personalisation") onNavigate?.("personalisation");
                       else if (link.label === "Build Your Own Bundle") onNavigate?.("byob");
                       else if (link.label === "Track Your Order") onNavigate?.("track-order");
