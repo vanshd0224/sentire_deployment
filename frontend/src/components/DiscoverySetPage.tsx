@@ -276,14 +276,13 @@ export default function DiscoverySetPage({
       {/* ================= SECTION 1: CAMPAIGN COVER HERO ================= */}
       {/* Mobile Layout (md:hidden) - Zero Text Collision, Crisp Readability */}
       <section className="block md:hidden w-full bg-[#FAF8F5]">
-        {/* Photoshoot Image Header */}
-        <div className="relative w-full h-[280px] sm:h-[340px] overflow-hidden">
+        {/* Photoshoot Image Header (Full 3:2 Landscape Uncropped Frame) */}
+        <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#FAF8F5] flex items-center justify-center">
           <img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret"
-            className="w-full h-full object-cover object-[center_35%]"
+            className="w-full h-full object-contain"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-black/10" />
         </div>
 
         {/* Text Content Block */}
