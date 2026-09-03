@@ -310,9 +310,6 @@ export default function Navbar({
                         e.preventDefault();
                         onNavigate?.("discovery-set" as any);
                         setMegaOpen(false);
-                        e.preventDefault();
-                        onNavigate?.("new-arrivals");
-                        setMegaOpen(false);
                       } else if (link.label === "Product Personalisation") {
                         e.preventDefault();
                         onNavigate?.("personalisation");
