@@ -564,14 +564,14 @@ export default function DiscoverySetPage({
       {/* ================= SECTION 4: ADD TO CART & LUXURY GALLERY ================= */}
       <section className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto" id="acquire-coffret">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Auto-Sliding 3-Photo Gallery Carousel */}
-          <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-black/8 bg-[#F1E9D8]">
+          {/* Left: Auto-Sliding 3-Photo Gallery Carousel (Full 2:3 Portrait Uncropped Frame) */}
+          <div className="relative w-full min-h-[500px] sm:min-h-[620px] aspect-[2/3] max-h-[660px] mx-auto rounded-3xl overflow-hidden shadow-2xl border border-black/8 bg-[#ECE3D5] flex items-center justify-center">
             {CAROUSEL_IMAGES.map((imgUrl, idx) => (
               <img
                 key={idx}
                 src={imgUrl}
                 alt={`Sentire Discovery Set View ${idx + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 ${
                   currentSlide === idx ? "opacity-100 scale-100" : "opacity-0 scale-105 pointer-events-none"
                 }`}
               />
@@ -637,15 +637,15 @@ export default function DiscoverySetPage({
             {/* Checklist */}
             <ul className="space-y-2.5 text-xs sm:text-sm text-[#14110D]/85 mb-8">
               <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">&check;</span>
+                <span className="text-[#B8863B] font-bold">✓</span>
                 <span><strong>All 6 Signature Extraits:</strong> Calantha, Mirai, Purple Oud, Seductive, Deep Crush, Rich</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">&check;</span>
+                <span className="text-[#B8863B] font-bold">✓</span>
                 <span><strong>₹1,000 Physical Gift Certificate:</strong> Redeemable toward any full 50ml flacon</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">&check;</span>
+                <span className="text-[#B8863B] font-bold">✓</span>
                 <span><strong>35% Pure Oil Extrait Formulation:</strong> 12–14 Hours Long-Lasting Sillage</span>
               </li>
             </ul>
