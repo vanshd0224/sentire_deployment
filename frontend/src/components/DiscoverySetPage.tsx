@@ -273,100 +273,48 @@ export default function DiscoverySetPage({
         }
       `}</style>
 
-      {/* ================= SECTION 1: CAMPAIGN COVER HERO ================= */}
-      {/* Mobile Layout (md:hidden): Full Uncropped 3:2 Landscape Image on Top + White Card Below */}
-      <section className="block md:hidden w-full bg-[#FAF8F5]">
-        {/* Full Uncropped 3:2 Photoshoot Image (Image 2 Reference - 100% Uncropped & Original Brightness) */}
-        <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#FAF8F5] flex items-center justify-center">
-          <img
-            src="/discovery_hero_cover.jpg"
-            alt="Sentire 6-Flacon Luxury Discovery Coffret"
-            className="w-full h-full object-contain filter brightness-[1.01] contrast-[1.01]"
-          />
-        </div>
-
-        {/* Crisp Text Content Card directly below photo */}
-        <div className="px-5 py-6 -mt-3 relative z-10 bg-[#FAF8F5] rounded-t-3xl border-t border-black/8 shadow-sm">
-          <span className="text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
-            The Atelier Anthology &bull; 35% Extrait
-          </span>
-          <h1 className="font-cormorant text-4xl font-normal leading-[1.05] text-[#14110D] mb-3 tracking-[-0.01em]">
-            Six moods.<br />
-            <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
-          </h1>
-          <p className="text-xs leading-relaxed text-[#14110D]/90 font-medium mb-5">
-            Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
-          </p>
-
-          {/* Mobile Micro Specs Tray */}
-          <div className="grid grid-cols-3 gap-1.5 border-y border-black/10 py-3 mb-6 bg-[#F5EFE6]/80 rounded-xl px-2.5 shadow-sm">
-            <div className="text-center">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Flacons</span>
-              <span className="text-[11px] font-bold text-[#14110D]">6 Extraits (6ml)</span>
-            </div>
-            <div className="text-center border-x border-black/10 px-1">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Concentration</span>
-              <span className="text-[11px] font-bold text-[#14110D]">35% Pure Oil</span>
-            </div>
-            <div className="text-center">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Offering</span>
-              <span className="text-[11px] font-bold text-[#14110D]">
-                ₹549 <span className="text-[9px] text-[#B8863B] font-semibold">(Net ₹99)</span>
-              </span>
-            </div>
-          </div>
-
-          {/* Direct Black Pill Button */}
-          <button
-            onClick={() => scrollToSection("acquire-coffret")}
-            className="w-full py-3.5 bg-[#14110D] active:bg-[#B8863B] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] font-semibold rounded-full shadow-lg transition-all text-center cursor-pointer"
-          >
-            Acquire Discovery Set &rarr;
-          </button>
-        </div>
-      </section>
-
-      {/* Desktop Layout (hidden md:flex): Full-Bleed Editorial Silk Layout */}
-      <section className="hidden md:flex relative w-full overflow-hidden bg-[#FAF8F5] min-h-[580px] lg:min-h-[720px] items-center">
-        {/* Full-bleed background photoshoot image */}
+      {/* ================= SECTION 1: CAMPAIGN COVER HERO (PC/LAPTOP OVERLAY STYLE FOR ALL SCREENS) ================= */}
+      <section className="relative w-full overflow-hidden bg-[#FAF8F5] min-h-[520px] sm:min-h-[600px] lg:min-h-[720px] flex items-center">
+        {/* Full-bleed background photoshoot image - Slightly lightened for perfect readability */}
         <div className="absolute inset-0 z-0">
           <img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret with Matte Black Box and Golden Amber Accents"
-            className="w-full h-full object-cover object-[center_35%] filter brightness-[1.02] contrast-[1.01]"
+            className="w-full h-full object-cover object-[center_35%] filter brightness-[1.06] contrast-[0.98] opacity-90"
           />
-          {/* Editorial Silk Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/85 via-[#FAF8F5]/45 to-transparent w-full md:w-[65%]" />
+          {/* Subtle lightened warm cream silk vignette for zero text collision & maximum readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/90 via-[#FAF8F5]/65 to-transparent w-full md:w-[65%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F5]/40 via-transparent to-[#FAF8F5]/60 md:hidden" />
         </div>
 
-        {/* Hero Top-Left Editorial Placement */}
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 md:py-16 w-full">
+        {/* Hero Top-Left Content Overlay directly on top of lightened photoshoot photo */}
+        <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-12 lg:px-16 py-10 md:py-16 w-full">
           <div className="max-w-[540px]">
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-3">
+            <span className="text-[9.5px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-2 sm:mb-3">
               The Atelier Anthology &bull; 35% Extrait
             </span>
-            <h1 className="font-cormorant text-5xl sm:text-6xl md:text-7xl font-normal leading-[1.02] text-[#14110D] mb-4 tracking-[-0.02em]">
+            <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl font-normal leading-[1.02] text-[#14110D] mb-3 sm:mb-4 tracking-[-0.02em]">
               Six moods.<br />
               <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
             </h1>
-            <p className="text-sm sm:text-base leading-relaxed text-[#14110D]/85 font-medium mb-8">
+            <p className="text-xs sm:text-base leading-relaxed text-[#14110D]/90 font-medium mb-5 sm:mb-8 max-w-[480px]">
               Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
             </p>
 
-            {/* Micro Specs Tray */}
-            <div className="grid grid-cols-3 gap-4 border-y border-black/10 py-3 mb-8">
+            {/* Micro Specs Tray Overlay */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 border-y border-black/10 py-2.5 sm:py-3 mb-6 sm:mb-8 bg-white/45 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none rounded-xl sm:rounded-none px-2 sm:px-0">
               <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Flacons</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">6 Extraits (6ml)</span>
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#14110D]/60 block font-semibold">Flacons</span>
+                <span className="text-[11px] sm:text-sm font-bold text-[#14110D]">6 Extraits (6ml)</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Concentration</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">35% Pure Oil</span>
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#14110D]/60 block font-semibold">Concentration</span>
+                <span className="text-[11px] sm:text-sm font-bold text-[#14110D]">35% Pure Oil</span>
               </div>
               <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Offering</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">
-                  ₹549 <span className="text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#14110D]/60 block font-semibold">Offering</span>
+                <span className="text-[11px] sm:text-sm font-bold text-[#14110D]">
+                  ₹549 <span className="text-[9px] sm:text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
                 </span>
               </div>
             </div>
@@ -374,7 +322,7 @@ export default function DiscoverySetPage({
             {/* Direct Black Pill Button */}
             <button
               onClick={() => scrollToSection("acquire-coffret")}
-              className="px-8 py-4 bg-[#14110D] text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-semibold rounded-full shadow-xl hover:bg-[#B8863B] transition-all transform hover:-translate-y-0.5 cursor-pointer flex items-center gap-3"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-[#14110D] text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-semibold rounded-full shadow-xl hover:bg-[#B8863B] active:bg-[#B8863B] transition-all transform hover:-translate-y-0.5 cursor-pointer flex items-center justify-center gap-3"
             >
               <span>Acquire Discovery Set &rarr;</span>
             </button>
