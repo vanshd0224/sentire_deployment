@@ -239,7 +239,7 @@ export default function DiscoverySetPage({
           id: "sentire-discovery-coffret-6x6ml",
           productId: "discovery-set",
           name: "The Discovery Coffret (6 x 6ml Extrait de Parfum)",
-          price: 1099,
+          price: 549,
           originalPrice: 2400,
           quantity: quantity,
           size: 36,
@@ -247,7 +247,7 @@ export default function DiscoverySetPage({
           image: "/discovery_gallery/gallery_slide_1.jpg"
         },
         36,
-        1099
+        549
       );
     }
   };
@@ -313,7 +313,7 @@ export default function DiscoverySetPage({
               <div>
                 <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Offering</span>
                 <span className="text-xs sm:text-sm font-bold text-[#14110D]">
-                  ₹1,099 <span className="text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
+                  ₹549 <span className="text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
                 </span>
               </div>
             </div>
@@ -624,13 +624,13 @@ export default function DiscoverySetPage({
             {/* Price block */}
             <div className="flex items-baseline gap-3 pb-6 border-b border-black/10 mb-6">
               <span className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D]">
-                ₹{(1099 * quantity).toLocaleString()}
+                ₹{(549 * quantity).toLocaleString()}
               </span>
               <span className="text-sm text-[#14110D]/40 line-through">
                 ₹{(2400 * quantity).toLocaleString()}
               </span>
               <span className="bg-[#EAF5EC] text-[#248232] px-2.5 py-0.5 rounded-full text-xs font-bold">
-                Save ₹{(1301 * quantity).toLocaleString()} (54% Off)
+                Save ₹{(1851 * quantity).toLocaleString()} (77% Off)
               </span>
             </div>
 
@@ -675,7 +675,7 @@ export default function DiscoverySetPage({
                   onClick={handleAcquire}
                   className="flex-1 py-4 bg-[#14110D] hover:bg-[#B8863B] text-[#FAF8F5] text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-lg transition-all cursor-pointer text-center"
                 >
-                  ADD TO BAG &bull; ₹{(1099 * quantity).toLocaleString()}
+                  ADD TO BAG &bull; ₹{(549 * quantity).toLocaleString()}
                 </button>
               </div>
 
