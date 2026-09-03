@@ -3,12 +3,15 @@ export type PageName =
   | "perfumes"
   | "bestsellers"
   | "new-arrivals"
+  | "discovery-set"
   | "byob"
   | "about"
   | "client-services"
   | "track-order"
   | "personalised-perfume"
-  | "extrait-de-parfum";
+  | "personalisation"
+  | "extrait-de-parfum"
+  | "account";
 
 export interface PerfumeProduct {
   id: string;

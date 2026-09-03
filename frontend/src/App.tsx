@@ -20,6 +20,7 @@ import BestSellersPage from "./components/BestSellersPage";
 import NewArrivalsPage from "./components/NewArrivalsPage";
 import AboutPage from "./components/AboutPage";
 import ByobPage from "./components/ByobPage";
+import DiscoverySetPage from "./components/DiscoverySetPage";
 import PersonalisationPage from "./components/PersonalisationPage";
 import CartDrawer, { CartItem } from "./components/CartDrawer";
 import MobileBottomNav from "./components/MobileBottomNav";
@@ -51,6 +52,7 @@ export default function App() {
     if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
     if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";
     if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "perfumes";
+    if (hash === "#discovery-set" || path.includes("discovery-set")) return "discovery-set";
     if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
     if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
     if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
@@ -144,6 +146,7 @@ export default function App() {
       else if (hash === "#about" || popPath.includes("about") || popPath.includes("extrait-de-parfum") || popPath.includes("35-percent")) setCurrentPage("about");
       else if (hash === "#byob" || popPath.includes("byob") || popPath.includes("build-your-own-bundle")) setCurrentPage("byob");
       else if (hash === "#personalisation" || popPath.includes("personalisation") || popPath.includes("personalised-perfume")) setCurrentPage("personalisation");
+      else if (hash === "#discovery-set" || popPath.includes("discovery-set")) setCurrentPage("discovery-set");
       else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
       else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
       else if (hash === "#perfumes" || popPath.includes("perfumes") || popPath.includes("products")) setCurrentPage("perfumes");
@@ -304,6 +307,13 @@ export default function App() {
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => setIsCartOpen(true)}
+        />
+            ) : currentPage === "discovery-set" ? (
+        <DiscoverySetPage
+          onAddToCart={handleAddToCart}
+          onOpenCart={() => setIsCartOpen(true)}
+          onBackToHome={() => handleNavigate("home")}
+          onNavigate={handleNavigate}
         />
       ) : currentPage === "new-arrivals" ? (
         <NewArrivalsPage

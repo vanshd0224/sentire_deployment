@@ -320,6 +320,31 @@ function generateProductSchemaJson(p) {
 
 const routes = [
   {
+    path: 'discovery-set',
+    title: 'The Discovery Coffret (6 x 6ml) | 35% Extrait de Parfum | SENTIRE By PC',
+    description: 'Explore six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration. Includes ₹1,000 physical gift voucher.',
+    ogTitle: 'The Discovery Coffret (6 x 6ml) | SENTIRE By PC',
+    ogDescription: 'Six moods. One case. Six signature 6ml extrait flacons with authentic ₹1,000 upgrade credit enclosed.',
+    image: `${PRODUCTION_DOMAIN}/discovery_hero_cover.jpg`,
+    heading: 'The Discovery Coffret',
+    subheading: 'Six Signature Extrait Flacons (6 x 6ml) · 35% Concentration · ₹1,000 Voucher Enclosed',
+    contentHtml: `<section class="max-w-7xl mx-auto px-4 py-8"><h1 class="text-3xl font-bold text-ink">The Discovery Coffret</h1><p class="mt-2 text-ink/70">Six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration.</p></section>`,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "Discovery Set", "item": `${PRODUCTION_DOMAIN}/discovery-set` }
+          ]
+        }
+      ]
+    })
+  },
+  {
     path: 'perfumes',
     title: 'All Perfumes | 35%+ Extrait de Parfum | SENTIRE By PC',
     description: 'Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.',
