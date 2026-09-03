@@ -274,7 +274,61 @@ export default function DiscoverySetPage({
       `}</style>
 
       {/* ================= SECTION 1: CAMPAIGN COVER HERO ================= */}
-      <section className="relative w-full overflow-hidden bg-[#FAF8F5] min-h-[580px] lg:min-h-[720px] flex items-center">
+      {/* Mobile Layout (md:hidden) - Zero Text Collision, Crisp Readability */}
+      <section className="block md:hidden w-full bg-[#FAF8F5]">
+        {/* Photoshoot Image Header */}
+        <div className="relative w-full h-[280px] sm:h-[340px] overflow-hidden">
+          <img
+            src="/discovery_hero_cover.jpg"
+            alt="Sentire 6-Flacon Luxury Discovery Coffret"
+            className="w-full h-full object-cover object-[center_35%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF8F5] via-transparent to-black/10" />
+        </div>
+
+        {/* Text Content Block */}
+        <div className="px-5 py-6 -mt-5 relative z-10 bg-[#FAF8F5] rounded-t-3xl border-t border-black/5 shadow-sm">
+          <span className="text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
+            The Atelier Anthology &bull; 35% Extrait
+          </span>
+          <h1 className="font-cormorant text-4xl font-normal leading-[1.05] text-[#14110D] mb-3 tracking-[-0.01em]">
+            Six moods.<br />
+            <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
+          </h1>
+          <p className="text-xs leading-relaxed text-[#14110D]/80 font-medium mb-5">
+            You are never just one fragrance. You are whoever the morning demands, and whoever midnight desires &mdash; six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
+          </p>
+
+          {/* Mobile Micro Specs Tray */}
+          <div className="grid grid-cols-3 gap-1.5 border-y border-black/10 py-3 mb-6 bg-[#F5EFE6]/70 rounded-xl px-2.5">
+            <div className="text-center">
+              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Flacons</span>
+              <span className="text-[11px] font-bold text-[#14110D]">6 Extraits (6ml)</span>
+            </div>
+            <div className="text-center border-x border-black/10 px-1">
+              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Concentration</span>
+              <span className="text-[11px] font-bold text-[#14110D]">35% Pure Oil</span>
+            </div>
+            <div className="text-center">
+              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Offering</span>
+              <span className="text-[11px] font-bold text-[#14110D]">
+                ₹549 <span className="text-[9px] text-[#B8863B] font-semibold">(Net ₹99)</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Direct Black Pill Button */}
+          <button
+            onClick={() => scrollToSection("acquire-coffret")}
+            className="w-full py-3.5 bg-[#14110D] active:bg-[#B8863B] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] font-semibold rounded-full shadow-lg transition-all text-center cursor-pointer mb-2"
+          >
+            Acquire Discovery Set &rarr;
+          </button>
+        </div>
+      </section>
+
+      {/* Desktop Layout (hidden md:flex) - High Editorial Silk Layout */}
+      <section className="hidden md:flex relative w-full overflow-hidden bg-[#FAF8F5] min-h-[580px] lg:min-h-[720px] items-center">
         {/* Full-bleed background photoshoot image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -286,7 +340,7 @@ export default function DiscoverySetPage({
           <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/85 via-[#FAF8F5]/45 to-transparent w-full md:w-[65%]" />
         </div>
 
-        {/* Hero Top-Left Editorial Silk Placement */}
+        {/* Hero Top-Left Editorial Placement */}
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 md:py-16 w-full">
           <div className="max-w-[540px]">
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-3">
