@@ -237,7 +237,8 @@ export default function DiscoverySetPage({
       onAddToCart(
         {
           id: "sentire-discovery-coffret-6x6ml",
-          productId: "discovery-set",
+          productId: "discovery-set-package",
+          variantId: "46965136031905",
           name: "The Discovery Coffret (6 x 6ml Extrait de Parfum)",
           price: 549,
           originalPrice: 2400,
