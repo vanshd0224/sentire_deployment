@@ -1,7 +1,12 @@
 // Official Shopify Storefront API Cart Manager
 import { trackAddToCart, trackInitiateCheckout } from "./analytics";
 
-export const SHOPIFY_VARIANT_MAP: Record<string, Record<number, string>> = {
+  // Discovery Set Package (549 INR)
+  "discovery-set": { 36: "46965136031905", 0: "46965136031905", 50: "46965136031905" },
+  "discovery-set-package": { 36: "46965136031905", 0: "46965136031905", 50: "46965136031905" },
+  "sentire-discovery-coffret-6x6ml": { 36: "46965136031905", 0: "46965136031905", 50: "46965136031905" },
+  "discovery coffret": { 36: "46965136031905", 0: "46965136031905", 50: "46965136031905" },
+
   // 0809
   "0809": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
   "perfume-1": { 10: "46888622293153", 30: "46888622325921", 50: "46888622358689" },
@@ -167,6 +172,10 @@ export const resolveShopifyVariantId = (item: any): string => {
 
   if (pId.includes("engraving") || pName.includes("engraving")) {
     return ENGRAVING_FEE_VARIANT_ID;
+  }
+
+  if (pId.includes("discovery") || pName.includes("discovery")) {
+    return "46965136031905";
   }
 
   const normalizedId = pId.replace(/[\s\-_]/g, "");
