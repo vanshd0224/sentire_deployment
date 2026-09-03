@@ -690,9 +690,9 @@ export default function DiscoverySetPage({
 
             {/* Guarantees */}
             <div className="grid grid-cols-3 gap-2 text-center text-[10px] text-[#14110D]/60 mt-6 pt-4 border-t border-black/8 font-medium">
-              <div>&check; Free Express Shipping</div>
-              <div>&check; Cash on Delivery (COD)</div>
-              <div>&check; Net ₹99 Discovery</div>
+              <div>✓ Free Express Shipping</div>
+              <div>✓ Cash on Delivery (COD)</div>
+              <div>✓ Net ₹99 Discovery</div>
             </div>
           </div>
         </div>
