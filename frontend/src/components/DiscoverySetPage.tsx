@@ -616,137 +616,140 @@ export default function DiscoverySetPage({
       </section>
 
       {/* ================= SECTION 4: ADD TO CART & LUXURY GALLERY ================= */}
-      <section className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto" id="acquire-coffret">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Auto-Sliding 3-Photo Gallery Carousel (Full 2:3 Portrait Uncropped Frame) */}
-          <div className="relative w-full min-h-[500px] sm:min-h-[620px] aspect-[2/3] max-h-[660px] mx-auto rounded-3xl overflow-hidden shadow-2xl border border-black/8 bg-[#ECE3D5] flex items-center justify-center">
-            {CAROUSEL_IMAGES.map((imgUrl, idx) => (
-              <img
-                key={idx}
-                src={imgUrl}
-                alt={`Sentire Discovery Set View ${idx + 1}`}
-                className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 ${
-                  currentSlide === idx ? "opacity-100 scale-100" : "opacity-0 scale-105 pointer-events-none"
-                }`}
-              />
-            ))}
-
-            {/* Arrows */}
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
-              aria-label="Previous image"
-            >
-              &larr;
-            </button>
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
-              aria-label="Next image"
-            >
-              &rarr;
-            </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {CAROUSEL_IMAGES.map((_, idx) => (
-                <button
+      <section className="py-16 sm:py-20 px-4 sm:px-12 lg:px-16 max-w-[1440px] mx-auto" id="acquire-coffret">
+        {/* Single Unified Box Container combining Image & Price Details */}
+        <div className="bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-black/8 shadow-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+            {/* Top / Left: Auto-Sliding 3-Photo Gallery Carousel */}
+            <div className="relative w-full min-h-[380px] sm:min-h-[520px] lg:min-h-[620px] aspect-[2/3] max-h-[660px] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden border border-black/8 bg-[#ECE3D5] flex items-center justify-center">
+              {CAROUSEL_IMAGES.map((imgUrl, idx) => (
+                <img
                   key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${
-                    currentSlide === idx ? "w-6 bg-white" : "w-2 bg-white/50"
+                  src={imgUrl}
+                  alt={`Sentire Discovery Set View ${idx + 1}`}
+                  className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 ${
+                    currentSlide === idx ? "opacity-100 scale-100" : "opacity-0 scale-105 pointer-events-none"
                   }`}
-                  aria-label={`Slide ${idx + 1}`}
                 />
               ))}
-            </div>
-          </div>
 
-          {/* Right: High-Converting Acquisition Card */}
-          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-black/8 shadow-xl">
-            <span className="inline-block bg-[#B8863B]/10 text-[#B8863B] border border-[#B8863B]/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
-              &#10022; ₹1,000 Voucher Enclosed
-            </span>
+              {/* Arrows */}
+              <button
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
+                aria-label="Previous image"
+              >
+                &larr;
+              </button>
+              <button
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
+                aria-label="Next image"
+              >
+                &rarr;
+              </button>
 
-            <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D] mb-2">
-              The Discovery Coffret
-            </h2>
-            <p className="text-xs sm:text-sm text-[#14110D]/70 mb-6">
-              Six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration.
-            </p>
-
-            {/* Price block */}
-            <div className="flex items-baseline gap-3 pb-6 border-b border-black/10 mb-6">
-              <span className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D]">
-                ₹{(549 * quantity).toLocaleString()}
-              </span>
-              <span className="text-sm text-[#14110D]/40 line-through">
-                ₹{(2400 * quantity).toLocaleString()}
-              </span>
-              <span className="bg-[#EAF5EC] text-[#248232] px-2.5 py-0.5 rounded-full text-xs font-bold">
-                Save ₹{(1851 * quantity).toLocaleString()} (77% Off)
-              </span>
-            </div>
-
-            {/* Checklist */}
-            <ul className="space-y-2.5 text-xs sm:text-sm text-[#14110D]/85 mb-8">
-              <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">✓</span>
-                <span><strong>All 6 Signature Extraits:</strong> Calantha, Mirai, Purple Oud, Seductive, Deep Crush, Rich</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">✓</span>
-                <span><strong>₹1,000 Physical Gift Certificate:</strong> Redeemable toward any full 50ml flacon</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#B8863B] font-bold">✓</span>
-                <span><strong>35% Pure Oil Extrait Formulation:</strong> 12–14 Hours Long-Lasting Sillage</span>
-              </li>
-            </ul>
-
-            {/* Quantity and Actions */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                {/* Quantity */}
-                <div className="flex items-center border border-black/15 rounded-full px-4 py-3 bg-[#FAF8F5]">
+              {/* Dots */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {CAROUSEL_IMAGES.map((_, idx) => (
                   <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
-                  >
-                    &minus;
-                  </button>
-                  <span className="text-sm font-bold px-4">{quantity}</span>
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-2 rounded-full transition-all cursor-pointer ${
+                      currentSlide === idx ? "w-5 bg-white" : "w-2 bg-white/50"
+                    }`}
+                    aria-label={`Slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom / Right: Acquisition Details & Pricing */}
+            <div className="pt-2 lg:pt-0">
+              <span className="inline-block bg-[#B8863B]/10 text-[#B8863B] border border-[#B8863B]/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
+                &#10022; ₹1,000 Voucher Enclosed
+              </span>
+
+              <h2 className="font-cormorant text-3xl sm:text-5xl font-bold text-[#14110D] mb-2 leading-tight">
+                The Discovery Coffret
+              </h2>
+              <p className="text-xs sm:text-sm text-[#14110D]/70 mb-5">
+                Six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration.
+              </p>
+
+              {/* Price block */}
+              <div className="flex items-baseline gap-3 pb-5 border-b border-black/10 mb-5">
+                <span className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D]">
+                  ₹{(549 * quantity).toLocaleString()}
+                </span>
+                <span className="text-sm text-[#14110D]/40 line-through">
+                  ₹{(2400 * quantity).toLocaleString()}
+                </span>
+                <span className="bg-[#EAF5EC] text-[#248232] px-2.5 py-0.5 rounded-full text-xs font-bold">
+                  Save ₹{(1851 * quantity).toLocaleString()} (77% Off)
+                </span>
+              </div>
+
+              {/* Checklist */}
+              <ul className="space-y-2.5 text-xs sm:text-sm text-[#14110D]/85 mb-6">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8863B] font-bold">✓</span>
+                  <span><strong>All 6 Signature Extraits:</strong> Calantha, Mirai, Purple Oud, Seductive, Deep Crush, Rich</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8863B] font-bold">✓</span>
+                  <span><strong>₹1,000 Physical Gift Certificate:</strong> Redeemable toward any full 50ml flacon</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#B8863B] font-bold">✓</span>
+                  <span><strong>35% Pure Oil Extrait Formulation:</strong> 12–14 Hours Long-Lasting Sillage</span>
+                </li>
+              </ul>
+
+              {/* Quantity and Actions */}
+              <div className="space-y-3.5">
+                <div className="flex items-center gap-3">
+                  {/* Quantity */}
+                  <div className="flex items-center border border-black/15 rounded-full px-3 py-2.5 bg-[#FAF8F5]">
+                    <button
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                      className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
+                    >
+                      &minus;
+                    </button>
+                    <span className="text-sm font-bold px-3">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity((q) => q + 1)}
+                      className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
+                    >
+                      &#43;
+                    </button>
+                  </div>
+
+                  {/* Add to Bag Button */}
                   <button
-                    onClick={() => setQuantity((q) => q + 1)}
-                    className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
+                    onClick={handleAcquire}
+                    className="flex-1 py-3.5 bg-[#14110D] hover:bg-[#B8863B] active:bg-[#B8863B] text-[#FAF8F5] text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-lg transition-all cursor-pointer text-center"
                   >
-                    &#43;
+                    ADD TO BAG &bull; ₹{(549 * quantity).toLocaleString()}
                   </button>
                 </div>
 
-                {/* Add to Bag Button */}
+                {/* Express Checkout Button */}
                 <button
-                  onClick={handleAcquire}
-                  className="flex-1 py-4 bg-[#14110D] hover:bg-[#B8863B] text-[#FAF8F5] text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-lg transition-all cursor-pointer text-center"
+                  onClick={handleDirectCheckout}
+                  className="w-full py-3.5 bg-gradient-to-r from-[#C89B5A] to-[#B8863B] hover:from-[#B8863B] hover:to-[#9B702B] text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-xl transition-all cursor-pointer text-center"
                 >
-                  ADD TO BAG &bull; ₹{(549 * quantity).toLocaleString()}
+                  EXPRESS CHECKOUT (COD / UPI) &rarr;
                 </button>
               </div>
 
-              {/* Express Checkout Button */}
-              <button
-                onClick={handleDirectCheckout}
-                className="w-full py-4 bg-gradient-to-r from-[#C89B5A] to-[#B8863B] hover:from-[#B8863B] hover:to-[#9B702B] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-xl transition-all cursor-pointer text-center"
-              >
-                EXPRESS CHECKOUT (COD / UPI) &rarr;
-              </button>
-            </div>
-
-            {/* Guarantees */}
-            <div className="grid grid-cols-3 gap-2 text-center text-[10px] text-[#14110D]/60 mt-6 pt-4 border-t border-black/8 font-medium">
-              <div>✓ Free Express Shipping</div>
-              <div>✓ Cash on Delivery (COD)</div>
-              <div>✓ Net ₹99 Discovery</div>
+              {/* Guarantees */}
+              <div className="grid grid-cols-3 gap-1.5 text-center text-[9.5px] sm:text-[10px] text-[#14110D]/60 mt-5 pt-4 border-t border-black/8 font-medium">
+                <div>✓ Free Express Shipping</div>
+                <div>✓ Cash on Delivery (COD)</div>
+                <div>✓ Net ₹99 Discovery</div>
+              </div>
             </div>
           </div>
         </div>
@@ -767,8 +770,8 @@ export default function DiscoverySetPage({
             </p>
           </div>
 
-          {/* 4 Vectors Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {/* 4 Vectors Grid (2x2 Grid on Mobile, 4-Cols on Desktop) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12">
             {/* Vector 1 */}
             <div className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
               <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector I</span>
