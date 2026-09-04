@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PageName } from "../types/appTypes";
+
+// Motion Animation Variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 }
+  }
+};
 
 interface DiscoverySetPageProps {
   onAddToCart?: (item: any, size?: number, price?: number) => void;
@@ -279,31 +294,40 @@ export default function DiscoverySetPage({
       <section className="block md:hidden w-full bg-[#FAF8F5]">
         {/* Full Uncropped 3:2 Photoshoot Image (100% Uncropped & Original Brightness) */}
         <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#FAF8F5] flex items-center justify-center">
-          <img
+          <motion.img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret"
             loading="eager"
             decoding="async"
             fetchPriority="high"
+            initial={{ scale: 1.05, opacity: 0.8 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="w-full h-full object-contain filter brightness-[1.01] contrast-[1.01]"
           />
         </div>
 
         {/* Crisp Text Content Card directly below photo */}
-        <div className="px-5 py-6 -mt-3 relative z-10 bg-[#FAF8F5] rounded-t-3xl border-t border-black/8 shadow-sm">
-          <span className="text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={staggerContainer}
+          className="px-5 py-6 -mt-3 relative z-10 bg-[#FAF8F5] rounded-t-3xl border-t border-black/8 shadow-sm"
+        >
+          <motion.span variants={fadeInUp} className="text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
             The Atelier Anthology &bull; 35% Extrait
-          </span>
-          <h1 className="font-cormorant text-4xl font-normal leading-[1.05] text-[#14110D] mb-3 tracking-[-0.01em]">
+          </motion.span>
+          <motion.h1 variants={fadeInUp} className="font-cormorant text-4xl font-normal leading-[1.05] text-[#14110D] mb-3 tracking-[-0.01em]">
             Six moods.<br />
             <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
-          </h1>
-          <p className="text-xs leading-relaxed text-[#14110D]/90 font-medium mb-5">
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-xs leading-relaxed text-[#14110D]/90 font-medium mb-5">
             Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
-          </p>
+          </motion.p>
 
           {/* Mobile Micro Specs Tray */}
-          <div className="grid grid-cols-3 gap-1.5 border-y border-black/10 py-3 mb-6 bg-[#F5EFE6]/80 rounded-xl px-2.5 shadow-sm">
+          <motion.div variants={fadeInUp} className="grid grid-cols-3 gap-1.5 border-y border-black/10 py-3 mb-6 bg-[#F5EFE6]/80 rounded-xl px-2.5 shadow-sm">
             <div className="text-center">
               <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Flacons</span>
               <span className="text-[11px] font-bold text-[#14110D]">6 Extraits (6ml)</span>
@@ -318,28 +342,33 @@ export default function DiscoverySetPage({
                 ₹549 <span className="text-[9px] text-[#B8863B] font-semibold">(Net ₹99)</span>
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Direct Black Pill Button */}
-          <button
+          <motion.button
+            variants={fadeInUp}
+            whileTap={{ scale: 0.97 }}
             onClick={() => scrollToSection("acquire-coffret")}
             className="w-full py-3.5 bg-[#14110D] active:bg-[#B8863B] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] font-semibold rounded-full shadow-lg transition-all text-center cursor-pointer"
           >
             Acquire Discovery Set &rarr;
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </section>
 
       {/* Desktop Layout (hidden md:flex): Full-Bleed Editorial Silk Layout */}
       <section className="hidden md:flex relative w-full overflow-hidden bg-[#FAF8F5] min-h-[580px] lg:min-h-[720px] items-center">
         {/* Full-bleed background photoshoot image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <motion.img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret with Matte Black Box and Golden Amber Accents"
             loading="eager"
             decoding="async"
             fetchPriority="high"
+            initial={{ scale: 1.04, opacity: 0.8 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
             className="w-full h-full object-cover object-[center_35%] filter brightness-[1.02] contrast-[1.01]"
           />
           {/* Editorial Silk Vignette */}
@@ -348,20 +377,25 @@ export default function DiscoverySetPage({
 
         {/* Hero Top-Left Editorial Placement */}
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 md:py-16 w-full">
-          <div className="max-w-[540px]">
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-3">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="max-w-[540px]"
+          >
+            <motion.span variants={fadeInUp} className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-3">
               The Atelier Anthology &bull; 35% Extrait
-            </span>
-            <h1 className="font-cormorant text-5xl sm:text-6xl md:text-7xl font-normal leading-[1.02] text-[#14110D] mb-4 tracking-[-0.02em]">
+            </motion.span>
+            <motion.h1 variants={fadeInUp} className="font-cormorant text-5xl sm:text-6xl md:text-7xl font-normal leading-[1.02] text-[#14110D] mb-4 tracking-[-0.02em]">
               Six moods.<br />
               <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
-            </h1>
-            <p className="text-sm sm:text-base leading-relaxed text-[#14110D]/85 font-medium mb-8">
+            </motion.h1>
+            <motion.p variants={fadeInUp} className="text-sm sm:text-base leading-relaxed text-[#14110D]/85 font-medium mb-8">
               Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
-            </p>
+            </motion.p>
 
             {/* Micro Specs Tray */}
-            <div className="grid grid-cols-3 gap-4 border-y border-black/10 py-3 mb-8">
+            <motion.div variants={fadeInUp} className="grid grid-cols-3 gap-4 border-y border-black/10 py-3 mb-8">
               <div>
                 <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Flacons</span>
                 <span className="text-xs sm:text-sm font-bold text-[#14110D]">6 Extraits (6ml)</span>
@@ -376,22 +410,31 @@ export default function DiscoverySetPage({
                   ₹549 <span className="text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Direct Black Pill Button */}
-            <button
+            <motion.button
+              variants={fadeInUp}
+              whileHover={{ y: -2, backgroundColor: "#B8863B" }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => scrollToSection("acquire-coffret")}
-              className="px-8 py-4 bg-[#14110D] text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-semibold rounded-full shadow-xl hover:bg-[#B8863B] transition-all transform hover:-translate-y-0.5 cursor-pointer flex items-center gap-3"
+              className="px-8 py-4 bg-[#14110D] text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-semibold rounded-full shadow-xl transition-colors cursor-pointer flex items-center gap-3"
             >
               <span>Acquire Discovery Set &rarr;</span>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* ================= SECTION 2: THE OCCASION WARDROBE ================= */}
       <section className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto border-t border-black/5" id="occasion-wardrobe">
-        <div className="text-center max-w-[720px] mx-auto mb-14">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeInUp}
+          className="text-center max-w-[720px] mx-auto mb-14"
+        >
           <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
             The Occasion Wardrobe
           </span>
@@ -401,14 +444,23 @@ export default function DiscoverySetPage({
           <p className="text-sm sm:text-base text-[#14110D]/70 max-w-lg mx-auto">
             Six signature extraits composed for the rhythm of your week. Poured with 35% pure perfume oils.
           </p>
-        </div>
+        </motion.div>
 
         {/* 6 Occasion Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        >
           {OCCASIONS.map((occ, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="group bg-white rounded-2xl overflow-hidden border border-black/8 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col"
+              variants={fadeInUp}
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="group bg-white rounded-2xl overflow-hidden border border-black/8 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer"
             >
               {/* Photo */}
               <div className="relative aspect-[4/3] overflow-hidden bg-[#F1E9D8]">
@@ -436,15 +488,21 @@ export default function DiscoverySetPage({
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* ================= SECTION 3: SENSORY NOTE PYRAMIDS & SILLAGE RADAR ================= */}
       <section className="py-20 px-6 sm:px-12 lg:px-16 bg-[#F5EFE6] border-y border-black/8" id="scent-radar">
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center max-w-[720px] mx-auto mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-[720px] mx-auto mb-12"
+          >
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
               Interactive Olfactory Visualization
             </span>
@@ -454,7 +512,7 @@ export default function DiscoverySetPage({
             <p className="text-sm sm:text-base text-[#14110D]/70 max-w-md mx-auto">
               Because you cannot smell through a screen, we mapped the precise 14-hour dry-down and projection anatomy of every flacon.
             </p>
-          </div>
+          </motion.div>
 
           {/* 6 Flacon Selector Tray */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
@@ -462,7 +520,7 @@ export default function DiscoverySetPage({
               <button
                 key={idx}
                 onClick={() => setActiveScentIdx(idx)}
-                className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`relative px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   activeScentIdx === idx
                     ? "bg-[#14110D] text-white shadow-lg scale-105"
                     : "bg-white/80 text-[#14110D]/75 hover:bg-white border border-black/5 hover:border-[#B8863B]/40"
@@ -473,187 +531,213 @@ export default function DiscoverySetPage({
             ))}
           </div>
 
-          {/* Dual Interactive Display with Sampled Warm Linen / Travertine Cream-Brown Background */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* Left: 3-Stage Bloom Timeline */}
-            <div
-              className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
-              style={{
-                background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
-              }}
+          {/* Dual Interactive Display with AnimatePresence */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeScentIdx}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"
             >
-              <div>
-                <div className="flex items-center justify-between pb-4 border-b border-black/10 mb-6">
-                  <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
-                    {currentScent.name}
-                  </h3>
-                  <span className="text-[10px] uppercase tracking-widest text-[#B8863B] font-bold">
-                    {currentScent.tagline}
-                  </span>
-                </div>
-
-                <div className="space-y-6 relative before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#B8863B]/30 pl-8">
-                  <div className="relative">
-                    <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                    <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                      Stage I &bull; Opening (First 15–30 Mins)
+              {/* Left: 3-Stage Bloom Timeline */}
+              <div
+                className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
+                style={{
+                  background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-black/10 mb-6">
+                    <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
+                      {currentScent.name}
+                    </h3>
+                    <span className="text-[10px] uppercase tracking-widest text-[#B8863B] font-bold">
+                      {currentScent.tagline}
                     </span>
-                    <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                      {currentScent.stage1Name}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                      {currentScent.stage1Desc}
-                    </p>
                   </div>
 
-                  <div className="relative">
-                    <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                    <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                      Stage II &bull; Heart Bloom (2–6 Hours)
-                    </span>
-                    <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                      {currentScent.stage2Name}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                      {currentScent.stage2Desc}
-                    </p>
-                  </div>
+                  <div className="space-y-6 relative before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#B8863B]/30 pl-8">
+                    <div className="relative">
+                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
+                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
+                        Stage I &bull; Opening (First 15–30 Mins)
+                      </span>
+                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
+                        {currentScent.stage1Name}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
+                        {currentScent.stage1Desc}
+                      </p>
+                    </div>
 
-                  <div className="relative">
-                    <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                    <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                      Stage III &bull; Base Drydown (8–14+ Hours)
-                    </span>
-                    <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                      {currentScent.stage3Name}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                      {currentScent.stage3Desc}
-                    </p>
+                    <div className="relative">
+                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
+                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
+                        Stage II &bull; Heart Bloom (2–6 Hours)
+                      </span>
+                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
+                        {currentScent.stage2Name}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
+                        {currentScent.stage2Desc}
+                      </p>
+                    </div>
+
+                    <div className="relative">
+                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
+                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
+                        Stage III &bull; Base Drydown (8–14+ Hours)
+                      </span>
+                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
+                        {currentScent.stage3Name}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
+                        {currentScent.stage3Desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right: Performance & Sillage Radar */}
-            <div
-              className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
-              style={{
-                background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
-              }}
-            >
-              <div>
-                <div className="pb-4 border-b border-black/10 mb-6">
-                  <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
-                    Performance &amp; Sillage Radar
-                  </h3>
-                  <p className="text-xs text-[#14110D]/60 mt-1">
-                    Laboratory measured on 35% pure extrait formulation
-                  </p>
-                </div>
-
-                <div className="space-y-6 mb-8">
-                  {/* Gauge 1 */}
-                  <div>
-                    <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                      <span>Longevity on Skin</span>
-                      <span className="text-[#B8863B]">{currentScent.longevity}</span>
-                    </div>
-                    <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-full bg-[#B8863B] rounded-full transition-all duration-700"
-                        style={{ width: `${currentScent.longevityPct}%` }}
-                      />
-                    </div>
+              {/* Right: Performance & Sillage Radar */}
+              <div
+                className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
+                style={{
+                  background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
+                }}
+              >
+                <div>
+                  <div className="pb-4 border-b border-black/10 mb-6">
+                    <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
+                      Performance &amp; Sillage Radar
+                    </h3>
+                    <p className="text-xs text-[#14110D]/60 mt-1">
+                      Laboratory measured on 35% pure extrait formulation
+                    </p>
                   </div>
 
-                  {/* Gauge 2 */}
-                  <div>
-                    <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                      <span>Projection / Sillage Cloud</span>
-                      <span className="text-[#B8863B]">{currentScent.projection}</span>
+                  <div className="space-y-6 mb-8">
+                    {/* Gauge 1 */}
+                    <div>
+                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Longevity on Skin</span>
+                        <span className="text-[#B8863B]">{currentScent.longevity}</span>
+                      </div>
+                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${currentScent.longevityPct}%` }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
+                          className="h-full bg-[#B8863B] rounded-full"
+                        />
+                      </div>
                     </div>
-                    <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-full bg-[#B8863B] rounded-full transition-all duration-700"
-                        style={{ width: `${currentScent.projectionPct}%` }}
-                      />
+
+                    {/* Gauge 2 */}
+                    <div>
+                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Projection / Sillage Cloud</span>
+                        <span className="text-[#B8863B]">{currentScent.projection}</span>
+                      </div>
+                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${currentScent.projectionPct}%` }}
+                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                          className="h-full bg-[#B8863B] rounded-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Gauge 3 */}
+                    <div>
+                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Aroma Intensity</span>
+                        <span className="text-[#B8863B]">{currentScent.intensity}</span>
+                      </div>
+                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${currentScent.intensityPct}%` }}
+                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                          className="h-full bg-[#B8863B] rounded-full"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Gauge 3 */}
-                  <div>
-                    <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                      <span>Aroma Intensity</span>
-                      <span className="text-[#B8863B]">{currentScent.intensity}</span>
+                  {/* 4 Performance Metric Badges */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
+                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Concentration</span>
+                      <span className="text-xs font-bold text-[#14110D]">{currentScent.concentration}</span>
                     </div>
-                    <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                      <div
-                        className="h-full bg-[#B8863B] rounded-full transition-all duration-700"
-                        style={{ width: `${currentScent.intensityPct}%` }}
-                      />
+                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
+                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Best Occasion</span>
+                      <span className="text-xs font-bold text-[#14110D]">{currentScent.occasion}</span>
                     </div>
-                  </div>
-                </div>
-
-                {/* 4 Performance Metric Badges */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                    <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Concentration</span>
-                    <span className="text-xs font-bold text-[#14110D]">{currentScent.concentration}</span>
-                  </div>
-                  <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                    <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Best Occasion</span>
-                    <span className="text-xs font-bold text-[#14110D]">{currentScent.occasion}</span>
-                  </div>
-                  <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                    <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Season</span>
-                    <span className="text-xs font-bold text-[#14110D]">{currentScent.season}</span>
-                  </div>
-                  <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                    <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Scent Character</span>
-                    <span className="text-xs font-bold text-[#14110D]">{currentScent.character}</span>
+                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
+                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Season</span>
+                      <span className="text-xs font-bold text-[#14110D]">{currentScent.season}</span>
+                    </div>
+                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
+                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Scent Character</span>
+                      <span className="text-xs font-bold text-[#14110D]">{currentScent.character}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
       {/* ================= SECTION 4: ADD TO CART & LUXURY GALLERY ================= */}
       <section className="py-16 sm:py-20 px-4 sm:px-12 lg:px-16 max-w-[1440px] mx-auto" id="acquire-coffret">
         {/* Single Unified Box Container combining Image & Price Details */}
-        <div className="bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-black/8 shadow-xl">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={fadeInUp}
+          className="bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-black/8 shadow-xl"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
             {/* Top / Left: Auto-Sliding 3-Photo Gallery Carousel */}
             <div className="relative w-full min-h-[380px] sm:min-h-[520px] lg:min-h-[620px] aspect-[2/3] max-h-[660px] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden border border-black/8 bg-[#ECE3D5] flex items-center justify-center">
               {CAROUSEL_IMAGES.map((imgUrl, idx) => (
-                <img
+                <motion.img
                   key={idx}
                   src={imgUrl}
                   alt={`Sentire Discovery Set View ${idx + 1}`}
-                  className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 ${
-                    currentSlide === idx ? "opacity-100 scale-100" : "opacity-0 scale-105 pointer-events-none"
-                  }`}
+                  initial={false}
+                  animate={{ opacity: currentSlide === idx ? 1 : 0, scale: currentSlide === idx ? 1 : 1.04 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="absolute inset-0 w-full h-full object-contain p-2"
                 />
               ))}
 
               {/* Arrows */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setCurrentSlide((prev) => (prev - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-colors cursor-pointer backdrop-blur-sm"
                 aria-label="Previous image"
               >
                 &larr;
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-all cursor-pointer backdrop-blur-sm"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-colors cursor-pointer backdrop-blur-sm"
                 aria-label="Next image"
               >
                 &rarr;
-              </button>
+              </motion.button>
 
               {/* Dots */}
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
@@ -733,21 +817,25 @@ export default function DiscoverySetPage({
                   </div>
 
                   {/* Add to Bag Button */}
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.96 }}
+                    whileHover={{ y: -1 }}
                     onClick={handleAcquire}
-                    className="flex-1 py-3.5 bg-[#14110D] hover:bg-[#B8863B] active:bg-[#B8863B] text-[#FAF8F5] text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-lg transition-all cursor-pointer text-center"
+                    className="flex-1 py-3.5 bg-[#14110D] hover:bg-[#B8863B] active:bg-[#B8863B] text-[#FAF8F5] text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-lg transition-colors cursor-pointer text-center"
                   >
                     ADD TO BAG &bull; ₹{(549 * quantity).toLocaleString()}
-                  </button>
+                  </motion.button>
                 </div>
 
                 {/* Express Checkout Button */}
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ y: -1 }}
                   onClick={handleDirectCheckout}
                   className="w-full py-3.5 bg-gradient-to-r from-[#C89B5A] to-[#B8863B] hover:from-[#B8863B] hover:to-[#9B702B] text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-xl transition-all cursor-pointer text-center"
                 >
                   EXPRESS CHECKOUT (COD / UPI) &rarr;
-                </button>
+                </motion.button>
               </div>
 
               {/* Guarantees */}
@@ -758,13 +846,19 @@ export default function DiscoverySetPage({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* ================= SECTION 5: 4D SCENT AURA & TIME CHRONOMETER (WARM CREAMY VELVET) ================= */}
+      {/* ================= SECTION 5: 4D SCENT AURA & TIME CHRONOMETER ================= */}
       <section className="py-20 px-6 sm:px-12 lg:px-16 bg-gradient-to-b from-[#FAF7F0] via-[#F5EFE4] to-[#EFE5D4] border-t border-black/8" id="aura-oracle">
         <div className="max-w-[1200px] mx-auto">
-          <div className="text-center max-w-[720px] mx-auto mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeInUp}
+            className="text-center max-w-[720px] mx-auto mb-12"
+          >
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
               4-Dimensional Olfactory Calibration
             </span>
@@ -774,12 +868,18 @@ export default function DiscoverySetPage({
             <p className="text-sm sm:text-base text-[#14110D]/75 max-w-lg mx-auto">
               Calibrate your four instinctual vectors &mdash; Walking Pace, Atmosphere, Time Clock, and Signature Energy &mdash; to reveal which of the six extraits claims your aura.
             </p>
-          </div>
+          </motion.div>
 
           {/* 4 Vectors Grid (2x2 Grid on Mobile, 4-Cols on Desktop) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12"
+          >
             {/* Vector 1 */}
-            <div className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
+            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
               <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector I</span>
               <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Walking Pace</div>
               {[
@@ -787,8 +887,9 @@ export default function DiscoverySetPage({
                 "Crisp & Purposeful",
                 "Commanding & Heavy"
               ].map((opt, i) => (
-                <button
+                <motion.button
                   key={i}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setVectors((v) => ({ ...v, pace: i }))}
                   className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
                     vectors.pace === i
@@ -797,12 +898,12 @@ export default function DiscoverySetPage({
                   }`}
                 >
                   {opt}
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
 
             {/* Vector 2 */}
-            <div className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
+            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
               <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector II</span>
               <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Atmosphere</div>
               {[
@@ -810,8 +911,9 @@ export default function DiscoverySetPage({
                 "Warm Sunlit Linen",
                 "Velvet & Candlelight"
               ].map((opt, i) => (
-                <button
+                <motion.button
                   key={i}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setVectors((v) => ({ ...v, atmos: i }))}
                   className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
                     vectors.atmos === i
@@ -820,12 +922,12 @@ export default function DiscoverySetPage({
                   }`}
                 >
                   {opt}
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
 
             {/* Vector 3 */}
-            <div className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
+            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
               <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector III</span>
               <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Time Clock</div>
               {[
@@ -833,8 +935,9 @@ export default function DiscoverySetPage({
                 "02:00 PM • High Focus",
                 "11:30 PM • Deep Midnight"
               ].map((opt, i) => (
-                <button
+                <motion.button
                   key={i}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setVectors((v) => ({ ...v, time: i }))}
                   className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
                     vectors.time === i
@@ -843,12 +946,12 @@ export default function DiscoverySetPage({
                   }`}
                 >
                   {opt}
-                </button>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
 
             {/* Vector 4 */}
-            <div className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
+            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
               <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector IV</span>
               <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Signature Energy</div>
               {[
@@ -856,8 +959,9 @@ export default function DiscoverySetPage({
                 "Luminous Radiance",
                 "Dangerous Allure"
               ].map((opt, i) => (
-                <button
+                <motion.button
                   key={i}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setVectors((v) => ({ ...v, energy: i }))}
                   className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
                     vectors.energy === i
@@ -866,67 +970,78 @@ export default function DiscoverySetPage({
                   }`}
                 >
                   {opt}
-                </button>
+                </motion.button>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Oracle Stage Match Card */}
-          <div className="bg-white border border-[#B8863B]/30 rounded-3xl p-8 sm:p-12 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left: Matched Product Image */}
-            <div className="lg:col-span-5 relative aspect-square rounded-2xl overflow-hidden shadow-lg border border-[#B8863B]/30 bg-[#FAF8F5]">
-              <img
-                src={matchedOccasion.img}
-                alt={`Matched Extrait: ${matchedScent.name}`}
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 right-4 bg-[#14110D]/90 backdrop-blur-md text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#B8863B]/40">
-                98% Resonant
-              </div>
-            </div>
-
-            {/* Right: Synthesis Narrative */}
-            <div className="lg:col-span-7">
-              <span className="text-[10px] uppercase tracking-[0.24em] text-[#B8863B] font-bold block mb-2">
-                Calibration Confirmed &bull; Vector Synthesis
-              </span>
-              <h3 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D] mb-1">
-                {matchedScent.name}
-              </h3>
-              <span className="text-xs sm:text-sm text-[#14110D]/70 font-semibold block mb-4">
-                {matchedScent.tagline} &bull; {matchedScent.moodDay}
-              </span>
-
-              <p className="text-sm sm:text-base text-[#14110D]/85 italic pl-4 border-l-2 border-[#B8863B] mb-6 leading-relaxed">
-                {matchedScent.auraQuote}
-              </p>
-
-              <div className="grid grid-cols-3 gap-3 border-y border-black/10 py-3 mb-6">
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Primary Note</span>
-                  <span className="text-xs font-bold text-[#14110D]">{matchedScent.stage1Name.split('&')[0]}</span>
-                </div>
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Projection</span>
-                  <span className="text-xs font-bold text-[#14110D]">{matchedScent.projection.split('(')[0]}</span>
-                </div>
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Longevity</span>
-                  <span className="text-xs font-bold text-[#14110D]">{matchedScent.longevity}</span>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={matchedScentIdx}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white border border-[#B8863B]/30 rounded-3xl p-8 sm:p-12 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+            >
+              {/* Left: Matched Product Image */}
+              <div className="lg:col-span-5 relative aspect-square rounded-2xl overflow-hidden shadow-lg border border-[#B8863B]/30 bg-[#FAF8F5]">
+                <img
+                  src={matchedOccasion.img}
+                  alt={`Matched Extrait: ${matchedScent.name}`}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-4 right-4 bg-[#14110D]/90 backdrop-blur-md text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#B8863B]/40">
+                  98% Resonant
                 </div>
               </div>
 
-              <button
-                onClick={() => scrollToSection("acquire-coffret")}
-                className="w-full sm:w-auto px-8 py-4 bg-[#C89B5A] hover:bg-[#B8863B] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md transition-all cursor-pointer"
-              >
-                CLAIM IN DISCOVERY SET (₹549) &rarr;
-              </button>
-            </div>
-          </div>
+              {/* Right: Synthesis Narrative */}
+              <div className="lg:col-span-7">
+                <span className="text-[10px] uppercase tracking-[0.24em] text-[#B8863B] font-bold block mb-2">
+                  Calibration Confirmed &bull; Vector Synthesis
+                </span>
+                <h3 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D] mb-1">
+                  {matchedScent.name}
+                </h3>
+                <span className="text-xs sm:text-sm text-[#14110D]/70 font-semibold block mb-4">
+                  {matchedScent.tagline} &bull; {matchedScent.moodDay}
+                </span>
+
+                <p className="text-sm sm:text-base text-[#14110D]/85 italic pl-4 border-l-2 border-[#B8863B] mb-6 leading-relaxed">
+                  {matchedScent.auraQuote}
+                </p>
+
+                <div className="grid grid-cols-3 gap-3 border-y border-black/10 py-3 mb-6">
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Primary Note</span>
+                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.stage1Name.split('&')[0]}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Projection</span>
+                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.projection.split('(')[0]}</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Longevity</span>
+                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.longevity}</span>
+                  </div>
+                </div>
+
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ y: -1 }}
+                  onClick={() => scrollToSection("acquire-coffret")}
+                  className="w-full sm:w-auto px-8 py-4 bg-[#C89B5A] hover:bg-[#B8863B] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md transition-colors cursor-pointer"
+                >
+                  CLAIM IN DISCOVERY SET (₹549) &rarr;
+                </motion.button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </div>
