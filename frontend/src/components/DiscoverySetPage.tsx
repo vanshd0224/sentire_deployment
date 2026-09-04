@@ -14,35 +14,35 @@ const BOX_ANGLES = [
     id: "front",
     label: "Case Front",
     tagline: "SENTIRE DISCOVERY SET · 6 ML × 6",
-    img: "/images/discovery-set/box-front.jpg",
+    img: "/discovery/box_case_front.jpg?v=photoshoot_box_v7",
     desc: "Matte black flip-top case with gold hot-stamped emblem and stepped interior architecture.",
   },
   {
     id: "warning",
     label: "The Manifesto",
     tagline: "“The COOLEST Thing SOMEBODY can OWN”",
-    img: "/images/discovery-set/box-warning.jpg",
+    img: "/discovery/box_manifesto.jpg?v=photoshoot_box_v7",
     desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
   },
   {
     id: "rare",
     label: "Side Profile",
     tagline: "IRRESISTIBLY RARE",
-    img: "/images/discovery-set/box-rare.jpg",
+    img: "/discovery/box_side_profile.jpg?v=photoshoot_box_v7",
     desc: "Precision angled silhouette engineered for smooth one-hand flip opening.",
   },
   {
     id: "top",
     label: "Crest Monogram",
     tagline: "PC EMBLEM OF HAUTE PARFUMERIE",
-    img: "/images/discovery-set/box-top.jpg",
+    img: "/discovery/box_crest_monogram.jpg?v=photoshoot_box_v7",
     desc: "Hand-finished cursive PC seal in reflective metallic gold on deep matte noir.",
   },
   {
     id: "minimal",
     label: "Tailored Case",
     tagline: "MINIMALIST LUXURY SILHOUETTE",
-    img: "/images/discovery-set/box-minimal.jpg",
+    img: "/discovery/box_tailored_case.jpg?v=photoshoot_box_v7",
     desc: "Compact dimensions tailored to fit evening clutches, breast pockets, and carry-ons without spilling a drop.",
   },
 ];
@@ -383,11 +383,11 @@ export default function DiscoverySetPage({
               </div>
 
               {/* Main Image with Smooth Fade */}
-              <div className="w-full h-full p-4 sm:p-8 flex items-center justify-center transition-all duration-500 ease-out">
+              <div className="w-full h-full flex items-center justify-center transition-all duration-500 ease-out overflow-hidden">
                 <img
                   src={currentAngle.img}
                   alt={`SENTIRE Discovery Set - ${currentAngle.label}`}
-                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                 />
               </div>
 
@@ -422,7 +422,7 @@ export default function DiscoverySetPage({
                     <img
                       src={angle.img}
                       alt={angle.label}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover rounded-lg"
                     />
                     <span
                       className={`absolute bottom-1 inset-x-1 text-[8px] sm:text-[9px] font-semibold text-center truncate px-1 rounded ${
