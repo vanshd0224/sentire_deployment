@@ -176,7 +176,7 @@ export const resolveShopifyVariantId = (item: any): string => {
   }
 
   if (pId.includes("discovery") || pName.includes("discovery")) {
-    return "46965136031905";
+    return item?.variantId || "46965136031905";
   }
 
   const normalizedId = pId.replace(/[\s\-_]/g, "");

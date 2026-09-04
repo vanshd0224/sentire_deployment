@@ -320,31 +320,6 @@ function generateProductSchemaJson(p) {
 
 const routes = [
   {
-    path: 'discovery-set',
-    title: 'The Discovery Coffret (6 x 6ml) | 35% Extrait de Parfum | SENTIRE By PC',
-    description: 'Explore six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration. Includes ₹1,000 physical gift voucher.',
-    ogTitle: 'The Discovery Coffret (6 x 6ml) | SENTIRE By PC',
-    ogDescription: 'Six moods. One case. Six signature 6ml extrait flacons with authentic ₹1,000 upgrade credit enclosed.',
-    image: `${PRODUCTION_DOMAIN}/discovery_hero_cover.jpg`,
-    heading: 'The Discovery Coffret',
-    subheading: 'Six Signature Extrait Flacons (6 x 6ml) · 35% Concentration · ₹1,000 Voucher Enclosed',
-    contentHtml: `<section class="max-w-7xl mx-auto px-4 py-8"><h1 class="text-3xl font-bold text-ink">The Discovery Coffret</h1><p class="mt-2 text-ink/70">Six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration.</p></section>`,
-    getSchema: () => ({
-      "@context": "https://schema.org",
-      "@graph": [
-        ORGANIZATION_SCHEMA,
-        STORE_SCHEMA,
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Discovery Set", "item": `${PRODUCTION_DOMAIN}/discovery-set` }
-          ]
-        }
-      ]
-    })
-  },
-  {
     path: 'perfumes',
     title: 'All Perfumes | 35%+ Extrait de Parfum | SENTIRE By PC',
     description: 'Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.',
@@ -396,6 +371,86 @@ const routes = [
           }))
         },
         ...PERFUMES_DATA.map(generateProductSchemaJson)
+      ]
+    })
+  },
+  {
+    path: 'discovery-set',
+    title: 'SENTIRE Discovery Set (6 × 6ML) | Find Your Signature Fragrance | ₹549',
+    description: "Six fragrances. One box. Find the one that's yours. Six 6ML travel sprays in a matte black flip-top case with gold emblem and oxblood interior. ₹549 for 36ML total.",
+    ogTitle: 'SENTIRE Discovery Set (6 × 6ML) | Six Fragrances. One Box. ₹549',
+    ogDescription: "Choosing a signature scent shouldn't mean committing to a full bottle you've never smelled. Six 6ML travel sprays (55-60 sprays each). Purple Oud, MIRAI, CALANTHA, Rich, Seductive, Deep Crush.",
+    image: `${PRODUCTION_DOMAIN}/images/discovery-set/box-front.jpg`,
+    heading: 'SENTIRE Discovery Set',
+    subheading: 'Six Fragrances. One Box. 36ML Total across Six 6ML Sprays · ₹549',
+    contentHtml: `
+      <article class="max-w-5xl mx-auto px-4 py-12">
+        <header>
+          <span class="text-xs uppercase tracking-widest text-[#c89b5a] font-bold">The Signature Hero Product</span>
+          <h1 class="text-3xl md:text-5xl font-serif font-bold text-ink mt-2">SENTIRE Discovery Set</h1>
+          <p class="text-xl font-serif italic text-[#c89b5a] mt-2">Six fragrances. One box. Find the one that's yours.</p>
+          <p class="mt-4 text-base text-ink/80 leading-relaxed">
+            Choosing a signature scent shouldn't mean committing to a full bottle you've never smelled. The SENTIRE Discovery Set gives you six of our fragrances in 6ML travel sprays — enough to live with each one properly, on your own skin, across your own days.
+          </p>
+          <p class="mt-2 text-2xl font-serif font-bold text-ink">₹549 <span class="text-base text-ink/50 line-through">₹999</span> <span class="text-xs text-[#8C6228] font-bold uppercase">(36ML Total · 6 Travel Sprays)</span></p>
+        </header>
+
+        <section class="mt-8 border-t border-black/10 pt-6">
+          <h2 class="text-2xl font-serif font-bold">What's Inside</h2>
+          <p class="mt-2 text-ink/80">Six 6ML sprays, presented in a matte black flip-top case with a gold SENTIRE emblem and an oxblood interior. Each vial sits in a stepped layout so the full set is visible the moment you open it. A scent-map card inside guides you through all six.</p>
+          <ul class="mt-4 space-y-2 text-ink/80">
+            <li><strong>Purple Oud</strong> — Berry-bright oud, magnetic and dominating</li>
+            <li><strong>MIRAI</strong> — Sweet dark gourmand, boldly addictive</li>
+            <li><strong>CALANTHA</strong> — Warm feminine floral, softly glamorous</li>
+            <li><strong>Rich</strong> — Cool aquatic freshness, crisp and confident</li>
+            <li><strong>Seductive</strong> — Citrus and spice, effortlessly charming</li>
+            <li><strong>Deep Crush</strong> — Musky warm freshness, quietly intimate</li>
+          </ul>
+        </section>
+
+        <section class="mt-8 border-t border-black/10 pt-6">
+          <h2 class="text-2xl font-serif font-bold">Why 6ML Matters</h2>
+          <p class="mt-2 text-ink/80">Each vial holds roughly 55 to 60 sprays — around a month of wear if you're using it a couple of times a day. This isn't a paper strip in a store. It's enough to know how a fragrance behaves on you, in the evening, hours after you put it on. The fine-mist atomiser and protective overcap mean a vial travels in a clutch or a carry-on without leaking.</p>
+        </section>
+
+        <section class="mt-8 border-t border-black/10 pt-6">
+          <h2 class="text-2xl font-serif font-bold">How to Wear the Set</h2>
+          <p class="mt-2 text-ink/80">Give each fragrance its own day. Notice which one people mention. Then try layering two — a warm base under something brighter — and you'll have a scent nobody else is wearing.</p>
+        </section>
+
+        <div class="mt-8 pt-6 border-t border-black/10">
+          <a href="/discovery-set" class="inline-block bg-[#0b0907] text-[#d4af37] px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg">Order SENTIRE Discovery Set — ₹549</a>
+        </div>
+      </article>
+    `,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA,
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+            { "@type": "ListItem", "position": 2, "name": "Discovery Set", "item": `${PRODUCTION_DOMAIN}/discovery-set` }
+          ]
+        },
+        {
+          "@type": "Product",
+          "name": "SENTIRE Discovery Set (6 × 6ML)",
+          "image": `${PRODUCTION_DOMAIN}/images/discovery-set/box-front.jpg`,
+          "description": "Six 6ML travel sprays presented in a matte black flip-top case with gold emblem and oxblood interior. Includes Purple Oud, MIRAI, CALANTHA, Rich, Seductive, Deep Crush.",
+          "sku": "SENTIRE-DISCOVERY-SET-36ML",
+          "offers": {
+            "@type": "Offer",
+            "url": `${PRODUCTION_DOMAIN}/discovery-set`,
+            "priceCurrency": "INR",
+            "price": "549",
+            "priceValidUntil": "2027-12-31",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        }
       ]
     })
   },

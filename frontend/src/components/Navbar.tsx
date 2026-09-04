@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import SentireLogo from "./SentireLogo";
 import AnnouncementBar from "./AnnouncementBar";
 
+import type { PageName } from "../types/appTypes";
+
 export interface PerfumeFilterOptions {
   size?: number;
   mood?: string;
@@ -43,9 +45,9 @@ const navLinks = [
       },
     },
   },
+  { label: "Discovery Set", href: "/discovery-set", badge: "Hero • ₹549" },
   { label: "Best Sellers", href: "/bestsellers", filter: { category: "bestsellers" } },
   { label: "New Arrivals", href: "/new-arrivals", filter: { category: "bestsellers" } },
-  { label: "Discovery Set", href: "/discovery-set" },
   { label: "Build Your Own Bundle", href: "/byob" },
   { label: "Track Your Order", href: "/track-order" },
 ];
@@ -53,10 +55,10 @@ const navLinks = [
 interface NavbarProps {
   onOpenBundleModal?: () => void;
   onNavigate?: (
-    page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "discovery-set" | "about" | "byob" | "personalisation" | "client-services" | "track-order",
+    page: PageName,
     filters?: PerfumeFilterOptions
   ) => void;
-  currentPage?: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "discovery-set" | "about" | "byob" | "personalisation" | "client-services" | "track-order";
+  currentPage?: PageName;
   cartCount?: number;
   onOpenAccount?: () => void;
   onOpenCart?: () => void;
@@ -277,6 +279,7 @@ export default function Navbar({
               const showMega = Boolean(link.mega && currentPage !== "perfumes");
               const isCurrent =
                 (currentPage === "perfumes" && (link.label === "All Perfumes" || link.label === "Perfumes")) ||
+                (currentPage === "discovery-set" && link.label === "Discovery Set") ||
                 (currentPage === "bestsellers" && link.label === "Best Sellers") ||
                 (currentPage === "new-arrivals" && link.label === "New Arrivals") ||
                 (currentPage === "discovery-set" && link.label === "Discovery Set") ||
@@ -297,6 +300,10 @@ export default function Navbar({
                       if (link.label === "All Perfumes" || link.label === "Perfumes") {
                         e.preventDefault();
                         onNavigate?.("perfumes");
+                        setMegaOpen(false);
+                      } else if (link.label === "Discovery Set") {
+                        e.preventDefault();
+                        onNavigate?.("discovery-set");
                         setMegaOpen(false);
                       } else if (link.label === "Best Sellers") {
                         e.preventDefault();
@@ -326,13 +333,18 @@ export default function Navbar({
                         onNavigate?.("home");
                       }
                     }}
-                    className={`group relative flex items-center gap-1 text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
+                    className={`group relative flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
                       isCurrent
                         ? "text-[#c89b5a] font-bold"
                         : "text-[#1e1e1e]/85 hover:text-[#c89b5a]"
                     }`}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    {"badge" in link && Boolean(link.badge) && (
+                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-extrabold tracking-wider bg-gradient-to-r from-[#d4af37]/25 to-[#c89b5a]/30 text-[#846124] border border-[#c89b5a]/45 uppercase shadow-xs">
+                        Hero
+                      </span>
+                    )}
                     {showMega && (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
                         className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#c89b5a]" : ""}`}>
@@ -709,6 +721,7 @@ export default function Navbar({
                       e.preventDefault();
                       setMobileNavOpen(false);
                       if (link.label === "All Perfumes" || link.label === "Perfumes") onNavigate?.("perfumes");
+                      else if (link.label === "Discovery Set") onNavigate?.("discovery-set");
                       else if (link.label === "Best Sellers") onNavigate?.("bestsellers");
                       else if (link.label === "New Arrivals") onNavigate?.("new-arrivals");
                       else if (link.label === "Discovery Set") onNavigate?.("discovery-set" as any);
@@ -717,9 +730,21 @@ export default function Navbar({
                       else if (link.label === "Track Your Order") onNavigate?.("track-order");
                       else onNavigate?.("home");
                     }}
-                    className="w-full text-left py-3 px-3 rounded-lg text-sm font-semibold uppercase tracking-wider text-ink hover:bg-black/5 hover:text-[#c89b5a] transition-all flex items-center justify-between"
+                    className={`w-full text-left py-3 px-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all flex items-center justify-between ${
+                      (currentPage === "discovery-set" && link.label === "Discovery Set") ||
+                      (currentPage === "perfumes" && link.label === "All Perfumes")
+                        ? "bg-[#c89b5a]/15 text-[#8d6a2f]"
+                        : "text-ink hover:bg-black/5 hover:text-[#c89b5a]"
+                    }`}
                   >
-                    <span>{link.label}</span>
+                    <span className="flex items-center gap-2">
+                      <span>{link.label}</span>
+                      {"badge" in link && Boolean(link.badge) && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider bg-[#d4af37]/25 text-[#7f5d23] border border-[#c89b5a]/40 uppercase">
+                          {link.badge}
+                        </span>
+                      )}
+                    </span>
                     <span className="text-[#c89b5a]">→</span>
                   </a>
                 ))}

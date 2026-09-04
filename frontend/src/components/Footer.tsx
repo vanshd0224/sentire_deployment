@@ -1,11 +1,12 @@
 import { useState } from "react";
 import SentireLogo from "./SentireLogo";
+import type { PageName } from "../types/appTypes";
 
 interface FooterProps {
-  onNavigate?: (page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "personalisation" | "byob" | "client-services" | "track-order") => void;
+  onNavigate?: (page: PageName) => void;
 }
 
-const shopLinks = ["All Perfumes", "Best Sellers", "New Arrivals", "Build Your Own Bundle", "35%+ Extrait Standard"];
+const shopLinks = ["All Perfumes", "Discovery Set", "Best Sellers", "New Arrivals", "Build Your Own Bundle", "35%+ Extrait Standard"];
 const helpLinks = ["Track Your Order", "Client Services", "FAQs", "Shipping & Delivery", "Returns & Exchanges"];
 const aboutLinks = ["About SENTIRE", "Our Story", "Craftsmanship", "Sustainability"];
 
@@ -42,6 +43,7 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
     if (link === "35%+ Extrait Standard") return "/extrait-de-parfum";
     if (link === "Build Your Own Bundle") return "/byob";
     if (link === "All Perfumes") return "/perfumes";
+    if (link === "Discovery Set") return "/discovery-set";
     if (link === "Best Sellers") return "/bestsellers";
     if (link === "New Arrivals") return "/new-arrivals";
     if (link === "Track Your Order") return "/track-order";
@@ -81,6 +83,8 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                     onNavigate?.("byob");
                   } else if (link === "All Perfumes") {
                     onNavigate?.("perfumes");
+                  } else if (link === "Discovery Set") {
+                    onNavigate?.("discovery-set");
                   } else if (link === "Best Sellers") {
                     onNavigate?.("bestsellers");
                   } else if (link === "New Arrivals") {

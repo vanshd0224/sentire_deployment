@@ -183,6 +183,20 @@ export function getPageMetadata(
         keywords: `new arrivals, new extrait de parfum, 35% concentration releases, ${BASE_KEYWORDS}`,
       };
 
+    case "discovery-set":
+      return {
+        title: "SENTIRE Discovery Set (6 × 6ML) | Find Your Signature Fragrance | ₹549",
+        description: "Six fragrances. One box. Find the one that's yours. Six 6ML travel sprays in a matte black flip-top case with gold emblem and oxblood interior. ₹549 for 36ML total.",
+        canonical: `${PRODUCTION_DOMAIN}/discovery-set`,
+        robots: defaultRobots,
+        ogType: "product",
+        ogTitle: "SENTIRE Discovery Set (6 × 6ML) | Six Fragrances. One Box. ₹549",
+        ogDescription: "Choosing a signature scent shouldn't mean committing to a full bottle. Six 6ML travel sprays (55-60 sprays each). Purple Oud, MIRAI, CALANTHA, Rich, Seductive, Deep Crush.",
+        ogImage: `${PRODUCTION_DOMAIN}/images/discovery-set/box-front.jpg`,
+        twitterCard: "summary_large_image",
+        keywords: `sentire discovery set, perfume discovery set, 6ml travel spray, perfume sample set India, purple oud, mirai, calantha, rich, seductive, deep crush, ${BASE_KEYWORDS}`,
+      };
+
     case "byob":
       return {
         title: "Build Your Own Bundle | SENTIRE By PC",

@@ -1,1049 +1,1420 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { PageName } from "../types/appTypes";
-
-// Motion Animation Variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 }
-  }
-};
+import React, { useState, useEffect, useRef } from "react";
+import type { PageName } from "../types/appTypes";
 
 interface DiscoverySetPageProps {
-  onAddToCart?: (item: any, size?: number, price?: number) => void;
-  onOpenCart?: () => void;
   onBackToHome?: () => void;
+  onAddToCart?: (item: any) => void;
+  onOpenCart?: () => void;
   onNavigate?: (page: PageName) => void;
 }
 
-// Scents Data for Sensory Radar & Note Pyramids
-const SCENTS_DATA = [
+// Angles for the discovery set flip-top packaging
+const BOX_ANGLES = [
   {
+    id: "front",
+    label: "Case Front",
+    tagline: "SENTIRE DISCOVERY SET · 6 ML × 6",
+    img: "/images/discovery-set/box-front.jpg",
+    desc: "Matte black flip-top case with gold hot-stamped emblem and stepped interior architecture.",
+  },
+  {
+    id: "warning",
+    label: "The Manifesto",
+    tagline: "“The COOLEST Thing SOMEBODY can OWN”",
+    img: "/images/discovery-set/box-warning.jpg",
+    desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
+  },
+  {
+    id: "rare",
+    label: "Side Profile",
+    tagline: "IRRESISTIBLY RARE",
+    img: "/images/discovery-set/box-rare.jpg",
+    desc: "Precision angled silhouette engineered for smooth one-hand flip opening.",
+  },
+  {
+    id: "top",
+    label: "Crest Monogram",
+    tagline: "PC EMBLEM OF HAUTE PARFUMERIE",
+    img: "/images/discovery-set/box-top.jpg",
+    desc: "Hand-finished cursive PC seal in reflective metallic gold on deep matte noir.",
+  },
+  {
+    id: "minimal",
+    label: "Tailored Case",
+    tagline: "MINIMALIST LUXURY SILHOUETTE",
+    img: "/images/discovery-set/box-minimal.jpg",
+    desc: "Compact dimensions tailored to fit evening clutches, breast pockets, and carry-ons without spilling a drop.",
+  },
+];
+
+// The 6 original fragrances in the Discovery Set
+const DISCOVERY_FRAGRANCES = [
+  {
+    id: "purple-oud",
     name: "Purple Oud",
-    tagline: "Exotic Woody Oriental",
-    stage1Name: "Candied Violet Petals & Pink Pepper",
-    stage1Desc: "A crystalline, sweet-floral opening that diffuses instantly off warm skin without synthetic harshness.",
-    stage2Name: "Smoked Frankincense Resin & Myrrh",
-    stage2Desc: "The core fragrance warms into a regal balsamic warmth, projecting an enigmatic aura.",
-    stage3Name: "Wild Cambodian Agarwood & Ambergris",
-    stage3Desc: "The final intimate skin signature. Deep, smoky, and dangerously memorable for hours.",
-    longevity: "14+ Hours",
-    longevityPct: 95,
-    projection: "6–8 Feet (Magnetic)",
-    projectionPct: 88,
-    intensity: "9.4 / 10 (High Impact)",
-    intensityPct: 94,
-    concentration: "35% Pure Extrait",
-    occasion: "Boardroom • Gala",
-    season: "All-Season • Night",
-    character: "Authoritative",
-    moodDay: "Monday • The Boardroom",
-    auraQuote: "\"You don't enter a room to demand attention. Your presence settles over the space like frankincense smoke in an ancient sanctuary — quiet, immovable, and unforgettable.\""
-  },
-  {
-    name: "Mirai",
-    tagline: "Crisp Green Floral & Solar Woods",
-    stage1Name: "Solar Jasmine & Crisp Green Pear",
-    stage1Desc: "An invigorating 8am burst of sun-drenched orchard fruit and delicate morning blossom.",
-    stage2Name: "White Tea Leaves & Moroccan Neroli",
-    stage2Desc: "A luminous, clean heart that creates an aura of effortless composure throughout the working day.",
-    stage3Name: "White Cedarwood & Soft Musk",
-    stage3Desc: "A serene, clean-skin drydown that lingers close to collarbones like fresh sunlit linen.",
+    tagline: "Berry-bright oud, magnetic and dominating",
+    vibe: "MAGNETIC · DOMINATING · HIGH ENERGY",
+    character: "Berry-Bright Oud",
+    topNotes: "Wild Blackberry, Bitter Orange, Saffron",
+    heartNotes: "Velvet Purple Rose, Spiced Plum, Amber",
+    baseNotes: "Cambodian Agarwood (Oud), Cedar, Leather",
+    img: "/images/discovery-set/vial-purple-oud.jpg",
+    family: "Oud & Berry Gourmand",
+    familyBadge: "Oriental Woody",
+    colorHex: "#542159",
+    liquidColor: "from-[#38133b]/90 to-[#6a2973]/70",
+    sillage: "Heavy (9.5/10)",
     longevity: "12+ Hours",
-    longevityPct: 82,
-    projection: "4–6 Feet (Radiant)",
-    projectionPct: 75,
-    intensity: "8.2 / 10 (Uplifting)",
-    intensityPct: 82,
-    concentration: "35% Pure Extrait",
-    occasion: "Morning Reset • Executive Work",
-    season: "Spring / Summer • Day",
-    character: "Crisp & Luminous",
-    moodDay: "Tuesday • Clean Start",
-    auraQuote: "\"You move through chaotic mornings with an effortless calm that disarms everyone around you. Your scent is the crisp first breath of dawn.\""
+    bestTime: "Night Out · Gala · Cold Weather",
+    complimentScore: "98%",
+    vialDescription:
+      "A dark, intoxicating collision of jammy wild berries and smoky Cambodian oud. Opens luminous and turns into an authoritative aura that commands attention.",
+    layeringRole: "base",
+    layeringTip: "Apply on chest as a rich, smoky foundation.",
   },
   {
+    id: "mirai",
+    name: "MIRAI",
+    tagline: "Sweet dark gourmand, boldly addictive",
+    vibe: "SWEET DARK GOURMAND · BOLDLY ADDICTIVE",
+    character: "Dark Gourmand",
+    topNotes: "Dark Chocolate, Sweet Mandarin, Candied Almond",
+    heartNotes: "Roasted Tonka Bean, Vanilla Caviar, Hazelnut",
+    baseNotes: "Warm Ambergris, Cashmere Woods, Musks",
+    img: "/images/discovery-set/vial-mirai.jpg",
+    family: "Rich Gourmand",
+    familyBadge: "Gourmand Oriental",
+    colorHex: "#7a222b",
+    liquidColor: "from-[#4a121a]/90 to-[#872835]/70",
+    sillage: "Intimate to Strong (9/10)",
+    longevity: "10-12 Hours",
+    bestTime: "Date Night · Sunset · Cozy Evenings",
+    complimentScore: "99%",
+    vialDescription:
+      "Decadent and deeply edible without being juvenile. Cocoa nibs dipped in sweet dark liquor with a warm caramel undertone that melts into your skin.",
+    layeringRole: "base",
+    layeringTip: "Perfect sweet anchor under fresh aquatic or citrus accents.",
+  },
+  {
+    id: "calantha",
+    name: "CALANTHA",
+    tagline: "Warm feminine floral, softly glamorous",
+    vibe: "WARM FEMININE FLORAL · SOFTLY GLAMOROUS",
+    character: "Velvet Floral",
+    topNotes: "Dewy White Jasmine, Neroli, Morning Dew",
+    heartNotes: "Centifolia Rose, Lily of the Valley, Iris",
+    baseNotes: "Creamy Sandalwood, Golden Amber, Cashmeran",
+    img: "/images/discovery-set/vial-calantha.jpg",
+    family: "Radiant Floral",
+    familyBadge: "Floral Woody",
+    colorHex: "#9b6845",
+    liquidColor: "from-[#633b20]/90 to-[#b57a52]/70",
+    sillage: "Radiant & Lingering (8.5/10)",
+    longevity: "9-11 Hours",
+    bestTime: "Golden Hour · Weddings · Brunch",
+    complimentScore: "96%",
+    vialDescription:
+      "Softly luminous French petals whipped with creamy Australian sandalwood. It feels like slipping into silk sheets in a sunlight-drenched Parisian balcony.",
+    layeringRole: "accent",
+    layeringTip: "Spritz across neck and wrists over an oud or amber base.",
+  },
+  {
+    id: "rich",
     name: "Rich",
-    tagline: "Spiced Saffron & Ambergris",
-    stage1Name: "Pure Kashmiri Saffron & Raw Honey",
-    stage1Desc: "A rich golden opening that commands immediate attention with velvet warmth.",
-    stage2Name: "Damask Rose Absolute & Nutmeg",
-    stage2Desc: "Spiced floral richness that blooms under body heat, exuding undeniable prestige.",
-    stage3Name: "Bourbon Vanilla & Aged Sandalwood",
-    stage3Desc: "A creamy, hypnotic drydown that leaves an unforgettable signature trail.",
-    longevity: "16+ Hours",
-    longevityPct: 98,
-    projection: "8–10 Feet (Beast Sillage)",
-    projectionPct: 96,
-    intensity: "9.8 / 10 (Opulent)",
-    intensityPct: 98,
-    concentration: "35% Pure Extrait",
-    occasion: "Signature Everyday • High Stakes",
-    season: "All-Season • Day & Night",
-    character: "Opulent Prestige",
-    moodDay: "Wednesday • Quiet Confidence",
-    auraQuote: "\"You never have to speak loudly because the room always leans in to listen. Your sillage is liquid gold that refuses to be ignored.\""
+    tagline: "Cool aquatic freshness, crisp and confident",
+    vibe: "COOL AQUATIC FRESHNESS · CRISP & CONFIDENT",
+    character: "Crisp Oceanic",
+    topNotes: "Sparkling Sea Salt, Bergamot, Frozen Grapefruit",
+    heartNotes: "Mediterranean Rosemary, Cyclamen, Aquatic Flora",
+    baseNotes: "Driftwood, White Cedar, Ambergris",
+    img: "/images/discovery-set/vial-rich.jpg",
+    family: "Marine Aquatic",
+    familyBadge: "Aquatic Fresh",
+    colorHex: "#2b4b68",
+    liquidColor: "from-[#173147]/90 to-[#376185]/70",
+    sillage: "Crisp High Projection (9/10)",
+    longevity: "8-10 Hours",
+    bestTime: "Morning · Boardrooms · Summer Sun",
+    complimentScore: "95%",
+    vialDescription:
+      "A high-voltage slap of crisp oceanic ozone followed by mineral salinity and chilled bergamot. The olfactory equivalent of a crisp linen shirt and a sea breeze.",
+    layeringRole: "accent",
+    layeringTip: "Layer 1 spray over Purple Oud to create a royal nautical contrast.",
   },
   {
+    id: "seductive",
     name: "Seductive",
-    tagline: "Intimate Amber & Spiced Florals",
-    stage1Name: "Macerated Spiced Plum & Italian Bergamot",
-    stage1Desc: "A tantalizing, juicy opening with a whisper of clove and velvet darkness.",
-    stage2Name: "Turkish Damask Rose & Night Tuberose",
-    stage2Desc: "A deep, narcotic floral heart formulated specifically for candlelit proximity.",
-    stage3Name: "Madagascar Vanilla & Indonesian Patchouli",
-    stage3Desc: "A sensual, magnetic trail that clings to skin and fabric long past midnight.",
-    longevity: "14+ Hours",
-    longevityPct: 92,
-    projection: "5–7 Feet (Intimate to Magnetic)",
-    projectionPct: 84,
-    intensity: "9.0 / 10 (Magnetic)",
-    intensityPct: 90,
-    concentration: "35% Pure Extrait",
-    occasion: "Dinner Date • Intimate Evenings",
-    season: "Autumn / Winter • Evening",
-    character: "Sensual & Dangerous",
-    moodDay: "Thursday • Dinner Date",
-    auraQuote: "\"You leave an intoxicating trace that turns casual glances into lingering memories. Dangerous, tender, and impossible to forget.\""
+    tagline: "Citrus and spice, effortlessly charming",
+    vibe: "CITRUS & SPICE · EFFORTLESSLY CHARMING",
+    character: "Zesty Spiced Allure",
+    topNotes: "Italian Limon, Pink Peppercorn, Cardamom",
+    heartNotes: "Lavender Provence, Nutmeg, Clary Sage",
+    baseNotes: "Golden Patchouli, Sensual Amber, Oakmoss",
+    img: "/images/discovery-set/vial-seductive.jpg",
+    family: "Spicy Citrus",
+    familyBadge: "Citrus Aromatic",
+    colorHex: "#7b6534",
+    liquidColor: "from-[#4c3e1e]/90 to-[#9e8346]/70",
+    sillage: "Effortless Magnetism (8.8/10)",
+    longevity: "9-11 Hours",
+    bestTime: "Everyday Luxury · Late Afternoon · Cocktails",
+    complimentScore: "97%",
+    vialDescription:
+      "Sun-kissed Italian citrus cut with cracked pink pepper and smooth French lavender. Effortlessly charming, warm, and impossible to mistake for anyone else.",
+    layeringRole: "accent",
+    layeringTip: "Spray on wrists over Deep Crush for a cozy spiced warmth.",
   },
   {
+    id: "deep-crush",
     name: "Deep Crush",
-    tagline: "Charred Woods & French Cognac",
-    stage1Name: "Macerated Black Cherry & French Cognac",
-    stage1Desc: "An intoxicating rush of dark fruits steeped in oak barrels and roasted spices.",
-    stage2Name: "French Lavender & Charred Oakwood",
-    stage2Desc: "Smoky, aromatic complexity that cuts through crowded rooms with razor sharpness.",
-    stage3Name: "Roasted Praline & Smoked Amber",
-    stage3Desc: "A decadent, dark-gourmand drydown that projects magnetically until 4am.",
-    longevity: "15+ Hours",
-    longevityPct: 96,
-    projection: "7–9 Feet (Party Sillage)",
-    projectionPct: 92,
-    intensity: "9.6 / 10 (Electric)",
-    intensityPct: 96,
-    concentration: "35% Pure Extrait",
-    occasion: "Night Out • Gala & Afterparty",
-    season: "All-Season • Deep Night",
-    character: "Electric & Bold",
-    moodDay: "Saturday • Night Out",
-    auraQuote: "\"You bring electric energy into every room you enter. Midnight belongs to you, and your scent leaves an unforgettable headline.\""
+    tagline: "Musky warm freshness, quietly intimate",
+    vibe: "MUSKY WARM FRESHNESS · QUIETLY INTIMATE",
+    character: "Intimate Skin Musk",
+    topNotes: "White Lavender, Bergamot Zest, Clean Linen",
+    heartNotes: "Turkish Rose Petals, Flue-Cured Tobacco, Violet",
+    baseNotes: "Warm Amber, Velvet Sandalwood, Skin Musk",
+    img: "/images/discovery-set/vial-deep-crush.jpg",
+    family: "Velvet Musk",
+    familyBadge: "Musk Woody",
+    colorHex: "#564b63",
+    liquidColor: "from-[#352c3f]/90 to-[#726385]/70",
+    sillage: "Second-Skin Intimate (8.2/10)",
+    longevity: "10-12 Hours",
+    bestTime: "Bedtime · Intimate Dinners · Everyday Signature",
+    complimentScore: "96%",
+    vialDescription:
+      "A sensual whisper of warm skin, sun-dried tobacco leaf, and milky musk. It doesn’t announce itself loudly; it draws people closer until they ask what you are wearing.",
+    layeringRole: "base",
+    layeringTip: "The ultimate skin base. Layer with any citrus or floral top spray.",
   },
-  {
-    name: "Calantha",
-    tagline: "Velvet Cashmere & Bourbon Vanilla",
-    stage1Name: "Lavender Sprigs & Crushed White Florals",
-    stage1Desc: "Soft, pillowy botanical freshness that wraps around skin like cashmere silk.",
-    stage2Name: "Steamed Rice accord & White Sandalwood",
-    stage2Desc: "A cocooning, intimate warmth designed for unhurried mornings and peaceful solitude.",
-    stage3Name: "Toasted Tonka Bean & Bourbon Vanilla",
-    stage3Desc: "A whisper-soft, golden drydown that feels like doing absolutely nothing, beautifully.",
-    longevity: "12+ Hours",
-    longevityPct: 84,
-    projection: "3–5 Feet (Intimate Envelope)",
-    projectionPct: 70,
-    intensity: "7.8 / 10 (Comforting)",
-    intensityPct: 78,
-    concentration: "35% Pure Extrait",
-    occasion: "Slow Sunday • Intimate Comfort",
-    season: "All-Season • Anytime",
-    character: "Cocooning & Serene",
-    moodDay: "Sunday • Slow Sunday",
-    auraQuote: "\"You understand the rare luxury of slow time. Your presence feels like a quiet sanctuary, wrapped in cashmere and soft light.\""
-  }
 ];
 
-// Occasions Wardrobe
-const OCCASIONS = [
+// Presets for the interactive Layering Studio
+const LAYERING_RECIPES = [
   {
-    day: "Monday",
-    name: "The Boardroom",
-    scent: "Purple Oud",
-    conc: "6ml Extrait",
-    desc: "Smoked Cambodian agarwood, frankincense, and candied violet. Scent equivalent of commanding the room quietly.",
-    img: "/occasion_cards/monday_boardroom_purple_oud.jpg"
+    name: "Royal Berry Aquatica",
+    base: "purple-oud",
+    accent: "rich",
+    ratio: "2 Sprays Purple Oud + 1 Spray Rich",
+    description: "Deep Cambodian agarwood and berries brightened by an electric wave of ocean salt. Authoritative yet breezy.",
+    vibe: "Executive Power & Summer Nights",
   },
   {
-    day: "Tuesday",
-    name: "Clean Start",
-    scent: "Mirai",
-    conc: "6ml Extrait",
-    desc: "Solar jasmine blossom, crisp green pear, and white cedarwood. The 8am reset when you need the world to feel light.",
-    img: "/occasion_cards/tuesday_clean_start_mirai.jpg"
+    name: "Spiced Tonka Mirage",
+    base: "mirai",
+    accent: "seductive",
+    ratio: "2 Sprays MIRAI + 1 Spray Seductive",
+    description: "Dark chocolate and roasted tonka kissed by zesty pink pepper and citrus. Sweet allure with a sharp bite.",
+    vibe: "Irresistible Midnight Seduction",
   },
   {
-    day: "Wednesday",
-    name: "Quiet Confidence",
-    scent: "Rich",
-    conc: "6ml Extrait",
-    desc: "Pure Kashmiri saffron steeped in raw honey, bourbon vanilla beans, and aged sandalwood. Understated prestige.",
-    img: "/occasion_cards/wednesday_quiet_confidence_rich.jpg"
+    name: "Velvet Petal Woods",
+    base: "deep-crush",
+    accent: "calantha",
+    ratio: "2 Sprays Deep Crush + 1 Spray CALANTHA",
+    description: "Warm skin musk and tobacco wrapped in blooming French rose and jasmine. Soft, ultra-glamorous, and intimate.",
+    vibe: "Golden Hour Romance",
   },
   {
-    day: "Thursday",
-    name: "Dinner Date",
-    scent: "Seductive",
-    conc: "6ml Extrait",
-    desc: "Spiced plum and Turkish damask rose over Madagascar vanilla patchouli. An intimate sillage for candlelight.",
-    img: "/occasion_cards/thursday_dinner_date_seductive.jpg"
+    name: "Smoky Floral Velvet",
+    base: "purple-oud",
+    accent: "calantha",
+    ratio: "1 Spray Purple Oud + 2 Sprays CALANTHA",
+    description: "The richness of oud anchored under a bouquet of luminous white petals. Parisian haute perfumery personified.",
+    vibe: "Gala & Signature Statement",
   },
-  {
-    day: "Saturday",
-    name: "Night Out",
-    scent: "Deep Crush",
-    conc: "6ml Extrait",
-    desc: "Macerated dark plums, black cherries steeped in French cognac, charred oakwood, and roasted praline.",
-    img: "/occasion_cards/saturday_night_out_deep_crush.jpg"
-  },
-  {
-    day: "Sunday",
-    name: "Slow Sunday",
-    scent: "Calantha",
-    conc: "6ml Extrait",
-    desc: "Bourbon vanilla, lavender sprigs, and toasted tonka cashmere. Soft — for doing absolutely nothing, beautifully.",
-    img: "/occasion_cards/sunday_slow_sunday_calantha.jpg"
-  }
 ];
 
-// 3 Auto-sliding carousel images
-const CAROUSEL_IMAGES = [
-  "/discovery_gallery/gallery_slide_1.jpg",
-  "/discovery_gallery/gallery_slide_2.jpg",
-  "/discovery_gallery/gallery_slide_3.jpg"
+const FAQS = [
+  {
+    q: "How many sprays does each 6ML vial hold?",
+    a: "Each 6ML glass travel vial delivers approximately 55 to 60 ultra-fine sprays. That means with 2 sprays every single day, one single vial will last an entire month — giving you 6 months (360 sprays) of combined wear across the entire set.",
+  },
+  {
+    q: "Why is testing on skin so much better than paper blotters?",
+    a: "Paper blotters evaporate in 10 minutes and completely fail to interact with your body temperature, skin pH, and natural sebum. Extrait de Parfum evolves in three distinct stages over 8 to 12 hours. The 6ML size gives you enough volume to live with each fragrance across hot days, air-conditioned rooms, and evenings.",
+  },
+  {
+    q: "Are the vials leak-proof for traveling in bags and flights?",
+    a: "Yes. Every vial features an anodized matte black protective overcap engineered with an internal tension ring that locks tight. They are 100% compliant with airport TSA hand-luggage regulations and won’t leak inside a clutch, gym bag, or dopp kit.",
+  },
+  {
+    q: "What oil concentration are the fragrances formulated at?",
+    a: "All six fragrances in the SENTIRE Discovery Set are formulated at Haute Extrait de Parfum concentration (35%+ pure perfume oil load), ensuring profound projection and 10 to 14 hours of persistent longevity on skin and fabric.",
+  },
+  {
+    q: "Can I redeem my purchase towards a full 50ML flacon?",
+    a: "Yes! Every Discovery Set box comes with an exclusive VIP redemption card inside. Once you find your signature scent, use the enclosed code at checkout to apply a special privilege discount toward your full 50ML bottle.",
+  },
+  {
+    q: "How fast is express delivery across India?",
+    a: "All Discovery Set orders are dispatched within 24 hours from our Mumbai studio via premium express air couriers. Delivery typically takes 2 to 4 business days with real-time SMS tracking at every step.",
+  },
 ];
 
 export default function DiscoverySetPage({
+  onBackToHome,
   onAddToCart,
   onOpenCart,
-  onBackToHome,
-  onNavigate
+  onNavigate,
 }: DiscoverySetPageProps) {
-  // Section 3 Active Scents
-  const [activeScentIdx, setActiveScentIdx] = useState(0);
-
-  // Section 4 Carousel & Quantity
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // State management
+  const [selectedAngleIndex, setSelectedAngleIndex] = useState(0);
+  const [selectedFragranceIndex, setSelectedFragranceIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [addedAnimation, setAddedAnimation] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // Section 5 4D Aura Matrix Vectors
-  const [vectors, setVectors] = useState({ pace: 0, atmos: 0, time: 0, energy: 0 });
+  // Spray simulator state
+  const [spraysPerDay, setSpraysPerDay] = useState(2);
 
-  // Auto slide effect
+  // Layering laboratory state
+  const [selectedBaseId, setSelectedBaseId] = useState("purple-oud");
+  const [selectedAccentId, setSelectedAccentId] = useState("rich");
+
+  // Sticky bar visibility
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length);
-    }, 3800);
-    return () => clearInterval(timer);
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setShowStickyBar(rect.bottom < 120);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Compute matched scent for Aura Matrix
-  const matchedScentIdx = (vectors.pace + vectors.atmos + vectors.time + vectors.energy) % 6;
-  const matchedScent = SCENTS_DATA[matchedScentIdx];
-  const matchedOccasion = OCCASIONS[matchedScentIdx];
+  // Compute active layering recipe or fallback
+  const activeRecipe =
+    LAYERING_RECIPES.find(
+      (r) => r.base === selectedBaseId && r.accent === selectedAccentId
+    ) || {
+      name: `${DISCOVERY_FRAGRANCES.find((f) => f.id === selectedBaseId)?.name} × ${
+        DISCOVERY_FRAGRANCES.find((f) => f.id === selectedAccentId)?.name
+      }`,
+      base: selectedBaseId,
+      accent: selectedAccentId,
+      ratio: "1 Spray Base + 1 Spray Accent",
+      description: `A custom signature fusion of ${
+        DISCOVERY_FRAGRANCES.find((f) => f.id === selectedBaseId)?.character
+      } deepened with a spark of ${
+        DISCOVERY_FRAGRANCES.find((f) => f.id === selectedAccentId)?.character
+      }. Completely unique to your skin.`,
+      vibe: "Bespoke Personal Alchemist",
+    };
 
-  const handleAcquire = () => {
-    if (onAddToCart) {
-      onAddToCart(
-        {
-          id: "sentire-discovery-coffret-6x6ml",
-          productId: "discovery-set-package",
-          variantId: "46965136031905",
-          name: "The Discovery Coffret (6 x 6ml Extrait de Parfum)",
-          price: 549,
-          originalPrice: 2400,
-          quantity: quantity,
-          size: 36,
-          img: "/discovery_gallery/gallery_slide_1.jpg",
-          image: "/discovery_gallery/gallery_slide_1.jpg"
-        },
-        36,
-        549
-      );
-    }
+  const handleAddToCart = () => {
+    const item = {
+      productId: "discovery-set",
+      name: "SENTIRE Discovery Set (6 × 6ML)",
+      price: 549,
+      size: 36,
+      quantity,
+      image: "/images/discovery-set/box-front.jpg",
+      img: "/images/discovery-set/box-front.jpg",
+      variantTitle: "6 × 6ML Travel Sprays (36ML Total)",
+    };
+
+    setAddedAnimation(true);
+    setTimeout(() => setAddedAnimation(false), 1200);
+
+    onAddToCart?.(item);
   };
 
-  const handleDirectCheckout = () => {
-    handleAcquire();
-    if (onOpenCart) onOpenCart();
-  };
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const currentScent = SCENTS_DATA[activeScentIdx];
+  const currentFragrance = DISCOVERY_FRAGRANCES[selectedFragranceIndex];
+  const currentAngle = BOX_ANGLES[selectedAngleIndex];
 
   return (
-    <div className="w-full bg-[#FAF8F5] text-[#14110D] font-sans selection:bg-[#B8863B]/20 selection:text-[#14110D]">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-        .font-cormorant {
-          font-family: 'Cormorant Garamond', serif;
-        }
-      `}</style>
-
-      {/* ================= SECTION 1: CAMPAIGN COVER HERO ================= */}
-      {/* Mobile Layout (md:hidden): Full Uncropped 3:2 Landscape Image on Top + White Card Below */}
-      <section className="block md:hidden w-full bg-[#FAF8F5]">
-        {/* Full Uncropped 3:2 Photoshoot Image (100% Uncropped & Original Brightness) */}
-        <div className="relative w-full aspect-[3/2] overflow-hidden bg-[#FAF8F5] flex items-center justify-center">
-          <motion.img
-            src="/discovery_hero_cover.jpg"
-            alt="Sentire 6-Flacon Luxury Discovery Coffret"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            initial={{ scale: 1.05, opacity: 0.8 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full h-full object-contain filter brightness-[1.01] contrast-[1.01]"
-          />
-        </div>
-
-        {/* Crisp Text Content Card directly below photo */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainer}
-          className="px-5 py-6 -mt-3 relative z-10 bg-[#FAF8F5] rounded-t-3xl border-t border-black/8 shadow-sm"
-        >
-          <motion.span variants={fadeInUp} className="text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
-            The Atelier Anthology &bull; 35% Extrait
-          </motion.span>
-          <motion.h1 variants={fadeInUp} className="font-cormorant text-4xl font-normal leading-[1.05] text-[#14110D] mb-3 tracking-[-0.01em]">
-            Six moods.<br />
-            <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-xs leading-relaxed text-[#14110D]/90 font-medium mb-5">
-            Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
-          </motion.p>
-
-          {/* Mobile Micro Specs Tray */}
-          <motion.div variants={fadeInUp} className="grid grid-cols-3 gap-1.5 border-y border-black/10 py-3 mb-6 bg-[#F5EFE6]/80 rounded-xl px-2.5 shadow-sm">
-            <div className="text-center">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Flacons</span>
-              <span className="text-[11px] font-bold text-[#14110D]">6 Extraits (6ml)</span>
-            </div>
-            <div className="text-center border-x border-black/10 px-1">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Concentration</span>
-              <span className="text-[11px] font-bold text-[#14110D]">35% Pure Oil</span>
-            </div>
-            <div className="text-center">
-              <span className="text-[8px] uppercase tracking-wider text-[#14110D]/50 block font-semibold">Offering</span>
-              <span className="text-[11px] font-bold text-[#14110D]">
-                ₹549 <span className="text-[9px] text-[#B8863B] font-semibold">(Net ₹99)</span>
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Direct Black Pill Button */}
-          <motion.button
-            variants={fadeInUp}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => scrollToSection("acquire-coffret")}
-            className="w-full py-3.5 bg-[#14110D] active:bg-[#B8863B] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] font-semibold rounded-full shadow-lg transition-all text-center cursor-pointer"
+    <div className="min-h-screen bg-[#faf8f5] text-[#19140f] selection:bg-[#c89b5a] selection:text-white font-sans antialiased">
+      {/* ── Breadcrumb Navigation ── */}
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+        <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#19140f]/60 font-medium">
+          <button
+            onClick={onBackToHome}
+            className="hover:text-[#c89b5a] transition-colors cursor-pointer"
           >
-            Acquire Discovery Set &rarr;
-          </motion.button>
-        </motion.div>
-      </section>
-
-      {/* Desktop Layout (hidden md:flex): Full-Bleed Editorial Silk Layout */}
-      <section className="hidden md:flex relative w-full overflow-hidden bg-[#FAF8F5] min-h-[580px] lg:min-h-[720px] items-center">
-        {/* Full-bleed background photoshoot image */}
-        <div className="absolute inset-0 z-0">
-          <motion.img
-            src="/discovery_hero_cover.jpg"
-            alt="Sentire 6-Flacon Luxury Discovery Coffret with Matte Black Box and Golden Amber Accents"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            initial={{ scale: 1.04, opacity: 0.8 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full h-full object-cover object-[center_35%] filter brightness-[1.02] contrast-[1.01]"
-          />
-          {/* Editorial Silk Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5]/85 via-[#FAF8F5]/45 to-transparent w-full md:w-[65%]" />
-        </div>
-
-        {/* Hero Top-Left Editorial Placement */}
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 md:py-16 w-full">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="max-w-[540px]"
+            Home
+          </button>
+          <span>/</span>
+          <button
+            onClick={() => onNavigate?.("perfumes")}
+            className="hover:text-[#c89b5a] transition-colors cursor-pointer"
           >
-            <motion.span variants={fadeInUp} className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.32em] text-[#B8863B] block mb-3">
-              The Atelier Anthology &bull; 35% Extrait
-            </motion.span>
-            <motion.h1 variants={fadeInUp} className="font-cormorant text-5xl sm:text-6xl md:text-7xl font-normal leading-[1.02] text-[#14110D] mb-4 tracking-[-0.02em]">
-              Six moods.<br />
-              <i className="font-cormorant italic font-normal text-[#14110D]">One case.</i>
-            </motion.h1>
-            <motion.p variants={fadeInUp} className="text-sm sm:text-base leading-relaxed text-[#14110D]/85 font-medium mb-8">
-              Six hand-poured extrait flacons composed to drape across your skin like liquid velvet.
-            </motion.p>
+            Haute Parfumerie
+          </button>
+          <span>/</span>
+          <span className="text-[#c89b5a] font-semibold">
+            Discovery Set (6 × 6ML)
+          </span>
+        </div>
+      </nav>
 
-            {/* Micro Specs Tray */}
-            <motion.div variants={fadeInUp} className="grid grid-cols-3 gap-4 border-y border-black/10 py-3 mb-8">
-              <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Flacons</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">6 Extraits (6ml)</span>
-              </div>
-              <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Concentration</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">35% Pure Oil</span>
-              </div>
-              <div>
-                <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Offering</span>
-                <span className="text-xs sm:text-sm font-bold text-[#14110D]">
-                  ₹549 <span className="text-[10px] text-[#B8863B] font-semibold">(Net ₹99)</span>
+      {/* ─────────────────────────────────────────────────────────────
+          HERO PRODUCT SHOWCASE (Split Luxury Grid)
+      ───────────────────────────────────────────────────────────── */}
+      <section ref={heroRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          
+          {/* LEFT: Product Photography Suite (7 cols) */}
+          <div className="lg:col-span-7 space-y-5">
+            {/* Main Stage Display */}
+            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] w-full bg-gradient-to-b from-[#f3eee7] via-[#ede6dd] to-[#e4dcce] rounded-2xl overflow-hidden border border-[#c89b5a]/25 shadow-[0_25px_60px_-15px_rgba(25,20,15,0.18)] group">
+              {/* Luxury gold watermarks & backdrop accents */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.8),transparent_70%)] pointer-events-none" />
+              <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.2em] font-extrabold bg-[#0b0907] text-[#d4af37] border border-[#c89b5a]/40 shadow-sm">
+                  ★ Hero Flagship
+                </span>
+                <span className="px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.2em] font-bold bg-[#faf8f5]/90 text-[#4a121a] border border-[#4a121a]/20 backdrop-blur-sm">
+                  Oxblood Velvet Case
                 </span>
               </div>
-            </motion.div>
 
-            {/* Direct Black Pill Button */}
-            <motion.button
-              variants={fadeInUp}
-              whileHover={{ y: -2, backgroundColor: "#B8863B" }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => scrollToSection("acquire-coffret")}
-              className="px-8 py-4 bg-[#14110D] text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-semibold rounded-full shadow-xl transition-colors cursor-pointer flex items-center gap-3"
-            >
-              <span>Acquire Discovery Set &rarr;</span>
-            </motion.button>
-          </motion.div>
+              <div className="absolute top-4 right-4 z-10">
+                <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-[0.16em] font-bold bg-[#d4af37]/20 text-[#7a591e] border border-[#c89b5a]/40 backdrop-blur-sm">
+                  36ML · 6 SPRAYS
+                </span>
+              </div>
+
+              {/* Main Image with Smooth Fade */}
+              <div className="w-full h-full p-4 sm:p-8 flex items-center justify-center transition-all duration-500 ease-out">
+                <img
+                  src={currentAngle.img}
+                  alt={`SENTIRE Discovery Set - ${currentAngle.label}`}
+                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
+
+              {/* Angle Description Overlay */}
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#0b0907]/90 via-[#0b0907]/50 to-transparent p-5 text-white flex flex-col justify-end">
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#d4af37]">
+                  Angle {selectedAngleIndex + 1} of {BOX_ANGLES.length} · {currentAngle.label}
+                </p>
+                <p className="text-sm sm:text-base font-serif italic text-white/95 mt-0.5">
+                  {currentAngle.tagline}
+                </p>
+                <p className="text-[11px] text-white/70 font-sans line-clamp-1 mt-0.5">
+                  {currentAngle.desc}
+                </p>
+              </div>
+            </div>
+
+            {/* Thumbnail Angle Switcher */}
+            <div className="grid grid-cols-5 gap-2 sm:gap-3">
+              {BOX_ANGLES.map((angle, idx) => {
+                const isActive = idx === selectedAngleIndex;
+                return (
+                  <button
+                    key={angle.id}
+                    onClick={() => setSelectedAngleIndex(idx)}
+                    className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all p-1.5 flex flex-col items-center justify-center cursor-pointer ${
+                      isActive
+                        ? "border-[#c89b5a] bg-white shadow-md ring-2 ring-[#c89b5a]/30 scale-[1.02]"
+                        : "border-[#e0d6c8] bg-[#f5ede2]/60 hover:border-[#c89b5a]/50 opacity-80 hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={angle.img}
+                      alt={angle.label}
+                      className="w-full h-full object-contain"
+                    />
+                    <span
+                      className={`absolute bottom-1 inset-x-1 text-[8px] sm:text-[9px] font-semibold text-center truncate px-1 rounded ${
+                        isActive
+                          ? "bg-[#0b0907] text-[#d4af37]"
+                          : "bg-white/85 text-[#19140f]/80"
+                      }`}
+                    >
+                      {angle.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Quick trust strip */}
+            <div className="grid grid-cols-3 gap-3 pt-3 border-t border-[#c89b5a]/20 text-center">
+              <div className="p-2.5 rounded-lg bg-white/70 border border-[#c89b5a]/15 shadow-xs">
+                <p className="text-[10px] uppercase tracking-[0.16em] text-[#c89b5a] font-bold">Volume</p>
+                <p className="text-xs font-semibold text-[#19140f] mt-0.5">6 × 6ML (36ML)</p>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white/70 border border-[#c89b5a]/15 shadow-xs">
+                <p className="text-[10px] uppercase tracking-[0.16em] text-[#c89b5a] font-bold">Spray Count</p>
+                <p className="text-xs font-semibold text-[#19140f] mt-0.5">~360 Fine Mists</p>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white/70 border border-[#c89b5a]/15 shadow-xs">
+                <p className="text-[10px] uppercase tracking-[0.16em] text-[#c89b5a] font-bold">Portability</p>
+                <p className="text-xs font-semibold text-[#19140f] mt-0.5">TSA & Clutch Safe</p>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: Product Intent & Purchasing Console (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col space-y-6">
+            <div>
+              {/* Brand kicker */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className="h-px w-6 bg-[#c89b5a]" />
+                <span className="text-[10.5px] uppercase tracking-[0.28em] text-[#c89b5a] font-extrabold">
+                  SENTIRE HAUTE PARFUMERIE
+                </span>
+              </div>
+
+              {/* Title & Headline */}
+              <h1 className="text-3xl sm:text-4xl lg:text-[42px] leading-[1.1] font-serif font-normal text-[#120e0b] tracking-tight">
+                SENTIRE Discovery Set
+              </h1>
+              <p className="mt-2 text-lg sm:text-xl font-serif italic text-[#c89b5a] font-medium">
+                Six fragrances. One box. Find the one that's yours.
+              </p>
+            </div>
+
+            {/* Rating and Social Proof Header */}
+            <div className="flex items-center gap-3 pb-3 border-b border-[#e5dcce]">
+              <div className="flex items-center text-[#d4af37] text-sm">
+                {"★★★★★".split("").map((star, i) => (
+                  <span key={i} className="text-[#c89b5a]">
+                    ★
+                  </span>
+                ))}
+              </div>
+              <span className="text-xs font-bold text-[#19140f]">4.9</span>
+              <span className="text-xs text-[#19140f]/60 underline">
+                (428 verified reviews)
+              </span>
+              <span className="ml-auto text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#4a121a]/10 text-[#4a121a] rounded">
+                Selling Fast
+              </span>
+            </div>
+
+            {/* Price block */}
+            <div className="p-4 rounded-xl bg-gradient-to-br from-[#f6f1ea] to-[#efe7db] border border-[#c89b5a]/30 shadow-xs">
+              <div className="flex items-baseline gap-3">
+                <span className="text-3xl sm:text-4xl font-serif font-bold text-[#19140f] tabular-nums">
+                  ₹549
+                </span>
+                <span className="text-base text-[#19140f]/45 line-through tabular-nums">
+                  ₹999
+                </span>
+                <span className="px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wider bg-[#4a121a] text-[#f7e7ce] rounded-full">
+                  Save 45%
+                </span>
+              </div>
+              <div className="mt-2 flex items-center justify-between text-xs text-[#19140f]/80">
+                <span className="font-medium text-[#846124]">
+                  ⚡ Only ₹91.50 per 6ML travel spray
+                </span>
+                <span className="font-semibold text-emerald-800 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  In Stock & Ready to Ship
+                </span>
+              </div>
+            </div>
+
+            {/* Narrative Editorial Quote */}
+            <blockquote className="border-l-2 border-[#c89b5a] pl-4 py-1 text-sm sm:text-base font-serif italic text-[#19140f]/85 leading-relaxed bg-[#f9f5ef]/70 rounded-r-lg">
+              “Choosing a signature scent shouldn't mean committing to a full bottle you've never smelled. The SENTIRE Discovery Set gives you six of our fragrances in 6ML travel sprays — enough to live with each one properly, on your own skin, across your own days.”
+            </blockquote>
+
+            {/* Six Vials Mini-Switcher Preview */}
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.18em] font-bold text-[#19140f]/75 mb-2.5 flex items-center justify-between">
+                <span>The Six Fragrances Included:</span>
+                <span className="text-[#c89b5a] text-[10px] lowercase italic font-serif">
+                  tap to preview below
+                </span>
+              </p>
+              <div className="grid grid-cols-6 gap-2">
+                {DISCOVERY_FRAGRANCES.map((frag, idx) => {
+                  const isSelected = idx === selectedFragranceIndex;
+                  return (
+                    <button
+                      key={frag.id}
+                      onClick={() => setSelectedFragranceIndex(idx)}
+                      className={`group relative p-1.5 rounded-xl border flex flex-col items-center justify-center transition-all cursor-pointer ${
+                        isSelected
+                          ? "border-[#c89b5a] bg-white shadow-md ring-2 ring-[#c89b5a]/30"
+                          : "border-[#e6ded1] bg-[#f8f3eb] hover:border-[#c89b5a]/40"
+                      }`}
+                      title={frag.name}
+                    >
+                      <div className="w-full aspect-[1/2] flex items-center justify-center overflow-hidden">
+                        <img
+                          src={frag.img}
+                          alt={frag.name}
+                          className="h-full object-contain group-hover:scale-105 transition-transform"
+                        />
+                      </div>
+                      <span className="text-[9px] font-bold text-center truncate w-full mt-1 text-[#19140f]">
+                        {frag.name.split(" ")[0]}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-[#19140f]/70 mt-2 font-medium">
+                Active preview: <strong className="text-[#c89b5a]">{currentFragrance.name}</strong> — {currentFragrance.tagline}
+              </p>
+            </div>
+
+            {/* Quantity Selector & Action Buttons */}
+            <div className="space-y-3 pt-2">
+              <div className="flex items-center gap-3">
+                {/* Qty Pill */}
+                <div className="flex items-center border border-[#c89b5a]/40 rounded-xl bg-white px-2 py-1 shadow-xs">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    disabled={quantity <= 1}
+                    className="w-8 h-9 flex items-center justify-center text-lg font-bold text-[#19140f] hover:text-[#c89b5a] disabled:opacity-30 cursor-pointer"
+                  >
+                    −
+                  </button>
+                  <span className="w-8 text-center font-bold text-sm tabular-nums">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+                    className="w-8 h-9 flex items-center justify-center text-lg font-bold text-[#19140f] hover:text-[#c89b5a] cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Primary Add to Cart Button */}
+                <button
+                  onClick={handleAddToCart}
+                  className={`flex-1 py-3.5 px-6 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg ${
+                    addedAnimation
+                      ? "bg-emerald-700 text-white scale-[0.99]"
+                      : "bg-[#0b0907] hover:bg-[#201914] text-[#d4af37] hover:shadow-[0_10px_25px_rgba(200,155,90,0.35)] active:scale-[0.98]"
+                  }`}
+                >
+                  {addedAnimation ? (
+                    <>
+                      <span>✓ Added to Your Bag</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Add To Cart</span>
+                      <span>·</span>
+                      <span className="tabular-nums">₹{(549 * quantity).toLocaleString()}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Fast Buy Now */}
+              <button
+                onClick={() => {
+                  handleAddToCart();
+                  setTimeout(() => onOpenCart?.(), 200);
+                }}
+                className="w-full py-3 px-6 rounded-xl font-bold text-xs uppercase tracking-[0.2em] bg-gradient-to-r from-[#d4af37] via-[#c89b5a] to-[#a37c3f] text-[#0b0907] hover:brightness-105 shadow-md active:scale-[0.98] transition-all cursor-pointer text-center"
+              >
+                Instant Buy & Checkout Now →
+              </button>
+            </div>
+
+            {/* Perks & Shipping Guarantees */}
+            <div className="pt-2 border-t border-[#e2d8c9] space-y-2 text-xs text-[#19140f]/75">
+              <div className="flex items-center gap-2.5">
+                <span className="text-[#c89b5a] text-base">✈</span>
+                <span><strong>Free Express Shipping</strong> across India (Arrives in 2-4 days)</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <span className="text-[#c89b5a] text-base">🔒</span>
+                <span><strong>Zero-Risk Discovery</strong>: Includes VIP discount card for full 50ML flacon</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <span className="text-[#c89b5a] text-base">🛡</span>
+                <span><strong>Anodized Leak-Proof Sprays</strong>: 100% TSA carry-on and purse approved</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ================= SECTION 2: THE OCCASION WARDROBE ================= */}
-      <section className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto border-t border-black/5" id="occasion-wardrobe">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeInUp}
-          className="text-center max-w-[720px] mx-auto mb-14"
-        >
-          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
-            The Occasion Wardrobe
-          </span>
-          <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl font-normal text-[#14110D] mb-4">
-            Different days ask for a <i className="font-cormorant italic">different you.</i>
-          </h2>
-          <p className="text-sm sm:text-base text-[#14110D]/70 max-w-lg mx-auto">
-            Six signature extraits composed for the rhythm of your week. Poured with 35% pure perfume oils.
-          </p>
-        </motion.div>
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: "WHAT'S INSIDE" — STEPPED VIALS SCENT EXPLORER
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#0d0a08] text-[#fbf8f3] relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#c89b5a]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-[#4a121a]/20 rounded-full blur-3xl pointer-events-none" />
 
-        {/* 6 Occasion Cards Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-        >
-          {OCCASIONS.map((occ, idx) => (
-            <motion.div
-              key={idx}
-              variants={fadeInUp}
-              whileHover={{ y: -6, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="group bg-white rounded-2xl overflow-hidden border border-black/8 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer"
-            >
-              {/* Photo */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#F1E9D8]">
-                <img
-                  src={occ.img}
-                  alt={`Sentire ${occ.scent} for ${occ.day} ${occ.name}`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-extrabold bg-[#c89b5a]/15 text-[#d4af37] border border-[#c89b5a]/30">
+              The 6ML Curation
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white">
+              What’s Inside the Case
+            </h2>
+            <p className="text-sm sm:text-base font-serif italic text-white/80 leading-relaxed">
+              Six 6ML sprays, presented in a matte black flip-top case with a gold SENTIRE emblem and an oxblood interior. Each vial sits in a stepped layout so the full set is visible the moment you open it. A scent-map card inside guides you through all six.
+            </p>
+          </div>
+
+          {/* Stepped Scent Selector Tabs */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {DISCOVERY_FRAGRANCES.map((frag, idx) => {
+              const isActive = idx === selectedFragranceIndex;
+              return (
+                <button
+                  key={frag.id}
+                  onClick={() => setSelectedFragranceIndex(idx)}
+                  className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+                    isActive
+                      ? "bg-[#c89b5a] text-[#0b0907] shadow-[0_0_20px_rgba(200,155,90,0.4)] font-bold scale-105"
+                      : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10"
+                  }`}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: frag.colorHex }}
+                  />
+                  <span>{frag.name}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Fragrance Deep-Dive Spotlight Card */}
+          <div className="mt-10 bg-gradient-to-b from-[#18130f] to-[#120e0b] border border-[#c89b5a]/35 rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* Left: Upright Authentic Vial Showcase (5 cols) */}
+              <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+                {/* Glowing radial disc */}
+                <div
+                  className="w-64 sm:w-80 aspect-square rounded-full absolute -z-10 blur-2xl opacity-30"
+                  style={{ backgroundColor: currentFragrance.colorHex }}
                 />
-                <div className="absolute top-4 left-4 bg-[#FAF8F5]/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-bold text-[#14110D] border border-black/5">
-                  {occ.day}
+
+                <div className="relative aspect-[3/5] w-64 sm:w-72 bg-gradient-to-b from-white/10 to-white/5 rounded-2xl border border-white/10 p-4 flex flex-col items-center justify-between shadow-2xl backdrop-blur-md group">
+                  <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-widest text-white/50 uppercase">
+                    <span>SENTIRE HAUTE</span>
+                    <span className="text-[#d4af37]">6ML EXTRAIT</span>
+                  </div>
+
+                  <div className="h-4/5 w-full flex items-center justify-center overflow-hidden">
+                    <img
+                      src={currentFragrance.img}
+                      alt={currentFragrance.name}
+                      className="max-h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="w-full text-center">
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37]">
+                      {currentFragrance.name}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-3 text-xs text-white/60">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>55–60 Sprays · Anodized Atomiser</span>
                 </div>
               </div>
 
-              {/* Text */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              {/* Right: Scent Identity & Notes Breakdown (7 cols) */}
+              <div className="lg:col-span-7 space-y-6">
                 <div>
-                  <h3 className="font-cormorant text-2xl font-bold text-[#14110D] mb-1">
-                    {occ.name}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[9px] uppercase tracking-[0.2em] font-extrabold bg-[#c89b5a]/20 text-[#d4af37] border border-[#c89b5a]/40">
+                      {currentFragrance.familyBadge}
+                    </span>
+                    <span className="text-xs text-white/50 font-mono">
+                      Compliment Index: {currentFragrance.complimentScore}
+                    </span>
+                  </div>
+                  <h3 className="text-3xl sm:text-4xl font-serif text-white">
+                    {currentFragrance.name}
                   </h3>
-                  <span className="text-xs uppercase tracking-wider text-[#B8863B] font-semibold block mb-3">
-                    {occ.scent} &bull; {occ.conc}
+                  <p className="text-base sm:text-lg font-serif italic text-[#c89b5a] mt-1">
+                    {currentFragrance.tagline}
+                  </p>
+                  <p className="mt-3 text-sm text-white/80 leading-relaxed font-sans">
+                    {currentFragrance.vialDescription}
+                  </p>
+                </div>
+
+                {/* Olfactory Note Pyramid */}
+                <div className="space-y-3 bg-black/40 rounded-2xl p-5 border border-white/5">
+                  <div className="flex items-start gap-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c89b5a] w-14 shrink-0 pt-0.5">
+                      Top
+                    </span>
+                    <span className="text-xs sm:text-sm text-white/90 font-medium">
+                      {currentFragrance.topNotes}
+                    </span>
+                  </div>
+                  <div className="h-px w-full bg-white/5" />
+                  <div className="flex items-start gap-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c89b5a] w-14 shrink-0 pt-0.5">
+                      Heart
+                    </span>
+                    <span className="text-xs sm:text-sm text-white/90 font-medium">
+                      {currentFragrance.heartNotes}
+                    </span>
+                  </div>
+                  <div className="h-px w-full bg-white/5" />
+                  <div className="flex items-start gap-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#c89b5a] w-14 shrink-0 pt-0.5">
+                      Base
+                    </span>
+                    <span className="text-xs sm:text-sm text-white/90 font-medium">
+                      {currentFragrance.baseNotes}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sillage, Longevity & Wear Context Meters */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/5">
+                    <p className="text-[10px] uppercase tracking-wider text-[#c89b5a] font-bold">Projection / Sillage</p>
+                    <p className="text-xs font-semibold text-white mt-1">{currentFragrance.sillage}</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/5">
+                    <p className="text-[10px] uppercase tracking-wider text-[#c89b5a] font-bold">Skin Longevity</p>
+                    <p className="text-xs font-semibold text-white mt-1">{currentFragrance.longevity}</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/5">
+                    <p className="text-[10px] uppercase tracking-wider text-[#c89b5a] font-bold">Best Setting</p>
+                    <p className="text-xs font-semibold text-white mt-1 truncate">{currentFragrance.bestTime}</p>
+                  </div>
+                </div>
+
+                {/* Layering Pro-Tip */}
+                <div className="p-3.5 rounded-xl bg-[#4a121a]/20 border border-[#4a121a]/40 flex items-center gap-3">
+                  <span className="text-base text-[#d4af37]">✨</span>
+                  <div className="text-xs">
+                    <strong className="text-[#d4af37] uppercase tracking-wider">Layering Role ({currentFragrance.layeringRole}):</strong>{" "}
+                    <span className="text-white/80">{currentFragrance.layeringTip}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Grid of all 6 Vials for Fast Comparison */}
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {DISCOVERY_FRAGRANCES.map((frag, idx) => (
+              <div
+                key={frag.id}
+                onClick={() => setSelectedFragranceIndex(idx)}
+                className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
+                  idx === selectedFragranceIndex
+                    ? "bg-[#1f1914] border-[#c89b5a] shadow-[0_10px_30px_rgba(200,155,90,0.15)]"
+                    : "bg-[#14100d] border-white/8 hover:border-white/20 hover:bg-[#1a1410]"
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-14 aspect-[1/2] shrink-0 bg-black/40 rounded-lg p-1 flex items-center justify-center">
+                    <img
+                      src={frag.img}
+                      alt={frag.name}
+                      className="h-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#c89b5a]">
+                      No. 0{idx + 1} · {frag.character}
+                    </span>
+                    <h4 className="text-lg font-serif text-white mt-0.5">
+                      {frag.name}
+                    </h4>
+                    <p className="text-xs font-serif italic text-white/70 mt-1">
+                      {frag.tagline}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-white/50">
+                  <span>{frag.family}</span>
+                  <span className="text-[#c89b5a] font-medium group-hover:underline">
+                    View Notes →
                   </span>
-                  <p className="text-xs sm:text-sm text-[#14110D]/75 leading-relaxed">
-                    {occ.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: "WHY 6ML MATTERS" — REAL SKIN WEAR VS PAPER STRIP
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#faf5ee] border-y border-[#c89b5a]/25">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="max-w-3xl mx-auto text-center space-y-3">
+            <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-extrabold bg-[#0b0907] text-[#d4af37]">
+              The Scent Science
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#18130f]">
+              Why 6ML Matters
+            </h2>
+            <p className="text-base sm:text-lg font-serif italic text-[#19140f]/80 leading-relaxed">
+              “Each vial holds roughly 55 to 60 sprays — around a month of wear if you're using it a couple of times a day. This isn't a paper strip in a store. It's enough to know how a fragrance behaves on you, in the evening, hours after you put it on.”
+            </p>
+          </div>
+
+          {/* Comparison Matrix: Paper Strip vs SENTIRE 6ML */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            
+            {/* The Old Way: Mall Paper Strip */}
+            <div className="p-8 rounded-3xl bg-white border border-red-200/60 shadow-sm relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest font-extrabold bg-red-100 text-red-700">
+                  The Outdated Mall Way
+                </span>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#18130f]">
+                Department Store Paper Strip
+              </h3>
+              <p className="text-xs text-[#19140f]/60 mt-1">
+                Why 80% of full-bottle blind purchases end in regret
+              </p>
+
+              <ul className="mt-6 space-y-4 text-xs sm:text-sm text-[#19140f]/75">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold">✕</span>
+                  <span><strong>Fades in 10 Minutes</strong>: Paper blotters don't have warmth, natural skin oils, or perspiration.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold">✕</span>
+                  <span><strong>Masks the Drydown</strong>: You only smell top notes; base amber and agarwood never bloom properly.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold">✕</span>
+                  <span><strong>Olfactory Fatigue</strong>: Store air is saturated with 50 other perfumes, confusing your senses.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold">✕</span>
+                  <span><strong>High Financial Risk</strong>: Forcing a ₹2,000–₹5,000 blind purchase after a 5-second sniff.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* The SENTIRE Way: 6ML Luxury Vials */}
+            <div className="p-8 rounded-3xl bg-gradient-to-br from-[#1b1511] to-[#0b0907] text-white border-2 border-[#c89b5a] shadow-xl relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest font-extrabold bg-[#d4af37] text-[#0b0907]">
+                  The SENTIRE Way
+                </span>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#d4af37]">
+                SENTIRE 6ML Travel Extrait
+              </h3>
+              <p className="text-xs text-white/60 mt-1">
+                True intimate luxury tested on your skin across weeks
+              </p>
+
+              <ul className="mt-6 space-y-4 text-xs sm:text-sm text-white/85">
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold">✓</span>
+                  <span><strong>55 to 60 Fine-Mist Sprays</strong>: One full month of real daily skin wear per fragrance.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold">✓</span>
+                  <span><strong>True Skin Chemistry</strong>: Observe how body heat transforms delicate florals and rich Cambodian oud across 12 hours.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold">✓</span>
+                  <span><strong>Clutch & Carry-on Safe</strong>: Anodized leak-proof protective overcap prevents accidental spills in transit.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold">✓</span>
+                  <span><strong>Total Freedom</strong>: Find your genuine signature fragrance without spending thousands up front.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Interactive Spray Calculator */}
+          <div className="mt-14 max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl bg-white border border-[#c89b5a]/30 shadow-md">
+            <div className="text-center max-w-xl mx-auto">
+              <h4 className="text-lg sm:text-xl font-serif font-bold text-[#18130f]">
+                Calculate Your Wear Time Across 36ML
+              </h4>
+              <p className="text-xs text-[#19140f]/70 mt-1">
+                Choose your average daily sprays to see how long the set lasts you:
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              {[1, 2, 3, 4].map((sprays) => (
+                <button
+                  key={sprays}
+                  onClick={() => setSpraysPerDay(sprays)}
+                  className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                    spraysPerDay === sprays
+                      ? "bg-[#0b0907] text-[#d4af37] shadow-md scale-105"
+                      : "bg-[#f5ede2] text-[#19140f]/70 hover:bg-[#c89b5a]/20"
+                  }`}
+                >
+                  {sprays} {sprays === 1 ? "Spray / Day" : "Sprays / Day"}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+              <div className="p-4 rounded-2xl bg-[#faf6f0] border border-[#e6dcce]">
+                <p className="text-[10px] uppercase tracking-widest text-[#c89b5a] font-extrabold">Total Sprays</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#18130f] mt-1">360</p>
+                <p className="text-[11px] text-[#19140f]/60 mt-0.5">60 sprays × 6 vials</p>
+              </div>
+              <div className="p-4 rounded-2xl bg-[#faf6f0] border border-[#e6dcce]">
+                <p className="text-[10px] uppercase tracking-widest text-[#c89b5a] font-extrabold">Days of Continuous Wear</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#4a121a] mt-1">
+                  {Math.round(360 / spraysPerDay)} Days
+                </p>
+                <p className="text-[11px] text-[#19140f]/60 mt-0.5">
+                  {(360 / spraysPerDay / 30).toFixed(1)} months of fragrance
+                </p>
+              </div>
+              <div className="p-4 rounded-2xl bg-[#faf6f0] border border-[#e6dcce]">
+                <p className="text-[10px] uppercase tracking-widest text-[#c89b5a] font-extrabold">Cost Per Day</p>
+                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#18130f] mt-1">
+                  ₹{(549 / (360 / spraysPerDay)).toFixed(2)}
+                </p>
+                <p className="text-[11px] text-[#19140f]/60 mt-0.5">Haute perfumery value</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: "HOW TO WEAR THE SET" & INTERACTIVE LAYERING LAB
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#faf8f5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="max-w-3xl mx-auto text-center space-y-3">
+            <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-extrabold bg-[#c89b5a]/20 text-[#846124] border border-[#c89b5a]/30">
+              The 3-Step Scent Ritual
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#19140f]">
+              How to Wear the Set
+            </h2>
+            <p className="text-base sm:text-lg font-serif italic text-[#19140f]/80 leading-relaxed">
+              “Give each fragrance its own day. Notice which one people mention. Then try layering two — a warm base under something brighter — and you'll have a scent nobody else is wearing.”
+            </p>
+          </div>
+
+          {/* 3 Step Cards */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            {/* Step 1 */}
+            <div className="p-8 rounded-3xl bg-white border border-[#e8dfd2] shadow-sm relative group hover:border-[#c89b5a] transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-[#0b0907] text-[#d4af37] font-serif font-bold text-xl flex items-center justify-center mb-6">
+                01
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#19140f]">
+                Give Each Its Own Day
+              </h3>
+              <p className="text-xs sm:text-sm text-[#19140f]/75 mt-3 leading-relaxed">
+                Apply on pulse points (inside wrists, side of neck) in the morning. Notice how the top citrus or berries soften into warm amber and florals as your body temperature rises throughout the day.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="p-8 rounded-3xl bg-white border border-[#e8dfd2] shadow-sm relative group hover:border-[#c89b5a] transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-[#0b0907] text-[#d4af37] font-serif font-bold text-xl flex items-center justify-center mb-6">
+                02
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#19140f]">
+                The Compliment Test
+              </h3>
+              <p className="text-xs sm:text-sm text-[#19140f]/75 mt-3 leading-relaxed">
+                Pay attention to what strangers, friends, and partners notice. A signature scent isn't just what smells pleasant in a bottle; it's what leaves an unforgettable scent trail in your wake.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="p-8 rounded-3xl bg-white border border-[#e8dfd2] shadow-sm relative group hover:border-[#c89b5a] transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-[#0b0907] text-[#d4af37] font-serif font-bold text-xl flex items-center justify-center mb-6">
+                03
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#19140f]">
+                Layer Like an Alchemist
+              </h3>
+              <p className="text-xs sm:text-sm text-[#19140f]/75 mt-3 leading-relaxed">
+                Never smell like anyone else. Lay down a deep, warm base (Purple Oud or MIRAI) and veil it with an aquatic or citrus high note (Rich or Seductive). Use our Layering Studio below!
+              </p>
+            </div>
+          </div>
+
+          {/* ── THE INTERACTIVE LAYERING LABORATORY ── */}
+          <div className="mt-16 bg-gradient-to-br from-[#120e0b] via-[#1a1410] to-[#0c0907] rounded-3xl p-6 sm:p-12 text-white border border-[#c89b5a]/40 shadow-2xl">
+            <div className="max-w-2xl mx-auto text-center space-y-2">
+              <span className="px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.25em] font-extrabold bg-[#d4af37]/20 text-[#d4af37] border border-[#c89b5a]/30">
+                Interactive Scent Alchemist
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white">
+                SENTIRE Layering Laboratory
+              </h3>
+              <p className="text-xs sm:text-sm text-white/70">
+                Pair a warm base with a bright top note to create a bespoke formula that exists nowhere else.
+              </p>
+            </div>
+
+            {/* Pairing Selectors */}
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              
+              {/* SELECT BASE NOTE */}
+              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#c89b5a] flex items-center justify-between">
+                  <span>Step A: Choose Deep Base Note</span>
+                  <span className="text-white/40">Chest & Pulse Points</span>
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {DISCOVERY_FRAGRANCES.slice(0, 3).map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => setSelectedBaseId(f.id)}
+                      className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                        selectedBaseId === f.id
+                          ? "border-[#c89b5a] bg-[#c89b5a]/20 text-white font-bold"
+                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                      }`}
+                    >
+                      <p className="text-xs font-serif">{f.name}</p>
+                      <p className="text-[9px] text-white/50 truncate">{f.character}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* SELECT ACCENT NOTE */}
+              <div className="p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#c89b5a] flex items-center justify-between">
+                  <span>Step B: Choose Bright Accent Note</span>
+                  <span className="text-white/40">Neck & Collar</span>
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {DISCOVERY_FRAGRANCES.slice(3, 6).map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => setSelectedAccentId(f.id)}
+                      className={`p-2.5 rounded-xl border text-center transition-all cursor-pointer ${
+                        selectedAccentId === f.id
+                          ? "border-[#c89b5a] bg-[#c89b5a]/20 text-white font-bold"
+                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                      }`}
+                    >
+                      <p className="text-xs font-serif">{f.name}</p>
+                      <p className="text-[9px] text-white/50 truncate">{f.character}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Generated Blend Output Card */}
+            <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#1e1712] via-[#241a15] to-[#1e1712] border border-[#c89b5a]/50 text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b0907] border border-[#c89b5a]/40 text-[#d4af37] text-[10px] font-mono tracking-widest uppercase">
+                <span>✦ Custom Blend Formula</span>
+              </div>
+              <h4 className="text-2xl sm:text-3xl font-serif text-white">
+                {activeRecipe.name}
+              </h4>
+              <p className="text-xs sm:text-sm font-mono text-[#d4af37] uppercase tracking-wider">
+                Ratio: {activeRecipe.ratio}
+              </p>
+              <p className="max-w-xl mx-auto text-xs sm:text-sm text-white/80 font-serif italic leading-relaxed">
+                "{activeRecipe.description}"
+              </p>
+              <p className="text-[11px] text-white/50 uppercase tracking-widest pt-2">
+                Vibe: {activeRecipe.vibe}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: PACKAGING & CRAFT ("THE COOLEST THING SOMEBODY CAN OWN")
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#0a0705] text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left: The Authentic Warning Box Shot (6 cols) */}
+            <div className="lg:col-span-6">
+              <div className="relative aspect-square max-w-md mx-auto rounded-3xl overflow-hidden border border-[#c89b5a]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group">
+                <img
+                  src="/images/discovery-set/box-warning.jpg"
+                  alt="WARNING: The COOLEST Thing SOMEBODY can OWN"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#d4af37]">
+                    ACTUAL PACKAGING COPY
+                  </span>
+                  <p className="text-lg font-serif italic text-white mt-1">
+                    “WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it”
                   </p>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* ================= SECTION 3: SENSORY NOTE PYRAMIDS & SILLAGE RADAR ================= */}
-      <section className="py-20 px-6 sm:px-12 lg:px-16 bg-[#F5EFE6] border-y border-black/8" id="scent-radar">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeInUp}
-            className="text-center max-w-[720px] mx-auto mb-12"
-          >
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
-              Interactive Olfactory Visualization
-            </span>
-            <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl font-normal text-[#14110D] mb-4">
-              The Sensory Note Pyramids <i className="font-cormorant italic">&amp; Sillage Radar</i>
-            </h2>
-            <p className="text-sm sm:text-base text-[#14110D]/70 max-w-md mx-auto">
-              Because you cannot smell through a screen, we mapped the precise 14-hour dry-down and projection anatomy of every flacon.
-            </p>
-          </motion.div>
-
-          {/* 6 Flacon Selector Tray */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
-            {SCENTS_DATA.map((scent, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveScentIdx(idx)}
-                className={`relative px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                  activeScentIdx === idx
-                    ? "bg-[#14110D] text-white shadow-lg scale-105"
-                    : "bg-white/80 text-[#14110D]/75 hover:bg-white border border-black/5 hover:border-[#B8863B]/40"
-                }`}
-              >
-                {idx + 1}. {scent.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Dual Interactive Display with AnimatePresence */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeScentIdx}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch"
-            >
-              {/* Left: 3-Stage Bloom Timeline */}
-              <div
-                className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
-                style={{
-                  background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
-                }}
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-4 border-b border-black/10 mb-6">
-                    <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
-                      {currentScent.name}
-                    </h3>
-                    <span className="text-[10px] uppercase tracking-widest text-[#B8863B] font-bold">
-                      {currentScent.tagline}
-                    </span>
-                  </div>
-
-                  <div className="space-y-6 relative before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#B8863B]/30 pl-8">
-                    <div className="relative">
-                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                        Stage I &bull; Opening (First 15–30 Mins)
-                      </span>
-                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                        {currentScent.stage1Name}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                        {currentScent.stage1Desc}
-                      </p>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                        Stage II &bull; Heart Bloom (2–6 Hours)
-                      </span>
-                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                        {currentScent.stage2Name}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                        {currentScent.stage2Desc}
-                      </p>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -left-[27px] top-1.5 w-3 h-3 rounded-full bg-[#B8863B] border-2 border-white shadow-sm" />
-                      <span className="text-[9px] uppercase tracking-widest font-bold text-[#B8863B] block">
-                        Stage III &bull; Base Drydown (8–14+ Hours)
-                      </span>
-                      <h4 className="font-cormorant text-lg sm:text-xl font-bold text-[#14110D]">
-                        {currentScent.stage3Name}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[#14110D]/75 mt-1 leading-relaxed">
-                        {currentScent.stage3Desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: Performance & Sillage Radar */}
-              <div
-                className="rounded-3xl p-8 sm:p-10 border border-[#A28D7A]/40 shadow-lg flex flex-col justify-between"
-                style={{
-                  background: "linear-gradient(150deg, #EDE2D1 0%, #DECDB6 100%)"
-                }}
-              >
-                <div>
-                  <div className="pb-4 border-b border-black/10 mb-6">
-                    <h3 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#14110D]">
-                      Performance &amp; Sillage Radar
-                    </h3>
-                    <p className="text-xs text-[#14110D]/60 mt-1">
-                      Laboratory measured on 35% pure extrait formulation
-                    </p>
-                  </div>
-
-                  <div className="space-y-6 mb-8">
-                    {/* Gauge 1 */}
-                    <div>
-                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                        <span>Longevity on Skin</span>
-                        <span className="text-[#B8863B]">{currentScent.longevity}</span>
-                      </div>
-                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${currentScent.longevityPct}%` }}
-                          transition={{ duration: 0.8, ease: "easeOut" }}
-                          className="h-full bg-[#B8863B] rounded-full"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Gauge 2 */}
-                    <div>
-                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                        <span>Projection / Sillage Cloud</span>
-                        <span className="text-[#B8863B]">{currentScent.projection}</span>
-                      </div>
-                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${currentScent.projectionPct}%` }}
-                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                          className="h-full bg-[#B8863B] rounded-full"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Gauge 3 */}
-                    <div>
-                      <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
-                        <span>Aroma Intensity</span>
-                        <span className="text-[#B8863B]">{currentScent.intensity}</span>
-                      </div>
-                      <div className="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${currentScent.intensityPct}%` }}
-                          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                          className="h-full bg-[#B8863B] rounded-full"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 4 Performance Metric Badges */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Concentration</span>
-                      <span className="text-xs font-bold text-[#14110D]">{currentScent.concentration}</span>
-                    </div>
-                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Best Occasion</span>
-                      <span className="text-xs font-bold text-[#14110D]">{currentScent.occasion}</span>
-                    </div>
-                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Season</span>
-                      <span className="text-xs font-bold text-[#14110D]">{currentScent.season}</span>
-                    </div>
-                    <div className="bg-white/55 backdrop-blur-sm p-3 rounded-xl border border-black/8 shadow-sm">
-                      <span className="text-[9px] uppercase tracking-widest text-[#14110D]/50 block font-semibold">Scent Character</span>
-                      <span className="text-xs font-bold text-[#14110D]">{currentScent.character}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* ================= SECTION 4: ADD TO CART & LUXURY GALLERY ================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-12 lg:px-16 max-w-[1440px] mx-auto" id="acquire-coffret">
-        {/* Single Unified Box Container combining Image & Price Details */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={fadeInUp}
-          className="bg-white rounded-3xl p-5 sm:p-8 md:p-10 border border-black/8 shadow-xl"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-            {/* Top / Left: Auto-Sliding 3-Photo Gallery Carousel */}
-            <div className="relative w-full min-h-[380px] sm:min-h-[520px] lg:min-h-[620px] aspect-[2/3] max-h-[660px] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden border border-black/8 bg-[#ECE3D5] flex items-center justify-center">
-              {CAROUSEL_IMAGES.map((imgUrl, idx) => (
-                <motion.img
-                  key={idx}
-                  src={imgUrl}
-                  alt={`Sentire Discovery Set View ${idx + 1}`}
-                  initial={false}
-                  animate={{ opacity: currentSlide === idx ? 1 : 0, scale: currentSlide === idx ? 1 : 1.04 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="absolute inset-0 w-full h-full object-contain p-2"
-                />
-              ))}
-
-              {/* Arrows */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setCurrentSlide((prev) => (prev - 1 + CAROUSEL_IMAGES.length) % CAROUSEL_IMAGES.length)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-colors cursor-pointer backdrop-blur-sm"
-                aria-label="Previous image"
-              >
-                &larr;
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setCurrentSlide((prev) => (prev + 1) % CAROUSEL_IMAGES.length)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-[#14110D] flex items-center justify-center shadow-md transition-colors cursor-pointer backdrop-blur-sm"
-                aria-label="Next image"
-              >
-                &rarr;
-              </motion.button>
-
-              {/* Dots */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                {CAROUSEL_IMAGES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`h-2 rounded-full transition-all cursor-pointer ${
-                      currentSlide === idx ? "w-5 bg-white" : "w-2 bg-white/50"
-                    }`}
-                    aria-label={`Slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
             </div>
 
-            {/* Bottom / Right: Acquisition Details & Pricing */}
-            <div className="pt-2 lg:pt-0">
-              <span className="inline-block bg-[#B8863B]/10 text-[#B8863B] border border-[#B8863B]/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-3">
-                &#10022; ₹1,000 Voucher Enclosed
+            {/* Right: The Architectural Details (6 cols) */}
+            <div className="lg:col-span-6 space-y-6">
+              <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.25em] font-extrabold bg-[#4a121a] text-[#f7e7ce] border border-[#c89b5a]/40">
+                Packaging Architecture
               </span>
-
-              <h2 className="font-cormorant text-3xl sm:text-5xl font-bold text-[#14110D] mb-2 leading-tight">
-                The Discovery Coffret
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white">
+                Matte Black. Oxblood Velvet. Stepped Revelation.
               </h2>
-              <p className="text-xs sm:text-sm text-[#14110D]/70 mb-5">
-                Six signature extraits de parfum (6ml each) hand-poured with 35% perfume oil concentration.
+              <p className="text-sm sm:text-base text-white/80 leading-relaxed font-serif italic">
+                From the weighted tactile snap of the flip-top magnetic clasp to the rich oxblood interior tiering, the SENTIRE Discovery Set was designed not as sample packaging, but as a luxury keepsake flacon collection.
               </p>
 
-              {/* Price block */}
-              <div className="flex items-baseline gap-3 pb-5 border-b border-black/10 mb-5">
-                <span className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D]">
-                  ₹{(549 * quantity).toLocaleString()}
-                </span>
-                <span className="text-sm text-[#14110D]/40 line-through">
-                  ₹{(2400 * quantity).toLocaleString()}
-                </span>
-                <span className="bg-[#EAF5EC] text-[#248232] px-2.5 py-0.5 rounded-full text-xs font-bold">
-                  Save ₹{(1851 * quantity).toLocaleString()} (77% Off)
-                </span>
-              </div>
-
-              {/* Checklist */}
-              <ul className="space-y-2.5 text-xs sm:text-sm text-[#14110D]/85 mb-6">
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B8863B] font-bold">✓</span>
-                  <span><strong>All 6 Signature Extraits:</strong> Calantha, Mirai, Purple Oud, Seductive, Deep Crush, Rich</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B8863B] font-bold">✓</span>
-                  <span><strong>₹1,000 Physical Gift Certificate:</strong> Redeemable toward any full 50ml flacon</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#B8863B] font-bold">✓</span>
-                  <span><strong>35% Pure Oil Extrait Formulation:</strong> 12–14 Hours Long-Lasting Sillage</span>
-                </li>
-              </ul>
-
-              {/* Quantity and Actions */}
-              <div className="space-y-3.5">
-                <div className="flex items-center gap-3">
-                  {/* Quantity */}
-                  <div className="flex items-center border border-black/15 rounded-full px-3 py-2.5 bg-[#FAF8F5]">
-                    <button
-                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
-                    >
-                      &minus;
-                    </button>
-                    <span className="text-sm font-bold px-3">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity((q) => q + 1)}
-                      className="text-sm font-bold px-2 hover:text-[#B8863B] cursor-pointer"
-                    >
-                      &#43;
-                    </button>
+              <div className="space-y-4 pt-2">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#c89b5a]/20 text-[#d4af37] flex items-center justify-center font-bold text-xs shrink-0">
+                    1
                   </div>
-
-                  {/* Add to Bag Button */}
-                  <motion.button
-                    whileTap={{ scale: 0.96 }}
-                    whileHover={{ y: -1 }}
-                    onClick={handleAcquire}
-                    className="flex-1 py-3.5 bg-[#14110D] hover:bg-[#B8863B] active:bg-[#B8863B] text-[#FAF8F5] text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-lg transition-colors cursor-pointer text-center"
-                  >
-                    ADD TO BAG &bull; ₹{(549 * quantity).toLocaleString()}
-                  </motion.button>
+                  <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                      Stepped Tiered Architecture
+                    </h4>
+                    <p className="text-xs text-white/70 mt-0.5">
+                      Each 6ML vial rests in an elevated staircase tray, allowing you to view all six bottles simultaneously the instant you flip the case open.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Express Checkout Button */}
-                <motion.button
-                  whileTap={{ scale: 0.96 }}
-                  whileHover={{ y: -1 }}
-                  onClick={handleDirectCheckout}
-                  className="w-full py-3.5 bg-gradient-to-r from-[#C89B5A] to-[#B8863B] hover:from-[#B8863B] hover:to-[#9B702B] text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] rounded-full shadow-xl transition-all cursor-pointer text-center"
-                >
-                  EXPRESS CHECKOUT (COD / UPI) &rarr;
-                </motion.button>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#c89b5a]/20 text-[#d4af37] flex items-center justify-center font-bold text-xs shrink-0">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                      Oxblood Velvet Interior
+                    </h4>
+                    <p className="text-xs text-white/70 mt-0.5">
+                      Deep burgundy velvet lining cushions the glass vials against vibration and shock, preserving the concentrated perfume oils during flights and commute.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#c89b5a]/20 text-[#d4af37] flex items-center justify-center font-bold text-xs shrink-0">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider">
+                      Included Scent-Map Guide Card
+                    </h4>
+                    <p className="text-xs text-white/70 mt-0.5">
+                      An embossed heavy-stock card tucked into the lid guides your journey through olfactory families, notes pyramids, and compliment profiles.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Guarantees */}
-              <div className="grid grid-cols-3 gap-1.5 text-center text-[9.5px] sm:text-[10px] text-[#14110D]/60 mt-5 pt-4 border-t border-black/8 font-medium">
-                <div>✓ Free Express Shipping</div>
-                <div>✓ Cash on Delivery (COD)</div>
-                <div>✓ Net ₹99 Discovery</div>
+              <div className="pt-4">
+                <button
+                  onClick={handleAddToCart}
+                  className="py-3.5 px-8 rounded-xl bg-[#c89b5a] text-[#0b0907] font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#d4af37] transition-all cursor-pointer shadow-lg active:scale-95"
+                >
+                  Acquire the Set — ₹549
+                </button>
               </div>
             </div>
           </div>
-        </motion.div>
-      </section>
-
-      {/* ================= SECTION 5: 4D SCENT AURA & TIME CHRONOMETER ================= */}
-      <section className="py-20 px-6 sm:px-12 lg:px-16 bg-gradient-to-b from-[#FAF7F0] via-[#F5EFE4] to-[#EFE5D4] border-t border-black/8" id="aura-oracle">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeInUp}
-            className="text-center max-w-[720px] mx-auto mb-12"
-          >
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.28em] text-[#B8863B] block mb-2">
-              4-Dimensional Olfactory Calibration
-            </span>
-            <h2 className="font-cormorant text-4xl sm:text-5xl md:text-6xl font-normal text-[#14110D] mb-4">
-              The Scent Aura &bull; <i className="font-cormorant italic text-[#B8863B]">Time Chronometer</i>
-            </h2>
-            <p className="text-sm sm:text-base text-[#14110D]/75 max-w-lg mx-auto">
-              Calibrate your four instinctual vectors &mdash; Walking Pace, Atmosphere, Time Clock, and Signature Energy &mdash; to reveal which of the six extraits claims your aura.
-            </p>
-          </motion.div>
-
-          {/* 4 Vectors Grid (2x2 Grid on Mobile, 4-Cols on Desktop) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12"
-          >
-            {/* Vector 1 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
-              <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector I</span>
-              <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Walking Pace</div>
-              {[
-                "Slow & Unhurried",
-                "Crisp & Purposeful",
-                "Commanding & Heavy"
-              ].map((opt, i) => (
-                <motion.button
-                  key={i}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setVectors((v) => ({ ...v, pace: i }))}
-                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
-                    vectors.pace === i
-                      ? "bg-[#14110D] text-white shadow-md"
-                      : "bg-[#FAF8F5] text-[#14110D]/70 hover:bg-[#B8863B]/10 hover:text-[#14110D] border border-black/5"
-                  }`}
-                >
-                  {opt}
-                </motion.button>
-              ))}
-            </motion.div>
-
-            {/* Vector 2 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
-              <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector II</span>
-              <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Atmosphere</div>
-              {[
-                "Rain on Polished Stone",
-                "Warm Sunlit Linen",
-                "Velvet & Candlelight"
-              ].map((opt, i) => (
-                <motion.button
-                  key={i}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setVectors((v) => ({ ...v, atmos: i }))}
-                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
-                    vectors.atmos === i
-                      ? "bg-[#14110D] text-white shadow-md"
-                      : "bg-[#FAF8F5] text-[#14110D]/70 hover:bg-[#B8863B]/10 hover:text-[#14110D] border border-black/5"
-                  }`}
-                >
-                  {opt}
-                </motion.button>
-              ))}
-            </motion.div>
-
-            {/* Vector 3 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
-              <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector III</span>
-              <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Time Clock</div>
-              {[
-                "08:00 AM • Pristine Dawn",
-                "02:00 PM • High Focus",
-                "11:30 PM • Deep Midnight"
-              ].map((opt, i) => (
-                <motion.button
-                  key={i}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setVectors((v) => ({ ...v, time: i }))}
-                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
-                    vectors.time === i
-                      ? "bg-[#14110D] text-white shadow-md"
-                      : "bg-[#FAF8F5] text-[#14110D]/70 hover:bg-[#B8863B]/10 hover:text-[#14110D] border border-black/5"
-                  }`}
-                >
-                  {opt}
-                </motion.button>
-              ))}
-            </motion.div>
-
-            {/* Vector 4 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-[#B8863B]/25 rounded-2xl p-5 shadow-sm">
-              <span className="text-[9px] uppercase tracking-widest text-[#B8863B] font-bold block mb-1">Vector IV</span>
-              <div className="font-cormorant text-lg text-[#14110D] font-bold mb-3">Signature Energy</div>
-              {[
-                "Silent Magnetism",
-                "Luminous Radiance",
-                "Dangerous Allure"
-              ].map((opt, i) => (
-                <motion.button
-                  key={i}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setVectors((v) => ({ ...v, energy: i }))}
-                  className={`w-full py-2.5 px-3 rounded-lg text-xs font-semibold mb-2 text-left transition-all cursor-pointer ${
-                    vectors.energy === i
-                      ? "bg-[#14110D] text-white shadow-md"
-                      : "bg-[#FAF8F5] text-[#14110D]/70 hover:bg-[#B8863B]/10 hover:text-[#14110D] border border-black/5"
-                  }`}
-                >
-                  {opt}
-                </motion.button>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* Oracle Stage Match Card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={matchedScentIdx}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4 }}
-              className="bg-white border border-[#B8863B]/30 rounded-3xl p-8 sm:p-12 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-            >
-              {/* Left: Matched Product Image */}
-              <div className="lg:col-span-5 relative aspect-square rounded-2xl overflow-hidden shadow-lg border border-[#B8863B]/30 bg-[#FAF8F5]">
-                <img
-                  src={matchedOccasion.img}
-                  alt={`Matched Extrait: ${matchedScent.name}`}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 right-4 bg-[#14110D]/90 backdrop-blur-md text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#B8863B]/40">
-                  98% Resonant
-                </div>
-              </div>
-
-              {/* Right: Synthesis Narrative */}
-              <div className="lg:col-span-7">
-                <span className="text-[10px] uppercase tracking-[0.24em] text-[#B8863B] font-bold block mb-2">
-                  Calibration Confirmed &bull; Vector Synthesis
-                </span>
-                <h3 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#14110D] mb-1">
-                  {matchedScent.name}
-                </h3>
-                <span className="text-xs sm:text-sm text-[#14110D]/70 font-semibold block mb-4">
-                  {matchedScent.tagline} &bull; {matchedScent.moodDay}
-                </span>
-
-                <p className="text-sm sm:text-base text-[#14110D]/85 italic pl-4 border-l-2 border-[#B8863B] mb-6 leading-relaxed">
-                  {matchedScent.auraQuote}
-                </p>
-
-                <div className="grid grid-cols-3 gap-3 border-y border-black/10 py-3 mb-6">
-                  <div>
-                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Primary Note</span>
-                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.stage1Name.split('&')[0]}</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Projection</span>
-                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.projection.split('(')[0]}</span>
-                  </div>
-                  <div>
-                    <span className="text-[9px] uppercase tracking-widest text-black/50 block font-semibold">Longevity</span>
-                    <span className="text-xs font-bold text-[#14110D]">{matchedScent.longevity}</span>
-                  </div>
-                </div>
-
-                <motion.button
-                  whileTap={{ scale: 0.96 }}
-                  whileHover={{ y: -1 }}
-                  onClick={() => scrollToSection("acquire-coffret")}
-                  className="w-full sm:w-auto px-8 py-4 bg-[#C89B5A] hover:bg-[#B8863B] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md transition-colors cursor-pointer"
-                >
-                  CLAIM IN DISCOVERY SET (₹549) &rarr;
-                </motion.button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
       </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: CUSTOMER REVIEWS & UNBOXING LOVE
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#faf6f0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#c89b5a] font-extrabold">
+              Real Impressions
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#19140f]">
+              Loved by Scent Connoisseurs
+            </h2>
+            <p className="text-xs sm:text-sm text-[#19140f]/70">
+              Verified buyers on skin chemistry, projection, and the 6ML format.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-white border border-[#e5dccd] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center text-[#c89b5a] text-xs">
+                  ★★★★★
+                </div>
+                <p className="text-sm font-serif italic text-[#19140f]/90 mt-3 leading-relaxed">
+                  “The 6ML size is pure genius. I wore Purple Oud to an evening event and received three separate compliment inquiries. I bought the 50ML flacon the next morning!”
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-[#f0e8dc] flex items-center justify-between text-xs">
+                <span className="font-bold text-[#19140f]">Aarav M.</span>
+                <span className="text-emerald-700 font-medium">✓ Verified Buyer</span>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white border border-[#e5dccd] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center text-[#c89b5a] text-xs">
+                  ★★★★★
+                </div>
+                <p className="text-sm font-serif italic text-[#19140f]/90 mt-3 leading-relaxed">
+                  “The box warning says ‘The COOLEST Thing SOMEBODY can OWN’ and honestly it’s not exaggerating. The matte black case and oxblood interior look incredible on my vanity.”
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-[#f0e8dc] flex items-center justify-between text-xs">
+                <span className="font-bold text-[#19140f]">Rhea K.</span>
+                <span className="text-emerald-700 font-medium">✓ Verified Buyer</span>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white border border-[#e5dccd] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center text-[#c89b5a] text-xs">
+                  ★★★★★
+                </div>
+                <p className="text-sm font-serif italic text-[#19140f]/90 mt-3 leading-relaxed">
+                  “Layering MIRAI with Seductive gives you this insane warm spiced cocoa aroma that lasts till the morning after. For ₹549 this is without question the best discovery set in India.”
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-[#f0e8dc] flex items-center justify-between text-xs">
+                <span className="font-bold text-[#19140f]">Kabir S.</span>
+                <span className="text-emerald-700 font-medium">✓ Verified Buyer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          SECTION: FAQ ACCORDION
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-[#f4ece1] border-t border-[#c89b5a]/20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center space-y-2 mb-12">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#c89b5a] font-extrabold">
+              Curated Answers
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#19140f]">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {FAQS.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl bg-white border border-[#e2d7c7] overflow-hidden transition-all shadow-xs"
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    className="w-full px-6 py-4 text-left flex items-center justify-between text-sm sm:text-base font-serif font-bold text-[#19140f] hover:text-[#c89b5a] transition-colors cursor-pointer"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="text-lg font-mono text-[#c89b5a] ml-4">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-6 pb-5 text-xs sm:text-sm text-[#19140f]/80 leading-relaxed border-t border-[#f5ede2] pt-3 font-sans">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          BOTTOM CALL TO ACTION BANNER
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 bg-[#0b0907] text-white text-center relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 space-y-6 relative z-10">
+          <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.28em] font-extrabold bg-[#c89b5a]/20 text-[#d4af37] border border-[#c89b5a]/40">
+            36ML · 6 TRAVEL SPRAYS · ₹549
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-serif">
+            Find the Scent That Belongs to Your Skin.
+          </h2>
+          <p className="text-sm sm:text-base font-serif italic text-white/80 max-w-xl mx-auto">
+            Six distinct olfactory identities in fine-mist travel vials. Dispatched within 24 hours with express courier tracking across India.
+          </p>
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            <button
+              onClick={handleAddToCart}
+              className="py-4 px-8 rounded-xl bg-[#c89b5a] hover:bg-[#d4af37] text-[#0b0907] font-bold text-xs uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 cursor-pointer"
+            >
+              Add To Cart — ₹549
+            </button>
+            <button
+              onClick={() => onNavigate?.("perfumes")}
+              className="py-4 px-8 rounded-xl bg-transparent border border-white/30 hover:border-[#c89b5a] text-white font-bold text-xs uppercase tracking-[0.2em] transition-all cursor-pointer"
+            >
+              Explore Full 50ML Bottles
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          STICKY MOBILE PURCHASE BAR (Appears on Scroll)
+      ───────────────────────────────────────────────────────────── */}
+      {showStickyBar && (
+        <div className="fixed bottom-0 inset-x-0 z-40 bg-[#0b0907]/95 backdrop-blur-xl border-t border-[#c89b5a]/40 p-3 sm:p-4 text-white shadow-2xl transition-all animate-fadeIn">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <img
+                src="/images/discovery-set/box-front.jpg"
+                alt="Discovery Set"
+                className="w-10 h-10 object-contain rounded-lg bg-[#1a1410] border border-[#c89b5a]/30 shrink-0"
+              />
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm font-serif font-bold text-white truncate">
+                  SENTIRE Discovery Set
+                </p>
+                <p className="text-[10px] text-[#d4af37] font-mono truncate">
+                  6 × 6ML · ₹549 (Save 45%)
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleAddToCart}
+                className="py-2.5 px-5 rounded-xl bg-[#c89b5a] hover:bg-[#d4af37] text-[#0b0907] font-bold text-xs uppercase tracking-[0.16em] transition-all shadow-md active:scale-95 cursor-pointer flex items-center gap-1.5"
+              >
+                <span>Add to Cart</span>
+                <span className="hidden sm:inline">· ₹549</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

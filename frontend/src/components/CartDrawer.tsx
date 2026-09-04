@@ -634,7 +634,9 @@ export default function CartDrawer({
                                 marginBottom: "6px",
                               }}
                             >
-                              Eau de Parfum&nbsp;·&nbsp;{item.size}&nbsp;ML
+                              {item.productId === "discovery-set" || item.name?.toLowerCase().includes("discovery set")
+                                ? "Discovery Set · 6 × 6 ML (36 ML)"
+                                : `Eau de Parfum · ${item.size} ML`}
                             </p>
 
                             {/* Price */}

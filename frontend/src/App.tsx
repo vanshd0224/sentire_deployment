@@ -22,6 +22,7 @@ import AboutPage from "./components/AboutPage";
 import ByobPage from "./components/ByobPage";
 import DiscoverySetPage from "./components/DiscoverySetPage";
 import PersonalisationPage from "./components/PersonalisationPage";
+import DiscoverySetPage from "./components/DiscoverySetPage";
 import CartDrawer, { CartItem } from "./components/CartDrawer";
 import MobileBottomNav from "./components/MobileBottomNav";
 import AccountDrawerModal from "./components/AccountDrawerModal";
@@ -49,6 +50,7 @@ export default function App() {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
+    if (hash === "#discovery-set" || path.includes("discovery-set") || hash === "#discoveryset" || path.includes("discoveryset")) return "discovery-set";
     if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
     if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";
     if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "perfumes";
@@ -143,6 +145,7 @@ export default function App() {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
       if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
+      else if (hash === "#discovery-set" || popPath.includes("discovery-set") || hash === "#discoveryset" || popPath.includes("discoveryset")) setCurrentPage("discovery-set");
       else if (hash === "#about" || popPath.includes("about") || popPath.includes("extrait-de-parfum") || popPath.includes("35-percent")) setCurrentPage("about");
       else if (hash === "#byob" || popPath.includes("byob") || popPath.includes("build-your-own-bundle")) setCurrentPage("byob");
       else if (hash === "#personalisation" || popPath.includes("personalisation") || popPath.includes("personalised-perfume")) setCurrentPage("personalisation");
@@ -322,6 +325,13 @@ export default function App() {
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => setIsCartOpen(true)}
+        />
+      ) : currentPage === "discovery-set" ? (
+        <DiscoverySetPage
+          onBackToHome={() => handleNavigate("home")}
+          onAddToCart={handleAddToCart}
+          onOpenCart={() => setIsCartOpen(true)}
+          onNavigate={handleNavigate}
         />
       ) : currentPage === "about" ? (
         <AboutPage
