@@ -175,10 +175,10 @@ export default function Hero({ onNavigate }: HeroProps) {
           FULL-BLEED PHOTOGRAPHIC JANMASHTAMI HERO BACKGROUND (DESKTOP)
           ═════════════════════════════════════════════════════════════════ */}
       <picture className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
-        <source srcSet="/images/hero-krishna-desktop.webp" type="image/webp" />
-        <source srcSet="/images/hero-krishna-desktop.png" type="image/png" />
+        <source srcSet="/images/hero-krishna-desktop.webp?v=v2_clean" type="image/webp" />
+        <source srcSet="/images/hero-krishna-desktop.png?v=v2_clean" type="image/png" />
         <img
-          src="/images/hero-krishna-desktop.png"
+          src="/images/hero-krishna-desktop.png?v=v2_clean"
           alt="SENTIRE By PC Janmashtami Luxury Perfume Collection"
           fetchPriority="high"
           width="1672"
@@ -385,10 +385,10 @@ export default function Hero({ onNavigate }: HeroProps) {
       >
         {/* Clean Photographic Still-Life Background Plate */}
         <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
-          <source srcSet="/images/mobile-hero-krishna.webp" type="image/webp" />
-          <source srcSet="/images/mobile-hero-krishna.png" type="image/png" />
+          <source srcSet="/images/mobile-hero-krishna.webp?v=v2_clean" type="image/webp" />
+          <source srcSet="/images/mobile-hero-krishna.png?v=v2_clean" type="image/png" />
           <img
-            src="/images/mobile-hero-krishna.png"
+            src="/images/mobile-hero-krishna.png?v=v2_clean"
             alt="SENTIRE By PC Janmashtami Luxury Fragrance Mobile Collection"
             fetchPriority="high"
             width="941"
