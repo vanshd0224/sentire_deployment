@@ -282,6 +282,9 @@ export default function DiscoverySetPage({
           <img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-contain filter brightness-[1.01] contrast-[1.01]"
           />
         </div>
@@ -334,6 +337,9 @@ export default function DiscoverySetPage({
           <img
             src="/discovery_hero_cover.jpg"
             alt="Sentire 6-Flacon Luxury Discovery Coffret with Matte Black Box and Golden Amber Accents"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover object-[center_35%] filter brightness-[1.02] contrast-[1.01]"
           />
           {/* Editorial Silk Vignette */}
@@ -872,6 +878,9 @@ export default function DiscoverySetPage({
               <img
                 src={matchedOccasion.img}
                 alt={`Matched Extrait: ${matchedScent.name}`}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-4 right-4 bg-[#14110D]/90 backdrop-blur-md text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#B8863B]/40">
@@ -914,7 +923,7 @@ export default function DiscoverySetPage({
                 onClick={() => scrollToSection("acquire-coffret")}
                 className="w-full sm:w-auto px-8 py-4 bg-[#C89B5A] hover:bg-[#B8863B] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md transition-all cursor-pointer"
               >
-                CLAIM IN DISCOVERY SET (₹1,099) &rarr;
+                CLAIM IN DISCOVERY SET (₹549) &rarr;
               </button>
             </div>
           </div>
