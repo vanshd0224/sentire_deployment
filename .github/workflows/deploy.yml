@@ -9,7 +9,6 @@ concurrency:
   group: cloud-run-${{ github.ref }}
   cancel-in-progress: true
 
-
 jobs:
   deploy-backend:
     name: Deploy Backend to Cloud Run
@@ -26,18 +25,26 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Configure Docker for Artifact Registry
         run: |
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud artifacts repositories create ecommerce-backend-repo --repository-format=docker --location=asia-south1 --quiet || true
           gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
 
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest ./backend
-          docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest
+      - name: Build and Push Backend Docker Image with Buildx Cache
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
 
-      - name: Deploy to Cloud Run
+      - name: Deploy Backend to Cloud Run
         run: |
           gcloud run deploy ecommerce-backend \
             --image asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest \
@@ -62,38 +69,48 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Configure Docker for Artifact Registry
         run: |
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud artifacts repositories create ecommerce-frontend-repo --repository-format=docker --location=asia-south1 --quiet || true
           gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet
 
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-frontend-repo/ecommerce-frontend:latest ./frontend
-          docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-frontend-repo/ecommerce-frontend:latest
+      - name: Build and Push Frontend Docker Image with Buildx Cache
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-frontend-repo/ecommerce-frontend:latest
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
 
-      - name: Deploy to Cloud Run
+      - name: Deploy Frontend to Cloud Run
         run: |
           gcloud run deploy ecommerce-frontend \
             --image asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-frontend-repo/ecommerce-frontend:latest \
             --region asia-south1 \
             --min-instances=1 \
             --allow-unauthenticated \
-            --port 8080
+            --port 8080 \
+            --quiet
 
-      - name: Setup Node.js for Firebase Build
+      - name: Setup Node.js with Cache for Firebase
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
-      - name: Build Frontend Assets
+      - name: Build Frontend Assets for Firebase
         run: |
           cd frontend
-          npm ci || npm install
+          npm ci
           npm run build
 
-      # Deploy to Firebase Hosting Live Domain (Non-blocking edge CDN sync)
       - name: Deploy to Firebase Hosting Live Domain
         continue-on-error: true
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -102,5 +119,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
           channelId: live
           projectId: sentire-perfumes
-
-# Trigger clean dev deployment
