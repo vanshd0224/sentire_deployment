@@ -544,11 +544,11 @@ export default function DiscoverySetPage({
                       }`}
                       title={frag.name}
                     >
-                      <div className="w-full aspect-[1/2] flex items-center justify-center overflow-hidden">
+                      <div className="w-full aspect-[3/4] flex items-center justify-center overflow-hidden rounded-lg">
                         <img
                           src={frag.img}
                           alt={frag.name}
-                          className="h-full object-contain group-hover:scale-105 transition-transform"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                         />
                       </div>
                       <span className="text-[9px] font-bold text-center truncate w-full mt-1 text-[#19140f]">
@@ -818,11 +818,11 @@ export default function DiscoverySetPage({
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-14 aspect-[1/2] shrink-0 bg-black/40 rounded-lg p-1 flex items-center justify-center">
+                  <div className="w-14 aspect-[3/4] shrink-0 bg-black/40 rounded-lg overflow-hidden flex items-center justify-center">
                     <img
                       src={frag.img}
                       alt={frag.name}
-                      className="h-full object-contain"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
