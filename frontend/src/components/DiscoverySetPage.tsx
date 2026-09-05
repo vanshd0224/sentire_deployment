@@ -21,7 +21,7 @@ const BOX_ANGLES = [
     id: "warning",
     label: "The Manifesto",
     tagline: "“The COOLEST Thing SOMEBODY can OWN”",
-    img: "/discovery/box_manifesto.jpg?v=v8_4k_crisp",
+    img: "/discovery/box_manifesto.jpg?v=v9_no_star",
     desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
   },
   {
