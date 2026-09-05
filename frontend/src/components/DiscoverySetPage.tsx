@@ -14,35 +14,35 @@ const BOX_ANGLES = [
     id: "front",
     label: "Case Front",
     tagline: "SENTIRE DISCOVERY SET · 6 ML × 6",
-    img: "/discovery/box_case_front.jpg?v=photoshoot_box_v7",
+    img: "/discovery/box_case_front.jpg?v=v8_4k_crisp",
     desc: "Matte black flip-top case with gold hot-stamped emblem and stepped interior architecture.",
   },
   {
     id: "warning",
     label: "The Manifesto",
     tagline: "“The COOLEST Thing SOMEBODY can OWN”",
-    img: "/discovery/box_manifesto.jpg?v=photoshoot_box_v7",
+    img: "/discovery/box_manifesto.jpg?v=v8_4k_crisp",
     desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
   },
   {
     id: "rare",
     label: "Side Profile",
     tagline: "IRRESISTIBLY RARE",
-    img: "/discovery/box_side_profile.jpg?v=photoshoot_box_v7",
+    img: "/discovery/box_side_profile.jpg?v=v8_4k_crisp",
     desc: "Precision angled silhouette engineered for smooth one-hand flip opening.",
   },
   {
     id: "top",
     label: "Crest Monogram",
     tagline: "PC EMBLEM OF HAUTE PARFUMERIE",
-    img: "/discovery/box_crest_monogram.jpg?v=photoshoot_box_v7",
+    img: "/discovery/box_crest_monogram.jpg?v=v8_4k_crisp",
     desc: "Hand-finished cursive PC seal in reflective metallic gold on deep matte noir.",
   },
   {
     id: "minimal",
     label: "Tailored Case",
     tagline: "MINIMALIST LUXURY SILHOUETTE",
-    img: "/discovery/box_tailored_case.jpg?v=photoshoot_box_v7",
+    img: "/discovery/box_tailored_case.jpg?v=v8_4k_crisp",
     desc: "Compact dimensions tailored to fit evening clutches, breast pockets, and carry-ons without spilling a drop.",
   },
 ];
@@ -364,9 +364,7 @@ export default function DiscoverySetPage({
           {/* LEFT: Product Photography Suite (7 cols) */}
           <div className="lg:col-span-7 space-y-5">
             {/* Main Stage Display */}
-            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] w-full bg-gradient-to-b from-[#f3eee7] via-[#ede6dd] to-[#e4dcce] rounded-2xl overflow-hidden border border-[#c89b5a]/25 shadow-[0_25px_60px_-15px_rgba(25,20,15,0.18)] group">
-              {/* Luxury gold watermarks & backdrop accents */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.8),transparent_70%)] pointer-events-none" />
+            <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] w-full bg-[#0b0907] rounded-2xl overflow-hidden border border-[#c89b5a]/30 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] group">
               <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
                 <span className="px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.2em] font-extrabold bg-[#0b0907] text-[#d4af37] border border-[#c89b5a]/40 shadow-sm">
                   ★ Hero Flagship
