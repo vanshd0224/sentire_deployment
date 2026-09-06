@@ -469,7 +469,12 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                       <div className="pt-2 border-t border-[#ece7de] flex items-center justify-between">
                         <span className="text-[11px] text-[#777777]">Shipped via Express Courier</span>
                         <button
-                          onClick={() => onNavigate("track-order")}
+                          onClick={() => {
+                            if (ord.orderNumber || ord.id) {
+                              localStorage.setItem("sentire_active_track_query", ord.orderNumber || ord.id);
+                            }
+                            onNavigate("track-order");
+                          }}
                           className="text-xs font-semibold text-[#c89b5a] hover:underline cursor-pointer flex items-center gap-1"
                         >
                           Track Order Details &rarr;

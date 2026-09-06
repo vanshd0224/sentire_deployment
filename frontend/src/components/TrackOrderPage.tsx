@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface TrackOrderPageProps {
   onBackToHome?: () => void;
@@ -24,30 +24,93 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
   const [searched, setSearched] = useState(false);
   const [orderResult, setOrderResult] = useState<OrderStatusResult | null>(null);
 
-  const handleTrackSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!orderQuery.trim()) return;
+  const performTrackingSearch = (queryStr: string) => {
+    if (!queryStr.trim()) return;
 
     setIsSearching(true);
+    const cleanQuery = queryStr.trim().toUpperCase();
+
+    // 1. Fetch user orders from localStorage (user specific + generic)
+    let allOrders: any[] = [];
+    try {
+      const generic = localStorage.getItem("sentire_user_orders");
+      if (generic) allOrders = [...allOrders, ...JSON.parse(generic)];
+      
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith("sentire_orders_")) {
+          const val = localStorage.getItem(key);
+          if (val) {
+            const parsed = JSON.parse(val);
+            if (Array.isArray(parsed)) allOrders = [...allOrders, ...parsed];
+          }
+        }
+      }
+    } catch (e) {}
+
+    // Find order matching number or ID
+    const foundOrder = allOrders.find((o: any) => {
+      const num = String(o.orderNumber || o.id || "").toUpperCase();
+      return num === cleanQuery || num.endsWith(cleanQuery) || cleanQuery.endsWith(num);
+    });
+
     setTimeout(() => {
       setIsSearching(false);
       setSearched(true);
-      // Demo verified tracking result matching Sentire Extrait de Parfum workflow
-      setOrderResult({
-        orderNumber: orderQuery.toUpperCase().startsWith("SNT-") ? orderQuery.toUpperCase() : `SNT-${orderQuery.toUpperCase()}`,
-        customerName: "Valued Sentire Client",
-        status: "dispatched",
-        statusText: "In Transit — Extrait de Parfum Formulated & Dispatched",
-        date: "12 August 2026",
-        estimatedDelivery: "15 August 2026",
-        courier: "Bluedart Luxury Express",
-        awb: "BLU-884920194",
-        items: [
-          { name: "White Oud", size: "50 ml Extrait de Parfum", quantity: 1, price: 2499, img: "/assets/white-oud.png" },
-          { name: "Calantha", size: "30 ml Extrait de Parfum", quantity: 1, price: 1499, img: "/assets/calantha.png" },
-        ],
-      });
-    }, 600);
+
+      const todayStr = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+      const estArrival = new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+
+      if (foundOrder && foundOrder.items && foundOrder.items.length > 0) {
+        setOrderResult({
+          orderNumber: foundOrder.orderNumber || foundOrder.id,
+          customerName: localStorage.getItem("sentire_user_name") || "Valued Sentire Client",
+          status: "dispatched",
+          statusText: "In Transit — Extrait de Parfum Formulated & Dispatched",
+          date: foundOrder.date || todayStr,
+          estimatedDelivery: estArrival,
+          courier: "Bluedart Luxury Express",
+          awb: `BLU-${Math.floor(100000000 + Math.random() * 900000000)}`,
+          items: foundOrder.items.map((it: any) => ({
+            name: it.name,
+            size: it.size ? (String(it.size).includes("ml") ? String(it.size) : `${it.size} ml Extrait de Parfum`) : "50 ml Extrait de Parfum",
+            quantity: it.quantity || 1,
+            price: it.price || 1489,
+            img: it.img || it.image || "/assets/white-oud.png"
+          }))
+        });
+      } else {
+        const orderNum = cleanQuery.startsWith("SNT-") ? cleanQuery : `SNT-${cleanQuery}`;
+
+        setOrderResult({
+          orderNumber: orderNum,
+          customerName: localStorage.getItem("sentire_user_name") || "Valued Sentire Client",
+          status: "dispatched",
+          statusText: "In Transit — Extrait de Parfum Formulated & Dispatched",
+          date: todayStr,
+          estimatedDelivery: estArrival,
+          courier: "Bluedart Luxury Express",
+          awb: `BLU-${Math.floor(100000000 + Math.random() * 900000000)}`,
+          items: [
+            { name: "Sentire Luxury Extrait de Parfum", size: "30 ml Voyage Flacon", quantity: 1, price: 1489, img: "/assets/white-oud.png" }
+          ]
+        });
+      }
+    }, 400);
+  };
+
+  useEffect(() => {
+    const activeQuery = localStorage.getItem("sentire_active_track_query");
+    if (activeQuery) {
+      localStorage.removeItem("sentire_active_track_query");
+      setOrderQuery(activeQuery);
+      performTrackingSearch(activeQuery);
+    }
+  }, []);
+
+  const handleTrackSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    performTrackingSearch(orderQuery);
   };
 
   return (
