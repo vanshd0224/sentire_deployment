@@ -109,8 +109,27 @@ export default function Navbar({
   const [internalSearchOpen, setInternalSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [cartPop, setCartPop] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const updateAuth = () => {
+      const logged = localStorage.getItem("sentire_is_logged_in") === "true";
+      const rawName = localStorage.getItem("sentire_user_name") || "";
+      setIsLoggedIn(logged);
+      setUserName(rawName.startsWith("+") ? "" : rawName);
+    };
+
+    updateAuth();
+    window.addEventListener("storage", updateAuth);
+    const interval = setInterval(updateAuth, 1000);
+    return () => {
+      window.removeEventListener("storage", updateAuth);
+      clearInterval(interval);
+    };
+  }, [mobileNavOpen]);
 
   const searchOpen = isSearchOpen !== undefined ? isSearchOpen : internalSearchOpen;
   const setSearchOpen = (val: boolean) => {
@@ -757,9 +776,16 @@ export default function Navbar({
                   setMobileNavOpen(false);
                   onOpenAccount?.();
                 }}
-                className="w-full py-3 bg-[#0b0907] text-[#d4af37] text-xs font-bold uppercase tracking-widest rounded-lg transition-all"
+                className="w-full py-3.5 bg-[#0b0907] hover:bg-[#c89b5a] text-[#d4af37] text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#c89b5a]/30"
               >
-                Sign In / My Account
+                {isLoggedIn ? (
+                  <>
+                    <span>👤 MY ACCOUNT {userName ? `(${userName.toUpperCase()})` : ""}</span>
+                    <span className="text-xs text-[#c89b5a]">&rarr;</span>
+                  </>
+                ) : (
+                  <span>SIGN IN / MY ACCOUNT</span>
+                )}
               </button>
               <p className="text-center text-[10px] text-ink/40 uppercase tracking-widest pt-2">
                 Born in Heaven, Worn on Earth
