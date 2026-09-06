@@ -54,11 +54,30 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     pincode: "",
   });
 
-  // User Orders State
-  const [userOrders, setUserOrders] = useState<any[]>(() => {
+  // Helper to load and sync orders from pending checkout snapshot
+  const loadAndSyncUserOrders = () => {
+    let currentOrders: any[] = [];
     const saved = localStorage.getItem("sentire_user_orders");
-    return saved ? JSON.parse(saved) : [];
-  });
+    if (saved) {
+      try { currentOrders = JSON.parse(saved); } catch (e) {}
+    }
+
+    const pendingSnapshot = localStorage.getItem("sentire_pending_checkout_order");
+    if (pendingSnapshot) {
+      try {
+        const newOrd = JSON.parse(pendingSnapshot);
+        localStorage.removeItem("sentire_pending_checkout_order");
+        if (!currentOrders.some((o: any) => o.id === newOrd.id)) {
+          currentOrders = [newOrd, ...currentOrders];
+          localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
+        }
+      } catch (e) {}
+    }
+    return currentOrders;
+  };
+
+  // User Orders State
+  const [userOrders, setUserOrders] = useState<any[]>(loadAndSyncUserOrders);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -75,11 +94,9 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
         email: email,
       });
 
-      // Reload orders from localStorage
-      const savedOrders = localStorage.getItem("sentire_user_orders");
-      if (savedOrders) {
-        try { setUserOrders(JSON.parse(savedOrders)); } catch (e) {}
-      }
+      // Reload & sync pending checkout orders
+      const synced = loadAndSyncUserOrders();
+      setUserOrders(synced);
     });
     return () => unsub();
   }, []);

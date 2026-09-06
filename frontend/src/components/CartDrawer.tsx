@@ -901,6 +901,25 @@ export default function CartDrawer({
                 const userEmail = currentUser?.email || localStorage.getItem("sentire_user_email") || undefined;
                 const userPhone = currentUser?.phoneNumber || localStorage.getItem("sentire_user_phone") || undefined;
 
+                // Save snapshot of order to register under user's Account upon return from Shopify
+                try {
+                  const pendingOrder = {
+                    id: `SNT-${Math.floor(10000 + Math.random() * 90000)}`,
+                    orderNumber: `SNT-${Math.floor(10000 + Math.random() * 90000)}`,
+                    date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+                    status: "Confirmed",
+                    total: finalTotal,
+                    items: items.map((i) => ({
+                      name: i.name,
+                      size: `${i.size}`,
+                      quantity: i.quantity,
+                      price: i.price,
+                      img: i.img || i.image,
+                    })),
+                  };
+                  localStorage.setItem("sentire_pending_checkout_order", JSON.stringify(pendingOrder));
+                } catch (e) {}
+
                 const winRef = window;
                 createOrGetShopifyCheckoutUrl(items, appliedCoupon || undefined, userEmail, userPhone)
                   .then((checkoutUrl) => {
