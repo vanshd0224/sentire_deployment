@@ -54,12 +54,27 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     pincode: "",
   });
 
-  // Helper to load and sync orders from pending checkout snapshot
-  const loadAndSyncUserOrders = () => {
+  // Helper to resolve unique account storage key for orders
+  const getUserOrdersKey = (phone?: string, email?: string) => {
+    const currentPhone = phone || localStorage.getItem("sentire_user_phone") || auth.currentUser?.phoneNumber || "";
+    const currentEmail = email || localStorage.getItem("sentire_user_email") || auth.currentUser?.email || "";
+    const id = currentPhone || currentEmail || auth.currentUser?.uid || "user";
+    return `sentire_orders_${id.replace(/[^\w]/g, "_")}`;
+  };
+
+  // Helper to load and sync orders from pending checkout snapshot and account key
+  const loadAndSyncUserOrders = (phone?: string, email?: string) => {
     let currentOrders: any[] = [];
-    const saved = localStorage.getItem("sentire_user_orders");
-    if (saved) {
-      try { currentOrders = JSON.parse(saved); } catch (e) {}
+    const specificKey = getUserOrdersKey(phone, email);
+
+    // Try specific account key first, fallback to generic
+    const savedSpecific = localStorage.getItem(specificKey);
+    const savedGeneric = localStorage.getItem("sentire_user_orders");
+
+    if (savedSpecific) {
+      try { currentOrders = JSON.parse(savedSpecific); } catch (e) {}
+    } else if (savedGeneric) {
+      try { currentOrders = JSON.parse(savedGeneric); } catch (e) {}
     }
 
     const pendingSnapshot = localStorage.getItem("sentire_pending_checkout_order");
@@ -70,10 +85,16 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
         newOrd.status = "Confirmed";
         if (!currentOrders.some((o: any) => o.id === newOrd.id)) {
           currentOrders = [newOrd, ...currentOrders];
-          localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
         }
       } catch (e) {}
     }
+
+    // Persist orders safely across logins
+    try {
+      localStorage.setItem(specificKey, JSON.stringify(currentOrders));
+      localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
+    } catch (e) {}
+
     return currentOrders;
   };
 
@@ -95,8 +116,8 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
         email: email,
       });
 
-      // Reload & sync pending checkout orders
-      const synced = loadAndSyncUserOrders();
+      // Reload & sync pending checkout orders for this specific logged-in user
+      const synced = loadAndSyncUserOrders(phone, email);
       setUserOrders(synced);
     });
     return () => unsub();
