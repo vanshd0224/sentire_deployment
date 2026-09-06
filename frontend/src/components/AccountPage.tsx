@@ -62,30 +62,15 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
       try { currentOrders = JSON.parse(saved); } catch (e) {}
     }
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const hash = window.location.hash;
-    const isCheckoutSuccess =
-      searchParams.get("checkout_success") === "true" ||
-      searchParams.get("order") ||
-      searchParams.get("status") === "success" ||
-      hash.includes("order_success") ||
-      hash.includes("checkout_completed");
-
     const pendingSnapshot = localStorage.getItem("sentire_pending_checkout_order");
     if (pendingSnapshot) {
       try {
         const newOrd = JSON.parse(pendingSnapshot);
-        if (isCheckoutSuccess) {
-          // User completed payment on Shopify -> Register confirmed order
-          localStorage.removeItem("sentire_pending_checkout_order");
-          newOrd.status = "Confirmed";
-          if (!currentOrders.some((o: any) => o.id === newOrd.id)) {
-            currentOrders = [newOrd, ...currentOrders];
-            localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
-          }
-        } else {
-          // User pressed back button without completing payment -> Do not register order
-          console.log("[Checkout Session]: User backed out or returned without payment completion.");
+        localStorage.removeItem("sentire_pending_checkout_order");
+        newOrd.status = "Confirmed";
+        if (!currentOrders.some((o: any) => o.id === newOrd.id)) {
+          currentOrders = [newOrd, ...currentOrders];
+          localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
         }
       } catch (e) {}
     }
