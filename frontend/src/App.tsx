@@ -177,7 +177,8 @@ export default function App() {
   }, []);
 
   const handleAccountClick = () => {
-    if (auth.currentUser) {
+    const isStoredLoggedIn = localStorage.getItem("sentire_is_logged_in") === "true";
+    if (auth.currentUser || isStoredLoggedIn) {
       handleNavigate("account");
     } else {
       setIsAccountOpen(true);
