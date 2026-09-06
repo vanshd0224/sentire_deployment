@@ -164,8 +164,16 @@ export default function App() {
       }
     };
 
+    const handleOpenCartEvent = () => {
+      setIsCartOpen(true);
+    };
+
     window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener("sentire_open_cart", handleOpenCartEvent);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("sentire_open_cart", handleOpenCartEvent);
+    };
   }, []);
 
   const handleAccountClick = () => {
@@ -423,6 +431,7 @@ export default function App() {
         items={cartItems}
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveCartItem}
+        onOpenLoginModal={() => setIsAccountOpen(true)}
       />
 
       {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}

@@ -22,6 +22,7 @@ interface Address {
 
 export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPageProps) {
   const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   
   // Stored Name & Profile Data (No raw phone number fallbacks!)
@@ -53,9 +54,16 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     pincode: "",
   });
 
+  // User Orders State
+  const [userOrders, setUserOrders] = useState<any[]>(() => {
+    const saved = localStorage.getItem("sentire_user_orders");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
+      setAuthLoading(false);
       const rawName = u?.displayName || localStorage.getItem("sentire_user_name") || "";
       const name = rawName.startsWith("+") ? "" : rawName;
       const phone = u?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
@@ -66,6 +74,12 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
         phone: phone,
         email: email,
       });
+
+      // Reload orders from localStorage
+      const savedOrders = localStorage.getItem("sentire_user_orders");
+      if (savedOrders) {
+        try { setUserOrders(JSON.parse(savedOrders)); } catch (e) {}
+      }
     });
     return () => unsub();
   }, []);
@@ -120,6 +134,18 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   };
 
   const isStoredLoggedIn = localStorage.getItem("sentire_is_logged_in") === "true";
+
+  // Display a smooth luxury loader while Firebase initializes on page reload or Shopify return
+  if (authLoading) {
+    return (
+      <div className="min-h-[75vh] bg-[#f8f5f1] flex flex-col items-center justify-center p-6 text-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-2 border-[#1e1e1e] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs uppercase tracking-widest text-[#777777] font-mono">Authenticating Private Account...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user && !isStoredLoggedIn) {
     return (
@@ -178,7 +204,7 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
           </div>
 
           <div className="bg-[#ffffff] p-4 rounded-xl border border-[#ece7de] text-center mb-6">
-            <span className="text-2xl font-bold text-[#1e1e1e]">0</span>
+            <span className="text-2xl font-bold text-[#1e1e1e]">{userOrders.length}</span>
             <p className="text-[10px] text-[#777777] uppercase font-semibold tracking-wider mt-0.5">
               Total Orders
             </p>
@@ -258,23 +284,40 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
 
               <div className="space-y-3">
                 <h3 className="text-xs font-bold text-[#1e1e1e] uppercase tracking-wider">
-                  My Orders
+                  My Orders ({userOrders.length})
                 </h3>
-                <div className="bg-[#faf8f5] p-8 rounded-2xl border border-[#ece7de] text-center">
-                  <div className="w-14 h-14 bg-[#ffffff] border border-[#e5dfd5] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
-                    📦
+                {userOrders.length === 0 ? (
+                  <div className="bg-[#faf8f5] p-8 rounded-2xl border border-[#ece7de] text-center">
+                    <div className="w-14 h-14 bg-[#ffffff] border border-[#e5dfd5] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
+                      📦
+                    </div>
+                    <h4 className="text-sm font-bold text-[#1e1e1e]">No Past Orders Yet</h4>
+                    <p className="text-xs text-[#777777] mt-1 mb-4">
+                      Start your first order to see it here.
+                    </p>
+                    <button
+                      onClick={() => onNavigate("perfumes")}
+                      className="px-6 py-2.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                    >
+                      Shop Now
+                    </button>
                   </div>
-                  <h4 className="text-sm font-bold text-[#1e1e1e]">No Past Orders Yet</h4>
-                  <p className="text-xs text-[#777777] mt-1 mb-4">
-                    Start your first order to see it here.
-                  </p>
-                  <button
-                    onClick={() => onNavigate("perfumes")}
-                    className="px-6 py-2.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
-                  >
-                    Shop Now
-                  </button>
-                </div>
+                ) : (
+                  <div className="space-y-3">
+                    {userOrders.slice(0, 2).map((ord: any, idx: number) => (
+                      <div key={ord.id || idx} className="bg-[#faf8f5] p-4 rounded-xl border border-[#e5dfd5] flex items-center justify-between text-xs">
+                        <div>
+                          <p className="font-bold text-[#1e1e1e]">Order #{ord.orderNumber || ord.id || `SC-${1000 + idx}`}</p>
+                          <p className="text-[11px] text-[#777]">{ord.date || "Recent Order"} · {ord.items?.length || 1} Item(s)</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-bold text-[#1e1e1e]">₹{(ord.total || 0).toLocaleString()}</span>
+                          <p className="text-[10px] text-emerald-600 font-semibold">{ord.status || "Confirmed"}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="space-y-3">
@@ -330,21 +373,73 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
           {activeTab === "orders" && (
             <div>
               <h2 className="text-2xl font-serif font-bold text-[#1e1e1e] mb-6">My Orders</h2>
-              <div className="bg-[#faf8f5] p-12 rounded-2xl border border-[#ece7de] text-center">
-                <div className="w-16 h-16 bg-[#ffffff] border border-[#e5dfd5] rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
-                  🛍️
+              {userOrders.length === 0 ? (
+                <div className="bg-[#faf8f5] p-12 rounded-2xl border border-[#ece7de] text-center">
+                  <div className="w-16 h-16 bg-[#ffffff] border border-[#e5dfd5] rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                    🛍️
+                  </div>
+                  <h3 className="text-base font-bold text-[#1e1e1e]">No Active Orders</h3>
+                  <p className="text-xs text-[#666666] mt-1 mb-6 max-w-sm mx-auto">
+                    You haven't placed any orders yet. Discover our luxury perfumes collection.
+                  </p>
+                  <button
+                    onClick={() => onNavigate("perfumes")}
+                    className="px-8 py-3 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-md cursor-pointer uppercase tracking-wider"
+                  >
+                    Explore Perfumes Collection
+                  </button>
                 </div>
-                <h3 className="text-base font-bold text-[#1e1e1e]">No Active Orders</h3>
-                <p className="text-xs text-[#666666] mt-1 mb-6 max-w-sm mx-auto">
-                  You haven't placed any orders yet. Discover our luxury perfumes collection.
-                </p>
-                <button
-                  onClick={() => onNavigate("perfumes")}
-                  className="px-8 py-3 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] text-xs font-semibold rounded-xl transition-all shadow-md cursor-pointer"
-                >
-                  Explore Perfumes Collection
-                </button>
-              </div>
+              ) : (
+                <div className="space-y-4">
+                  {userOrders.map((ord: any, idx: number) => (
+                    <div key={ord.id || idx} className="bg-[#faf8f5] p-5 sm:p-6 rounded-2xl border border-[#e5dfd5] space-y-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#ece7de] pb-3">
+                        <div>
+                          <span className="font-bold text-sm text-[#1e1e1e]">Order #{ord.orderNumber || ord.id || `SC-${1000 + idx}`}</span>
+                          <p className="text-[11px] text-[#777777] mt-0.5">Placed on {ord.date || "Today"}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            {ord.status || "Confirmed"}
+                          </span>
+                          <span className="font-serif font-bold text-sm text-[#1e1e1e]">
+                            ₹{(ord.total || 0).toLocaleString()}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        {(ord.items || []).map((item: any, i: number) => (
+                          <div key={i} className="flex items-center justify-between text-xs py-1">
+                            <div className="flex items-center gap-3">
+                              {item.img || item.image ? (
+                                <img src={item.img || item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg border border-[#e5dfd5]" />
+                              ) : (
+                                <div className="w-10 h-10 bg-[#f4efe8] rounded-lg border border-[#e5dfd5] flex items-center justify-center text-base">✨</div>
+                              )}
+                              <div>
+                                <p className="font-semibold text-[#1e1e1e]">{item.name}</p>
+                                <p className="text-[10px] text-[#777777]">Size: {item.size || 50} ML · Qty: {item.quantity || 1}</p>
+                              </div>
+                            </div>
+                            <span className="font-medium text-[#1e1e1e]">₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="pt-2 border-t border-[#ece7de] flex items-center justify-between">
+                        <span className="text-[11px] text-[#777777]">Shipped via Express Courier</span>
+                        <button
+                          onClick={() => onNavigate("track-order")}
+                          className="text-xs font-semibold text-[#c89b5a] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          Track Order Details &rarr;
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

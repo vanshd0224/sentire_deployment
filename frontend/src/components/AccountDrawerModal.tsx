@@ -33,21 +33,29 @@ export default function AccountDrawerModal({
 
   const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
 
+  const handleLoginCompletion = () => {
+    localStorage.setItem("sentire_is_logged_in", "true");
+    onClose();
+    const pendingCheckout = localStorage.getItem("sentire_pending_checkout");
+    if (pendingCheckout === "true") {
+      localStorage.removeItem("sentire_pending_checkout");
+      window.dispatchEvent(new CustomEvent("sentire_open_cart"));
+    } else if (onSuccessLogin) {
+      onSuccessLogin();
+    } else {
+      window.location.hash = "#account";
+    }
+  };
+
   // Handle Google redirect auth completion
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         if (result?.user) {
-          localStorage.setItem("sentire_is_logged_in", "true");
           if (result.user.displayName) localStorage.setItem("sentire_user_name", result.user.displayName);
           if (result.user.email) localStorage.setItem("sentire_user_email", result.user.email);
           if (result.user.phoneNumber) localStorage.setItem("sentire_user_phone", result.user.phoneNumber);
-          onClose();
-          if (onSuccessLogin) {
-            onSuccessLogin();
-          } else {
-            window.location.hash = "#account";
-          }
+          handleLoginCompletion();
         }
       })
       .catch((err) => {
@@ -182,12 +190,7 @@ export default function AccountDrawerModal({
         return;
       }
 
-      onClose();
-      if (onSuccessLogin) {
-        onSuccessLogin();
-      } else {
-        window.location.hash = "#account";
-      }
+      handleLoginCompletion();
     }
   };
 
@@ -201,7 +204,6 @@ export default function AccountDrawerModal({
     try {
       const result = await signInWithPopup(auth, provider);
       if (result?.user) {
-        localStorage.setItem("sentire_is_logged_in", "true");
         if (result.user.displayName) {
           localStorage.setItem("sentire_user_name", result.user.displayName);
         }
@@ -211,12 +213,7 @@ export default function AccountDrawerModal({
         if (result.user.phoneNumber) {
           localStorage.setItem("sentire_user_phone", result.user.phoneNumber);
         }
-        onClose();
-        if (onSuccessLogin) {
-          onSuccessLogin();
-        } else {
-          window.location.hash = "#account";
-        }
+        handleLoginCompletion();
       }
     } catch (err: any) {
       console.error("[Google Auth Error]:", err);
@@ -433,17 +430,10 @@ export default function AccountDrawerModal({
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const nameToSave = inputName.trim() || "Sentire Member";
-                localStorage.setItem("sentire_user_name", nameToSave);
-                if (auth.currentUser) {
-                  try { updateProfile(auth.currentUser, { displayName: nameToSave }); } catch(err){}
+                if (inputName.trim()) {
+                  localStorage.setItem("sentire_user_name", inputName.trim());
                 }
-                onClose();
-                if (onSuccessLogin) {
-                  onSuccessLogin();
-                } else {
-                  window.location.hash = "#account";
-                }
+                handleLoginCompletion();
               }}
               className="space-y-4"
             >

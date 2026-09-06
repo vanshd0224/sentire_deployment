@@ -392,7 +392,12 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
 };
 
 // Asynchronously create a fresh GraphQL Shopify Cart via direct Storefront API or permalink fallback
-export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCode?: string): Promise<string> => {
+export const createOrGetShopifyCheckoutUrl = async (
+  rawItems: any[],
+  discountCode?: string,
+  userEmail?: string,
+  userPhone?: string
+): Promise<string> => {
   if (!rawItems || rawItems.length === 0) return "";
 
   const items = prepareShopifyCheckoutItems(rawItems);
@@ -417,6 +422,20 @@ export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCod
   const input: any = { lines };
   if (discountCode) {
     input.discountCodes = [discountCode];
+  }
+
+  // Pre-fill Customer Details on Shopify Checkout if available
+  if (userEmail || userPhone) {
+    input.buyerIdentity = {};
+    if (userEmail && userEmail.includes("@")) {
+      input.buyerIdentity.email = userEmail.trim();
+    }
+    if (userPhone) {
+      const cleanPhone = userPhone.replace(/[^\d+]/g, "");
+      if (cleanPhone.length >= 10) {
+        input.buyerIdentity.phone = cleanPhone.startsWith("+") ? cleanPhone : `+91${cleanPhone}`;
+      }
+    }
   }
 
   const storefrontToken = (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
@@ -466,8 +485,11 @@ export const createOrGetShopifyCheckoutUrl = async (rawItems: any[], discountCod
     .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
     .join(",");
   let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
-  if (discountCode) {
-    permalinkUrl += (permalinkUrl.includes("?") ? "&" : "?") + `discount=${encodeURIComponent(discountCode)}`;
+  const params: string[] = [];
+  if (discountCode) params.push(`discount=${encodeURIComponent(discountCode)}`);
+  if (userEmail && userEmail.includes("@")) params.push(`email=${encodeURIComponent(userEmail.trim())}`);
+  if (params.length > 0) {
+    permalinkUrl += "?" + params.join("&");
   }
   return permalinkUrl;
 };
