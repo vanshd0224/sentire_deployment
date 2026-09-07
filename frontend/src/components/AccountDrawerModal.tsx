@@ -416,10 +416,10 @@ export default function AccountDrawerModal({
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isVerifyingOtp}
                 className="w-full py-3.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
               >
-                {loading ? "Verifying..." : "Verify & Continue"}
+                {isVerifyingOtp ? "Verifying..." : "Verify & Continue"}
               </button>
             </form>
           </div>
