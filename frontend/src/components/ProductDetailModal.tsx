@@ -58,9 +58,9 @@ export default function ProductDetailModal({
     if (e) e.stopPropagation();
     if (!product) return;
 
-    const shareUrl = `${window.location.origin}/perfumes/${product.id}`;
-    const shareTitle = `SENTIRE By PC - ${product.name}`;
-    const shareText = `Discover ${product.name} Extrait de Parfum by SENTIRE By PC. Luxury 35% oil concentration.`;
+    const shareUrl = `${window.location.origin}/perfumes/${product.id}/${selectedSize}ml`;
+    const shareTitle = `SENTIRE By PC - ${product.name} ${selectedSize}ml`;
+    const shareText = `Discover ${product.name} ${selectedSize}ml Extrait de Parfum by SENTIRE By PC. Luxury 35% oil concentration.`;
 
     if (navigator.share) {
       try {
@@ -155,19 +155,32 @@ export default function ProductDetailModal({
     if (product && product.sizes && product.sizes.length > 0) {
       const outStock = product.outOfStockSizes || [];
       const inStock = product.sizes.filter((s) => !outStock.includes(s));
-      const defaultSz = inStock.includes(50) ? 50 : inStock[inStock.length - 1] || product.sizes[0];
+      const passedSize = (product as any).initialSize;
+
+      let defaultSz = inStock.includes(50) ? 50 : inStock[inStock.length - 1] || product.sizes[0];
+      if (passedSize && product.sizes.includes(passedSize)) {
+        defaultSz = passedSize;
+      }
+
       setSelectedSize(defaultSz);
       setSelectedImageIndex(0);
       setSelectedNote(null);
       setNotifySubmitted(false);
       setVisibleReviewsCount(6);
 
+      if (product.id) {
+        try {
+          const pathPrefix = window.location.pathname.startsWith("/products/") ? "/products" : "/perfumes";
+          window.history.replaceState(null, "", `${pathPrefix}/${product.id}/${defaultSz}ml`);
+        } catch (e) {}
+      }
+
       // Track Meta Pixel + GA4 ViewContent Event
       try {
         trackViewContent({
           id: product.id,
           name: product.name,
-          price: product.prices?.[50] || product.prices?.[30] || product.prices?.[10] || product.price || 1489,
+          price: product.prices?.[defaultSz] || product.prices?.[50] || product.prices?.[30] || product.prices?.[10] || product.price || 1489,
           category: product.scentFamily || "Perfumes",
           variant: defaultSz,
         });
@@ -178,6 +191,16 @@ export default function ProductDetailModal({
       }
     }
   }, [product]);
+
+  const handleSelectSize = (sz: number) => {
+    setSelectedSize(sz);
+    if (product && product.id) {
+      try {
+        const pathPrefix = window.location.pathname.startsWith("/products/") ? "/products" : "/perfumes";
+        window.history.replaceState(null, "", `${pathPrefix}/${product.id}/${sz}ml`);
+      } catch (e) {}
+    }
+  };
 
   // Collapse personalisation if a non-50ML size (10ml / 30ml) is selected
   useEffect(() => {
@@ -571,7 +594,7 @@ export default function ProductDetailModal({
                   return (
                     <button
                       key={sz}
-                      onClick={() => setSelectedSize(sz)}
+                      onClick={() => handleSelectSize(sz)}
                       className={`group relative flex flex-col items-center justify-between rounded-2xl p-3.5 text-center transition-all cursor-pointer ${
                         isSelected
                           ? isOutOfStock

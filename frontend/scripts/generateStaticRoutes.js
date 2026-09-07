@@ -1103,34 +1103,67 @@ PERFUMES_DATA.forEach(p => {
     })
   });
 
-  // Also maintain /products/[id] with canonical pointing to /perfumes/[id]
-  routes.push({
-    path: `products/${p.id}`,
-    title: `${p.name} Extrait de Parfum | ${p.subtitle} | SENTIRE By PC`,
-    description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${p.name} (${p.subtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
-    canonicalUrl: `${PRODUCTION_DOMAIN}/perfumes/${p.id}`,
-    ogTitle: `${p.name} Extrait de Parfum (${p.subtitle}) | SENTIRE By PC`,
-    ogDescription: `Artisanal 35%+ perfume oil Extrait de Parfum outlasting standard 15% EDPs. Precision laser bottle etching and express delivery across India.`,
-    image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
-    heading: `${p.name} Extrait de Parfum`,
-    subheading: `35%+ Perfume Oil Concentration · ${p.desc}`,
-    contentHtml: `<p>Redirecting to <a href="/perfumes/${p.id}">SENTIRE ${p.name} Extrait de Parfum</a>...</p>`,
-    getSchema: () => ({
-      "@context": "https://schema.org",
-      "@graph": [
-        ORGANIZATION_SCHEMA,
-        STORE_SCHEMA,
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
-            { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` },
-            { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes/${p.id}` }
-          ]
-        },
-        generateProductSchemaJson(p)
-      ]
-    })
+  // Size-specific static routes: /perfumes/[id]/10ml, /perfumes/[id]/30ml, /perfumes/[id]/50ml, etc.
+  p.sizes.forEach(size => {
+    const sizePath = `perfumes/${p.id}/${size}ml`;
+    const priceForSize = p.prices[size] || p.prices[p.sizes[0]];
+
+    routes.push({
+      path: sizePath,
+      title: `${p.name} (${size}ml) Extrait de Parfum | ₹${priceForSize} | SENTIRE By PC`,
+      description: `Shop SENTIRE ${p.name} ${size}ml Extrait de Parfum at ₹${priceForSize}. Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage.`,
+      canonicalUrl: `${PRODUCTION_DOMAIN}/${sizePath}`,
+      ogTitle: `SENTIRE ${p.name} ${size}ml Extrait de Parfum`,
+      ogDescription: `${p.desc} — ${size}ml bottle available at ₹${priceForSize}. 35%+ perfume oil concentration formulated in Jaipur.`,
+      image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
+      heading: `${p.name} ${size}ml Extrait de Parfum`,
+      subheading: `35%+ Perfume Oil Concentration · ${size}ml · ₹${priceForSize}`,
+      contentHtml: `<p>Discover <a href="/${sizePath}">SENTIRE ${p.name} ${size}ml Extrait de Parfum</a> at ₹${priceForSize}.</p>`,
+      getSchema: () => ({
+        "@context": "https://schema.org",
+        "@graph": [
+          ORGANIZATION_SCHEMA,
+          STORE_SCHEMA,
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": `${PRODUCTION_DOMAIN}/` },
+              { "@type": "ListItem", "position": 2, "name": "Perfumes", "item": `${PRODUCTION_DOMAIN}/perfumes` },
+              { "@type": "ListItem", "position": 3, "name": p.name, "item": `${PRODUCTION_DOMAIN}/perfumes/${p.id}` },
+              { "@type": "ListItem", "position": 4, "name": `${p.name} ${size}ml`, "item": `${PRODUCTION_DOMAIN}/${sizePath}` }
+            ]
+          },
+          generateProductSchemaJson(p)
+        ]
+      })
+    });
+
+    // Also push /products/[id]/[size]ml and /[id]/[size]ml fallback routes
+    routes.push({
+      path: `products/${p.id}/${size}ml`,
+      title: `${p.name} (${size}ml) Extrait de Parfum | SENTIRE By PC`,
+      description: `Shop SENTIRE ${p.name} ${size}ml Extrait de Parfum at ₹${priceForSize}.`,
+      canonicalUrl: `${PRODUCTION_DOMAIN}/${sizePath}`,
+      ogTitle: `SENTIRE ${p.name} ${size}ml Extrait de Parfum`,
+      ogDescription: `${p.desc} — ${size}ml bottle available at ₹${priceForSize}.`,
+      image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
+      heading: `${p.name} ${size}ml Extrait de Parfum`,
+      subheading: `35%+ Perfume Oil Concentration · ${size}ml`,
+      contentHtml: `<p>Redirecting to <a href="/${sizePath}">SENTIRE ${p.name} ${size}ml</a>...</p>`,
+    });
+
+    routes.push({
+      path: `${p.id}/${size}ml`,
+      title: `${p.name} (${size}ml) Extrait de Parfum | SENTIRE By PC`,
+      description: `Shop SENTIRE ${p.name} ${size}ml Extrait de Parfum at ₹${priceForSize}.`,
+      canonicalUrl: `${PRODUCTION_DOMAIN}/${sizePath}`,
+      ogTitle: `SENTIRE ${p.name} ${size}ml Extrait de Parfum`,
+      ogDescription: `${p.desc} — ${size}ml bottle available at ₹${priceForSize}.`,
+      image: `${PRODUCTION_DOMAIN}${p.img.split('?')[0]}`,
+      heading: `${p.name} ${size}ml Extrait de Parfum`,
+      subheading: `35%+ Perfume Oil Concentration · ${size}ml`,
+      contentHtml: `<p>Redirecting to <a href="/${sizePath}">SENTIRE ${p.name} ${size}ml</a>...</p>`,
+    });
   });
 });
 
