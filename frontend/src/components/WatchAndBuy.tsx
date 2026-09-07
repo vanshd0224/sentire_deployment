@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { ALL_PERFUMES } from "../data/perfumes";
 
 export interface ReelProduct {
   id: string;
@@ -13,17 +14,13 @@ export interface ReelProduct {
   swatch: string;
 }
 
-const reels: ReelProduct[] = [
+const rawReels = [
   {
     id: "calantha",
     thumb: "/images/watch/calantha.jpg",
     video: "/videos/watch/calantha.mp4",
     product: "Calantha 50ml",
     notes: "Velvet Rose • Amethyst Oud • Warm Amber",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/calantha.png",
   },
   {
@@ -32,10 +29,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/deep-crush.mp4",
     product: "Deep Crush 50ml",
     notes: "Black Cherry • Dark Vanilla • Seductive Musk",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/deep-crush.png",
   },
   {
@@ -44,10 +37,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/midnight.mp4",
     product: "Midnight 50ml",
     notes: "Dark Violet • Midnight Jasmine • Cedarwood",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/midnight.png",
   },
   {
@@ -56,10 +45,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/personna.mp4",
     product: "Personna 50ml",
     notes: "Italian Bergamot • Iris Root • Oakmoss",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/personna.png",
   },
   {
@@ -68,10 +53,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/purple-oud.mp4",
     product: "Purple Oud 50ml",
     notes: "Cambodian Oud • Amethyst Rose • Saffron",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/purple-oud.png",
   },
   {
@@ -80,10 +61,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/rich.mp4",
     product: "Rich 50ml",
     notes: "Golden Honey • Tonka Bean • Roasted Coffee",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/rich.png",
   },
   {
@@ -92,10 +69,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/herrlich.mp4",
     product: "Herrlich 50ml",
     notes: "Smoky Birch • Leather Accord • Golden Amber",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/herrlich.png",
   },
   {
@@ -104,10 +77,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/mirai.mp4",
     product: "Mirai 50ml",
     notes: "White Tea • Cashmere Blossom • Soft Sandalwood",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/mirai.png",
   },
   {
@@ -116,10 +85,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/0809.mp4",
     product: "0809 Signature 50ml",
     notes: "Spiced Cinnamon • Tobacco Leaf • Vanilla Bean",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/0809.png",
   },
   {
@@ -128,10 +93,6 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/seductive.mp4",
     product: "Seductive 50ml",
     notes: "Red Plum • Orchid Petals • White Amber",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/seductive.png",
   },
   {
@@ -140,13 +101,24 @@ const reels: ReelProduct[] = [
     video: "/videos/watch/white-oud.mp4",
     product: "White Oud 50ml",
     notes: "White Musks • Saffron Spice • Agarwood",
-    price: 1199,
-    priceText: "₹1,199",
-    original: "₹1,699",
-    badge: "29% OFF",
     swatch: "/assets/white-oud.png",
   },
 ];
+
+const reels: ReelProduct[] = rawReels.map((r) => {
+  const pData = ALL_PERFUMES.find((p) => p.id === r.id);
+  const price = pData?.prices[50] ?? 1199;
+  const mrp = pData?.mrps?.[50] ?? Math.round(price * 1.4);
+  const discountPct = Math.round(((mrp - price) / mrp) * 100);
+
+  return {
+    ...r,
+    price,
+    priceText: `₹${price.toLocaleString("en-IN")}`,
+    original: `₹${mrp.toLocaleString("en-IN")}`,
+    badge: `${discountPct}% OFF`,
+  };
+});
 
 const GAP = 16;
 const TOTAL = reels.length;
