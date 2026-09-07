@@ -1172,8 +1172,8 @@ function generateHtml(templateHtml, route) {
   const canonicalUrl = route.canonicalUrl || `${PRODUCTION_DOMAIN}/${route.path}`;
   const buildTimestamp = Date.now();
 
-  // Cache-bust JS asset URL to force Edge CDN / Cloudflare to purge old cached JS bundles
-  html = html.replace(/src="(\/assets\/(?:app-v2|index)-[^"]+\.js)"/g, (match, p1) => `src="${p1}?v=${buildTimestamp}"`);
+  // Cache-bust JS asset URL to force Edge CDN / Cloudflare / Instagram WebView to purge old cached JS bundles
+  html = html.replace(/src="(\/assets\/[^"]+\.js)"/g, (match, p1) => `src="${p1}?v=${buildTimestamp}"`);
 
   // Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${route.title}</title>`);
