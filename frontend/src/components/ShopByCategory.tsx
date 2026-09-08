@@ -2,7 +2,7 @@ import SectionHeading from "./SectionHeading";
 import type { PerfumeFilterOptions } from "./Navbar";
 
 const categories = [
-  { title: "Discovery Set", subtitle: "Six Scents. Find Yours.", image: "/images/curated-discovery-set-v2.jpg?v=v2_crisp", page: "discovery-set" as const },
+  { title: "Discovery Set", subtitle: "Six Scents. Find Yours.", image: "/images/curated-discovery-set-v3.jpg?v=v3_heading", page: "discovery-set" as const },
   { title: "New Arrivals", subtitle: "Discover The Unseen", image: "/images/curated-new-arrivals.jpg", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
   { title: "Best Sellers", subtitle: "Most Loved Essentials", image: "/images/curated-best-sellers.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
   { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/curated-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
