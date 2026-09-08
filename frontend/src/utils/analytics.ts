@@ -80,15 +80,34 @@ function sanitizePayload(payload: AnalyticsPayload): AnalyticsPayload {
 const META_PIXEL_ID = "4305047443093499";
 const META_CAPI_TOKEN = "EAAOrZBJm6eOUBSVZBpg9UVS3ZBZBUWdY9UyAlAQzF3q9iIHZAM41lXnevRq2dGOh1YHTMLsML8aB56ZAXX99Nkz0BZCAsjmb54NgZC3qleyNqalKvQdV1ZA7ZBD9ispcMX7vfD5nZCWaYZAZAzc66FZBUfr5XoRjR8G90EvhiMwCZCocDAQ2eX4haWoIHKbfk7H5Cj5n9AZCHQZDZD";
 
-/**
- * Direct Meta Conversions API (CAPI) Event Sender
- */
 export function sendMetaCapiEvent(eventName: string, customData: Record<string, any> = {}) {
   try {
     if (typeof window === "undefined") return;
     const eventTime = Math.floor(Date.now() / 1000);
     const eventSourceUrl = window.location.href;
     const userAgent = navigator.userAgent || "";
+
+    // Extract fbp / fbc cookies if available or fallback
+    let fbp = "";
+    let fbc = "";
+    try {
+      const cookies = document.cookie.split(";");
+      for (let c of cookies) {
+        const [k, v] = c.trim().split("=");
+        if (k === "_fbp") fbp = v;
+        if (k === "_fbc") fbc = v;
+      }
+    } catch (e) {}
+
+    if (!fbp) {
+      fbp = `fb.1.${Date.now()}.${Math.floor(Math.random() * 1000000000)}`;
+    }
+
+    const userData: Record<string, any> = {
+      client_user_agent: userAgent,
+      fbp: fbp,
+    };
+    if (fbc) userData.fbc = fbc;
 
     const payload = {
       data: [
@@ -97,9 +116,7 @@ export function sendMetaCapiEvent(eventName: string, customData: Record<string, 
           event_time: eventTime,
           event_source_url: eventSourceUrl,
           action_source: "website",
-          user_data: {
-            client_user_agent: userAgent,
-          },
+          user_data: userData,
           custom_data: customData,
         },
       ],
