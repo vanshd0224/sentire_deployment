@@ -77,14 +77,53 @@ function sanitizePayload(payload: AnalyticsPayload): AnalyticsPayload {
   return sanitized;
 }
 
+const META_PIXEL_ID = "4305047443093499";
+const META_CAPI_TOKEN = "EAAOrZBJm6eOUBSVZBpg9UVS3ZBZBUWdY9UyAlAQzF3q9iIHZAM41lXnevRq2dGOh1YHTMLsML8aB56ZAXX99Nkz0BZCAsjmb54NgZC3qleyNqalKvQdV1ZA7ZBD9ispcMX7vfD5nZCWaYZAZAzc66FZBUfr5XoRjR8G90EvhiMwCZCocDAQ2eX4haWoIHKbfk7H5Cj5n9AZCHQZDZD";
+
 /**
- * Dispatch Meta Pixel (Facebook Pixel) events
+ * Direct Meta Conversions API (CAPI) Event Sender
+ */
+export function sendMetaCapiEvent(eventName: string, customData: Record<string, any> = {}) {
+  try {
+    if (typeof window === "undefined") return;
+    const eventTime = Math.floor(Date.now() / 1000);
+    const eventSourceUrl = window.location.href;
+    const userAgent = navigator.userAgent || "";
+
+    const payload = {
+      data: [
+        {
+          event_name: eventName,
+          event_time: eventTime,
+          event_source_url: eventSourceUrl,
+          action_source: "website",
+          user_data: {
+            client_user_agent: userAgent,
+          },
+          custom_data: customData,
+        },
+      ],
+    };
+
+    fetch(`https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_CAPI_TOKEN}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  } catch (err) {
+    // Non-blocking
+  }
+}
+
+/**
+ * Dispatch Meta Pixel (Facebook Pixel) & Conversions API (CAPI) events
  */
 export function trackMetaPixel(eventName: string, data: Record<string, any> = {}) {
   try {
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
       window.fbq("track", eventName, data);
     }
+    sendMetaCapiEvent(eventName, data);
   } catch (err) {
     // Non-blocking catch
   }
