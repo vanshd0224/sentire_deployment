@@ -1053,17 +1053,6 @@ export default function PerfumesPage({
         </div>
       )}
 
-      {/* ── DEEP DOWN DETAILS PDP MODAL (When clicking Image or Title) ── */}
-      <ProductDetailModal
-        product={selectedDetailProduct}
-        onClose={() => setSelectedDetailProduct(null)}
-        cartItems={cartItems}
-        onAddToCart={onAddToCart}
-        onUpdateCartQuantity={onUpdateCartQuantity}
-        onOpenCart={onOpenCart}
-        onSelectProduct={(p) => setSelectedDetailProduct(p)}
-        allProducts={allProductsList}
-      />
 
       {/* ── SCENT FINDER QUIZ MODAL ── */}
       {isQuizOpen && (

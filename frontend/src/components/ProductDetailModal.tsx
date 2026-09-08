@@ -397,7 +397,7 @@ export default function ProductDetailModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 backdrop-blur-xl transition-all duration-300 animate-in fade-in">
+    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 backdrop-blur-sm sm:backdrop-blur-md transition-all duration-300 animate-in fade-in">
       {/* Click backdrop to close */}
       <div className="fixed inset-0" onClick={onClose} />
 
@@ -462,6 +462,7 @@ export default function ProductDetailModal({
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                 width="500"
                 height="600"
+                decoding="async"
                 className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
               />
 
@@ -511,7 +512,7 @@ export default function ProductDetailModal({
                   }`}
                   aria-label={`Select fragrance view ${idx + 1}`}
                 >
-                  <img src={img} alt={`Sentire ${product.name} view ${idx + 1}`} width="80" height="80" className="h-full w-full object-contain" />
+                  <img src={img} alt={`Sentire ${product.name} view ${idx + 1}`} width="80" height="80" loading="lazy" decoding="async" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
