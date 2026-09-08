@@ -143,36 +143,62 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
   const [trackIndex, setTrackIndex] = useState(ORIGIN);
   const [animated, setAnimated] = useState(true);
   const [activeReelIndex, setActiveReelIndex] = useState<number | null>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const transitioning = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (activeReelIndex !== null && videoRef.current) {
-      videoRef.current.currentTime = 0;
+    if (activeReelIndex !== null) {
+      setIsMuted(false);
       setIsPlaying(true);
-      const p = videoRef.current.play();
-      if (p !== undefined) {
-        p.catch(() => {
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            setIsMuted(true);
-            videoRef.current.play().catch(() => {});
-          }
-        });
+
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.muted = false;
+        const p = videoRef.current.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              setIsMuted(true);
+              videoRef.current.play().catch(() => {});
+            }
+          });
+        }
+      }
+
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(() => {});
+      }
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
       }
     }
   }, [activeReelIndex]);
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newMuteState = !isMuted;
+    setIsMuted(newMuteState);
+    if (videoRef.current) videoRef.current.muted = newMuteState;
+    if (audioRef.current) audioRef.current.muted = newMuteState;
+  };
 
   const togglePlayPause = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioRef.current?.play().catch(() => {});
       } else {
         videoRef.current.pause();
+        audioRef.current?.pause();
         setIsPlaying(false);
       }
     }
@@ -389,12 +415,13 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
               </span>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setIsMuted((p) => !p)}
+                  onClick={toggleMute}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer shadow-md"
                   aria-label="Toggle mute"
                 >
                   {isMuted ? "🔇" : "🔊"}
                 </button>
+                <audio ref={audioRef} src="/audio/watch-ambient.wav" loop preload="auto" />
                 <button
                   onClick={() => setActiveReelIndex(null)}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer shadow-md"
