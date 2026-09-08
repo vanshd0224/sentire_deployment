@@ -80,6 +80,25 @@ function sanitizePayload(payload: AnalyticsPayload): AnalyticsPayload {
 const META_PIXEL_ID = "4305047443093499";
 const META_CAPI_TOKEN = "EAAOrZBJm6eOUBSVZBpg9UVS3ZBZBUWdY9UyAlAQzF3q9iIHZAM41lXnevRq2dGOh1YHTMLsML8aB56ZAXX99Nkz0BZCAsjmb54NgZC3qleyNqalKvQdV1ZA7ZBD9ispcMX7vfD5nZCWaYZAZAzc66FZBUfr5XoRjR8G90EvhiMwCZCocDAQ2eX4haWoIHKbfk7H5Cj5n9AZCHQZDZD";
 
+/**
+ * Auto-detect and persist test_event_code from URL parameters (?test_event_code=TESTxxxx)
+ * for seamless live Option 1 testing in Meta Events Manager.
+ */
+function getActiveTestEventCode(): string | null {
+  try {
+    if (typeof window === "undefined") return null;
+    const params = new URLSearchParams(window.location.search);
+    const codeFromQuery = params.get("test_event_code") || params.get("test_code");
+    if (codeFromQuery) {
+      sessionStorage.setItem("sentire_meta_test_code", codeFromQuery);
+      return codeFromQuery;
+    }
+    return sessionStorage.getItem("sentire_meta_test_code") || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 export function sendMetaCapiEvent(eventName: string, customData: Record<string, any> = {}) {
   try {
     if (typeof window === "undefined") return;
@@ -109,7 +128,9 @@ export function sendMetaCapiEvent(eventName: string, customData: Record<string, 
     };
     if (fbc) userData.fbc = fbc;
 
-    const payload = {
+    const activeTestCode = getActiveTestEventCode();
+
+    const payload: Record<string, any> = {
       data: [
         {
           event_name: eventName,
@@ -121,6 +142,10 @@ export function sendMetaCapiEvent(eventName: string, customData: Record<string, 
         },
       ],
     };
+
+    if (activeTestCode) {
+      payload.test_event_code = activeTestCode;
+    }
 
     fetch(`https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_CAPI_TOKEN}`, {
       method: "POST",
