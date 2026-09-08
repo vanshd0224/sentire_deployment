@@ -312,7 +312,7 @@ export default function PerfumesPage({
             </button>
 
             {/* Size Pills */}
-            <div className="flex items-center justify-center gap-1.5 my-2">
+            <div className="flex items-center justify-center gap-1 sm:gap-1.5 my-2 w-full overflow-hidden px-0.5">
               {p.sizes.map((sz) => {
                 const isSizeOut = Boolean(p.outOfStockSizes?.includes(sz as any));
                 const isSelected = currentSize === sz;
@@ -323,7 +323,7 @@ export default function PerfumesPage({
                       key={sz}
                       disabled
                       type="button"
-                      className="rounded px-2.5 py-1 text-[9px] font-semibold tracking-wider bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none"
+                      className="rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-[8.5px] sm:text-[9.5px] font-semibold tracking-wider bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none shrink-0"
                       title="Out of stock in this size"
                     >
                       {sz}ML
@@ -339,9 +339,9 @@ export default function PerfumesPage({
                       e.stopPropagation();
                       handleProductSizeSelect(p.id, sz);
                     }}
-                    className={`rounded px-2.5 py-1 text-[9px] font-semibold tracking-wider border transition-all cursor-pointer ${
+                    className={`rounded px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[9.5px] font-semibold tracking-wider border transition-all cursor-pointer shrink-0 ${
                       isSelected
-                        ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907] font-bold shadow-xs scale-105"
+                        ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907] font-bold shadow-xs scale-102"
                         : "bg-[#fdfbf7] text-[#1e1e1e] border-black/15 hover:border-[#c89b5a] hover:text-[#c89b5a]"
                     }`}
                   >

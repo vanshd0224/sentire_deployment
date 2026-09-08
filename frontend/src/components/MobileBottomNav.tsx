@@ -116,9 +116,9 @@ export default function MobileBottomNav({
 
         .snav-label {
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          font-size: 9.5px;
+          font-size: 8.5px;
           font-weight: 500;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.04em;
           text-transform: uppercase;
           line-height: 1;
           white-space: nowrap;

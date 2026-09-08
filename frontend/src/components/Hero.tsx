@@ -401,33 +401,23 @@ export default function Hero({ onNavigate }: HeroProps) {
           />
         </picture>
 
-        {/* ── Mobile Hero Editorial Layer (Locked to 941x1506 Canvas) ── */}
-        <div className="absolute inset-0 pointer-events-none z-10">
+        {/* ── Mobile Hero Editorial Layer (Flexbox Flow) ── */}
+        <div className="absolute inset-0 z-10 flex flex-col justify-start p-5 sm:p-7 pt-4 sm:pt-6 text-left pointer-events-none">
 
           {/* 1. Festive Intro Label: Feather Graphic + "Celebrate Janmashtami in Fragrance" */}
-          <div
-            className="absolute flex items-center"
-            style={{
-              left: "14.0%",
-              top: "2.25%",
-              gap: "8px",
-            }}
-          >
+          <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
             <img
               src="/images/janmashtami/kicker-feather.png"
               alt=""
               aria-hidden="true"
-              className="w-auto select-none pointer-events-none"
-              style={{
-                height: "clamp(18px, 4.4vw, 32px)",
-              }}
+              className="h-[22px] sm:h-[28px] w-auto select-none pointer-events-none"
             />
             <span
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: 500,
                 color: "#85501F",
-                fontSize: "clamp(11px, 2.7vw, 20px)",
+                fontSize: "clamp(10.5px, 2.7vw, 16px)",
                 letterSpacing: "0.01em",
                 whiteSpace: "nowrap",
                 lineHeight: 1,
@@ -437,24 +427,17 @@ export default function Hero({ onNavigate }: HeroProps) {
             </span>
           </div>
 
-          {/* 2. Main Headline: "A Divine Scent / for Janmashtami" */}
-          <div
-            className="absolute"
-            style={{
-              left: "13.5%",
-              top: "5.50%",
-              width: "75%",
-            }}
-          >
+          {/* 2. Main Headline: "A Divine Scent for Janmashtami" */}
+          <div className="w-[85%] max-w-[420px] mb-2 sm:mb-3">
             <h1
               className="m-0 text-left"
               style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(34px, 8.7vw, 68px)",
-                lineHeight: 0.94,
+                fontSize: "clamp(28px, 7.8vw, 54px)",
+                lineHeight: 0.98,
                 letterSpacing: "-0.015em",
                 color: "#25163F",
-                fontWeight: 400,
+                fontWeight: 500,
               }}
             >
               A Divine Scent
@@ -464,45 +447,27 @@ export default function Hero({ onNavigate }: HeroProps) {
           </div>
 
           {/* 3. Ornamental Divider with Central Floral Motif */}
-          <div
-            className="absolute flex items-center"
-            style={{
-              left: "14.0%",
-              top: "16.50%",
-              width: "70%",
-            }}
-            aria-hidden="true"
-          >
+          <div className="flex items-center w-[75%] max-w-[340px] my-1 sm:my-2" aria-hidden="true">
             <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D]/20 via-[#C7903D]/70 to-[#C7903D]" />
             <div className="mx-2 flex items-center justify-center shrink-0">
               <img
                 src="/images/janmashtami/ornament-divider-flower.png"
                 alt=""
                 aria-hidden="true"
-                className="w-auto object-contain"
-                style={{
-                  height: "clamp(12px, 3.2vw, 22px)",
-                }}
+                className="h-[12px] sm:h-[16px] w-auto object-contain"
               />
             </div>
             <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D] via-[#C7903D]/70 to-[#C7903D]/20" />
           </div>
 
-          {/* 4. Body Copy (3 lines exactly as specified) */}
-          <div
-            className="absolute"
-            style={{
-              left: "14.0%",
-              top: "18.80%",
-              width: "72%",
-            }}
-          >
+          {/* 4. Body Copy */}
+          <div className="w-[82%] max-w-[380px] mb-2 sm:mb-3">
             <p
               className="m-0 text-left"
               style={{
                 fontFamily: "Montserrat, sans-serif",
-                fontSize: "clamp(11px, 2.75vw, 20px)",
-                lineHeight: 1.40,
+                fontSize: "clamp(10.5px, 2.6vw, 16px)",
+                lineHeight: 1.45,
                 color: "#252047",
                 fontWeight: 400,
                 letterSpacing: "-0.005em",
@@ -517,29 +482,19 @@ export default function Hero({ onNavigate }: HeroProps) {
           </div>
 
           {/* 5. Limited Festive Edition Badge (Gold Flute Icon + Accent) */}
-          <div
-            className="absolute flex items-center"
-            style={{
-              left: "14.0%",
-              top: "26.80%",
-              gap: "8px",
-            }}
-          >
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
             <img
               src="/images/janmashtami/flute-badge.png"
               alt=""
               aria-hidden="true"
-              className="w-auto object-contain"
-              style={{
-                height: "clamp(16px, 4.0vw, 28px)",
-              }}
+              className="h-[18px] sm:h-[24px] w-auto object-contain"
             />
             <span
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: 500,
                 color: "#8A571F",
-                fontSize: "clamp(11px, 2.7vw, 19px)",
+                fontSize: "clamp(10.5px, 2.6vw, 15px)",
                 letterSpacing: "0.01em",
                 whiteSpace: "nowrap",
                 lineHeight: 1,
@@ -550,25 +505,17 @@ export default function Hero({ onNavigate }: HeroProps) {
           </div>
 
           {/* 6. CTA Buttons Container (Shop Now + Explore Collection) */}
-          <div
-            className="absolute flex flex-col justify-start pointer-events-auto"
-            style={{
-              left: "14.0%",
-              top: "30.50%",
-              width: "47.3%",
-              gap: "clamp(6px, 1.4vw, 12px)",
-            }}
-          >
+          <div className="flex flex-col gap-2 w-[65%] max-w-[260px] pointer-events-auto">
             {/* Primary CTA: "Shop Now" */}
             <a
               href="#perfumes"
               onClick={handleCtaClick}
               className="w-full flex items-center justify-between transition-all duration-200 active:scale-[0.98]"
               style={{
-                height: "clamp(42px, 10.2vw, 76px)",
+                height: "clamp(38px, 9.2vw, 54px)",
                 backgroundColor: "#2D1748",
-                borderRadius: "16px",
-                padding: "0 clamp(16px, 4.0vw, 32px)",
+                borderRadius: "14px",
+                padding: "0 18px",
                 textDecoration: "none",
                 boxSizing: "border-box",
                 boxShadow: "0 4px 16px rgba(45, 23, 72, 0.22)",
@@ -577,7 +524,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               <span
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(13px, 3.4vw, 24px)",
+                  fontSize: "clamp(12px, 3.2vw, 18px)",
                   fontWeight: 500,
                   color: "#E8BA59",
                   whiteSpace: "nowrap",
@@ -594,7 +541,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                  width: "clamp(15px, 3.8vw, 26px)",
+                  width: "clamp(14px, 3.4vw, 22px)",
                   height: "auto",
                   flexShrink: 0,
                 }}
@@ -610,11 +557,11 @@ export default function Hero({ onNavigate }: HeroProps) {
               onClick={() => onNavigate?.("perfumes")}
               className="w-full flex items-center justify-between cursor-pointer transition-all duration-200 active:scale-[0.98]"
               style={{
-                height: "clamp(40px, 9.6vw, 72px)",
+                height: "clamp(36px, 8.8vw, 50px)",
                 backgroundColor: "#FAEEE8",
                 border: "1.5px solid #9D672F",
-                borderRadius: "16px",
-                padding: "0 clamp(16px, 4.0vw, 32px)",
+                borderRadius: "14px",
+                padding: "0 18px",
                 boxSizing: "border-box",
                 boxShadow: "0 2px 8px rgba(157, 103, 47, 0.08)",
               }}
@@ -622,7 +569,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               <span
                 style={{
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(15px, 3.8vw, 27px)",
+                  fontSize: "clamp(13.5px, 3.5vw, 20px)",
                   fontWeight: 500,
                   color: "#2B1B43",
                   whiteSpace: "nowrap",
@@ -639,7 +586,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                  width: "clamp(15px, 3.8vw, 26px)",
+                  width: "clamp(14px, 3.4vw, 22px)",
                   height: "auto",
                   flexShrink: 0,
                 }}
@@ -648,31 +595,6 @@ export default function Hero({ onNavigate }: HeroProps) {
                 <polyline points="16 1 22 6 16 11" />
               </svg>
             </button>
-          </div>
-
-          {/* 7. Bottom Double-Chevron Downward Indicator */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center select-none pointer-events-none"
-            style={{
-              top: "96.40%",
-            }}
-            aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 24 14"
-              fill="none"
-              stroke="#D6A94F"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                width: "clamp(16px, 3.8vw, 28px)",
-                height: "auto",
-              }}
-            >
-              <polyline points="4 2 12 8 20 2" />
-              <polyline points="4 7 12 13 20 7" />
-            </svg>
           </div>
 
         </div>

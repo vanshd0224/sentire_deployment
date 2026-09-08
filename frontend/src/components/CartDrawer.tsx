@@ -269,7 +269,7 @@ export default function CartDrawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-stretch justify-end"
+      className="fixed inset-0 z-[999999] flex items-stretch justify-end overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Shopping Bag"
@@ -307,7 +307,7 @@ export default function CartDrawer({
           isClosing
             ? "translate-x-full opacity-90"
             : "cart-mobile-drawer-enter md:cart-salon-enter",
-          "overflow-hidden",
+          "overflow-hidden shadow-2xl",
         ].join(" ")}
       >
         {/* ══ HEADER ══════════════════════════════════════════════════ */}
