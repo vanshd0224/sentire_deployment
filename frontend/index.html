@@ -83,6 +83,9 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Mobile Hero Preload for Instant Instagram In-App Browser FCP -->
+    <link rel="preload" as="image" href="/images/mobile-hero-krishna.webp?v=v2_clean" type="image/webp" media="(max-width: 900px)" />
+    <link rel="preload" as="image" href="/images/hero-krishna-desktop.webp?v=v2_clean" type="image/webp" media="(min-width: 901px)" />
 
     <!-- Pre-rendered Master JSON-LD Structured Data Graph -->
     <script type="application/ld+json" id="sentire-dynamic-jsonld">
@@ -232,10 +235,17 @@
       html, body {
         background-color: #050505 !important;
         color: #f5f0e8 !important;
+        -webkit-tap-highlight-color: transparent;
       }
       #root {
         background-color: #050505 !important;
         min-height: 100vh;
+      }
+      /* Hardware Acceleration for Instagram In-App Browser 60FPS Rendering */
+      .hero-section, img, video, section {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
       }
     </style>
   </head>
