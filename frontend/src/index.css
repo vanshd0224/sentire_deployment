@@ -1125,3 +1125,26 @@ html, body {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ULTRA HIGH-FPS GPU ACCELERATION & DOM COMPOSITOR ENGINE
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. Force Dedicated GPU Layer Compositing for Modals & Fixed Layers */
+.glass-bottom-sheet,
+.glass-card-luxury,
+.fixed,
+.sticky {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* 2. Off-screen DOM Render Deferral for Ultra Smooth Mobile Scroll */
+@media (max-width: 768px) {
+  .shadow-2xl, .shadow-xl, .shadow-lg {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22) !important;
+  }
+}
+
+
