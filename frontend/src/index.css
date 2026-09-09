@@ -1086,3 +1086,42 @@ a {
 .sentire-checkout-btn:hover::before {
   animation: luxeLightSweep 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   INSTAGRAM IN-APP BROWSER (WEBVIEW) HARDENING SUITE
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. Dynamic Viewport Height & Overscroll Bouncing Fix */
+html, body {
+  min-height: 100dvh;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. Contain Modal Scrolling inside Instagram WebView Container */
+.glass-bottom-sheet,
+.glass-card-luxury,
+[role="dialog"],
+.modal-scroll-surface {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* 3. Disable Auto-Zoom on Form Focus in iOS / Instagram WebView */
+@media screen and (max-width: 767px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* 4. Optimize GPU Backdrop Blur Filters on Mobile WebViews */
+@media (max-width: 768px) {
+  .backdrop-blur-xl,
+  .backdrop-blur-lg,
+  .backdrop-blur-md {
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+}
+
