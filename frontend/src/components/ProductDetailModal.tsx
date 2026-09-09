@@ -405,8 +405,8 @@ export default function ProductDetailModal({
       <div ref={modalContainerRef} className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#c89b5a]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1e1e1e] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury">
         {/* Mobile Drag Handle Bar */}
         <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />
-        {/* Sticky Header Action Buttons (Close Button + Share Button directly below it) */}
-        <div className="sticky top-4 right-4 z-30 float-right flex flex-col items-center gap-2.5">
+        {/* Header Action Buttons (Close Button + Share Button directly below it) */}
+        <div className="absolute top-4 right-4 z-30 flex flex-col items-center gap-2.5">
           {/* 1. Close Button (✕) */}
           <button
             onClick={onClose}
@@ -437,7 +437,7 @@ export default function ProductDetailModal({
         </div>
 
         {/* ── BREADCRUMB ── */}
-        <div className="px-6 pt-6 pb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#1e1e1e]/40">
+        <div className="px-6 pt-6 pb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#1e1e1e]/40 pr-16">
           <span>Home</span> <span className="mx-1.5">•</span> <span>Fragrances</span> <span className="mx-1.5">•</span>{" "}
           <span className="text-[#c89b5a] font-bold">{product.name}</span>
         </div>
@@ -448,7 +448,7 @@ export default function ProductDetailModal({
           <div className="lg:col-span-6 space-y-6">
             {/* Main Featured Image Box with Touch Swipe & Click-to-Zoom Lightbox */}
             <div
-              className="relative aspect-square sm:aspect-[4/5] w-full max-w-[320px] sm:max-w-none mx-auto overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md select-none cursor-zoom-in"
+              className="relative aspect-square sm:aspect-[4/5] w-full max-w-[340px] sm:max-w-none mx-auto overflow-hidden rounded-3xl bg-[#120e0a] border border-[#c89b5a]/30 p-2 sm:p-4 flex items-center justify-center group shadow-xl select-none cursor-zoom-in"
               onClick={() => {
                 setIsLightboxOpen(true);
                 setIsZoomed(false);
@@ -462,7 +462,7 @@ export default function ProductDetailModal({
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                 loading="eager"
                 decoding="sync"
-                className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
+                className="h-full w-full object-cover sm:object-contain rounded-2xl transition-transform duration-500 ease-out group-hover:scale-105"
               />
 
               {/* Navigation Arrows for Desktop */}
