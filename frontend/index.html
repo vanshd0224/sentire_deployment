@@ -9,8 +9,15 @@
     <meta http-equiv="Expires" content="0" />
     <script>
       (function() {
+        // Force full network reload if page was restored from Instagram WebView Back-Forward Memory Cache (BF Cache)
+        window.addEventListener('pageshow', function(e) {
+          if (e && e.persisted) {
+            window.location.reload(true);
+          }
+        });
+
         var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent);
-        var targetVer = 'v18_force_refresh';
+        var targetVer = 'v19_bfcache_purge';
         if (isIG && sessionStorage.getItem('sentire_ig_ver') !== targetVer) {
           sessionStorage.setItem('sentire_ig_ver', targetVer);
           if ('caches' in window) {
@@ -21,7 +28,7 @@
             }).catch(function() {});
           }
           var url = new URL(window.location.href);
-          url.searchParams.set('_v', '18');
+          url.searchParams.set('_v', '19');
           window.location.replace(url.toString());
           return;
         }
