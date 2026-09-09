@@ -421,7 +421,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
                 >
                   {isMuted ? "🔇" : "🔊"}
                 </button>
-                <audio ref={audioRef} src="/audio/watch-ambient.wav" loop preload="auto" />
+                <audio ref={audioRef} src="/audio/watch-ambient.wav" loop preload="none" />
                 <button
                   onClick={() => setActiveReelIndex(null)}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-[#c89b5a] hover:text-black transition-colors cursor-pointer shadow-md"
