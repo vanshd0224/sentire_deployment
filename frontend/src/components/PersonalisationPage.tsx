@@ -387,7 +387,7 @@ export default function PersonalisationPage({
   const MAX_CHARS  = 20;
 
   return (
-    <div className="min-h-screen w-full bg-[#0d0906] text-[#f8f5f1] selection:bg-[#c89b5a] selection:text-black">
+    <div className="min-h-screen w-full bg-[#0d0906] text-[#f8f5f1] selection:bg-[#c89b5a] selection:text-black pb-32 sm:pb-16">
 
       {/* ── HERO INTRO ─────────────────────────────────────────── */}
       <div className="relative border-b border-[#c89b5a]/20 bg-[#0d0906] pt-8 pb-10 text-center overflow-hidden">

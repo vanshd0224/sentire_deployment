@@ -1280,7 +1280,10 @@ export default function ProductDetailModal({
         </div>
 
         {/* ── STICKY MOBILE COMMERCE ACTION BAR ── */}
-        <div className="sticky bottom-0 left-0 right-0 z-40 flex items-center justify-between border-t border-[#c89b5a]/30 bg-[#120e0a] px-4 py-3 text-white shadow-2xl md:hidden">
+        <div
+          className="sticky left-0 right-0 z-40 flex items-center justify-between border-t border-[#c89b5a]/30 bg-[#120e0a] px-4 py-3 text-white shadow-2xl md:hidden"
+          style={{ bottom: "calc(68px + env(safe-area-inset-bottom, 8px))" }}
+        >
           <div>
             <span className="text-[9px] font-bold uppercase tracking-wider text-[#c89b5a] block">
               {product.name} • {selectedSize}ML

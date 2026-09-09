@@ -1383,7 +1383,10 @@ export default function DiscoverySetPage({
           STICKY MOBILE PURCHASE BAR (Appears on Scroll)
       ───────────────────────────────────────────────────────────── */}
       {showStickyBar && (
-        <div className="fixed bottom-0 inset-x-0 z-40 bg-[#0b0907]/95 backdrop-blur-xl border-t border-[#c89b5a]/40 p-3 sm:p-4 text-white shadow-2xl transition-all animate-fadeIn">
+        <div
+          className="fixed left-0 right-0 z-40 bg-[#0b0907]/95 backdrop-blur-xl border-t border-[#c89b5a]/40 p-3 sm:p-4 text-white shadow-2xl transition-all animate-fadeIn"
+          style={{ bottom: "calc(68px + env(safe-area-inset-bottom, 8px))" }}
+        >
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <img

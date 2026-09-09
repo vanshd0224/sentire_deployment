@@ -847,8 +847,11 @@ export default function ByobPage({
         </div>
       )}
 
-      {/* ── MOBILE STICKY BOTTOM HUD (Docked at bottom-[64px]) ── */}
-      <div className="lg:hidden fixed bottom-[64px] left-0 right-0 z-30 border-t border-black/10 bg-white/95 px-5 py-3 backdrop-blur-md flex items-center justify-between shadow-lg">
+      {/* ── MOBILE STICKY BOTTOM HUD ── */}
+      <div
+        className="lg:hidden fixed left-0 right-0 z-30 border-t border-black/10 bg-white/95 px-5 py-3 backdrop-blur-md flex items-center justify-between shadow-lg"
+        style={{ bottom: "calc(68px + env(safe-area-inset-bottom, 8px))" }}
+      >
         <div>
           <span className="block text-[9px] font-bold uppercase tracking-wider text-[#a97f43]">
             {filledCount}/{bundleSize} FILLED • SAVE ₹{discount}
