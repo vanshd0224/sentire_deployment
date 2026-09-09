@@ -722,7 +722,15 @@ export default function Navbar({
           <div className="relative w-4/5 max-w-sm bg-[#faf7f2] h-full shadow-2xl p-6 flex flex-col justify-between animate-drawerSlideInLeft border-r border-[#c89b5a]/30 overflow-y-auto">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-black/10">
-                <SentireLogo variant="navbar" theme="light" />
+                <SentireLogo
+                  variant="navbar"
+                  theme="light"
+                  onClick={() => {
+                    setMobileNavOpen(false);
+                    onNavigate?.("home");
+                  }}
+                  className="cursor-pointer"
+                />
                 <button
                   onClick={() => setMobileNavOpen(false)}
                   className="h-9 w-9 rounded-full bg-black/5 flex items-center justify-center text-ink cursor-pointer"
