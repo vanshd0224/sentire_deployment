@@ -1115,13 +1115,19 @@ html, body {
   }
 }
 
-/* 4. Lightweight Mobile Shadow & Blur Optimizations */
+/* 4. Eliminate GPU Tile Drops & Screen Blinking in Instagram WebView */
 @media (max-width: 768px) {
+  .backdrop-blur-2xl,
   .backdrop-blur-xl,
   .backdrop-blur-lg,
-  .backdrop-blur-md {
-    -webkit-backdrop-filter: blur(4px) !important;
-    backdrop-filter: blur(4px) !important;
+  .backdrop-blur-md,
+  .backdrop-blur-sm,
+  .backdrop-blur-xs,
+  .glass-backdrop-luxury,
+  .glass-drawer-luxury,
+  .glass-card-luxury {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
   .shadow-2xl, .shadow-xl, .shadow-lg {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22) !important;

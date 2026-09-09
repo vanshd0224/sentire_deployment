@@ -92,13 +92,13 @@ export default function PerfumesPage({
       try {
         const targetUrl = `/perfumes/${selectedDetailProduct.id}`;
         if (window.location.pathname !== targetUrl) {
-          window.history.pushState(null, "", targetUrl);
+          window.history.replaceState(null, "", targetUrl);
         }
       } catch (e) {}
     } else {
       if (window.location.pathname.startsWith("/perfumes/") && window.location.pathname !== "/perfumes") {
         try {
-          window.history.pushState(null, "", "/perfumes");
+          window.history.replaceState(null, "", "/perfumes");
         } catch (e) {}
       }
     }

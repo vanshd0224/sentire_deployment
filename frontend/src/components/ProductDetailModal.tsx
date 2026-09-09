@@ -397,7 +397,7 @@ export default function ProductDetailModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 backdrop-blur-sm sm:backdrop-blur-md transition-all duration-300 animate-in fade-in">
+    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 transition-all">
       {/* Click backdrop to close */}
       <div className="fixed inset-0" onClick={onClose} />
 
