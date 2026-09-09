@@ -54,6 +54,13 @@ export default function ProductDetailModal({
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  useEffect(() => {
+    document.body.classList.add("product-modal-open");
+    return () => {
+      document.body.classList.remove("product-modal-open");
+    };
+  }, []);
+
   const handleShare = async (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (!product) return;
@@ -1281,8 +1288,7 @@ export default function ProductDetailModal({
 
         {/* ── STICKY MOBILE COMMERCE ACTION BAR ── */}
         <div
-          className="sticky left-0 right-0 z-40 flex items-center justify-between border-t border-[#c89b5a]/30 bg-[#120e0a] px-4 py-3 text-white shadow-2xl md:hidden"
-          style={{ bottom: "calc(68px + env(safe-area-inset-bottom, 8px))" }}
+          className="sticky left-0 right-0 bottom-0 z-40 flex items-center justify-between border-t border-[#c89b5a]/30 bg-[#120e0a] px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom,12px))] text-white shadow-2xl md:hidden"
         >
           <div>
             <span className="text-[9px] font-bold uppercase tracking-wider text-[#c89b5a] block">

@@ -1134,5 +1134,10 @@ html, body {
   }
 }
 
+/* 5. Hide AI Chatbot trigger when Product Detail Modal is open to prevent CTA collisions */
+body.product-modal-open #sentire-suite-container {
+  display: none !important;
+}
+
 
 
