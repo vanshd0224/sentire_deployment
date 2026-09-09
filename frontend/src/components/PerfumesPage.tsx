@@ -786,14 +786,14 @@ export default function PerfumesPage({
                 <div className="lg:col-span-5 flex justify-center w-full">
                   <div
                     onClick={() => setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)}
-                    className="relative aspect-square w-full max-w-[280px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#c89b5a]/30 bg-[#14100b] p-3 sm:p-4 shadow-2xl group cursor-pointer"
+                    className="relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#c89b5a]/40 bg-[#0a0705] shadow-2xl group cursor-pointer"
                   >
                     <img
                       src={"/assets/purple-oud-banner.png?v=6"}
                       alt="Sentire Purple Oud 50ml limited edition extrait de parfum with 35%+ perfume oil concentration and laser bottle engraving"
                       width="400"
                       height="400"
-                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 </div>

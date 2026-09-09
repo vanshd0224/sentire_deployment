@@ -1100,12 +1100,6 @@ html, body {
   overscroll-behavior-y: auto;
 }
 
-/* 2. Offscreen section containment for Instagram WebView 60FPS scroll */
-section:not(.hero-section) {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 400px;
-}
-
 /* 2. Modal Touch Scroll Surfaces */
 .glass-bottom-sheet,
 .glass-card-luxury,
