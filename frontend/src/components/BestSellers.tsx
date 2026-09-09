@@ -167,7 +167,7 @@ export default function BestSellers({
                   </a>
 
                   <div className="mt-2 sm:mt-3 text-center">
-                    <h3 className="font-display text-xs sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-tight">
+                    <h3 className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-snug truncate block w-full">
                       <a
                         href={`/perfumes?id=${p.id}`}
                         onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
@@ -179,12 +179,12 @@ export default function BestSellers({
                     <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
 
-                  <div className="flex justify-center gap-1 sm:gap-1.5 my-1.5 sm:my-2">
+                  <div className="flex items-center justify-center gap-1 my-2 w-full max-w-full">
                     {availableSizes.map((sz) => (
                       <button
                         key={sz}
                         onClick={() => handleSizeSelect(p.id, sz)}
-                        className={`rounded px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[8px] sm:text-[9px] font-bold border transition-all cursor-pointer ${
+                        className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
                           currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
                         }`}
                       >

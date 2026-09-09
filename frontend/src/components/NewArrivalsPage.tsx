@@ -350,18 +350,18 @@ export default function NewArrivalsPage({
                   </div>
 
                   <div className="mt-3 text-center">
-                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-lg font-bold text-ink cursor-pointer hover:text-[#c89b5a]">
+                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-snug truncate block w-full">
                       {p.name}
                     </h3>
                     <p className="text-xs text-ink/60 truncate mt-0.5">{p.notes}</p>
                   </div>
 
-                  <div className="flex justify-center gap-1 sm:gap-1.5 my-3 w-full overflow-hidden px-0.5">
+                  <div className="flex items-center justify-center gap-1 my-2.5 w-full max-w-full">
                     {availableSizes.map((sz) => (
                       <button
                         key={sz}
                         onClick={() => setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))}
-                        className={`rounded px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[9.5px] font-bold border transition-all cursor-pointer shrink-0 ${
+                        className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
                           currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
                         }`}
                       >

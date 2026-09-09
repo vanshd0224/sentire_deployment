@@ -551,7 +551,7 @@ a {
 
   /* Bottom nav safe area — 68px nav + env inset */
   .mobile-page-padding {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
   }
 
   .touch-target-min {

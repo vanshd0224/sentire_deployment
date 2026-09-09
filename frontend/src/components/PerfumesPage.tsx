@@ -283,7 +283,7 @@ export default function PerfumesPage({
           {/* Details */}
           <div className="mt-3 text-center">
             <h3
-              className="font-sans text-xs sm:text-sm font-bold uppercase tracking-wider text-ink hover:text-[#c89b5a] transition-colors cursor-pointer inline-block truncate max-w-full"
+              className="font-sans text-[11px] sm:text-sm font-bold uppercase tracking-wide text-ink hover:text-[#c89b5a] transition-colors cursor-pointer block truncate w-full"
               title={`View info for ${p.name}`}
             >
               <a
@@ -312,7 +312,7 @@ export default function PerfumesPage({
             </button>
 
             {/* Size Pills */}
-            <div className="flex items-center justify-center gap-1 sm:gap-1.5 my-2 w-full overflow-hidden px-0.5">
+            <div className="flex items-center justify-center gap-1 my-2 w-full max-w-full">
               {p.sizes.map((sz) => {
                 const isSizeOut = Boolean(p.outOfStockSizes?.includes(sz as any));
                 const isSelected = currentSize === sz;
@@ -323,7 +323,7 @@ export default function PerfumesPage({
                       key={sz}
                       disabled
                       type="button"
-                      className="rounded px-1.5 sm:px-2 py-0.5 sm:py-1 text-[8.5px] sm:text-[9.5px] font-semibold tracking-wider bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none shrink-0"
+                      className="rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-semibold tracking-tight bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none shrink-0"
                       title="Out of stock in this size"
                     >
                       {sz}ML
@@ -339,7 +339,7 @@ export default function PerfumesPage({
                       e.stopPropagation();
                       handleProductSizeSelect(p.id, sz);
                     }}
-                    className={`rounded px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[9.5px] font-semibold tracking-wider border transition-all cursor-pointer shrink-0 ${
+                    className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-semibold tracking-tight border transition-all cursor-pointer shrink-0 ${
                       isSelected
                         ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907] font-bold shadow-xs scale-102"
                         : "bg-[#fdfbf7] text-[#1e1e1e] border-black/15 hover:border-[#c89b5a] hover:text-[#c89b5a]"
