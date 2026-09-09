@@ -311,7 +311,7 @@ export default function CartDrawer({
             : undefined,
         }}
         className={[
-          "relative z-10 flex flex-col h-full max-h-full min-h-0",
+          "absolute top-0 bottom-0 right-0 z-10 flex flex-col h-full",
           "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
           "cart-drawer-surface bg-[#F8F4EC]",
           "rounded-none",
@@ -375,7 +375,7 @@ export default function CartDrawer({
         </header>
 
         {/* ── Scrollable body ───────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-72 md:pb-60">
+        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-12 md:pb-16">
 
           {/* ══ DELIVERY PRIVILEGE ══════════════════════════════════ */}
           <div className="cart-delivery-band px-5 md:px-6 py-3.5 md:py-4 salon-stagger-2">
