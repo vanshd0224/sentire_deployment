@@ -311,9 +311,9 @@ export default function CartDrawer({
             : undefined,
         }}
         className={[
-          "relative z-10 flex flex-col h-full max-h-full min-h-0",
+          "relative z-10 flex flex-col h-full h-[100dvh]",
           "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
-          "cart-drawer-surface",
+          "cart-drawer-surface bg-[#F8F4EC]",
           "rounded-none",
           isClosing
             ? "translate-x-full opacity-90"
@@ -375,7 +375,7 @@ export default function CartDrawer({
         </header>
 
         {/* ── Scrollable body ───────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0">
+        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-12">
 
           {/* ══ DELIVERY PRIVILEGE ══════════════════════════════════ */}
           <div className="cart-delivery-band px-5 md:px-6 py-3.5 md:py-4 salon-stagger-2">
@@ -752,7 +752,7 @@ export default function CartDrawer({
 
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface px-5 md:px-6 pt-3.5 md:pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] md:pb-5 shrink-0 salon-stagger-5 border-t border-black/8">
+          <footer className="cart-footer-surface bg-[#F8F4EC] relative z-20 px-5 md:px-6 pt-3.5 md:pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
             {/* Promo Code Input & Badges */}
             <div className="mb-3">
               <div className="flex items-center justify-between mb-1">
