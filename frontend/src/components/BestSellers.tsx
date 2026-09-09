@@ -200,10 +200,10 @@ export default function BestSellers({
                 </div>
 
                 {qty > 0 ? (
-                  <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 sm:px-2 py-1 sm:py-1.5">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a]">−</button>
-                    <span className="text-[8px] sm:text-[10px] font-bold text-[#e2c48e]">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a]">+</button>
+                  <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 sm:px-2 py-1 sm:py-1.5 min-w-0">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a] shrink-0">−</button>
+                    <span className="text-[8.5px] sm:text-[10px] font-bold text-[#e2c48e] truncate px-0.5">{qty} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a] shrink-0">+</button>
                   </div>
                 ) : (
                   <button
@@ -211,7 +211,7 @@ export default function BestSellers({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-2 sm:mt-3 w-full rounded-md bg-[#0b0907] py-1.5 sm:py-2 text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
+                    className="mt-2 sm:mt-3 w-full rounded-md bg-[#0b0907] py-1.5 sm:py-2 px-1 text-[8.5px] sm:text-[10px] font-bold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
                   >
                     Add to Bag
                   </button>

@@ -361,23 +361,23 @@ export default function PerfumesPage({
           </div>
 
           {isOutOfStock ? (
-            <button disabled className="mt-2 w-full rounded-md bg-stone-200 py-2 text-[10px] font-bold uppercase tracking-widest text-stone-400 cursor-not-allowed">
+            <button disabled className="mt-2 w-full rounded-md bg-stone-200 py-2 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-stone-400 cursor-not-allowed">
               Out of Stock
             </button>
           ) : qtyInBag > 0 ? (
-            <div className="mt-2 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-2 py-1.5 shadow-xs">
+            <div className="mt-2 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 py-1 sm:px-2 sm:py-1.5 shadow-xs min-w-0">
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onUpdateCartQuantity?.(p.id, currentSize, -1);
                 }}
-                className="flex h-5 w-5 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
+                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
                 aria-label="Decrease quantity"
               >
                 −
               </button>
-              <span className="text-[10px] font-extrabold text-[#e2c48e] tracking-wider uppercase">
+              <span className="text-[8.5px] sm:text-[10px] font-extrabold text-[#e2c48e] tracking-tight uppercase truncate px-0.5">
                 {qtyInBag} IN BAG ({currentSize}ML)
               </span>
               <button
@@ -386,7 +386,7 @@ export default function PerfumesPage({
                   e.stopPropagation();
                   onUpdateCartQuantity?.(p.id, currentSize, 1);
                 }}
-                className="flex h-5 w-5 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
+                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
                 aria-label="Increase quantity"
               >
                 +
@@ -400,7 +400,7 @@ export default function PerfumesPage({
                 onAddToCart?.({ id: p.id, name: p.name, num: p.num, img: p.img }, currentSize, currentPrice);
                 showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
               }}
-              className="mt-2 w-full rounded-md bg-[#0b0907] py-2 text-[10px] font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all shadow-xs border border-[#c89b5a]/40 cursor-pointer"
+              className="mt-2 w-full rounded-md bg-[#0b0907] py-2 px-1 text-[8.5px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all shadow-xs border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
             >
               Add to Bag
             </button>
@@ -678,7 +678,7 @@ export default function PerfumesPage({
       </section>
 
       {/* ── MAIN CONTENT CONTAINER (FULL WIDTH RESPONSIVE GRID) ── */}
-      <main className="mx-auto max-w-[1400px] px-2.5 sm:px-6 lg:px-16 py-2 sm:py-12 space-y-6 sm:space-y-16">
+      <main className="mx-auto max-w-[1400px] px-2.5 sm:px-6 lg:px-16 py-2 sm:py-12 space-y-6 sm:space-y-16 pb-32 sm:pb-16">
         {/* UNIFIED GRID WHEN A SIZE FILTER IS ACTIVE */}
         {selectedSizes.length > 0 ? (
           <section className="space-y-8">

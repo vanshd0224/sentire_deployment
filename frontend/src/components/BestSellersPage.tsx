@@ -191,7 +191,7 @@ export default function BestSellersPage({
         </div>
       )}
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-32 sm:pb-20">
         {/* Breadcrumb matching Screenshot 111 */}
         <div className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wider text-ink/50 uppercase">
           <button onClick={onBackToHome} className="hover:text-[#c89b5a] transition-colors cursor-pointer">
@@ -391,10 +391,10 @@ export default function BestSellersPage({
                 </div>
 
                 {qty > 0 ? (
-                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-3 py-2">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-sm font-bold text-[#c89b5a]">−</button>
-                    <span className="text-xs font-bold text-[#e2c48e]">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-sm font-bold text-[#c89b5a]">+</button>
+                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 py-1 sm:px-3 sm:py-2 min-w-0">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs sm:text-sm font-bold text-[#c89b5a] shrink-0">−</button>
+                    <span className="text-[8.5px] sm:text-xs font-bold text-[#e2c48e] truncate px-0.5">{qty} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs sm:text-sm font-bold text-[#c89b5a] shrink-0">+</button>
                   </div>
                 ) : (
                   <button
@@ -402,7 +402,7 @@ export default function BestSellersPage({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2.5 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer"
+                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 sm:py-2.5 px-1 text-[8.5px] sm:text-xs font-bold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
                   >
                     Add to Bag
                   </button>
