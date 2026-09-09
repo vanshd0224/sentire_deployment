@@ -9,6 +9,23 @@
     <meta http-equiv="Expires" content="0" />
     <script>
       (function() {
+        var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent);
+        var targetVer = 'v17_force_refresh';
+        if (isIG && sessionStorage.getItem('sentire_ig_ver') !== targetVer) {
+          sessionStorage.setItem('sentire_ig_ver', targetVer);
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              for (var name of names) {
+                caches.delete(name);
+              }
+            }).catch(function() {});
+          }
+          var url = new URL(window.location.href);
+          url.searchParams.set('_v', '17');
+          window.location.replace(url.toString());
+          return;
+        }
+
         // Automatically unregister legacy service workers and purge stale disk caches
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.getRegistrations().then(function(registrations) {
