@@ -17,7 +17,7 @@
         });
 
         var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent);
-        var targetVer = 'v19_bfcache_purge';
+        var targetVer = 'v20_bfcache_purge';
         if (isIG && sessionStorage.getItem('sentire_ig_ver') !== targetVer) {
           sessionStorage.setItem('sentire_ig_ver', targetVer);
           if ('caches' in window) {
@@ -28,7 +28,7 @@
             }).catch(function() {});
           }
           var url = new URL(window.location.href);
-          url.searchParams.set('_v', '19');
+          url.searchParams.set('_v', '20');
           window.location.replace(url.toString());
           return;
         }

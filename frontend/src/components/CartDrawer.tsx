@@ -777,11 +777,11 @@ export default function CartDrawer({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 bg-black/5 border border-black/15 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907] h-7 sm:h-8"
+                      className="flex-1 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-normal sm:tracking-wider text-[#0B0907] h-6 sm:h-8"
                     />
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-3 py-1 text-[10px] font-semibold uppercase tracking-wider cursor-pointer h-7 sm:h-8"
+                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
                     >
                       Apply
                     </button>
