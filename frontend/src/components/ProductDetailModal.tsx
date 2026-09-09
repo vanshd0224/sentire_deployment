@@ -448,7 +448,7 @@ export default function ProductDetailModal({
           <div className="lg:col-span-6 space-y-6">
             {/* Main Featured Image Box with Touch Swipe & Click-to-Zoom Lightbox */}
             <div
-              className="relative aspect-square sm:aspect-[4/5] max-h-60 sm:max-h-96 w-full overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md select-none cursor-zoom-in"
+              className="relative aspect-square sm:aspect-[4/5] w-full max-w-[320px] sm:max-w-none mx-auto overflow-hidden rounded-3xl bg-gradient-to-b from-[#f5efe6] to-[#ebe3d5] border border-black/8 p-3 sm:p-6 flex items-center justify-center group shadow-md select-none cursor-zoom-in"
               onClick={() => {
                 setIsLightboxOpen(true);
                 setIsZoomed(false);
@@ -460,9 +460,8 @@ export default function ProductDetailModal({
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
-                width="500"
-                height="600"
-                decoding="async"
+                loading="eager"
+                decoding="sync"
                 className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
               />
 
