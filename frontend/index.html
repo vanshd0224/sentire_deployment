@@ -10,7 +10,7 @@
     <script>
       (function() {
         var isIG = /Instagram|FBAN|FBAV/i.test(navigator.userAgent);
-        var targetVer = 'v17_force_refresh';
+        var targetVer = 'v18_force_refresh';
         if (isIG && sessionStorage.getItem('sentire_ig_ver') !== targetVer) {
           sessionStorage.setItem('sentire_ig_ver', targetVer);
           if ('caches' in window) {
@@ -21,7 +21,7 @@
             }).catch(function() {});
           }
           var url = new URL(window.location.href);
-          url.searchParams.set('_v', '17');
+          url.searchParams.set('_v', '18');
           window.location.replace(url.toString());
           return;
         }

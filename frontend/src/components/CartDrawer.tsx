@@ -606,28 +606,10 @@ export default function CartDrawer({
                           {/* Info */}
                           <div className="flex-1 min-w-0 pt-0.5">
 
-                            {/* Reference number */}
-                            {item.num && (
-                              <p
-                                style={{
-                                  fontFamily: "var(--font-sans)",
-                                  fontSize: "8px",
-                                  fontWeight: 600,
-                                  letterSpacing: "0.18em",
-                                  textTransform: "uppercase",
-                                  color: "#C89A46",
-                                  marginBottom: "2px",
-                                }}
-                              >
-                                {item.num}
-                              </p>
-                            )}
-
                             {/* Product name */}
                             <h3
-                              className="font-display leading-tight truncate"
+                              className="font-display leading-tight truncate text-[15px] sm:text-[17px]"
                               style={{
-                                fontSize: "17px",
                                 fontWeight: 400,
                                 color: "#0B0907",
                                 letterSpacing: "-0.01em",
