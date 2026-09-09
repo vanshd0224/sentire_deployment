@@ -311,7 +311,7 @@ export default function CartDrawer({
             : undefined,
         }}
         className={[
-          "relative z-10 flex flex-col h-full h-[100dvh]",
+          "relative z-10 flex flex-col h-full max-h-full min-h-0",
           "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
           "cart-drawer-surface bg-[#F8F4EC]",
           "rounded-none",

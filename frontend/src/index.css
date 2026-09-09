@@ -906,6 +906,13 @@ a {
   border-bottom: 1px solid rgba(25, 20, 15, 0.12);
 }
 
+.cart-footer-surface {
+  background: #F8F4EC !important;
+  border-top: 1px solid rgba(25, 20, 15, 0.12);
+  position: relative;
+  z-index: 20;
+}
+
 .sentire-close-btn {
   width: 40px;
   height: 40px;
