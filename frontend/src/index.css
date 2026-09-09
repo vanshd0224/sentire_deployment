@@ -1088,24 +1088,22 @@ a {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   INSTAGRAM IN-APP BROWSER (WEBVIEW) HARDENING SUITE
+   MOBILE & INSTAGRAM IN-APP BROWSER TOUCH SCROLL SUITE
    ═══════════════════════════════════════════════════════════ */
 
-/* 1. Dynamic Viewport Height & Overscroll Bouncing Fix */
+/* 1. Dynamic Viewport & Native Smooth Touch Scrolling */
 html, body {
   min-height: 100dvh;
-  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 2. Contain Modal Scrolling inside Instagram WebView Container */
+/* 2. Modal Touch Scroll Surfaces */
 .glass-bottom-sheet,
 .glass-card-luxury,
 [role="dialog"],
 .modal-scroll-surface {
-  overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
 }
 
 /* 3. Disable Auto-Zoom on Form Focus in iOS / Instagram WebView */
@@ -1115,7 +1113,7 @@ html, body {
   }
 }
 
-/* 4. Optimize GPU Backdrop Blur Filters on Mobile WebViews */
+/* 4. Lightweight Mobile Shadow & Blur Optimizations */
 @media (max-width: 768px) {
   .backdrop-blur-xl,
   .backdrop-blur-lg,
@@ -1123,28 +1121,10 @@ html, body {
     -webkit-backdrop-filter: blur(4px) !important;
     backdrop-filter: blur(4px) !important;
   }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   ULTRA HIGH-FPS GPU ACCELERATION & DOM COMPOSITOR ENGINE
-   ═══════════════════════════════════════════════════════════ */
-
-/* 1. Force Dedicated GPU Layer Compositing for Modals & Fixed Layers */
-.glass-bottom-sheet,
-.glass-card-luxury,
-.fixed,
-.sticky {
-  will-change: transform;
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-/* 2. Off-screen DOM Render Deferral for Ultra Smooth Mobile Scroll */
-@media (max-width: 768px) {
   .shadow-2xl, .shadow-xl, .shadow-lg {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22) !important;
   }
 }
+
 
 
