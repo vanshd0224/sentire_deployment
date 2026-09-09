@@ -158,7 +158,7 @@ export default function BestSellers({
                     <img
                       src={displayImage}
                       alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
                       width="300"
                       height="300"

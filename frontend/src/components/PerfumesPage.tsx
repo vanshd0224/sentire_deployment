@@ -268,7 +268,8 @@ export default function PerfumesPage({
             <img
               src={(p.sizeImages && (p.sizeImages[currentSize]?.[0] || (p.sizeImages as any)[String(currentSize)]?.[0])) || p.img}
               alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
-              loading="lazy"
+              loading="eager"
+              decoding="async"
               width="300"
               height="300"
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"

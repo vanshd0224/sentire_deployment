@@ -343,7 +343,7 @@ export default function NewArrivalsPage({
                     onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
                     className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
-                    <img src={displayImage} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={displayImage} alt={p.name} loading="eager" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <span className="absolute top-2 left-2 rounded-full bg-[#c89b5a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
                       {p.badge}
                     </span>
