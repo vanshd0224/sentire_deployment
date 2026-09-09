@@ -375,7 +375,7 @@ export default function CartDrawer({
         </header>
 
         {/* ── Scrollable body ───────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-12">
+        <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-72 md:pb-60">
 
           {/* ══ DELIVERY PRIVILEGE ══════════════════════════════════ */}
           <div className="cart-delivery-band px-5 md:px-6 py-3.5 md:py-4 salon-stagger-2">
@@ -752,9 +752,9 @@ export default function CartDrawer({
 
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface bg-[#F8F4EC] relative z-20 px-5 md:px-6 pt-3.5 md:pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
+          <footer className="cart-footer-surface bg-[#F8F4EC] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
             {/* Promo Code Input & Badges */}
-            <div className="mb-3">
+            <div className="mb-2 md:mb-3">
               <div className="flex items-center justify-between mb-1">
                 <span
                   style={{
@@ -795,17 +795,17 @@ export default function CartDrawer({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 bg-black/5 border border-black/15 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907] h-8"
+                      className="flex-1 bg-black/5 border border-black/15 rounded px-2.5 py-1 text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-wider text-[#0B0907] h-7 sm:h-8"
                     />
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-3 py-1 text-[10px] font-semibold uppercase tracking-wider cursor-pointer h-8"
+                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-3 py-1 text-[10px] font-semibold uppercase tracking-wider cursor-pointer h-7 sm:h-8"
                     >
                       Apply
                     </button>
                   </div>
                   {/* Quick Code Pills */}
-                  <div className="flex items-center gap-1.5 mt-1.5">
+                  <div className="flex items-center gap-1.5 mt-1 md:mt-1.5">
                     <button
                       onClick={() => handleApplyCoupon("PC100")}
                       className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
@@ -839,7 +839,7 @@ export default function CartDrawer({
             </div>
 
             {/* Order Summary Rows */}
-            <div className="space-y-1.5 pt-1">
+            <div className="space-y-1 md:space-y-1.5 pt-0.5 md:pt-1">
               <div className="flex justify-between items-baseline">
                 <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(25,20,15,0.60)" }}>
                   Subtotal
@@ -876,9 +876,9 @@ export default function CartDrawer({
               </div>
             </div>
 
-            <div className="cart-summary-rule my-2.5" />
+            <div className="cart-summary-rule my-1.5 md:my-2.5" />
 
-            <div className="flex justify-between items-baseline mb-3">
+            <div className="flex justify-between items-baseline mb-2 md:mb-3">
               <span className="font-display" style={{ fontSize: "14px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}>
                 Estimated Total
               </span>
