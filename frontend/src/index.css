@@ -1094,8 +1094,16 @@ a {
 /* 1. Dynamic Viewport & Native Smooth Touch Scrolling */
 html, body {
   min-height: 100dvh;
+  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: auto;
+}
+
+/* 2. Offscreen section containment for Instagram WebView 60FPS scroll */
+section:not(.hero-section) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px;
 }
 
 /* 2. Modal Touch Scroll Surfaces */

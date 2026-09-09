@@ -68,6 +68,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     height="400"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     loading="lazy"
+                    decoding="async"
                   />
                   
                   {/* Gradient Scrim */}

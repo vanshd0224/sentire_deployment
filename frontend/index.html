@@ -236,16 +236,19 @@
         background-color: #050505 !important;
         color: #f5f0e8 !important;
         -webkit-tap-highlight-color: transparent;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
       }
       #root {
         background-color: #050505 !important;
         min-height: 100vh;
       }
-      /* Hardware Acceleration for Instagram In-App Browser 60FPS Rendering */
-      .hero-section, img, video, section {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        transform: translateZ(0);
+      /* Selective GPU compositing to prevent layer explosion in Instagram WebView */
+      .will-change-transform {
+        will-change: transform;
+      }
+      img {
+        content-visibility: auto;
       }
     </style>
   </head>

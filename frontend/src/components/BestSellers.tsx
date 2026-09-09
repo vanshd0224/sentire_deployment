@@ -159,6 +159,7 @@ export default function BestSellers({
                       src={displayImage}
                       alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                       loading="lazy"
+                      decoding="async"
                       width="300"
                       height="300"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

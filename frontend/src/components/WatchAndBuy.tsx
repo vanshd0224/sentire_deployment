@@ -344,6 +344,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart }: WatchAndBuyProp
                         alt={`Sentire ${reel.product} luxury fragrance application and sillage demonstration`}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
                         loading="lazy"
+                        decoding="async"
                         width="220"
                         height="330"
                       />

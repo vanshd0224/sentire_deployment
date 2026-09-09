@@ -98,6 +98,7 @@ export default function CelebrityReacts() {
                   alt={`Celebrity ${originalIndex + 1}`}
                   className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
+                  decoding="async"
                 />
 
                 {/* Subtle hover overlay highlight */}

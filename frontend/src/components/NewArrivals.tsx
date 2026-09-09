@@ -159,6 +159,7 @@ export default function NewArrivals({
                       src={displayImage}
                       alt={`Sentire ${p.name} new arrival extrait de parfum with 35%+ perfume oil concentration and bottle engraving`}
                       loading="lazy"
+                      decoding="async"
                       width="300"
                       height="300"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
