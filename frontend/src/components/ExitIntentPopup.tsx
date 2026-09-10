@@ -10,6 +10,12 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
 
   useEffect(() => {
+    // Preload image and logo into browser cache immediately on page load
+    const preloadImg1 = new Image();
+    preloadImg1.src = "/assets/sentire_purple_oud_popup.webp";
+    const preloadImg2 = new Image();
+    preloadImg2.src = "/assets/sentire-logo-official-transparent.png";
+
     // Check if dismissed within last 24 hours
     const lastDismissed = localStorage.getItem("sentire_popup_dismissed_v1");
     if (lastDismissed) {
