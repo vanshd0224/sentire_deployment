@@ -112,12 +112,12 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
             />
           </div>
 
-          {/* HEADLINE (Two lines: Dark + Red) */}
+          {/* HEADLINE (Two lines: Dark + Bold Red) */}
           <div className="mb-3 text-center">
-            <div className="font-serif text-[#1C1814] font-bold text-xs sm:text-sm tracking-wider uppercase leading-tight">
+            <div className="font-serif text-[#1C1814] font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase leading-tight">
               DON'T WORRY,
             </div>
-            <div className="font-serif text-[#9E2A2B] font-bold text-xs sm:text-sm tracking-wider uppercase leading-tight mt-0.5">
+            <div className="font-serif text-[#9E2A2B] font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase leading-tight mt-0.5" style={{ textShadow: "0 0.5px 0 #9E2A2B" }}>
               IT'S A SAFE ADDICTION.
             </div>
           </div>
