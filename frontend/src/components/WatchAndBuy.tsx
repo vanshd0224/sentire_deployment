@@ -178,6 +178,38 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Force all landing page carousel videos to play 100% reliably
+  useEffect(() => {
+    const playAllVideos = () => {
+      const videos = document.querySelectorAll<HTMLVideoElement>(".watch-carousel-video");
+      videos.forEach((v) => {
+        v.muted = true;
+        const p = v.play();
+        if (p !== undefined) {
+          p.catch(() => {});
+        }
+      });
+    };
+
+    playAllVideos();
+    const timer1 = setTimeout(playAllVideos, 300);
+    const timer2 = setTimeout(playAllVideos, 1000);
+    const interval = setInterval(playAllVideos, 2500);
+
+    window.addEventListener("scroll", playAllVideos, { passive: true });
+    window.addEventListener("touchstart", playAllVideos, { passive: true });
+    window.addEventListener("click", playAllVideos, { passive: true });
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearInterval(interval);
+      window.removeEventListener("scroll", playAllVideos);
+      window.removeEventListener("touchstart", playAllVideos);
+      window.removeEventListener("click", playAllVideos);
+    };
+  }, []);
+
   useEffect(() => {
     if (activeReelIndex !== null) {
       setIsMuted(false);
@@ -363,6 +395,13 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                       style={{ width: `${cardWidth}px` }}
                     >
                       <video
+                        ref={(el) => {
+                          if (el) {
+                            el.muted = true;
+                            const p = el.play();
+                            if (p !== undefined) p.catch(() => {});
+                          }
+                        }}
                         src={reel.video}
                         poster={reel.thumb}
                         autoPlay
@@ -370,7 +409,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                         muted
                         playsInline
                         preload="auto"
-                        className="h-full w-full object-cover"
+                        className="watch-carousel-video h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                     </div>
