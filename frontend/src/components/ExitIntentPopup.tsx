@@ -28,14 +28,14 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
       }
     };
 
-    // Desktop Exit-Intent listener (mouse leaving viewport at top)
+    // Desktop Exit-Intent listener
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0) {
         triggerPopup();
       }
     };
 
-    // Timer fallback (trigger after 6 seconds if not triggered yet)
+    // Timer fallback (trigger after 6 seconds)
     const timer = setTimeout(() => {
       triggerPopup();
     }, 6000);
@@ -76,16 +76,19 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
   const sStr = String(seconds).padStart(2, "0");
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 bg-black/70 backdrop-blur-sm animate-fadeIn">
-      {/* POPUP CARD ASSEMBLY (50/50 Split Layout) */}
-      <div 
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-sm animate-fadeIn"
+      onClick={handleClose}
+    >
+      {/* POPUP CARD ASSEMBLY (50/50 Split Layout - faithful to approved prototype) */}
+      <div
         className="max-w-2xl w-full bg-[#FAF6F0] rounded-[24px] overflow-hidden flex flex-col md:flex-row relative transition-all duration-300 border border-[#C89B5A]/50 shadow-2xl"
         style={{
-          boxShadow: "0 30px 90px rgba(0,0,0,0.5), 0 0 35px rgba(200, 155, 90, 0.3)"
+          boxShadow: "0 30px 90px rgba(0,0,0,0.6), 0 0 35px rgba(200, 155, 90, 0.35)"
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button (Top Right over image) */}
         <button
           onClick={handleClose}
           aria-label="Close modal"
@@ -94,73 +97,98 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
           ✕
         </button>
 
-        {/* LEFT COLUMN (50% Half): Official Logo + Up to 30% OFF Main Offer */}
+        {/* LEFT COLUMN (50% Half): Official Logo + Up to 30% OFF Main Offer (Warm Silk Cream #FAF6F0) */}
         <div className="w-full md:w-1/2 p-5 sm:p-7 flex flex-col justify-center items-center text-center bg-[#FAF6F0] shrink-0">
+          
           {/* OFFICIAL SENTIRE BY PC LOGO */}
-          <div className="mb-2 max-w-[150px] sm:max-w-[170px]">
+          <div className="mb-2 max-w-[150px] sm:max-w-[175px]">
             <img
               src="/assets/sentire-logo-official-transparent.png"
               alt="SENTIRE® By PC"
-              className="w-full h-auto object-contain block max-h-[48px]"
+              className="w-full h-auto object-contain block max-h-[46px]"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/assets/sentire-logo-gold.png";
+              }}
             />
           </div>
 
-          {/* HEADLINE */}
-          <h3 className="font-serif text-[#1C1917] font-bold text-xs sm:text-sm tracking-wider uppercase mb-2">
-            DON'T WORRY. IT'S A SAFE ADDICTION.
-          </h3>
-
-          {/* MAIN OFFER BADGE */}
-          <div className="inline-block bg-black text-[#F5F0E8] text-xs sm:text-sm font-extrabold px-3 py-1 rounded-full tracking-wide mb-2 shadow-sm">
-            UP TO 30% OFF
+          {/* HEADLINE (Two lines: Dark + Red) */}
+          <div className="mb-3 text-center">
+            <div className="font-serif text-[#1C1814] font-bold text-xs sm:text-sm tracking-wider uppercase leading-tight">
+              DON'T WORRY,
+            </div>
+            <div className="font-serif text-[#9E2A2B] font-bold text-xs sm:text-sm tracking-wider uppercase leading-tight mt-0.5">
+              IT'S A SAFE ADDICTION.
+            </div>
           </div>
 
-          {/* SUBTEXT */}
-          <p className="text-[11px] sm:text-xs text-[#57534E] leading-relaxed mb-4 max-w-[230px]">
-            Use code <span className="font-bold text-black">PC200</span> for flat ₹200 OFF on orders above ₹1,999 + Free Express Shipping
+          {/* DARK EXCLUSIVE PRIVILEGE CONTAINER BOX */}
+          <div className="bg-[#1C1917] text-white py-3 px-5 rounded-[16px] w-full mb-3 border border-[#C89B5A]/40 shadow-md flex flex-col items-center justify-center">
+            <span className="text-[9px] uppercase tracking-widest text-[#C89B5A] font-bold block mb-0.5">
+              EXCLUSIVE PRIVILEGE
+            </span>
+            <div className="text-xl sm:text-2xl font-black tracking-tight text-[#F5F0E8]">
+              UP TO 30% OFF
+            </div>
+          </div>
+
+          {/* SUBTEXT WITH PC200 HIGHLIGHT BADGE */}
+          <p className="text-[11px] sm:text-xs text-[#57534E] leading-relaxed mb-3 max-w-[240px]">
+            Use code{" "}
+            <span className="font-bold text-[#1C1814] bg-[#E8DEC8] px-1.5 py-0.5 rounded border border-[#C89B5A]/30">
+              PC200
+            </span>{" "}
+            for <span className="font-bold text-black">Flat ₹200 OFF</span> on orders above ₹1,999 + Free Shipping
           </p>
 
-          {/* DIGIT COUNTDOWN TIMER */}
-          <div className="mb-5 flex flex-col items-center">
-            <span className="text-[9px] uppercase tracking-widest text-[#8C6228] font-bold mb-1">
-              Offer Expires In
-            </span>
-            <div className="flex items-center gap-1">
-              <div className="w-6 h-7 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs shadow">
+          {/* DIGITAL COUNTDOWN TIMER */}
+          <div className="mb-4 flex flex-col items-center">
+            <div className="flex items-center gap-1.5 mb-1">
+              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
                 {mStr[0]}
               </div>
-              <div className="w-6 h-7 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs shadow">
+              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
                 {mStr[1]}
               </div>
-              <span className="text-[#1C1917] font-bold text-sm mx-0.5">:</span>
-              <div className="w-6 h-7 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs shadow">
+              <span className="text-[#1C1917] font-extrabold text-sm mx-0.5">:</span>
+              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
                 {sStr[0]}
               </div>
-              <div className="w-6 h-7 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs shadow">
+              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
                 {sStr[1]}
               </div>
             </div>
+            <span className="text-[10px] text-[#78716C] font-medium">
+              Privilege expires in <span className="font-bold text-[#1C1917]">30:00 mins</span>
+            </span>
           </div>
 
           {/* ACTION BUTTON */}
           <button
             onClick={handleClaimPrivilege}
-            className="w-full py-3 px-4 text-white text-xs font-extrabold tracking-wider uppercase rounded-full shadow-lg transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, #C89B5A 0%, #A87C3B 50%, #8C6228 100%)"
-            }}
+            className="w-full py-3 px-4 bg-[#1C1917] hover:bg-[#2C2724] text-white text-xs font-extrabold tracking-wider uppercase rounded-full shadow-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer border border-[#C89B5A]/30"
           >
             CLAIM PRIVILEGE &amp; SHOP →
           </button>
         </div>
 
         {/* RIGHT COLUMN (50% Half): Creative Visual Image */}
-        <div className="w-full md:w-1/2 relative min-h-[240px] md:min-h-[380px] bg-black overflow-hidden">
-          <img
-            src="/assets/sentire_purple_oud_popup.jpg"
-            alt="Sentire Purple Oud Luxury Perfume"
-            className="w-full h-full object-cover absolute inset-0"
-          />
+        <div className="w-full md:w-1/2 relative min-h-[260px] md:min-h-[420px] bg-[#1C1917] overflow-hidden flex items-end">
+          <picture className="w-full h-full absolute inset-0">
+            <source srcSet="/assets/sentire_purple_oud_popup.webp" type="image/webp" />
+            <img
+              src="/assets/sentire_purple_oud_popup.jpg"
+              alt="Sentire Purple Oud Luxury Perfume"
+              className="w-full h-full object-cover block"
+            />
+          </picture>
+          
+          {/* BOTTOM LEFT IMAGE BADGE */}
+          <div className="relative z-10 p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent w-full text-left">
+            <span className="text-[9px] uppercase tracking-widest text-[#E8DEC8] bg-black/70 backdrop-blur-sm border border-[#C89B5A]/40 px-2.5 py-1 rounded-full font-bold inline-block shadow-md">
+              PURPLE OUD EXTRAIT
+            </span>
+          </div>
         </div>
       </div>
     </div>
