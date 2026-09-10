@@ -31,6 +31,7 @@ import ClientServicesPage from "./components/ClientServicesPage";
 import TrackOrderPage from "./components/TrackOrderPage";
 import SEOHead from "./components/SEOHead";
 import ProductDetailModal from "./components/ProductDetailModal";
+import ExitIntentPopup from "./components/ExitIntentPopup";
 import { ALL_PERFUMES } from "./data/perfumes";
 import { auth } from "./lib/firebase";
 
@@ -476,6 +477,7 @@ export default function App() {
           handleNavigate("account");
         }}
       />
+      <ExitIntentPopup onNavigate={handleNavigate} />
     </div>
   );
 }
