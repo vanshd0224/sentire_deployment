@@ -5,7 +5,6 @@ const categories = [
   { title: "Discovery Set", subtitle: "Six Scents. Find Yours.", image: "/images/curated-discovery-set-v5.jpg?v=v5_clean", page: "discovery-set" as const },
   { title: "New Arrivals", subtitle: "Discover The Unseen", image: "/images/curated-new-arrivals.jpg", filter: { category: "bestsellers" }, page: "new-arrivals" as const },
   { title: "Best Sellers", subtitle: "Most Loved Essentials", image: "/images/curated-best-sellers.jpg", filter: { category: "bestsellers" }, page: "bestsellers" as const },
-  { title: "Product Personalisation", subtitle: "Bespoke Engraving Atelier", image: "/images/curated-personalisation.jpg", filter: { category: "all" }, page: "personalisation" as const },
   { title: "Build Your Own Bundle", subtitle: "Curate Your Perfect Set", image: "/images/curated-byob.jpg", isByob: true },
 ];
 
@@ -19,8 +18,8 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         <SectionHeading title="Curated Collections" subtitle="Explore the realms of Haute Parfumerie by category & bespoke rituals" />
 
-        {/* Mobile Horizontal Rail / Desktop Grid */}
-        <div className="mt-8 md:mt-12 flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 md:mx-0 md:px-0">
+        {/* Mobile Horizontal Rail / Desktop 4-Column Grid */}
+        <div className="mt-8 md:mt-12 flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 md:mx-0 md:px-0">
           {categories.map((cat) => {
             const targetHref = cat.isByob
               ? "/byob"
@@ -30,8 +29,6 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
               ? "/bestsellers"
               : cat.page === "new-arrivals"
               ? "/new-arrivals"
-              : cat.page === "personalisation"
-              ? "/personalised-perfume"
               : cat.page === "discovery-set"
               ? "/discovery-set"
               : "/perfumes";
@@ -50,12 +47,10 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     onNavigate?.("bestsellers");
                   } else if (cat.page === "new-arrivals") {
                     onNavigate?.("new-arrivals");
-                  } else if (cat.page === "personalisation") {
-                    onNavigate?.("personalisation");
                   } else if (cat.page === "discovery-set") {
                     onNavigate?.("discovery-set");
                   } else {
-                    onNavigate?.("perfumes", cat.filter);
+                    onNavigate?.("perfumes", (cat as any).filter);
                   }
                 }}
                 className="group flex flex-col text-left transition-transform duration-500 hover:-translate-y-2 cursor-pointer outline-none shrink-0 w-[78vw] sm:w-[280px] md:w-auto snap-center"
