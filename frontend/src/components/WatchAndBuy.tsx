@@ -158,6 +158,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [shareModalReel, setShareModalReel] = useState<ReelProduct | null>(null);
   const [likesMap, setLikesMap] = useState<{ [id: string]: { count: number; liked: boolean } }>(() => {
     const map: { [id: string]: { count: number; liked: boolean } } = {};
     reels.forEach((r) => {
@@ -269,11 +270,29 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
     });
   };
 
-  const handleShare = (e: React.MouseEvent, reel: ReelProduct) => {
+  const handleShareClick = (e: React.MouseEvent, reel: ReelProduct) => {
     e.stopPropagation();
     const shareUrl = `${window.location.origin}/perfumes/${reel.id}`;
+
+    // Try native Web Share API if on mobile device
+    if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      navigator
+        .share({
+          title: `Sentire ${reel.product}`,
+          text: `Experience Sentire ${reel.product} Extrait de Parfum!`,
+          url: shareUrl,
+        })
+        .catch(() => {
+          setShareModalReel(reel);
+        });
+    } else {
+      setShareModalReel(reel);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(() => {
+      navigator.clipboard.writeText(text).then(() => {
         showToast("Link Copied to Clipboard!");
       }).catch(() => {
         showToast("Link Copied!");
@@ -288,7 +307,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
       {/* Toast Notification */}
       {toastMsg && (
         <div
-          className="fixed z-[9999999] left-1/2 -translate-x-1/2 rounded-full border border-[#c89b5a]/60 bg-[#1c1917] px-6 py-3 text-xs font-bold text-white shadow-2xl flex items-center gap-2 animate-fadeIn"
+          className="fixed z-[99999999] left-1/2 -translate-x-1/2 rounded-full border border-[#c89b5a]/60 bg-[#1c1917] px-6 py-3 text-xs font-bold text-white shadow-2xl flex items-center gap-2 animate-fadeIn"
           style={{ bottom: "calc(74px + env(safe-area-inset-bottom, 8px) + 12px)" }}
         >
           <span className="h-2 w-2 rounded-full bg-[#d4af37] animate-pulse" />
@@ -475,7 +494,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
 
               {/* Share Button */}
               <button
-                onClick={(e) => handleShare(e, activeReel)}
+                onClick={(e) => handleShareClick(e, activeReel)}
                 className="flex flex-col items-center gap-1 group cursor-pointer"
               >
                 <div className="h-10 w-10 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all">
@@ -538,6 +557,122 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                   ADD TO CART
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── MULTI-OPTION SHARE SHEET MODAL (WhatsApp, Instagram, FB, X, Copy Link) ── */}
+      {shareModalReel && (
+        <div
+          className="fixed inset-0 z-[99999999] flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          onClick={() => setShareModalReel(null)}
+        >
+          <div
+            className="w-full max-w-md bg-[#FAF6F0] rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border border-[#C89B5A]/40 text-[#1C1917] relative animate-slideUp"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-black/10 mb-4">
+              <h3 className="font-serif font-bold text-base sm:text-lg uppercase tracking-wide text-[#1C1917]">
+                Share Fragrance
+              </h3>
+              <button
+                onClick={() => setShareModalReel(null)}
+                className="h-8 w-8 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-xs font-bold text-black transition-all cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Product Preview Bar */}
+            <div className="flex items-center gap-3 bg-white p-3 rounded-2xl border border-black/10 mb-5 shadow-sm">
+              <img src={shareModalReel.swatch} alt={shareModalReel.product} className="h-10 w-10 object-contain p-0.5" />
+              <div className="flex-1 min-w-0">
+                <h4 className="text-xs font-bold uppercase truncate text-black">{shareModalReel.product}</h4>
+                <p className="text-[10px] text-black/60 truncate">{shareModalReel.notes}</p>
+              </div>
+              <span className="text-xs font-extrabold text-[#9e2a2b]">{shareModalReel.priceText}</span>
+            </div>
+
+            {/* Social Share Grid Icons */}
+            <div className="grid grid-cols-4 gap-3 text-center mb-5">
+              {/* WhatsApp */}
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Check out Sentire ${shareModalReel.product} Extrait de Parfum: ${window.location.origin}/perfumes/${shareModalReel.id}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 group cursor-pointer"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-[#25D366] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.099 4.017 4.103-1.077z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold text-black/80">WhatsApp</span>
+              </a>
+
+              {/* Instagram */}
+              <button
+                onClick={() => {
+                  copyToClipboard(`${window.location.origin}/perfumes/${shareModalReel.id}`);
+                  window.open("https://instagram.com", "_blank");
+                }}
+                className="flex flex-col items-center gap-1.5 group cursor-pointer"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold text-black/80">Instagram</span>
+              </button>
+
+              {/* Facebook */}
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location.origin}/perfumes/${shareModalReel.id}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 group cursor-pointer"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-[#1877F2] text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold text-black/80">Facebook</span>
+              </a>
+
+              {/* X / Twitter */}
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out Sentire ${shareModalReel.product} Extrait de Parfum!`)}&url=${encodeURIComponent(`${window.location.origin}/perfumes/${shareModalReel.id}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-1.5 group cursor-pointer"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-bold text-black/80">X / Twitter</span>
+              </a>
+            </div>
+
+            {/* Copy Direct Link Section */}
+            <div className="bg-white p-2 rounded-2xl border border-black/15 flex items-center gap-2">
+              <input
+                type="text"
+                readOnly
+                value={`${window.location.origin}/perfumes/${shareModalReel.id}`}
+                className="flex-1 bg-transparent text-xs text-black font-mono px-2 outline-none select-all truncate"
+              />
+              <button
+                onClick={() => copyToClipboard(`${window.location.origin}/perfumes/${shareModalReel.id}`)}
+                className="bg-[#1C1917] hover:bg-[#c89b5a] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 shadow-sm"
+              >
+                Copy Link
+              </button>
             </div>
           </div>
         </div>
