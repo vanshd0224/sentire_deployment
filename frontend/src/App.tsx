@@ -384,7 +384,11 @@ export default function App() {
       ) : (
         <main>
           <Hero onNavigate={handleNavigate} />
-          <WatchAndBuy onAddToCart={handleAddToCart} onOpenCart={() => setIsCartOpen(true)} onOpenAccount={handleAccountClick} />
+          <WatchAndBuy
+            onAddToCart={handleAddToCart}
+            onOpenCart={() => setIsCartOpen(true)}
+            onSelectProduct={handleOpenProductModal}
+          />
           <RetailerBadges />
           <ShopByCategory onNavigate={handleNavigate} />
           <BestSellers
