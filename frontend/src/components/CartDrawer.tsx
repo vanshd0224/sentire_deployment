@@ -793,6 +793,87 @@ export default function CartDrawer({
                   })}
                 </div>
 
+                {/* ══ 🏷️ PROMINENT COUPON & DISCOUNTS CARD ══════════════════════ */}
+                <div className="mt-5 rounded-2xl border border-[#C89A46]/35 bg-white p-4 shadow-sm space-y-2.5">
+                  <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[#C89A46] text-sm">🏷️</span>
+                      <h4 className="font-serif text-sm font-bold text-[#14110D]">Apply Coupon & Atelier Offers</h4>
+                    </div>
+                    <span className="text-[9px] font-bold text-[#C89A46] uppercase tracking-wider">Instant Savings</span>
+                  </div>
+
+                  {appliedCoupon ? (
+                    <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/40 rounded-xl p-2.5 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-[#0B0907] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
+                        <span className="text-emerald-700 font-extrabold text-xs">(Saved ₹{couponDiscount})</span>
+                      </div>
+                      <button
+                        onClick={handleRemoveCoupon}
+                        className="text-red-600 hover:text-red-800 font-bold text-xs px-2 py-0.5 rounded bg-white border border-red-200"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {/* 1-Tap Pill Chips */}
+                      <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-0.5">
+                        <button
+                          onClick={() => handleApplyCoupon("PC100")}
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
+                            subtotal >= 999
+                              ? "bg-[#FAF6F0] text-[#C89A46] border-[#C89A46] hover:bg-[#C89A46] hover:text-white shadow-sm"
+                              : "bg-black/5 text-gray-400 border-black/10"
+                          }`}
+                        >
+                          ⚡ PC100 (₹100 OFF &gt; ₹999)
+                        </button>
+                        <button
+                          onClick={() => handleApplyCoupon("PC200")}
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
+                            subtotal >= 1999
+                              ? "bg-[#FAF6F0] text-[#C89A46] border-[#C89A46] hover:bg-[#C89A46] hover:text-white shadow-sm"
+                              : "bg-black/5 text-gray-400 border-black/10"
+                          }`}
+                        >
+                          ⚡ PC200 (₹200 OFF &gt; ₹1,999)
+                        </button>
+                      </div>
+
+                      {/* Manual Code Input */}
+                      <div className="flex items-center gap-1.5">
+                        <input
+                          type="text"
+                          placeholder="ENTER PROMO CODE (e.g. PC100)"
+                          value={couponInput}
+                          onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") handleApplyCoupon();
+                          }}
+                          className="flex-1 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-3 py-2 text-xs font-bold font-mono tracking-wider text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                        />
+                        <button
+                          onClick={() => handleApplyCoupon()}
+                          className="rounded-xl bg-[#14110D] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#C89A46] hover:text-white transition-colors"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {couponError && (
+                    <p className="text-[10px] text-red-500 font-medium">{couponError}</p>
+                  )}
+                  {couponSuccess && (
+                    <p className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
+                      <span>✓</span> {couponSuccess}
+                    </p>
+                  )}
+                </div>
+
                 {/* ══ ₹200 PERSONALISATION ENGRAVING MODULE ══════════════════════ */}
                 <div className="mt-6 rounded-2xl border border-[#C89A46]/35 bg-white p-4 shadow-sm space-y-3">
                   <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
