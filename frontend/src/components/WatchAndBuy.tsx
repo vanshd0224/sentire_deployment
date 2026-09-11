@@ -205,6 +205,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
         videos.forEach((v) => {
           v.muted = true;
           if (v === closestVideo) {
+            v.preload = "metadata";
             const p = v.play();
             if (p !== undefined) p.catch(() => {});
           } else {
@@ -217,6 +218,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
           const rect = v.getBoundingClientRect();
           v.muted = true;
           if (rect.right > 0 && rect.left < window.innerWidth) {
+            v.preload = "metadata";
             const p = v.play();
             if (p !== undefined) p.catch(() => {});
           } else {
@@ -445,17 +447,14 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                         ref={(el) => {
                           if (el) {
                             el.muted = true;
-                            const p = el.play();
-                            if (p !== undefined) p.catch(() => {});
                           }
                         }}
                         src={reel.video}
                         poster={reel.thumb}
-                        autoPlay
                         loop
                         muted
                         playsInline
-                        preload="auto"
+                        preload="none"
                         className="watch-carousel-video h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
