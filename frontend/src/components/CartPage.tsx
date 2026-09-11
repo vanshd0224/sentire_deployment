@@ -119,9 +119,17 @@ export default function CartPage({
     }
   };
 
+  const engravingEligibleItems = useMemo(
+    () => items.filter((i) => i.size === 50),
+    [items]
+  );
+
   const handleApplyEngravingToTarget = () => {
     if (!engraveName.trim()) return;
-    const targetItem = items.find((i) => `${i.productId}-${i.size}` === engraveTargetKey) || items[0];
+    const targetItem =
+      engravingEligibleItems.find(
+        (i) => `${i.productId}-${i.size}` === engraveTargetKey
+      ) || engravingEligibleItems[0];
     if (!targetItem) return;
 
     const basePrice = targetItem.isPersonalised ? targetItem.price : targetItem.price + 200;
@@ -240,7 +248,7 @@ export default function CartPage({
             {/* LEFT COLUMN: Products & Customization (7 Cols) */}
             <div className="lg:col-span-7 space-y-5">
               <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-3">
-                <h2 className="font-serif text-2xl font-bold tracking-wide text-[#14110D]">
+                <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#14110D]">
                   Selected Fragrances ({totalCount})
                 </h2>
                 {onClearCart && (
@@ -265,6 +273,8 @@ export default function CartPage({
                   const displayName = item.name.toLowerCase().includes("extrait")
                     ? item.name
                     : `${item.name} Extrait ${item.size}ml`;
+
+                  const availableSizes = pData?.sizes || [item.size];
 
                   return (
                     <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-3">
@@ -298,12 +308,12 @@ export default function CartPage({
                             )}
                           </div>
 
-                          {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
-                          {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
+                          {/* Inline Size Switcher Pills (ONLY show available sizes for this perfume!) */}
+                          {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && availableSizes.length > 1 && (
                             <div className="mt-2 flex items-center gap-2">
                               <label className="text-[11px] font-medium text-[#14110D]/70">Size</label>
                               <div className="flex gap-1.5">
-                                {[10, 30, 50].map((sz) => {
+                                {availableSizes.map((sz) => {
                                   const isSelected = item.size === sz;
                                   return (
                                     <button
@@ -341,60 +351,75 @@ export default function CartPage({
                 })}
               </div>
 
-              {/* ✨ ₹200 CUSTOM LASER ENGRAVING MODULE (MATCHING IMAGE 3) */}
-              <div className="rounded-2xl border border-[#14110D]/15 bg-white p-4 shadow-sm space-y-3">
-                <div>
-                  <h3 className="font-sans text-base font-bold text-[#14110D]">
+              {/* ✨ ₹200 CUSTOM LASER ENGRAVING MODULE (RESTRICTED TO 50ML BOTTLES ONLY) */}
+              {engravingEligibleItems.length > 0 ? (
+                <div className="rounded-2xl border border-[#14110D]/15 bg-white p-4 shadow-sm space-y-3">
+                  <div>
+                    <h3 className="font-sans text-base font-bold text-[#14110D]">
+                      Custom Laser Name & Date Engraving (+₹200)
+                    </h3>
+                    <p className="text-[10px] text-[#B8863B] font-bold mt-0.5">Exclusively available on 50ml signature Extrait bottles</p>
+                  </div>
+
+                  <div>
+                    <select
+                      value={engraveTargetKey || `${engravingEligibleItems[0]?.productId}-${engravingEligibleItems[0]?.size}`}
+                      onChange={(e) => setEngraveTargetKey(e.target.value)}
+                      className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                    >
+                      {engravingEligibleItems.map((i) => {
+                        const cleanName = i.name.replace(/Extrait\s*\d+ml/gi, "").trim();
+                        return (
+                          <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
+                            Select Perfume: {cleanName} (50ml)
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Name: {engraveName || "Vansh"}</label>
+                      <input
+                        type="text"
+                        maxLength={12}
+                        value={engraveName}
+                        onChange={(e) => setEngraveName(e.target.value)}
+                        placeholder="Name: Vansh"
+                        className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Date: {engraveDate || "11.09.2026"}</label>
+                      <input
+                        type="text"
+                        maxLength={10}
+                        value={engraveDate}
+                        onChange={(e) => setEngraveDate(e.target.value)}
+                        placeholder="Date: 11.09.2026"
+                        className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleApplyEngravingToTarget}
+                    className="w-full rounded-xl border border-[#14110D] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#14110D] hover:bg-black hover:text-white transition-all shadow-xs"
+                  >
+                    PREVIEW / APPLY ENGRAVING (+₹200)
+                  </button>
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-1">
+                  <h3 className="font-sans text-sm font-bold text-[#14110D]">
                     Custom Laser Name & Date Engraving (+₹200)
                   </h3>
+                  <p className="text-xs text-[#14110D]/70">
+                    ✨ Custom laser name & date engraving (+₹200) is exclusively available on <strong>50ml Extrait bottles</strong>.
+                  </p>
                 </div>
-
-                <div>
-                  <select
-                    value={engraveTargetKey || `${items[0]?.productId}-${items[0]?.size}`}
-                    onChange={(e) => setEngraveTargetKey(e.target.value)}
-                    className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
-                  >
-                    {items.map((i) => (
-                      <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
-                        Select Perfume: {i.name} {i.size}ml
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Name: {engraveName || "Vansh"}</label>
-                    <input
-                      type="text"
-                      maxLength={12}
-                      value={engraveName}
-                      onChange={(e) => setEngraveName(e.target.value)}
-                      placeholder="Name: Vansh"
-                      className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Date: {engraveDate || "11.09.2026"}</label>
-                    <input
-                      type="text"
-                      maxLength={10}
-                      value={engraveDate}
-                      onChange={(e) => setEngraveDate(e.target.value)}
-                      placeholder="Date: 11.09.2026"
-                      className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleApplyEngravingToTarget}
-                  className="w-full rounded-xl border border-[#14110D] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#14110D] hover:bg-black hover:text-white transition-all shadow-xs"
-                >
-                  PREVIEW / APPLY ENGRAVING (+₹200)
-                </button>
-              </div>
+              )}
 
             </div>
 
@@ -402,7 +427,7 @@ export default function CartPage({
             <div className="lg:col-span-5 space-y-4">
               <div className="sticky top-24 rounded-2xl border border-[#B8863B]/30 bg-white p-5 shadow-xl space-y-5">
                 <div className="border-b border-[#14110D]/10 pb-3 flex items-center justify-between">
-                  <h3 className="font-serif text-xl font-bold tracking-wide text-[#14110D]">Atelier Order Summary</h3>
+                  <h3 className="font-sans text-lg sm:text-xl font-bold text-[#14110D]">Atelier Order Summary</h3>
                   <span className="rounded-full bg-[#14110D] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#D4AF37]">
                     Prepaid Extra 10% Off
                   </span>
@@ -486,8 +511,8 @@ export default function CartPage({
                     <span className="font-bold text-emerald-700">{isFreeShippingUnlocked ? "FREE" : "₹ 100"}</span>
                   </div>
                   <div className="flex justify-between border-t border-dashed border-[#14110D]/10 pt-2 text-base font-bold text-[#14110D]">
-                    <span className="font-serif">Total Payable</span>
-                    <span className="font-serif text-xl font-bold text-[#14110D]">₹ {finalTotal.toLocaleString()}</span>
+                    <span className="font-sans font-bold">Total Payable</span>
+                    <span className="font-sans text-xl font-extrabold text-[#14110D]">₹ {finalTotal.toLocaleString()}</span>
                   </div>
                 </div>
 
