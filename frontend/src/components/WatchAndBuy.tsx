@@ -178,54 +178,56 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const [activeVideoIndexes, setActiveVideoIndexes] = useState<Set<number>>(new Set());
+
   // Smart Video Playback Controller (Desktop: all visible play | Mobile: ONLY centered video plays)
   useEffect(() => {
     const updateVideoPlayback = () => {
       const isMobile = window.innerWidth < 768;
-      const videos = document.querySelectorAll<HTMLVideoElement>(".watch-carousel-video");
+      const cards = document.querySelectorAll<HTMLElement>(".watch-carousel-card");
+      const newActive = new Set<number>();
 
       if (isMobile) {
         // MOBILE: Find the video card closest to center of screen
         const screenCenterX = window.innerWidth / 2;
-        let closestVideo: HTMLVideoElement | null = null;
+        let closestIndex: number | null = null;
         let minDistance = Infinity;
 
-        videos.forEach((v) => {
-          const rect = v.getBoundingClientRect();
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
           if (rect.right > 0 && rect.left < window.innerWidth) {
             const cardCenterX = rect.left + rect.width / 2;
             const dist = Math.abs(cardCenterX - screenCenterX);
             if (dist < minDistance) {
               minDistance = dist;
-              closestVideo = v;
+              const idxAttr = card.getAttribute("data-index");
+              if (idxAttr !== null) closestIndex = parseInt(idxAttr, 10);
             }
           }
         });
 
-        videos.forEach((v) => {
-          v.muted = true;
-          if (v === closestVideo) {
-            v.preload = "metadata";
-            const p = v.play();
-            if (p !== undefined) p.catch(() => {});
-          } else {
-            v.pause();
-          }
-        });
+        if (closestIndex !== null) {
+          newActive.add(closestIndex);
+        }
       } else {
         // DESKTOP: All visible cards play simultaneously
-        videos.forEach((v) => {
-          const rect = v.getBoundingClientRect();
-          v.muted = true;
-          if (rect.right > 0 && rect.left < window.innerWidth) {
-            v.preload = "metadata";
-            const p = v.play();
-            if (p !== undefined) p.catch(() => {});
-          } else {
-            v.pause();
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.right > -50 && rect.left < window.innerWidth + 50) {
+            const idxAttr = card.getAttribute("data-index");
+            if (idxAttr !== null) {
+              newActive.add(parseInt(idxAttr, 10));
+            }
           }
         });
       }
+
+      setActiveVideoIndexes((prev) => {
+        if (prev.size === newActive.size && [...newActive].every((i) => prev.has(i))) {
+          return prev;
+        }
+        return newActive;
+      });
     };
 
     updateVideoPlayback();
@@ -434,8 +436,9 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                 return (
                   <div
                     key={i}
+                    data-index={i}
                     onClick={() => setActiveReelIndex(reelIndex)}
-                    className="group flex shrink-0 flex-col cursor-pointer transition-transform duration-300 hover:scale-[1.02] active:scale-95"
+                    className="watch-carousel-card group flex shrink-0 flex-col cursor-pointer transition-transform duration-300 hover:scale-[1.02] active:scale-95"
                     style={{ width: `${cardWidth}px` }}
                   >
                     {/* Video Card - AUTOPLAY MUTED DIRECTLY ON LANDING PAGE */}
@@ -443,20 +446,32 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                       className="relative overflow-hidden rounded-2xl bg-black shadow-md border border-black/10 h-[270px] sm:h-[340px] group-hover:shadow-xl transition-all duration-300"
                       style={{ width: `${cardWidth}px` }}
                     >
-                      <video
-                        ref={(el) => {
-                          if (el) {
-                            el.muted = true;
-                          }
-                        }}
-                        src={reel.video}
-                        poster={reel.thumb}
-                        loop
-                        muted
-                        playsInline
-                        preload="none"
-                        className="watch-carousel-video h-full w-full object-cover"
-                      />
+                      {activeVideoIndexes.has(i) ? (
+                        <video
+                          ref={(el) => {
+                            if (el) {
+                              el.muted = true;
+                              const p = el.play();
+                              if (p !== undefined) p.catch(() => {});
+                            }
+                          }}
+                          src={reel.video}
+                          poster={reel.thumb}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                          className="watch-carousel-video h-full w-full object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={reel.thumb}
+                          alt={reel.product}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                     </div>
 
