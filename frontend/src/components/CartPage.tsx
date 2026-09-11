@@ -163,7 +163,7 @@ export default function CartPage({
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#14110D] pb-28 md:pb-20">
       {/* ══ HEADER WITH OFFICIAL BURGUNDY LOGO ══════════════════════════ */}
-      <header className="sticky top-0 z-50 border-b border-[#14110D]/10 bg-[#FAF8F5]/90 backdrop-blur-md px-4 sm:px-8 py-3.5">
+      <header className="sticky top-0 z-50 border-b border-[#14110D]/10 bg-[#FAF8F5]/95 backdrop-blur-md px-4 sm:px-8 py-3">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <button
             onClick={() => onNavigate?.("home")}
@@ -175,12 +175,12 @@ export default function CartPage({
             <span className="hidden sm:inline">Back to Boutique</span>
           </button>
 
-          {/* Official Logo */}
+          {/* Official Logo (Bigger & Seamless Cream Background Blending) */}
           <div className="flex items-center justify-center cursor-pointer" onClick={() => onNavigate?.("home")}>
             <img
               src="/assets/sentire-logo-user.jpg"
               alt="SENTIRE By PC Logo"
-              className="h-8 sm:h-10 object-contain max-w-[200px]"
+              className="h-10 sm:h-12 object-contain max-w-[220px] mix-blend-multiply scale-110"
             />
           </div>
 
@@ -196,11 +196,11 @@ export default function CartPage({
       {/* Main Container */}
       <main className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 lg:px-8">
 
-        {/* 🚚 DYNAMIC FREE DELIVERY BANNER (THRESHOLD ₹999) */}
-        <div className="mb-6 rounded-2xl border border-[#B8863B]/40 bg-gradient-to-r from-[#B8863B] via-[#C89B5A] to-[#B8863B] p-4 text-white shadow-md text-center relative overflow-hidden">
+        {/* 🚚 DYNAMIC FREE DELIVERY BANNER (MATCHING IMAGE 3) */}
+        <div className="mb-6 rounded-2xl border border-[#B8863B]/40 bg-[#B8863B] p-4 text-white shadow-md text-center relative overflow-hidden">
           {isFreeShippingUnlocked ? (
             <div>
-              <p className="text-sm font-bold tracking-wide text-white">
+              <p className="text-sm sm:text-base font-bold tracking-wide text-white">
                 🎉 Congratulations! You have unlocked <strong className="underline decoration-2">FREE Express Delivery!</strong>
               </p>
               <p className="mt-1 text-[10px] uppercase tracking-widest text-white/90 font-bold">
@@ -209,15 +209,13 @@ export default function CartPage({
             </div>
           ) : (
             <div>
-              <p className="text-xs sm:text-sm font-semibold tracking-wide text-white">
-                Add <span className="font-extrabold text-white underline decoration-2">₹{(remainingForFreeShipping || 0).toLocaleString()} more</span> to unlock <strong className="uppercase font-bold text-white">FREE Delivery!</strong>
+              <p className="text-sm sm:text-base font-bold tracking-wide text-white">
+                Add <span className="font-extrabold text-white">₹{(remainingForFreeShipping || 0).toLocaleString()} more</span> to unlock <strong className="uppercase font-bold text-white">FREE Delivery!</strong>
               </p>
+              <p className="mt-0.5 text-xs text-white/90 font-medium">(Threshold ₹999)</p>
               <div className="mt-2.5 h-2 w-full rounded-full bg-black/20 overflow-hidden p-0.5 max-w-md mx-auto">
                 <div className="h-full rounded-full bg-white transition-all duration-500" style={{ width: `${progressPercent}%` }} />
               </div>
-              <p className="mt-1 text-[9.5px] uppercase tracking-widest text-white/80 font-bold">
-                Free shipping on orders ₹999 & above
-              </p>
             </div>
           )}
         </div>
@@ -254,100 +252,112 @@ export default function CartPage({
 
               {/* Items List */}
               <div className="space-y-4">
-                {items.map((item) => (
-                  <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-3">
-                    <div className="flex gap-4">
-                      {/* Bottle Thumbnail */}
-                      <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#14110D]/5 border border-[#14110D]/10 flex items-center justify-center">
-                        <img src={item.img || item.image} alt={item.name} className="h-full w-full object-contain p-1.5" />
-                        {item.isPersonalised && (
-                          <div className="absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[#D4AF37] truncate px-1 py-0.5 border border-[#B8863B]/60 shadow">
-                            {item.engravingText} {item.engravingDate ? `• ${item.engravingDate}` : ""}
-                          </div>
-                        )}
-                      </div>
+                {items.map((item) => {
+                  const pData = ALL_PERFUMES.find((p) => p.id === item.productId || p.id === item.id);
+                  const displayImg =
+                    item.img ||
+                    item.image ||
+                    (item.num && pData?.img) ||
+                    pData?.sizeImages?.[item.size as 10 | 30 | 50]?.[0] ||
+                    pData?.img ||
+                    "/assets/purple-oud-arrival.png";
 
-                      {/* Info */}
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <h3 className="font-serif text-lg font-bold text-[#14110D]">{item.name}</h3>
-                              <p className="text-[10px] text-[#B8863B] font-bold uppercase tracking-wider">35%+ Pure Oil Extrait</p>
-                            </div>
-                            <span className="font-serif text-base font-bold text-[#14110D]">₹{(item.price * item.quantity).toLocaleString()}</span>
-                          </div>
+                  const displayName = item.name.toLowerCase().includes("extrait")
+                    ? item.name
+                    : `${item.name} Extrait ${item.size}ml`;
 
-                          {/* Personalisation Badge */}
+                  return (
+                    <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-3">
+                      <div className="flex gap-4">
+                        {/* Bottle Thumbnail */}
+                        <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#FAF8F5] border border-[#14110D]/10 flex items-center justify-center">
+                          <img src={displayImg} alt={item.name} className="h-full w-full object-contain p-1" />
                           {item.isPersonalised && (
-                            <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-[#B8863B]">
-                              <span>✨ Laser Engraved: "{item.engravingText} {item.engravingDate}" (+₹200)</span>
+                            <div className="absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[#D4AF37] truncate px-1 py-0.5 border border-[#B8863B]/60 shadow">
+                              {item.engravingText} {item.engravingDate ? `• ${item.engravingDate}` : ""}
                             </div>
                           )}
                         </div>
 
-                        {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
-                        {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
-                          <div className="mt-2">
-                            <label className="block text-[9px] uppercase font-bold tracking-wider text-[#14110D]/50 mb-1">Select Size:</label>
-                            <div className="flex gap-1.5">
-                              {[10, 30, 50].map((sz) => {
-                                const isSelected = item.size === sz;
-                                return (
-                                  <button
-                                    key={sz}
-                                    onClick={() => handleSwitchSize(item, sz)}
-                                    className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold transition-all ${
-                                      isSelected
-                                        ? "bg-[#B8863B] text-white border border-[#B8863B] shadow-sm"
-                                        : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/10 hover:border-[#B8863B]"
-                                    }`}
-                                  >
-                                    {sz}ML
-                                  </button>
-                                );
-                              })}
+                        {/* Info */}
+                        <div className="flex-1 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-start justify-between gap-2">
+                              <div>
+                                <h3 className="font-sans text-base sm:text-lg font-bold text-[#14110D]">{displayName}</h3>
+                                <p className="text-[10px] text-[#B8863B] font-bold uppercase tracking-wider">35%+ Pure Oil Extrait</p>
+                              </div>
+                              <span className="font-sans text-base font-extrabold text-[#14110D]">₹{(item.price * item.quantity).toLocaleString()}</span>
                             </div>
-                          </div>
-                        )}
 
-                        {/* Controls */}
-                        <div className="mt-3 flex items-center justify-between">
-                          <div className="flex items-center rounded-full border border-[#14110D]/20 bg-[#FAF8F5] px-2 py-0.5">
-                            <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="h-6 w-6 font-bold text-xs hover:bg-[#14110D]/10 rounded-full">-</button>
-                            <span className="w-6 text-center text-xs font-bold">{item.quantity}</span>
-                            <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="h-6 w-6 font-bold text-xs hover:bg-[#14110D]/10 rounded-full">+</button>
+                            {/* Personalisation Badge */}
+                            {item.isPersonalised && (
+                              <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-[#B8863B]">
+                                <span>✨ Laser Engraved: "{item.engravingText} {item.engravingDate}" (+₹200)</span>
+                              </div>
+                            )}
                           </div>
-                          <button onClick={() => onRemoveItem(item.productId, item.size)} className="text-[10px] text-red-600 font-semibold hover:underline">
-                            Remove
-                          </button>
+
+                          {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
+                          {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
+                            <div className="mt-2 flex items-center gap-2">
+                              <label className="text-[11px] font-medium text-[#14110D]/70">Size</label>
+                              <div className="flex gap-1.5">
+                                {[10, 30, 50].map((sz) => {
+                                  const isSelected = item.size === sz;
+                                  return (
+                                    <button
+                                      key={sz}
+                                      onClick={() => handleSwitchSize(item, sz)}
+                                      className={`px-3 py-0.5 rounded-lg text-xs font-bold transition-all ${
+                                        isSelected
+                                          ? "bg-black text-white border border-black shadow-sm"
+                                          : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/15 hover:border-black"
+                                      }`}
+                                    >
+                                      {sz}ml
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Quantity Stepper & Remove */}
+                          <div className="mt-3 flex items-center justify-between">
+                            <div className="flex items-center rounded-full border border-[#14110D]/30 bg-white px-2.5 py-0.5 gap-2">
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="font-bold text-sm text-[#14110D] hover:opacity-75">-</button>
+                              <span className="w-4 text-center text-xs font-bold text-[#14110D]">{item.quantity}</span>
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="font-bold text-sm text-[#14110D] hover:opacity-75">+</button>
+                            </div>
+                            <button onClick={() => onRemoveItem(item.productId, item.size)} className="text-[11px] text-red-600 font-semibold hover:underline">
+                              Remove
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
-              {/* ✨ ₹200 CUSTOM LASER ENGRAVING MODULE */}
-              <div className="rounded-2xl border border-[#B8863B]/40 bg-white p-4 shadow-sm space-y-3">
-                <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
-                  <div>
-                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#B8863B]">Personalised Craftsmanship</span>
-                    <h3 className="font-serif text-base font-bold text-[#14110D]">Add Custom Name & Date Engraving (+₹200)</h3>
-                  </div>
-                  <span className="rounded bg-[#B8863B]/10 border border-[#B8863B]/30 px-2 py-0.5 text-[9px] font-bold text-[#B8863B]">Jaipur Laser Engraved</span>
+              {/* ✨ ₹200 CUSTOM LASER ENGRAVING MODULE (MATCHING IMAGE 3) */}
+              <div className="rounded-2xl border border-[#14110D]/15 bg-white p-4 shadow-sm space-y-3">
+                <div>
+                  <h3 className="font-sans text-base font-bold text-[#14110D]">
+                    Custom Laser Name & Date Engraving (+₹200)
+                  </h3>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Select Perfume to Engrave:</label>
                   <select
                     value={engraveTargetKey || `${items[0]?.productId}-${items[0]?.size}`}
                     onChange={(e) => setEngraveTargetKey(e.target.value)}
-                    className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2.5 text-xs font-bold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                    className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                   >
                     {items.map((i) => (
                       <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
-                        {i.name} ({i.size}ML)
+                        Select Perfume: {i.name} {i.size}ml
                       </option>
                     ))}
                   </select>
@@ -355,34 +365,34 @@ export default function CartPage({
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Name (Max 12 Chars):</label>
+                    <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Name: {engraveName || "Vansh"}</label>
                     <input
                       type="text"
                       maxLength={12}
                       value={engraveName}
                       onChange={(e) => setEngraveName(e.target.value)}
-                      placeholder="e.g. Vansh"
-                      className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      placeholder="Name: Vansh"
+                      className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Date (Max 10 Chars):</label>
+                    <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Date: {engraveDate || "11.09.2026"}</label>
                     <input
                       type="text"
                       maxLength={10}
                       value={engraveDate}
                       onChange={(e) => setEngraveDate(e.target.value)}
-                      placeholder="e.g. 11.09.2026"
-                      className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      placeholder="Date: 11.09.2026"
+                      className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <button
                   onClick={handleApplyEngravingToTarget}
-                  className="w-full rounded-xl border-2 border-[#B8863B] bg-[#FAF6F0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#B8863B] hover:bg-[#B8863B] hover:text-white transition-all shadow-sm"
+                  className="w-full rounded-xl border border-[#14110D] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#14110D] hover:bg-black hover:text-white transition-all shadow-xs"
                 >
-                  Apply Engraving to Bottle (+₹200)
+                  PREVIEW / APPLY ENGRAVING (+₹200)
                 </button>
               </div>
 
@@ -481,11 +491,11 @@ export default function CartPage({
                   </div>
                 </div>
 
-                {/* Primary CTA */}
+                {/* Primary CTA (Visible on Desktop Only - Mobile Uses Fixed Bottom Bar) */}
                 <button
                   onClick={handleProceedToShopifyCheckout}
                   disabled={isRedirecting}
-                  className="w-full rounded-full bg-gradient-to-r from-[#B8863B] to-[#C89B5A] py-3.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-white shadow-lg flex items-center justify-center gap-2 hover:opacity-95 transition-opacity"
+                  className="hidden lg:flex w-full rounded-full bg-[#B8863B] hover:bg-[#C89B5A] py-3.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md items-center justify-center gap-2 transition-all"
                 >
                   <span>{isRedirecting ? "REDIRECTING TO CHECKOUT..." : "PROCEED TO CHECKOUT"}</span>
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -499,22 +509,22 @@ export default function CartPage({
         )}
       </main>
 
-      {/* ══ MOBILE STICKY BOTTOM CHECKOUT DOCK ══════════════════════════ */}
+      {/* ══ MOBILE STICKY BOTTOM CHECKOUT DOCK (MATCHING IMAGE 3) ══════════════════════════ */}
       {items.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#B8863B]/30 bg-[#14110D]/95 backdrop-blur-md p-3 text-white lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.3)]">
-          <div className="mx-auto flex max-w-lg items-center justify-between gap-3">
-            <div>
-              <span className="text-[9px] uppercase tracking-widest text-white/60">Total</span>
-              <p className="font-serif text-xl font-bold text-[#D4AF37]">₹ {finalTotal.toLocaleString()}</p>
+        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#14110D]/10 bg-[#FAF8F5]/95 backdrop-blur-md p-3 text-[#14110D] lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.12)]">
+          <div className="mx-auto flex max-w-lg items-center justify-between gap-3 px-1">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold text-[#14110D]">Total:</span>
+              <p className="font-sans text-lg font-extrabold text-[#14110D]">₹{finalTotal.toLocaleString()}</p>
             </div>
 
             <button
               onClick={handleProceedToShopifyCheckout}
               disabled={isRedirecting}
-              className="flex-1 rounded-full bg-gradient-to-r from-[#B8863B] to-[#C89B5A] py-3 px-4 text-center text-xs font-bold uppercase tracking-[0.18em] text-white shadow-xl flex items-center justify-center gap-1.5"
+              className="flex-1 rounded-full bg-[#B8863B] py-3 px-4 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 hover:bg-[#C89B5A] transition-all"
             >
               <span>{isRedirecting ? "CHECKING OUT..." : "PROCEED TO CHECKOUT"}</span>
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>

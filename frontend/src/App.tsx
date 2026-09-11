@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
+import { ALL_PERFUMES } from "./data/perfumes";
 import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -214,7 +215,15 @@ export default function App() {
     const safeSize = typeof sizeArg === "number" ? sizeArg : typeof item?.size === "number" ? item.size : 50;
     const safeProductId = item?.productId || item?.id || "perfume-1";
     const safeName = item?.name || item?.product || "Luxury Extrait de Parfum";
-    const safeImage = item?.image || item?.img || item?.swatch || "/assets/purple-oud-arrival.png";
+    
+    const pData = ALL_PERFUMES.find((p) => p.id === safeProductId || p.id === item?.id);
+    const safeImage =
+      item?.image ||
+      item?.img ||
+      (item?.swatch && item.swatch.startsWith("/assets/perfumes") ? item.swatch : null) ||
+      pData?.img ||
+      pData?.sizeImages?.[safeSize as 10 | 30 | 50]?.[0] ||
+      "/assets/purple-oud-arrival.png";
 
     const isPersonalised = Boolean(item?.isPersonalised || item?.engravingText);
     const engravingText = item?.engravingText || "";
@@ -294,18 +303,20 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
       <SEOHead currentPage={currentPage} selectedProductModal={selectedProductModal} />
-      <Navbar
-        onOpenBundleModal={openBundleModal}
-        onNavigate={handleNavigate}
-        currentPage={currentPage}
-        cartCount={totalCartCount}
-        onOpenCart={() => handleNavigate("cart")}
-        onOpenAccount={handleAccountClick}
-        onSelectProduct={handleOpenProductModal}
-        isSearchOpen={isSearchOpen}
-        onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
-        onCloseSearch={() => setIsSearchOpen(false)}
-      />
+      {currentPage !== "cart" && (
+        <Navbar
+          onOpenBundleModal={openBundleModal}
+          onNavigate={handleNavigate}
+          currentPage={currentPage}
+          cartCount={totalCartCount}
+          onOpenCart={() => handleNavigate("cart")}
+          onOpenAccount={handleAccountClick}
+          onSelectProduct={handleOpenProductModal}
+          isSearchOpen={isSearchOpen}
+          onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
+          onCloseSearch={() => setIsSearchOpen(false)}
+        />
+      )}
 
       {currentPage === "perfumes" ? (
         <PerfumesPage

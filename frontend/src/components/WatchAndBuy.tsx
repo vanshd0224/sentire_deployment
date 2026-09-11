@@ -122,9 +122,11 @@ const reels: ReelProduct[] = rawReels.map((r) => {
   const price = pData?.prices[50] ?? 1199;
   const mrp = pData?.mrps?.[50] ?? Math.round(price * 1.4);
   const discountPct = Math.round(((mrp - price) / mrp) * 100);
+  const realSwatch = pData?.img || pData?.sizeImages?.[50]?.[0] || r.swatch;
 
   return {
     ...r,
+    swatch: realSwatch,
     price,
     priceText: `₹ ${price.toLocaleString("en-IN")}`,
     original: `₹ ${mrp.toLocaleString("en-IN")}`,
@@ -333,8 +335,20 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
 
   const triggerAdd = (e: React.MouseEvent, reel: ReelProduct) => {
     e.stopPropagation();
-    onAddToCart?.({ id: reel.id, name: reel.product, img: reel.swatch }, 50, reel.price);
-    showToast(`Added ${reel.product} to Bag!`);
+    const pData = ALL_PERFUMES.find((p) => p.id === reel.id);
+    const realImg = pData?.img || pData?.sizeImages?.[50]?.[0] || reel.swatch;
+    onAddToCart?.(
+      {
+        id: reel.id,
+        productId: reel.id,
+        name: pData?.name ? `${pData.name} Extrait 50ml` : reel.product,
+        img: realImg,
+        image: realImg,
+      },
+      50,
+      reel.price
+    );
+    showToast(`Added ${pData?.name || reel.product} to Bag!`);
     onOpenCart?.();
   };
 
