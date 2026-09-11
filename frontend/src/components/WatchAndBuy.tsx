@@ -178,37 +178,84 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Force all landing page carousel videos to play 100% reliably
+  // Smart Video Playback Controller (Desktop: all visible play | Mobile: ONLY centered video plays)
   useEffect(() => {
-    const playAllVideos = () => {
+    const updateVideoPlayback = () => {
+      const isMobile = window.innerWidth < 768;
       const videos = document.querySelectorAll<HTMLVideoElement>(".watch-carousel-video");
-      videos.forEach((v) => {
-        v.muted = true;
-        const p = v.play();
-        if (p !== undefined) {
-          p.catch(() => {});
-        }
-      });
+
+      if (isMobile) {
+        // MOBILE: Find the video card closest to center of screen
+        const screenCenterX = window.innerWidth / 2;
+        let closestVideo: HTMLVideoElement | null = null;
+        let minDistance = Infinity;
+
+        videos.forEach((v) => {
+          const rect = v.getBoundingClientRect();
+          if (rect.right > 0 && rect.left < window.innerWidth) {
+            const cardCenterX = rect.left + rect.width / 2;
+            const dist = Math.abs(cardCenterX - screenCenterX);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestVideo = v;
+            }
+          }
+        });
+
+        videos.forEach((v) => {
+          v.muted = true;
+          if (v === closestVideo) {
+            const p = v.play();
+            if (p !== undefined) p.catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      } else {
+        // DESKTOP: All visible cards play simultaneously
+        videos.forEach((v) => {
+          const rect = v.getBoundingClientRect();
+          v.muted = true;
+          if (rect.right > 0 && rect.left < window.innerWidth) {
+            const p = v.play();
+            if (p !== undefined) p.catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      }
     };
 
-    playAllVideos();
-    const timer1 = setTimeout(playAllVideos, 300);
-    const timer2 = setTimeout(playAllVideos, 1000);
-    const interval = setInterval(playAllVideos, 2500);
+    updateVideoPlayback();
+    const timer1 = setTimeout(updateVideoPlayback, 100);
+    const timer2 = setTimeout(updateVideoPlayback, 400);
+    const timer3 = setTimeout(updateVideoPlayback, 1000);
+    const interval = setInterval(updateVideoPlayback, 600);
 
-    window.addEventListener("scroll", playAllVideos, { passive: true });
-    window.addEventListener("touchstart", playAllVideos, { passive: true });
-    window.addEventListener("click", playAllVideos, { passive: true });
+    const viewportEl = document.querySelector(".watch-carousel-viewport");
+    if (viewportEl) {
+      viewportEl.addEventListener("scroll", updateVideoPlayback, { passive: true });
+    }
+
+    window.addEventListener("scroll", updateVideoPlayback, { passive: true });
+    window.addEventListener("touchmove", updateVideoPlayback, { passive: true });
+    window.addEventListener("touchend", updateVideoPlayback, { passive: true });
+    window.addEventListener("resize", updateVideoPlayback, { passive: true });
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
+      clearTimeout(timer3);
       clearInterval(interval);
-      window.removeEventListener("scroll", playAllVideos);
-      window.removeEventListener("touchstart", playAllVideos);
-      window.removeEventListener("click", playAllVideos);
+      if (viewportEl) {
+        viewportEl.removeEventListener("scroll", updateVideoPlayback);
+      }
+      window.removeEventListener("scroll", updateVideoPlayback);
+      window.removeEventListener("touchmove", updateVideoPlayback);
+      window.removeEventListener("touchend", updateVideoPlayback);
+      window.removeEventListener("resize", updateVideoPlayback);
     };
-  }, []);
+  }, [trackIndex]);
 
   useEffect(() => {
     if (activeReelIndex !== null) {
@@ -369,7 +416,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
           </button>
 
           {/* Viewport */}
-          <div className="relative flex-1 overflow-x-auto scroll-smooth hide-scrollbar md:overflow-hidden">
+          <div className="relative flex-1 overflow-x-auto scroll-smooth hide-scrollbar md:overflow-hidden watch-carousel-viewport">
             {/* Track */}
             <div
               className="flex will-change-transform gap-4 px-2"
