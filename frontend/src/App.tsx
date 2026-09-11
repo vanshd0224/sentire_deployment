@@ -24,6 +24,7 @@ import DiscoverySetPage from "./components/DiscoverySetPage";
 import PersonalisationPage from "./components/PersonalisationPage";
 import DiscoverySetPage from "./components/DiscoverySetPage";
 import CartDrawer, { CartItem } from "./components/CartDrawer";
+import CartPage from "./components/CartPage";
 import MobileBottomNav from "./components/MobileBottomNav";
 import AccountDrawerModal from "./components/AccountDrawerModal";
 import AccountPage from "./components/AccountPage";
@@ -149,6 +150,7 @@ export default function App() {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
       if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
+      else if (hash === "#cart" || popPath.includes("cart") || popPath.includes("bag")) setCurrentPage("cart");
       else if (hash === "#discovery-set" || popPath.includes("discovery-set") || hash === "#discoveryset" || popPath.includes("discoveryset")) setCurrentPage("discovery-set");
       else if (hash === "#about" || popPath.includes("about") || popPath.includes("extrait-de-parfum") || popPath.includes("35-percent")) setCurrentPage("about");
       else if (hash === "#byob" || popPath.includes("byob") || popPath.includes("build-your-own-bundle")) setCurrentPage("byob");
@@ -169,7 +171,7 @@ export default function App() {
     };
 
     const handleOpenCartEvent = () => {
-      setIsCartOpen(true);
+      handleNavigate("cart");
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -258,7 +260,7 @@ export default function App() {
     
     // Trigger real-time Shopify Storefront GraphQL mutation (cartCreate / cartLinesAdd)
     syncAddToCartToShopifyStorefront(newItem, qtyToAdd);
-    setIsCartOpen(true);
+    handleNavigate("cart");
   };
 
   const handleUpdateCartQuantity = (productId: string, size: number, delta: number) => {
@@ -297,7 +299,7 @@ export default function App() {
         onNavigate={handleNavigate}
         currentPage={currentPage}
         cartCount={totalCartCount}
-        onOpenCart={() => setIsCartOpen(true)}
+        onOpenCart={() => handleNavigate("cart")}
         onOpenAccount={handleAccountClick}
         onSelectProduct={handleOpenProductModal}
         isSearchOpen={isSearchOpen}
@@ -313,7 +315,7 @@ export default function App() {
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "bestsellers" ? (
@@ -322,12 +324,12 @@ export default function App() {
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
         />
             ) : currentPage === "discovery-set" ? (
         <DiscoverySetPage
           onAddToCart={handleAddToCart}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onBackToHome={() => handleNavigate("home")}
           onNavigate={handleNavigate}
         />
@@ -337,13 +339,13 @@ export default function App() {
           cartItems={cartItems}
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
         />
       ) : currentPage === "discovery-set" ? (
         <DiscoverySetPage
           onBackToHome={() => handleNavigate("home")}
           onAddToCart={handleAddToCart}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onNavigate={handleNavigate}
         />
       ) : currentPage === "about" ? (
@@ -356,14 +358,14 @@ export default function App() {
         <ByobPage
           onBackToHome={() => handleNavigate("home")}
           onAddToCart={handleAddToCart}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "personalisation" ? (
         <PersonalisationPage
           onBackToHome={() => handleNavigate("home")}
           onAddToCart={handleAddToCart}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "client-services" ? (
@@ -381,12 +383,21 @@ export default function App() {
           onBackToHome={() => handleNavigate("home")}
           onNavigate={handleNavigate}
         />
+      ) : currentPage === "cart" ? (
+        <CartPage
+          items={cartItems}
+          onUpdateQuantity={handleUpdateCartQuantity}
+          onRemoveItem={handleRemoveCartItem}
+          onClearCart={() => setCartItems([])}
+          onAddToCart={handleAddToCart}
+          onNavigate={handleNavigate}
+        />
       ) : (
         <main>
           <Hero onNavigate={handleNavigate} />
           <WatchAndBuy
             onAddToCart={handleAddToCart}
-            onOpenCart={() => setIsCartOpen(true)}
+            onOpenCart={() => handleNavigate("cart")}
             onSelectProduct={handleOpenProductModal}
           />
           <RetailerBadges />
@@ -414,11 +425,11 @@ export default function App() {
 
       <Footer onNavigate={handleNavigate} />
 
-      {!isCartOpen && !isBundleModalOpen && currentPage !== "personalisation" && (
+      {!isCartOpen && !isBundleModalOpen && currentPage !== "personalisation" && currentPage !== "cart" && (
         <MobileBottomNav
           currentPage={currentPage}
           onNavigate={handleNavigate}
-          onOpenCart={() => setIsCartOpen(true)}
+          onOpenCart={() => handleNavigate("cart")}
           onOpenAccount={handleAccountClick}
           onOpenBundleModal={openBundleModal}
           onToggleSearch={() => {
