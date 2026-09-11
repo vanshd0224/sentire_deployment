@@ -380,24 +380,24 @@ export default function CartPage({
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Name: {engraveName || "Vansh"}</label>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Name</label>
                       <input
                         type="text"
                         maxLength={12}
                         value={engraveName}
                         onChange={(e) => setEngraveName(e.target.value)}
-                        placeholder="Name: Vansh"
+                        placeholder="e.g. Vansh"
                         className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-[#14110D]/70 mb-1">Date: {engraveDate || "11.09.2026"}</label>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Date</label>
                       <input
                         type="text"
                         maxLength={10}
                         value={engraveDate}
                         onChange={(e) => setEngraveDate(e.target.value)}
-                        placeholder="Date: 11.09.2026"
+                        placeholder="e.g. 11.09.2026"
                         className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                       />
                     </div>

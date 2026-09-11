@@ -335,6 +335,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
 
   const triggerAdd = (e: React.MouseEvent, reel: ReelProduct) => {
     e.stopPropagation();
+    e.preventDefault();
     const pData = ALL_PERFUMES.find((p) => p.id === reel.id);
     const realImg = pData?.img || pData?.sizeImages?.[50]?.[0] || reel.swatch;
     onAddToCart?.(
@@ -451,13 +452,13 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                   <div
                     key={i}
                     data-index={i}
-                    onClick={() => setActiveReelIndex(reelIndex)}
-                    className="watch-carousel-card group flex shrink-0 flex-col cursor-pointer transition-transform duration-300 hover:scale-[1.02] active:scale-95"
+                    className="watch-carousel-card group flex shrink-0 flex-col transition-transform duration-300 hover:scale-[1.02] active:scale-95"
                     style={{ width: `${cardWidth}px` }}
                   >
                     {/* Video Card - AUTOPLAY MUTED DIRECTLY ON LANDING PAGE */}
                     <div
-                      className="relative overflow-hidden rounded-2xl bg-black shadow-md border border-black/10 h-[270px] sm:h-[340px] group-hover:shadow-xl transition-all duration-300"
+                      onClick={() => setActiveReelIndex(reelIndex)}
+                      className="relative overflow-hidden rounded-2xl bg-black shadow-md border border-black/10 h-[270px] sm:h-[340px] group-hover:shadow-xl transition-all duration-300 cursor-pointer"
                       style={{ width: `${cardWidth}px` }}
                     >
                       {activeVideoIndexes.has(i) ? (
