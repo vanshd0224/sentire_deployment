@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { createOrGetShopifyCheckoutUrl, resolveShopifyVariantId } from "../utils/shopifyCart";
 import { auth } from "../lib/firebase";
+import { ALL_PERFUMES } from "../data/perfumes";
 
 const IconClose = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -63,6 +64,7 @@ export interface CartDrawerProps {
   onRemoveItem: (productId: string, size: number) => void;
   onClearCart?: () => void;
   onOpenLoginModal?: () => void;
+  onAddToCart?: (item: any, size?: number, price?: number) => void;
 }
 
 export default function CartDrawer({
@@ -73,6 +75,7 @@ export default function CartDrawer({
   onRemoveItem,
   onClearCart,
   onOpenLoginModal,
+  onAddToCart,
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
@@ -80,6 +83,11 @@ export default function CartDrawer({
   const [couponInput, setCouponInput] = useState<string>("");
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
+
+  // Engraving state module
+  const [engraveTargetKey, setEngraveTargetKey] = useState<string>("");
+  const [engraveName, setEngraveName] = useState<string>("");
+  const [engraveDate, setEngraveDate] = useState<string>("");
 
   // Touch gesture & smooth closing state (for mobile right-side swipe-to-dismiss)
   const [touchOffset, setTouchOffset] = useState<number>(0);
@@ -274,6 +282,39 @@ export default function CartDrawer({
     [onUpdateQuantity]
   );
 
+  const handleSwitchSize = (item: CartItem, newSize: number) => {
+    if (item.size === newSize) return;
+    const pData = ALL_PERFUMES.find((p) => p.id === item.productId);
+    const newPrice = pData?.prices?.[newSize] ?? item.price;
+    onRemoveItem(item.productId, item.size);
+    if (onAddToCart) {
+      onAddToCart({ ...item, size: newSize, price: newPrice }, newSize, newPrice);
+    }
+  };
+
+  const handleApplyEngravingToTarget = () => {
+    if (!engraveName.trim()) return;
+    const targetItem = items.find((i) => `${i.productId}-${i.size}` === engraveTargetKey) || items[0];
+    if (!targetItem) return;
+
+    const basePrice = targetItem.isPersonalised ? targetItem.price : targetItem.price + 200;
+    if (onAddToCart) {
+      onAddToCart(
+        {
+          ...targetItem,
+          price: basePrice,
+          isPersonalised: true,
+          engravingText: engraveName.trim(),
+          engravingDate: engraveDate.trim(),
+        },
+        targetItem.size,
+        basePrice
+      );
+    }
+    setCouponSuccess(`Personalised Engraving (+₹200) added to ${targetItem.name}!`);
+    setTimeout(() => setCouponSuccess(null), 3000);
+  };
+
   if (!isOpen) return null;
 
   const countDisplay = String(totalCount).padStart(2, "0");
@@ -341,12 +382,11 @@ export default function CartDrawer({
           {/* Title row */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0">
-              <h2
-                className="font-display leading-tight"
-                style={{ fontSize: "21px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
-              >
-                Shopping Bag
-              </h2>
+              <img
+                src="/assets/sentire-logo-user.jpg"
+                alt="SENTIRE By PC Logo"
+                className="h-7 md:h-8 object-contain max-w-[170px]"
+              />
               <span className="sentire-count-pill shrink-0">
                 {countDisplay}&nbsp;{totalCount === 1 ? "Item" : "Items"}
               </span>
@@ -412,10 +452,10 @@ export default function CartDrawer({
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p
-                    className="font-display"
-                    style={{ fontSize: "13.5px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
+                    className="font-display font-bold text-[#C89A46]"
+                    style={{ fontSize: "13.5px", letterSpacing: "-0.01em" }}
                   >
-                    Complimentary Express Delivery
+                    🎉 Congratulations! FREE Delivery Unlocked!
                   </p>
                   <p
                     style={{
@@ -426,17 +466,17 @@ export default function CartDrawer({
                       fontWeight: 400,
                     }}
                   >
-                    Unlocked for your signature order
+                    Free Express Delivery on orders ₹999 & above
                   </p>
                 </div>
                 <div
                   className="flex items-center justify-center shrink-0"
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: "22px",
+                    height: "22px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(190,143,66,0.55)",
-                    background: "rgba(200,154,70,0.12)",
+                    border: "1px solid rgba(190,143,66,0.6)",
+                    background: "rgba(200,154,70,0.15)",
                     color: "#C89A46",
                   }}
                 >
@@ -449,7 +489,13 @@ export default function CartDrawer({
                   className="font-display"
                   style={{ fontSize: "13.5px", fontWeight: 400, color: "#0B0907" }}
                 >
-                  Express Delivery
+                  {remainingForFreeShipping > 0 ? (
+                    <>
+                      Add <strong style={{ color: "#C89A46", fontWeight: 700 }}>₹{(remainingForFreeShipping || 0).toLocaleString()}</strong> more to get <strong style={{ color: "#C89A46", textTransform: "uppercase", fontWeight: 700 }}>FREE Delivery</strong>
+                    </>
+                  ) : (
+                    "Free shipping on orders over ₹999"
+                  )}
                 </p>
                 <p
                   style={{
@@ -460,9 +506,7 @@ export default function CartDrawer({
                     fontWeight: 400,
                   }}
                 >
-                  {remainingForFreeShipping > 0
-                    ? <>Add <strong style={{ color: "#C89A46", fontWeight: 600 }}>₹{(remainingForFreeShipping || 0).toLocaleString()}</strong> more for complimentary delivery</>
-                    : "Free shipping on orders over ₹999"}
+                  Free delivery on orders ₹999 & above
                 </p>
               </div>
             )}
@@ -628,13 +672,36 @@ export default function CartDrawer({
                                 letterSpacing: "0.14em",
                                 textTransform: "uppercase",
                                 color: "rgba(25,20,15,0.48)",
-                                marginBottom: "6px",
+                                marginBottom: "4px",
                               }}
                             >
                               {item.productId === "discovery-set" || item.name?.toLowerCase().includes("discovery set")
                                 ? "Discovery Set · 6 × 6 ML (36 ML)"
                                 : `Eau de Parfum · ${item.size} ML`}
                             </p>
+
+                            {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
+                            {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
+                              <div className="mt-1.5 mb-2 flex items-center gap-1.5 flex-wrap">
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[#14110D]/50">Size:</span>
+                                {[10, 30, 50].map((sz) => {
+                                  const isSelected = item.size === sz;
+                                  return (
+                                    <button
+                                      key={sz}
+                                      onClick={() => handleSwitchSize(item, sz)}
+                                      className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                                        isSelected
+                                          ? "bg-[#C89A46] text-white border border-[#C89A46] shadow-sm"
+                                          : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/10 hover:border-[#C89A46]"
+                                      }`}
+                                    >
+                                      {sz}ML
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
 
                             {/* Price */}
                             <p
@@ -724,6 +791,64 @@ export default function CartDrawer({
                       </div>
                     );
                   })}
+                </div>
+
+                {/* ══ ₹200 PERSONALISATION ENGRAVING MODULE ══════════════════════ */}
+                <div className="mt-6 rounded-2xl border border-[#C89A46]/35 bg-white p-4 shadow-sm space-y-3">
+                  <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
+                    <div>
+                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#C89A46]">Personalised Craftsmanship</span>
+                      <h4 className="font-serif text-sm font-bold text-[#14110D]">Add Custom Name & Date Engraving (+₹200)</h4>
+                    </div>
+                    <span className="rounded bg-[#C89A46]/10 border border-[#C89A46]/30 px-2 py-0.5 text-[9px] font-bold text-[#C89A46]">Jaipur Laser Engraved</span>
+                  </div>
+
+                  <div>
+                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Select Perfume to Engrave:</label>
+                    <select
+                      value={engraveTargetKey || `${items[0]?.productId}-${items[0]?.size}`}
+                      onChange={(e) => setEngraveTargetKey(e.target.value)}
+                      className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                    >
+                      {items.map((i) => (
+                        <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
+                          {i.name} ({i.size}ML)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Name (Max 12 Chars):</label>
+                      <input
+                        type="text"
+                        maxLength={12}
+                        value={engraveName}
+                        onChange={(e) => setEngraveName(e.target.value)}
+                        placeholder="e.g. Vansh"
+                        className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Date (Max 10 Chars):</label>
+                      <input
+                        type="text"
+                        maxLength={10}
+                        value={engraveDate}
+                        onChange={(e) => setEngraveDate(e.target.value)}
+                        placeholder="e.g. 11.09.2026"
+                        className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleApplyEngravingToTarget}
+                    className="w-full rounded-xl border-2 border-[#C89A46] bg-[#FAF6F0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#C89A46] hover:bg-[#C89A46] hover:text-white transition-all shadow-sm"
+                  >
+                    Apply Engraving to Bottle (+₹200)
+                  </button>
                 </div>
               </div>
             )}

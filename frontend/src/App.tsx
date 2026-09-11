@@ -441,6 +441,7 @@ export default function App() {
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveCartItem}
         onOpenLoginModal={() => setIsAccountOpen(true)}
+        onAddToCart={handleAddToCart}
       />
 
       {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}
