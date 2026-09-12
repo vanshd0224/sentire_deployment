@@ -80,6 +80,7 @@ export default function App() {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
     if (hash === "#account" || path.includes("account")) return "account";
+    if (hash === "#cart" || path.includes("cart") || path.includes("bag") || hash === "#bag") return "cart";
     if (hash === "#discovery-set" || path.includes("discovery-set") || hash === "#discoveryset" || path.includes("discoveryset")) return "discovery-set";
     if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
     if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";

@@ -497,6 +497,24 @@ const routes = [
     })
   },
   {
+    path: 'cart',
+    title: 'Shopping Bag | SENTIRE By PC',
+    description: 'Review your selected artisanal extraits de parfum, apply promo codes, and proceed to checkout.',
+    ogTitle: 'Shopping Bag | SENTIRE By PC',
+    ogDescription: 'Review your selected artisanal extraits de parfum, apply promo codes, and proceed to checkout.',
+    image: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+    heading: 'Your Shopping Bag',
+    subheading: 'Atelier Order Summary & Checkout',
+    contentHtml: `<section class="max-w-7xl mx-auto px-4 py-8"><h1 class="text-3xl font-bold text-ink">Your Shopping Bag</h1></section>`,
+    getSchema: () => ({
+      "@context": "https://schema.org",
+      "@graph": [
+        ORGANIZATION_SCHEMA,
+        STORE_SCHEMA
+      ]
+    })
+  },
+  {
     path: 'new-arrivals',
     title: 'New Arrivals | SENTIRE By PC',
     description: 'Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.',
