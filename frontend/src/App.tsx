@@ -41,12 +41,31 @@ export type { PageName };
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<PerfumeFilterOptions | undefined>(undefined);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem("sentire_cart_items");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (e) {
+      console.error("Error loading saved cart:", e);
+    }
+    return [];
+  });
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
   const [cartToast, setCartToast] = useState<{ id: number; message: string; img?: string } | null>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("sentire_cart_items", JSON.stringify(cartItems));
+    } catch (e) {
+      console.error("Error saving cart to localStorage:", e);
+    }
+  }, [cartItems]);
 
   useEffect(() => {
     if (cartToast) {

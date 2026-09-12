@@ -79,10 +79,26 @@ export default function CartDrawer({
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem("sentire_applied_coupon") || null;
+    } catch (e) {
+      return null;
+    }
+  });
   const [couponInput, setCouponInput] = useState<string>("");
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      if (appliedCoupon) {
+        localStorage.setItem("sentire_applied_coupon", appliedCoupon);
+      } else {
+        localStorage.removeItem("sentire_applied_coupon");
+      }
+    } catch (e) {}
+  }, [appliedCoupon]);
 
   // Engraving state module
   const [engraveTargetKey, setEngraveTargetKey] = useState<string>("");
