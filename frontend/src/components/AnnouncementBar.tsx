@@ -1,10 +1,10 @@
 const items = [
   {
-    text: "USE CODE PC100 FOR ₹100 OFF",
+    text: "GET FLAT ₹100 OFF ON ORDERS ABOVE ₹999 - USE CODE PC100",
     icon: "♦",
   },
   {
-    text: "USE CODE PC200 FOR ₹200 OFF",
+    text: "GET FLAT ₹200 OFF ON ORDERS ABOVE ₹1,999 - USE CODE PC200",
     icon: "♦",
   },
   {
