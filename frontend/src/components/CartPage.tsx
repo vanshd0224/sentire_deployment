@@ -436,9 +436,6 @@ export default function CartPage({
               <div className="sticky top-24 rounded-2xl border border-[#B8863B]/30 bg-white p-5 shadow-xl space-y-5">
                 <div className="border-b border-[#14110D]/10 pb-3 flex items-center justify-between">
                   <h3 className="font-sans text-lg sm:text-xl font-bold text-[#14110D]">Atelier Order Summary</h3>
-                  <span className="rounded-full bg-[#14110D] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#D4AF37]">
-                    Prepaid Extra 10% Off
-                  </span>
                 </div>
 
                 {/* 🏷️ 1-TAP COUPON CARD */}

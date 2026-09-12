@@ -48,12 +48,11 @@ class ChatbotService {
 
 CORE PHILOSOPHY & KNOWLEDGE WEIGHTING (80% AI KNOWLEDGE + 20% BRAND DATASET):
 - 80% GEMINI AI INTELLIGENCE & CREATIVE EXPERTISE: Use your full LLM reasoning, perfumery wisdom, layering artistry, occasion styling, sillage tips, and expressive writing style to compose every answer. Write just like a top-tier Google Gemini AI assistant — rich, dynamic, articulate, and deeply engaging!
-- 20% BRAND DATASET HELPER: Use the brand facts below as a helper reference for Sentire product names, notes, bottle formats, laser photo engraving, and discount codes:
+- 20% BRAND DATASET HELPER: Use the brand facts below as a helper reference for Sentire product names, notes, bottle formats, and discount codes:
 
 BRAND DATASET HELPER REFERENCE:
 ${retrievedContext}
 - Bottle Formats: 50 ML Signature Bottle (Primary recommendation), 30 ML Travel Format, 10 ML Purse Spray.
-- Personalisation & Engraving: 100% COMPLIMENTARY 3D Laser Text & Photo/Portrait Engraving on all 50 ML bottles.
 - Coupons & Offers: Code "PC100" (Rs. 100 OFF > Rs. 999), Code "PC200" (Rs. 200 OFF > Rs. 1,999), BYOB Box Savings (up to Rs. 400 OFF on 2-4 bottles).
 
 RESPONSE STRUCTURE REQUIREMENTS:
@@ -92,7 +91,7 @@ Respond now with full Gemini AI intelligence:`;
             const payload = {
               systemInstruction: {
                 parts: [{
-                  text: "You are 'Sentire AI', an elite master fragrance concierge for House of Sentire. You MUST write comprehensive, long-form, highly detailed, multi-paragraph luxury responses (at least 200 to 350 words). NEVER give brief 1-line or 2-sentence summaries! Always break down 2 to 3 specific Sentire perfumes with their top/heart/base scent notes, occasion mood, bottle formats, 100% complimentary laser photo engraving options, and master perfumer application advice."
+                  text: "You are 'Sentire AI', an elite master fragrance concierge for House of Sentire. You MUST write comprehensive, long-form, highly detailed, multi-paragraph luxury responses (at least 200 to 350 words). NEVER give brief 1-line or 2-sentence summaries! Always break down 2 to 3 specific Sentire perfumes with their top/heart/base scent notes, occasion mood, bottle formats, and master perfumer application advice."
                 }]
               },
               contents: [{
@@ -146,15 +145,7 @@ Respond now with full Gemini AI intelligence:`;
   _getRAGFallback(message, context) {
     const q = message.toLowerCase().trim();
 
-    // 1. Personalisation & Laser Photo Engraving (Checked FIRST so "how does photo engraving work" is not caught by "work")
-    if (q.includes('engrav') || q.includes('photo') || q.includes('image') || q.includes('personal') || q.includes('custom') || q.includes('name') || q.includes('portrait')) {
-      return "Product Personalisation at **SENTIRE By PC** is **100% COMPLIMENTARY** on all 50 ML signature bottles!\n\n" +
-        "• **Bespoke Text & Name Engraving**: Engrave initials, names, romantic dates, or inspirational quotes directly onto the glass bottle.\n\n" +
-        "• **High-Precision Photo Engraving**: Upload any photo, couple portrait, line-art, or logo, and our optical laser etches it permanently into the glass bottle with stunning 3D clarity!\n\n" +
-        "Simply select your 50 ML perfume bottle on our website and enter your custom text or photo before checking out.";
-    }
-
-    // 2. Evening, Date Night & Romance Recommendations
+    // 1. Evening, Date Night & Romance Recommendations
     if (q.includes('date') || q.includes('romance') || q.includes('night') || q.includes('evening') || q.includes('party') || q.includes('club')) {
       return "For **intimate date nights and high-energy evening occasions**, these rich, magnetic extraits de parfum create an unforgettable, seductive scent trail:\n\n" +
         "• **Deep Crush (50 ML / 30 ML / 10 ML)**\n" +
@@ -166,7 +157,7 @@ Respond now with full Gemini AI intelligence:`;
         "✨ *Tip: Apply to moisturized pulse points (wrists, neck, behind ears) to extend sillage all night! Code **PC200** grants ₹200 OFF on orders above ₹1,999.*";
     }
 
-    // 3. Office & Daily Wear Recommendations
+    // 2. Office & Daily Wear Recommendations
     if (q.includes('office') || q.includes('daily') || q.includes('daytime') || q.includes('formal') || q.includes('meeting') || /\bworkplace\b|\bworkday\b/.test(q)) {
       return "For a **sophisticated, professional daily aura at work or meetings**, we recommend our master-crafted extraits de parfum that project clean, understated elegance:\n\n" +
         "• **White Oud (50 ML / 30 ML / 10 ML)**\n" +
@@ -175,21 +166,21 @@ Respond now with full Gemini AI intelligence:`;
         "Cool aquatic freshness layered over a dry, cedarwood foundation. Effortless, crisp, and unbothered for all-day office wear.\n\n" +
         "• **Seductive (50 ML / 30 ML / 10 ML)**\n" +
         "Sparkling Mediterranean citrus sharpened with zesty black pepper. Crisp on application, evolving into a warm velvet aura by your evening commute.\n\n" +
-        "✨ *Note: All 50 ML signature bottles include **100% Complimentary Laser Photo/Text Engraving**! Use code **PC100** for ₹100 OFF.*";
+        "✨ *Tip: Use code **PC100** for ₹100 OFF on orders above ₹999.*";
     }
 
-    // 4. Coupons, Offers & BYOB Multi-Bottle Box
+    // 3. Coupons, Offers & BYOB Multi-Bottle Box
     if (q.includes('coupon') || q.includes('code') || q.includes('offer') || q.includes('discount') || q.includes('byob') || q.includes('bundle') || q.includes('pric') || q.includes('cost')) {
-      return "Exclusive **Sentire Offers &amp; Multi-Bottle Savings**:\n\n" +
+      return "Exclusive **Sentire Offers & Multi-Bottle Savings**:\n\n" +
         "• **Code PC100**: Instant ₹100 OFF on orders above ₹999\n" +
         "• **Code PC200**: Instant ₹200 OFF on orders above ₹1,999\n" +
         "• **BYOB Box Savings**: 2 bottles = ₹150 OFF | 3 bottles = ₹250 OFF | 4 bottles = ₹400 OFF!\n" +
         "• **Complimentary Shipping**: Express nationwide delivery on all orders above ₹999.";
     }
 
-    // 5. Default General Luxury Recommendation
-    return "Greetings from **House of Sentire**! We offer 11 signature 35%+ pure oil extraits de parfum starting at ₹799 with complimentary laser photo bottle engraving.\n\n" +
-      "Would you like a tailored recommendation for a specific occasion (Office, Date Night, Summer, Gifting), or details on custom photo engraving and discount codes?";
+    // 4. Default General Luxury Recommendation
+    return "Greetings from **House of Sentire**! We offer 11 signature 35%+ pure oil extraits de parfum starting at ₹799.\n\n" +
+      "Would you like a tailored recommendation for a specific occasion (Office, Date Night, Summer, Gifting), or details on discount codes?";
   }
 
   async _saveMessage(sessionId, customerId, role, text) {

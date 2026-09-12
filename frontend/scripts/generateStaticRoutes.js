@@ -557,7 +557,6 @@ const routes = [
             <li><strong>2 Bottles:</strong> Instant ₹150 OFF</li>
             <li><strong>3 Bottles:</strong> Instant ₹250 OFF</li>
             <li><strong>4 Bottles:</strong> Instant ₹400 OFF</li>
-            <li><strong>Plus:</strong> 5% extra discount on all UPI / Prepaid checkouts.</li>
           </ul>
         </div>
       </section>
