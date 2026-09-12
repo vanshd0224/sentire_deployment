@@ -179,6 +179,9 @@ export default function CartPage({
     setIsRedirecting(true);
 
     try {
+      try {
+        sessionStorage.setItem("sentire_went_to_checkout", "true");
+      } catch (e) {}
       const checkoutUrl = await createOrGetShopifyCheckoutUrl(items, appliedCoupon);
       if (checkoutUrl) {
         window.location.href = checkoutUrl;

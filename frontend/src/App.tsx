@@ -79,6 +79,16 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
+    const ref = (typeof document !== "undefined" ? document.referrer : "").toLowerCase();
+    const wentToCheckout = typeof sessionStorage !== "undefined" && sessionStorage.getItem("sentire_went_to_checkout") === "true";
+
+    if (wentToCheckout || ref.includes("myshopify.com") || ref.includes("checkouts")) {
+      try {
+        sessionStorage.removeItem("sentire_went_to_checkout");
+      } catch (e) {}
+      return "cart";
+    }
+
     if (hash === "#account" || path.includes("account")) return "account";
     if (hash === "#cart" || path.includes("cart") || path.includes("bag") || hash === "#bag") return "cart";
     if (hash === "#discovery-set" || path.includes("discovery-set") || hash === "#discoveryset" || path.includes("discoveryset")) return "discovery-set";
