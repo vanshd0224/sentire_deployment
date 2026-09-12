@@ -498,7 +498,7 @@ export default function PerfumesPage({
       </section>
 
       {/* ── LUXURY EDITORIAL HERO DESKTOP ── */}
-      <section className="hidden sm:block relative z-30 border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#faf6f0] to-[#fbf9f5] pt-14 pb-16 px-6 lg:px-16">
+      <section className={`hidden sm:block relative border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#faf6f0] to-[#fbf9f5] pt-14 pb-16 px-6 lg:px-16 ${isSortOpen ? "z-40" : "z-30"}`}>
         {/* Subtle Ambient Background Light */}
         <div className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/10 blur-3xl opacity-70" />
 
@@ -614,7 +614,7 @@ export default function PerfumesPage({
       </section>
 
       {/* ── STICKY CONTROL BAR & QUICK CATEGORIES ── */}
-      <section className="sticky top-[71px] z-30 border-b border-black/8 bg-[#fbf9f5]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
+      <section className="sticky top-[71px] z-20 border-b border-black/8 bg-[#fbf9f5]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
         <div className="mx-auto max-w-[1400px] flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
           {/* Quick Filter Pills */}
           <div className="flex items-center gap-2 shrink-0">

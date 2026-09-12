@@ -8,7 +8,7 @@ const items = [
     icon: "♦",
   },
   {
-    text: "NAME & DATE ENGRAVING",
+    text: "35%+ EXTRAIT DE PARFUM",
     icon: "♦",
   },
   {
