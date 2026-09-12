@@ -1306,7 +1306,6 @@ export default function ProductDetailModal({
                 selectedSize,
                 currentPrice
               );
-              onOpenCart?.();
               onClose();
             }}
             className="rounded-full bg-[#c89b5a] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black hover:bg-[#a97f43] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"

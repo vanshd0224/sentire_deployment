@@ -327,7 +327,6 @@ export default function ByobPage({
 
     setTimeout(() => {
       setIsAdding(false);
-      if (onOpenCart) onOpenCart();
     }, 400);
   };
 

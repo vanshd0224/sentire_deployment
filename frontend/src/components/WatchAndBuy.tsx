@@ -350,7 +350,6 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
       reel.price
     );
     showToast(`Added ${pData?.name || reel.product} to Bag!`);
-    onOpenCart?.();
   };
 
   const showToast = (msg: string) => {

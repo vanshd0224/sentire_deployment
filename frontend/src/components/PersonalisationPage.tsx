@@ -379,7 +379,6 @@ export default function PersonalisationPage({
     }
     setCartAdded(true);
     setTimeout(() => setCartAdded(false), 4000);
-    if (onOpenCart) onOpenCart();
   }
 
   const totalPrice = selectedPerfume.price + PERSONALISATION_FEE;

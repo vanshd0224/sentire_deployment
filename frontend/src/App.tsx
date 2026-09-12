@@ -48,6 +48,14 @@ export default function App() {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
+  const [cartToast, setCartToast] = useState<{ id: number; message: string; img?: string } | null>(null);
+
+  useEffect(() => {
+    if (cartToast) {
+      const timer = setTimeout(() => setCartToast(null), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [cartToast]);
 
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
@@ -269,7 +277,13 @@ export default function App() {
     
     // Trigger real-time Shopify Storefront GraphQL mutation (cartCreate / cartLinesAdd)
     syncAddToCartToShopifyStorefront(newItem, qtyToAdd);
-    handleNavigate("cart");
+
+    // Stay on current page, update cart count badge, and show toast notification!
+    setCartToast({
+      id: Date.now(),
+      message: `Added ${safeName} to Bag!`,
+      img: safeImage,
+    });
   };
 
   const handleUpdateCartQuantity = (productId: string, size: number, delta: number) => {
@@ -473,24 +487,27 @@ export default function App() {
           onClose={handleCloseProductModal}
           cartItems={cartItems}
           onAddToCart={(prod, size, price) => {
-            handleAddToCart({
-              productId: prod.id,
-              name: prod.name,
-              price: price,
-              originalPrice: Math.round(price * 1.35),
-              image: prod.img,
-              size: size,
-              isPersonalised: prod.isPersonalised,
-              engravingText: prod.engravingText,
-              engravingDate: prod.engravingDate,
-            });
+            handleAddToCart(
+              {
+                productId: prod.id,
+                name: prod.name,
+                price: price,
+                originalPrice: Math.round(price * 1.35),
+                image: prod.img,
+                size: size,
+                isPersonalised: prod.isPersonalised,
+                engravingText: prod.engravingText,
+                engravingDate: prod.engravingDate,
+              },
+              size,
+              price
+            );
             handleCloseProductModal();
-            setIsCartOpen(true);
           }}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => {
             handleCloseProductModal();
-            setIsCartOpen(true);
+            handleNavigate("cart");
           }}
           onSelectProduct={handleOpenProductModal}
           allProducts={ALL_PERFUMES}
@@ -505,6 +522,39 @@ export default function App() {
         }}
       />
       <ExitIntentPopup onNavigate={handleNavigate} />
+
+      {/* 🛒 LUXURY FLOATING CART TOAST NOTIFICATION (APPROACH 1) */}
+      {cartToast && (
+        <div
+          key={cartToast.id}
+          className="fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-2xl border border-[#B8863B]/60 bg-[#14110D]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            {cartToast.img && (
+              <div className="h-11 w-11 shrink-0 rounded-xl bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
+                <img src={cartToast.img} alt="Cart item thumbnail" className="h-full w-full object-contain" />
+              </div>
+            )}
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-[#D4AF37] tracking-wide truncate">{cartToast.message}</p>
+              <p className="text-[10px] text-white/70 font-medium">Cart Updated ({totalCartCount} item{totalCartCount === 1 ? "" : "s"})</p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => {
+              setCartToast(null);
+              handleNavigate("cart");
+            }}
+            className="shrink-0 rounded-full bg-[#B8863B] px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#C89B5A] transition-all shadow-md cursor-pointer flex items-center gap-1"
+          >
+            <span>View Bag</span>
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
