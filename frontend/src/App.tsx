@@ -23,7 +23,6 @@ import AboutPage from "./components/AboutPage";
 import ByobPage from "./components/ByobPage";
 import DiscoverySetPage from "./components/DiscoverySetPage";
 import PersonalisationPage from "./components/PersonalisationPage";
-import DiscoverySetPage from "./components/DiscoverySetPage";
 import CartDrawer, { CartItem } from "./components/CartDrawer";
 import CartPage from "./components/CartPage";
 import MobileBottomNav from "./components/MobileBottomNav";
@@ -34,7 +33,6 @@ import TrackOrderPage from "./components/TrackOrderPage";
 import SEOHead from "./components/SEOHead";
 import ProductDetailModal from "./components/ProductDetailModal";
 import ExitIntentPopup from "./components/ExitIntentPopup";
-import { ALL_PERFUMES } from "./data/perfumes";
 import { auth } from "./lib/firebase";
 
 import type { PageName } from "./types/appTypes";
@@ -56,6 +54,8 @@ export default function App() {
       return () => clearTimeout(timer);
     }
   }, [cartToast]);
+
+
 
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;

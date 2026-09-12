@@ -1,21 +1,29 @@
 import React, { useEffect, useRef } from "react";
+import type { PageName } from "../types/appTypes";
 
 interface HeroProps {
-  onNavigate?: (
-    page: "home" | "perfumes" | "bestsellers" | "new-arrivals" | "about" | "byob" | "personalisation" | "client-services" | "track-order" | "account",
-    filters?: any
-  ) => void;
+  onNavigate?: (page: PageName, filters?: any) => void;
+  onOpenCart?: () => void;
+  onOpenAccount?: () => void;
+  onToggleSearch?: () => void;
+  cartCount?: number;
 }
 
-export default function Hero({ onNavigate }: HeroProps) {
+export default function Hero({
+  onNavigate,
+  onOpenCart,
+  onOpenAccount,
+  onToggleSearch,
+  cartCount = 0,
+}: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = sectionRef.current?.querySelector<HTMLImageElement>(".hero-clean-bg");
+    const el = sectionRef.current?.querySelector<HTMLImageElement>(".hero-bg-img");
     if (!el) return;
     const t = setTimeout(() => {
       el.style.opacity = "1";
-    }, 50);
+    }, 40);
     return () => clearTimeout(t);
   }, []);
 
@@ -31,10 +39,13 @@ export default function Hero({ onNavigate }: HeroProps) {
     }
   };
 
-  const handlePersonalisationClick = (e: React.MouseEvent) => {
+  const scrollToNextSection = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (onNavigate) {
-      onNavigate("personalisation");
+    const nextEl = document.getElementById("perfumes") || document.querySelector("main > section:nth-of-type(2)");
+    if (nextEl) {
+      nextEl.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollBy({ top: window.innerHeight * 0.85, behavior: "smooth" });
     }
   };
 
@@ -42,359 +53,602 @@ export default function Hero({ onNavigate }: HeroProps) {
     <section
       id="top"
       ref={sectionRef}
-      aria-label="Sentire by PC Bespoke Rakhi Fragrance Gifting"
-      className="hero-section relative w-full overflow-hidden select-none bg-[#F3DFC5]"
+      aria-label="Sentire by PC Ganesh Chaturthi Luxury Fragrance Collection"
+      className="hero-section relative w-full overflow-hidden select-none bg-[#FAF7F7]"
       style={{
-        width: "100%",
-        height: "calc(100vh - 96px)",
-        minHeight: "calc(100vh - 96px)",
-        backgroundColor: "#F3DFC5",
         WebkitFontSmoothing: "antialiased",
         textRendering: "geometricPrecision",
       }}
     >
       <style>{`
-        /* ═════════════════════════════════════════════════════════════════
-           TYPOGRAPHY SYSTEM (Cormorant Garamond + Montserrat / Inter)
-           ═════════════════════════════════════════════════════════════════ */
-        .hero-janmashtami-title {
+        /* ── Scoped Typography & Keyframe Animations ── */
+        @keyframes heroFadeIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .font-cormorant {
           font-family: "Cormorant Garamond", Georgia, serif !important;
-          font-weight: 500 !important;
-          font-style: normal !important;
-          color: #24133F !important;
-          line-height: 1.02 !important;
-          letter-spacing: -0.015em !important;
-          text-shadow: 0 1px 2px rgba(36, 19, 63, 0.04);
         }
-
-        .hero-janmashtami-kicker {
+        .font-montserrat {
           font-family: "Montserrat", -apple-system, sans-serif !important;
-          font-weight: 500 !important;
-          color: #38241D !important;
-          letter-spacing: 0.035em !important;
         }
 
-        .hero-janmashtami-body {
-          font-family: "Inter", "Montserrat", -apple-system, sans-serif !important;
+        .hero-ganesh-title {
+          font-family: "Cormorant Garamond", Georgia, serif !important;
           font-weight: 400 !important;
-          color: #1F1535 !important;
-          line-height: 1.62 !important;
-          letter-spacing: -0.005em !important;
+          color: #32113F !important;
+          letter-spacing: -1.2px !important;
+          text-shadow: 0 1px 2px rgba(50, 17, 63, 0.06);
         }
 
-        .hero-janmashtami-badge {
-          font-family: "Montserrat", "Inter", -apple-system, sans-serif !important;
-          font-style: normal !important;
+        .hero-eyebrow-text {
+          font-family: "Montserrat", sans-serif !important;
           font-weight: 500 !important;
-          color: #945722 !important;
-          letter-spacing: 0.015em !important;
+          color: #966127 !important;
+          letter-spacing: 3.4px !important;
+          text-indent: 3.4px;
         }
 
-        /* Primary Button: Shop Now ➔ */
-        .hero-cta-shop-now {
+        .hero-happy-text {
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 400 !important;
+          color: #BA8844 !important;
+          letter-spacing: 28px !important;
+          text-indent: 28px;
+        }
+
+        .hero-subhead-text {
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 500 !important;
+          color: #32113F !important;
+          letter-spacing: 7.5px !important;
+          text-indent: 7.5px;
+        }
+
+        .hero-body-text {
+          font-family: "Montserrat", sans-serif !important;
+          font-weight: 400 !important;
+          color: #49414A !important;
+          line-height: 1.55 !important;
+          letter-spacing: 0.2px !important;
+        }
+
+        /* Primary Explore CTA Button */
+        .hero-cta-btn {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background-color: #251642;
-          background-image: linear-gradient(180deg, #2D1A4D 0%, #201239 100%);
-          color: #F8EEE7;
-          border: 1px solid rgba(200, 148, 57, 0.4);
-          border-radius: 10px;
-          font-family: "Montserrat", sans-serif !important;
-          font-weight: 500 !important;
-          letter-spacing: 0.04em;
-          box-shadow: 0 6px 22px rgba(37, 22, 66, 0.28);
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          background: linear-gradient(135deg, #552060 0%, #32103D 100%);
+          color: #FFFFFF;
+          border-radius: 4px;
+          border: none;
+          box-shadow: 0 4px 18px rgba(50, 16, 61, 0.28);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           text-decoration: none;
           cursor: pointer;
         }
-        .hero-cta-shop-now:hover {
-          background-color: #1c0e33;
-          border-color: #C89439;
-          box-shadow: 0 10px 30px rgba(37, 22, 66, 0.38);
+        .hero-cta-btn:hover {
+          filter: brightness(1.08);
+          box-shadow: 0 8px 24px rgba(50, 16, 61, 0.38);
           transform: translateY(-1.5px);
         }
 
-        /* Secondary Button: Explore Collection ➔ */
-        .hero-cta-explore {
+        /* Secondary Discovery CTA Button */
+        .hero-discovery-btn {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 249, 244, 0.65);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          color: #251642;
-          border: 1.5px solid #C89439;
-          border-radius: 10px;
-          font-family: "Montserrat", sans-serif !important;
-          font-weight: 500 !important;
-          letter-spacing: 0.03em;
-          box-shadow: 0 4px 16px rgba(37, 22, 66, 0.06);
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          background: rgba(255, 255, 255, 0.75);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1.5px solid #B9863E;
+          border-radius: 4px;
+          box-shadow: 0 3px 14px rgba(185, 134, 62, 0.16);
+          transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
           text-decoration: none;
           cursor: pointer;
         }
-        .hero-cta-explore:hover {
-          background: rgba(255, 255, 255, 0.9);
-          border-color: #A87624;
-          box-shadow: 0 8px 24px rgba(200, 148, 57, 0.22);
+        .hero-discovery-btn:hover {
+          background: #32113F;
+          border-color: #32113F;
+          box-shadow: 0 6px 20px rgba(50, 17, 63, 0.25);
           transform: translateY(-1.5px);
         }
+        .hero-discovery-btn:hover span {
+          color: #F7D488 !important;
+        }
+        .hero-discovery-btn:hover svg {
+          stroke: #F7D488 !important;
+        }
 
-        @media (max-width: 900px) {
+        /* Nav link hover */
+        .hero-nav-link {
+          position: relative;
+          font-family: "Montserrat", sans-serif !important;
+          font-size: 16px;
+          font-weight: 500;
+          letter-spacing: 0.4px;
+          color: #161217;
+          text-decoration: none;
+          transition: color 0.22s ease;
+          white-space: nowrap;
+        }
+        .hero-nav-link:hover {
+          color: #B9863E;
+        }
+
+        .hero-icon-btn {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          color: #161217;
+          transition: transform 0.2s ease, color 0.2s ease;
+          padding: 0;
+        }
+        .hero-icon-btn:hover {
+          color: #B9863E;
+          transform: scale(1.08);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 767px) {
           .hero-section {
             height: auto !important;
             min-height: 0 !important;
-            max-height: none !important;
           }
-          .hero-desktop-content {
+          .hero-desktop-view {
             display: none !important;
           }
-          .hero-mobile-content {
+          .hero-tablet-view {
+            display: none !important;
+          }
+          .hero-mobile-view {
             display: block !important;
+          }
+          .mobile-hero-tagline {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 500 !important;
+            color: #B47833 !important;
+            letter-spacing: clamp(1.4px, 0.4vw, 2.2px) !important;
+            text-indent: clamp(1.4px, 0.4vw, 2.2px);
+            font-size: clamp(8.5px, 2.2vw, 10.5px) !important;
+          }
+          .mobile-hero-happy {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 500 !important;
+            color: #B88241 !important;
+            letter-spacing: clamp(10px, 2.9vw, 15px) !important;
+            text-indent: clamp(10px, 2.9vw, 15px);
+            font-size: clamp(18px, 5.2vw, 25px) !important;
+          }
+          .mobile-hero-title {
+            font-family: "Cormorant Garamond", Georgia, serif !important;
+            font-weight: 500 !important;
+            color: #30103D !important;
+            letter-spacing: -0.012em !important;
+            line-height: 0.94 !important;
+            font-size: clamp(37px, 10.4vw, 54px) !important;
+          }
+          .mobile-hero-subhead {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 600 !important;
+            color: #30103D !important;
+            letter-spacing: clamp(2.2px, 0.7vw, 3.4px) !important;
+            text-indent: clamp(2.2px, 0.7vw, 3.4px);
+            font-size: clamp(10px, 2.5vw, 13px) !important;
+          }
+          .mobile-hero-desc {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 400 !important;
+            color: #4D4A4F !important;
+            line-height: 1.4 !important;
+            font-size: clamp(10px, 2.4vw, 12px) !important;
+          }
+          .mobile-hero-feature-label {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 500 !important;
+            color: #30103D !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.35px !important;
+            font-size: clamp(7.5px, 2vw, 9.2px) !important;
+          }
+          .mobile-hero-cta-text {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 500 !important;
+            color: #FFFFFF !important;
+            letter-spacing: 0.5px !important;
+            font-size: clamp(11.5px, 2.8vw, 13px) !important;
+          }
+          .mobile-trust-text {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 500 !important;
+            color: #30103D !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.2px !important;
+            font-size: clamp(7.5px, 1.9vw, 9px) !important;
+          }
+        }
+        @media (min-width: 768px) and (max-width: 900px) {
+          .hero-section {
+            height: auto !important;
+            min-height: 0 !important;
+          }
+          .hero-desktop-view {
+            display: none !important;
+          }
+          .hero-tablet-view {
+            display: block !important;
+          }
+          .hero-mobile-view {
+            display: none !important;
           }
         }
         @media (min-width: 901px) {
           .hero-section {
-            height: 100vh !important;
-            min-height: 720px !important;
-            max-height: none !important;
+            height: calc(100vh - 115px) !important;
+            min-height: 560px !important;
+            max-height: 850px !important;
           }
-          .hero-desktop-content {
-            display: flex !important;
+          .hero-desktop-view {
+            display: block !important;
+            height: 100% !important;
           }
-          .hero-mobile-content {
+          .hero-tablet-view {
             display: none !important;
+          }
+          .hero-mobile-view {
+            display: none !important;
+          }
+        }
+        @media (min-width: 1718px) {
+          .hero-section {
+            height: calc(100vh - 125px) !important;
+            min-height: 700px !important;
+            max-height: 920px !important;
           }
         }
       `}</style>
 
       {/* ═════════════════════════════════════════════════════════════════
-          FULL-BLEED PHOTOGRAPHIC JANMASHTAMI HERO BACKGROUND (DESKTOP)
+          DESKTOP HERO (≥ 901px) — Exact 1:1 match to reference 1717 × 916 px
           ═════════════════════════════════════════════════════════════════ */}
-      <picture className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
-        <source srcSet="/images/hero-krishna-desktop.webp?v=v2_clean" type="image/webp" />
-        <source srcSet="/images/hero-krishna-desktop.png?v=v2_clean" type="image/png" />
-        <img
-          src="/images/hero-krishna-desktop.png?v=v2_clean"
-          alt="SENTIRE By PC Janmashtami Luxury Perfume Collection"
-          fetchPriority="high"
-          decoding="async"
-          width="1672"
-          height="941"
-          className="hero-clean-bg absolute inset-0 w-full h-full object-cover object-right md:object-center select-none pointer-events-none"
-          style={{
-            transition: "opacity 0.6s ease-out",
-          }}
-          draggable={false}
-        />
-      </picture>
-
-      {/* ═════════════════════════════════════════════════════════════════
-          DESKTOP JANMASHTAMI EDITORIAL CONTENT LAYER (51-54% Left Content)
-          ═════════════════════════════════════════════════════════════════ */}
-      <div
-        className="hero-desktop-content absolute inset-0 flex flex-col justify-center"
-        style={{
-          paddingLeft: "clamp(48px, 10.2vw, 195px)",
-          paddingTop: "clamp(90px, 13vh, 140px)",
-          paddingBottom: "clamp(30px, 4vh, 60px)",
-          paddingRight: "46%", // Preserves right photographic focus on the perfume bottle
-          zIndex: 6,
-        }}
-      >
-        {/* Kicker Eyebrow: Feather Motif + Celebrate Janmashtami in Fragrance */}
-        <div className="flex items-center gap-3 mb-2.5 sm:mb-3 select-none">
+      <div className="hero-desktop-view relative w-full h-full overflow-hidden">
+        {/* Absolutely Positioned Clean Photographic Background */}
+        <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
+          <source srcSet="/images/hero-ganesh-desktop.webp" type="image/webp" />
+          <source srcSet="/images/hero-ganesh-desktop.png" type="image/png" />
           <img
-            src="/images/janmashtami/kicker-feather.png"
-            alt=""
-            aria-hidden="true"
-            className="h-[28px] sm:h-[34px] w-auto object-contain drop-shadow-[0_1px_3px_rgba(200,148,57,0.25)]"
-          />
-          <span
-            className="hero-janmashtami-kicker"
+            src="/images/hero-ganesh-desktop.png"
+            alt="Sentire By PC Ganesh Chaturthi Luxury Perfume"
+            fetchPriority="high"
+            decoding="async"
+            width="1695"
+            height="928"
+            className="hero-bg-img absolute inset-0 w-full h-full select-none pointer-events-none"
             style={{
-              fontSize: "clamp(13px, 1.05vw, 17px)",
-              color: "#352219",
-              lineHeight: 1.2,
+              objectFit: "cover",
+              objectPosition: "center -5px",
+              transition: "opacity 0.5s ease-out",
             }}
-          >
-            Celebrate Janmashtami in Fragrance
-          </span>
-        </div>
+            draggable={false}
+          />
+        </picture>
 
-        {/* Main Headline: A Divine Scent / for Janmashtami */}
-        <h1
-          className="hero-janmashtami-title m-0"
-          style={{
-            fontSize: "clamp(54px, 5.3vw, 104px)",
-            lineHeight: 0.98,
-            marginBottom: "clamp(14px, 2vh, 24px)",
-            letterSpacing: "-0.015em",
-          }}
-        >
-          A Divine Scent
-          <br />
-          for Janmashtami
-        </h1>
 
-        {/* Horizontal Gold Ornamental Divider with Central Motif */}
+
+        {/* ── LEFT HERO EDITORIAL CONTENT BLOCK ── */}
         <div
-          className="flex items-center"
+          className="absolute z-20 flex flex-col items-center text-center"
           style={{
-            maxWidth: "520px",
-            width: "100%",
-            marginTop: "clamp(4px, 0.8vh, 10px)",
-            marginBottom: "clamp(16px, 2.4vh, 28px)",
+            left: "clamp(32px, 5.5vw, 95px)",
+            top: "clamp(12px, 2.2vh, 26px)",
+            width: "min(676px, 48vw)",
           }}
-          aria-hidden="true"
         >
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C89439]/10 via-[#C89439]/60 to-[#C89439]" />
-          <div className="mx-3 flex items-center justify-center shrink-0">
+          {/* 1. Eyebrow: NEW BEGINNINGS. DIVINE BLESSINGS. */}
+          <div
+            className="hero-eyebrow-text uppercase text-[12.5px] leading-none"
+            style={{ transform: "translateX(-15px)" }}
+          >
+            NEW BEGINNINGS. DIVINE BLESSINGS.
+          </div>
+
+          {/* Ornamental Lotus Divider */}
+          <div
+            className="flex items-center justify-center select-none pointer-events-none"
+            style={{
+              marginTop: "8px",
+              transform: "translateX(-16px)",
+              width: "220px",
+              height: "18px",
+            }}
+            aria-hidden="true"
+          >
             <img
-              src="/images/janmashtami/ornament-divider-flower.png"
+              src="/images/ganesh/eyebrow_ornament.png"
               alt=""
-              aria-hidden="true"
-              className="h-[15px] sm:h-[18px] w-auto object-contain"
+              width="250"
+              height="20"
+              className="w-[220px] h-auto object-contain"
             />
           </div>
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C89439] via-[#C89439]/60 to-[#C89439]/10" />
-        </div>
 
-        {/* Body Paragraph */}
-        <p
-          className="hero-janmashtami-body m-0"
-          style={{
-            fontSize: "clamp(15px, 1.15vw, 19px)",
-            lineHeight: 1.62,
-            maxWidth: "530px",
-            color: "#211638",
-            marginBottom: "clamp(18px, 2.6vh, 32px)",
-          }}
-        >
-          Immerse your senses in the soft elegance of Sentire by PC, inspired by devotion, beauty, and timeless celebration.
-        </p>
+          {/* 2. HAPPY Text */}
+          <div
+            className="hero-happy-text uppercase leading-none"
+            style={{
+              marginTop: "2px",
+              transform: "translateX(-12px)",
+              fontSize: "clamp(32px, 2.7vw, 42px)",
+              letterSpacing: "18px",
+              textIndent: "18px",
+            }}
+          >
+            HAPPY
+          </div>
 
-        {/* Limited Festive Edition Badge (Gold Flute Icon + Accent) */}
-        <div className="flex items-center gap-3 mb-6 sm:mb-8 select-none">
-          <img
-            src="/images/janmashtami/flute-badge.png"
-            alt=""
+          {/* 3. Main Headline: Ganesh Chaturthi */}
+          <h1
+            className="hero-ganesh-title m-0 whitespace-nowrap leading-[0.88]"
+            style={{
+              marginTop: "6px",
+              fontSize: "clamp(62px, 5.8vw, 90px)",
+            }}
+          >
+            Ganesh Chaturthi
+          </h1>
+
+          {/* 4. Gold Divider with Ampersand Medallion */}
+          <div
+            className="relative flex items-center justify-center select-none"
+            style={{
+              marginTop: "6px",
+              width: "min(620px, 95%)",
+              height: "26px",
+              marginLeft: "3px",
+            }}
             aria-hidden="true"
-            className="h-[24px] sm:h-[28px] w-auto object-contain drop-shadow-[0_1px_3px_rgba(200,148,57,0.3)]"
-          />
-          <span
-            className="hero-janmashtami-badge"
+          >
+            {/* Horizontal Line Left */}
+            <div className="flex-1 flex items-center">
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#B9863E] shrink-0" />
+              <div className="flex-1 h-[1.2px] bg-[#B9863E]" />
+            </div>
+
+            {/* Center Circular Medallion */}
+            <div
+              className="mx-[10px] flex items-center justify-center rounded-full bg-[#B9863E] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
+              style={{
+                width: "26px",
+                height: "26px",
+              }}
+            >
+              <span
+                className="font-cormorant text-white font-normal text-[18px] leading-none select-none"
+                style={{
+                  marginTop: "-2px",
+                  marginLeft: "-0.5px",
+                }}
+              >
+                &amp;
+              </span>
+            </div>
+
+            {/* Horizontal Line Right */}
+            <div className="flex-1 flex items-center">
+              <div className="flex-1 h-[1.2px] bg-[#B9863E]" />
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#B9863E] shrink-0" />
+            </div>
+          </div>
+
+          {/* 5. Subhead: WELCOME TO OUR NEW BEGINNING */}
+          <div
+            className="hero-subhead-text uppercase whitespace-nowrap leading-none"
             style={{
-              fontSize: "clamp(14px, 1.05vw, 17px)",
-              color: "#8C5F22",
+              marginTop: "6px",
+              fontSize: "clamp(13px, 1.15vw, 17px)",
+              letterSpacing: "4px",
+              textIndent: "4px",
             }}
           >
-            Limited Festive Edition
-          </span>
-        </div>
+            WELCOME TO OUR NEW BEGINNING
+          </div>
 
-        {/* Dual Call-to-Action Buttons Row */}
-        <div className="flex items-center gap-4 sm:gap-5 flex-wrap">
-          {/* Button 1: Shop Now ➔ */}
+          {/* 6. Description Copy */}
+          <p
+            className="hero-body-text text-center m-0"
+            style={{
+              marginTop: "8px",
+              fontSize: "clamp(12px, 0.95vw, 15px)",
+              lineHeight: "1.45",
+              maxWidth: "440px",
+            }}
+          >
+            As we celebrate wisdom and prosperity, we begin a
+            <br />
+            new journey of crafting emotions through fragrances.
+          </p>
+
+          {/* 7. Three Benefit Items with Thin Vertical Separators */}
+          <div
+            className="flex items-center justify-between select-none"
+            style={{
+              marginTop: "12px",
+              width: "min(460px, 90%)",
+              height: "64px",
+            }}
+          >
+            {/* Benefit 1: Divine Blessings (Ganesh) */}
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <div className="h-[30px] flex items-center justify-center mb-[3px]">
+                <img
+                  src="/images/ganesh/benefit_ganesh.png"
+                  alt="Divine Blessings"
+                  width="64"
+                  height="74"
+                  className="h-[26px] w-auto object-contain"
+                />
+              </div>
+              <span
+                className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase"
+              >
+                DIVINE
+                <br />
+                BLESSINGS
+              </span>
+            </div>
+
+            {/* Vertical Separator 1 */}
+            <div
+              className="w-[1px] h-[48px] shrink-0"
+              style={{ background: "rgba(185, 134, 62, 0.35)" }}
+              aria-hidden="true"
+            />
+
+            {/* Benefit 2: New Beginnings New Essences (Lotus) */}
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <div className="h-[30px] flex items-center justify-center mb-[3px]">
+                <img
+                  src="/images/ganesh/benefit_lotus.png"
+                  alt="New Beginnings New Essences"
+                  width="74"
+                  height="68"
+                  className="h-[23px] w-auto object-contain"
+                />
+              </div>
+              <span
+                className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase"
+              >
+                NEW BEGINNINGS
+                <br />
+                NEW ESSENCES
+              </span>
+            </div>
+
+            {/* Vertical Separator 2 */}
+            <div
+              className="w-[1px] h-[48px] shrink-0"
+              style={{ background: "rgba(185, 134, 62, 0.35)" }}
+              aria-hidden="true"
+            />
+
+            {/* Benefit 3: Crafted With Passion (Perfume) */}
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <div className="h-[30px] flex items-center justify-center mb-[3px]">
+                <img
+                  src="/images/ganesh/benefit_perfume.png"
+                  alt="Crafted With Passion"
+                  width="54"
+                  height="68"
+                  className="h-[25px] w-auto object-contain"
+                />
+              </div>
+              <span
+                className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase"
+              >
+                CRAFTED
+                <br />
+                WITH PASSION
+              </span>
+            </div>
+          </div>
+
+          {/* 8. Primary CTA Button: EXPLORE OUR FRAGRANCES → */}
           <a
             href="#perfumes"
             onClick={handleCtaClick}
-            className="hero-cta-shop-now"
+            className="hero-cta-btn"
             style={{
-              padding: "0 clamp(28px, 2.4vw, 42px)",
-              height: "clamp(48px, 3.6vw, 56px)",
+              marginTop: "14px",
+              width: "min(390px, 86%)",
+              height: "42px",
             }}
           >
             <span
-              style={{
-                fontSize: "clamp(13.5px, 1.02vw, 16px)",
-                marginRight: "14px",
-                color: "#FFF9F4",
-                fontWeight: 500,
-              }}
+              className="font-montserrat font-medium text-[14.5px] tracking-[0.5px] text-white mr-[10px]"
             >
-              Shop Now
+              EXPLORE OUR FRAGRANCES
             </span>
             <svg
-              width="19"
-              height="12"
+              width="17"
+              height="11"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#D0A24B"
+              stroke="#E0B368"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+              className="shrink-0"
             >
               <line x1="1" y1="6" x2="19" y2="6" />
               <polyline points="13 1 19 6 13 11" />
             </svg>
           </a>
 
-          {/* Button 2: Explore Collection ➔ */}
+          {/* 9. Secondary CTA Button: DISCOVERY SET • ₹549 */}
           <a
-            href="#perfumes"
-            onClick={handleCtaClick}
-            className="hero-cta-explore"
+            href="/discovery-set"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate?.("discovery-set");
+            }}
+            className="hero-discovery-btn"
             style={{
-              padding: "0 clamp(24px, 2.2vw, 38px)",
-              height: "clamp(48px, 3.6vw, 56px)",
+              marginTop: "8px",
+              width: "min(390px, 86%)",
+              height: "38px",
             }}
           >
             <span
-              style={{
-                fontSize: "clamp(13.5px, 1.02vw, 16px)",
-                marginRight: "14px",
-                color: "#251642",
-                fontWeight: 500,
-              }}
+              className="font-montserrat font-semibold text-[13.5px] tracking-[0.5px] text-[#32113F] mr-[8px]"
             >
-              Explore Collection
+              DISCOVERY SET • ₹549
             </span>
             <svg
-              width="19"
-              height="12"
+              width="15"
+              height="10"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#A87624"
+              stroke="#B9863E"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+              className="shrink-0"
             >
               <line x1="1" y1="6" x2="19" y2="6" />
               <polyline points="13 1 19 6 13 11" />
             </svg>
           </a>
         </div>
+
       </div>
 
       {/* ═════════════════════════════════════════════════════════════════
-          MOBILE 1:1 REPLICA HERO LAYOUT (< 900px)
-          Exact 1:1 Replica matching reference 941 × 1506 px canvas
+          TABLET HERO (768px – 900px) — Preserved Tablet Layout
           ═════════════════════════════════════════════════════════════════ */}
       <div
-        className="hero-mobile-content relative w-full overflow-hidden select-none"
+        className="hero-tablet-view relative w-full overflow-hidden select-none bg-[#FAF7F7]"
         style={{
-          width: "100%",
-          aspectRatio: "941 / 1506",
-          backgroundColor: "#F2DCD9",
+          aspectRatio: "941 / 1672",
         }}
       >
-        {/* Clean Photographic Still-Life Background Plate */}
         <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
-          <source srcSet="/images/mobile-hero-krishna.webp?v=v2_clean" type="image/webp" />
-          <source srcSet="/images/mobile-hero-krishna.png?v=v2_clean" type="image/png" />
+          <source srcSet="/images/hero-ganesh-mobile.webp" type="image/webp" />
+          <source srcSet="/images/hero-ganesh-mobile.png" type="image/png" />
           <img
-            src="/images/mobile-hero-krishna.png?v=v2_clean"
-            alt="SENTIRE By PC Janmashtami Luxury Fragrance Mobile Collection"
+            src="/images/hero-ganesh-mobile.png"
+            alt="Sentire By PC Ganesh Chaturthi Luxury Perfume"
             fetchPriority="high"
             decoding="async"
             width="941"
-            height="1506"
+            height="1672"
             className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             style={{
               objectPosition: "center 0px",
@@ -403,205 +657,411 @@ export default function Hero({ onNavigate }: HeroProps) {
           />
         </picture>
 
-        {/* ── Mobile Hero Editorial Layer (Flexbox Flow) ── */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-start p-5 sm:p-7 pt-4 sm:pt-6 text-left pointer-events-none">
+        {/* Tablet Content */}
+        <div
+          className="absolute inset-0 z-20 flex flex-col items-center text-center px-6"
+          style={{ paddingTop: "24px" }}
+        >
+          <div
+            className="hero-eyebrow-text uppercase text-center"
+            style={{
+              fontSize: "clamp(10px, 2.5vw, 14px)",
+              letterSpacing: "1.8px",
+              marginBottom: "4px",
+            }}
+          >
+            NEW BEGINNINGS. DIVINE BLESSINGS.
+          </div>
 
-          {/* 1. Festive Intro Label: Feather Graphic + "Celebrate Janmashtami in Fragrance" */}
-          <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
+          <div className="w-[200px] h-[20px] mb-2 flex items-center justify-center">
             <img
-              src="/images/janmashtami/kicker-feather.png"
+              src="/images/ganesh/eyebrow_ornament.png"
               alt=""
-              aria-hidden="true"
-              className="h-[22px] sm:h-[28px] w-auto select-none pointer-events-none"
+              width="280"
+              height="34"
+              className="w-full h-auto object-contain"
             />
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 500,
-                color: "#85501F",
-                fontSize: "clamp(10.5px, 2.7vw, 16px)",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                lineHeight: 1,
-              }}
-            >
-              Celebrate Janmashtami in Fragrance
-            </span>
           </div>
 
-          {/* 2. Main Headline: "A Divine Scent for Janmashtami" */}
-          <div className="w-[85%] max-w-[420px] mb-2 sm:mb-3">
-            <h1
-              className="m-0 text-left"
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "clamp(28px, 7.8vw, 54px)",
-                lineHeight: 0.98,
-                letterSpacing: "-0.015em",
-                color: "#25163F",
-                fontWeight: 500,
-              }}
-            >
-              A Divine Scent
-              <br />
-              for Janmashtami
-            </h1>
+          <div
+            className="hero-happy-text uppercase leading-none text-center"
+            style={{
+              fontSize: "clamp(26px, 6vw, 40px)",
+              letterSpacing: "10px",
+              textIndent: "10px",
+              marginBottom: "4px",
+            }}
+          >
+            HAPPY
           </div>
 
-          {/* 3. Ornamental Divider with Central Floral Motif */}
-          <div className="flex items-center w-[75%] max-w-[340px] my-1 sm:my-2" aria-hidden="true">
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D]/20 via-[#C7903D]/70 to-[#C7903D]" />
-            <div className="mx-2 flex items-center justify-center shrink-0">
-              <img
-                src="/images/janmashtami/ornament-divider-flower.png"
-                alt=""
-                aria-hidden="true"
-                className="h-[12px] sm:h-[16px] w-auto object-contain"
-              />
+          <h1
+            className="hero-ganesh-title m-0 text-center"
+            style={{
+              fontSize: "clamp(40px, 9vw, 64px)",
+              lineHeight: 0.95,
+              marginBottom: "8px",
+            }}
+          >
+            Ganesh Chaturthi
+          </h1>
+
+          <div className="flex items-center justify-center w-[85%] max-w-[380px] my-2" aria-hidden="true">
+            <div className="flex-1 h-[1px] bg-[#B9863E]" />
+            <div
+              className="mx-2 flex items-center justify-center rounded-full bg-[#B9863E] shrink-0"
+              style={{ width: "22px", height: "22px" }}
+            >
+              <span className="font-cormorant text-white text-[14px] leading-none">&amp;</span>
             </div>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-[#C7903D] via-[#C7903D]/70 to-[#C7903D]/20" />
+            <div className="flex-1 h-[1px] bg-[#B9863E]" />
           </div>
 
-          {/* 4. Body Copy */}
-          <div className="w-[82%] max-w-[380px] mb-2 sm:mb-3">
-            <p
-              className="m-0 text-left"
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: "clamp(10.5px, 2.6vw, 16px)",
-                lineHeight: 1.45,
-                color: "#252047",
-                fontWeight: 400,
-                letterSpacing: "-0.005em",
-              }}
-            >
-              Immerse your senses in the soft elegance
-              <br />
-              of Sentire by PC, inspired by devotion,
-              <br />
-              beauty, and timeless celebration.
-            </p>
+          <div
+            className="hero-subhead-text uppercase text-center"
+            style={{
+              fontSize: "clamp(11px, 2.7vw, 16px)",
+              letterSpacing: "3.5px",
+              textIndent: "3.5px",
+              marginBottom: "8px",
+            }}
+          >
+            WELCOME TO OUR NEW BEGINNING
           </div>
 
-          {/* 5. Limited Festive Edition Badge (Gold Flute Icon + Accent) */}
-          <div className="flex items-center gap-2 mb-3 sm:mb-4">
-            <img
-              src="/images/janmashtami/flute-badge.png"
-              alt=""
-              aria-hidden="true"
-              className="h-[18px] sm:h-[24px] w-auto object-contain"
-            />
-            <span
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 500,
-                color: "#8A571F",
-                fontSize: "clamp(10.5px, 2.6vw, 15px)",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                lineHeight: 1,
-              }}
-            >
-              Limited Festive Edition
+          <p
+            className="hero-body-text text-center m-0 px-4"
+            style={{
+              fontSize: "clamp(12px, 2.8vw, 15.5px)",
+              lineHeight: 1.5,
+              maxWidth: "380px",
+              marginBottom: "16px",
+            }}
+          >
+            As we celebrate wisdom and prosperity, we begin a new journey of crafting emotions through fragrances.
+          </p>
+
+          <div
+            className="flex items-center justify-between w-[92%] max-w-[380px] mb-4 py-2 px-3 rounded-lg"
+            style={{
+              background: "rgba(255, 255, 255, 0.65)",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
+              border: "1px solid rgba(185, 134, 62, 0.3)",
+              boxShadow: "0 2px 12px rgba(50, 17, 63, 0.06)",
+            }}
+          >
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <img
+                src="/images/ganesh/benefit_ganesh.png"
+                alt="Divine Blessings"
+                className="h-[30px] w-auto object-contain mb-1"
+              />
+              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+                DIVINE<br />BLESSINGS
+              </span>
+            </div>
+            <div className="w-[1px] h-[40px] bg-[#B9863E]/40" />
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <img
+                src="/images/ganesh/benefit_lotus.png"
+                alt="New Beginnings"
+                className="h-[28px] w-auto object-contain mb-1"
+              />
+              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+                NEW BEGINNINGS<br />NEW ESSENCES
+              </span>
+            </div>
+            <div className="w-[1px] h-[40px] bg-[#B9863E]/40" />
+            <div className="flex-1 flex flex-col items-center text-center px-1">
+              <img
+                src="/images/ganesh/benefit_perfume.png"
+                alt="Crafted With Passion"
+                className="h-[30px] w-auto object-contain mb-1"
+              />
+              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+                CRAFTED<br />WITH PASSION
+              </span>
+            </div>
+          </div>
+
+          <a
+            href="#perfumes"
+            onClick={handleCtaClick}
+            className="hero-cta-btn w-[80%] max-w-[320px] py-2 px-4 mb-2"
+            style={{ height: "42px" }}
+          >
+            <span className="font-montserrat font-medium text-[13.5px] tracking-[0.4px] text-white mr-2">
+              EXPLORE OUR FRAGRANCES
             </span>
+            <svg width="16" height="10" viewBox="0 0 20 12" fill="none" stroke="#E0B368" strokeWidth="1.8">
+              <line x1="1" y1="6" x2="19" y2="6" />
+              <polyline points="13 1 19 6 13 11" />
+            </svg>
+          </a>
+
+          <a
+            href="/discovery-set"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate?.("discovery-set");
+            }}
+            className="hero-discovery-btn w-[80%] max-w-[320px] py-2 px-4"
+            style={{ height: "40px" }}
+          >
+            <span className="font-montserrat font-semibold text-[13px] tracking-[0.4px] text-[#32113F] mr-2">
+              DISCOVERY SET • ₹549
+            </span>
+            <svg width="15" height="10" viewBox="0 0 20 12" fill="none" stroke="#B9863E" strokeWidth="1.8">
+              <line x1="1" y1="6" x2="19" y2="6" />
+              <polyline points="13 1 19 6 13 11" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      {/* ═════════════════════════════════════════════════════════════════
+          MOBILE HERO (≤ 767px) — 1:1 Match to Ganesh Chaturthi Reference
+          ═════════════════════════════════════════════════════════════════ */}
+      <div className="hero-mobile-view relative w-full overflow-hidden select-none bg-[#FAF3F5]">
+        {/* Atmosphere: Corner Lilac Flowers */}
+        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-10" aria-hidden="true">
+          <img
+            src="/images/ganesh/corner-flower-left.png"
+            alt=""
+            width="360"
+            height="320"
+            className="absolute top-0 left-0 w-[125px] sm:w-[155px] h-auto object-contain pointer-events-none select-none opacity-85"
+            draggable={false}
+          />
+          <img
+            src="/images/ganesh/corner-flower-right.png"
+            alt=""
+            width="360"
+            height="320"
+            className="absolute top-0 right-0 w-[125px] sm:w-[155px] h-auto object-contain pointer-events-none select-none opacity-85"
+            draggable={false}
+          />
+        </div>
+
+        {/* ── Mobile Hero Editorial Content Layer (Sequential Order matching Ref 1) ── */}
+        <div className="relative z-20 flex flex-col items-center text-center px-4 pt-2.5 sm:pt-3">
+          {/* 1. Tagline: NEW BEGINNINGS. DIVINE BLESSINGS. */}
+          <div className="mobile-hero-tagline uppercase text-center mb-0.5">
+            NEW BEGINNINGS. DIVINE BLESSINGS.
           </div>
 
-          {/* 6. CTA Buttons Container (Shop Now + Explore Collection) */}
-          <div className="flex flex-col gap-2 w-[65%] max-w-[260px] pointer-events-auto">
-            {/* Primary CTA: "Shop Now" */}
-            <a
-              href="#perfumes"
-              onClick={handleCtaClick}
-              className="w-full flex items-center justify-between transition-all duration-200 active:scale-[0.98]"
-              style={{
-                height: "clamp(38px, 9.2vw, 54px)",
-                backgroundColor: "#2D1748",
-                borderRadius: "14px",
-                padding: "0 18px",
-                textDecoration: "none",
-                boxSizing: "border-box",
-                boxShadow: "0 4px 16px rgba(45, 23, 72, 0.22)",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: "clamp(12px, 3.2vw, 18px)",
-                  fontWeight: 500,
-                  color: "#E8BA59",
-                  whiteSpace: "nowrap",
-                  lineHeight: 1,
-                }}
-              >
-                Shop Now
-              </span>
-              <svg
-                viewBox="0 0 24 12"
-                fill="none"
-                stroke="#E3B24E"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  width: "clamp(14px, 3.4vw, 22px)",
-                  height: "auto",
-                  flexShrink: 0,
-                }}
-              >
-                <line x1="1" y1="6" x2="22" y2="6" />
-                <polyline points="16 1 22 6 16 11" />
-              </svg>
-            </a>
-
-            {/* Secondary CTA: "Explore Collection" */}
-            <button
-              type="button"
-              onClick={() => onNavigate?.("perfumes")}
-              className="w-full flex items-center justify-between cursor-pointer transition-all duration-200 active:scale-[0.98]"
-              style={{
-                height: "clamp(36px, 8.8vw, 50px)",
-                backgroundColor: "#FAEEE8",
-                border: "1.5px solid #9D672F",
-                borderRadius: "14px",
-                padding: "0 18px",
-                boxSizing: "border-box",
-                boxShadow: "0 2px 8px rgba(157, 103, 47, 0.08)",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "clamp(13.5px, 3.5vw, 20px)",
-                  fontWeight: 500,
-                  color: "#2B1B43",
-                  whiteSpace: "nowrap",
-                  lineHeight: 1,
-                }}
-              >
-                Explore Collection
-              </span>
-              <svg
-                viewBox="0 0 24 12"
-                fill="none"
-                stroke="#2B1B43"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  width: "clamp(14px, 3.4vw, 22px)",
-                  height: "auto",
-                  flexShrink: 0,
-                }}
-              >
-                <line x1="1" y1="6" x2="22" y2="6" />
-                <polyline points="16 1 22 6 16 11" />
-              </svg>
-            </button>
+          {/* 2. Ornamental Lotus Divider */}
+          <div
+            className="w-[36%] max-w-[160px] h-[11px] sm:h-[14px] mb-0.5 flex items-center justify-center select-none pointer-events-none"
+            aria-hidden="true"
+          >
+            <img
+              src="/images/ganesh/eyebrow_ornament.png"
+              alt=""
+              width="280"
+              height="34"
+              className="w-full h-auto object-contain"
+            />
           </div>
+
+          {/* 3. HAPPY */}
+          <div className="mobile-hero-happy uppercase leading-none text-center mb-0">
+            HAPPY
+          </div>
+
+          {/* 4. Ganesh Chaturthi Title */}
+          <h1 className="mobile-hero-title text-center m-0 mb-0.5">
+            Ganesh Chaturthi
+          </h1>
+
+          {/* 5. Gold Divider with & Medallion */}
+          <div
+            className="w-[80%] max-w-[330px] h-[12px] sm:h-[14px] mb-0.5 flex items-center justify-center select-none pointer-events-none"
+            aria-hidden="true"
+          >
+            <img
+              src="/images/ganesh/divider_ampersand.png"
+              alt=""
+              width="622"
+              height="35"
+              className="w-full h-auto object-contain"
+            />
+          </div>
+
+          {/* 6. Welcome Heading */}
+          <div className="mobile-hero-subhead uppercase text-center mb-0.5">
+            WELCOME TO OUR NEW BEGINNING
+          </div>
+
+          {/* 7. Description Body */}
+          <p className="mobile-hero-desc text-center m-0 max-w-[340px] mb-1.5 px-2">
+            As we celebrate wisdom and prosperity, we begin a
+            <br className="hidden min-[360px]:inline" /> new journey of crafting
+            emotions through fragrances.
+          </p>
+
+          {/* 8. 3 Feature Icons Row (Equal Columns with Vertical Dividers) */}
+          <div className="flex items-center justify-between w-[86%] max-w-[315px] mb-2 py-0">
+            {/* Column 1: Divine Blessings */}
+            <div className="flex-1 flex flex-col items-center text-center px-0.5">
+              <div className="h-[22px] flex items-center justify-center mb-0.5">
+                <img
+                  src="/images/ganesh/benefit_ganesh.png"
+                  alt="Divine Blessings"
+                  width="64"
+                  height="74"
+                  className="h-[20px] sm:h-[23px] w-auto object-contain"
+                />
+              </div>
+              <span className="mobile-hero-feature-label uppercase">
+                DIVINE<br />BLESSINGS
+              </span>
+            </div>
+
+            {/* Vertical Separator 1 */}
+            <div className="w-[1px] h-[30px] bg-[#B9863E]/35 shrink-0" aria-hidden="true" />
+
+            {/* Column 2: New Beginnings */}
+            <div className="flex-1 flex flex-col items-center text-center px-0.5">
+              <div className="h-[22px] flex items-center justify-center mb-0.5">
+                <img
+                  src="/images/ganesh/benefit_lotus.png"
+                  alt="New Beginnings"
+                  width="74"
+                  height="68"
+                  className="h-[19px] sm:h-[22px] w-auto object-contain"
+                />
+              </div>
+              <span className="mobile-hero-feature-label uppercase">
+                NEW BEGINNINGS<br />NEW ESSENCES
+              </span>
+            </div>
+
+            {/* Vertical Separator 2 */}
+            <div className="w-[1px] h-[30px] bg-[#B9863E]/35 shrink-0" aria-hidden="true" />
+
+            {/* Column 3: Crafted With Passion */}
+            <div className="flex-1 flex flex-col items-center text-center px-0.5">
+              <div className="h-[22px] flex items-center justify-center mb-0.5">
+                <img
+                  src="/images/ganesh/benefit_perfume.png"
+                  alt="Crafted With Passion"
+                  width="54"
+                  height="68"
+                  className="h-[20px] sm:h-[23px] w-auto object-contain"
+                />
+              </div>
+              <span className="mobile-hero-feature-label uppercase">
+                CRAFTED<br />WITH PASSION
+              </span>
+            </div>
+          </div>
+
+          {/* 9. Primary CTA Button: EXPLORE OUR FRAGRANCES → */}
+          <a
+            href="#perfumes"
+            onClick={handleCtaClick}
+            className="hero-cta-btn flex items-center justify-center pointer-events-auto transition-all duration-200 active:scale-[0.98]"
+            style={{
+              width: "clamp(205px, 58%, 250px)",
+              height: "38px",
+              minHeight: "38px",
+              borderRadius: "6px",
+              background: "linear-gradient(135deg, #44174F 0%, #2D0E35 100%)",
+              boxShadow: "0 4px 18px rgba(45, 14, 53, 0.30)",
+              textDecoration: "none",
+              marginBottom: "6px",
+            }}
+          >
+            <span className="mobile-hero-cta-text uppercase mr-2 text-[11.5px] sm:text-[12.5px]">
+              EXPLORE OUR FRAGRANCES
+            </span>
+            <svg
+              width="14"
+              height="10"
+              viewBox="0 0 20 12"
+              fill="none"
+              stroke="#E0B368"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="shrink-0"
+            >
+              <line x1="1" y1="6" x2="19" y2="6" />
+              <polyline points="13 1 19 6 13 11" />
+            </svg>
+          </a>
+
+          {/* 10. Secondary CTA Button: DISCOVERY SET • ₹549 */}
+          <a
+            href="/discovery-set"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate?.("discovery-set");
+            }}
+            className="hero-discovery-btn flex items-center justify-center pointer-events-auto transition-all duration-200 active:scale-[0.98]"
+            style={{
+              width: "clamp(205px, 58%, 250px)",
+              height: "36px",
+              minHeight: "36px",
+              borderRadius: "6px",
+              marginBottom: "4px",
+            }}
+          >
+            <span className="font-montserrat font-semibold text-[11px] sm:text-[12px] tracking-[0.4px] text-[#32113F] mr-2">
+              DISCOVERY SET • ₹549
+            </span>
+            <svg
+              width="13"
+              height="9"
+              viewBox="0 0 20 12"
+              fill="none"
+              stroke="#B9863E"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="shrink-0"
+            >
+              <line x1="1" y1="6" x2="19" y2="6" />
+              <polyline points="13 1 19 6 13 11" />
+            </svg>
+          </a>
+        </div>
+
+        {/* ── 10. Main Hero Product Visual (Pulls up directly behind CTA & 3 Icons) ── */}
+        <div
+          className="relative w-full overflow-hidden select-none"
+          style={{
+            marginTop: "clamp(-106px, -27vw, -78px)",
+          }}
+        >
+          {/* Seamless gradient blend between upper background and artwork */}
+          <div
+            className="absolute top-0 left-0 right-0 h-[50px] z-10 pointer-events-none"
+            style={{
+              background: "linear-gradient(180deg, #FAF3F5 0%, rgba(250, 243, 245, 0.8) 40%, transparent 100%)",
+            }}
+            aria-hidden="true"
+          />
+
+          <picture className="w-full block select-none pointer-events-none">
+            <source srcSet="/images/ganesh/ganesh-hero-mobile-artwork.webp" type="image/webp" />
+            <source srcSet="/images/ganesh/ganesh-hero-mobile-artwork.png" type="image/png" />
+            <img
+              src="/images/ganesh/ganesh-hero-mobile-artwork.png"
+              alt="Sentire By PC Ganesh Chaturthi Luxury Perfume"
+              fetchPriority="high"
+              decoding="async"
+              width="941"
+              height="1295"
+              className="w-full h-auto object-contain block select-none pointer-events-none"
+              draggable={false}
+            />
+          </picture>
 
         </div>
       </div>
     </section>
   );
 }
-
