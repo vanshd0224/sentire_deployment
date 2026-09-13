@@ -867,20 +867,20 @@ export default function CartDrawer({
                       </div>
 
                       {/* Manual Code Input */}
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 w-full">
                         <input
                           type="text"
-                          placeholder="ENTER PROMO CODE (e.g. PC100)"
+                          placeholder="ENTER PROMO CODE"
                           value={couponInput}
                           onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
-                          className="flex-1 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-3 py-2 text-xs font-bold font-mono tracking-wider text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#14110D] focus:border-[#C89A46] focus:outline-none"
                         />
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="rounded-xl bg-[#14110D] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#C89A46] hover:text-white transition-colors"
+                          className="shrink-0 rounded-xl bg-[#14110D] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#C89A46] hover:text-white transition-colors"
                         >
                           Apply
                         </button>
@@ -998,7 +998,7 @@ export default function CartDrawer({
                 </div>
               ) : (
                 <div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 w-full">
                     <input
                       type="text"
                       placeholder="Enter promo code"
@@ -1007,7 +1007,7 @@ export default function CartDrawer({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#C89A46] font-mono tracking-normal sm:tracking-wider text-[#0B0907] h-6 sm:h-8"
+                      className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#C89A46] font-sans tracking-tight text-[#0B0907] h-6 sm:h-8"
                     />
                     <button
                       onClick={() => handleApplyCoupon()}

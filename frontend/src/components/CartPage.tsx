@@ -304,8 +304,8 @@ export default function CartPage({
                   const availableSizes = pData?.sizes || [item.size];
 
                   return (
-                    <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-3">
-                      <div className="flex gap-4">
+                    <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-3 sm:p-4 shadow-sm space-y-3 overflow-hidden">
+                      <div className="flex gap-3 sm:gap-4">
                         {/* Bottle Thumbnail */}
                         <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#FAF8F5] border border-[#14110D]/10 flex items-center justify-center">
                           <img src={displayImg} alt={item.name} className="h-full w-full object-contain p-1" />
@@ -317,14 +317,14 @@ export default function CartPage({
                         </div>
 
                         {/* Info */}
-                        <div className="flex-1 flex flex-col justify-between">
+                        <div className="flex-1 min-w-0 flex flex-col justify-between">
                           <div>
-                            <div className="flex items-start justify-between gap-2">
-                              <div>
-                                <h3 className="font-sans text-base sm:text-lg font-bold text-[#14110D]">{displayName}</h3>
+                            <div className="flex items-start justify-between gap-1.5">
+                              <div className="min-w-0 flex-1">
+                                <h3 className="font-sans text-sm sm:text-lg font-bold text-[#14110D] leading-tight truncate">{displayName}</h3>
                                 <p className="text-[10px] text-[#B8863B] font-bold uppercase tracking-wider">35%+ Pure Oil Extrait</p>
                               </div>
-                              <span className="font-sans text-base font-extrabold text-[#14110D]">₹{(item.price * item.quantity).toLocaleString()}</span>
+                              <span className="font-sans text-sm sm:text-base font-extrabold text-[#14110D] shrink-0 whitespace-nowrap ml-1">₹{(item.price * item.quantity).toLocaleString()}</span>
                             </div>
 
                             {/* Personalisation Badge */}
@@ -337,18 +337,18 @@ export default function CartPage({
 
                           {/* Inline Size Switcher Pills (ONLY show available sizes for this perfume!) */}
                           {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && availableSizes.length > 1 && (
-                            <div className="mt-2 flex items-center gap-2">
-                              <label className="text-[11px] font-medium text-[#14110D]/70">Size</label>
-                              <div className="flex gap-1.5">
+                            <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                              <span className="text-[10px] font-bold text-[#14110D]/60 uppercase">Size:</span>
+                              <div className="flex flex-wrap gap-1">
                                 {availableSizes.map((sz) => {
                                   const isSelected = item.size === sz;
                                   return (
                                     <button
                                       key={sz}
                                       onClick={() => handleSwitchSize(item, sz)}
-                                      className={`px-3 py-0.5 rounded-lg text-xs font-bold transition-all ${
+                                      className={`px-2.5 py-0.5 rounded-md text-[11px] font-bold transition-all ${
                                         isSelected
-                                          ? "bg-black text-white border border-black shadow-sm"
+                                          ? "bg-black text-white border border-black shadow-xs"
                                           : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/15 hover:border-black"
                                       }`}
                                     >
@@ -362,10 +362,10 @@ export default function CartPage({
 
                           {/* Quantity Stepper & Remove */}
                           <div className="mt-3 flex items-center justify-between">
-                            <div className="flex items-center rounded-full border border-[#14110D]/30 bg-white px-2.5 py-0.5 gap-2">
-                              <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="font-bold text-sm text-[#14110D] hover:opacity-75">-</button>
+                            <div className="flex items-center rounded-full border border-[#14110D]/30 bg-white px-2 py-0.5 gap-1.5">
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="font-bold text-sm text-[#14110D] hover:opacity-75 px-1">-</button>
                               <span className="w-4 text-center text-xs font-bold text-[#14110D]">{item.quantity}</span>
-                              <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="font-bold text-sm text-[#14110D] hover:opacity-75">+</button>
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="font-bold text-sm text-[#14110D] hover:opacity-75 px-1">+</button>
                             </div>
                             <button onClick={() => onRemoveItem(item.productId, item.size)} className="text-[11px] text-red-600 font-semibold hover:underline">
                               Remove
@@ -452,7 +452,7 @@ export default function CartPage({
 
             {/* RIGHT COLUMN: Order Summary & Checkout (5 Cols) */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="sticky top-24 rounded-2xl border border-[#B8863B]/30 bg-white p-5 shadow-xl space-y-5">
+              <div className="sticky top-24 rounded-2xl border border-[#B8863B]/30 bg-white p-4 sm:p-5 shadow-xl space-y-4 sm:space-y-5 overflow-hidden">
                 <div className="border-b border-[#14110D]/10 pb-3 flex items-center justify-between">
                   <h3 className="font-sans text-lg sm:text-xl font-bold text-[#14110D]">Atelier Order Summary</h3>
                 </div>
@@ -495,18 +495,18 @@ export default function CartPage({
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 w-full">
                         <input
                           type="text"
                           placeholder="ENTER PROMO CODE"
                           value={couponInput}
                           onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                           onKeyDown={(e) => { if (e.key === "Enter") handleApplyCoupon(); }}
-                          className="flex-1 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-3 py-2 text-xs font-bold font-mono text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#14110D] focus:border-[#B8863B] focus:outline-none"
                         />
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="rounded-xl bg-[#14110D] px-4 py-2 text-xs font-bold uppercase text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-colors"
+                          className="shrink-0 rounded-xl bg-[#14110D] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-colors"
                         >
                           Apply
                         </button>
