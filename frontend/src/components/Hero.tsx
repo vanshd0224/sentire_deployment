@@ -261,10 +261,17 @@ export default function Hero({
           }
           .mobile-hero-cta-text {
             font-family: "Montserrat", sans-serif !important;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
             color: #FFFFFF !important;
-            letter-spacing: 0.5px !important;
-            font-size: clamp(11.5px, 2.8vw, 13px) !important;
+            letter-spacing: 0.6px !important;
+            font-size: clamp(9.5px, 2.3vw, 10.8px) !important;
+          }
+          .mobile-discovery-cta-text {
+            font-family: "Montserrat", sans-serif !important;
+            font-weight: 600 !important;
+            color: #32113F !important;
+            letter-spacing: 0.6px !important;
+            font-size: clamp(9.5px, 2.3vw, 10.8px) !important;
           }
           .mobile-trust-text {
             font-family: "Montserrat", sans-serif !important;
@@ -1009,7 +1016,7 @@ export default function Hero({
               marginBottom: "4px",
             }}
           >
-            <span className="font-montserrat font-semibold text-[10.5px] sm:text-[11px] tracking-[0.6px] text-[#32113F] mr-1.5">
+            <span className="mobile-discovery-cta-text uppercase mr-1.5">
               DISCOVERY SET • ₹549
             </span>
             <svg
