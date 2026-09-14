@@ -572,13 +572,13 @@ export default function Hero({
             }}
           >
             <span
-              className="font-montserrat font-medium text-[14.5px] tracking-[0.5px] text-white mr-[10px]"
+              className="font-montserrat font-semibold text-[11.5px] sm:text-[12.5px] tracking-[0.8px] text-white mr-[8px]"
             >
               EXPLORE OUR FRAGRANCES
             </span>
             <svg
-              width="17"
-              height="11"
+              width="15"
+              height="10"
               viewBox="0 0 20 12"
               fill="none"
               stroke="#E0B368"
@@ -607,13 +607,13 @@ export default function Hero({
             }}
           >
             <span
-              className="font-montserrat font-semibold text-[13.5px] tracking-[0.5px] text-[#32113F] mr-[8px]"
+              className="font-montserrat font-semibold text-[11px] sm:text-[12px] tracking-[0.8px] text-[#32113F] mr-[6px]"
             >
               DISCOVERY SET • ₹549
             </span>
             <svg
-              width="15"
-              height="10"
+              width="14"
+              height="9"
               viewBox="0 0 20 12"
               fill="none"
               stroke="#B9863E"
@@ -791,10 +791,10 @@ export default function Hero({
             className="hero-cta-btn w-[80%] max-w-[320px] py-2 px-4 mb-2"
             style={{ height: "42px" }}
           >
-            <span className="font-montserrat font-medium text-[13.5px] tracking-[0.4px] text-white mr-2">
+            <span className="font-montserrat font-semibold text-[11.5px] tracking-[0.8px] text-white mr-2">
               EXPLORE OUR FRAGRANCES
             </span>
-            <svg width="16" height="10" viewBox="0 0 20 12" fill="none" stroke="#E0B368" strokeWidth="1.8">
+            <svg width="15" height="10" viewBox="0 0 20 12" fill="none" stroke="#E0B368" strokeWidth="1.8">
               <line x1="1" y1="6" x2="19" y2="6" />
               <polyline points="13 1 19 6 13 11" />
             </svg>
@@ -809,10 +809,10 @@ export default function Hero({
             className="hero-discovery-btn w-[80%] max-w-[320px] py-2 px-4"
             style={{ height: "40px" }}
           >
-            <span className="font-montserrat font-semibold text-[13px] tracking-[0.4px] text-[#32113F] mr-2">
+            <span className="font-montserrat font-semibold text-[11px] tracking-[0.8px] text-[#32113F] mr-2">
               DISCOVERY SET • ₹549
             </span>
-            <svg width="15" height="10" viewBox="0 0 20 12" fill="none" stroke="#B9863E" strokeWidth="1.8">
+            <svg width="14" height="9" viewBox="0 0 20 12" fill="none" stroke="#B9863E" strokeWidth="1.8">
               <line x1="1" y1="6" x2="19" y2="6" />
               <polyline points="13 1 19 6 13 11" />
             </svg>
@@ -974,12 +974,12 @@ export default function Hero({
               marginBottom: "6px",
             }}
           >
-            <span className="mobile-hero-cta-text uppercase mr-2 text-[11.5px] sm:text-[12.5px]">
+            <span className="mobile-hero-cta-text uppercase mr-1.5 text-[11px] sm:text-[11.5px] font-semibold tracking-[0.6px]">
               EXPLORE OUR FRAGRANCES
             </span>
             <svg
-              width="14"
-              height="10"
+              width="13"
+              height="9"
               viewBox="0 0 20 12"
               fill="none"
               stroke="#E0B368"
@@ -1009,12 +1009,12 @@ export default function Hero({
               marginBottom: "4px",
             }}
           >
-            <span className="font-montserrat font-semibold text-[11px] sm:text-[12px] tracking-[0.4px] text-[#32113F] mr-2">
+            <span className="font-montserrat font-semibold text-[10.5px] sm:text-[11px] tracking-[0.6px] text-[#32113F] mr-1.5">
               DISCOVERY SET • ₹549
             </span>
             <svg
-              width="13"
-              height="9"
+              width="12"
+              height="8"
               viewBox="0 0 20 12"
               fill="none"
               stroke="#B9863E"
