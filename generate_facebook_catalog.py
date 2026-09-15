@@ -30,20 +30,18 @@ perfumes = [
     {'name': 'Woo-Dy', 'id': 'woo-dy', 'prices': {10: 799, 30: 1499}, 'desc': 'Intense rare wood luxury extrait de parfum.', 'cat': 'Woody'},
 ]
 
-def find_best_image(p_id, size):
+def find_best_jpg_image(p_id, size):
     candidates = [
-        f"{p_id}-{size}ml-1.png",
         f"{p_id}-{size}ml-1.jpg",
-        f"{p_id}-{size}ml-1.webp",
-        f"{p_id}-{size}ml.png",
-        f"{p_id}-{size}ml.webp",
+        f"{p_id}-{size}ml-2.jpg",
+        f"{p_id}-{size}ml.jpg",
     ]
     for c in candidates:
         if os.path.exists(os.path.join(perfumes_dir, c)):
             return f"https://sentirebypc.com/assets/perfumes/{c}"
     if os.path.exists(perfumes_dir):
         for f in os.listdir(perfumes_dir):
-            if f.startswith(f"{p_id}-{size}ml") and f.endswith(('.png', '.jpg', '.webp')):
+            if f.startswith(f"{p_id}-{size}ml") and f.endswith('.jpg'):
                 return f"https://sentirebypc.com/assets/perfumes/{f}"
     return "https://sentirebypc.com/assets/perfumes/byob-bundle.jpg"
 
@@ -60,7 +58,7 @@ for p in perfumes:
         v_id = f"{p_id}-{size}"
         title = f"{p_name} Extrait De Parfum ({size}ml)"
         url = f"https://sentirebypc.com/perfumes/{p_id}/{size}ml"
-        img = find_best_image(p_id, size)
+        img = find_best_jpg_image(p_id, size)
         
         rows.append({
             'id': v_id,
@@ -119,4 +117,4 @@ with open(csv_path, 'w', newline='', encoding='utf-8') as f:
     for r in rows:
         writer.writerow(r)
 
-print(f"Successfully generated {len(rows)} product size variants in facebook-catalog.csv")
+print(f"Successfully generated {len(rows)} product size variants in facebook-catalog.csv with JPEG URLs")
