@@ -139,6 +139,17 @@ export default function AccountDrawerModal({
         ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/send-otp'
         : '/auth/send-otp';
 
+      const captureUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
+        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/api/leads/capture'
+        : '/api/leads/capture';
+
+      // Capture lead in database silently for Abandoned Cart recovery
+      fetch(captureUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: cleanDigits })
+      }).catch(() => {});
+
       await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
