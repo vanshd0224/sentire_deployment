@@ -45,9 +45,9 @@ def find_best_image(p_id, size):
         for f in os.listdir(perfumes_dir):
             if f.startswith(f"{p_id}-{size}ml") and f.endswith(('.png', '.jpg', '.webp')):
                 return f"https://sentirebypc.com/assets/perfumes/{f}"
-    return "https://sentirebypc.com/assets/perfumes/purple-oud-50ml-1.png"
+    return "https://sentirebypc.com/assets/perfumes/byob-bundle.jpg"
 
-fieldnames = ['id', 'item_group_id', 'title', 'description', 'availability', 'condition', 'price', 'link', 'image_link', 'brand', 'google_product_category', 'custom_label_0']
+fieldnames = ['id', 'item_group_id', 'title', 'description', 'availability', 'condition', 'price', 'link', 'image_link', 'brand', 'google_product_category', 'gender', 'age_group', 'custom_label_0']
 
 rows = []
 
@@ -74,6 +74,8 @@ for p in perfumes:
             'image_link': img,
             'brand': 'SENTIRE By PC',
             'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+            'gender': 'unisex',
+            'age_group': 'adult',
             'custom_label_0': p_cat
         })
 
@@ -89,6 +91,8 @@ rows.append({
     'image_link': 'https://sentirebypc.com/discovery_hero_cover.jpg',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+    'gender': 'unisex',
+    'age_group': 'adult',
     'custom_label_0': 'Sample Box'
 })
 
@@ -104,6 +108,8 @@ rows.append({
     'image_link': 'https://sentirebypc.com/assets/perfumes/byob-bundle.jpg',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+    'gender': 'unisex',
+    'age_group': 'adult',
     'custom_label_0': 'Custom Bundle'
 })
 
