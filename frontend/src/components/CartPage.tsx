@@ -63,6 +63,58 @@ export default function CartPage({
   const [engraveName, setEngraveName] = useState<string>("");
   const [engraveDate, setEngraveDate] = useState<string>("");
 
+  // Pincode Checker State
+  const [pincodeInput, setPincodeInput] = useState<string>(() => {
+    try { return localStorage.getItem("sentire_user_pincode") || ""; } catch(e) { return ""; }
+  });
+  const [pincodeResult, setPincodeResult] = useState<any>(null);
+  const [isCheckingPincode, setIsCheckingPincode] = useState<boolean>(false);
+  const [pincodeError, setPincodeError] = useState<string | null>(null);
+
+  const handleCheckPincode = async (codeToCheck?: string) => {
+    const pin = (codeToCheck || pincodeInput).trim();
+    if (!pin || !/^\d{6}$/.test(pin)) {
+      setPincodeError("Please enter a valid 6-digit pincode.");
+      return;
+    }
+    setPincodeError(null);
+    setIsCheckingPincode(true);
+
+    try {
+      const res = await fetch(`https://ecommerce-backend-1041917436859.asia-south1.run.app/api/pincode/check?pincode=${pin}`);
+      const data = await res.json();
+      if (data && data.success) {
+        setPincodeResult(data);
+        try { localStorage.setItem("sentire_user_pincode", pin); } catch(e) {}
+      } else {
+        setPincodeError(data.message || "Could not verify pincode.");
+      }
+    } catch (e) {
+      if (pin.startsWith("302")) {
+        setPincodeResult({
+          express: true,
+          badge: "⚡ 24-Hour Jaipur Express Delivery",
+          delivery_text: "Delivered within 24 Hours",
+          cod_available: true
+        });
+      } else {
+        setPincodeResult({
+          express: false,
+          delivery_text: "Delivered in 2-3 Business Days",
+          cod_available: true
+        });
+      }
+    } finally {
+      setIsCheckingPincode(false);
+    }
+  };
+
+  useEffect(() => {
+    if (pincodeInput && pincodeInput.length === 6 && !pincodeResult) {
+      handleCheckPincode(pincodeInput);
+    }
+  }, []);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -538,6 +590,58 @@ export default function CartPage({
                     <span className="font-sans font-bold">Total Payable</span>
                     <span className="font-sans text-xl font-extrabold text-[#14110D]">₹ {finalTotal.toLocaleString()}</span>
                   </div>
+                </div>
+
+                {/* 📍 PINCODE DELIVERY & COD CHECKER WIDGET */}
+                <div className="rounded-xl border border-[#B8863B]/30 bg-[#FAF8F5] p-3 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#14110D]/80 flex items-center gap-1">
+                      📍 Check Delivery & COD
+                    </span>
+                    {pincodeResult && (
+                      <span className="text-[10px] font-bold text-[#B8863B] uppercase">Checked</span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={pincodeInput}
+                      onChange={(e) => setPincodeInput(e.target.value.replace(/\D/g, ''))}
+                      onKeyDown={(e) => { if (e.key === "Enter") handleCheckPincode(); }}
+                      placeholder="Enter 6-digit Pincode"
+                      className="flex-1 min-w-0 rounded-lg border border-[#14110D]/20 bg-white px-3 py-2 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                    />
+                    <button
+                      onClick={() => handleCheckPincode()}
+                      disabled={isCheckingPincode}
+                      className="shrink-0 rounded-lg bg-[#14110D] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-all shadow-sm disabled:opacity-50"
+                    >
+                      {isCheckingPincode ? "..." : "CHECK"}
+                    </button>
+                  </div>
+
+                  {pincodeError && (
+                    <p className="text-[10px] text-red-500 font-medium">{pincodeError}</p>
+                  )}
+
+                  {pincodeResult && (
+                    <div className="mt-2 rounded-lg p-2.5 text-xs space-y-1 border bg-white border-[#B8863B]/30">
+                      {pincodeResult.express ? (
+                        <div className="flex items-center gap-1.5 font-bold text-amber-900">
+                          <span>⚡ {pincodeResult.badge || "Delivered within 24 Hours"}</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 font-bold text-emerald-800">
+                          <span>🚀 {pincodeResult.delivery_text || `Estimated Delivery: ${pincodeResult.estimated_days}`}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-1 text-[11px] text-[#14110D]/80">
+                        <span>💵 Cash on Delivery: <strong>{pincodeResult.cod_available ? "Available" : "Not Available"}</strong></span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Primary CTA (Visible on Desktop Only - Mobile Uses Fixed Bottom Bar) */}
