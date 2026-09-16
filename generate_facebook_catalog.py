@@ -5,15 +5,18 @@ public_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\fron
 perfumes_dir = os.path.join(public_dir, 'assets', 'perfumes')
 feeds_dir = os.path.join(public_dir, 'feeds')
 backend_feeds_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\backend\public\feeds'
+backend_assets_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\backend\public\assets\perfumes'
 
 os.makedirs(feeds_dir, exist_ok=True)
 os.makedirs(backend_feeds_dir, exist_ok=True)
+os.makedirs(backend_assets_dir, exist_ok=True)
 
 csv_path = os.path.join(feeds_dir, 'facebook-catalog.csv')
 csv_flat_path = os.path.join(feeds_dir, 'facebook-catalog-flat.csv')
 
 # Timestamp cache-buster to force Meta to clear image cache
-CACHE_BUSTER = "?v=20260916v2"
+CACHE_BUSTER = "?v=20260916v3"
+BASE_IMAGE_DOMAIN = "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes"
 
 perfumes = [
     {'name': 'Calantha', 'id': 'calantha', 'prices': {10: 399, 30: 749, 50: 1085}, 'desc': 'Luxury floral extrait de parfum with 12+ hour sillage.', 'cat': 'Floral'},
@@ -47,12 +50,12 @@ def find_best_jpg_image(p_id, size):
     ]
     for c in candidates:
         if os.path.exists(os.path.join(perfumes_dir, c)):
-            return f"https://sentirebypc.com/assets/perfumes/{c}{CACHE_BUSTER}"
+            return f"{BASE_IMAGE_DOMAIN}/{c}{CACHE_BUSTER}"
     if os.path.exists(perfumes_dir):
         for f in os.listdir(perfumes_dir):
             if f.startswith(f"{p_id}-{size}ml") and f.endswith('.jpg'):
-                return f"https://sentirebypc.com/assets/perfumes/{f}{CACHE_BUSTER}"
-    return f"https://sentirebypc.com/assets/perfumes/byob-bundle.jpg{CACHE_BUSTER}"
+                return f"{BASE_IMAGE_DOMAIN}/{f}{CACHE_BUSTER}"
+    return f"{BASE_IMAGE_DOMAIN}/byob-bundle.jpg{CACHE_BUSTER}"
 
 fieldnames = [
     'id', 'item_group_id', 'title', 'description', 'availability', 'condition', 
@@ -104,7 +107,7 @@ rows.append({
     'condition': 'new',
     'price': '549.00 INR',
     'link': 'https://sentirebypc.com/discovery-set',
-    'image_link': f'https://sentirebypc.com/assets/perfumes/byob-bundle.jpg{CACHE_BUSTER}',
+    'image_link': f'{BASE_IMAGE_DOMAIN}/byob-bundle.jpg{CACHE_BUSTER}',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
     'fb_product_category': 'health & beauty > personal care > cosmetics > perfume & cologne',
@@ -126,7 +129,7 @@ rows.append({
     'condition': 'new',
     'price': '2899.00 INR',
     'link': 'https://sentirebypc.com/byob',
-    'image_link': f'https://sentirebypc.com/assets/perfumes/byob-bundle.jpg{CACHE_BUSTER}',
+    'image_link': f'{BASE_IMAGE_DOMAIN}/byob-bundle.jpg{CACHE_BUSTER}',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
     'fb_product_category': 'health & beauty > personal care > cosmetics > perfume & cologne',
@@ -157,5 +160,6 @@ with open(csv_flat_path, 'w', newline='', encoding='utf-8') as f:
 # Copy to backend public directory
 shutil.copy(csv_path, os.path.join(backend_feeds_dir, 'facebook-catalog.csv'))
 shutil.copy(csv_flat_path, os.path.join(backend_feeds_dir, 'facebook-catalog-flat.csv'))
+shutil.copytree(perfumes_dir, backend_assets_dir, dirs_exist_ok=True)
 
-print(f"Generated and copied {len(rows)} products with image cache buster ({CACHE_BUSTER})!")
+print(f"Generated and copied {len(rows)} products with Cloud Run CDN Image URLs ({CACHE_BUSTER})!")

@@ -103,6 +103,7 @@ app.use('/api/enquiries', require('./routes/enquiry'));
 app.use('/pincode', pincodeRouter);
 app.use('/api/pincode', pincodeRouter);
 app.use('/feeds', require('./routes/feeds'));
+app.use('/assets', express.static(require('path').join(__dirname, 'public', 'assets')));
 
 // Fallback 404 handler
 app.use((req, res) => {
