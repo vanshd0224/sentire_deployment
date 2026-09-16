@@ -34,6 +34,7 @@ deploy_backend:
       --min-instances=1
       --allow-unauthenticated
       --port 8080
+      --set-env-vars "SHIPROCKET_EMAIL=sentireforwork@gmail.com,SHIPROCKET_PASSWORD=l%R$&sMZnNG1LaW8iX&P5SLAE4KmVvuB,SHIPROCKET_PICKUP_PINCODE=302016"
   after_script:
     - rm -f /tmp/gcp-key.json
 
