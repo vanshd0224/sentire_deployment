@@ -1,10 +1,13 @@
-import csv, os
+import csv, os, shutil
 
 # Target directory for public assets and feeds
 public_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\frontend\public'
 perfumes_dir = os.path.join(public_dir, 'assets', 'perfumes')
 feeds_dir = os.path.join(public_dir, 'feeds')
+backend_feeds_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\backend\public\feeds'
+
 os.makedirs(feeds_dir, exist_ok=True)
+os.makedirs(backend_feeds_dir, exist_ok=True)
 
 csv_path = os.path.join(feeds_dir, 'facebook-catalog.csv')
 csv_flat_path = os.path.join(feeds_dir, 'facebook-catalog-flat.csv')
@@ -51,7 +54,7 @@ def find_best_jpg_image(p_id, size):
 fieldnames = [
     'id', 'item_group_id', 'title', 'description', 'availability', 'condition', 
     'price', 'link', 'image_link', 'brand', 'google_product_category', 
-    'fb_product_category', 'size', 'gender', 'age_group', 'custom_label_0'
+    'fb_product_category', 'size', 'gender', 'age_group', 'identifier_exists', 'shipping', 'custom_label_0'
 ]
 
 rows = []
@@ -83,6 +86,8 @@ for p in perfumes:
             'size': f"{size}ml",
             'gender': 'unisex',
             'age_group': 'adult',
+            'identifier_exists': 'no',
+            'shipping': 'IN::Standard:0.00 INR',
             'custom_label_0': p_cat
         })
 
@@ -103,6 +108,8 @@ rows.append({
     'size': '5 x 5ml',
     'gender': 'unisex',
     'age_group': 'adult',
+    'identifier_exists': 'no',
+    'shipping': 'IN::Standard:0.00 INR',
     'custom_label_0': 'Sample Box'
 })
 
@@ -123,19 +130,19 @@ rows.append({
     'size': '3 x 50ml',
     'gender': 'unisex',
     'age_group': 'adult',
+    'identifier_exists': 'no',
+    'shipping': 'IN::Standard:0.00 INR',
     'custom_label_0': 'Custom Bundle'
 })
 
-# Write Grouped Catalog Feed (with size column)
+# Write Grouped Catalog Feed
 with open(csv_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames)
     writer.writeheader()
     for r in rows:
         writer.writerow(r)
 
-print(f"1. Successfully generated {len(rows)} product variants in facebook-catalog.csv (Grouped Feed with 'size' column)")
-
-# Write Flat Catalog Feed (Without item_group_id so every variant is 100% Eligible standalone product)
+# Write Flat Catalog Feed
 fieldnames_flat = [f for f in fieldnames if f != 'item_group_id']
 with open(csv_flat_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames_flat)
@@ -144,4 +151,8 @@ with open(csv_flat_path, 'w', newline='', encoding='utf-8') as f:
         r_flat = {k: v for k, v in r.items() if k != 'item_group_id'}
         writer.writerow(r_flat)
 
-print(f"2. Successfully generated {len(rows)} products in facebook-catalog-flat.csv (Flat Feed without 'item_group_id')")
+# Copy to backend public directory
+shutil.copy(csv_path, os.path.join(backend_feeds_dir, 'facebook-catalog.csv'))
+shutil.copy(csv_flat_path, os.path.join(backend_feeds_dir, 'facebook-catalog-flat.csv'))
+
+print(f"Generated and copied {len(rows)} products to backend/public/feeds with identifier_exists=no & shipping rules!")
