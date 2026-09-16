@@ -1,10 +1,13 @@
 import csv, os
 
+# Target directory for public assets and feeds
 public_dir = r'C:\Users\asus\.gemini\antigravity\scratch\sentire_deployment\frontend\public'
 perfumes_dir = os.path.join(public_dir, 'assets', 'perfumes')
 feeds_dir = os.path.join(public_dir, 'feeds')
 os.makedirs(feeds_dir, exist_ok=True)
+
 csv_path = os.path.join(feeds_dir, 'facebook-catalog.csv')
+csv_flat_path = os.path.join(feeds_dir, 'facebook-catalog-flat.csv')
 
 perfumes = [
     {'name': 'Calantha', 'id': 'calantha', 'prices': {10: 399, 30: 749, 50: 1085}, 'desc': 'Luxury floral extrait de parfum with 12+ hour sillage.', 'cat': 'Floral'},
@@ -45,7 +48,11 @@ def find_best_jpg_image(p_id, size):
                 return f"https://sentirebypc.com/assets/perfumes/{f}"
     return "https://sentirebypc.com/assets/perfumes/byob-bundle.jpg"
 
-fieldnames = ['id', 'item_group_id', 'title', 'description', 'availability', 'condition', 'price', 'link', 'image_link', 'brand', 'google_product_category', 'gender', 'age_group', 'custom_label_0']
+fieldnames = [
+    'id', 'item_group_id', 'title', 'description', 'availability', 'condition', 
+    'price', 'link', 'image_link', 'brand', 'google_product_category', 
+    'fb_product_category', 'size', 'gender', 'age_group', 'custom_label_0'
+]
 
 rows = []
 
@@ -72,11 +79,14 @@ for p in perfumes:
             'image_link': img,
             'brand': 'SENTIRE By PC',
             'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+            'fb_product_category': 'health & beauty > personal care > cosmetics > perfume & cologne',
+            'size': f"{size}ml",
             'gender': 'unisex',
             'age_group': 'adult',
             'custom_label_0': p_cat
         })
 
+# Discovery Set
 rows.append({
     'id': 'discovery-set',
     'item_group_id': 'discovery-set',
@@ -89,11 +99,14 @@ rows.append({
     'image_link': 'https://sentirebypc.com/discovery_hero_cover.jpg',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+    'fb_product_category': 'health & beauty > personal care > cosmetics > perfume & cologne',
+    'size': '5 x 5ml',
     'gender': 'unisex',
     'age_group': 'adult',
     'custom_label_0': 'Sample Box'
 })
 
+# BYOB
 rows.append({
     'id': 'byob',
     'item_group_id': 'byob',
@@ -106,15 +119,29 @@ rows.append({
     'image_link': 'https://sentirebypc.com/assets/perfumes/byob-bundle.jpg',
     'brand': 'SENTIRE By PC',
     'google_product_category': 'Health & Beauty > Personal Care > Cosmetics > Perfume & Cologne',
+    'fb_product_category': 'health & beauty > personal care > cosmetics > perfume & cologne',
+    'size': '3 x 50ml',
     'gender': 'unisex',
     'age_group': 'adult',
     'custom_label_0': 'Custom Bundle'
 })
 
+# Write Grouped Catalog Feed (with size column)
 with open(csv_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames)
     writer.writeheader()
     for r in rows:
         writer.writerow(r)
 
-print(f"Successfully generated {len(rows)} product size variants in facebook-catalog.csv with JPEG URLs")
+print(f"1. Successfully generated {len(rows)} product variants in facebook-catalog.csv (Grouped Feed with 'size' column)")
+
+# Write Flat Catalog Feed (Without item_group_id so every variant is 100% Eligible standalone product)
+fieldnames_flat = [f for f in fieldnames if f != 'item_group_id']
+with open(csv_flat_path, 'w', newline='', encoding='utf-8') as f:
+    writer = csv.DictWriter(f, fieldnames=fieldnames_flat)
+    writer.writeheader()
+    for r in rows:
+        r_flat = {k: v for k, v in r.items() if k != 'item_group_id'}
+        writer.writerow(r_flat)
+
+print(f"2. Successfully generated {len(rows)} products in facebook-catalog-flat.csv (Flat Feed without 'item_group_id')")

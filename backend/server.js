@@ -102,6 +102,7 @@ app.use('/checkout', require('./routes/checkout'));
 app.use('/api/enquiries', require('./routes/enquiry'));
 app.use('/pincode', pincodeRouter);
 app.use('/api/pincode', pincodeRouter);
+app.use('/feeds', require('./routes/feeds'));
 
 // Fallback 404 handler
 app.use((req, res) => {
