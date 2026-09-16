@@ -20,6 +20,7 @@ const integrationsRouter = require('./routes/integrations');
 const uploadsRouter = require('./routes/uploads');
 const affiliates = require('./routes/affiliates');
 const leadsRouter = require('./routes/leads');
+const pincodeRouter = require('./routes/pincode');
 
 const app = express();
 
@@ -99,6 +100,8 @@ app.use('/admin/affiliates', affiliates.adminRoutes);
 app.use('/leads', leadsRouter);
 app.use('/checkout', require('./routes/checkout'));
 app.use('/api/enquiries', require('./routes/enquiry'));
+app.use('/pincode', pincodeRouter);
+app.use('/api/pincode', pincodeRouter);
 
 // Fallback 404 handler
 app.use((req, res) => {
