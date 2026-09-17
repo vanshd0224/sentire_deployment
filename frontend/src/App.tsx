@@ -1,18 +1,17 @@
 import { useState, useEffect, useMemo } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
-import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
-import Hero from "./components/Hero";
-import TrustBadges from "./components/TrustBadges";
+import EditorialHero from "./editorial/Hero";
+import NoteMarquee from "./editorial/NoteMarquee";
+import CollectionRail from "./editorial/CollectionRail";
+import Atelier from "./editorial/Atelier";
+import Collections from "./editorial/Collections";
+import Campaign from "./editorial/Campaign";
+import Marks from "./editorial/Marks";
+import EditorialNewsletter from "./editorial/Newsletter";
 import WatchAndBuy from "./components/WatchAndBuy";
-import RetailerBadges from "./components/RetailerBadges";
-import ShopByCategory from "./components/ShopByCategory";
-import BestSellers from "./components/BestSellers";
-import NewArrivals from "./components/NewArrivals";
 import CelebrityReacts from "./components/CelebrityReacts";
-import PromoSplit from "./components/PromoSplit";
-import Newsletter from "./components/Newsletter";
 import InstagramSection from "./components/InstagramSection";
 import Footer from "./components/Footer";
 import BundleBuilderModal from "./components/BundleBuilderModal";
@@ -37,6 +36,9 @@ import { auth } from "./lib/firebase";
 
 import type { PageName } from "./types/appTypes";
 export type { PageName };
+
+const BEST_SELLERS = ALL_PERFUMES.filter((p) => p.badge === "bestseller" || p.badge === "exclusive").slice(0, 8);
+const NEW_ARRIVALS = ALL_PERFUMES.filter((p) => p.badge === "new").slice(0, 8);
 
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
@@ -449,31 +451,38 @@ export default function App() {
         />
       ) : (
         <main>
-          <Hero onNavigate={handleNavigate} />
+          <EditorialHero onNavigate={handleNavigate} />
+          <NoteMarquee />
+          <CollectionRail
+            label="Haute parfumerie"
+            title="Best sellers."
+            products={BEST_SELLERS}
+            href="/bestsellers"
+            onViewAll={() => handleNavigate("bestsellers")}
+            onAddToCart={handleAddToCart}
+            onSelectProduct={handleOpenProductModal}
+          />
+          <Collections onNavigate={handleNavigate} onOpenBundleModal={openBundleModal} />
+          <Atelier />
+          <Campaign onNavigate={handleNavigate} />
+          <CollectionRail
+            label="Haute selection"
+            title="New arrivals."
+            layout="grid"
+            products={NEW_ARRIVALS}
+            href="/new-arrivals"
+            onViewAll={() => handleNavigate("new-arrivals")}
+            onAddToCart={handleAddToCart}
+            onSelectProduct={handleOpenProductModal}
+          />
           <WatchAndBuy
             onAddToCart={handleAddToCart}
             onOpenCart={() => handleNavigate("cart")}
             onSelectProduct={handleOpenProductModal}
           />
-          <RetailerBadges />
-          <ShopByCategory onNavigate={handleNavigate} />
-          <BestSellers
-            cartItems={cartItems}
-            onAddToCart={handleAddToCart}
-            onUpdateCartQuantity={handleUpdateCartQuantity}
-            onNavigate={handleNavigate}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <NewArrivals
-            cartItems={cartItems}
-            onAddToCart={handleAddToCart}
-            onUpdateCartQuantity={handleUpdateCartQuantity}
-            onNavigate={handleNavigate}
-            onSelectProduct={handleOpenProductModal}
-          />
           <CelebrityReacts />
-          <TrustBadges />
-          <Newsletter />
+          <Marks />
+          <EditorialNewsletter />
           <InstagramSection />
         </main>
       )}
@@ -557,7 +566,7 @@ export default function App() {
       {cartToast && (
         <div
           key={cartToast.id}
-          className="fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-2xl border border-[#B8863B]/60 bg-[#14110D]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
+          className="fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-2xl border border-[#8a3b24]/60 bg-[#151412]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
         >
           <div className="flex items-center gap-3 min-w-0">
             {cartToast.img && (
@@ -566,7 +575,7 @@ export default function App() {
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-xs font-bold text-[#D4AF37] tracking-wide truncate">{cartToast.message}</p>
+              <p className="text-xs font-bold text-[#a4492e] tracking-wide truncate">{cartToast.message}</p>
               <p className="text-[10px] text-white/70 font-medium">Cart Updated ({totalCartCount} item{totalCartCount === 1 ? "" : "s"})</p>
             </div>
           </div>
@@ -576,7 +585,7 @@ export default function App() {
               setCartToast(null);
               handleNavigate("cart");
             }}
-            className="shrink-0 rounded-full bg-[#B8863B] px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#C89B5A] transition-all shadow-md cursor-pointer flex items-center gap-1"
+            className="shrink-0 rounded-full bg-[#8a3b24] px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#a4492e] transition-all shadow-md cursor-pointer flex items-center gap-1"
           >
             <span>View Bag</span>
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

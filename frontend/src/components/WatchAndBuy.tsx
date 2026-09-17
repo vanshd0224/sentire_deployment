@@ -197,7 +197,8 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
 
         cards.forEach((card) => {
           const rect = card.getBoundingClientRect();
-          if (rect.right > 0 && rect.left < window.innerWidth) {
+          const onScreenY = rect.bottom > 0 && rect.top < window.innerHeight;
+          if (onScreenY && rect.right > 0 && rect.left < window.innerWidth) {
             const cardCenterX = rect.left + rect.width / 2;
             const dist = Math.abs(cardCenterX - screenCenterX);
             if (dist < minDistance) {
@@ -215,7 +216,10 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
         // DESKTOP: All visible cards play simultaneously
         cards.forEach((card) => {
           const rect = card.getBoundingClientRect();
-          if (rect.right > -50 && rect.left < window.innerWidth + 50) {
+          // Vertical check too: without it every reel downloads on first paint,
+          // even while the section is still far below the fold.
+          const onScreenY = rect.bottom > -100 && rect.top < window.innerHeight + 100;
+          if (onScreenY && rect.right > -50 && rect.left < window.innerWidth + 50) {
             const idxAttr = card.getAttribute("data-index");
             if (idxAttr !== null) {
               newActive.add(parseInt(idxAttr, 10));
@@ -400,24 +404,24 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
   };
 
   return (
-    <section className="w-full bg-[#FAF6F0] py-12 sm:py-16 overflow-hidden">
+    <section className="w-full bg-[#f4f2ee] py-12 sm:py-16 overflow-hidden">
       {/* Toast Notification */}
       {toastMsg && (
         <div
-          className="fixed z-[99999999] left-1/2 -translate-x-1/2 rounded-full border border-[#c89b5a]/60 bg-[#1c1917] px-6 py-3 text-xs font-bold text-white shadow-2xl flex items-center gap-2 animate-fadeIn"
+          className="fixed z-[99999999] left-1/2 -translate-x-1/2 rounded-full border border-[#a4492e]/60 bg-[#1c1917] px-6 py-3 text-xs font-bold text-white shadow-2xl flex items-center gap-2 animate-fadeIn"
           style={{ bottom: "calc(74px + env(safe-area-inset-bottom, 8px) + 12px)" }}
         >
-          <span className="h-2 w-2 rounded-full bg-[#d4af37] animate-pulse" />
+          <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />
           {toastMsg}
         </div>
       )}
 
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {/* Carousel Heading */}
-        <h2 className="flex items-center justify-center gap-4 sm:gap-6 font-display text-[20px] tracking-[0.25em] text-[#1c1917] uppercase sm:text-[26px]">
-          <span className="h-px w-8 bg-[#1c1917]/25 sm:w-14" />
-          Watch &amp; Buy
-          <span className="h-px w-8 bg-[#1c1917]/25 sm:w-14" />
+        <div className="h-px w-full bg-[color:var(--color-rule)]" />
+        <p className="ed-label mt-5">In motion</p>
+        <h2 className="mt-3 font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em] text-ink">
+          Watch &amp; buy.
         </h2>
 
         {/* Carousel Viewport with Floating Scroll Arrows */}
@@ -630,7 +634,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
                       const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
                       if (pData) onSelectProduct?.(pData);
                     }}
-                    className="h-11 w-11 shrink-0 rounded-lg bg-[#FAF6F0] p-1 border border-black/10 flex items-center justify-center cursor-pointer overflow-hidden"
+                    className="h-11 w-11 shrink-0 rounded-lg bg-[#f4f2ee] p-1 border border-black/10 flex items-center justify-center cursor-pointer overflow-hidden"
                   >
                     <img src={activeReel.swatch} alt={activeReel.product} className="h-full w-full object-contain" />
                   </div>
@@ -683,7 +687,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
           onClick={() => setShareModalReel(null)}
         >
           <div
-            className="w-full max-w-md bg-[#FAF6F0] rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border border-[#C89B5A]/40 text-[#1C1917] relative animate-slideUp"
+            className="w-full max-w-md bg-[#f4f2ee] rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border border-[#a4492e]/40 text-[#1C1917] relative animate-slideUp"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -783,7 +787,7 @@ export default function WatchAndBuy({ onAddToCart, onOpenCart, onSelectProduct }
               />
               <button
                 onClick={() => copyToClipboard(`${window.location.origin}/perfumes/${shareModalReel.id}`)}
-                className="bg-[#1C1917] hover:bg-[#c89b5a] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 shadow-sm"
+                className="bg-[#1C1917] hover:bg-[#a4492e] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 shadow-sm"
               >
                 Copy Link
               </button>

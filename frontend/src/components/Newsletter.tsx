@@ -24,7 +24,7 @@ export default function Newsletter() {
             type="email"
             required
             placeholder="Enter your email address"
-            className="w-full border border-black/15 bg-white px-4 py-3 text-[12px] text-ink placeholder:text-ink/40 focus:border-[#c89b5a] focus:outline-none rounded-md sm:rounded-none sm:rounded-l-md"
+            className="w-full border border-black/15 bg-white px-4 py-3 text-[12px] text-ink placeholder:text-ink/40 focus:border-[#a4492e] focus:outline-none rounded-md sm:rounded-none sm:rounded-l-md"
             style={{ fontFamily: "var(--font-sans)" }}
           />
           <button

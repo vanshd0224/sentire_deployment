@@ -144,7 +144,7 @@ export default function Hero({
           background: rgba(255, 255, 255, 0.75);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
-          border: 1.5px solid #B9863E;
+          border: 1.5px solid #8a3b24;
           border-radius: 4px;
           box-shadow: 0 3px 14px rgba(185, 134, 62, 0.16);
           transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -177,7 +177,7 @@ export default function Hero({
           white-space: nowrap;
         }
         .hero-nav-link:hover {
-          color: #B9863E;
+          color: #8a3b24;
         }
 
         .hero-icon-btn {
@@ -193,7 +193,7 @@ export default function Hero({
           padding: 0;
         }
         .hero-icon-btn:hover {
-          color: #B9863E;
+          color: #8a3b24;
           transform: scale(1.08);
         }
 
@@ -425,13 +425,13 @@ export default function Hero({
           >
             {/* Horizontal Line Left */}
             <div className="flex-1 flex items-center">
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#B9863E] shrink-0" />
-              <div className="flex-1 h-[1.2px] bg-[#B9863E]" />
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#8a3b24] shrink-0" />
+              <div className="flex-1 h-[1.2px] bg-[#8a3b24]" />
             </div>
 
             {/* Center Circular Medallion */}
             <div
-              className="mx-[10px] flex items-center justify-center rounded-full bg-[#B9863E] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
+              className="mx-[10px] flex items-center justify-center rounded-full bg-[#8a3b24] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
               style={{
                 width: "26px",
                 height: "26px",
@@ -450,8 +450,8 @@ export default function Hero({
 
             {/* Horizontal Line Right */}
             <div className="flex-1 flex items-center">
-              <div className="flex-1 h-[1.2px] bg-[#B9863E]" />
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#B9863E] shrink-0" />
+              <div className="flex-1 h-[1.2px] bg-[#8a3b24]" />
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#8a3b24] shrink-0" />
             </div>
           </div>
 
@@ -623,7 +623,7 @@ export default function Hero({
               height="9"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#B9863E"
+              stroke="#8a3b24"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -714,14 +714,14 @@ export default function Hero({
           </h1>
 
           <div className="flex items-center justify-center w-[85%] max-w-[380px] my-2" aria-hidden="true">
-            <div className="flex-1 h-[1px] bg-[#B9863E]" />
+            <div className="flex-1 h-[1px] bg-[#8a3b24]" />
             <div
-              className="mx-2 flex items-center justify-center rounded-full bg-[#B9863E] shrink-0"
+              className="mx-2 flex items-center justify-center rounded-full bg-[#8a3b24] shrink-0"
               style={{ width: "22px", height: "22px" }}
             >
               <span className="font-cormorant text-white text-[14px] leading-none">&amp;</span>
             </div>
-            <div className="flex-1 h-[1px] bg-[#B9863E]" />
+            <div className="flex-1 h-[1px] bg-[#8a3b24]" />
           </div>
 
           <div
@@ -768,7 +768,7 @@ export default function Hero({
                 DIVINE<br />BLESSINGS
               </span>
             </div>
-            <div className="w-[1px] h-[40px] bg-[#B9863E]/40" />
+            <div className="w-[1px] h-[40px] bg-[#8a3b24]/40" />
             <div className="flex-1 flex flex-col items-center text-center px-1">
               <img
                 src="/images/ganesh/benefit_lotus.png"
@@ -779,7 +779,7 @@ export default function Hero({
                 NEW BEGINNINGS<br />NEW ESSENCES
               </span>
             </div>
-            <div className="w-[1px] h-[40px] bg-[#B9863E]/40" />
+            <div className="w-[1px] h-[40px] bg-[#8a3b24]/40" />
             <div className="flex-1 flex flex-col items-center text-center px-1">
               <img
                 src="/images/ganesh/benefit_perfume.png"
@@ -819,7 +819,7 @@ export default function Hero({
             <span className="font-montserrat font-semibold text-[11px] tracking-[0.8px] text-[#32113F] mr-2">
               DISCOVERY SET • ₹549
             </span>
-            <svg width="14" height="9" viewBox="0 0 20 12" fill="none" stroke="#B9863E" strokeWidth="1.8">
+            <svg width="14" height="9" viewBox="0 0 20 12" fill="none" stroke="#8a3b24" strokeWidth="1.8">
               <line x1="1" y1="6" x2="19" y2="6" />
               <polyline points="13 1 19 6 13 11" />
             </svg>
@@ -927,7 +927,7 @@ export default function Hero({
             </div>
 
             {/* Vertical Separator 1 */}
-            <div className="w-[1px] h-[30px] bg-[#B9863E]/35 shrink-0" aria-hidden="true" />
+            <div className="w-[1px] h-[30px] bg-[#8a3b24]/35 shrink-0" aria-hidden="true" />
 
             {/* Column 2: New Beginnings */}
             <div className="flex-1 flex flex-col items-center text-center px-0.5">
@@ -946,7 +946,7 @@ export default function Hero({
             </div>
 
             {/* Vertical Separator 2 */}
-            <div className="w-[1px] h-[30px] bg-[#B9863E]/35 shrink-0" aria-hidden="true" />
+            <div className="w-[1px] h-[30px] bg-[#8a3b24]/35 shrink-0" aria-hidden="true" />
 
             {/* Column 3: Crafted With Passion */}
             <div className="flex-1 flex flex-col items-center text-center px-0.5">
@@ -1024,7 +1024,7 @@ export default function Hero({
               height="8"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#B9863E"
+              stroke="#8a3b24"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"

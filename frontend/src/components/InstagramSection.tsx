@@ -62,19 +62,14 @@ export default function InstagramSection() {
           </div>
 
           <h2
-            className="font-display text-[22px] uppercase tracking-[0.28em] sm:text-[28px]"
-            style={{ color: "#f5f0e8" }}
+            className="font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em]"
+            style={{ color: "#f4f2ee" }}
           >
-            <span style={{ color: "rgba(245,240,220,0.4)", marginRight: "14px" }}>——</span>
-            As Seen on Instagram
-            <span style={{ color: "rgba(245,240,220,0.4)", marginLeft: "14px" }}>——</span>
+            As seen on Instagram.
           </h2>
 
-          <p
-            className="text-[11px] tracking-[0.14em] uppercase text-[#c89b5a]"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
-            Tag us with <span className="underline decoration-[#c89b5a]/40 underline-offset-4">#SentireForElite</span> to be featured
+          <p className="text-[14px] leading-relaxed" style={{ color: "rgba(244,242,238,0.65)" }}>
+            Tag <span className="underline decoration-white/30 underline-offset-4">#SentireForElite</span> to be featured
           </p>
         </div>
 
@@ -86,7 +81,7 @@ export default function InstagramSection() {
               href={post.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-2xl bg-neutral-900 border border-white/10 hover:border-[#c89b5a]/60 transition-all duration-300 shadow-md hover:shadow-xl"
+              className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-[2px] bg-neutral-900 border border-white/10 hover:border-[#a4492e]/60 transition-all duration-300 shadow-md hover:shadow-xl"
             >
               {/* Real Instagram Reel Cover Image */}
               <img
@@ -116,16 +111,16 @@ export default function InstagramSection() {
             href="https://www.instagram.com/sentireforelite?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 rounded-full border px-7 py-2.5 text-[10.5px] font-semibold uppercase tracking-[0.2em] transition-all duration-300"
+            className="group inline-flex items-center gap-2.5 rounded-full border px-7 py-3 text-[13px] font-medium transition-all duration-300"
             style={{
               borderColor: "rgba(255,255,255,0.18)",
               color: "rgba(255,255,255,0.75)",
               background: "rgba(255,255,255,0.04)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#c89b5a";
-              e.currentTarget.style.color = "#c89b5a";
-              e.currentTarget.style.background = "rgba(200,155,90,0.08)";
+              e.currentTarget.style.borderColor = "#a4492e";
+              e.currentTarget.style.color = "#a4492e";
+              e.currentTarget.style.background = "rgba(164, 73, 46,0.08)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";

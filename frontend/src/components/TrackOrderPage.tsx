@@ -114,41 +114,41 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f5f1] text-[#18130f]">
+    <div className="min-h-screen bg-[#f4f2ee] text-[#1c1b18]">
       {/* ── Breadcrumb & Top Bar ── */}
-      <div className="border-b border-[#c89b5a]/15 bg-[#fbf9f5] px-5 py-4 lg:px-12">
+      <div className="border-b border-[#a4492e]/15 bg-[#f4f2ee] px-5 py-4 lg:px-12">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between text-[11px] font-medium tracking-[0.12em] uppercase text-ink/60">
           <div className="flex items-center gap-2">
-            <button onClick={onBackToHome} className="hover:text-[#c89b5a] transition-colors cursor-pointer">
+            <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
               Home
             </button>
             <span>/</span>
-            <span className="text-[#c89b5a] font-bold">Track My Order</span>
+            <span className="text-[#a4492e] font-bold">Track My Order</span>
           </div>
-          <span className="hidden sm:inline text-[10px] tracking-[0.2em] text-[#c89b5a]">
+          <span className="hidden sm:inline text-[10px] tracking-[0.2em] text-[#a4492e]">
             Sentire Concierge Dispatch
           </span>
         </div>
       </div>
 
       {/* ── Hero Section ── */}
-      <section className="relative overflow-hidden border-b border-[#c89b5a]/15 bg-[#0d0a07] text-[#f8f5f1] py-16 lg:py-24 px-5 lg:px-12">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#c89b5a]/15 via-transparent to-transparent opacity-40 pointer-events-none" />
+      <section className="relative overflow-hidden border-b border-[#a4492e]/15 bg-[#0d0a07] text-[#f4f2ee] py-16 lg:py-24 px-5 lg:px-12">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#a4492e]/15 via-transparent to-transparent opacity-40 pointer-events-none" />
         
         <div className="mx-auto max-w-[900px] text-center relative z-10">
-          <span className="inline-block rounded-full bg-[#c89b5a]/15 border border-[#c89b5a]/30 px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.25em] text-[#d4af37]">
+          <span className="inline-block rounded-full bg-[#a4492e]/15 border border-[#a4492e]/30 px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
             Order Tracking & Dispatch Status
           </span>
           <h1 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-normal tracking-[0.08em] text-white">
             Track Your Order
           </h1>
           <p className="mt-4 text-xs sm:text-sm text-white/70 leading-relaxed max-w-xl mx-auto font-sans">
-            Track your SENTIRE By PC order and view the latest delivery status. Enter your Sentire Order Number (e.g. <span className="text-[#c89b5a]">SNT-84920</span>) or courier AWB tracking code below.
+            Track your SENTIRE By PC order and view the latest delivery status. Enter your Sentire Order Number (e.g. <span className="text-[#a4492e]">SNT-84920</span>) or courier AWB tracking code below.
           </p>
 
           {/* Track Form */}
           <form onSubmit={handleTrackSubmit} className="mt-8 max-w-xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3 bg-[#16120e] p-2 rounded-xl border border-[#c89b5a]/30 shadow-2xl">
+            <div className="flex flex-col sm:flex-row gap-3 bg-[#151412] p-2 rounded-xl border border-[#a4492e]/30 shadow-2xl">
               <input
                 type="text"
                 value={orderQuery}
@@ -167,7 +167,7 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
               <button
                 type="submit"
                 disabled={isSearching}
-                className="px-6 py-3 rounded-lg bg-[#c89b5a] text-[#0b0907] font-bold text-xs uppercase tracking-widest hover:bg-[#d4af37] transition-all cursor-pointer shrink-0 disabled:opacity-50"
+                className="px-6 py-3 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-widest hover:bg-[#a4492e] transition-all cursor-pointer shrink-0 disabled:opacity-50"
               >
                 {isSearching ? "SEARCHING..." : "TRACK STATUS →"}
               </button>
@@ -179,17 +179,17 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
       {/* ── Tracking Result Output ── */}
       {searched && orderResult && (
         <section className="py-16 px-5 lg:px-12 mx-auto max-w-[1000px]">
-          <div className="bg-white rounded-3xl border border-[#c89b5a]/25 p-6 sm:p-10 shadow-xl space-y-8">
+          <div className="bg-white rounded-3xl border border-[#a4492e]/25 p-6 sm:p-10 shadow-xl space-y-8">
             {/* Status Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/10 pb-6">
               <div>
-                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c89b5a]">VERIFIED DISPATCH STATUS</span>
+                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">VERIFIED DISPATCH STATUS</span>
                 <h2 className="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1">
                   Order {orderResult.orderNumber}
                 </h2>
                 <p className="text-xs text-ink/60 mt-1 font-sans">Placed on {orderResult.date} • Sentire Maison Jaipur</p>
               </div>
-              <div className="inline-flex items-center gap-2 bg-[#fcf9f4] border border-[#c89b5a]/40 px-4 py-2 rounded-full self-start sm:self-auto">
+              <div className="inline-flex items-center gap-2 bg-[#f7f5f2] border border-[#a4492e]/40 px-4 py-2 rounded-full self-start sm:self-auto">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-xs font-bold text-ink uppercase tracking-wider">{orderResult.statusText}</span>
               </div>
@@ -205,8 +205,8 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
                 <span className="text-xs font-bold text-emerald-800 uppercase block">2. Formulated</span>
                 <span className="text-[10px] text-emerald-700 mt-1 block">Extrait de parfum bottled</span>
               </div>
-              <div className="p-4 rounded-2xl bg-[#0b0907] text-white border border-[#c89b5a] shadow-md">
-                <span className="text-xs font-bold text-[#d4af37] uppercase block">3. In Transit 🚚</span>
+              <div className="p-4 rounded-2xl bg-[#151412] text-white border border-[#a4492e] shadow-md">
+                <span className="text-xs font-bold text-[#a4492e] uppercase block">3. In Transit 🚚</span>
                 <span className="text-[10px] text-white/70 mt-1 block">{orderResult.courier}</span>
               </div>
               <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 text-gray-400">
@@ -216,14 +216,14 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
             </div>
 
             {/* Courier & AWB Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#fcf9f4] p-5 rounded-2xl border border-[#c89b5a]/20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#f7f5f2] p-5 rounded-2xl border border-[#a4492e]/20">
               <div>
                 <span className="text-[10px] font-bold text-ink/50 uppercase tracking-widest block">Courier Partner</span>
                 <span className="text-sm font-semibold text-ink">{orderResult.courier}</span>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-ink/50 uppercase tracking-widest block">AWB Tracking Number</span>
-                <span className="text-sm font-semibold text-[#c89b5a] font-mono">{orderResult.awb}</span>
+                <span className="text-sm font-semibold text-[#a4492e] font-mono">{orderResult.awb}</span>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-ink/50 uppercase tracking-widest block">Estimated Arrival</span>
@@ -237,7 +237,7 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
               <div className="space-y-3">
                 {orderResult.items.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-4 p-3 rounded-xl border border-black/10 bg-white">
-                    <img src={item.img} alt={item.name} className="h-12 w-12 object-contain rounded-lg bg-[#f8f5f1]" />
+                    <img src={item.img} alt={item.name} className="h-12 w-12 object-contain rounded-lg bg-[#f4f2ee]" />
                     <div className="flex-1">
                       <h4 className="font-display text-sm font-semibold text-ink">{item.name}</h4>
                       <p className="text-[11px] text-ink/60">{item.size} • Qty: {item.quantity}</p>
@@ -253,7 +253,7 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
               <p className="text-xs text-ink/70">Need assistance with your delivery or address change?</p>
               <button
                 onClick={onNavigateToContact}
-                className="px-5 py-2.5 rounded-lg bg-[#0b0907] text-[#c89b5a] font-bold text-xs uppercase tracking-widest hover:bg-[#1a1511] transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-[#151412] text-[#a4492e] font-bold text-xs uppercase tracking-widest hover:bg-[#1a1511] transition-colors cursor-pointer"
               >
                 CONTACT CLIENT SERVICES →
               </button>
@@ -265,7 +265,7 @@ export default function TrackOrderPage({ onBackToHome, onNavigateToContact }: Tr
       {/* ── FAQ & Support Info ── */}
       <section className="py-16 px-5 lg:px-12 mx-auto max-w-[1000px]">
         <div className="text-center max-w-xl mx-auto mb-10">
-          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
             DELIVERY ASSISTANCE
           </span>
           <h2 className="font-display text-3xl font-normal text-ink">Frequently Asked Questions</h2>

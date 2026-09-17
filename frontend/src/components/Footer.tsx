@@ -64,7 +64,7 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
         className="flex w-full items-center justify-between text-[11.5px] font-semibold tracking-[0.12em] text-ink uppercase md:cursor-default"
       >
         <span>{title}</span>
-        <span className="text-[#c89b5a] font-bold text-sm md:hidden">{isOpen ? "−" : "+"}</span>
+        <span className="text-[#a4492e] font-bold text-sm md:hidden">{isOpen ? "−" : "+"}</span>
       </button>
       <ul className={`mt-3 space-y-2.5 ${isOpen ? "block" : "hidden md:block"}`}>
         {links.map((link) => {
@@ -119,7 +119,7 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
                     onNavigate?.("client-services");
                   }
                 }}
-                className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[#c89b5a]"
+                className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[#a4492e]"
               >
                 {link}
               </a>
@@ -133,7 +133,7 @@ function MobileAccordionColumn({ title, links, onNavigate }: { title: string; li
 
 export default function Footer({ onNavigate }: FooterProps) {
   return (
-    <footer className="w-full bg-[#f8f5f1] border-t border-[#c89b5a]/15">
+    <footer className="w-full bg-[#f4f2ee] border-t border-[#a4492e]/15">
       <div className="mx-auto max-w-[1440px] px-5 py-10 sm:py-14 lg:px-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
           <div className="col-span-1 sm:col-span-3 lg:col-span-1 pb-4 border-b border-black/10 sm:border-none sm:pb-0">
@@ -153,7 +153,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#c89b5a] hover:text-[#c89b5a] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
               >
                 <InstagramIcon />
               </a>
@@ -162,7 +162,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#c89b5a] hover:text-[#c89b5a] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
               >
                 <FacebookIcon />
               </a>
@@ -171,7 +171,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Youtube"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#c89b5a] hover:text-[#c89b5a] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
               >
                 <YoutubeIcon />
               </a>
@@ -186,24 +186,24 @@ export default function Footer({ onNavigate }: FooterProps) {
             <h3 className="text-[11.5px] font-semibold tracking-[0.12em] text-ink uppercase">Need Help?</h3>
             <ul className="mt-3 space-y-2.5 text-[12px] text-ink/70">
               <li className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#a4492e] shrink-0">
                   <path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6z" />
                 </svg>
-                <a href="tel:+919950891935" className="hover:text-[#c89b5a] transition-colors">
+                <a href="tel:+919950891935" className="hover:text-[#a4492e] transition-colors">
                   +91 99508 91935
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#a4492e] shrink-0">
                   <rect x="3" y="5" width="18" height="14" rx="2" />
                   <path d="m4 7 8 6 8-6" />
                 </svg>
-                <a href="mailto:support@sentirebypc.com" className="hover:text-[#c89b5a] transition-colors">
+                <a href="mailto:support@sentirebypc.com" className="hover:text-[#a4492e] transition-colors">
                   support@sentirebypc.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#c89b5a] shrink-0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} className="h-4 w-4 text-[#a4492e] shrink-0">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 7v5l3.5 2" />
                 </svg>
@@ -214,18 +214,18 @@ export default function Footer({ onNavigate }: FooterProps) {
         </div>
       </div>
 
-      <div className="border-t border-black/10 bg-[#f4efe8]">
+      <div className="border-t border-black/10 bg-[#eeebe5]">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-5 py-4 text-[10.5px] text-ink/50 sm:flex-row sm:justify-between lg:px-12">
           <p>© 2026 Sentire by PC. All Rights Reserved.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#c89b5a]">
+            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#a4492e]">
               Privacy Policy
             </a>
-            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#c89b5a]">
+            <a href="/client-services" onClick={(e) => { e.preventDefault(); onNavigate?.("client-services"); }} className="transition-colors duration-300 hover:text-[#a4492e]">
               Terms & Conditions
             </a>
             <span className="flex items-center gap-1">
-              Crafted with <span className="text-[#c89b5a]">♥</span> in India
+              Crafted with <span className="text-[#a4492e]">♥</span> in India
             </span>
           </div>
         </div>

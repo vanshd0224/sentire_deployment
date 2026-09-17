@@ -35,7 +35,7 @@ export default function CelebrityReacts() {
 
   return (
     <section
-      className="relative w-full overflow-hidden py-14 lg:py-20 bg-[#0a0705] text-[#f5f0e8] border-t border-b border-[#c89b5a]/20"
+      className="relative w-full overflow-hidden py-14 lg:py-20 bg-[#121110] text-[#eeebe5] border-t border-b border-[#a4492e]/20"
       aria-label="Celebrity Reacts to Sentire"
       id="celebrity-reacts"
     >
@@ -58,31 +58,27 @@ export default function CelebrityReacts() {
 
       {/* Background ambient gold radial glow */}
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-30"
+        className="pointer-events-none absolute inset-0 z-0 opacity-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(200,155,90,0.12) 0%, transparent 75%)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(164, 73, 46,0.12) 0%, transparent 75%)",
         }}
       />
 
       {/* Section Header */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 text-center mb-10 lg:mb-14">
-        <h2
-          className="font-display text-3xl md:text-5xl lg:text-6xl uppercase tracking-tight text-[#f5f0e8]"
-          style={{ lineHeight: 1.1 }}
-        >
-          Celebrity Reacts <span className="italic text-[#c89b5a]">to Sentire</span>
+      <div className="relative z-10 mx-auto mb-10 w-full max-w-[1440px] px-5 md:px-10 lg:mb-14">
+        <div className="h-px w-full bg-paper/20" />
+        <p className="ed-label mt-5 !text-paper/55">Worn by</p>
+        <h2 className="mt-3 font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em] text-paper">
+          Celebrity reacts <em className="italic">to Sentire.</em>
         </h2>
-
-        {/* Golden underline accent */}
-        <div className="mx-auto mt-4 h-[1px] w-24 bg-gradient-to-r from-transparent via-[#c89b5a] to-transparent" />
       </div>
 
       {/* Moving Loop Container (Infinite Photo Marquee) */}
       <div className="celeb-marquee-wrapper relative z-10 w-full overflow-hidden py-2 cursor-pointer">
         {/* Left & Right edge gradient fade masks */}
-        <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-r from-[#0a0705] to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-l from-[#0a0705] to-transparent" />
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-r from-[#121110] to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-l from-[#121110] to-transparent" />
 
         <div className="animate-celeb-marquee gap-5 md:gap-7 px-4">
           {marqueeItems.map((imgSrc, idx) => {
@@ -91,7 +87,7 @@ export default function CelebrityReacts() {
               <div
                 key={`${imgSrc}-${idx}`}
                 onClick={() => setActiveModalIndex(originalIndex)}
-                className="group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-xl overflow-hidden border border-[#c89b5a]/30 bg-[#140e0a] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[#c89b5a] hover:shadow-[0_12px_30px_rgba(200,155,90,0.3)]"
+                className="group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-xl overflow-hidden border border-[#a4492e]/30 bg-[#140e0a] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[#a4492e] hover:shadow-[0_12px_30px_rgba(164, 73, 46,0.3)]"
               >
                 <img
                   src={imgSrc}
@@ -102,7 +98,7 @@ export default function CelebrityReacts() {
                 />
 
                 {/* Subtle hover overlay highlight */}
-                <div className="absolute inset-0 bg-[#c89b5a]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-[#a4492e]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
             );
           })}
@@ -116,13 +112,13 @@ export default function CelebrityReacts() {
           onClick={() => setActiveModalIndex(null)}
         >
           <div
-            className="relative max-w-3xl max-h-[90vh] rounded-2xl border border-[#c89b5a]/40 bg-[#120d09] overflow-hidden shadow-2xl flex flex-col"
+            className="relative max-w-3xl max-h-[90vh] rounded-2xl border border-[#a4492e]/40 bg-[#120d09] overflow-hidden shadow-2xl flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setActiveModalIndex(null)}
-              className="absolute top-4 right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-[#c89b5a]/40 bg-[#0a0705]/80 text-[#c89b5a] transition-all hover:bg-[#c89b5a] hover:text-[#0a0705]"
+              className="absolute top-4 right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-[#a4492e]/40 bg-[#121110]/80 text-[#a4492e] transition-all hover:bg-[#a4492e] hover:text-[#121110]"
               aria-label="Close celebrity modal"
             >
               ✕
@@ -138,21 +134,21 @@ export default function CelebrityReacts() {
             </div>
 
             {/* Lightbox Navigation Controls */}
-            <div className="flex items-center justify-between p-4 bg-[#120d09] border-t border-[#c89b5a]/20">
+            <div className="flex items-center justify-between p-4 bg-[#120d09] border-t border-[#a4492e]/20">
               <button
                 onClick={handlePrev}
-                className="flex items-center gap-2 rounded-lg border border-[#c89b5a]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#c89b5a] transition-all hover:bg-[#c89b5a]/10"
+                className="flex items-center gap-2 rounded-lg border border-[#a4492e]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#a4492e] transition-all hover:bg-[#a4492e]/10"
               >
                 ← Prev Photo
               </button>
 
-              <span className="text-xs text-[#f5f0e8]/60 font-mono">
+              <span className="text-xs text-[#eeebe5]/60 font-mono">
                 {activeModalIndex + 1} / {CELEBRITY_IMAGES.length}
               </span>
 
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 rounded-lg border border-[#c89b5a]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#c89b5a] transition-all hover:bg-[#c89b5a]/10"
+                className="flex items-center gap-2 rounded-lg border border-[#a4492e]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#a4492e] transition-all hover:bg-[#a4492e]/10"
               >
                 Next Photo →
               </button>

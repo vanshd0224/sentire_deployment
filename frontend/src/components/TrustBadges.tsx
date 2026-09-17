@@ -116,12 +116,12 @@ const marqueeBadges = [...qualityBadges, ...qualityBadges, ...qualityBadges, ...
 
 export default function TrustBadges() {
   return (
-    <section className="w-full bg-[#fdfbf7] border-y border-[#c89b5a]/20 py-4.5 overflow-hidden relative">
+    <section className="w-full bg-[#f7f5f2] border-y border-[#a4492e]/20 py-4.5 overflow-hidden relative">
       {/* Infinite Scroll Marquee Loop */}
       <div className="relative w-full overflow-hidden group">
         {/* Edge Gradient Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/90 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/90 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#f7f5f2] via-[#f7f5f2]/90 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#f7f5f2] via-[#f7f5f2]/90 to-transparent z-10 pointer-events-none" />
 
         <div className="ticker-track flex items-center gap-4 sm:gap-6 w-max py-1">
           {marqueeBadges.map((badge, index) => (

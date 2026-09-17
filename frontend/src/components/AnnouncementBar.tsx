@@ -28,7 +28,7 @@ export default function AnnouncementBar() {
         .sentire-announcement-bar {
           display: block !important;
           background-color: #000000 !important;
-          border-bottom: 1px solid rgba(200, 155, 90, 0.25);
+          border-bottom: 1px solid rgba(164, 73, 46, 0.25);
         }
         .sentire-marquee-track {
           display: flex;
@@ -36,20 +36,20 @@ export default function AnnouncementBar() {
           animation: marqueeScroll 20s linear infinite;
         }
       `}</style>
-      <div className="sentire-announcement-bar w-full text-[#f8f5f1] overflow-hidden select-none py-1.5 z-50">
+      <div className="sentire-announcement-bar w-full text-[#f4f2ee] overflow-hidden select-none py-1.5 z-50">
         <div className="sentire-marquee-track text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-white">
           {/* First Loop */}
           {items.map((item, i) => (
             <span key={`m1-${i}`} className="inline-flex items-center whitespace-nowrap px-4 sm:px-8">
               <span>{item.text}</span>
-              <span className="ml-4 sm:ml-8 text-[#c89b5a]">{item.icon}</span>
+              <span className="ml-4 sm:ml-8 text-[#a4492e]">{item.icon}</span>
             </span>
           ))}
           {/* Duplicate Loop for Infinite Seamless Scroll */}
           {items.map((item, i) => (
             <span key={`m2-${i}`} className="inline-flex items-center whitespace-nowrap px-4 sm:px-8">
               <span>{item.text}</span>
-              <span className="ml-4 sm:ml-8 text-[#c89b5a]">{item.icon}</span>
+              <span className="ml-4 sm:ml-8 text-[#a4492e]">{item.icon}</span>
             </span>
           ))}
         </div>

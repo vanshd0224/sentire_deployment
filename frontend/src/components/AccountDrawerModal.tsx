@@ -270,14 +270,14 @@ export default function AccountDrawerModal({
       className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="relative w-full max-w-md bg-[#ffffff] text-[#1e1e1e] rounded-2xl shadow-2xl overflow-hidden border border-[#c89b5a]/30 transition-all p-8 sm:p-10 text-center">
+      <div className="relative w-full max-w-md bg-[#ffffff] text-[#1c1b18] rounded-2xl shadow-2xl overflow-hidden border border-[#a4492e]/30 transition-all p-8 sm:p-10 text-center">
         
         {/* Top Controls */}
         <div className="flex items-center justify-between mb-4">
           {viewMode === "otp" ? (
             <button
               onClick={() => setViewMode("login")}
-              className="text-xs font-semibold text-[#1e1e1e] hover:text-[#c89b5a] flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-[#1c1b18] hover:text-[#a4492e] flex items-center gap-1 cursor-pointer"
             >
               ← Back
             </button>
@@ -287,7 +287,7 @@ export default function AccountDrawerModal({
 
           <button
             onClick={onClose}
-            className="text-[#888888] hover:text-[#1e1e1e] text-2xl font-light cursor-pointer leading-none"
+            className="text-[#888888] hover:text-[#1c1b18] text-2xl font-light cursor-pointer leading-none"
             aria-label="Close modal"
           >
             &times;
@@ -297,14 +297,14 @@ export default function AccountDrawerModal({
         <div id="recaptcha-container"></div>
 
         {/* Brand Header */}
-        <h2 className="text-3xl font-serif tracking-tight font-bold text-[#1e1e1e] mb-1">
+        <h2 className="text-3xl font-serif tracking-tight font-bold text-[#1c1b18] mb-1">
           SENTIRE
         </h2>
 
         {/* VIEW 1: PHONE OTP & GOOGLE LOGIN */}
         {viewMode === "login" && (
           <div>
-            <h3 className="text-lg font-display font-semibold text-[#1e1e1e] mb-1">
+            <h3 className="text-lg font-display font-semibold text-[#1c1b18] mb-1">
               Login Now!
             </h3>
             <p className="text-xs text-[#666666] mb-6">
@@ -316,7 +316,7 @@ export default function AccountDrawerModal({
             )}
 
             <form onSubmit={handleSendOtp} className="space-y-4">
-              <div className="flex border border-[#e5e5e5] rounded-xl overflow-hidden focus-within:border-[#c89b5a] transition-all bg-[#fcfbf9]">
+              <div className="flex border border-[#e5e5e5] rounded-xl overflow-hidden focus-within:border-[#a4492e] transition-all bg-[#f7f5f2]">
                 <span className="bg-[#f0ebe3] px-4 py-3 text-sm font-semibold text-[#333] border-r border-[#e5e5e5] flex items-center">
                   +91
                 </span>
@@ -330,7 +330,7 @@ export default function AccountDrawerModal({
                     const clean = raw.length > 10 && raw.startsWith("91") ? raw.slice(2, 12) : raw.slice(0, 10);
                     setPhoneNumber(clean);
                   }}
-                  className="w-full px-4 py-3 text-sm text-[#1e1e1e] bg-transparent outline-none font-medium placeholder-[#aaa]"
+                  className="w-full px-4 py-3 text-sm text-[#1c1b18] bg-transparent outline-none font-medium placeholder-[#aaa]"
                   required
                 />
               </div>
@@ -338,7 +338,7 @@ export default function AccountDrawerModal({
               <button
                 type="submit"
                 disabled={isSendingOtp || isGoogleLoading}
-                className="w-full py-3.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {isSendingOtp ? "Sending Code..." : "Submit"}
               </button>
@@ -347,7 +347,7 @@ export default function AccountDrawerModal({
             {/* OR Divider */}
             <div className="relative my-6 flex items-center justify-center">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#e5dfd5]" />
+                <div className="w-full border-t border-[#dedad3]" />
               </div>
               <span className="relative bg-[#ffffff] px-3 text-[11px] font-semibold uppercase tracking-widest text-[#999999]">
                 OR
@@ -360,10 +360,10 @@ export default function AccountDrawerModal({
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={isSendingOtp || isGoogleLoading}
-                className="w-full py-3 border border-[#e5dfd5] bg-[#ffffff] hover:bg-[#faf8f5] text-[#1e1e1e] font-medium text-xs rounded-xl flex items-center justify-center gap-3 transition-all cursor-pointer shadow-sm hover:border-[#c89b5a]/40"
+                className="w-full py-3 border border-[#dedad3] bg-[#ffffff] hover:bg-[#f4f2ee] text-[#1c1b18] font-medium text-xs rounded-xl flex items-center justify-center gap-3 transition-all cursor-pointer shadow-sm hover:border-[#a4492e]/40"
               >
                 {isGoogleLoading ? (
-                  <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#1e1e1e] border-t-transparent" />
+                  <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#1c1b18] border-t-transparent" />
                 ) : (
                   <svg className="w-4 h-4" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -383,12 +383,12 @@ export default function AccountDrawerModal({
           <div>
             <p className="text-xs text-[#666666] mb-6">
               Verification code sent to{" "}
-              <strong className="text-[#1e1e1e] font-semibold">
+              <strong className="text-[#1c1b18] font-semibold">
                 {phoneNumber ? (phoneNumber.startsWith('+91') ? `+91 ${phoneNumber.replace('+91', '')}` : phoneNumber) : "+91 9461094671"}
               </strong>{" "}
               <button
                 onClick={() => setViewMode("login")}
-                className="text-[#c89b5a] underline text-xs ml-1 cursor-pointer font-semibold"
+                className="text-[#a4492e] underline text-xs ml-1 cursor-pointer font-semibold"
               >
                 Edit
               </button>
@@ -408,7 +408,7 @@ export default function AccountDrawerModal({
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpInput(idx, e.target.value)}
-                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-xl outline-none focus:border-[#c89b5a] focus:ring-2 focus:ring-[#c89b5a]/20 bg-[#fcfbf9]"
+                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-xl outline-none focus:border-[#a4492e] focus:ring-2 focus:ring-[#a4492e]/20 bg-[#f7f5f2]"
                   />
                 ))}
               </div>
@@ -419,7 +419,7 @@ export default function AccountDrawerModal({
                   type="button"
                   disabled={resendTimer > 0}
                   onClick={() => setResendTimer(30)}
-                  className="text-[#c89b5a] font-semibold underline disabled:opacity-50 cursor-pointer"
+                  className="text-[#a4492e] font-semibold underline disabled:opacity-50 cursor-pointer"
                 >
                   Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
                 </button>
@@ -428,7 +428,7 @@ export default function AccountDrawerModal({
               <button
                 type="submit"
                 disabled={isVerifyingOtp}
-                className="w-full py-3.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {isVerifyingOtp ? "Verifying..." : "Verify & Continue"}
               </button>
@@ -439,7 +439,7 @@ export default function AccountDrawerModal({
         {/* VIEW 3: NEW USER NAME PROMPT */}
         {viewMode === "name-prompt" && (
           <div>
-            <h3 className="text-lg font-display font-semibold text-[#1e1e1e] mb-1">
+            <h3 className="text-lg font-display font-semibold text-[#1c1b18] mb-1">
               Welcome to Sentire! ✨
             </h3>
             <p className="text-xs text-[#666666] mb-6">
@@ -461,14 +461,14 @@ export default function AccountDrawerModal({
                 placeholder="Enter Your Full Name (e.g. Vansh Dhamija)"
                 value={inputName}
                 onChange={(e) => setInputName(e.target.value)}
-                className="w-full px-4 py-3.5 text-sm text-[#1e1e1e] bg-[#fcfbf9] border border-[#e5e5e5] rounded-xl outline-none focus:border-[#c89b5a] font-medium"
+                className="w-full px-4 py-3.5 text-sm text-[#1c1b18] bg-[#f7f5f2] border border-[#e5e5e5] rounded-xl outline-none focus:border-[#a4492e] font-medium"
                 autoFocus
                 required
               />
 
               <button
                 type="submit"
-                className="w-full py-3.5 bg-[#1e1e1e] hover:bg-[#c89b5a] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
               >
                 Save & Continue →
               </button>

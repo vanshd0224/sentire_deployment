@@ -183,7 +183,7 @@ export default function Navbar({
       <style>{`
         @keyframes badgePop {
           0%   { transform: scale(1); }
-          50%  { transform: scale(1.35); color: #d4af37; }
+          50%  { transform: scale(1.35); color: #a4492e; }
           100% { transform: scale(1); }
         }
         @keyframes megaIn {
@@ -198,7 +198,7 @@ export default function Navbar({
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          color: #18130f;
+          color: #1c1b18;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           cursor: pointer;
           background: transparent;
@@ -210,15 +210,15 @@ export default function Navbar({
           position: absolute;
           inset: 0;
           border-radius: 50%;
-          background: rgba(200, 155, 90, 0.14);
+          background: rgba(164, 73, 46, 0.14);
           transform: scale(0);
           transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .nav-icon-btn:hover::before { transform: scale(1); }
-        .nav-icon-btn:hover { color: #c89b5a; }
+        .nav-icon-btn:hover { color: #a4492e; }
         .nav-icon-btn svg { position: relative; z-index: 1; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         .nav-icon-btn:hover svg { transform: scale(1.12); }
-        .nav-icon-btn.active { background: #0b0907; color: #c89b5a; box-shadow: 0 0 0 1px rgba(200,155,90,.45), 0 4px 16px rgba(0,0,0,.2); }
+        .nav-icon-btn.active { background: #151412; color: #a4492e; box-shadow: 0 0 0 1px rgba(164, 73, 46,.45), 0 4px 16px rgba(0,0,0,.2); }
         @media (max-width: 900px) {
           .sentire-mobile-hamburger { display: flex !important; }
           .sentire-mobile-logo { display: flex !important; }
@@ -237,7 +237,7 @@ export default function Navbar({
         }
       `}</style>
 
-      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#c89b5a]/15 bg-white transition-all">
+      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#a4492e]/15 bg-white transition-all">
         <AnnouncementBar />
         <div
           className="mx-auto flex max-w-[1440px] items-center justify-between relative"
@@ -354,23 +354,23 @@ export default function Navbar({
                     }}
                     className={`group relative flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
                       isCurrent
-                        ? "text-[#c89b5a] font-bold"
-                        : "text-[#1e1e1e]/85 hover:text-[#c89b5a]"
+                        ? "text-[#a4492e] font-bold"
+                        : "text-[#1c1b18]/85 hover:text-[#a4492e]"
                     }`}
                   >
                     <span>{link.label}</span>
                     {"badge" in link && Boolean(link.badge) && (
-                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-extrabold tracking-wider bg-gradient-to-r from-[#d4af37]/25 to-[#c89b5a]/30 text-[#846124] border border-[#c89b5a]/45 uppercase shadow-xs">
+                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-extrabold tracking-wider bg-gradient-to-r from-[#a4492e]/25 to-[#a4492e]/30 text-[#846124] border border-[#a4492e]/45 uppercase shadow-xs">
                         Hero
                       </span>
                     )}
                     {showMega && (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
-                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#c89b5a]" : ""}`}>
+                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#a4492e]" : ""}`}>
                         <path d="m6 9 6 6 6-6" />
                       </svg>
                     )}
-                    <span className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#c89b5a] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`} />
+                    <span className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#a4492e] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`} />
                   </a>
                 </div>
               );
@@ -424,7 +424,7 @@ export default function Navbar({
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#18130f] text-[9px] font-bold text-[#f5e3cd] shadow-md border border-[#c89b5a]/40">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#1c1b18] text-[9px] font-bold text-[#f5e3cd] shadow-md border border-[#a4492e]/40">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -433,9 +433,9 @@ export default function Navbar({
 
           {/* ── Seamless Full Header Search Bar Overlay (Never Overflows Frame) ── */}
           {searchOpen && (
-            <div className="absolute inset-0 z-50 bg-[#FEFDFB] flex items-center justify-between px-4 sm:px-8 max-w-[1440px] mx-auto border-b border-[#c89b5a]/30 shadow-md animate-fadeIn">
+            <div className="absolute inset-0 z-50 bg-[#FEFDFB] flex items-center justify-between px-4 sm:px-8 max-w-[1440px] mx-auto border-b border-[#a4492e]/30 shadow-md animate-fadeIn">
               <div className="flex items-center gap-3 flex-1 mr-4">
-                <span className="text-[#c89b5a] shrink-0">
+                <span className="text-[#a4492e] shrink-0">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
                     <circle cx="11" cy="11" r="7" />
                     <path d="m20 20-3.5-3.5" strokeLinecap="round" />
@@ -481,9 +481,9 @@ export default function Navbar({
               </button>
 
               {/* Live Search Results Dropdown Popover */}
-              <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#c89b5a]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
+              <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#a4492e]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
                 <div className="flex items-center justify-between border-b border-black/8 pb-2 px-2 mb-2.5">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#c89b5a]">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#a4492e]">
                     {searchQuery.trim() === "" ? "Curated Fragrance Suggestions" : `Olfactory Discovery (${searchResults.length})`}
                   </span>
                   {searchQuery && (
@@ -504,7 +504,7 @@ export default function Navbar({
                         <button
                           key={tag}
                           onClick={() => setSearchQuery(tag)}
-                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#f3ece0] text-[#21150F] hover:bg-[#c89b5a] hover:text-white transition-colors cursor-pointer border border-[#c89b5a]/20"
+                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#f3ece0] text-[#21150F] hover:bg-[#a4492e] hover:text-white transition-colors cursor-pointer border border-[#a4492e]/20"
                         >
                           {tag}
                         </button>
@@ -520,13 +520,13 @@ export default function Navbar({
                             setSearchOpen(false);
                             setSearchQuery("");
                           }}
-                          className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#c89b5a] hover:shadow-md transition-all cursor-pointer group"
+                          className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#a4492e] hover:shadow-md transition-all cursor-pointer group"
                         >
-                          <div className="h-11 w-11 shrink-0 rounded-lg bg-[#f6f2ec] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                          <div className="h-11 w-11 shrink-0 rounded-lg bg-[#eeebe5] p-1 flex items-center justify-center overflow-hidden border border-black/5">
                             <img src={product.img} alt={product.name} className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-300" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#c89b5a] transition-colors">
+                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#a4492e] transition-colors">
                               {product.name}
                             </h4>
                             <p className="text-[10px] text-ink/55 truncate">{product.notes}</p>
@@ -543,7 +543,7 @@ export default function Navbar({
                 ) : searchResults.length === 0 ? (
                   <div className="py-8 text-center text-xs text-ink/60 font-medium">
                     <p>No fragrances found for "{searchQuery}"</p>
-                    <p className="text-[10.5px] text-[#c89b5a] mt-1">Try "Oud", "Lavender", "Amber", or "Floral"</p>
+                    <p className="text-[10.5px] text-[#a4492e] mt-1">Try "Oud", "Lavender", "Amber", or "Floral"</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -556,21 +556,21 @@ export default function Navbar({
                           setSearchOpen(false);
                           setSearchQuery("");
                         }}
-                        className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#c89b5a] hover:shadow-md transition-all cursor-pointer group"
+                        className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#a4492e] hover:shadow-md transition-all cursor-pointer group"
                       >
-                        <div className="h-12 w-12 shrink-0 rounded-lg bg-[#f6f2ec] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                        <div className="h-12 w-12 shrink-0 rounded-lg bg-[#eeebe5] p-1 flex items-center justify-center overflow-hidden border border-black/5">
                           <img src={product.img} alt={product.name} className="h-full w-full object-contain group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[8px] font-bold uppercase tracking-wider text-[#c89b5a] block">
+                            <span className="text-[8px] font-bold uppercase tracking-wider text-[#a4492e] block">
                               {product.num}
                             </span>
-                            <span className="text-[8px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#c89b5a]/10 text-[#c89b5a] border border-[#c89b5a]/20">
+                            <span className="text-[8px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#a4492e]/10 text-[#a4492e] border border-[#a4492e]/20">
                               {product.scentFamily}
                             </span>
                           </div>
-                          <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#c89b5a] transition-colors mt-0.5">
+                          <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#a4492e] transition-colors mt-0.5">
                             {product.name}
                           </h4>
                           <p className="text-[10px] text-ink/55 truncate mt-0.5">{product.notes}</p>
@@ -579,7 +579,7 @@ export default function Navbar({
                           <span className="text-xs font-bold text-ink block">
                             ₹{product.price.toLocaleString()}
                           </span>
-                          <span className="text-[9px] text-[#c89b5a] font-medium group-hover:underline">
+                          <span className="text-[9px] text-[#a4492e] font-medium group-hover:underline">
                             View Scent →
                           </span>
                         </div>
@@ -614,7 +614,7 @@ export default function Navbar({
                   <div className="flex flex-1 gap-0 divide-x divide-ink/8">
                     {categories.map((cat) => (
                       <div key={cat.title} className="flex-1 px-8 py-8">
-                        <p className="mb-4 text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#c89b5a]"
+                        <p className="mb-4 text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#a4492e]"
                           style={{ fontFamily: "var(--font-sans)" }}>
                           {cat.title}
                         </p>
@@ -628,10 +628,10 @@ export default function Navbar({
                                   setMegaOpen(false);
                                   onNavigate?.("perfumes", item.filter);
                                 }}
-                                className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:bg-[#faf6f0] cursor-pointer"
+                                className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:bg-[#f4f2ee] cursor-pointer"
                               >
                                 <span>
-                                  <span className="block text-[13px] font-semibold text-ink transition-colors duration-200 group-hover:text-[#c89b5a]"
+                                  <span className="block text-[13px] font-semibold text-ink transition-colors duration-200 group-hover:text-[#a4492e]"
                                     style={{ fontFamily: "var(--font-sans)" }}>
                                     {item.label}
                                   </span>
@@ -641,7 +641,7 @@ export default function Navbar({
                                   </span>
                                 </span>
                                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.6}
-                                  className="h-3.5 w-3.5 translate-x-0 text-ink/20 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:text-[#c89b5a] group-hover:opacity-100">
+                                  className="h-3.5 w-3.5 translate-x-0 text-ink/20 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:text-[#a4492e] group-hover:opacity-100">
                                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               </a>
@@ -660,8 +660,8 @@ export default function Navbar({
                       setMegaOpen(false);
                       onNavigate?.("perfumes", featured.filter);
                     }}
-                    className="group relative flex w-80 shrink-0 flex-col overflow-hidden text-left cursor-pointer border-l border-[#c89b5a]/30"
-                    style={{ background: "#0d0906" }}
+                    className="group relative flex w-80 shrink-0 flex-col overflow-hidden text-left cursor-pointer border-l border-[#a4492e]/30"
+                    style={{ background: "#151412" }}
                   >
                     {/* Full-bleed background image with smooth zoom on hover */}
                     <div className="relative h-full min-h-[320px] w-full overflow-hidden">
@@ -678,7 +678,7 @@ export default function Navbar({
                       {/* Content on image */}
                       <div className="absolute inset-0 p-7 flex flex-col justify-end">
                         <span
-                          className="self-start rounded-full bg-[#c89b5a]/25 backdrop-blur-md border border-[#c89b5a]/50 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.22em] text-[#d4af37] mb-2 shadow-sm"
+                          className="self-start rounded-full bg-[#a4492e]/25 backdrop-blur-md border border-[#a4492e]/50 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.22em] text-[#a4492e] mb-2 shadow-sm"
                           style={{ fontFamily: "var(--font-sans)" }}
                         >
                           {featured.label}
@@ -687,14 +687,14 @@ export default function Navbar({
                           {featured.name}
                         </h4>
                         <p
-                          className="mt-1 text-[11px] leading-relaxed text-[#f8f5f1]/75 line-clamp-2"
+                          className="mt-1 text-[11px] leading-relaxed text-[#f4f2ee]/75 line-clamp-2"
                           style={{ fontFamily: "var(--font-sans)" }}
                         >
                           {featured.sub}
                         </p>
                         {/* CTA with gold arrow */}
                         <div
-                          className="mt-4 flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.2em] text-[#d4af37] transition-all duration-300 group-hover:text-white group-hover:gap-2.5"
+                          className="mt-4 flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.2em] text-[#a4492e] transition-all duration-300 group-hover:text-white group-hover:gap-2.5"
                           style={{ fontFamily: "var(--font-sans)" }}
                         >
                           <span>Discover Fragrance</span>
@@ -719,7 +719,7 @@ export default function Navbar({
             className="fixed inset-0 bg-black/75 backdrop-blur-md animate-fadeIn"
             onClick={() => setMobileNavOpen(false)}
           />
-          <div className="relative w-4/5 max-w-sm bg-[#faf7f2] h-full shadow-2xl p-6 flex flex-col justify-between animate-drawerSlideInLeft border-r border-[#c89b5a]/30 overflow-y-auto">
+          <div className="relative w-4/5 max-w-sm bg-[#f4f2ee] h-full shadow-2xl p-6 flex flex-col justify-between animate-drawerSlideInLeft border-r border-[#a4492e]/30 overflow-y-auto">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-black/10">
                 <SentireLogo
@@ -760,19 +760,19 @@ export default function Navbar({
                     className={`w-full text-left py-3 px-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all flex items-center justify-between ${
                       (currentPage === "discovery-set" && link.label === "Discovery Set") ||
                       (currentPage === "perfumes" && link.label === "All Perfumes")
-                        ? "bg-[#c89b5a]/15 text-[#8d6a2f]"
-                        : "text-ink hover:bg-black/5 hover:text-[#c89b5a]"
+                        ? "bg-[#a4492e]/15 text-[#8d6a2f]"
+                        : "text-ink hover:bg-black/5 hover:text-[#a4492e]"
                     }`}
                   >
                     <span className="flex items-center gap-2">
                       <span>{link.label}</span>
                       {"badge" in link && Boolean(link.badge) && (
-                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider bg-[#d4af37]/25 text-[#7f5d23] border border-[#c89b5a]/40 uppercase">
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider bg-[#a4492e]/25 text-[#7f5d23] border border-[#a4492e]/40 uppercase">
                           {link.badge}
                         </span>
                       )}
                     </span>
-                    <span className="text-[#c89b5a]">→</span>
+                    <span className="text-[#a4492e]">→</span>
                   </a>
                 ))}
               </div>
@@ -784,12 +784,12 @@ export default function Navbar({
                   setMobileNavOpen(false);
                   onOpenAccount?.();
                 }}
-                className="w-full py-3.5 bg-[#0b0907] hover:bg-[#c89b5a] text-[#d4af37] text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#c89b5a]/30"
+                className="w-full py-3.5 bg-[#151412] hover:bg-[#a4492e] text-[#a4492e] text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#a4492e]/30"
               >
                 {isLoggedIn ? (
                   <>
                     <span>👤 MY ACCOUNT {userName ? `(${userName.toUpperCase()})` : ""}</span>
-                    <span className="text-xs text-[#c89b5a]">&rarr;</span>
+                    <span className="text-xs text-[#a4492e]">&rarr;</span>
                   </>
                 ) : (
                   <span>SIGN IN / MY ACCOUNT</span>

@@ -167,11 +167,11 @@ export default function NewArrivalsPage({
   });
 
   return (
-    <div className="min-h-screen w-full bg-[#fbf9f5] text-ink font-sans">
+    <div className="min-h-screen w-full bg-[#f4f2ee] text-ink font-sans">
       {addedToast && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#c89b5a]/40 bg-[#120e0a] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#a4492e]/40 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
           <span className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#c89b5a] animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />
             {addedToast}
           </span>
         </div>
@@ -180,7 +180,7 @@ export default function NewArrivalsPage({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-32 sm:pb-20">
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wider text-ink/50 uppercase">
-          <button onClick={onBackToHome} className="hover:text-[#c89b5a] transition-colors cursor-pointer">
+          <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
             Home
           </button>
           <span>/</span>
@@ -189,7 +189,7 @@ export default function NewArrivalsPage({
 
         {/* Pre-title & Title */}
         <div className="mb-8">
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
             ✨ HAUTE SELECTION • NEW LAUNCHES
           </span>
           <h1 className="font-display text-4xl sm:text-5xl font-normal text-ink tracking-tight">
@@ -205,7 +205,7 @@ export default function NewArrivalsPage({
           <button
             onClick={() => setActiveCategoryPill("all")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "all" ? "bg-[#0b0907] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "all" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
             All New Arrivals
@@ -213,7 +213,7 @@ export default function NewArrivalsPage({
           <button
             onClick={() => setActiveCategoryPill("woody")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "woody" ? "bg-[#0b0907] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "woody" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
             Woody & Oud
@@ -221,7 +221,7 @@ export default function NewArrivalsPage({
           <button
             onClick={() => setActiveCategoryPill("floral")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "floral" ? "bg-[#0b0907] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "floral" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
             Floral & Gourmand
@@ -229,7 +229,7 @@ export default function NewArrivalsPage({
           <button
             onClick={() => setActiveCategoryPill("oriental")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "oriental" ? "bg-[#0b0907] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "oriental" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
             Oriental & Spice
@@ -237,7 +237,7 @@ export default function NewArrivalsPage({
           <button
             onClick={() => setActiveCategoryPill("50ml")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "50ml" ? "bg-[#0b0907] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "50ml" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
             50 ML Exclusives
@@ -250,7 +250,7 @@ export default function NewArrivalsPage({
             <select
               value={selectedMood}
               onChange={(e) => setSelectedMood(e.target.value)}
-              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#c89b5a]"
+              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
             >
               <option value="all">All Moods</option>
               <option value="party">Evening & Party</option>
@@ -261,7 +261,7 @@ export default function NewArrivalsPage({
             <select
               value={selectedFamily}
               onChange={(e) => setSelectedFamily(e.target.value)}
-              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#c89b5a]"
+              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
             >
               <option value="all">All Scent Families</option>
               <option value="woody">Woody & Oud</option>
@@ -273,7 +273,7 @@ export default function NewArrivalsPage({
               <button
                 onClick={() => setSelectedSizeFilter("all")}
                 className={`rounded-full px-3 py-1 transition-all ${
-                  selectedSizeFilter === "all" ? "bg-[#c89b5a] text-black" : "text-ink/60"
+                  selectedSizeFilter === "all" ? "bg-[#a4492e] text-black" : "text-ink/60"
                 }`}
               >
                 ALL SIZES
@@ -281,7 +281,7 @@ export default function NewArrivalsPage({
               <button
                 onClick={() => setSelectedSizeFilter("10")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "10" ? "bg-[#c89b5a] text-black" : "text-ink/60"
+                  selectedSizeFilter === "10" ? "bg-[#a4492e] text-black" : "text-ink/60"
                 }`}
               >
                 10 ML
@@ -289,7 +289,7 @@ export default function NewArrivalsPage({
               <button
                 onClick={() => setSelectedSizeFilter("30")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "30" ? "bg-[#c89b5a] text-black" : "text-ink/60"
+                  selectedSizeFilter === "30" ? "bg-[#a4492e] text-black" : "text-ink/60"
                 }`}
               >
                 30 ML
@@ -297,7 +297,7 @@ export default function NewArrivalsPage({
               <button
                 onClick={() => setSelectedSizeFilter("50")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "50" ? "bg-[#c89b5a] text-black" : "text-ink/60"
+                  selectedSizeFilter === "50" ? "bg-[#a4492e] text-black" : "text-ink/60"
                 }`}
               >
                 50 ML
@@ -308,7 +308,7 @@ export default function NewArrivalsPage({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#c89b5a]"
+            className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
           >
             <option value="rank">Sort by Rank</option>
             <option value="price-low">Price: Low to High</option>
@@ -318,7 +318,7 @@ export default function NewArrivalsPage({
 
         {/* Section Subhead */}
         <div className="mb-8">
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
             HAUTE FORMULATIONS
           </span>
           <h2 className="font-display text-2xl font-bold text-ink">
@@ -337,20 +337,20 @@ export default function NewArrivalsPage({
             const displayImage = (fullProd?.sizeImages && (fullProd.sizeImages[currentSize as keyof typeof fullProd.sizeImages]?.[0] || (fullProd.sizeImages as any)[String(currentSize)]?.[0])) || fullProd?.img || p.image;
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all">
                 <div>
                   <div
                     onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
-                    className="relative aspect-square w-full rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer"
+                    className="relative aspect-square w-full rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
                     <img src={displayImage} alt={p.name} loading="eager" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <span className="absolute top-2 left-2 rounded-full bg-[#c89b5a] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
+                    <span className="absolute top-2 left-2 rounded-full bg-[#a4492e] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
                       {p.badge}
                     </span>
                   </div>
 
                   <div className="mt-3 text-center">
-                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-snug truncate block w-full">
+                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full">
                       {p.name}
                     </h3>
                     <p className="text-xs text-ink/60 truncate mt-0.5">{p.notes}</p>
@@ -362,7 +362,7 @@ export default function NewArrivalsPage({
                         key={sz}
                         onClick={() => setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))}
                         className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                          currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
+                          currentSize === sz ? "bg-[#151412] text-[#a4492e] border-[#151412]" : "bg-white text-ink border-black/15"
                         }`}
                       >
                         {sz}ML
@@ -377,10 +377,10 @@ export default function NewArrivalsPage({
                 </div>
 
                 {qty > 0 ? (
-                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 py-1 sm:px-3 sm:py-2 min-w-0">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs sm:text-sm font-bold text-[#c89b5a] shrink-0">−</button>
-                    <span className="text-[8.5px] sm:text-xs font-bold text-[#e2c48e] truncate px-0.5">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs sm:text-sm font-bold text-[#c89b5a] shrink-0">+</button>
+                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 py-1 sm:px-3 sm:py-2 min-w-0">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0">−</button>
+                    <span className="text-[8.5px] sm:text-xs font-bold text-[#d9a08a] truncate px-0.5">{qty} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0">+</button>
                   </div>
                 ) : (
                   <button
@@ -388,7 +388,7 @@ export default function NewArrivalsPage({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-3 w-full rounded-md bg-[#0b0907] py-2 sm:py-2.5 px-1 text-[8.5px] sm:text-xs font-bold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
+                    className="mt-3 w-full rounded-md bg-[#151412] py-2 sm:py-2.5 px-1 text-[8.5px] sm:text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
                   >
                     Add to Bag
                   </button>

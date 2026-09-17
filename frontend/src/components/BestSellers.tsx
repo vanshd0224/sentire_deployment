@@ -110,11 +110,11 @@ export default function BestSellers({
   };
 
   return (
-    <section className="bg-[#fbf9f5] py-16 sm:py-24 text-ink relative">
+    <section className="bg-[#f4f2ee] py-16 sm:py-24 text-ink relative">
       {addedToast && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#c89b5a]/40 bg-[#120e0a] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#a4492e]/40 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
           <span className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#c89b5a] animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />
             {addedToast}
           </span>
         </div>
@@ -123,14 +123,14 @@ export default function BestSellers({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-12">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] block mb-1">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
               HAUTE PARFUMERIE
             </span>
             <SectionHeading title="BEST SELLERS" subtitle="Discover our most coveted, iconic fragrance creations." />
           </div>
           <button
             onClick={() => onNavigate?.("bestsellers")}
-            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#c89b5a] hover:text-black transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#a4492e] hover:text-black transition-colors cursor-pointer"
           >
             <span>Explore All</span>
             <span>→</span>
@@ -147,13 +147,13 @@ export default function BestSellers({
             const displayImage = (fullProd?.sizeImages && (fullProd.sizeImages[currentSize as keyof typeof fullProd.sizeImages]?.[0] || (fullProd.sizeImages as any)[String(currentSize)]?.[0])) || fullProd?.img || p.image;
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+              <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all">
                 <div>
                   <a
                     href={`/perfumes?id=${p.id}`}
                     onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
                     aria-label={`View Sentire ${p.name} personalised perfume details`}
-                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer block"
+                    className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer block"
                   >
                     <img
                       src={displayImage}
@@ -167,11 +167,11 @@ export default function BestSellers({
                   </a>
 
                   <div className="mt-2 sm:mt-3 text-center">
-                    <h3 className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#c89b5a] leading-snug truncate block w-full">
+                    <h3 className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full">
                       <a
                         href={`/perfumes?id=${p.id}`}
                         onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
-                        className="hover:text-[#c89b5a]"
+                        className="hover:text-[#a4492e]"
                       >
                         {p.name}
                       </a>
@@ -185,7 +185,7 @@ export default function BestSellers({
                         key={sz}
                         onClick={() => handleSizeSelect(p.id, sz)}
                         className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                          currentSize === sz ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907]" : "bg-white text-ink border-black/15"
+                          currentSize === sz ? "bg-[#151412] text-[#a4492e] border-[#151412]" : "bg-white text-ink border-black/15"
                         }`}
                       >
                         {sz}ML
@@ -200,10 +200,10 @@ export default function BestSellers({
                 </div>
 
                 {qty > 0 ? (
-                  <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 sm:px-2 py-1 sm:py-1.5 min-w-0">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#c89b5a] shrink-0">−</button>
-                    <span className="text-[8.5px] sm:text-[10px] font-bold text-[#e2c48e] truncate px-0.5">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#c89b5a] shrink-0">+</button>
+                  <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 sm:px-2 py-1 sm:py-1.5 min-w-0">
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#a4492e] shrink-0">−</button>
+                    <span className="text-[8.5px] sm:text-[10px] font-bold text-[#d9a08a] truncate px-0.5">{qty} IN BAG</span>
+                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#a4492e] shrink-0">+</button>
                   </div>
                 ) : (
                   <button
@@ -211,7 +211,7 @@ export default function BestSellers({
                       onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
-                    className="mt-2 sm:mt-3 w-full rounded-md bg-[#0b0907] py-1.5 sm:py-2 px-1 text-[8.5px] sm:text-[10px] font-bold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
+                    className="mt-2 sm:mt-3 w-full rounded-md bg-[#151412] py-1.5 sm:py-2 px-1 text-[8.5px] sm:text-[10px] font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
                   >
                     Add to Bag
                   </button>

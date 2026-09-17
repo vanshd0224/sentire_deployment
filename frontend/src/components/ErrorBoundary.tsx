@@ -29,9 +29,9 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen w-full bg-[#050505] text-[#f5f0e8] flex flex-col items-center justify-center p-6 text-center">
-          <div className="max-w-lg rounded-2xl border border-[#c89b5a]/40 bg-[#120e0a] p-8 shadow-2xl">
-            <h2 className="text-xl font-bold text-[#c89b5a] font-display uppercase tracking-wider mb-2">
+        <div className="min-h-screen w-full bg-[#050505] text-[#eeebe5] flex flex-col items-center justify-center p-6 text-center">
+          <div className="max-w-lg rounded-2xl border border-[#a4492e]/40 bg-[#151412] p-8 shadow-2xl">
+            <h2 className="text-xl font-bold text-[#a4492e] font-display uppercase tracking-wider mb-2">
               Something went wrong
             </h2>
             <p className="text-sm text-gray-300 mb-6">
@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 this.setState({ hasError: false, error: null, errorInfo: null });
                 window.location.reload();
               }}
-              className="rounded-full bg-[#c89b5a] px-8 py-3 text-xs font-bold uppercase tracking-[0.18em] text-black hover:bg-[#a97f43] transition-all shadow-md cursor-pointer"
+              className="rounded-full bg-[#a4492e] px-8 py-3 text-xs font-bold uppercase tracking-[0.18em] text-black hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
             >
               Refresh Page
             </button>

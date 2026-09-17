@@ -1,31 +1,42 @@
-export default function SectionHeading({ title, light = false }: { title: string; light?: boolean }) {
+/**
+ * Shared section heading, editorial version: a hairline rule with a left-set
+ * serif title. Same props as before, so every page that already uses it
+ * (perfumes, byob, discovery set…) picks up the new look automatically.
+ */
+export default function SectionHeading({
+  title,
+  subtitle,
+  light = false,
+}: {
+  title: string;
+  subtitle?: string;
+  light?: boolean;
+}) {
   return (
-    <div className="flex items-center justify-center gap-4 sm:gap-5">
-      <span
-        className="h-px flex-shrink-0"
-        style={{
-          width: "clamp(24px, 6vw, 56px)",
-          background: light ? "rgba(200,155,90,0.45)" : "rgba(30,30,30,0.2)",
-        }}
+    <div className="w-full">
+      <div
+        className="h-px w-full"
+        style={{ background: light ? "rgba(244,242,238,0.22)" : "var(--color-rule)" }}
       />
       <h2
-        className="font-display uppercase text-center"
+        className="mt-5 font-serif text-left font-light lowercase first-letter:uppercase"
         style={{
-          fontSize: "clamp(18px, 5vw, 26px)",
-          letterSpacing: "0.24em",
-          color: light ? "#f5f0e8" : "#1e1e1e",
-          lineHeight: 1.1,
+          fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
+          letterSpacing: "-0.02em",
+          lineHeight: 1.04,
+          color: light ? "#f4f2ee" : "#1c1b18",
         }}
       >
         {title}
       </h2>
-      <span
-        className="h-px flex-shrink-0"
-        style={{
-          width: "clamp(24px, 6vw, 56px)",
-          background: light ? "rgba(200,155,90,0.45)" : "rgba(30,30,30,0.2)",
-        }}
-      />
+      {subtitle && (
+        <p
+          className="mt-3 max-w-xl text-left text-[15px] leading-relaxed"
+          style={{ color: light ? "rgba(244,242,238,0.7)" : "#57534c" }}
+        >
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

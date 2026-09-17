@@ -42,7 +42,7 @@ const benefits = [
 
 export default function BenefitsStrip() {
   return (
-    <section className="w-full bg-[#0b0907] text-white border-y border-white/8 reveal-fade-up">
+    <section className="w-full bg-[#151412] text-white border-y border-white/8 reveal-fade-up">
       <div
         className="mx-auto max-w-[1440px] px-6 py-8 sm:py-10 lg:px-12"
         style={{
@@ -63,14 +63,14 @@ export default function BenefitsStrip() {
         {benefits.map((b, i) => (
           <div
             key={b.title}
-            className="benefits-cell flex items-center gap-3 sm:gap-4 py-5 px-4 sm:px-6 bg-[#0b0907] transition-colors duration-300 hover:bg-[#120f0b]"
+            className="benefits-cell flex items-center gap-3 sm:gap-4 py-5 px-4 sm:px-6 bg-[#151412] transition-colors duration-300 hover:bg-[#120f0b]"
           >
-            <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-[#c89b5a]/20">
+            <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-[#a4492e]/20">
               {b.icon}
             </span>
             <div>
               <p
-                style={{ fontFamily: "var(--font-sans)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#f5f0e8" }}
+                style={{ fontFamily: "var(--font-sans)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#eeebe5" }}
               >
                 {b.title}
               </p>

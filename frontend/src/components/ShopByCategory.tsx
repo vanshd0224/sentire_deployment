@@ -14,7 +14,7 @@ interface ShopByCategoryProps {
 
 export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
   return (
-    <section className="w-full bg-[#f8f5f1] py-14 md:py-20 overflow-hidden reveal-fade-up">
+    <section className="w-full bg-[#f4f2ee] py-14 md:py-20 overflow-hidden reveal-fade-up">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         <SectionHeading title="Curated Collections" subtitle="Explore the realms of Haute Parfumerie by category & bespoke rituals" />
 
@@ -55,7 +55,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                 }}
                 className="group flex flex-col text-left transition-transform duration-500 hover:-translate-y-2 cursor-pointer outline-none shrink-0 w-[78vw] sm:w-[280px] md:w-auto snap-center"
               >
-                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-2xl shadow-lg border border-[#c89b5a]/30 bg-[#120d09] group-hover:border-[#c89b5a] group-hover:shadow-[0_16px_36px_rgba(200,155,90,0.22)] transition-all duration-500">
+                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-2xl shadow-lg border border-[#a4492e]/30 bg-[#120d09] group-hover:border-[#a4492e] group-hover:shadow-[0_16px_36px_rgba(164, 73, 46,0.22)] transition-all duration-500">
                   <img
                     src={cat.image}
                     alt={`SENTIRE ${cat.title} - ${cat.subtitle} luxury perfume collection`}
@@ -70,14 +70,14 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080604]/85 via-[#080604]/20 to-transparent" />
 
                   {/* Floating Glass Pill */}
-                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/15 group-hover:border-[#c89b5a]/50 transition-colors">
-                    <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-[#d4af37] block">
+                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/15 group-hover:border-[#a4492e]/50 transition-colors">
+                    <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-[#a4492e] block">
                       {cat.subtitle}
                     </span>
                     <p className="font-display text-base font-bold tracking-wide text-white uppercase mt-0.5">
                       {cat.title}
                     </p>
-                    <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] tracking-widest text-[#f8f5f1]/90 uppercase font-semibold group-hover:text-[#c89b5a] transition-colors">
+                    <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] tracking-widest text-[#f4f2ee]/90 uppercase font-semibold group-hover:text-[#a4492e] transition-colors">
                       Explore Collection <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </span>
                   </div>

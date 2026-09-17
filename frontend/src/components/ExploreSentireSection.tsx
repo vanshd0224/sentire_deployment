@@ -49,10 +49,10 @@ const exploreLinks = [
 
 export default function ExploreSentireSection({ onNavigate }: ExploreSentireProps) {
   return (
-    <section className="w-full bg-[#faf7f2] py-12 sm:py-16 border-t border-[#c89b5a]/15" aria-label="Explore SENTIRE Navigation">
+    <section className="w-full bg-[#f4f2ee] py-12 sm:py-16 border-t border-[#a4492e]/15" aria-label="Explore SENTIRE Navigation">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] mb-2">
+          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] mb-2">
             Haute Parfumerie Directory
           </p>
           <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink font-semibold tracking-tight">
@@ -72,18 +72,18 @@ export default function ExploreSentireSection({ onNavigate }: ExploreSentireProp
                 e.preventDefault();
                 onNavigate?.(item.page);
               }}
-              className="group flex flex-col justify-between p-5 sm:p-6 bg-white rounded-2xl border border-black/5 hover:border-[#c89b5a]/50 shadow-sm hover:shadow-md transition-all duration-300"
+              className="group flex flex-col justify-between p-5 sm:p-6 bg-white rounded-2xl border border-black/5 hover:border-[#a4492e]/50 shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#c89b5a] bg-[#c89b5a]/10 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#a4492e] bg-[#a4492e]/10 px-2.5 py-0.5 rounded-full">
                     {item.badge}
                   </span>
-                  <span className="text-sm text-[#c89b5a] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                  <span className="text-sm text-[#a4492e] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
                     →
                   </span>
                 </div>
-                <h3 className="font-display text-lg font-semibold text-ink group-hover:text-[#c89b5a] transition-colors duration-200">
+                <h3 className="font-display text-lg font-semibold text-ink group-hover:text-[#a4492e] transition-colors duration-200">
                   {item.title}
                 </h3>
                 <p className="text-xs text-ink/65 mt-1.5 leading-relaxed">

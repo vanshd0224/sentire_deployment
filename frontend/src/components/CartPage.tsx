@@ -248,13 +248,13 @@ export default function CartPage({
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#14110D] pb-28 md:pb-20">
+    <div className="min-h-screen bg-[#f4f2ee] text-[#151412] pb-28 md:pb-20">
       {/* ══ HEADER WITH OFFICIAL BURGUNDY LOGO ══════════════════════════ */}
-      <header className="sticky top-0 z-50 border-b border-[#14110D]/10 bg-[#FAF8F5]/95 backdrop-blur-md px-4 sm:px-8 py-3">
+      <header className="sticky top-0 z-50 border-b border-[#151412]/10 bg-[#f4f2ee]/95 backdrop-blur-md px-4 sm:px-8 py-3">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <button
             onClick={() => onNavigate?.("home")}
-            className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#14110D]/70 hover:text-[#B8863B] transition-colors"
+            className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#151412]/70 hover:text-[#8a3b24] transition-colors"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -271,7 +271,7 @@ export default function CartPage({
             />
           </div>
 
-          <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#B8863B]">
+          <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#8a3b24]">
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
@@ -284,7 +284,7 @@ export default function CartPage({
       <main className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 lg:px-8">
 
         {/* 🚚 DYNAMIC FREE DELIVERY BANNER (MATCHING IMAGE 3) */}
-        <div className="mb-6 rounded-2xl border border-[#B8863B]/40 bg-[#B8863B] p-4 text-white shadow-md text-center relative overflow-hidden">
+        <div className="mb-6 rounded-2xl border border-[#8a3b24]/40 bg-[#8a3b24] p-4 text-white shadow-md text-center relative overflow-hidden">
           {isFreeShippingUnlocked ? (
             <div>
               <p className="text-sm sm:text-base font-bold tracking-wide text-white">
@@ -310,12 +310,12 @@ export default function CartPage({
         {items.length === 0 ? (
           /* Empty State */
           <div className="flex flex-col items-center text-center py-16 space-y-4">
-            <div className="h-px w-16 bg-[#B8863B]/40" />
-            <h2 className="font-serif text-2xl font-bold text-[#14110D]">Your Atelier Bag is Empty</h2>
-            <p className="text-xs text-[#14110D]/60 max-w-sm">Discover our rare 35%+ pure perfume oil extraits de parfum crafted in Jaipur.</p>
+            <div className="h-px w-16 bg-[#8a3b24]/40" />
+            <h2 className="font-serif text-2xl font-bold text-[#151412]">Your Atelier Bag is Empty</h2>
+            <p className="text-xs text-[#151412]/60 max-w-sm">Discover our rare 35%+ pure perfume oil extraits de parfum crafted in Jaipur.</p>
             <button
               onClick={() => onNavigate?.("perfumes")}
-              className="mt-2 rounded-full bg-[#14110D] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-all shadow-md"
+              className="mt-2 rounded-full bg-[#151412] px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-[#a4492e] hover:bg-[#8a3b24] hover:text-white transition-all shadow-md"
             >
               Explore Perfume Library
             </button>
@@ -326,12 +326,12 @@ export default function CartPage({
 
             {/* LEFT COLUMN: Products & Customization (7 Cols) */}
             <div className="lg:col-span-7 space-y-5">
-              <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-3">
-                <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#14110D]">
+              <div className="flex items-center justify-between border-b border-[#151412]/10 pb-3">
+                <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#151412]">
                   Selected Fragrances ({totalCount})
                 </h2>
                 {onClearCart && (
-                  <button onClick={onClearCart} className="text-xs uppercase tracking-widest text-[#B8863B] font-bold hover:underline">
+                  <button onClick={onClearCart} className="text-xs uppercase tracking-widest text-[#8a3b24] font-bold hover:underline">
                     Clear Bag
                   </button>
                 )}
@@ -356,13 +356,13 @@ export default function CartPage({
                   const availableSizes = pData?.sizes || [item.size];
 
                   return (
-                    <div key={item.id} className="rounded-2xl border border-[#14110D]/10 bg-white p-3 sm:p-4 shadow-sm space-y-3 overflow-hidden">
+                    <div key={item.id} className="rounded-2xl border border-[#151412]/10 bg-white p-3 sm:p-4 shadow-sm space-y-3 overflow-hidden">
                       <div className="flex gap-3 sm:gap-4">
                         {/* Bottle Thumbnail */}
-                        <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#FAF8F5] border border-[#14110D]/10 flex items-center justify-center">
+                        <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#f4f2ee] border border-[#151412]/10 flex items-center justify-center">
                           <img src={displayImg} alt={item.name} className="h-full w-full object-contain p-1" />
                           {item.isPersonalised && (
-                            <div className="absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[#D4AF37] truncate px-1 py-0.5 border border-[#B8863B]/60 shadow">
+                            <div className="absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[#a4492e] truncate px-1 py-0.5 border border-[#8a3b24]/60 shadow">
                               {item.engravingText} {item.engravingDate ? `• ${item.engravingDate}` : ""}
                             </div>
                           )}
@@ -373,15 +373,15 @@ export default function CartPage({
                           <div>
                             <div className="flex items-start justify-between gap-1.5">
                               <div className="min-w-0 flex-1">
-                                <h3 className="font-sans text-sm sm:text-lg font-bold text-[#14110D] leading-tight truncate">{displayName}</h3>
-                                <p className="text-[10px] text-[#B8863B] font-bold uppercase tracking-wider">35%+ Pure Oil Extrait</p>
+                                <h3 className="font-sans text-sm sm:text-lg font-bold text-[#151412] leading-tight truncate">{displayName}</h3>
+                                <p className="text-[10px] text-[#8a3b24] font-bold uppercase tracking-wider">35%+ Pure Oil Extrait</p>
                               </div>
-                              <span className="font-sans text-sm sm:text-base font-extrabold text-[#14110D] shrink-0 whitespace-nowrap ml-1">₹{(item.price * item.quantity).toLocaleString()}</span>
+                              <span className="font-sans text-sm sm:text-base font-extrabold text-[#151412] shrink-0 whitespace-nowrap ml-1">₹{(item.price * item.quantity).toLocaleString()}</span>
                             </div>
 
                             {/* Personalisation Badge */}
                             {item.isPersonalised && (
-                              <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-[#B8863B]">
+                              <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-[#8a3b24]">
                                 <span>✨ Laser Engraved: "{item.engravingText} {item.engravingDate}" (+₹200)</span>
                               </div>
                             )}
@@ -390,7 +390,7 @@ export default function CartPage({
                           {/* Inline Size Switcher Pills (ONLY show available sizes for this perfume!) */}
                           {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && availableSizes.length > 1 && (
                             <div className="mt-2 flex items-center gap-1.5 flex-wrap">
-                              <span className="text-[10px] font-bold text-[#14110D]/60 uppercase">Size:</span>
+                              <span className="text-[10px] font-bold text-[#151412]/60 uppercase">Size:</span>
                               <div className="flex flex-wrap gap-1">
                                 {availableSizes.map((sz) => {
                                   const isSelected = item.size === sz;
@@ -401,7 +401,7 @@ export default function CartPage({
                                       className={`px-2.5 py-0.5 rounded-md text-[11px] font-bold transition-all ${
                                         isSelected
                                           ? "bg-black text-white border border-black shadow-xs"
-                                          : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/15 hover:border-black"
+                                          : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/15 hover:border-black"
                                       }`}
                                     >
                                       {sz}ml
@@ -414,10 +414,10 @@ export default function CartPage({
 
                           {/* Quantity Stepper & Remove */}
                           <div className="mt-3 flex items-center justify-between">
-                            <div className="flex items-center rounded-full border border-[#14110D]/30 bg-white px-2 py-0.5 gap-1.5">
-                              <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="font-bold text-sm text-[#14110D] hover:opacity-75 px-1">-</button>
-                              <span className="w-4 text-center text-xs font-bold text-[#14110D]">{item.quantity}</span>
-                              <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="font-bold text-sm text-[#14110D] hover:opacity-75 px-1">+</button>
+                            <div className="flex items-center rounded-full border border-[#151412]/30 bg-white px-2 py-0.5 gap-1.5">
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, -1)} className="font-bold text-sm text-[#151412] hover:opacity-75 px-1">-</button>
+                              <span className="w-4 text-center text-xs font-bold text-[#151412]">{item.quantity}</span>
+                              <button onClick={() => onUpdateQuantity(item.productId, item.size, 1)} className="font-bold text-sm text-[#151412] hover:opacity-75 px-1">+</button>
                             </div>
                             <button onClick={() => onRemoveItem(item.productId, item.size)} className="text-[11px] text-red-600 font-semibold hover:underline">
                               Remove
@@ -432,19 +432,19 @@ export default function CartPage({
 
               {/* ✨ ₹200 CUSTOM LASER ENGRAVING MODULE (RESTRICTED TO 50ML BOTTLES ONLY) */}
               {engravingEligibleItems.length > 0 ? (
-                <div className="rounded-2xl border border-[#14110D]/15 bg-white p-4 shadow-sm space-y-3">
+                <div className="rounded-2xl border border-[#151412]/15 bg-white p-4 shadow-sm space-y-3">
                   <div>
-                    <h3 className="font-sans text-base font-bold text-[#14110D]">
+                    <h3 className="font-sans text-base font-bold text-[#151412]">
                       Custom Laser Name & Date Engraving (+₹200)
                     </h3>
-                    <p className="text-[10px] text-[#B8863B] font-bold mt-0.5">Exclusively available on 50ml signature Extrait bottles</p>
+                    <p className="text-[10px] text-[#8a3b24] font-bold mt-0.5">Exclusively available on 50ml signature Extrait bottles</p>
                   </div>
 
                   <div>
                     <select
                       value={engraveTargetKey || `${engravingEligibleItems[0]?.productId}-${engravingEligibleItems[0]?.size}`}
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
-                      className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      className="w-full rounded-xl border border-[#151412]/20 bg-[#f4f2ee] p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
                     >
                       {engravingEligibleItems.map((i) => {
                         const cleanName = i.name.replace(/Extrait\s*\d+ml/gi, "").trim();
@@ -459,42 +459,42 @@ export default function CartPage({
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Name</label>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Name</label>
                       <input
                         type="text"
                         maxLength={12}
                         value={engraveName}
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
-                        className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                        className="w-full rounded-xl border border-[#151412]/20 p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Date</label>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Date</label>
                       <input
                         type="text"
                         maxLength={10}
                         value={engraveDate}
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
-                        className="w-full rounded-xl border border-[#14110D]/20 p-2.5 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                        className="w-full rounded-xl border border-[#151412]/20 p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <button
                     onClick={handleApplyEngravingToTarget}
-                    className="w-full rounded-xl border border-[#14110D] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#14110D] hover:bg-black hover:text-white transition-all shadow-xs"
+                    className="w-full rounded-xl border border-[#151412] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#151412] hover:bg-black hover:text-white transition-all shadow-xs"
                   >
                     PREVIEW / APPLY ENGRAVING (+₹200)
                   </button>
                 </div>
               ) : (
-                <div className="rounded-2xl border border-[#14110D]/10 bg-white p-4 shadow-sm space-y-1">
-                  <h3 className="font-sans text-sm font-bold text-[#14110D]">
+                <div className="rounded-2xl border border-[#151412]/10 bg-white p-4 shadow-sm space-y-1">
+                  <h3 className="font-sans text-sm font-bold text-[#151412]">
                     Custom Laser Name & Date Engraving (+₹200)
                   </h3>
-                  <p className="text-xs text-[#14110D]/70">
+                  <p className="text-xs text-[#151412]/70">
                     ✨ Custom laser name & date engraving (+₹200) is exclusively available on <strong>50ml Extrait bottles</strong>.
                   </p>
                 </div>
@@ -504,18 +504,18 @@ export default function CartPage({
 
             {/* RIGHT COLUMN: Order Summary & Checkout (5 Cols) */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="sticky top-24 rounded-2xl border border-[#B8863B]/30 bg-white p-4 sm:p-5 shadow-xl space-y-4 sm:space-y-5 overflow-hidden">
-                <div className="border-b border-[#14110D]/10 pb-3 flex items-center justify-between">
-                  <h3 className="font-sans text-lg sm:text-xl font-bold text-[#14110D]">Atelier Order Summary</h3>
+              <div className="sticky top-24 rounded-2xl border border-[#8a3b24]/30 bg-white p-4 sm:p-5 shadow-xl space-y-4 sm:space-y-5 overflow-hidden">
+                <div className="border-b border-[#151412]/10 pb-3 flex items-center justify-between">
+                  <h3 className="font-sans text-lg sm:text-xl font-bold text-[#151412]">Atelier Order Summary</h3>
                 </div>
 
                 {/* 🏷️ 1-TAP COUPON CARD */}
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#14110D]/70">Apply Atelier Coupons</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#151412]/70">Apply Atelier Coupons</label>
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[#B8863B]/10 border border-[#B8863B]/40 rounded-xl p-2.5 text-xs">
+                    <div className="flex items-center justify-between bg-[#8a3b24]/10 border border-[#8a3b24]/40 rounded-xl p-2.5 text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#14110D] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
+                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
                         <span className="text-emerald-700 font-extrabold text-xs">(Saved ₹{couponDiscount})</span>
                       </div>
                       <button onClick={handleRemoveCoupon} className="text-red-600 font-bold text-xs px-2 py-0.5 rounded bg-white border border-red-200">
@@ -529,7 +529,7 @@ export default function CartPage({
                           onClick={() => handleApplyCoupon("PC100")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider border transition-all ${
                             subtotal >= 999
-                              ? "bg-[#FAF6F0] text-[#B8863B] border-[#B8863B] hover:bg-[#B8863B] hover:text-white"
+                              ? "bg-[#f4f2ee] text-[#8a3b24] border-[#8a3b24] hover:bg-[#8a3b24] hover:text-white"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -539,7 +539,7 @@ export default function CartPage({
                           onClick={() => handleApplyCoupon("PC200")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider border transition-all ${
                             subtotal >= 1999
-                              ? "bg-[#FAF6F0] text-[#B8863B] border-[#B8863B] hover:bg-[#B8863B] hover:text-white"
+                              ? "bg-[#f4f2ee] text-[#8a3b24] border-[#8a3b24] hover:bg-[#8a3b24] hover:text-white"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -554,11 +554,11 @@ export default function CartPage({
                           value={couponInput}
                           onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
                           onKeyDown={(e) => { if (e.key === "Enter") handleApplyCoupon(); }}
-                          className="flex-1 min-w-0 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-xl border border-[#151412]/20 bg-[#f4f2ee] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#151412] focus:border-[#8a3b24] focus:outline-none"
                         />
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="shrink-0 rounded-xl bg-[#14110D] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-colors"
+                          className="shrink-0 rounded-xl bg-[#151412] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[#a4492e] hover:bg-[#8a3b24] hover:text-white transition-colors"
                         >
                           Apply
                         </button>
@@ -571,8 +571,8 @@ export default function CartPage({
                 </div>
 
                 {/* Breakdown */}
-                <div className="space-y-2 border-t border-b border-[#14110D]/10 py-3 text-xs">
-                  <div className="flex justify-between text-[#14110D]/80">
+                <div className="space-y-2 border-t border-b border-[#151412]/10 py-3 text-xs">
+                  <div className="flex justify-between text-[#151412]/80">
                     <span>Items Subtotal ({totalCount} items)</span>
                     <span className="font-bold">₹ {subtotal.toLocaleString()}</span>
                   </div>
@@ -582,24 +582,24 @@ export default function CartPage({
                       <span>- ₹ {couponDiscount.toLocaleString()}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-[#14110D]/80">
+                  <div className="flex justify-between text-[#151412]/80">
                     <span>Express Shipping</span>
                     <span className="font-bold text-emerald-700">{isFreeShippingUnlocked ? "FREE" : "₹ 100"}</span>
                   </div>
-                  <div className="flex justify-between border-t border-dashed border-[#14110D]/10 pt-2 text-base font-bold text-[#14110D]">
+                  <div className="flex justify-between border-t border-dashed border-[#151412]/10 pt-2 text-base font-bold text-[#151412]">
                     <span className="font-sans font-bold">Total Payable</span>
-                    <span className="font-sans text-xl font-extrabold text-[#14110D]">₹ {finalTotal.toLocaleString()}</span>
+                    <span className="font-sans text-xl font-extrabold text-[#151412]">₹ {finalTotal.toLocaleString()}</span>
                   </div>
                 </div>
 
                 {/* 📍 PINCODE DELIVERY & COD CHECKER WIDGET */}
-                <div className="rounded-xl border border-[#B8863B]/30 bg-[#FAF8F5] p-3 space-y-2">
+                <div className="rounded-xl border border-[#8a3b24]/30 bg-[#f4f2ee] p-3 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#14110D]/80 flex items-center gap-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#151412]/80 flex items-center gap-1">
                       📍 Check Delivery & COD
                     </span>
                     {pincodeResult && (
-                      <span className="text-[10px] font-bold text-[#B8863B] uppercase">Checked</span>
+                      <span className="text-[10px] font-bold text-[#8a3b24] uppercase">Checked</span>
                     )}
                   </div>
 
@@ -611,12 +611,12 @@ export default function CartPage({
                       onChange={(e) => setPincodeInput(e.target.value.replace(/\D/g, ''))}
                       onKeyDown={(e) => { if (e.key === "Enter") handleCheckPincode(); }}
                       placeholder="Enter 6-digit Pincode"
-                      className="flex-1 min-w-0 rounded-lg border border-[#14110D]/20 bg-white px-3 py-2 text-xs font-semibold text-[#14110D] focus:border-[#B8863B] focus:outline-none"
+                      className="flex-1 min-w-0 rounded-lg border border-[#151412]/20 bg-white px-3 py-2 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
                     />
                     <button
                       onClick={() => handleCheckPincode()}
                       disabled={isCheckingPincode}
-                      className="shrink-0 rounded-lg bg-[#14110D] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#B8863B] hover:text-white transition-all shadow-sm disabled:opacity-50"
+                      className="shrink-0 rounded-lg bg-[#151412] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#8a3b24] hover:text-white transition-all shadow-sm disabled:opacity-50"
                     >
                       {isCheckingPincode ? "..." : "CHECK"}
                     </button>
@@ -627,7 +627,7 @@ export default function CartPage({
                   )}
 
                   {pincodeResult && (
-                    <div className="mt-2 rounded-lg p-2.5 text-xs space-y-1 border bg-white border-[#B8863B]/30">
+                    <div className="mt-2 rounded-lg p-2.5 text-xs space-y-1 border bg-white border-[#8a3b24]/30">
                       {pincodeResult.express ? (
                         <div className="flex items-center gap-1.5 font-bold text-amber-900">
                           <span>⚡ {pincodeResult.badge || "Delivered within 24 Hours"}</span>
@@ -637,7 +637,7 @@ export default function CartPage({
                           <span>🚀 {pincodeResult.delivery_text || `Estimated Delivery: ${pincodeResult.estimated_days}`}</span>
                         </div>
                       )}
-                      <div className="flex items-center gap-1 text-[11px] text-[#14110D]/80">
+                      <div className="flex items-center gap-1 text-[11px] text-[#151412]/80">
                         <span>💵 Cash on Delivery: <strong>{pincodeResult.cod_available ? "Available" : "Not Available"}</strong></span>
                       </div>
                     </div>
@@ -648,7 +648,7 @@ export default function CartPage({
                 <button
                   onClick={handleProceedToShopifyCheckout}
                   disabled={isRedirecting}
-                  className="hidden lg:flex w-full rounded-full bg-[#B8863B] hover:bg-[#C89B5A] py-3.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md items-center justify-center gap-2 transition-all"
+                  className="hidden lg:flex w-full rounded-full bg-[#8a3b24] hover:bg-[#a4492e] py-3.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md items-center justify-center gap-2 transition-all"
                 >
                   <span>{isRedirecting ? "REDIRECTING TO CHECKOUT..." : "PROCEED TO CHECKOUT"}</span>
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -664,17 +664,17 @@ export default function CartPage({
 
       {/* ══ MOBILE STICKY BOTTOM CHECKOUT DOCK (MATCHING IMAGE 3) ══════════════════════════ */}
       {items.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#14110D]/10 bg-[#FAF8F5]/95 backdrop-blur-md p-3 text-[#14110D] lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.12)]">
+        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#151412]/10 bg-[#f4f2ee]/95 backdrop-blur-md p-3 text-[#151412] lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.12)]">
           <div className="mx-auto flex max-w-lg items-center justify-between gap-3 px-1">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-[#14110D]">Total:</span>
-              <p className="font-sans text-lg font-extrabold text-[#14110D]">₹{finalTotal.toLocaleString()}</p>
+              <span className="text-xs font-bold text-[#151412]">Total:</span>
+              <p className="font-sans text-lg font-extrabold text-[#151412]">₹{finalTotal.toLocaleString()}</p>
             </div>
 
             <button
               onClick={handleProceedToShopifyCheckout}
               disabled={isRedirecting}
-              className="flex-1 rounded-full bg-[#B8863B] py-3 px-4 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 hover:bg-[#C89B5A] transition-all"
+              className="flex-1 rounded-full bg-[#8a3b24] py-3 px-4 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 hover:bg-[#a4492e] transition-all"
             >
               <span>{isRedirecting ? "CHECKING OUT..." : "PROCEED TO CHECKOUT"}</span>
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

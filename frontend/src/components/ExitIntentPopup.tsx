@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import type { PageName } from "../types/appTypes";
 
 interface ExitIntentPopupProps {
@@ -44,7 +44,7 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
     // Timer fallback (trigger after 6 seconds)
     const timer = setTimeout(() => {
       triggerPopup();
-    }, 6000);
+    }, 30000);
 
     document.addEventListener("mouseleave", handleMouseLeave);
 
@@ -82,118 +82,57 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
   const sStr = String(seconds).padStart(2, "0");
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-sm animate-fadeIn"
+    <div
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-ink/45 p-0 sm:items-center sm:p-6"
       onClick={handleClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Offer"
     >
-      {/* POPUP CARD ASSEMBLY (50/50 Split Layout - faithful to approved prototype) */}
       <div
-        className="max-w-2xl w-full bg-[#FAF6F0] rounded-[24px] overflow-hidden flex flex-col md:flex-row relative transition-all duration-300 border border-[#C89B5A]/50 shadow-2xl"
-        style={{
-          boxShadow: "0 30px 90px rgba(0,0,0,0.6), 0 0 35px rgba(200, 155, 90, 0.35)"
-        }}
+        className="ed-offer-card relative w-full max-w-3xl overflow-hidden bg-paper sm:rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button (Top Right over image) */}
         <button
           onClick={handleClose}
-          aria-label="Close modal"
-          className="absolute top-3.5 right-3.5 z-30 w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center text-xs font-bold backdrop-blur-md transition-all border border-white/20 shadow-lg cursor-pointer"
+          aria-label="Close"
+          className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center text-ink/70 transition-colors hover:text-ink sm:text-paper/80 sm:hover:text-paper"
         >
-          ✕
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+          </svg>
         </button>
 
-        {/* LEFT COLUMN (50% Half): Official Logo + Up to 30% OFF Main Offer (Warm Silk Cream #FAF6F0) */}
-        <div className="w-full md:w-1/2 p-5 sm:p-7 flex flex-col justify-center items-center text-center bg-[#FAF6F0] shrink-0">
-          
-          {/* OFFICIAL SENTIRE BY PC LOGO */}
-          <div className="mb-2 max-w-[150px] sm:max-w-[175px]">
-            <img
-              src="/assets/sentire-logo-official-transparent.png"
-              alt="SENTIRE® By PC"
-              className="w-full h-auto object-contain block max-h-[46px]"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/assets/sentire-logo-gold.png";
-              }}
-            />
+        <div className="grid sm:grid-cols-2">
+          <div className="order-2 flex flex-col justify-center p-6 sm:order-1 sm:p-10">
+            <p className="ed-label">A note before you go</p>
+            <h2 className="mt-4 font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-ink">
+              ₹200 off your first <em className="italic">extrait</em>.
+            </h2>
+            <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+              Use code{" "}
+              <span className="font-mono text-[13px] tracking-[0.02em] text-ink underline underline-offset-4">
+                PC200
+              </span>{" "}
+              on orders above ₹1,999. Shipping is on us.
+            </p>
+            <p className="ed-label mt-5 tabular-nums">
+              Expires in {mStr}:{sStr}
+            </p>
+            <button onClick={handleClaimPrivilege} className="ed-btn ed-btn-solid mt-7 w-full sm:w-auto">
+              Shop the library
+            </button>
           </div>
 
-          {/* HEADLINE (Two lines: Dark + Bold Red) */}
-          <div className="mb-3 text-center">
-            <div className="font-serif text-[#1C1814] font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase leading-tight">
-              DON'T WORRY,
-            </div>
-            <div className="font-serif text-[#9E2A2B] font-extrabold text-sm sm:text-base md:text-lg tracking-wider uppercase leading-tight mt-0.5" style={{ textShadow: "0 0.5px 0 #9E2A2B" }}>
-              IT'S A SAFE ADDICTION.
-            </div>
-          </div>
-
-          {/* DARK EXCLUSIVE PRIVILEGE CONTAINER BOX */}
-          <div className="bg-[#1C1917] text-white py-3 px-5 rounded-[16px] w-full mb-3 border border-[#C89B5A]/40 shadow-md flex flex-col items-center justify-center">
-            <span className="text-[9px] uppercase tracking-widest text-[#C89B5A] font-bold block mb-0.5">
-              EXCLUSIVE PRIVILEGE
-            </span>
-            <div className="text-xl sm:text-2xl font-black tracking-tight text-[#F5F0E8]">
-              UP TO 30% OFF
-            </div>
-          </div>
-
-          {/* SUBTEXT WITH PC200 HIGHLIGHT BADGE */}
-          <p className="text-[11px] sm:text-xs text-[#57534E] leading-relaxed mb-3 max-w-[240px]">
-            Use code{" "}
-            <span className="font-bold text-[#1C1814] bg-[#E8DEC8] px-1.5 py-0.5 rounded border border-[#C89B5A]/30">
-              PC200
-            </span>{" "}
-            for <span className="font-bold text-black">Flat ₹200 OFF</span> on orders above ₹1,999 + Free Shipping
-          </p>
-
-          {/* DIGITAL COUNTDOWN TIMER */}
-          <div className="mb-4 flex flex-col items-center">
-            <div className="flex items-center gap-1.5 mb-1">
-              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
-                {mStr[0]}
-              </div>
-              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
-                {mStr[1]}
-              </div>
-              <span className="text-[#1C1917] font-extrabold text-sm mx-0.5">:</span>
-              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
-                {sStr[0]}
-              </div>
-              <div className="w-6 sm:w-7 h-7 sm:h-8 bg-[#1C1917] text-[#F5F0E8] font-mono font-extrabold flex items-center justify-center rounded text-xs sm:text-sm shadow border border-black/40">
-                {sStr[1]}
-              </div>
-            </div>
-            <span className="text-[10px] text-[#78716C] font-medium">
-              Privilege expires in <span className="font-bold text-[#1C1917]">30:00 mins</span>
-            </span>
-          </div>
-
-          {/* ACTION BUTTON */}
-          <button
-            onClick={handleClaimPrivilege}
-            className="w-full py-3 px-4 bg-[#1C1917] hover:bg-[#2C2724] text-white text-xs font-extrabold tracking-wider uppercase rounded-full shadow-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer border border-[#C89B5A]/30"
-          >
-            CLAIM PRIVILEGE &amp; SHOP →
-          </button>
-        </div>
-
-        {/* RIGHT COLUMN (50% Half): Creative Visual Image */}
-        <div className="w-full md:w-1/2 relative min-h-[260px] md:min-h-[420px] bg-[#1C1917] overflow-hidden flex items-end">
-          <picture className="w-full h-full absolute inset-0">
-            <source srcSet="/assets/sentire_purple_oud_popup.webp" type="image/webp" />
-            <img
-              src="/assets/sentire_purple_oud_popup.jpg"
-              alt="Sentire Purple Oud Luxury Perfume"
-              className="w-full h-full object-cover block"
-            />
-          </picture>
-          
-          {/* BOTTOM LEFT IMAGE BADGE */}
-          <div className="relative z-10 p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent w-full text-left">
-            <span className="text-[9px] uppercase tracking-widest text-[#E8DEC8] bg-black/70 backdrop-blur-sm border border-[#C89B5A]/40 px-2.5 py-1 rounded-full font-bold inline-block shadow-md">
-              PURPLE OUD EXTRAIT
-            </span>
+          <div className="order-1 relative min-h-[180px] bg-ink sm:order-2 sm:min-h-[420px]">
+            <picture>
+              <source srcSet="/assets/sentire_purple_oud_popup.webp" type="image/webp" />
+              <img
+                src="/assets/sentire_purple_oud_popup.jpg"
+                alt="Purple Oud extrait de parfum"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </picture>
           </div>
         </div>
       </div>

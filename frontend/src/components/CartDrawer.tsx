@@ -378,7 +378,7 @@ export default function CartDrawer({
         className={[
           "absolute top-0 bottom-0 right-0 z-10 flex flex-col h-full",
           "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
-          "cart-drawer-surface bg-[#F8F4EC]",
+          "cart-drawer-surface bg-[#f4f2ee]",
           "rounded-none",
           isClosing
             ? "translate-x-full opacity-90"
@@ -396,7 +396,7 @@ export default function CartDrawer({
               fontWeight: 600,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "#C89A46",
+              color: "#a4492e",
               marginBottom: "5px",
             }}
           >
@@ -451,7 +451,7 @@ export default function CartDrawer({
                   fontWeight: 600,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "rgba(25,20,15,0.45)",
+                  color: "rgba(28, 27, 24,0.45)",
                 }}
               >
                 ✦&nbsp; Private Delivery
@@ -464,7 +464,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "#C89A46",
+                    color: "#a4492e",
                   }}
                 >
                   Unlocked
@@ -476,7 +476,7 @@ export default function CartDrawer({
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <p
-                    className="font-display font-bold text-[#C89A46]"
+                    className="font-display font-bold text-[#a4492e]"
                     style={{ fontSize: "13.5px", letterSpacing: "-0.01em" }}
                   >
                     🎉 Congratulations! FREE Delivery Unlocked!
@@ -485,7 +485,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "10px",
-                      color: "rgba(25,20,15,0.55)",
+                      color: "rgba(28, 27, 24,0.55)",
                       marginTop: "1px",
                       fontWeight: 400,
                     }}
@@ -499,9 +499,9 @@ export default function CartDrawer({
                     width: "22px",
                     height: "22px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(190,143,66,0.6)",
+                    border: "1px solid rgba(138, 59, 36,0.6)",
                     background: "rgba(200,154,70,0.15)",
-                    color: "#C89A46",
+                    color: "#a4492e",
                   }}
                 >
                   <IconCheck />
@@ -511,11 +511,11 @@ export default function CartDrawer({
               <div>
                 <p
                   className="font-display"
-                  style={{ fontSize: "13.5px", fontWeight: 400, color: "#0B0907" }}
+                  style={{ fontSize: "13.5px", fontWeight: 400, color: "#151412" }}
                 >
                   {remainingForFreeShipping > 0 ? (
                     <>
-                      Add <strong style={{ color: "#C89A46", fontWeight: 700 }}>₹{(remainingForFreeShipping || 0).toLocaleString()}</strong> more to get <strong style={{ color: "#C89A46", textTransform: "uppercase", fontWeight: 700 }}>FREE Delivery</strong>
+                      Add <strong style={{ color: "#a4492e", fontWeight: 700 }}>₹{(remainingForFreeShipping || 0).toLocaleString()}</strong> more to get <strong style={{ color: "#a4492e", textTransform: "uppercase", fontWeight: 700 }}>FREE Delivery</strong>
                     </>
                   ) : (
                     "Free shipping on orders over ₹999"
@@ -525,7 +525,7 @@ export default function CartDrawer({
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "10px",
-                    color: "rgba(25,20,15,0.55)",
+                    color: "rgba(28, 27, 24,0.55)",
                     marginTop: "1px",
                     fontWeight: 400,
                   }}
@@ -548,7 +548,7 @@ export default function CartDrawer({
                     right: 0,
                     top: "50%",
                     transform: "translateY(-50%) translateX(50%)",
-                    color: "#C89A46",
+                    color: "#a4492e",
                     fontSize: "7px",
                     fontWeight: 700,
                   }}
@@ -570,7 +570,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(190,143,66,0.40)",
+                    background: "rgba(138, 59, 36,0.40)",
                     margin: "0 auto",
                   }}
                 />
@@ -583,14 +583,14 @@ export default function CartDrawer({
                       fontWeight: 600,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
-                      color: "#C89A46",
+                      color: "#a4492e",
                     }}
                   >
                     Your Private Selection
                   </p>
                   <h3
                     className="font-display"
-                    style={{ fontSize: "20px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}
+                    style={{ fontSize: "20px", fontWeight: 400, color: "#151412", letterSpacing: "-0.01em" }}
                   >
                     Your bag awaits<br />its first fragrance.
                   </h3>
@@ -599,7 +599,7 @@ export default function CartDrawer({
                       fontFamily: "var(--font-sans)",
                       fontSize: "10.5px",
                       lineHeight: "1.6",
-                      color: "rgba(25,20,15,0.50)",
+                      color: "rgba(28, 27, 24,0.50)",
                       maxWidth: "230px",
                       margin: "0 auto",
                       fontWeight: 400,
@@ -623,7 +623,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(190,143,66,0.40)",
+                    background: "rgba(138, 59, 36,0.40)",
                     margin: "0 auto",
                   }}
                 />
@@ -640,7 +640,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.20em",
                     textTransform: "uppercase",
-                    color: "rgba(25,20,15,0.40)",
+                    color: "rgba(28, 27, 24,0.40)",
                     marginBottom: "14px",
                   }}
                 >
@@ -679,7 +679,7 @@ export default function CartDrawer({
                               className="font-display leading-tight truncate text-[15px] sm:text-[17px]"
                               style={{
                                 fontWeight: 400,
-                                color: "#0B0907",
+                                color: "#151412",
                                 letterSpacing: "-0.01em",
                                 marginBottom: "2px",
                               }}
@@ -695,7 +695,7 @@ export default function CartDrawer({
                                 fontWeight: 500,
                                 letterSpacing: "0.14em",
                                 textTransform: "uppercase",
-                                color: "rgba(25,20,15,0.48)",
+                                color: "rgba(28, 27, 24,0.48)",
                                 marginBottom: "4px",
                               }}
                             >
@@ -707,7 +707,7 @@ export default function CartDrawer({
                             {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
                             {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
                               <div className="mt-1.5 mb-2 flex items-center gap-1.5 flex-wrap">
-                                <span className="text-[9px] font-bold uppercase tracking-wider text-[#14110D]/50">Size:</span>
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[#151412]/50">Size:</span>
                                 {[10, 30, 50].map((sz) => {
                                   const isSelected = item.size === sz;
                                   return (
@@ -716,8 +716,8 @@ export default function CartDrawer({
                                       onClick={() => handleSwitchSize(item, sz)}
                                       className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
                                         isSelected
-                                          ? "bg-[#C89A46] text-white border border-[#C89A46] shadow-sm"
-                                          : "bg-[#14110D]/5 text-[#14110D]/70 border border-[#14110D]/10 hover:border-[#C89A46]"
+                                          ? "bg-[#a4492e] text-white border border-[#a4492e] shadow-sm"
+                                          : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/10 hover:border-[#a4492e]"
                                       }`}
                                     >
                                       {sz}ML
@@ -733,7 +733,7 @@ export default function CartDrawer({
                                 fontFamily: "var(--font-sans)",
                                 fontSize: "13.5px",
                                 fontWeight: 600,
-                                color: "#18130F",
+                                color: "#1c1b18",
                                 letterSpacing: "0.01em",
                                 fontVariantNumeric: "tabular-nums",
                                 marginBottom: "4px",
@@ -744,8 +744,8 @@ export default function CartDrawer({
 
                             {/* Personalisation Badge & Notes */}
                             {item.isPersonalised && (
-                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[#c89b5a]/30 bg-[#c89b5a]/10 px-2 py-1 text-[10px] text-[#18130F]">
-                                <span className="font-bold text-[#c89b5a] tracking-wider uppercase">✨ Personalised (+₹200)</span>
+                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[#a4492e]/30 bg-[#a4492e]/10 px-2 py-1 text-[10px] text-[#1c1b18]">
+                                <span className="font-bold text-[#a4492e] tracking-wider uppercase">✨ Personalised (+₹200)</span>
                                 {item.engravingText && <span>Name: <strong className="font-serif uppercase tracking-wider">{item.engravingText}</strong></span>}
                                 {item.engravingDate && <span>Date: <strong>{item.engravingDate}</strong></span>}
                               </div>
@@ -787,7 +787,7 @@ export default function CartDrawer({
                                       fontFamily: "var(--font-sans)",
                                       fontSize: "11.5px",
                                       fontWeight: 600,
-                                      color: "#18130F",
+                                      color: "#1c1b18",
                                       fontVariantNumeric: "tabular-nums",
                                     }}
                                   >
@@ -818,19 +818,19 @@ export default function CartDrawer({
                 </div>
 
                 {/* ══ 🏷️ PROMINENT COUPON & DISCOUNTS CARD ══════════════════════ */}
-                <div className="mt-5 rounded-2xl border border-[#C89A46]/35 bg-white p-4 shadow-sm space-y-2.5">
-                  <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
+                <div className="mt-5 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-2.5">
+                  <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[#C89A46] text-sm">🏷️</span>
-                      <h4 className="font-serif text-sm font-bold text-[#14110D]">Apply Coupon & Atelier Offers</h4>
+                      <span className="text-[#a4492e] text-sm">🏷️</span>
+                      <h4 className="font-serif text-sm font-bold text-[#151412]">Apply Coupon & Atelier Offers</h4>
                     </div>
-                    <span className="text-[9px] font-bold text-[#C89A46] uppercase tracking-wider">Instant Savings</span>
+                    <span className="text-[9px] font-bold text-[#a4492e] uppercase tracking-wider">Instant Savings</span>
                   </div>
 
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/40 rounded-xl p-2.5 text-xs">
+                    <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/40 rounded-xl p-2.5 text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#0B0907] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
+                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
                         <span className="text-emerald-700 font-extrabold text-xs">(Saved ₹{couponDiscount})</span>
                       </div>
                       <button
@@ -848,7 +848,7 @@ export default function CartDrawer({
                           onClick={() => handleApplyCoupon("PC100")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
                             subtotal >= 999
-                              ? "bg-[#FAF6F0] text-[#C89A46] border-[#C89A46] hover:bg-[#C89A46] hover:text-white shadow-sm"
+                              ? "bg-[#f4f2ee] text-[#a4492e] border-[#a4492e] hover:bg-[#a4492e] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -858,7 +858,7 @@ export default function CartDrawer({
                           onClick={() => handleApplyCoupon("PC200")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
                             subtotal >= 1999
-                              ? "bg-[#FAF6F0] text-[#C89A46] border-[#C89A46] hover:bg-[#C89A46] hover:text-white shadow-sm"
+                              ? "bg-[#f4f2ee] text-[#a4492e] border-[#a4492e] hover:bg-[#a4492e] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -876,11 +876,11 @@ export default function CartDrawer({
                           onKeyDown={(e) => {
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
-                          className="flex-1 min-w-0 rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-xl border border-[#151412]/20 bg-[#f4f2ee] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#151412] focus:border-[#a4492e] focus:outline-none"
                         />
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="shrink-0 rounded-xl bg-[#14110D] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37] hover:bg-[#C89A46] hover:text-white transition-colors"
+                          className="shrink-0 rounded-xl bg-[#151412] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-colors"
                         >
                           Apply
                         </button>
@@ -899,21 +899,21 @@ export default function CartDrawer({
                 </div>
 
                 {/* ══ ₹200 PERSONALISATION ENGRAVING MODULE ══════════════════════ */}
-                <div className="mt-6 rounded-2xl border border-[#C89A46]/35 bg-white p-4 shadow-sm space-y-3">
-                  <div className="flex items-center justify-between border-b border-[#14110D]/10 pb-2">
+                <div className="mt-6 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-3">
+                  <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
                     <div>
-                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#C89A46]">Personalised Craftsmanship</span>
-                      <h4 className="font-serif text-sm font-bold text-[#14110D]">Add Custom Name & Date Engraving (+₹200)</h4>
+                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#a4492e]">Personalised Craftsmanship</span>
+                      <h4 className="font-serif text-sm font-bold text-[#151412]">Add Custom Name & Date Engraving (+₹200)</h4>
                     </div>
-                    <span className="rounded bg-[#C89A46]/10 border border-[#C89A46]/30 px-2 py-0.5 text-[9px] font-bold text-[#C89A46]">Jaipur Laser Engraved</span>
+                    <span className="rounded bg-[#a4492e]/10 border border-[#a4492e]/30 px-2 py-0.5 text-[9px] font-bold text-[#a4492e]">Jaipur Laser Engraved</span>
                   </div>
 
                   <div>
-                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Select Perfume to Engrave:</label>
+                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Select Perfume to Engrave:</label>
                     <select
                       value={engraveTargetKey || `${items[0]?.productId}-${items[0]?.size}`}
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
-                      className="w-full rounded-xl border border-[#14110D]/20 bg-[#FAF8F5] p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                      className="w-full rounded-xl border border-[#151412]/20 bg-[#f4f2ee] p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
                     >
                       {items.map((i) => (
                         <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
@@ -925,32 +925,32 @@ export default function CartDrawer({
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Name (Max 12 Chars):</label>
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Name (Max 12 Chars):</label>
                       <input
                         type="text"
                         maxLength={12}
                         value={engraveName}
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
-                        className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                        className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#14110D]/70 mb-1">Date (Max 10 Chars):</label>
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Date (Max 10 Chars):</label>
                       <input
                         type="text"
                         maxLength={10}
                         value={engraveDate}
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
-                        className="w-full rounded-xl border border-[#14110D]/20 p-2 text-xs font-bold text-[#14110D] focus:border-[#C89A46] focus:outline-none"
+                        className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <button
                     onClick={handleApplyEngravingToTarget}
-                    className="w-full rounded-xl border-2 border-[#C89A46] bg-[#FAF6F0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#C89A46] hover:bg-[#C89A46] hover:text-white transition-all shadow-sm"
+                    className="w-full rounded-xl border-2 border-[#a4492e] bg-[#f4f2ee] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all shadow-sm"
                   >
                     Apply Engraving to Bottle (+₹200)
                   </button>
@@ -964,7 +964,7 @@ export default function CartDrawer({
 
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface bg-[#F8F4EC] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
+          <footer className="cart-footer-surface bg-[#f4f2ee] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
             {/* Promo Code Input & Badges */}
             <div className="mb-2 md:mb-3">
               <div className="flex items-center justify-between mb-1">
@@ -975,7 +975,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "#C89A46",
+                    color: "#a4492e",
                   }}
                 >
                   Promo / Coupon Code
@@ -983,10 +983,10 @@ export default function CartDrawer({
               </div>
 
               {appliedCoupon ? (
-                <div className="flex items-center justify-between bg-[#C89A46]/10 border border-[#C89A46]/30 rounded-lg px-2.5 py-1.5 text-xs">
+                <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/30 rounded-lg px-2.5 py-1.5 text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-[#0B0907] font-mono tracking-wider text-[11px]">{appliedCoupon}</span>
-                    <span className="text-[#C89A46] font-semibold text-[11px]">(-₹{couponDiscount})</span>
+                    <span className="font-semibold text-[#151412] font-mono tracking-wider text-[11px]">{appliedCoupon}</span>
+                    <span className="text-[#a4492e] font-semibold text-[11px]">(-₹{couponDiscount})</span>
                   </div>
                   <button
                     onClick={handleRemoveCoupon}
@@ -1007,11 +1007,11 @@ export default function CartDrawer({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#C89A46] font-sans tracking-tight text-[#0B0907] h-6 sm:h-8"
+                      className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#a4492e] font-sans tracking-tight text-[#151412] h-6 sm:h-8"
                     />
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="bg-[#18130F] text-[#f5f0e8] hover:bg-[#C89A46] hover:text-[#0B0907] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
+                      className="bg-[#1c1b18] text-[#eeebe5] hover:bg-[#a4492e] hover:text-[#151412] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
                     >
                       Apply
                     </button>
@@ -1022,7 +1022,7 @@ export default function CartDrawer({
                       onClick={() => handleApplyCoupon("PC100")}
                       className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 999
-                          ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
+                          ? "bg-[#a4492e]/10 text-[#a4492e] border-[#a4492e]/30 hover:border-[#a4492e]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1032,7 +1032,7 @@ export default function CartDrawer({
                       onClick={() => handleApplyCoupon("PC200")}
                       className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 1999
-                          ? "bg-[#C89A46]/10 text-[#C89A46] border-[#C89A46]/30 hover:border-[#C89A46]"
+                          ? "bg-[#a4492e]/10 text-[#a4492e] border-[#a4492e]/30 hover:border-[#a4492e]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1053,35 +1053,35 @@ export default function CartDrawer({
             {/* Order Summary Rows */}
             <div className="space-y-1 md:space-y-1.5 pt-0.5 md:pt-1">
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(25,20,15,0.60)" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(28, 27, 24,0.60)" }}>
                   Subtotal
                 </span>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#18130F", fontWeight: 500 }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#1c1b18", fontWeight: 500 }}>
                   ₹{(subtotal || 0).toLocaleString()}
                 </span>
               </div>
 
               {couponDiscount > 0 && (
                 <div className="flex justify-between items-baseline">
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "#C89A46", fontWeight: 500 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "#a4492e", fontWeight: 500 }}>
                     Promo Discount ({appliedCoupon})
                   </span>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#C89A46", fontWeight: 600 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#a4492e", fontWeight: 600 }}>
                     -₹{couponDiscount.toLocaleString()}
                   </span>
                 </div>
               )}
 
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(25,20,15,0.60)" }}>
+                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(28, 27, 24,0.60)" }}>
                   Express Delivery
                 </span>
                 {isFreeShippingUnlocked ? (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "9.5px", fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "#C89A46" }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "9.5px", fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "#a4492e" }}>
                     Complimentary
                   </span>
                 ) : (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#18130F", fontWeight: 500 }}>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#1c1b18", fontWeight: 500 }}>
                     ₹100
                   </span>
                 )}
@@ -1091,10 +1091,10 @@ export default function CartDrawer({
             <div className="cart-summary-rule my-1.5 md:my-2.5" />
 
             <div className="flex justify-between items-baseline mb-2 md:mb-3">
-              <span className="font-display" style={{ fontSize: "14px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.01em" }}>
+              <span className="font-display" style={{ fontSize: "14px", fontWeight: 400, color: "#151412", letterSpacing: "-0.01em" }}>
                 Estimated Total
               </span>
-              <span className="font-display" style={{ fontSize: "19px", fontWeight: 400, color: "#0B0907", letterSpacing: "-0.02em" }}>
+              <span className="font-display" style={{ fontSize: "19px", fontWeight: 400, color: "#151412", letterSpacing: "-0.02em" }}>
                 ₹{(finalTotal || 0).toLocaleString()}
               </span>
             </div>
@@ -1164,7 +1164,7 @@ export default function CartDrawer({
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
               {isRedirecting ? (
-                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#f5f0e8] border-t-transparent" />
+                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#eeebe5] border-t-transparent" />
               ) : (
                 <>
                   <span>Proceed to Checkout</span>
@@ -1182,14 +1182,14 @@ export default function CartDrawer({
                 fontWeight: 500,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(25,20,15,0.40)",
+                color: "rgba(28, 27, 24,0.40)",
               }}
             >
               <span className="flex items-center gap-1">
                 <IconLock aria-hidden="true" />
                 Secure Checkout
               </span>
-              <span style={{ color: "rgba(25,20,15,0.20)" }}>◇</span>
+              <span style={{ color: "rgba(28, 27, 24,0.20)" }}>◇</span>
               <span className="flex items-center gap-1">
                 <IconDiamond aria-hidden="true" />
                 Authentic Sentire

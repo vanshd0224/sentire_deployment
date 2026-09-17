@@ -249,19 +249,19 @@ export default function PerfumesPage({
     const badgeText = p.badge === "bestseller" ? "BEST SELLER" : p.badge === "new" ? "NEW LAUNCH" : p.badge ? p.badge.toUpperCase() : null;
 
     return (
-      <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-3 sm:p-4 shadow-sm hover:border-[#c89b5a]/50 hover:shadow-md transition-all">
+      <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-3 sm:p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all">
         {/* Top Content */}
         <div>
           {/* Media box */}
           <a
             href={`/perfumes?id=${p.id}`}
             onClick={(e) => { e.preventDefault(); setSelectedDetailProduct(p); }}
-            className="relative w-full aspect-square rounded-xl bg-[#f6f2ec] overflow-hidden flex items-center justify-center cursor-pointer block"
+            className="relative w-full aspect-square rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer block"
             title={`View info for ${p.name}`}
             aria-label={`View Sentire ${p.name} personalised perfume details`}
           >
             {badgeText && (
-              <span className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-[#1a120a] to-[#0d0906] text-[#c89b5a] text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 border border-[#c89b5a]/40 shadow-sm">
+              <span className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-[#1c1b18] to-[#151412] text-[#a4492e] text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 border border-[#a4492e]/40 shadow-sm">
                 {badgeText}
               </span>
             )}
@@ -275,7 +275,7 @@ export default function PerfumesPage({
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"
             />
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-              <span className="bg-white/95 text-ink text-[9px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md border border-[#c89b5a]/40">
+              <span className="bg-white/95 text-ink text-[9px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md border border-[#a4492e]/40">
                 Quick View
               </span>
             </div>
@@ -284,13 +284,13 @@ export default function PerfumesPage({
           {/* Details */}
           <div className="mt-3 text-center">
             <h3
-              className="font-sans text-[11px] sm:text-sm font-bold uppercase tracking-wide text-ink hover:text-[#c89b5a] transition-colors cursor-pointer block truncate w-full"
+              className="font-sans text-[11px] sm:text-sm font-bold uppercase tracking-wide text-ink hover:text-[#a4492e] transition-colors cursor-pointer block truncate w-full"
               title={`View info for ${p.name}`}
             >
               <a
                 href={`/perfumes?id=${p.id}`}
                 onClick={(e) => { e.preventDefault(); setSelectedDetailProduct(p); }}
-                className="hover:text-[#c89b5a]"
+                className="hover:text-[#a4492e]"
               >
                 {p.name}
               </a>
@@ -306,7 +306,7 @@ export default function PerfumesPage({
             <button
               type="button"
               onClick={() => setSelectedDetailProduct(p)}
-              className="mt-1 mb-1 inline-flex items-center justify-center gap-1 text-[9.5px] font-bold tracking-widest text-[#c89b5a] hover:text-ink uppercase transition-colors cursor-pointer"
+              className="mt-1 mb-1 inline-flex items-center justify-center gap-1 text-[9.5px] font-bold tracking-widest text-[#a4492e] hover:text-ink uppercase transition-colors cursor-pointer"
             >
               <span>View Scent Info</span>
               <span aria-hidden="true">→</span>
@@ -342,8 +342,8 @@ export default function PerfumesPage({
                     }}
                     className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-semibold tracking-tight border transition-all cursor-pointer shrink-0 ${
                       isSelected
-                        ? "bg-[#0b0907] text-[#c89b5a] border-[#0b0907] font-bold shadow-xs scale-102"
-                        : "bg-[#fdfbf7] text-[#1e1e1e] border-black/15 hover:border-[#c89b5a] hover:text-[#c89b5a]"
+                        ? "bg-[#151412] text-[#a4492e] border-[#151412] font-bold shadow-xs scale-102"
+                        : "bg-[#f7f5f2] text-[#1c1b18] border-black/15 hover:border-[#a4492e] hover:text-[#a4492e]"
                     }`}
                   >
                     {sz}ML
@@ -366,19 +366,19 @@ export default function PerfumesPage({
               Out of Stock
             </button>
           ) : qtyInBag > 0 ? (
-            <div className="mt-2 flex items-center justify-between rounded-md bg-[#0b0907] text-white border border-[#c89b5a]/40 px-1.5 py-1 sm:px-2 sm:py-1.5 shadow-xs min-w-0">
+            <div className="mt-2 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 py-1 sm:px-2 sm:py-1.5 shadow-xs min-w-0">
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onUpdateCartQuantity?.(p.id, currentSize, -1);
                 }}
-                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
+                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#a4492e] hover:bg-white/10 rounded transition-all cursor-pointer"
                 aria-label="Decrease quantity"
               >
                 −
               </button>
-              <span className="text-[8.5px] sm:text-[10px] font-extrabold text-[#e2c48e] tracking-tight uppercase truncate px-0.5">
+              <span className="text-[8.5px] sm:text-[10px] font-extrabold text-[#d9a08a] tracking-tight uppercase truncate px-0.5">
                 {qtyInBag} IN BAG ({currentSize}ML)
               </span>
               <button
@@ -387,7 +387,7 @@ export default function PerfumesPage({
                   e.stopPropagation();
                   onUpdateCartQuantity?.(p.id, currentSize, 1);
                 }}
-                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#c89b5a] hover:bg-white/10 rounded transition-all cursor-pointer"
+                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#a4492e] hover:bg-white/10 rounded transition-all cursor-pointer"
                 aria-label="Increase quantity"
               >
                 +
@@ -401,7 +401,7 @@ export default function PerfumesPage({
                 onAddToCart?.({ id: p.id, name: p.name, num: p.num, img: p.img }, currentSize, currentPrice);
                 showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
               }}
-              className="mt-2 w-full rounded-md bg-[#0b0907] py-2 px-1 text-[8.5px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all shadow-xs border border-[#c89b5a]/40 cursor-pointer truncate whitespace-nowrap"
+              className="mt-2 w-full rounded-md bg-[#151412] py-2 px-1 text-[8.5px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all shadow-xs border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
             >
               Add to Bag
             </button>
@@ -412,10 +412,10 @@ export default function PerfumesPage({
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#fbf9f5] text-ink font-sans selection:bg-gold/20 selection:text-ink">
+    <div className="min-h-screen w-full bg-[#f4f2ee] text-ink font-sans selection:bg-gold/20 selection:text-ink">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-gold/30 bg-[#120e0a] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl transition-all animate-bounce">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-gold/30 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl transition-all animate-bounce">
           <span className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
             {toastMessage}
@@ -424,15 +424,15 @@ export default function PerfumesPage({
       )}
 
       {/* ── MOBILE EDITORIAL HERO ── */}
-      <section className="block sm:hidden border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#faf6f0] to-[#fbf9f5] pt-6 pb-6 px-4">
+      <section className="block sm:hidden border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f4f2ee] to-[#f4f2ee] pt-6 pb-6 px-4">
         <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] text-ink/40 mb-2">
-          <button onClick={onBackToHome} className="hover:text-[#c89b5a] transition-colors cursor-pointer">
+          <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
             Home
           </button>
-          <span className="text-[#c89b5a]/50">•</span>
+          <span className="text-[#a4492e]/50">•</span>
           <span className="text-ink font-semibold">Perfume Library</span>
         </div>
-        <span className="inline-block rounded-full border border-[#c89b5a]/40 bg-[#c89b5a]/10 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.25em] text-[#c89b5a] mb-2">
+        <span className="inline-block rounded-full border border-[#a4492e]/40 bg-[#a4492e]/10 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.25em] text-[#a4492e] mb-2">
           SENTIRE BY PC
         </span>
         <h1 className="font-display text-2xl text-ink font-normal leading-tight tracking-tight">
@@ -448,7 +448,7 @@ export default function PerfumesPage({
             onClick={() => setSelectedCategory("all")}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "all"
-                ? "bg-[#0b0907] text-[#c89b5a] shadow-xs"
+                ? "bg-[#151412] text-[#a4492e] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -458,7 +458,7 @@ export default function PerfumesPage({
             onClick={() => setSelectedCategory("bestsellers")}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "bestsellers"
-                ? "bg-[#0b0907] text-[#c89b5a] shadow-xs"
+                ? "bg-[#151412] text-[#a4492e] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -468,7 +468,7 @@ export default function PerfumesPage({
             onClick={() => setSelectedCategory("woody-oud")}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "woody-oud"
-                ? "bg-[#0b0907] text-[#c89b5a] shadow-xs"
+                ? "bg-[#151412] text-[#a4492e] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -478,7 +478,7 @@ export default function PerfumesPage({
             onClick={() => setSelectedCategory("fresh-aquatic")}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "fresh-aquatic"
-                ? "bg-[#0b0907] text-[#c89b5a] shadow-xs"
+                ? "bg-[#151412] text-[#a4492e] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -488,7 +488,7 @@ export default function PerfumesPage({
             onClick={() => setSelectedCategory("floral-gourmand")}
             className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "floral-gourmand"
-                ? "bg-[#0b0907] text-[#c89b5a] shadow-xs"
+                ? "bg-[#151412] text-[#a4492e] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -498,7 +498,7 @@ export default function PerfumesPage({
       </section>
 
       {/* ── LUXURY EDITORIAL HERO DESKTOP ── */}
-      <section className={`hidden sm:block relative border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#faf6f0] to-[#fbf9f5] pt-14 pb-16 px-6 lg:px-16 ${isSortOpen ? "z-40" : "z-30"}`}>
+      <section className={`hidden sm:block relative border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f4f2ee] to-[#f4f2ee] pt-14 pb-16 px-6 lg:px-16 ${isSortOpen ? "z-40" : "z-30"}`}>
         {/* Subtle Ambient Background Light */}
         <div className="pointer-events-none absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/10 blur-3xl opacity-70" />
 
@@ -530,7 +530,7 @@ export default function PerfumesPage({
               <div className="relative">
                 <button
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center gap-3 rounded-full border border-gold/40 bg-[#120e0a] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-md hover:border-gold hover:bg-[#1a140f] transition-all cursor-pointer group"
+                  className="flex items-center gap-3 rounded-full border border-gold/40 bg-[#151412] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-md hover:border-gold hover:bg-[#1a140f] transition-all cursor-pointer group"
                 >
                   <span className="text-gold font-bold">Sort By:</span>
                   <span className="text-white/90 font-medium">
@@ -614,7 +614,7 @@ export default function PerfumesPage({
       </section>
 
       {/* ── STICKY CONTROL BAR & QUICK CATEGORIES ── */}
-      <section className="sticky top-[71px] z-20 border-b border-black/8 bg-[#fbf9f5]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
+      <section className="sticky top-[71px] z-20 border-b border-black/8 bg-[#f4f2ee]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
         <div className="mx-auto max-w-[1400px] flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
           {/* Quick Filter Pills */}
           <div className="flex items-center gap-2 shrink-0">
@@ -704,19 +704,19 @@ export default function PerfumesPage({
         ) : (
           <>
             {/* ── SECTION 1: PURPLE OUD — VOGUE STYLE HIGH LUXURY BANNER (TOP HERO PRODUCT) ── */}
-            <section className="relative overflow-hidden rounded-2xl bg-[#0a0705] border border-[#c89b5a]/30 text-white p-5 sm:p-8 lg:p-16 shadow-2xl">
-              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#c89b5a]/15 blur-3xl opacity-60" />
+            <section className="relative overflow-hidden rounded-2xl bg-[#121110] border border-[#a4492e]/30 text-white p-5 sm:p-8 lg:p-16 shadow-2xl">
+              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#a4492e]/15 blur-3xl opacity-60" />
 
               <div className="relative z-10 flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                 <div className="lg:col-span-7 space-y-3 sm:space-y-6 w-full text-left">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#c89b5a]/40 bg-[#c89b5a]/15 px-3 py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.25em] text-[#c89b5a]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#c89b5a] animate-ping" />
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/40 bg-[#a4492e]/15 px-3 py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e] animate-ping" />
                     HAUTE PARFUMERIE · 50 ML EXCLUSIVE
                   </div>
 
                   <h2
                     onClick={() => setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)}
-                    className="font-display text-3xl sm:text-4xl lg:text-6xl text-white font-normal leading-[1.05] tracking-tight cursor-pointer hover:text-[#c89b5a] transition-colors"
+                    className="font-display text-3xl sm:text-4xl lg:text-6xl text-white font-normal leading-[1.05] tracking-tight cursor-pointer hover:text-[#a4492e] transition-colors"
                   >
                     Purple Oud
                   </h2>
@@ -727,10 +727,10 @@ export default function PerfumesPage({
 
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-2">
                     <div>
-                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[#c89b5a]/70 block">
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e]/70 block">
                         Exclusive Edition
                       </span>
-                      <div className="flex items-baseline gap-3"><span className="font-sans font-bold text-2xl sm:text-3xl text-[#c89b5a] tracking-tight inline-flex items-baseline gap-0.5">₹1,489</span><span className="font-sans text-sm text-white/40 line-through inline-flex items-baseline gap-0.5">MRP ₹1,859</span></div>
+                      <div className="flex items-baseline gap-3"><span className="font-sans font-bold text-2xl sm:text-3xl text-[#a4492e] tracking-tight inline-flex items-baseline gap-0.5">₹1,489</span><span className="font-sans text-sm text-white/40 line-through inline-flex items-baseline gap-0.5">MRP ₹1,859</span></div>
                     </div>
 
                     <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
@@ -738,19 +738,19 @@ export default function PerfumesPage({
                         const purpleOudQty = getItemQuantity(EXCLUSIVE_PURPLE_OUD.id, 50);
                         if (purpleOudQty > 0) {
                           return (
-                            <div className="flex-1 sm:flex-none flex items-center gap-3 rounded-full bg-[#120e0a] border border-[#c89b5a] px-6 py-2.5 text-white shadow-lg">
+                            <div className="flex-1 sm:flex-none flex items-center gap-3 rounded-full bg-[#151412] border border-[#a4492e] px-6 py-2.5 text-white shadow-lg">
                               <button
                                 onClick={() => onUpdateCartQuantity?.(EXCLUSIVE_PURPLE_OUD.id, 50, -1)}
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer"
                               >
                                 −
                               </button>
-                              <span className="text-xs font-extrabold text-[#e2c48e] uppercase tracking-wider px-2">
+                              <span className="text-xs font-extrabold text-[#d9a08a] uppercase tracking-wider px-2">
                                 {purpleOudQty} IN BAG (50ML)
                               </span>
                               <button
                                 onClick={() => onUpdateCartQuantity?.(EXCLUSIVE_PURPLE_OUD.id, 50, 1)}
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer"
                               >
                                 +
                               </button>
@@ -768,7 +768,7 @@ export default function PerfumesPage({
                               );
                               showToast("Added Purple Oud (50 ML) to Bag");
                             }}
-                            className="flex-1 sm:flex-none rounded-full bg-[#c89b5a] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-black hover:bg-[#a97f43] transition-all shadow-lg cursor-pointer min-h-[44px]"
+                            className="flex-1 sm:flex-none rounded-full bg-[#a4492e] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-black hover:bg-[#8a3b24] transition-all shadow-lg cursor-pointer min-h-[44px]"
                           >
                             Acquire 50 ML Bottle
                           </button>
@@ -776,7 +776,7 @@ export default function PerfumesPage({
                       })()}
                       <button
                         onClick={() => setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)}
-                        className="flex-1 sm:flex-none rounded-full border border-[#c89b5a]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[#c89b5a] hover:bg-[#c89b5a] hover:text-black transition-all cursor-pointer min-h-[44px]"
+                        className="flex-1 sm:flex-none rounded-full border border-[#a4492e]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer min-h-[44px]"
                       >
                         Explore Details
                       </button>
@@ -787,7 +787,7 @@ export default function PerfumesPage({
                 <div className="lg:col-span-5 flex justify-center w-full">
                   <div
                     onClick={() => setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)}
-                    className="relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#c89b5a]/40 bg-[#0a0705] shadow-2xl group cursor-pointer"
+                    className="relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#a4492e]/40 bg-[#121110] shadow-2xl group cursor-pointer"
                   >
                     <img
                       src={"/assets/purple-oud-banner.png?v=6"}
@@ -856,7 +856,7 @@ export default function PerfumesPage({
       {isFilterDrawerOpen && (
         <div className="fixed inset-0 z-50 flex items-end md:items-stretch justify-end bg-black/60 backdrop-blur-sm transition-all">
           <div className="fixed inset-0" onClick={() => setIsFilterDrawerOpen(false)} />
-          <div className="relative w-full md:max-w-md bg-[#fbf9f5] max-h-[90vh] md:max-h-full md:h-full rounded-t-3xl md:rounded-none overflow-y-auto p-6 md:p-8 shadow-2xl flex flex-col justify-between z-10 glass-bottom-sheet md:shadow-2xl border-t border-gold/40 md:border-t-0">
+          <div className="relative w-full md:max-w-md bg-[#f4f2ee] max-h-[90vh] md:max-h-full md:h-full rounded-t-3xl md:rounded-none overflow-y-auto p-6 md:p-8 shadow-2xl flex flex-col justify-between z-10 glass-bottom-sheet md:shadow-2xl border-t border-gold/40 md:border-t-0">
             
             {/* Mobile Drag Handle Bar */}
             <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mb-4 md:hidden" />
@@ -958,7 +958,7 @@ export default function PerfumesPage({
               </button>
               <button
                 onClick={() => setIsFilterDrawerOpen(false)}
-                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#b88a48] shadow-md cursor-pointer active:scale-95"
+                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#8a3b24] shadow-md cursor-pointer active:scale-95"
               >
                 Apply ({filteredUnifiedList.length})
               </button>
@@ -970,7 +970,7 @@ export default function PerfumesPage({
       {/* ── RESTORED COMPACT QUICK VIEW MODAL (When clicking "Quick View" button) ── */}
       {quickViewProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="w-full max-w-2xl rounded-2xl bg-[#fbf9f5] border border-gold/30 p-8 shadow-2xl relative grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full max-w-2xl rounded-2xl bg-[#f4f2ee] border border-gold/30 p-8 shadow-2xl relative grid grid-cols-1 md:grid-cols-2 gap-8">
             <button
               onClick={() => setQuickViewProduct(null)}
               className="absolute top-4 right-4 text-ink/50 hover:text-ink text-lg cursor-pointer"
@@ -1033,7 +1033,7 @@ export default function PerfumesPage({
                       showToast(`Added ${quickViewProduct.name} to Bag`);
                       setQuickViewProduct(null);
                     }}
-                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#b88a48] transition-all shadow-md cursor-pointer"
+                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
                   >
                     Add to Bag
                   </button>
@@ -1058,7 +1058,7 @@ export default function PerfumesPage({
       {/* ── SCENT FINDER QUIZ MODAL ── */}
       {isQuizOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-[#fbf9f5] border border-gold/30 p-8 shadow-2xl relative">
+          <div className="w-full max-w-lg rounded-2xl bg-[#f4f2ee] border border-gold/30 p-8 shadow-2xl relative">
             <button
               onClick={() => {
                 setIsQuizOpen(false);
@@ -1135,7 +1135,7 @@ export default function PerfumesPage({
                     setQuizStep(0);
                     showToast("Fragrance match applied to collection");
                   }}
-                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#b88a48] transition-all shadow-md"
+                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md"
                 >
                   Explore Match
                 </button>
