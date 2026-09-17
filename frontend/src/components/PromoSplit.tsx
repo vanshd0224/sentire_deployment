@@ -7,4 +7,3 @@ interface PromoSplitProps {
 export default function PromoSplit({ onOpenBundleModal }: PromoSplitProps) {
   return <CelebrityReacts />;
 }
-

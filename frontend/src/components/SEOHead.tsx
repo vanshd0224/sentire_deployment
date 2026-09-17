@@ -7,9 +7,15 @@ interface SEOHeadProps {
   selectedProductModal?: any;
 }
 
-function updateMetaTag(attr: "name" | "property", key: string, value: string | undefined) {
+function updateMetaTag(
+  attr: "name" | "property",
+  key: string,
+  value: string | undefined,
+) {
   if (!value) return;
-  let element = document.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  let element = document.querySelector<HTMLMetaElement>(
+    `meta[${attr}="${key}"]`,
+  );
   if (!element) {
     element = document.createElement("meta");
     element.setAttribute(attr, key);
@@ -29,10 +35,16 @@ function updateLinkTag(rel: string, href: string | undefined) {
   element.setAttribute("href", href);
 }
 
-export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadProps) {
+export default function SEOHead({
+  currentPage,
+  selectedProductModal,
+}: SEOHeadProps) {
   useEffect(() => {
     const meta = getPageMetadata(currentPage, selectedProductModal);
-    const structuredData = getStructuredDataForPage(currentPage, selectedProductModal);
+    const structuredData = getStructuredDataForPage(
+      currentPage,
+      selectedProductModal,
+    );
 
     // 1. Page Title
     document.title = meta.title;
@@ -47,9 +59,21 @@ export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadPr
     if (meta.robots && meta.robots.includes("noindex")) {
       updateMetaTag("name", "robots", "noindex, nofollow");
     } else {
-      updateMetaTag("name", "robots", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
-      updateMetaTag("name", "googlebot", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
-      updateMetaTag("name", "bingbot", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+      updateMetaTag(
+        "name",
+        "robots",
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      );
+      updateMetaTag(
+        "name",
+        "googlebot",
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      );
+      updateMetaTag(
+        "name",
+        "bingbot",
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      );
     }
 
     // 4. Canonical Link
@@ -57,7 +81,11 @@ export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadPr
 
     // 5. Open Graph Metadata
     updateMetaTag("property", "og:title", meta.ogTitle || meta.title);
-    updateMetaTag("property", "og:description", meta.ogDescription || meta.description);
+    updateMetaTag(
+      "property",
+      "og:description",
+      meta.ogDescription || meta.description,
+    );
     updateMetaTag("property", "og:url", meta.canonical);
     updateMetaTag("property", "og:type", meta.ogType);
     updateMetaTag("property", "og:image", meta.ogImage);
@@ -67,12 +95,18 @@ export default function SEOHead({ currentPage, selectedProductModal }: SEOHeadPr
     // 6. Twitter Card Metadata
     updateMetaTag("name", "twitter:card", meta.twitterCard);
     updateMetaTag("name", "twitter:title", meta.ogTitle || meta.title);
-    updateMetaTag("name", "twitter:description", meta.ogDescription || meta.description);
+    updateMetaTag(
+      "name",
+      "twitter:description",
+      meta.ogDescription || meta.description,
+    );
     updateMetaTag("name", "twitter:image", meta.ogImage);
     updateMetaTag("name", "twitter:site", "@sentireforelite");
 
     // 7. Inject / Update Dynamic JSON-LD Structured Data
-    let scriptTag = document.getElementById("sentire-dynamic-jsonld") as HTMLScriptElement | null;
+    let scriptTag = document.getElementById(
+      "sentire-dynamic-jsonld",
+    ) as HTMLScriptElement | null;
     if (!scriptTag) {
       scriptTag = document.createElement("script");
       scriptTag.id = "sentire-dynamic-jsonld";

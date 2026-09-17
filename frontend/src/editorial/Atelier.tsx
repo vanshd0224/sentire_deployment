@@ -85,7 +85,9 @@ export default function Atelier() {
                     <h3 className="font-serif text-[clamp(1.5rem,3vw,2.25rem)] font-light leading-tight tracking-[-0.015em]">
                       {step.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-[15px] leading-[1.75] text-ink-soft">{step.body}</p>
+                    <p className="mt-3 max-w-md text-[15px] leading-[1.75] text-ink-soft">
+                      {step.body}
+                    </p>
                     {/* Phones see the image inline instead of the sticky column */}
                     <div className="mt-6 aspect-[3/2] w-full overflow-hidden rounded-[2px] bg-paper-2 lg:hidden">
                       <img

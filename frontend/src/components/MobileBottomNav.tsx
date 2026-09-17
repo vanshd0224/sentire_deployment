@@ -27,6 +27,7 @@ export default function MobileBottomNav({
 
   return (
     <>
+      {" "}
       <style>{`
         .snav-dock-container {
           position: fixed;
@@ -198,17 +199,23 @@ export default function MobileBottomNav({
           line-height: 1;
           border: 1.5px solid #FBF8F2;
         }
-      `}</style>
-
-      <div className="snav-dock-container" aria-label="Mobile Bottom Navigation">
+      `}</style>{" "}
+      <div
+        className="snav-dock-container"
+        aria-label="Mobile Bottom Navigation"
+      >
+        {" "}
         <nav className="snav-dock">
+          {" "}
           {/* 1. HOME */}
           <button
             onClick={() => onNavigate("home")}
             className={`snav-item${isHomeActive ? " is-active" : ""}`}
             aria-label="Home"
           >
+            {" "}
             <span className="snav-icon">
+              {" "}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -219,20 +226,22 @@ export default function MobileBottomNav({
                 width={21}
                 height={21}
               >
-                <path d="M3 10.5L12 3l9 7.5v10a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 20.5v-10z" />
-                <path d="M9 22V13h6v9" />
-              </svg>
-            </span>
-            <span className="snav-label">Home</span>
-          </button>
-
+                {" "}
+                <path d="M3 10.5L12 3l9 7.5v10a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 20.5v-10z" />{" "}
+                <path d="M9 22V13h6v9" />{" "}
+              </svg>{" "}
+            </span>{" "}
+            <span className="snav-label">Home</span>{" "}
+          </button>{" "}
           {/* 2. PERFUMES */}
           <button
             onClick={() => onNavigate("perfumes")}
             className={`snav-item${isPerfumesActive ? " is-active" : ""}`}
             aria-label="Shop perfumes"
           >
+            {" "}
             <span className="snav-icon">
+              {" "}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -243,15 +252,15 @@ export default function MobileBottomNav({
                 width={21}
                 height={21}
               >
-                <rect x="7" y="9" width="10" height="12" rx="2" />
-                <path d="M10 9V6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3" />
-                <line x1="12" y1="3" x2="12" y2="5" />
-                <circle cx="12" cy="14" r="0.9" fill="currentColor" />
-              </svg>
-            </span>
-            <span className="snav-label">Perfumes</span>
-          </button>
-
+                {" "}
+                <rect x="7" y="9" width="10" height="12" rx="2" />{" "}
+                <path d="M10 9V6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3" />{" "}
+                <line x1="12" y1="3" x2="12" y2="5" />{" "}
+                <circle cx="12" cy="14" r="0.9" fill="currentColor" />{" "}
+              </svg>{" "}
+            </span>{" "}
+            <span className="snav-label">Perfumes</span>{" "}
+          </button>{" "}
           {/* 3. CENTER: BYOB */}
           <button
             onClick={() => {
@@ -260,7 +269,9 @@ export default function MobileBottomNav({
             className={`snav-center${isByobActive ? " is-active" : ""}`}
             aria-label="Build your own bundle"
           >
+            {" "}
             <span className="snav-byob-circle">
+              {" "}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -271,19 +282,21 @@ export default function MobileBottomNav({
                 width={24}
                 height={24}
               >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
-            </span>
-            <span className="snav-center-label">BYOB</span>
-          </button>
-
+                {" "}
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />{" "}
+              </svg>{" "}
+            </span>{" "}
+            <span className="snav-center-label">BYOB</span>{" "}
+          </button>{" "}
           {/* 4. SEARCH */}
           <button
             onClick={onToggleSearch}
             className="snav-item"
             aria-label="Search fragrances"
           >
+            {" "}
             <span className="snav-icon">
+              {" "}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -294,20 +307,22 @@ export default function MobileBottomNav({
                 width={21}
                 height={21}
               >
-                <circle cx="11" cy="11" r="7" />
-                <line x1="16.5" y1="16.5" x2="21.5" y2="21.5" />
-              </svg>
-            </span>
-            <span className="snav-label">Search</span>
-          </button>
-
+                {" "}
+                <circle cx="11" cy="11" r="7" />{" "}
+                <line x1="16.5" y1="16.5" x2="21.5" y2="21.5" />{" "}
+              </svg>{" "}
+            </span>{" "}
+            <span className="snav-label">Search</span>{" "}
+          </button>{" "}
           {/* 5. CART */}
           <button
             onClick={onOpenCart}
             className="snav-item"
             aria-label={`Cart ${cartCount > 0 ? `, ${cartCount} items` : ""}`}
           >
+            {" "}
             <span className="snav-icon">
+              {" "}
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -318,17 +333,20 @@ export default function MobileBottomNav({
                 width={21}
                 height={21}
               >
-                <path d="M6 8.5h12l-1 12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20.5l-1-12z" />
-                <path d="M9 8.5V6a3 3 0 0 1 6 0v2.5" />
-              </svg>
+                {" "}
+                <path d="M6 8.5h12l-1 12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20.5l-1-12z" />{" "}
+                <path d="M9 8.5V6a3 3 0 0 1 6 0v2.5" />{" "}
+              </svg>{" "}
               {cartCount > 0 && (
-                <span className="snav-cart-badge">{cartCount > 9 ? "9+" : cartCount}</span>
+                <span className="snav-cart-badge">
+                  {cartCount > 9 ? "9+" : cartCount}
+                </span>
               )}
-            </span>
-            <span className="snav-label">Cart</span>
-          </button>
-        </nav>
-      </div>
+            </span>{" "}
+            <span className="snav-label">Cart</span>{" "}
+          </button>{" "}
+        </nav>{" "}
+      </div>{" "}
     </>
   );
 }

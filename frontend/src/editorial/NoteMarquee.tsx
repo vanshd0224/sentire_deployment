@@ -33,8 +33,13 @@ export default function NoteMarquee() {
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 4], { clamp: false });
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 4], {
+    clamp: false,
+  });
   const direction = useRef(1);
 
   const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
@@ -68,7 +73,10 @@ export default function NoteMarquee() {
       aria-label="Notes in the collection"
     >
       <div className="overflow-hidden">
-        <motion.div className="flex flex-nowrap will-change-transform" style={{ x }}>
+        <motion.div
+          className="flex flex-nowrap will-change-transform"
+          style={{ x }}
+        >
           {row}
           {row}
           {row}

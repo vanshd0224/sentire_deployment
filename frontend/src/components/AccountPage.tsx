@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../lib/firebase";
-import { signOut, onAuthStateChanged, User, updateProfile } from "firebase/auth";
+import {
+  signOut,
+  onAuthStateChanged,
+  User,
+  updateProfile,
+} from "firebase/auth";
 
 interface AccountPageProps {
   onNavigate: (page: any) => void;
@@ -20,16 +25,22 @@ interface Address {
   isDefault: boolean;
 }
 
-export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPageProps) {
+export default function AccountPage({
+  onNavigate,
+  onOpenLoginModal,
+}: AccountPageProps) {
   const [user, setUser] = useState<User | null>(auth.currentUser);
   const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
-  
+
   // Stored Name & Profile Data (No raw phone number fallbacks!)
-  const rawStoredName = localStorage.getItem("sentire_user_name") || user?.displayName || "";
+  const rawStoredName =
+    localStorage.getItem("sentire_user_name") || user?.displayName || "";
   const storedName = rawStoredName.startsWith("+") ? "" : rawStoredName;
-  const storedPhone = user?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
-  const storedEmail = user?.email || localStorage.getItem("sentire_user_email") || "";
+  const storedPhone =
+    user?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
+  const storedEmail =
+    user?.email || localStorage.getItem("sentire_user_email") || "";
 
   const [profileData, setProfileData] = useState({
     firstName: storedName || "Sentire Member",
@@ -56,8 +67,16 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
 
   // Helper to resolve unique account storage key for orders
   const getUserOrdersKey = (phone?: string, email?: string) => {
-    const currentPhone = phone || localStorage.getItem("sentire_user_phone") || auth.currentUser?.phoneNumber || "";
-    const currentEmail = email || localStorage.getItem("sentire_user_email") || auth.currentUser?.email || "";
+    const currentPhone =
+      phone ||
+      localStorage.getItem("sentire_user_phone") ||
+      auth.currentUser?.phoneNumber ||
+      "";
+    const currentEmail =
+      email ||
+      localStorage.getItem("sentire_user_email") ||
+      auth.currentUser?.email ||
+      "";
     const id = currentPhone || currentEmail || auth.currentUser?.uid || "user";
     return `sentire_orders_${id.replace(/[^\w]/g, "_")}`;
   };
@@ -72,12 +91,18 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     const savedGeneric = localStorage.getItem("sentire_user_orders");
 
     if (savedSpecific) {
-      try { currentOrders = JSON.parse(savedSpecific); } catch (e) {}
+      try {
+        currentOrders = JSON.parse(savedSpecific);
+      } catch (e) {}
     } else if (savedGeneric) {
-      try { currentOrders = JSON.parse(savedGeneric); } catch (e) {}
+      try {
+        currentOrders = JSON.parse(savedGeneric);
+      } catch (e) {}
     }
 
-    const pendingSnapshot = localStorage.getItem("sentire_pending_checkout_order");
+    const pendingSnapshot = localStorage.getItem(
+      "sentire_pending_checkout_order",
+    );
     if (pendingSnapshot) {
       try {
         const newOrd = JSON.parse(pendingSnapshot);
@@ -92,7 +117,10 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     // Persist orders safely across logins
     try {
       localStorage.setItem(specificKey, JSON.stringify(currentOrders));
-      localStorage.setItem("sentire_user_orders", JSON.stringify(currentOrders));
+      localStorage.setItem(
+        "sentire_user_orders",
+        JSON.stringify(currentOrders),
+      );
     } catch (e) {}
 
     return currentOrders;
@@ -105,10 +133,13 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
       setAuthLoading(false);
-      const rawName = u?.displayName || localStorage.getItem("sentire_user_name") || "";
+      const rawName =
+        u?.displayName || localStorage.getItem("sentire_user_name") || "";
       const name = rawName.startsWith("+") ? "" : rawName;
-      const phone = u?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
-      const email = u?.email || localStorage.getItem("sentire_user_email") || "";
+      const phone =
+        u?.phoneNumber || localStorage.getItem("sentire_user_phone") || "";
+      const email =
+        u?.email || localStorage.getItem("sentire_user_email") || "";
 
       setProfileData({
         firstName: name || "Sentire Member",
@@ -127,7 +158,9 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     localStorage.setItem("sentire_user_name", profileData.firstName);
     if (auth.currentUser) {
       try {
-        await updateProfile(auth.currentUser, { displayName: profileData.firstName });
+        await updateProfile(auth.currentUser, {
+          displayName: profileData.firstName,
+        });
       } catch (e) {
         console.log("Firebase profile update notice:", e);
       }
@@ -156,7 +189,14 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     setAddresses(updated);
     localStorage.setItem("sentire_user_addresses", JSON.stringify(updated));
     setIsAddressModalOpen(false);
-    setNewAddr({ name: profileData.firstName, phone: profileData.phone, street: "", city: "", state: "", pincode: "" });
+    setNewAddr({
+      name: profileData.firstName,
+      phone: profileData.phone,
+      street: "",
+      city: "",
+      state: "",
+      pincode: "",
+    });
   };
 
   const handleLogout = async () => {
@@ -172,16 +212,21 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
     onNavigate("home");
   };
 
-  const isStoredLoggedIn = localStorage.getItem("sentire_is_logged_in") === "true";
+  const isStoredLoggedIn =
+    localStorage.getItem("sentire_is_logged_in") === "true";
 
   // Display a smooth luxury loader while Firebase initializes on page reload or Shopify return
   if (authLoading) {
     return (
       <div className="min-h-[75vh] bg-[#f4f2ee] flex flex-col items-center justify-center p-6 text-center">
+        {" "}
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-2 border-[#1c1b18] border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs uppercase tracking-widest text-[#777777] font-mono">Authenticating Private Account...</p>
-        </div>
+          {" "}
+          <div className="w-10 h-10 border-2 border-[#1c1b18] border-t-transparent rounded-full animate-spin" />{" "}
+          <p className="text-xs uppercase tracking-widest text-[#777777] font-mono">
+            Authenticating Private Account...
+          </p>{" "}
+        </div>{" "}
       </div>
     );
   }
@@ -189,21 +234,28 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
   if (!user && !isStoredLoggedIn) {
     return (
       <div className="min-h-[75vh] bg-[#f4f2ee] flex flex-col items-center justify-center p-6 text-center">
+        {" "}
         <div className="max-w-md w-full bg-[#ffffff] p-8 sm:p-10 rounded-3xl border border-[#dedad3] shadow-sm">
+          {" "}
           <div className="w-16 h-16 bg-[#eeebe5] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-            👤
-          </div>
-          <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-2">My Account</h2>
+            {" "}
+          </div>{" "}
+          <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-2">
+            My Account
+          </h2>{" "}
           <p className="text-xs text-[#666666] mb-8 leading-relaxed">
-            Log in with your Mobile Number or Google account to view orders, track shipments, and manage saved addresses.
-          </p>
+            {" "}
+            Log in with your Mobile Number or Google account to view orders,
+            track shipments, and manage saved addresses.
+          </p>{" "}
           <button
             onClick={() => onOpenLoginModal?.()}
             className="w-full py-4 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md cursor-pointer"
           >
+            {" "}
             Login / Sign Up Now
-          </button>
-        </div>
+          </button>{" "}
+        </div>{" "}
       </div>
     );
   }
@@ -213,43 +265,60 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
 
   return (
     <div className="min-h-screen bg-[#f4f2ee] text-[#1c1b18] pt-8 pb-16 px-4 sm:px-8 max-w-7xl mx-auto">
+      {" "}
       {/* Breadcrumb Navigation */}
       <div className="mb-6 flex items-center gap-2 text-xs text-[#777777]">
-        <button onClick={() => onNavigate("home")} className="hover:text-[#1c1b18] cursor-pointer">
+        {" "}
+        <button
+          onClick={() => onNavigate("home")}
+          className="hover:text-[#1c1b18] cursor-pointer"
+        >
+          {" "}
           Home
-        </button>
-        <span>/</span>
-        <span className="font-semibold text-[#1c1b18]">Account</span>
-      </div>
-
+        </button>{" "}
+        <span>/</span>{" "}
+        <span className="font-semibold text-[#1c1b18]">Account</span>{" "}
+      </div>{" "}
       <div className="flex flex-col lg:flex-row gap-8 items-start">
+        {" "}
         {/* Left Sidebar */}
         <div className="w-full lg:w-80 bg-[#ffffff] p-6 rounded-2xl border border-[#dedad3] shadow-sm shrink-0">
+          {" "}
           <div className="bg-[#f4f2ee] p-4 rounded-xl border border-[#e6e3dd] mb-6">
+            {" "}
             <div className="flex items-center justify-between">
+              {" "}
               <div>
+                {" "}
                 <button
                   onClick={() => setActiveTab("profile")}
                   className="font-bold text-sm text-[#1c1b18] hover:text-[#a4492e] transition-colors flex items-center gap-1 cursor-pointer"
                 >
+                  {" "}
                   Hey, {displayName} &gt;
-                </button>
-                <p className="text-[11px] text-[#666666] mt-0.5">Logged with {userPhone}</p>
-              </div>
+                </button>{" "}
+                <p className="text-[11px] text-[#666666] mt-0.5">
+                  Logged with {userPhone}
+                </p>{" "}
+              </div>{" "}
               <div className="w-10 h-10 rounded-full bg-[#1c1b18] text-[#a4492e] font-bold text-base flex items-center justify-center">
+                {" "}
                 {displayName.charAt(0).toUpperCase()}
-              </div>
-            </div>
-          </div>
-
+              </div>{" "}
+            </div>{" "}
+          </div>{" "}
           <div className="bg-[#ffffff] p-4 rounded-xl border border-[#e6e3dd] text-center mb-6">
-            <span className="text-2xl font-bold text-[#1c1b18]">{userOrders.length}</span>
+            {" "}
+            <span className="text-2xl font-bold text-[#1c1b18]">
+              {userOrders.length}
+            </span>{" "}
             <p className="text-[10px] text-[#777777] uppercase font-semibold tracking-wider mt-0.5">
+              {" "}
               Total Orders
-            </p>
-          </div>
-
+            </p>{" "}
+          </div>{" "}
           <nav className="space-y-1.5">
+            {" "}
             <button
               onClick={() => setActiveTab("overview")}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -258,12 +327,13 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                   : "text-[#555555] hover:bg-[#f4f2ee]"
               }`}
             >
+              {" "}
               <div className="flex items-center gap-3">
-                <span>🏠</span> Overview
-              </div>
-              <span className="text-xs">&gt;</span>
-            </button>
-
+                {" "}
+                <span></span> Overview
+              </div>{" "}
+              <span className="text-xs">&gt;</span>{" "}
+            </button>{" "}
             <button
               onClick={() => setActiveTab("orders")}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -272,12 +342,13 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                   : "text-[#555555] hover:bg-[#f4f2ee]"
               }`}
             >
+              {" "}
               <div className="flex items-center gap-3">
-                <span>🛍️</span> My Orders
-              </div>
-              <span className="text-xs">&gt;</span>
-            </button>
-
+                {" "}
+                <span></span> My Orders
+              </div>{" "}
+              <span className="text-xs">&gt;</span>{" "}
+            </button>{" "}
             <button
               onClick={() => setActiveTab("addresses")}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -286,12 +357,13 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                   : "text-[#555555] hover:bg-[#f4f2ee]"
               }`}
             >
+              {" "}
               <div className="flex items-center gap-3">
-                <span>📍</span> My Address
-              </div>
-              <span className="text-xs">&gt;</span>
-            </button>
-
+                {" "}
+                <span></span> My Address
+              </div>{" "}
+              <span className="text-xs">&gt;</span>{" "}
+            </button>{" "}
             <button
               onClick={() => setActiveTab("profile")}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -300,239 +372,361 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                   : "text-[#555555] hover:bg-[#f4f2ee]"
               }`}
             >
+              {" "}
               <div className="flex items-center gap-3">
-                <span>👤</span> Profile Details
-              </div>
-              <span className="text-xs">&gt;</span>
-            </button>
-          </nav>
-
+                {" "}
+                <span></span> Profile Details
+              </div>{" "}
+              <span className="text-xs">&gt;</span>{" "}
+            </button>{" "}
+          </nav>{" "}
           <button
             onClick={handleLogout}
             className="w-full mt-8 py-3 px-4 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl flex items-center justify-start gap-3 transition-all cursor-pointer border border-red-100"
           >
-            <span>🚪</span> Logout
-          </button>
-        </div>
-
+            {" "}
+            <span></span> Logout
+          </button>{" "}
+        </div>{" "}
         {/* Right Main Content Area */}
         <div className="w-full bg-[#ffffff] p-6 sm:p-8 rounded-2xl border border-[#dedad3] shadow-sm min-h-[500px]">
+          {" "}
           {activeTab === "overview" && (
             <div className="space-y-8">
-              <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">Overview</h2>
-
+              {" "}
+              <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+                Overview
+              </h2>{" "}
               <div className="space-y-3">
+                {" "}
                 <h3 className="text-xs font-bold text-[#1c1b18] uppercase tracking-wider">
+                  {" "}
                   My Orders ({userOrders.length})
-                </h3>
+                </h3>{" "}
                 {userOrders.length === 0 ? (
                   <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
+                    {" "}
                     <div className="w-14 h-14 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
-                      📦
-                    </div>
-                    <h4 className="text-sm font-bold text-[#1c1b18]">No Past Orders Yet</h4>
+                      {" "}
+                    </div>{" "}
+                    <h4 className="text-sm font-bold text-[#1c1b18]">
+                      No Past Orders Yet
+                    </h4>{" "}
                     <p className="text-xs text-[#777777] mt-1 mb-4">
+                      {" "}
                       Start your first order to see it here.
-                    </p>
+                    </p>{" "}
                     <button
                       onClick={() => onNavigate("perfumes")}
                       className="px-6 py-2.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                     >
+                      {" "}
                       Shop Now
-                    </button>
+                    </button>{" "}
                   </div>
                 ) : (
                   <div className="space-y-3">
+                    {" "}
                     {userOrders.slice(0, 2).map((ord: any, idx: number) => (
-                      <div key={ord.id || idx} className="bg-[#f4f2ee] p-4 rounded-xl border border-[#dedad3] flex items-center justify-between text-xs">
+                      <div
+                        key={ord.id || idx}
+                        className="bg-[#f4f2ee] p-4 rounded-xl border border-[#dedad3] flex items-center justify-between text-xs"
+                      >
+                        {" "}
                         <div>
-                          <p className="font-bold text-[#1c1b18]">Order #{ord.orderNumber || ord.id || `SC-${1000 + idx}`}</p>
-                          <p className="text-[11px] text-[#777]">{ord.date || "Recent Order"} · {ord.items?.length || 1} Item(s)</p>
-                        </div>
+                          {" "}
+                          <p className="font-bold text-[#1c1b18]">
+                            Order #
+                            {ord.orderNumber || ord.id || `SC-${1000 + idx}`}
+                          </p>{" "}
+                          <p className="text-[11px] text-[#777]">
+                            {ord.date || "Recent Order"} ·{" "}
+                            {ord.items?.length || 1} Item(s)
+                          </p>{" "}
+                        </div>{" "}
                         <div className="text-right">
-                          <span className="font-bold text-[#1c1b18]">₹{(ord.total || 0).toLocaleString()}</span>
-                          <p className="text-[10px] text-emerald-600 font-semibold">{ord.status || "Confirmed"}</p>
-                        </div>
+                          {" "}
+                          <span className="font-bold text-[#1c1b18]">
+                            ₹{(ord.total || 0).toLocaleString()}
+                          </span>{" "}
+                          <p className="text-[10px] text-emerald-600 font-semibold">
+                            {ord.status || "Confirmed"}
+                          </p>{" "}
+                        </div>{" "}
                       </div>
                     ))}
                   </div>
                 )}
-              </div>
-
+              </div>{" "}
               <div className="space-y-3">
+                {" "}
                 <div className="flex items-center justify-between">
+                  {" "}
                   <h3 className="text-xs font-bold text-[#1c1b18] uppercase tracking-wider">
+                    {" "}
                     Saved Addresses
-                  </h3>
+                  </h3>{" "}
                   <button
                     onClick={() => setIsAddressModalOpen(true)}
                     className="text-xs font-semibold text-[#a4492e] hover:underline cursor-pointer"
                   >
+                    {" "}
                     + Add New
-                  </button>
-                </div>
-
+                  </button>{" "}
+                </div>{" "}
                 {addresses.length === 0 ? (
                   <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
+                    {" "}
                     <div className="w-14 h-14 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
-                      📍
-                    </div>
-                    <h4 className="text-sm font-bold text-[#1c1b18]">No Address Saved Yet</h4>
+                      {" "}
+                    </div>{" "}
+                    <h4 className="text-sm font-bold text-[#1c1b18]">
+                      No Address Saved Yet
+                    </h4>{" "}
                     <p className="text-xs text-[#777777] mt-1 mb-4">
+                      {" "}
                       Tap to add and shop faster.
-                    </p>
+                    </p>{" "}
                     <button
                       onClick={() => setIsAddressModalOpen(true)}
                       className="px-6 py-2.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                     >
+                      {" "}
                       Add New Address Now
-                    </button>
+                    </button>{" "}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {" "}
                     {addresses.map((addr) => (
-                      <div key={addr.id} className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs">
+                      <div
+                        key={addr.id}
+                        className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs"
+                      >
+                        {" "}
                         <div className="flex items-center justify-between mb-2">
-                          <span className="font-bold text-sm text-[#1c1b18]">{addr.name}</span>
+                          {" "}
+                          <span className="font-bold text-sm text-[#1c1b18]">
+                            {addr.name}
+                          </span>{" "}
                           {addr.isDefault && (
-                            <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">Default</span>
+                            <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                              Default
+                            </span>
                           )}
-                        </div>
-                        <p className="text-[#555]">{addr.street}</p>
-                        <p className="text-[#555]">{addr.city}, {addr.state} - {addr.pincode}</p>
-                        <p className="text-[#777] pt-1">Phone: {addr.phone}</p>
+                        </div>{" "}
+                        <p className="text-[#555]">{addr.street}</p>{" "}
+                        <p className="text-[#555]">
+                          {addr.city}, {addr.state} - {addr.pincode}
+                        </p>{" "}
+                        <p className="text-[#777] pt-1">
+                          Phone: {addr.phone}
+                        </p>{" "}
                       </div>
                     ))}
                   </div>
                 )}
-              </div>
+              </div>{" "}
             </div>
           )}
-
           {activeTab === "orders" && (
             <div>
-              <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-6">My Orders</h2>
+              {" "}
+              <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-6">
+                My Orders
+              </h2>{" "}
               {userOrders.length === 0 ? (
                 <div className="bg-[#f4f2ee] p-12 rounded-2xl border border-[#e6e3dd] text-center">
+                  {" "}
                   <div className="w-16 h-16 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
-                    🛍️
-                  </div>
-                  <h3 className="text-base font-bold text-[#1c1b18]">No Active Orders</h3>
+                    {" "}
+                  </div>{" "}
+                  <h3 className="text-base font-bold text-[#1c1b18]">
+                    No Active Orders
+                  </h3>{" "}
                   <p className="text-xs text-[#666666] mt-1 mb-6 max-w-sm mx-auto">
-                    You haven't placed any orders yet. Discover our luxury perfumes collection.
-                  </p>
+                    {" "}
+                    You haven't placed any orders yet. Discover our luxury
+                    perfumes collection.
+                  </p>{" "}
                   <button
                     onClick={() => onNavigate("perfumes")}
                     className="px-8 py-3 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-md cursor-pointer uppercase tracking-wider"
                   >
+                    {" "}
                     Explore Perfumes Collection
-                  </button>
+                  </button>{" "}
                 </div>
               ) : (
                 <div className="space-y-4">
+                  {" "}
                   {userOrders.map((ord: any, idx: number) => (
-                    <div key={ord.id || idx} className="bg-[#f4f2ee] p-5 sm:p-6 rounded-2xl border border-[#dedad3] space-y-4">
+                    <div
+                      key={ord.id || idx}
+                      className="bg-[#f4f2ee] p-5 sm:p-6 rounded-2xl border border-[#dedad3] space-y-4"
+                    >
+                      {" "}
                       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e6e3dd] pb-3">
+                        {" "}
                         <div>
-                          <span className="font-bold text-sm text-[#1c1b18]">Order #{ord.orderNumber || ord.id || `SC-${1000 + idx}`}</span>
-                          <p className="text-[11px] text-[#777777] mt-0.5">Placed on {ord.date || "Today"}</p>
-                        </div>
+                          {" "}
+                          <span className="font-bold text-sm text-[#1c1b18]">
+                            Order #
+                            {ord.orderNumber || ord.id || `SC-${1000 + idx}`}
+                          </span>{" "}
+                          <p className="text-[11px] text-[#777777] mt-0.5">
+                            Placed on {ord.date || "Today"}
+                          </p>{" "}
+                        </div>{" "}
                         <div className="flex items-center gap-3">
+                          {" "}
                           <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            {" "}
                             {ord.status || "Confirmed"}
-                          </span>
+                          </span>{" "}
                           <span className="font-serif font-bold text-sm text-[#1c1b18]">
+                            {" "}
                             ₹{(ord.total || 0).toLocaleString()}
-                          </span>
-                        </div>
-                      </div>
-
+                          </span>{" "}
+                        </div>{" "}
+                      </div>{" "}
                       <div className="space-y-2">
+                        {" "}
                         {(ord.items || []).map((item: any, i: number) => (
-                          <div key={i} className="flex items-center justify-between text-xs py-1">
+                          <div
+                            key={i}
+                            className="flex items-center justify-between text-xs py-1"
+                          >
+                            {" "}
                             <div className="flex items-center gap-3">
+                              {" "}
                               {item.img || item.image ? (
-                                <img src={item.img || item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg border border-[#dedad3]" />
+                                <img
+                                  src={item.img || item.image}
+                                  alt={item.name}
+                                  className="w-10 h-10 object-cover rounded-lg border border-[#dedad3]"
+                                />
                               ) : (
-                                <div className="w-10 h-10 bg-[#eeebe5] rounded-lg border border-[#dedad3] flex items-center justify-center text-base">✨</div>
+                                <div className="w-10 h-10 bg-[#eeebe5] rounded-lg border border-[#dedad3] flex items-center justify-center text-base"></div>
                               )}
                               <div>
-                                <p className="font-semibold text-[#1c1b18]">{item.name}</p>
-                                <p className="text-[10px] text-[#777777]">Size: {item.size || 50} ML · Qty: {item.quantity || 1}</p>
-                              </div>
-                            </div>
-                            <span className="font-medium text-[#1c1b18]">₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}</span>
+                                {" "}
+                                <p className="font-semibold text-[#1c1b18]">
+                                  {item.name}
+                                </p>{" "}
+                                <p className="text-[10px] text-[#777777]">
+                                  Size: {item.size || 50} ML · Qty:{" "}
+                                  {item.quantity || 1}
+                                </p>{" "}
+                              </div>{" "}
+                            </div>{" "}
+                            <span className="font-medium text-[#1c1b18]">
+                              ₹
+                              {(
+                                (item.price || 0) * (item.quantity || 1)
+                              ).toLocaleString()}
+                            </span>{" "}
                           </div>
                         ))}
-                      </div>
-
+                      </div>{" "}
                       <div className="pt-2 border-t border-[#e6e3dd] flex items-center justify-between">
-                        <span className="text-[11px] text-[#777777]">Shipped via Express Courier</span>
+                        {" "}
+                        <span className="text-[11px] text-[#777777]">
+                          Shipped via Express Courier
+                        </span>{" "}
                         <button
                           onClick={() => {
                             if (ord.orderNumber || ord.id) {
-                              localStorage.setItem("sentire_active_track_query", ord.orderNumber || ord.id);
+                              localStorage.setItem(
+                                "sentire_active_track_query",
+                                ord.orderNumber || ord.id,
+                              );
                             }
                             onNavigate("track-order");
                           }}
                           className="text-xs font-semibold text-[#a4492e] hover:underline cursor-pointer flex items-center gap-1"
                         >
+                          {" "}
                           Track Order Details &rarr;
-                        </button>
-                      </div>
+                        </button>{" "}
+                      </div>{" "}
                     </div>
                   ))}
                 </div>
               )}
             </div>
           )}
-
           {activeTab === "addresses" && (
             <div>
+              {" "}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">Saved Addresses</h2>
+                {" "}
+                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+                  Saved Addresses
+                </h2>{" "}
                 <button
                   onClick={() => setIsAddressModalOpen(true)}
                   className="px-4 py-2 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] text-xs font-semibold rounded-xl transition-all cursor-pointer"
                 >
+                  {" "}
                   + Add New Address
-                </button>
-              </div>
-
+                </button>{" "}
+              </div>{" "}
               {addresses.length === 0 ? (
                 <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
-                  <p className="text-xs text-[#666666] mb-4">No default shipping address configured.</p>
+                  {" "}
+                  <p className="text-xs text-[#666666] mb-4">
+                    No default shipping address configured.
+                  </p>{" "}
                   <button
                     onClick={() => setIsAddressModalOpen(true)}
                     className="px-6 py-2.5 bg-[#a4492e] text-[#000000] text-xs font-semibold rounded-xl"
                   >
+                    {" "}
                     Add Shipping Address
-                  </button>
+                  </button>{" "}
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {" "}
                   {addresses.map((addr) => (
-                    <div key={addr.id} className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs">
+                    <div
+                      key={addr.id}
+                      className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs"
+                    >
+                      {" "}
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-bold text-sm text-[#1c1b18]">{addr.name}</span>
+                        {" "}
+                        <span className="font-bold text-sm text-[#1c1b18]">
+                          {addr.name}
+                        </span>{" "}
                         {addr.isDefault && (
-                          <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">Default</span>
+                          <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                            Default
+                          </span>
                         )}
-                      </div>
-                      <p className="text-[#555]">{addr.street}</p>
-                      <p className="text-[#555]">{addr.city}, {addr.state} - {addr.pincode}</p>
-                      <p className="text-[#777] pt-1">Phone: {addr.phone}</p>
+                      </div>{" "}
+                      <p className="text-[#555]">{addr.street}</p>{" "}
+                      <p className="text-[#555]">
+                        {addr.city}, {addr.state} - {addr.pincode}
+                      </p>{" "}
+                      <p className="text-[#777] pt-1">
+                        Phone: {addr.phone}
+                      </p>{" "}
                     </div>
                   ))}
                 </div>
               )}
             </div>
           )}
-
           {activeTab === "profile" && (
             <div>
+              {" "}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">Profile Details</h2>
+                {" "}
+                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+                  Profile Details
+                </h2>{" "}
                 <button
                   onClick={() => {
                     if (isEditing) handleSaveProfile();
@@ -540,114 +734,160 @@ export default function AccountPage({ onNavigate, onOpenLoginModal }: AccountPag
                   }}
                   className="px-5 py-2.5 bg-[#a4492e] hover:bg-[#1c1b18] text-[#000000] hover:text-[#ffffff] text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm"
                 >
+                  {" "}
                   {isEditing ? "Save Changes" : "Edit Profile"}
-                </button>
-              </div>
-
+                </button>{" "}
+              </div>{" "}
               {saveMessage && (
                 <div className="p-3 bg-green-50 text-green-700 text-xs rounded-xl mb-4 text-center font-semibold">
+                  {" "}
                   {saveMessage}
                 </div>
               )}
-
               <div className="space-y-4">
+                {" "}
                 <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
-                  <span className="text-xs text-[#666666] font-medium">First Name</span>
+                  {" "}
+                  <span className="text-xs text-[#666666] font-medium">
+                    First Name
+                  </span>{" "}
                   {isEditing ? (
                     <input
                       type="text"
                       value={profileData.firstName}
-                      onChange={(e) => setProfileData({ ...profileData, firstName: e.target.value })}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          firstName: e.target.value,
+                        })
+                      }
                       className="px-3 py-1.5 bg-[#ffffff] border border-[#a4492e] rounded-lg text-xs outline-none text-[#1c1b18] font-semibold"
                     />
                   ) : (
-                    <span className="text-xs font-semibold text-[#1c1b18]">{displayName}</span>
+                    <span className="text-xs font-semibold text-[#1c1b18]">
+                      {displayName}
+                    </span>
                   )}
-                </div>
-
+                </div>{" "}
                 <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
-                  <span className="text-xs text-[#666666] font-medium">Phone Number</span>
-                  <span className="text-xs font-semibold text-[#1c1b18]">{userPhone}</span>
-                </div>
-
+                  {" "}
+                  <span className="text-xs text-[#666666] font-medium">
+                    Phone Number
+                  </span>{" "}
+                  <span className="text-xs font-semibold text-[#1c1b18]">
+                    {userPhone}
+                  </span>{" "}
+                </div>{" "}
                 <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
-                  <span className="text-xs text-[#666666] font-medium">Email ID</span>
+                  {" "}
+                  <span className="text-xs text-[#666666] font-medium">
+                    Email ID
+                  </span>{" "}
                   {isEditing ? (
                     <input
                       type="email"
                       value={profileData.email}
-                      onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          email: e.target.value,
+                        })
+                      }
                       className="px-3 py-1.5 bg-[#ffffff] border border-[#a4492e] rounded-lg text-xs outline-none text-[#1c1b18] font-semibold"
                     />
                   ) : (
-                    <span className="text-xs font-semibold text-[#1c1b18]">{profileData.email}</span>
+                    <span className="text-xs font-semibold text-[#1c1b18]">
+                      {profileData.email}
+                    </span>
                   )}
-                </div>
-              </div>
+                </div>{" "}
+              </div>{" "}
             </div>
           )}
-        </div>
-      </div>
-
+        </div>{" "}
+      </div>{" "}
       {/* Add Address Modal */}
       {isAddressModalOpen && (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 p-4">
+          {" "}
           <div className="bg-[#ffffff] text-[#1c1b18] p-6 sm:p-8 rounded-2xl max-w-md w-full shadow-2xl border border-[#dedad3]">
+            {" "}
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-serif font-bold">Add Shipping Address</h3>
-              <button onClick={() => setIsAddressModalOpen(false)} className="text-xl leading-none">&times;</button>
-            </div>
+              {" "}
+              <h3 className="text-lg font-serif font-bold">
+                Add Shipping Address
+              </h3>{" "}
+              <button
+                onClick={() => setIsAddressModalOpen(false)}
+                className="text-xl leading-none"
+              >
+                &times;
+              </button>{" "}
+            </div>{" "}
             <form onSubmit={handleAddAddress} className="space-y-3 text-xs">
+              {" "}
               <input
                 type="text"
                 placeholder="Full Name"
                 value={newAddr.name}
-                onChange={(e) => setNewAddr({ ...newAddr, name: e.target.value })}
+                onChange={(e) =>
+                  setNewAddr({ ...newAddr, name: e.target.value })
+                }
                 className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
                 required
-              />
+              />{" "}
               <input
                 type="text"
                 placeholder="Flat / House No / Street Address"
                 value={newAddr.street}
-                onChange={(e) => setNewAddr({ ...newAddr, street: e.target.value })}
+                onChange={(e) =>
+                  setNewAddr({ ...newAddr, street: e.target.value })
+                }
                 className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
                 required
-              />
+              />{" "}
               <div className="grid grid-cols-2 gap-2">
+                {" "}
                 <input
                   type="text"
                   placeholder="City"
                   value={newAddr.city}
-                  onChange={(e) => setNewAddr({ ...newAddr, city: e.target.value })}
+                  onChange={(e) =>
+                    setNewAddr({ ...newAddr, city: e.target.value })
+                  }
                   className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
                   required
-                />
+                />{" "}
                 <input
                   type="text"
                   placeholder="Pincode"
                   value={newAddr.pincode}
-                  onChange={(e) => setNewAddr({ ...newAddr, pincode: e.target.value })}
+                  onChange={(e) =>
+                    setNewAddr({ ...newAddr, pincode: e.target.value })
+                  }
                   className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
                   required
-                />
-              </div>
+                />{" "}
+              </div>{" "}
               <input
                 type="tel"
                 placeholder="Mobile Number"
                 value={newAddr.phone}
-                onChange={(e) => setNewAddr({ ...newAddr, phone: e.target.value })}
+                onChange={(e) =>
+                  setNewAddr({ ...newAddr, phone: e.target.value })
+                }
                 className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
                 required
-              />
+              />{" "}
               <button
                 type="submit"
                 className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] font-semibold text-xs rounded-xl transition-all mt-2"
               >
+                {" "}
                 Save Shipping Address
-              </button>
-            </form>
-          </div>
+              </button>{" "}
+            </form>{" "}
+          </div>{" "}
         </div>
       )}
     </div>

@@ -49,7 +49,10 @@ interface CollectionsProps {
   onOpenBundleModal?: () => void;
 }
 
-export default function Collections({ onNavigate, onOpenBundleModal }: CollectionsProps) {
+export default function Collections({
+  onNavigate,
+  onOpenBundleModal,
+}: CollectionsProps) {
   return (
     <section className="bg-paper py-14 md:py-20">
       <div className="ed-container">
@@ -75,7 +78,11 @@ export default function Collections({ onNavigate, onOpenBundleModal }: Collectio
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
-              transition={{ duration: 0.75, delay: i * 0.07, ease: EASE_OUT_EXPO }}
+              transition={{
+                duration: 0.75,
+                delay: i * 0.07,
+                ease: EASE_OUT_EXPO,
+              }}
             >
               <div className="aspect-[4/5] overflow-hidden rounded-[2px] bg-paper-2">
                 <img
@@ -87,9 +94,13 @@ export default function Collections({ onNavigate, onOpenBundleModal }: Collectio
                 />
               </div>
               <div className="mt-4">
-                <h3 className="font-serif text-2xl font-light tracking-[-0.01em]">{entry.title}</h3>
+                <h3 className="font-serif text-2xl font-light tracking-[-0.01em]">
+                  {entry.title}
+                </h3>
                 <p className="ed-label mt-2">{entry.caption}</p>
-                <span className="ed-link mt-3 inline-block text-[13px] font-medium">Open</span>
+                <span className="ed-link mt-3 inline-block text-[13px] font-medium">
+                  Open
+                </span>
               </div>
             </motion.a>
           ))}

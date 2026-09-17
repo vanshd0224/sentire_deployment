@@ -9,9 +9,13 @@ interface NewArrivalsPageProps {
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
     size: number,
-    price: number
+    price: number,
   ) => void;
-  onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
+  onUpdateCartQuantity?: (
+    productId: string,
+    size: number,
+    delta: number,
+  ) => void;
   onOpenCart?: () => void;
 }
 
@@ -104,7 +108,8 @@ export default function NewArrivalsPage({
   onUpdateCartQuantity,
   onOpenCart: _onOpenCart,
 }: NewArrivalsPageProps) {
-  const [selectedDetailProduct, setSelectedDetailProduct] = useState<PerfumeProduct | null>(null);
+  const [selectedDetailProduct, setSelectedDetailProduct] =
+    useState<PerfumeProduct | null>(null);
 
   const isFirstRender = useRef(true);
 
@@ -116,7 +121,9 @@ export default function NewArrivalsPage({
       if (path.startsWith("/perfumes/")) {
         const slug = path.replace("/perfumes/", "").split("/")[0].split(".")[0];
         if (slug && slug !== "index" && slug !== "all") {
-          const found = ALL_PERFUMES.find((p) => p.id.toLowerCase() === slug.toLowerCase());
+          const found = ALL_PERFUMES.find(
+            (p) => p.id.toLowerCase() === slug.toLowerCase(),
+          );
           if (found) {
             setSelectedDetailProduct(found);
             return;
@@ -133,14 +140,19 @@ export default function NewArrivalsPage({
         }
       } catch (e) {}
     } else {
-      if (window.location.pathname.startsWith("/perfumes/") && window.location.pathname !== "/perfumes") {
+      if (
+        window.location.pathname.startsWith("/perfumes/") &&
+        window.location.pathname !== "/perfumes"
+      ) {
         try {
           window.history.pushState(null, "", "/new-arrivals");
         } catch (e) {}
       }
     }
   }, [selectedDetailProduct]);
-  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>(
+    {},
+  );
   const [activeCategoryPill, setActiveCategoryPill] = useState("all");
   const [selectedMood, setSelectedMood] = useState("all");
   const [selectedFamily, setSelectedFamily] = useState("all");
@@ -149,7 +161,9 @@ export default function NewArrivalsPage({
   const [addedToast, setAddedToast] = useState<string | null>(null);
 
   const getItemQuantity = (productId: string, size: number): number => {
-    const item = cartItems.find((ci) => ci.productId === productId && ci.size === size);
+    const item = cartItems.find(
+      (ci) => ci.productId === productId && ci.size === size,
+    );
     return item ? item.quantity : 0;
   };
 
@@ -168,237 +182,346 @@ export default function NewArrivalsPage({
 
   return (
     <div className="min-h-screen w-full bg-[#f4f2ee] text-ink font-sans">
+      {" "}
       {addedToast && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#a4492e]/40 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+          {" "}
           <span className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />
+            {" "}
+            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />{" "}
             {addedToast}
-          </span>
+          </span>{" "}
         </div>
       )}
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-32 sm:pb-20">
+        {" "}
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wider text-ink/50 uppercase">
-          <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
+          {" "}
+          <button
+            onClick={onBackToHome}
+            className="hover:text-[#a4492e] transition-colors cursor-pointer"
+          >
+            {" "}
             Home
-          </button>
-          <span>/</span>
-          <span className="text-ink font-bold">NEW ARRIVALS</span>
-        </div>
-
+          </button>{" "}
+          <span>/</span>{" "}
+          <span className="text-ink font-bold">NEW ARRIVALS</span>{" "}
+        </div>{" "}
         {/* Pre-title & Title */}
         <div className="mb-8">
+          {" "}
           <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
-            ✨ HAUTE SELECTION • NEW LAUNCHES
-          </span>
+            {" "}
+            HAUTE SELECTION • NEW LAUNCHES
+          </span>{" "}
           <h1 className="font-display text-4xl sm:text-5xl font-normal text-ink tracking-tight">
+            {" "}
             New Arrivals
-          </h1>
+          </h1>{" "}
           <p className="text-sm text-ink/60 mt-2 max-w-3xl">
-            Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.
-          </p>
-        </div>
-
+            {" "}
+            Explore the latest fragrance launches and new extrait de parfum
+            creations from SENTIRE By PC.
+          </p>{" "}
+        </div>{" "}
         {/* Filter Pills */}
         <div className="flex flex-wrap items-center gap-2.5 mb-6">
+          {" "}
           <button
             onClick={() => setActiveCategoryPill("all")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "all" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "all"
+                ? "bg-[#151412] text-white shadow"
+                : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
+            {" "}
             All New Arrivals
-          </button>
+          </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("woody")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "woody" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "woody"
+                ? "bg-[#151412] text-white shadow"
+                : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
+            {" "}
             Woody & Oud
-          </button>
+          </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("floral")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "floral" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "floral"
+                ? "bg-[#151412] text-white shadow"
+                : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
+            {" "}
             Floral & Gourmand
-          </button>
+          </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("oriental")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "oriental" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "oriental"
+                ? "bg-[#151412] text-white shadow"
+                : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
+            {" "}
             Oriental & Spice
-          </button>
+          </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("50ml")}
             className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-              activeCategoryPill === "50ml" ? "bg-[#151412] text-white shadow" : "bg-white text-ink border border-black/10 hover:border-black/30"
+              activeCategoryPill === "50ml"
+                ? "bg-[#151412] text-white shadow"
+                : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
+            {" "}
             50 ML Exclusives
-          </button>
-        </div>
-
+          </button>{" "}
+        </div>{" "}
         {/* Dropdowns Row */}
         <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-10 border-b border-black/10">
+          {" "}
           <div className="flex flex-wrap items-center gap-3">
+            {" "}
             <select
               value={selectedMood}
               onChange={(e) => setSelectedMood(e.target.value)}
               className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
             >
-              <option value="all">All Moods</option>
-              <option value="party">Evening & Party</option>
-              <option value="date-night">Date Night</option>
-              <option value="daily">Signature Daily</option>
-            </select>
-
+              {" "}
+              <option value="all">All Moods</option>{" "}
+              <option value="party">Evening & Party</option>{" "}
+              <option value="date-night">Date Night</option>{" "}
+              <option value="daily">Signature Daily</option>{" "}
+            </select>{" "}
             <select
               value={selectedFamily}
               onChange={(e) => setSelectedFamily(e.target.value)}
               className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
             >
-              <option value="all">All Scent Families</option>
-              <option value="woody">Woody & Oud</option>
-              <option value="floral">Floral & Amber</option>
-              <option value="fresh">Fresh & Citrus</option>
-            </select>
-
+              {" "}
+              <option value="all">All Scent Families</option>{" "}
+              <option value="woody">Woody & Oud</option>{" "}
+              <option value="floral">Floral & Amber</option>{" "}
+              <option value="fresh">Fresh & Citrus</option>{" "}
+            </select>{" "}
             <div className="flex items-center rounded-full bg-white border border-black/15 p-1 text-xs font-bold">
+              {" "}
               <button
                 onClick={() => setSelectedSizeFilter("all")}
                 className={`rounded-full px-3 py-1 transition-all ${
-                  selectedSizeFilter === "all" ? "bg-[#a4492e] text-black" : "text-ink/60"
+                  selectedSizeFilter === "all"
+                    ? "bg-[#a4492e] text-black"
+                    : "text-ink/60"
                 }`}
               >
+                {" "}
                 ALL SIZES
-              </button>
+              </button>{" "}
               <button
                 onClick={() => setSelectedSizeFilter("10")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "10" ? "bg-[#a4492e] text-black" : "text-ink/60"
+                  selectedSizeFilter === "10"
+                    ? "bg-[#a4492e] text-black"
+                    : "text-ink/60"
                 }`}
               >
+                {" "}
                 10 ML
-              </button>
+              </button>{" "}
               <button
                 onClick={() => setSelectedSizeFilter("30")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "30" ? "bg-[#a4492e] text-black" : "text-ink/60"
+                  selectedSizeFilter === "30"
+                    ? "bg-[#a4492e] text-black"
+                    : "text-ink/60"
                 }`}
               >
+                {" "}
                 30 ML
-              </button>
+              </button>{" "}
               <button
                 onClick={() => setSelectedSizeFilter("50")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
-                  selectedSizeFilter === "50" ? "bg-[#a4492e] text-black" : "text-ink/60"
+                  selectedSizeFilter === "50"
+                    ? "bg-[#a4492e] text-black"
+                    : "text-ink/60"
                 }`}
               >
+                {" "}
                 50 ML
-              </button>
-            </div>
-          </div>
-
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
           >
-            <option value="rank">Sort by Rank</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-          </select>
-        </div>
-
+            {" "}
+            <option value="rank">Sort by Rank</option>{" "}
+            <option value="price-low">Price: Low to High</option>{" "}
+            <option value="price-high">Price: High to Low</option>{" "}
+          </select>{" "}
+        </div>{" "}
         {/* Section Subhead */}
         <div className="mb-8">
+          {" "}
           <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+            {" "}
             HAUTE FORMULATIONS
-          </span>
+          </span>{" "}
           <h2 className="font-display text-2xl font-bold text-ink">
+            {" "}
             Showing {filteredProducts.length} New Arrivals
-          </h2>
-        </div>
-
+          </h2>{" "}
+        </div>{" "}
         {/* Grid of Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+          {" "}
           {filteredProducts.map((p) => {
             const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
-            const availableSizes = fullProd?.sizes || Object.keys(p.prices).map(Number);
-            const currentSize = selectedSizes[p.id] || (availableSizes.includes(50) ? 50 : availableSizes[0]);
-            const priceInfo = p.prices[currentSize] || p.prices[availableSizes[0]] || { price: 999, originalPrice: 1409 };
+            const availableSizes =
+              fullProd?.sizes || Object.keys(p.prices).map(Number);
+            const currentSize =
+              selectedSizes[p.id] ||
+              (availableSizes.includes(50) ? 50 : availableSizes[0]);
+            const priceInfo = p.prices[currentSize] ||
+              p.prices[availableSizes[0]] || {
+                price: 999,
+                originalPrice: 1409,
+              };
             const qty = getItemQuantity(p.id, currentSize);
-            const displayImage = (fullProd?.sizeImages && (fullProd.sizeImages[currentSize as keyof typeof fullProd.sizeImages]?.[0] || (fullProd.sizeImages as any)[String(currentSize)]?.[0])) || fullProd?.img || p.image;
+            const displayImage =
+              (fullProd?.sizeImages &&
+                (fullProd.sizeImages[
+                  currentSize as keyof typeof fullProd.sizeImages
+                ]?.[0] ||
+                  (fullProd.sizeImages as any)[String(currentSize)]?.[0])) ||
+              fullProd?.img ||
+              p.image;
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all">
+              <div
+                key={p.id}
+                className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all"
+              >
+                {" "}
                 <div>
+                  {" "}
                   <div
-                    onClick={() => fullProd && setSelectedDetailProduct(fullProd)}
+                    onClick={() =>
+                      fullProd && setSelectedDetailProduct(fullProd)
+                    }
                     className="relative aspect-square w-full rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer"
                   >
-                    <img src={displayImage} alt={p.name} loading="eager" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    {" "}
+                    <img
+                      src={displayImage}
+                      alt={p.name}
+                      loading="eager"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />{" "}
                     <span className="absolute top-2 left-2 rounded-full bg-[#a4492e] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-black">
+                      {" "}
                       {p.badge}
-                    </span>
-                  </div>
-
+                    </span>{" "}
+                  </div>{" "}
                   <div className="mt-3 text-center">
-                    <h3 onClick={() => fullProd && setSelectedDetailProduct(fullProd)} className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full">
+                    {" "}
+                    <h3
+                      onClick={() =>
+                        fullProd && setSelectedDetailProduct(fullProd)
+                      }
+                      className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full"
+                    >
+                      {" "}
                       {p.name}
-                    </h3>
-                    <p className="text-xs text-ink/60 truncate mt-0.5">{p.notes}</p>
-                  </div>
-
+                    </h3>{" "}
+                    <p className="text-xs text-ink/60 truncate mt-0.5">
+                      {p.notes}
+                    </p>{" "}
+                  </div>{" "}
                   <div className="flex items-center justify-center gap-1 my-2.5 w-full max-w-full">
+                    {" "}
                     {availableSizes.map((sz) => (
                       <button
                         key={sz}
-                        onClick={() => setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))}
+                        onClick={() =>
+                          setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))
+                        }
                         className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                          currentSize === sz ? "bg-[#151412] text-[#a4492e] border-[#151412]" : "bg-white text-ink border-black/15"
+                          currentSize === sz
+                            ? "bg-[#151412] text-[#a4492e] border-[#151412]"
+                            : "bg-white text-ink border-black/15"
                         }`}
                       >
+                        {" "}
                         {sz}ML
                       </button>
                     ))}
-                  </div>
-
+                  </div>{" "}
                   <div className="flex items-baseline justify-center gap-2 my-2">
-                    <span className="font-sans font-bold text-base text-ink tabular-nums inline-flex items-baseline gap-0.5">₹{priceInfo.price.toLocaleString("en-IN")}</span>
-                    <span className="font-sans text-xs text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
-                  </div>
-                </div>
-
+                    {" "}
+                    <span className="font-sans font-bold text-base text-ink tabular-nums inline-flex items-baseline gap-0.5">
+                      ₹{priceInfo.price.toLocaleString("en-IN")}
+                    </span>{" "}
+                    <span className="font-sans text-xs text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
+                      MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}
+                    </span>{" "}
+                  </div>{" "}
+                </div>{" "}
                 {qty > 0 ? (
                   <div className="mt-3 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 py-1 sm:px-3 sm:py-2 min-w-0">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0">−</button>
-                    <span className="text-[8.5px] sm:text-xs font-bold text-[#d9a08a] truncate px-0.5">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0">+</button>
+                    {" "}
+                    <button
+                      onClick={() =>
+                        onUpdateCartQuantity?.(p.id, currentSize, -1)
+                      }
+                      className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0"
+                    >
+                      −
+                    </button>{" "}
+                    <span className="text-[8.5px] sm:text-xs font-bold text-[#d9a08a] truncate px-0.5">
+                      {qty} IN BAG
+                    </span>{" "}
+                    <button
+                      onClick={() =>
+                        onUpdateCartQuantity?.(p.id, currentSize, 1)
+                      }
+                      className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0"
+                    >
+                      +
+                    </button>{" "}
                   </div>
                 ) : (
                   <button
                     onClick={() => {
-                      onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
+                      onAddToCart?.(
+                        { id: p.id, name: p.name, img: p.image },
+                        currentSize,
+                        priceInfo.price,
+                      );
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
                     className="mt-3 w-full rounded-md bg-[#151412] py-2 sm:py-2.5 px-1 text-[8.5px] sm:text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
                   >
+                    {" "}
                     Add to Bag
                   </button>
                 )}
               </div>
             );
           })}
-        </div>
-      </div>
-
+        </div>{" "}
+      </div>{" "}
       {selectedDetailProduct && (
         <ProductDetailModal
           product={selectedDetailProduct}

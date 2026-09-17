@@ -34,47 +34,87 @@ const INSTAGRAM_REELS = [
 export default function InstagramSection() {
   return (
     <section className="w-full bg-[#0a0a0a] py-14 sm:py-20 border-t border-white/10">
+      {" "}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
-
+        {" "}
         {/* Header */}
         <div className="mb-10 flex flex-col items-center gap-3 text-center">
+          {" "}
           <div className="flex items-center gap-2.5">
-            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-              <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#ig-grad)" strokeWidth="1.8"/>
-              <circle cx="12" cy="12" r="4.5" stroke="url(#ig-grad)" strokeWidth="1.8"/>
-              <circle cx="17.5" cy="6.5" r="1" fill="url(#ig-grad)"/>
+            {" "}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="h-6 w-6"
+              aria-hidden
+            >
+              {" "}
+              <rect
+                x="2"
+                y="2"
+                width="20"
+                height="20"
+                rx="5.5"
+                stroke="url(#ig-grad)"
+                strokeWidth="1.8"
+              />{" "}
+              <circle
+                cx="12"
+                cy="12"
+                r="4.5"
+                stroke="url(#ig-grad)"
+                strokeWidth="1.8"
+              />{" "}
+              <circle cx="17.5" cy="6.5" r="1" fill="url(#ig-grad)" />{" "}
               <defs>
-                <linearGradient id="ig-grad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#f09433"/>
-                  <stop offset="0.25" stopColor="#e6683c"/>
-                  <stop offset="0.5" stopColor="#dc2743"/>
-                  <stop offset="0.75" stopColor="#cc2366"/>
-                  <stop offset="1" stopColor="#bc1888"/>
-                </linearGradient>
-              </defs>
-            </svg>
+                {" "}
+                <linearGradient
+                  id="ig-grad"
+                  x1="2"
+                  y1="22"
+                  x2="22"
+                  y2="2"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  {" "}
+                  <stop stopColor="#f09433" />{" "}
+                  <stop offset="0.25" stopColor="#e6683c" />{" "}
+                  <stop offset="0.5" stopColor="#dc2743" />{" "}
+                  <stop offset="0.75" stopColor="#cc2366" />{" "}
+                  <stop offset="1" stopColor="#bc1888" />{" "}
+                </linearGradient>{" "}
+              </defs>{" "}
+            </svg>{" "}
             <span
               className="text-[13px] font-semibold tracking-[0.18em] text-white uppercase"
               style={{ fontFamily: "var(--font-sans)" }}
             >
+              {" "}
               @sentireforelite
-            </span>
-          </div>
-
+            </span>{" "}
+          </div>{" "}
           <h2
             className="font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em]"
             style={{ color: "#f4f2ee" }}
           >
+            {" "}
             As seen on Instagram.
-          </h2>
-
-          <p className="text-[14px] leading-relaxed" style={{ color: "rgba(244,242,238,0.65)" }}>
-            Tag <span className="underline decoration-white/30 underline-offset-4">#SentireForElite</span> to be featured
-          </p>
-        </div>
-
+          </h2>{" "}
+          <p
+            className="text-[14px] leading-relaxed"
+            style={{ color: "rgba(244,242,238,0.65)" }}
+          >
+            {" "}
+            Tag{" "}
+            <span className="underline decoration-white/30 underline-offset-4">
+              #SentireForElite
+            </span>{" "}
+            to be featured
+          </p>{" "}
+        </div>{" "}
         {/* 6 Clean Reel Grid Cards */}
         <div className="flex sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          {" "}
           {INSTAGRAM_REELS.map((post) => (
             <a
               key={post.id}
@@ -83,6 +123,7 @@ export default function InstagramSection() {
               rel="noopener noreferrer"
               className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-[2px] bg-neutral-900 border border-white/10 hover:border-[#a4492e]/60 transition-all duration-300 shadow-md hover:shadow-xl"
             >
+              {" "}
               {/* Real Instagram Reel Cover Image */}
               <img
                 src={post.thumb}
@@ -92,21 +133,20 @@ export default function InstagramSection() {
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
-              />
-
+              />{" "}
               {/* Top-right play icon badge (just like user's original design) */}
               <div className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-sm text-[11px] shadow-xs border border-white/10 transition-transform group-hover:scale-110">
+                {" "}
                 ▶
-              </div>
-
+              </div>{" "}
               {/* Hover highlight overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />{" "}
             </a>
           ))}
-        </div>
-
+        </div>{" "}
         {/* CTA */}
         <div className="mt-8 flex justify-center">
+          {" "}
           <a
             href="https://www.instagram.com/sentireforelite?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
             target="_blank"
@@ -128,15 +168,36 @@ export default function InstagramSection() {
               e.currentTarget.style.background = "rgba(255,255,255,0.04)";
             }}
           >
-            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
-              <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" strokeWidth="1.6"/>
-              <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.6"/>
-              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
-            </svg>
+            {" "}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="h-4 w-4"
+              aria-hidden
+            >
+              {" "}
+              <rect
+                x="2"
+                y="2"
+                width="20"
+                height="20"
+                rx="5.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              />{" "}
+              <circle
+                cx="12"
+                cy="12"
+                r="4.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              />{" "}
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />{" "}
+            </svg>{" "}
             Follow us on Instagram
-          </a>
-        </div>
-      </div>
+          </a>{" "}
+        </div>{" "}
+      </div>{" "}
     </section>
   );
 }

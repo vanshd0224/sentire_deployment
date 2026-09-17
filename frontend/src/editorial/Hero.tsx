@@ -30,7 +30,7 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
   const glare = useTransform(
     px,
     (x) =>
-      `radial-gradient(60% 60% at ${28 + (x + 1) * 22}% 30%, rgba(255,255,255,0.45), transparent 70%)`
+      `radial-gradient(60% 60% at ${28 + (x + 1) * 22}% 30%, rgba(255,255,255,0.45), transparent 70%)`,
   );
 
   const handlePointer = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -53,7 +53,10 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
     >
       <div className="ed-container grid grid-cols-1 items-center gap-8 pb-14 pt-6 md:gap-10 md:pb-20 md:pt-12 lg:min-h-[86vh] lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         {/* ── Type column ───────────────────────────────── */}
-        <motion.div style={rich ? { y: textY, opacity: fade } : undefined} className="relative z-10">
+        <motion.div
+          style={rich ? { y: textY, opacity: fade } : undefined}
+          className="relative z-10"
+        >
           <motion.p
             className="ed-label"
             initial={{ opacity: 0 }}
@@ -65,7 +68,12 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
 
           <h1 className="mt-5 font-serif text-[clamp(3rem,9vw,7.5rem)] font-light leading-[0.92] tracking-[-0.035em]">
             <span className="sr-only">Wear it like a signature.</span>
-            <motion.span aria-hidden initial="hidden" animate="show" className="block">
+            <motion.span
+              aria-hidden
+              initial="hidden"
+              animate="show"
+              className="block"
+            >
               {HEADLINE.map((line, i) => (
                 <span key={line} className="block overflow-hidden pb-[0.06em]">
                   <motion.span
@@ -73,7 +81,11 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
                     variants={maskLine}
                     custom={i}
                   >
-                    {i === 2 ? <em className="font-normal italic">{line}</em> : line}
+                    {i === 2 ? (
+                      <em className="font-normal italic">{line}</em>
+                    ) : (
+                      line
+                    )}
                   </motion.span>
                 </span>
               ))}
@@ -86,8 +98,8 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.55, ease: EASE_OUT_EXPO }}
           >
-            Eleven compositions blended at extrait strength, then engraved with your own
-            photograph or name before they leave the atelier.
+            Eleven compositions blended at extrait strength, then engraved with
+            your own photograph or name before they leave the atelier.
           </motion.p>
 
           <motion.div
@@ -132,7 +144,9 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
               ["11", "Compositions"],
             ].map(([value, caption]) => (
               <div key={caption}>
-                <dt className="font-serif text-2xl font-light leading-none md:text-3xl">{value}</dt>
+                <dt className="font-serif text-2xl font-light leading-none md:text-3xl">
+                  {value}
+                </dt>
                 <dd className="ed-label mt-2">{caption}</dd>
               </div>
             ))}
@@ -148,7 +162,11 @@ export default function EditorialHero({ onNavigate }: HeroProps) {
         >
           <motion.figure
             className="relative aspect-[4/5] w-full overflow-hidden rounded-[2px] bg-paper-2 sm:aspect-[5/6] lg:aspect-[4/5]"
-            style={rich ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
+            style={
+              rich
+                ? { rotateX, rotateY, transformStyle: "preserve-3d" }
+                : undefined
+            }
             initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
             animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
             transition={{ duration: 1.2, delay: 0.15, ease: EASE_OUT_EXPO }}

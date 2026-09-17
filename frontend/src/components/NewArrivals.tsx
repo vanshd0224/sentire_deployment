@@ -77,9 +77,13 @@ interface NewArrivalsProps {
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
     size: number,
-    price: number
+    price: number,
   ) => void;
-  onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
+  onUpdateCartQuantity?: (
+    productId: string,
+    size: number,
+    delta: number,
+  ) => void;
   onOpenCart?: () => void;
   onNavigate?: (page: any, filterOptions?: any) => void;
 }
@@ -92,7 +96,9 @@ export default function NewArrivals({
   onOpenCart: _onOpenCart,
   onNavigate,
 }: NewArrivalsProps) {
-  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>({});
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>(
+    {},
+  );
   const [addedToast, setAddedToast] = useState<string | null>(null);
 
   const handleSizeSelect = (productId: string, size: number) => {
@@ -100,7 +106,9 @@ export default function NewArrivals({
   };
 
   const getQuantity = (productId: string, size: number) => {
-    const item = cartItems.find((ci) => ci.productId === productId && ci.size === size);
+    const item = cartItems.find(
+      (ci) => ci.productId === productId && ci.size === size,
+    );
     return item ? item.quantity : 0;
   };
 
@@ -111,50 +119,82 @@ export default function NewArrivals({
 
   return (
     <section className="bg-gradient-to-b from-[#f4f2ee] to-[#f4f2ee] py-16 sm:py-24 text-ink relative border-t border-black/5">
+      {" "}
       {addedToast && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#a4492e]/40 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
+          {" "}
           <span className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />
+            {" "}
+            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />{" "}
             {addedToast}
-          </span>
+          </span>{" "}
         </div>
       )}
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {" "}
         <div className="flex items-end justify-between mb-12">
+          {" "}
           <div>
+            {" "}
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+              {" "}
               HAUTE SELECTION
-            </span>
-            <SectionHeading title="NEW ARRIVALS" subtitle="Experience our latest luxury formulations and extraits." />
-          </div>
+            </span>{" "}
+            <SectionHeading
+              title="NEW ARRIVALS"
+              subtitle="Experience our latest luxury formulations and extraits."
+            />{" "}
+          </div>{" "}
           <button
             onClick={() => onNavigate?.("new-arrivals")}
             className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#a4492e] hover:text-black transition-colors cursor-pointer"
           >
-            <span>Explore All</span>
-            <span>→</span>
-          </button>
-        </div>
-
+            {" "}
+            <span>Explore All</span> <span>→</span>{" "}
+          </button>{" "}
+        </div>{" "}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
+          {" "}
           {products.map((p) => {
-            const fullProd = ALL_PERFUMES.find(ap => ap.id === p.id);
-            const availableSizes = fullProd?.sizes || Object.keys(p.prices).map(Number);
-            const currentSize = selectedSizes[p.id] || (availableSizes.includes(50) ? 50 : availableSizes[0]);
-            const priceInfo = p.prices[currentSize] || p.prices[availableSizes[0]] || { price: 999, originalPrice: 1409 };
+            const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
+            const availableSizes =
+              fullProd?.sizes || Object.keys(p.prices).map(Number);
+            const currentSize =
+              selectedSizes[p.id] ||
+              (availableSizes.includes(50) ? 50 : availableSizes[0]);
+            const priceInfo = p.prices[currentSize] ||
+              p.prices[availableSizes[0]] || {
+                price: 999,
+                originalPrice: 1409,
+              };
             const qty = getQuantity(p.id, currentSize);
-            const displayImage = (fullProd?.sizeImages && (fullProd.sizeImages[currentSize as keyof typeof fullProd.sizeImages]?.[0] || (fullProd.sizeImages as any)[String(currentSize)]?.[0])) || fullProd?.img || p.image;
+            const displayImage =
+              (fullProd?.sizeImages &&
+                (fullProd.sizeImages[
+                  currentSize as keyof typeof fullProd.sizeImages
+                ]?.[0] ||
+                  (fullProd.sizeImages as any)[String(currentSize)]?.[0])) ||
+              fullProd?.img ||
+              p.image;
 
             return (
-              <div key={p.id} className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all">
+              <div
+                key={p.id}
+                className="group flex flex-col justify-between rounded-xl sm:rounded-2xl border border-black/8 bg-white p-2.5 sm:p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all"
+              >
+                {" "}
                 <div>
+                  {" "}
                   <a
                     href={`/perfumes?id=${p.id}`}
-                    onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      fullProd && onSelectProduct?.(fullProd);
+                    }}
                     aria-label={`View Sentire ${p.name} personalised perfume details`}
                     className="relative aspect-square w-full rounded-lg sm:rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer block"
                   >
+                    {" "}
                     <img
                       src={displayImage}
                       alt={`Sentire ${p.name} new arrival extrait de parfum with 35%+ perfume oil concentration and bottle engraving`}
@@ -163,64 +203,99 @@ export default function NewArrivals({
                       width="300"
                       height="300"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </a>
-
+                    />{" "}
+                  </a>{" "}
                   <div className="mt-2 sm:mt-3 text-center">
+                    {" "}
                     <h3 className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full">
+                      {" "}
                       <a
                         href={`/perfumes?id=${p.id}`}
-                        onClick={(e) => { e.preventDefault(); fullProd && onSelectProduct?.(fullProd); }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          fullProd && onSelectProduct?.(fullProd);
+                        }}
                         className="hover:text-[#a4492e]"
                       >
+                        {" "}
                         {p.name}
-                      </a>
-                    </h3>
-                    <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">{p.notes}</p>
-                  </div>
-
+                      </a>{" "}
+                    </h3>{" "}
+                    <p className="text-[9px] sm:text-[10px] text-ink/60 truncate mt-0.5">
+                      {p.notes}
+                    </p>{" "}
+                  </div>{" "}
                   <div className="flex items-center justify-center gap-1 my-2 w-full max-w-full">
+                    {" "}
                     {availableSizes.map((sz) => (
                       <button
                         key={sz}
                         onClick={() => handleSizeSelect(p.id, sz)}
                         className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                          currentSize === sz ? "bg-[#151412] text-[#a4492e] border-[#151412]" : "bg-white text-ink border-black/15"
+                          currentSize === sz
+                            ? "bg-[#151412] text-[#a4492e] border-[#151412]"
+                            : "bg-white text-ink border-black/15"
                         }`}
                       >
+                        {" "}
                         {sz}ML
                       </button>
                     ))}
-                  </div>
-
+                  </div>{" "}
                   <div className="flex items-baseline justify-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1">
-                    <span className="font-sans font-bold text-xs sm:text-sm text-ink tabular-nums inline-flex items-baseline gap-0.5">₹{priceInfo.price.toLocaleString("en-IN")}</span>
-                    <span className="font-sans text-[9px] sm:text-[10px] text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}</span>
-                  </div>
-                </div>
-
+                    {" "}
+                    <span className="font-sans font-bold text-xs sm:text-sm text-ink tabular-nums inline-flex items-baseline gap-0.5">
+                      ₹{priceInfo.price.toLocaleString("en-IN")}
+                    </span>{" "}
+                    <span className="font-sans text-[9px] sm:text-[10px] text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
+                      MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}
+                    </span>{" "}
+                  </div>{" "}
+                </div>{" "}
                 {qty > 0 ? (
                   <div className="mt-2 sm:mt-3 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 sm:px-2 py-1 sm:py-1.5 min-w-0">
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, -1)} className="text-xs font-bold text-[#a4492e] shrink-0">−</button>
-                    <span className="text-[8.5px] sm:text-[10px] font-bold text-[#d9a08a] truncate px-0.5">{qty} IN BAG</span>
-                    <button onClick={() => onUpdateCartQuantity?.(p.id, currentSize, 1)} className="text-xs font-bold text-[#a4492e] shrink-0">+</button>
+                    {" "}
+                    <button
+                      onClick={() =>
+                        onUpdateCartQuantity?.(p.id, currentSize, -1)
+                      }
+                      className="text-xs font-bold text-[#a4492e] shrink-0"
+                    >
+                      −
+                    </button>{" "}
+                    <span className="text-[8.5px] sm:text-[10px] font-bold text-[#d9a08a] truncate px-0.5">
+                      {qty} IN BAG
+                    </span>{" "}
+                    <button
+                      onClick={() =>
+                        onUpdateCartQuantity?.(p.id, currentSize, 1)
+                      }
+                      className="text-xs font-bold text-[#a4492e] shrink-0"
+                    >
+                      +
+                    </button>{" "}
                   </div>
                 ) : (
                   <button
                     onClick={() => {
-                      onAddToCart?.({ id: p.id, name: p.name, img: p.image }, currentSize, priceInfo.price);
+                      onAddToCart?.(
+                        { id: p.id, name: p.name, img: p.image },
+                        currentSize,
+                        priceInfo.price,
+                      );
                       showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
                     }}
                     className="mt-2 sm:mt-3 w-full rounded-md bg-[#151412] py-1.5 sm:py-2 px-1 text-[8.5px] sm:text-[10px] font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
                   >
+                    {" "}
                     Add to Bag
                   </button>
                 )}
               </div>
             );
           })}
-        </div>
-      </div>
+        </div>{" "}
+      </div>{" "}
     </section>
   );
 }

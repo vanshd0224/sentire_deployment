@@ -182,26 +182,26 @@ export const BYOB_50ML_PERFUMES: ByobPerfume[] = [
     topNotes: ["Sicilian Mandarin", "Cardamom"],
     heartNotes: ["Spiced Rose", "Black Pepper"],
     baseNotes: ["Patchouli", "Soft Leather"],
-  }
+  },
 ];
 
 const BYOB_FAQS = [
   {
     q: "How does the SENTIRE Build Your Own Bundle work?",
-    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Quatuor 4-bottle set). Next, explore our signature 50ML collection and select your scents, and receive exclusive bundle savings up to ₹400 automatically applied at checkout."
+    a: "Building your fragrance wardrobe is effortless: Select your preferred set size (The Duo 2-bottle, The Trio 3-bottle, or The Quatuor 4-bottle set). Next, explore our signature 50ML collection and select your scents, and receive exclusive bundle savings up to ₹400 automatically applied at checkout.",
   },
   {
     q: "How are bundle discounts applied?",
-    a: "Discounts are applied automatically at checkout: Save ₹150 on The Duo (2 bottles), Save ₹250 on The Trio (3 bottles), and Save ₹400 on The Quatuor (4 bottles). Free express shipping is included on all bundles."
+    a: "Discounts are applied automatically at checkout: Save ₹150 on The Duo (2 bottles), Save ₹250 on The Trio (3 bottles), and Save ₹400 on The Quatuor (4 bottles). Free express shipping is included on all bundles.",
   },
   {
     q: "Can I choose multiple bottles of the same fragrance?",
-    a: "Yes! You can curate any combination you like, including multiple bottles of your signature scent."
+    a: "Yes! You can curate any combination you like, including multiple bottles of your signature scent.",
   },
   {
     q: "What is the 30-Day Discovery Guarantee?",
-    a: "Your box includes complimentary matching sample trial vials. Try the sample vial first; if a scent isn't right for you, exchange the unopened 50ML bottle within 30 days."
-  }
+    a: "Your box includes complimentary matching sample trial vials. Try the sample vial first; if a scent isn't right for you, exchange the unopened 50ML bottle within 30 days.",
+  },
 ];
 
 interface ByobPageProps {
@@ -209,7 +209,7 @@ interface ByobPageProps {
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
     size: number,
-    price: number
+    price: number,
   ) => void;
   onOpenCart?: () => void;
   onOpenAccount?: () => void;
@@ -234,7 +234,9 @@ export default function ByobPage({
 
   // ── UI STATE ──
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [quickViewPerfume, setQuickViewPerfume] = useState<ByobPerfume | null>(null);
+  const [quickViewPerfume, setQuickViewPerfume] = useState<ByobPerfume | null>(
+    null,
+  );
   const [faqOpenIdx, setFaqOpenIdx] = useState<number | null>(null);
   const [isAdding, setIsAdding] = useState<boolean>(false);
 
@@ -264,8 +266,14 @@ export default function ByobPage({
   const isComplete = filledCount === bundleSize;
   const progressPercent = Math.round((filledCount / bundleSize) * 100);
 
-  const rawSubtotal = selected.reduce((sum, item) => sum + (item?.price50ml || 0), 0);
-  const rawMrpTotal = selected.reduce((sum, item) => sum + (item?.mrp50ml || (item ? item.price50ml + 500 : 0)), 0);
+  const rawSubtotal = selected.reduce(
+    (sum, item) => sum + (item?.price50ml || 0),
+    0,
+  );
+  const rawMrpTotal = selected.reduce(
+    (sum, item) => sum + (item?.mrp50ml || (item ? item.price50ml + 500 : 0)),
+    0,
+  );
   const discount = bundleSize === 2 ? 150 : bundleSize === 3 ? 250 : 400;
   const finalPrice = Math.max(0, rawSubtotal - (isComplete ? discount : 0));
 
@@ -319,7 +327,7 @@ export default function ByobPage({
               img: item.image,
             },
             50,
-            Math.max(0, item.price50ml - perBottleDiscount)
+            Math.max(0, item.price50ml - perBottleDiscount),
           );
         }
       });
@@ -332,101 +340,157 @@ export default function ByobPage({
 
   const filteredPerfumes = useMemo(() => {
     return BYOB_50ML_PERFUMES.filter((p) => {
-      const matchesCat = activeCategory === "all" ? true : p.scentCategory === activeCategory;
+      const matchesCat =
+        activeCategory === "all" ? true : p.scentCategory === activeCategory;
       const matchesSearch =
         searchQuery.trim() === ""
           ? true
           : p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             p.family.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.topNotes.some((n) => n.toLowerCase().includes(searchQuery.toLowerCase())) ||
-            p.heartNotes.some((n) => n.toLowerCase().includes(searchQuery.toLowerCase())) ||
-            p.baseNotes.some((n) => n.toLowerCase().includes(searchQuery.toLowerCase()));
+            p.topNotes.some((n) =>
+              n.toLowerCase().includes(searchQuery.toLowerCase()),
+            ) ||
+            p.heartNotes.some((n) =>
+              n.toLowerCase().includes(searchQuery.toLowerCase()),
+            ) ||
+            p.baseNotes.some((n) =>
+              n.toLowerCase().includes(searchQuery.toLowerCase()),
+            );
       return matchesCat && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
 
   return (
     <div className="min-h-screen w-full bg-[#f7f5f2] text-[#1c1917] font-sans selection:bg-[#a4492e] selection:text-white pb-28 lg:pb-16">
-      
+      {" "}
       {/* ── TOAST NOTIFICATION ── */}
       {toastMessage && (
         <div className="fixed top-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[#a4492e]/40 bg-[#151412]/95 px-5 py-2 text-xs font-medium tracking-wide text-[#d9a08a] shadow-xl backdrop-blur-md animate-in fade-in flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e]" />
-          <span>{toastMessage}</span>
+          {" "}
+          <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e]" />{" "}
+          <span>{toastMessage}</span>{" "}
         </div>
       )}
-
       {/* ── TOP BREADCRUMB ── */}
       <div className="border-b border-black/[0.06] bg-white/80 backdrop-blur-sm px-6 py-3">
+        {" "}
         <div className="mx-auto flex max-w-7xl items-center justify-between">
+          {" "}
           <div className="flex items-center gap-2 text-xs tracking-wider text-[#78716c]">
-            <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
+            {" "}
+            <button
+              onClick={onBackToHome}
+              className="hover:text-[#a4492e] transition-colors cursor-pointer"
+            >
+              {" "}
               ← BOUTIQUE
-            </button>
-            <span className="text-black/20">/</span>
+            </button>{" "}
+            <span className="text-black/20">/</span>{" "}
             <span className="font-semibold text-[#151412] uppercase tracking-widest">
+              {" "}
               BUILD YOUR OWN BOX (50ML EXTRAITS)
-            </span>
-          </div>
+            </span>{" "}
+          </div>{" "}
           <span className="hidden sm:inline-block text-[11px] font-bold text-[#8a3b24] uppercase tracking-widest">
+            {" "}
             35%+ EXTRAIT DE PARFUM
-          </span>
-        </div>
-      </div>
-
+          </span>{" "}
+        </div>{" "}
+      </div>{" "}
       {/* ── HERO HEADER ── */}
       <section className="border-b border-black/[0.06] bg-gradient-to-b from-white via-[#f7f5f2] to-[#f7f2ea] px-6 py-10 sm:py-14 lg:px-12 text-center">
+        {" "}
         <div className="mx-auto max-w-3xl space-y-3">
+          {" "}
           <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/30 bg-white px-4 py-1 shadow-xs">
-            <span className="text-xs">✦</span>
+            {" "}
+            <span className="text-xs">✦</span>{" "}
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+              {" "}
               HAUTE PARFUMERIE BESPOKE SET
-            </span>
-          </div>
-
+            </span>{" "}
+          </div>{" "}
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-[#151412]">
-            Build Your Own <span className="italic font-serif text-[#a4492e] font-normal">Bundle</span>
-          </h1>
-
+            {" "}
+            Build Your Own{" "}
+            <span className="italic font-serif text-[#a4492e] font-normal">
+              Bundle
+            </span>{" "}
+          </h1>{" "}
           <p className="mx-auto max-w-xl text-xs sm:text-sm text-[#57534e] leading-relaxed">
-            Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection. Handcrafted with <strong>35%+ pure perfume oils</strong> for 12+ hour longevity. Includes complimentary gift coffret and automatic bundle savings.
-          </p>
-
+            {" "}
+            Create your own SENTIRE perfume bundle. Choose your favourite
+            fragrances and build a personalised set from our extrait de parfum
+            collection. Handcrafted with <strong>
+              35%+ pure perfume oils
+            </strong>{" "}
+            for 12+ hour longevity. Includes complimentary gift coffret and
+            automatic bundle savings.
+          </p>{" "}
           {/* Value Badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-1 text-[11px] font-semibold text-[#78716c]">
+            {" "}
             <span className="flex items-center gap-1.5">
-              <span className="text-[#a4492e]">✓</span> 35%+ Extrait Concentration
-            </span>
+              {" "}
+              <span className="text-[#a4492e]">✓</span> 35%+ Extrait
+              Concentration
+            </span>{" "}
             <span className="flex items-center gap-1.5">
+              {" "}
               <span className="text-[#a4492e]">✓</span> 12+ Hour Longevity
-            </span>
+            </span>{" "}
             <span className="flex items-center gap-1.5">
+              {" "}
               <span className="text-[#a4492e]">✓</span> Free Express Delivery
-            </span>
+            </span>{" "}
             <span className="flex items-center gap-1.5">
+              {" "}
               <span className="text-[#a4492e]">✓</span> Save up to ₹400
-            </span>
-          </div>
-        </div>
-      </section>
-
+            </span>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── STEP 1: SELECT COFFRET SIZE ── */}
       <section className="border-b border-black/[0.06] bg-white px-6 py-8 lg:px-12">
+        {" "}
         <div className="mx-auto max-w-5xl space-y-5">
+          {" "}
           <div className="text-center space-y-1">
+            {" "}
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+              {" "}
               STEP 01 — SELECT BOX SIZE
-            </span>
+            </span>{" "}
             <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#151412]">
-              CHOOSE NUMBER OF BOTTLES
-            </h2>
-          </div>
-
+              {" "}
+              Choose number of bottles
+            </h2>{" "}
+          </div>{" "}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {" "}
             {[
-              { size: 2, title: "THE DUO", sub: "2 × 50ML Bottles", save: "SAVE ₹150", desc: "Day & evening essentials" },
-              { size: 3, title: "THE TRIO", sub: "3 × 50ML Bottles", save: "SAVE ₹250", desc: "Complete 3-scent wardrobe", badge: "MOST POPULAR" },
-              { size: 4, title: "THE QUATUOR", sub: "4 × 50ML Bottles", save: "SAVE ₹400", desc: "Master collector set" },
+              {
+                size: 2,
+                title: "THE DUO",
+                sub: "2 × 50ML Bottles",
+                save: "SAVE ₹150",
+                desc: "Day & evening essentials",
+              },
+              {
+                size: 3,
+                title: "THE TRIO",
+                sub: "3 × 50ML Bottles",
+                save: "SAVE ₹250",
+                desc: "Complete 3-scent wardrobe",
+                badge: "MOST POPULAR",
+              },
+              {
+                size: 4,
+                title: "THE QUATUOR",
+                sub: "4 × 50ML Bottles",
+                save: "SAVE ₹400",
+                desc: "Master collector set",
+              },
             ].map((tier) => (
               <div
                 key={tier.size}
@@ -437,53 +501,75 @@ export default function ByobPage({
                     : "border-black/10 bg-white hover:border-[#a4492e]/60 hover:shadow-xs"
                 }`}
               >
+                {" "}
                 {tier.badge && (
                   <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-[#a4492e] px-3 py-0.5 text-[8px] font-bold uppercase tracking-wider text-white shadow-xs">
+                    {" "}
                     {tier.badge}
                   </span>
                 )}
-
                 <div className="space-y-1">
+                  {" "}
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display text-lg font-bold uppercase text-[#151412]">{tier.title}</h3>
+                    {" "}
+                    <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
+                      {tier.title}
+                    </h3>{" "}
                     <span className="rounded bg-[#151412] px-2 py-0.5 text-[9px] font-bold text-[#d9a08a]">
+                      {" "}
                       {tier.save}
-                    </span>
-                  </div>
-                  <p className="text-xs font-medium text-[#8a3b24]">{tier.sub}</p>
-                  <p className="text-[11px] text-[#78716c] pt-1">{tier.desc}</p>
-                </div>
-
+                    </span>{" "}
+                  </div>{" "}
+                  <p className="text-xs font-medium text-[#8a3b24]">
+                    {tier.sub}
+                  </p>{" "}
+                  <p className="text-[11px] text-[#78716c] pt-1">
+                    {tier.desc}
+                  </p>{" "}
+                </div>{" "}
                 <div className="mt-4 border-t border-black/[0.06] pt-3 flex items-center justify-between text-xs font-semibold">
-                  <span className="text-[#78716c]">50ML Extraits</span>
-                  <span className={bundleSize === tier.size ? "text-[#8a3b24]" : "text-[#78716c]"}>
+                  {" "}
+                  <span className="text-[#78716c]">50ML Extraits</span>{" "}
+                  <span
+                    className={
+                      bundleSize === tier.size
+                        ? "text-[#8a3b24]"
+                        : "text-[#78716c]"
+                    }
+                  >
+                    {" "}
                     {bundleSize === tier.size ? "● SELECTED" : "SELECT →"}
-                  </span>
-                </div>
+                  </span>{" "}
+                </div>{" "}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── STEP 2: MAIN SCENT SELECTION & STICKY SCROLLABLE BOX TRAY ── */}
       <section className="px-6 py-10 lg:px-12">
+        {" "}
         <div className="mx-auto max-w-7xl space-y-8">
-          
+          {" "}
           {/* Section Header & Filters */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/[0.08] pb-5">
+            {" "}
             <div>
+              {" "}
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+                {" "}
                 STEP 02 — CHOOSE YOUR FRAGRANCES
-              </span>
+              </span>{" "}
               <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#151412]">
+                {" "}
                 SELECT {bundleSize} SIGNATURE 50ML SCENTS
-              </h2>
-            </div>
-
+              </h2>{" "}
+            </div>{" "}
             {/* Filter pills & search */}
             <div className="flex flex-wrap items-center gap-2">
+              {" "}
               <div className="flex items-center gap-1 rounded-full bg-white p-1 border border-black/10 shadow-xs">
+                {" "}
                 {[
                   { id: "all", label: "ALL 11" },
                   { id: "woody", label: "WOODY / OUD" },
@@ -500,27 +586,28 @@ export default function ByobPage({
                         : "text-[#78716c] hover:text-[#151412]"
                     }`}
                   >
+                    {" "}
                     {cat.label}
                   </button>
                 ))}
-              </div>
-
+              </div>{" "}
               <input
                 type="text"
                 placeholder="Search scent..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="rounded-full border border-black/15 bg-white px-3.5 py-1 text-xs text-[#151412] placeholder-[#a8a29e] focus:border-[#a4492e] focus:outline-none w-36"
-              />
-            </div>
-          </div>
-
+              />{" "}
+            </div>{" "}
+          </div>{" "}
           {/* Two-Column Grid: Left Catalog (7 cols) + Right Sticky Scrollable Box Tray (5 cols) */}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
-            
+            {" "}
             {/* ── LEFT: 11 PERFUMES GRID ── */}
             <div className="lg:col-span-7 xl:col-span-8">
+              {" "}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {" "}
                 {filteredPerfumes.map((perfume) => {
                   const assignedSlots = selected
                     .map((s, idx) => (s?.id === perfume.id ? idx + 1 : null))
@@ -536,61 +623,77 @@ export default function ByobPage({
                           : "border-black/10 hover:border-[#a4492e]/50 hover:shadow-md"
                       }`}
                     >
+                      {" "}
                       {/* Top badge */}
                       <div className="flex items-center justify-between border-b border-black/[0.04] pb-2">
+                        {" "}
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#8a3b24]">
+                          {" "}
                           {perfume.num} • {perfume.family}
-                        </span>
+                        </span>{" "}
                         {isAssigned && (
                           <span className="rounded-full bg-[#151412] px-2.5 py-0.5 text-[9px] font-bold text-[#d9a08a] uppercase">
+                            {" "}
                             SLOT 0{assignedSlots.join(", 0")}
                           </span>
                         )}
-                      </div>
-
+                      </div>{" "}
                       {/* Bottle image */}
                       <div
                         onClick={() => setQuickViewPerfume(perfume)}
                         className="my-3 flex aspect-square w-full items-center justify-center rounded-xl bg-[#f4f2ee] p-4 cursor-pointer group-hover:bg-[#f5efe6] transition-colors"
                       >
+                        {" "}
                         <img
                           src={perfume.image}
                           alt={perfume.name}
                           className="h-full w-full object-contain filter drop-shadow-md transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-
+                        />{" "}
+                      </div>{" "}
                       {/* Details & CTA */}
                       <div className="space-y-2">
+                        {" "}
                         <div className="flex items-baseline justify-between">
+                          {" "}
                           <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
+                            {" "}
                             {perfume.name}
-                          </h3>
+                          </h3>{" "}
                           <div className="text-right">
+                            {" "}
                             <span className="font-bold text-sm text-[#151412]">
+                              {" "}
                               ₹{perfume.price50ml.toLocaleString("en-IN")}
-                            </span>
+                            </span>{" "}
                             <span className="block text-[10px] text-[#a8a29e] line-through">
+                              {" "}
                               ₹{perfume.mrp50ml.toLocaleString("en-IN")}
-                            </span>
-                          </div>
-                        </div>
-
+                            </span>{" "}
+                          </div>{" "}
+                        </div>{" "}
                         <p className="text-xs text-[#57534e] line-clamp-2">
+                          {" "}
                           {perfume.subtitle}
-                        </p>
-
+                        </p>{" "}
                         {/* Notes snippet */}
                         <div className="flex flex-wrap gap-1 pt-1">
-                          {perfume.topNotes.concat(perfume.baseNotes).slice(0, 3).map((note, i) => (
-                            <span key={i} className="rounded bg-black/[0.04] px-1.5 py-0.5 text-[9px] text-[#78716c]">
-                              {note}
-                            </span>
-                          ))}
-                        </div>
-
+                          {" "}
+                          {perfume.topNotes
+                            .concat(perfume.baseNotes)
+                            .slice(0, 3)
+                            .map((note, i) => (
+                              <span
+                                key={i}
+                                className="rounded bg-black/[0.04] px-1.5 py-0.5 text-[9px] text-[#78716c]"
+                              >
+                                {" "}
+                                {note}
+                              </span>
+                            ))}
+                        </div>{" "}
                         {/* Add button */}
                         <div className="pt-2 flex gap-2">
+                          {" "}
                           <button
                             onClick={() => handleSelectPerfume(perfume)}
                             className={`flex-1 rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
@@ -599,61 +702,74 @@ export default function ByobPage({
                                 : "border border-black/10 bg-[#151412] text-white hover:bg-[#a4492e] hover:text-black hover:border-[#a4492e]"
                             }`}
                           >
+                            {" "}
                             {isAssigned ? "+ ADD AGAIN" : "+ ADD TO BOX"}
-                          </button>
-
+                          </button>{" "}
                           <button
                             onClick={() => setQuickViewPerfume(perfume)}
                             className="rounded-xl border border-black/10 bg-white px-3 py-2.5 text-xs text-[#78716c] hover:text-black hover:border-black/30 transition-colors cursor-pointer"
                             title="View Notes"
                           >
-                            ℹ️
-                          </button>
-                        </div>
-                      </div>
+                            {" "}
+                            ℹ
+                          </button>{" "}
+                        </div>{" "}
+                      </div>{" "}
                     </div>
                   );
                 })}
-              </div>
-            </div>
-
+              </div>{" "}
+            </div>{" "}
             {/* ── RIGHT: STICKY FULLY-SCROLLABLE BOX TRAY (NO OVERFLOW CUTOFF) ── */}
             <div className="lg:col-span-5 xl:col-span-4">
+              {" "}
               <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-3xl border border-[#a4492e]/30 bg-white p-5 sm:p-6 space-y-4 shadow-xl scrollbar-thin">
-                
+                {" "}
                 {/* Header & Progress */}
                 <div className="border-b border-black/[0.06] pb-3 space-y-2">
+                  {" "}
                   <div className="flex items-center justify-between">
+                    {" "}
                     <div>
+                      {" "}
                       <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
-                        YOUR BESPOKE BOX
-                      </h3>
+                        {" "}
+                        Your bespoke box
+                      </h3>{" "}
                       <span className="text-[11px] text-[#78716c]">
+                        {" "}
                         {bundleSize}-Bottle 50ML Collection
-                      </span>
-                    </div>
+                      </span>{" "}
+                    </div>{" "}
                     <span className="rounded-full bg-[#a4492e]/15 px-2.5 py-0.5 text-xs font-bold text-[#8a3b24]">
+                      {" "}
                       {filledCount} / {bundleSize} SLOTS
-                    </span>
-                  </div>
-
+                    </span>{" "}
+                  </div>{" "}
                   {/* Progress Bar */}
                   <div className="space-y-1">
+                    {" "}
                     <div className="flex justify-between text-[10px] font-semibold text-[#78716c]">
-                      <span>{isComplete ? "✓ Box Complete — Discount Unlocked!" : `Select ${bundleSize - filledCount} more scent(s)`}</span>
-                      <span>{progressPercent}%</span>
-                    </div>
+                      {" "}
+                      <span>
+                        {isComplete
+                          ? "✓ Box Complete — Discount Unlocked!"
+                          : `Select ${bundleSize - filledCount} more scent(s)`}
+                      </span>{" "}
+                      <span>{progressPercent}%</span>{" "}
+                    </div>{" "}
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-black/5">
+                      {" "}
                       <div
                         className="h-full rounded-full bg-[#a4492e] transition-all duration-300"
                         style={{ width: `${progressPercent}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
+                      />{" "}
+                    </div>{" "}
+                  </div>{" "}
+                </div>{" "}
                 {/* Slots List (Scrollable if multiple) */}
                 <div className="space-y-2 max-h-[260px] overflow-y-auto pr-0.5">
+                  {" "}
                   {Array.from({ length: bundleSize }).map((_, slotIdx) => {
                     const item = selected[slotIdx];
                     const isActive = activeSlot === slotIdx;
@@ -666,76 +782,108 @@ export default function ByobPage({
                           isActive
                             ? "border-[#a4492e] bg-[#f7f5f2] ring-2 ring-[#a4492e]"
                             : item
-                            ? "border-black/10 bg-white hover:border-[#a4492e]/60"
-                            : "border-dashed border-black/20 bg-[#f4f2ee] hover:border-[#a4492e]/60 hover:bg-white"
+                              ? "border-black/10 bg-white hover:border-[#a4492e]/60"
+                              : "border-dashed border-black/20 bg-[#f4f2ee] hover:border-[#a4492e]/60 hover:bg-white"
                         }`}
                       >
+                        {" "}
                         <div className="flex items-center gap-2.5">
+                          {" "}
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#151412] text-[9px] font-bold text-[#d9a08a]">
+                            {" "}
                             0{slotIdx + 1}
-                          </span>
-
+                          </span>{" "}
                           {item ? (
                             <div className="flex items-center gap-2.5">
-                              <img src={item.image} alt={item.name} className="h-9 w-9 object-contain" />
+                              {" "}
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="h-9 w-9 object-contain"
+                              />{" "}
                               <div>
-                                <h4 className="font-display text-xs font-bold uppercase text-[#151412] leading-tight">{item.name}</h4>
-                                <span className="block text-[10px] text-[#8a3b24] font-medium">50 ML • ₹{item.price50ml}</span>
-                              </div>
+                                {" "}
+                                <h4 className="font-display text-xs font-bold uppercase text-[#151412] leading-tight">
+                                  {item.name}
+                                </h4>{" "}
+                                <span className="block text-[10px] text-[#8a3b24] font-medium">
+                                  50 ML • ₹{item.price50ml}
+                                </span>{" "}
+                              </div>{" "}
                             </div>
                           ) : (
                             <div>
-                              <span className="block text-xs font-semibold text-[#151412] leading-tight">EMPTY SLOT</span>
-                              <span className="block text-[9px] text-[#a8a29e]">Click any perfume to assign</span>
+                              {" "}
+                              <span className="block text-xs font-semibold text-[#151412] leading-tight">
+                                EMPTY SLOT
+                              </span>{" "}
+                              <span className="block text-[9px] text-[#a8a29e]">
+                                Click any perfume to assign
+                              </span>{" "}
                             </div>
                           )}
-                        </div>
-
+                        </div>{" "}
                         {item && (
                           <button
                             onClick={(e) => handleRemoveSlot(slotIdx, e)}
                             className="flex h-6 w-6 items-center justify-center rounded-full text-xs text-[#a8a29e] hover:bg-red-50 hover:text-red-500 cursor-pointer"
                           >
+                            {" "}
                             ✕
                           </button>
                         )}
                       </div>
                     );
                   })}
-                </div>
-
+                </div>{" "}
                 {/* Pricing Breakdown */}
                 <div className="border-t border-black/[0.08] pt-3 space-y-1.5 text-xs">
+                  {" "}
                   <div className="flex justify-between text-[#78716c]">
-                    <span>Subtotal ({bundleSize} × 50ML):</span>
-                    <span>₹{rawSubtotal.toLocaleString("en-IN")}</span>
-                  </div>
-
+                    {" "}
+                    <span>Subtotal ({bundleSize} × 50ML):</span>{" "}
+                    <span>₹{rawSubtotal.toLocaleString("en-IN")}</span>{" "}
+                  </div>{" "}
                   <div className="flex justify-between font-semibold text-emerald-600">
-                    <span>Bundle Savings:</span>
-                    <span>{isComplete ? `− ₹${discount}` : `Unlock ₹${discount} OFF`}</span>
-                  </div>
-
+                    {" "}
+                    <span>Bundle Savings:</span>{" "}
+                    <span>
+                      {isComplete
+                        ? `− ₹${discount}`
+                        : `Unlock ₹${discount} OFF`}
+                    </span>{" "}
+                  </div>{" "}
                   <div className="flex justify-between text-[#78716c]">
-                    <span>Express Delivery:</span>
-                    <span className="text-emerald-600 font-semibold">FREE</span>
-                  </div>
-
+                    {" "}
+                    <span>Express Delivery:</span>{" "}
+                    <span className="text-emerald-600 font-semibold">
+                      FREE
+                    </span>{" "}
+                  </div>{" "}
                   <div className="flex justify-between border-t border-black/[0.08] pt-2 font-display text-base font-bold text-[#151412]">
-                    <span>Set Total:</span>
+                    {" "}
+                    <span>Set Total:</span>{" "}
                     <div className="text-right">
-                      <span className="block text-lg text-[#151412]">₹{finalPrice.toLocaleString("en-IN")}</span>
+                      {" "}
+                      <span className="block text-lg text-[#151412]">
+                        ₹{finalPrice.toLocaleString("en-IN")}
+                      </span>{" "}
                       {rawMrpTotal > finalPrice && (
                         <span className="block text-[9px] font-sans font-normal text-emerald-600">
-                          Save ₹{(rawMrpTotal - finalPrice).toLocaleString("en-IN")} total
+                          {" "}
+                          Save ₹
+                          {(rawMrpTotal - finalPrice).toLocaleString(
+                            "en-IN",
+                          )}{" "}
+                          total
                         </span>
                       )}
-                    </div>
-                  </div>
-                </div>
-
+                    </div>{" "}
+                  </div>{" "}
+                </div>{" "}
                 {/* Primary CTA Button */}
                 <div className="pt-1 space-y-2">
+                  {" "}
                   <button
                     onClick={handleAddBundleToBag}
                     disabled={!isComplete || isAdding}
@@ -745,94 +893,129 @@ export default function ByobPage({
                         : "border border-black/10 bg-black/5 text-[#a8a29e] cursor-not-allowed"
                     }`}
                   >
+                    {" "}
                     {isAdding
                       ? "ADDING TO BAG..."
                       : isComplete
-                      ? `ADD ${bundleSize}-BOTTLE BOX TO BAG • ₹${finalPrice.toLocaleString("en-IN")} →`
-                      : `SELECT ${bundleSize - filledCount} MORE SCENT(S)`}
-                  </button>
-
+                        ? `ADD ${bundleSize}-BOTTLE BOX TO BAG • ₹${finalPrice.toLocaleString("en-IN")} →`
+                        : `SELECT ${bundleSize - filledCount} MORE SCENT(S)`}
+                  </button>{" "}
                   <p className="text-[9px] text-center text-[#a8a29e]">
-                    🔒 Includes 30-Day Discovery Guarantee & free trial sample vials
-                  </p>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
+                    {" "}
+                    Includes 30-Day Discovery Guarantee & free trial sample
+                    vials
+                  </p>{" "}
+                </div>{" "}
+              </div>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── SIMPLE FAQ ACCORDION ── */}
       <section className="border-t border-black/[0.06] bg-white px-6 py-14 lg:px-12">
+        {" "}
         <div className="mx-auto max-w-3xl space-y-5">
+          {" "}
           <div className="text-center space-y-1">
+            {" "}
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+              {" "}
               ASSURANCES
-            </span>
+            </span>{" "}
             <h2 className="font-display text-2xl uppercase tracking-tight text-[#151412]">
-              FREQUENTLY ASKED QUESTIONS
-            </h2>
-          </div>
-
+              {" "}
+              Frequently asked questions
+            </h2>{" "}
+          </div>{" "}
           <div className="divide-y divide-black/[0.06]">
+            {" "}
             {BYOB_FAQS.map((faq, idx) => {
               const isOpen = faqOpenIdx === idx;
               return (
                 <div key={idx} className="py-3">
+                  {" "}
                   <button
                     onClick={() => setFaqOpenIdx(isOpen ? null : idx)}
                     className="flex w-full items-center justify-between text-left font-display text-sm font-bold text-[#151412] cursor-pointer"
                   >
-                    <span>{faq.q}</span>
-                    <span className="text-[#a4492e] font-bold text-base">{isOpen ? "−" : "+"}</span>
-                  </button>
-                  {isOpen && <p className="mt-2 text-xs text-[#57534e] leading-relaxed">{faq.a}</p>}
+                    {" "}
+                    <span>{faq.q}</span>{" "}
+                    <span className="text-[#a4492e] font-bold text-base">
+                      {isOpen ? "−" : "+"}
+                    </span>{" "}
+                  </button>{" "}
+                  {isOpen && (
+                    <p className="mt-2 text-xs text-[#57534e] leading-relaxed">
+                      {faq.a}
+                    </p>
+                  )}
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── QUICK VIEW NOTES MODAL ── */}
       {quickViewPerfume && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
+          {" "}
           <div className="relative w-full max-w-lg rounded-3xl border border-[#a4492e]/40 bg-white p-6 sm:p-8 shadow-2xl space-y-5">
+            {" "}
             <button
               onClick={() => setQuickViewPerfume(null)}
               className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full bg-black/5 text-xs text-[#78716c] hover:bg-black/10 hover:text-black cursor-pointer"
             >
+              {" "}
               ✕
-            </button>
-
+            </button>{" "}
             <div className="border-b border-black/[0.06] pb-3">
+              {" "}
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#8a3b24]">
+                {" "}
                 {quickViewPerfume.family} • 35%+ EXTRAIT
-              </span>
-              <h3 className="font-display text-2xl font-bold uppercase text-[#151412]">{quickViewPerfume.name}</h3>
-              <p className="text-xs text-[#57534e] mt-0.5">{quickViewPerfume.subtitle}</p>
-            </div>
-
-            <img src={quickViewPerfume.image} alt={quickViewPerfume.name} className="h-44 mx-auto object-contain drop-shadow-md" />
-
+              </span>{" "}
+              <h3 className="font-display text-2xl font-bold uppercase text-[#151412]">
+                {quickViewPerfume.name}
+              </h3>{" "}
+              <p className="text-xs text-[#57534e] mt-0.5">
+                {quickViewPerfume.subtitle}
+              </p>{" "}
+            </div>{" "}
+            <img
+              src={quickViewPerfume.image}
+              alt={quickViewPerfume.name}
+              className="h-44 mx-auto object-contain drop-shadow-md"
+            />{" "}
             <div className="rounded-2xl border border-black/[0.06] bg-[#f4f2ee] p-4 space-y-2 text-xs">
+              {" "}
               <div>
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">TOP NOTES:</strong>
-                <span className="text-[#151412]">{quickViewPerfume.topNotes.join(" • ")}</span>
-              </div>
+                {" "}
+                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                  TOP NOTES:
+                </strong>{" "}
+                <span className="text-[#151412]">
+                  {quickViewPerfume.topNotes.join(" • ")}
+                </span>{" "}
+              </div>{" "}
               <div>
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">HEART NOTES:</strong>
-                <span className="text-[#151412]">{quickViewPerfume.heartNotes.join(" • ")}</span>
-              </div>
+                {" "}
+                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                  HEART NOTES:
+                </strong>{" "}
+                <span className="text-[#151412]">
+                  {quickViewPerfume.heartNotes.join(" • ")}
+                </span>{" "}
+              </div>{" "}
               <div>
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">BASE NOTES:</strong>
-                <span className="text-[#151412]">{quickViewPerfume.baseNotes.join(" • ")}</span>
-              </div>
-            </div>
-
+                {" "}
+                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                  BASE NOTES:
+                </strong>{" "}
+                <span className="text-[#151412]">
+                  {quickViewPerfume.baseNotes.join(" • ")}
+                </span>{" "}
+              </div>{" "}
+            </div>{" "}
             <button
               onClick={() => {
                 handleSelectPerfume(quickViewPerfume);
@@ -840,26 +1023,30 @@ export default function ByobPage({
               }}
               className="w-full rounded-full border border-[#a4492e] bg-[#151412] py-3.5 text-xs font-bold uppercase tracking-wider text-[#d9a08a] hover:bg-[#a4492e] hover:text-black transition-colors cursor-pointer"
             >
-              + ADD {quickViewPerfume.name} TO BOX • ₹{quickViewPerfume.price50ml}
-            </button>
-          </div>
+              {" "}
+              + ADD {quickViewPerfume.name} TO BOX • ₹
+              {quickViewPerfume.price50ml}
+            </button>{" "}
+          </div>{" "}
         </div>
       )}
-
       {/* ── MOBILE STICKY BOTTOM HUD ── */}
       <div
         className="lg:hidden fixed left-0 right-0 z-30 border-t border-black/10 bg-white/95 px-5 py-3 backdrop-blur-md flex items-center justify-between shadow-lg"
         style={{ bottom: "calc(68px + env(safe-area-inset-bottom, 8px))" }}
       >
+        {" "}
         <div>
+          {" "}
           <span className="block text-[9px] font-bold uppercase tracking-wider text-[#8a3b24]">
+            {" "}
             {filledCount}/{bundleSize} FILLED • SAVE ₹{discount}
-          </span>
+          </span>{" "}
           <span className="font-display text-base font-bold text-[#151412]">
+            {" "}
             ₹{finalPrice.toLocaleString("en-IN")}
-          </span>
-        </div>
-
+          </span>{" "}
+        </div>{" "}
         <button
           onClick={handleAddBundleToBag}
           disabled={!isComplete || isAdding}
@@ -869,10 +1056,10 @@ export default function ByobPage({
               : "border border-black/10 bg-black/5 text-[#a8a29e]"
           }`}
         >
+          {" "}
           {isComplete ? "ADD TO BAG →" : `PICK (${bundleSize - filledCount})`}
-        </button>
-      </div>
-
+        </button>{" "}
+      </div>{" "}
     </div>
   );
 }

@@ -21,8 +21,8 @@ export default function Newsletter() {
               Letters from the bench.
             </h2>
             <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-ink-soft">
-              New compositions, restocks and the occasional note on how a fragrance is built. No
-              more than twice a month.
+              New compositions, restocks and the occasional note on how a
+              fragrance is built. No more than twice a month.
             </p>
           </div>
 
@@ -47,11 +47,17 @@ export default function Newsletter() {
                 placeholder="you@example.com"
                 className="min-h-[44px] w-full bg-transparent text-[16px] text-ink outline-none placeholder:text-stone"
               />
-              <button type="submit" className="ed-link shrink-0 cursor-pointer text-[14px] font-medium">
+              <button
+                type="submit"
+                className="ed-link shrink-0 cursor-pointer text-[14px] font-medium"
+              >
                 {done ? "Thank you" : "Subscribe"}
               </button>
             </div>
-            <p aria-live="polite" className="mt-3 h-5 text-[13px] text-ink-soft">
+            <p
+              aria-live="polite"
+              className="mt-3 h-5 text-[13px] text-ink-soft"
+            >
               {done ? "You're on the list." : ""}
             </p>
           </form>

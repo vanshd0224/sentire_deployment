@@ -1,7 +1,11 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeProduct } from "../types/appTypes";
 import type { CartItem } from "./CartDrawer";
-import { getPerfumeReviews, getPerfumeReviewStats, type Review } from "../data/reviews";
+import {
+  getPerfumeReviews,
+  getPerfumeReviewStats,
+  type Review,
+} from "../data/reviews";
 import { trackViewContent } from "../utils/analytics";
 
 interface ScentNote {
@@ -19,9 +23,13 @@ interface ProductDetailModalProps {
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
     size: number,
-    price: number
+    price: number,
   ) => void;
-  onUpdateCartQuantity?: (productId: string, size: number, delta: number) => void;
+  onUpdateCartQuantity?: (
+    productId: string,
+    size: number,
+    delta: number,
+  ) => void;
   onOpenCart?: () => void;
   onSelectProduct?: (product: PerfumeProduct) => void;
   allProducts?: PerfumeProduct[];
@@ -37,7 +45,9 @@ export default function ProductDetailModal({
   onSelectProduct,
   allProducts = [],
 }: ProductDetailModalProps) {
-  const [selectedSize, setSelectedSize] = useState<number>(() => product?.sizes[0] || 50);
+  const [selectedSize, setSelectedSize] = useState<number>(
+    () => product?.sizes[0] || 50,
+  );
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [activeTab, setActiveTab] = useState<string>("description");
   const [pincode, setPincode] = useState<string>("");
@@ -86,10 +96,10 @@ export default function ProductDetailModal({
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopiedShareLink(true);
-      showToast("Link copied to clipboard! 🔗");
+      showToast("Link copied to clipboard! ");
       setTimeout(() => setCopiedShareLink(false), 2500);
     } catch (err) {
-      showToast("Link copied to clipboard! 🔗");
+      showToast("Link copied to clipboard! ");
     }
   };
 
@@ -101,7 +111,9 @@ export default function ProductDetailModal({
   const [newReviewComment, setNewReviewComment] = useState<string>("");
 
   // Local reviews state per product
-  const [customReviews, setCustomReviews] = useState<Record<string, Review[]>>({});
+  const [customReviews, setCustomReviews] = useState<Record<string, Review[]>>(
+    {},
+  );
   const [visibleReviewsCount, setVisibleReviewsCount] = useState<number>(6);
 
   // Product Personalisation State
@@ -117,11 +129,15 @@ export default function ProductDetailModal({
   const touchEndX = useRef<number>(0);
 
   const handleNextImage = () => {
-    setSelectedImageIndex((prev) => (prev < galleryImages.length - 1 ? prev + 1 : 0));
+    setSelectedImageIndex((prev) =>
+      prev < galleryImages.length - 1 ? prev + 1 : 0,
+    );
   };
 
   const handlePrevImage = () => {
-    setSelectedImageIndex((prev) => (prev > 0 ? prev - 1 : galleryImages.length - 1));
+    setSelectedImageIndex((prev) =>
+      prev > 0 ? prev - 1 : galleryImages.length - 1,
+    );
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -164,7 +180,9 @@ export default function ProductDetailModal({
       const inStock = product.sizes.filter((s) => !outStock.includes(s));
       const passedSize = (product as any).initialSize;
 
-      let defaultSz = inStock.includes(50) ? 50 : inStock[inStock.length - 1] || product.sizes[0];
+      let defaultSz = inStock.includes(50)
+        ? 50
+        : inStock[inStock.length - 1] || product.sizes[0];
       if (passedSize && product.sizes.includes(passedSize)) {
         defaultSz = passedSize;
       }
@@ -177,8 +195,14 @@ export default function ProductDetailModal({
 
       if (product.id) {
         try {
-          const pathPrefix = window.location.pathname.startsWith("/products/") ? "/products" : "/perfumes";
-          window.history.replaceState(null, "", `${pathPrefix}/${product.id}/${defaultSz}ml`);
+          const pathPrefix = window.location.pathname.startsWith("/products/")
+            ? "/products"
+            : "/perfumes";
+          window.history.replaceState(
+            null,
+            "",
+            `${pathPrefix}/${product.id}/${defaultSz}ml`,
+          );
         } catch (e) {}
       }
 
@@ -187,7 +211,13 @@ export default function ProductDetailModal({
         trackViewContent({
           id: product.id,
           name: product.name,
-          price: product.prices?.[defaultSz] || product.prices?.[50] || product.prices?.[30] || product.prices?.[10] || product.price || 1489,
+          price:
+            product.prices?.[defaultSz] ||
+            product.prices?.[50] ||
+            product.prices?.[30] ||
+            product.prices?.[10] ||
+            product.price ||
+            1489,
           category: product.scentFamily || "Perfumes",
           variant: defaultSz,
         });
@@ -203,8 +233,14 @@ export default function ProductDetailModal({
     setSelectedSize(sz);
     if (product && product.id) {
       try {
-        const pathPrefix = window.location.pathname.startsWith("/products/") ? "/products" : "/perfumes";
-        window.history.replaceState(null, "", `${pathPrefix}/${product.id}/${sz}ml`);
+        const pathPrefix = window.location.pathname.startsWith("/products/")
+          ? "/products"
+          : "/perfumes";
+        window.history.replaceState(
+          null,
+          "",
+          `${pathPrefix}/${product.id}/${sz}ml`,
+        );
       } catch (e) {}
     }
   };
@@ -230,17 +266,32 @@ export default function ProductDetailModal({
     setPhotoPreviewUrl(null);
   };
 
-  const hasPersonalisation = selectedSize === 50 && (isPersonalising || engravingText.trim() !== "" || (includeDate && engravingDate !== ""));
-  const basePrice = product ? (product.prices[selectedSize] || product.prices[product.sizes[0]] || 799) : 799;
+  const hasPersonalisation =
+    selectedSize === 50 &&
+    (isPersonalising ||
+      engravingText.trim() !== "" ||
+      (includeDate && engravingDate !== ""));
+  const basePrice = product
+    ? product.prices[selectedSize] || product.prices[product.sizes[0]] || 799
+    : 799;
   const currentPrice = basePrice + (hasPersonalisation ? 200 : 0);
-  const originalPrice = product && product.mrps && product.mrps[selectedSize] ? product.mrps[selectedSize] + (hasPersonalisation ? 200 : 0) : Math.round(currentPrice * 1.35);
-  const discountPercent = originalPrice > currentPrice && originalPrice > 0 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : 0;
+  const originalPrice =
+    product && product.mrps && product.mrps[selectedSize]
+      ? product.mrps[selectedSize] + (hasPersonalisation ? 200 : 0)
+      : Math.round(currentPrice * 1.35);
+  const discountPercent =
+    originalPrice > currentPrice && originalPrice > 0
+      ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100)
+      : 0;
 
   // Helper for cart quantity (matches exact size and personalisation status)
   const cartQty = useMemo(() => {
     if (!product) return 0;
     const item = cartItems.find(
-      (ci) => ci.productId === product.id && ci.size === selectedSize && Boolean(ci.isPersonalised) === Boolean(hasPersonalisation)
+      (ci) =>
+        ci.productId === product.id &&
+        ci.size === selectedSize &&
+        Boolean(ci.isPersonalised) === Boolean(hasPersonalisation),
     );
     return item ? item.quantity : 0;
   }, [cartItems, product, selectedSize, hasPersonalisation]);
@@ -259,14 +310,14 @@ export default function ProductDetailModal({
       {
         name: t0,
         tier: "Top Note",
-        icon: "🍋",
+        icon: "",
         desc: "Bright, sparkling opening accord that creates an instantaneous uplifting aroma.",
         intensity: 85,
       },
       {
         name: "Pink Pepper",
         tier: "Top Note",
-        icon: "🌶️",
+        icon: "",
         desc: "Warm spicy sparkle adding vibrant energetic character to initial spritz.",
         intensity: 75,
       },
@@ -276,14 +327,14 @@ export default function ProductDetailModal({
       {
         name: t1,
         tier: "Heart Note",
-        icon: "🌸",
+        icon: "",
         desc: "Opulent floral heart unfolding 15 minutes after application.",
         intensity: 90,
       },
       {
         name: "Velvet Rose Accord",
         tier: "Heart Note",
-        icon: "🌹",
+        icon: "",
         desc: "Deep, romantic bouquet giving rich texture and unisex elegance.",
         intensity: 88,
       },
@@ -293,21 +344,21 @@ export default function ProductDetailModal({
       {
         name: t2,
         tier: "Base Note",
-        icon: "🪵",
+        icon: "",
         desc: "Precious rare wood base anchoring long-lasting persistence.",
         intensity: 95,
       },
       {
         name: t3,
         tier: "Base Note",
-        icon: "✨",
+        icon: "",
         desc: "Radiant golden resin providing warm velvet sillage on dry-down.",
         intensity: 92,
       },
       {
         name: "Madagascar Vanilla & Musk",
         tier: "Base Note",
-        icon: "🍦",
+        icon: "",
         desc: "Smooth comforting embrace leaving an indelible memory trail.",
         intensity: 90,
       },
@@ -329,7 +380,7 @@ export default function ProductDetailModal({
       return {
         count: 0,
         averageRating: 4.9,
-        ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+        ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
       };
     }
     return getPerfumeReviewStats(product.id, customReviews[product.id] || []);
@@ -339,10 +390,15 @@ export default function ProductDetailModal({
   const galleryImages = useMemo(() => {
     if (!product) return [];
     if (product.sizeImages) {
-      if (product.sizeImages[selectedSize]) return product.sizeImages[selectedSize];
-      if ((product.sizeImages as any)[String(selectedSize)]) return (product.sizeImages as any)[String(selectedSize)];
+      if (product.sizeImages[selectedSize])
+        return product.sizeImages[selectedSize];
+      if ((product.sizeImages as any)[String(selectedSize)])
+        return (product.sizeImages as any)[String(selectedSize)];
     }
-    const fallbackImg = product.img || (product as any).image || "/assets/perfumes/purple-oud-50ml-2.png?v=3";
+    const fallbackImg =
+      product.img ||
+      (product as any).image ||
+      "/assets/perfumes/purple-oud-50ml-2.png?v=3";
     return [fallbackImg, fallbackImg, fallbackImg];
   }, [product, selectedSize]);
 
@@ -364,7 +420,9 @@ export default function ProductDetailModal({
     setDeliveryStatus(null);
     setTimeout(() => {
       setIsCheckingPincode(false);
-      setDeliveryStatus("✅ Express Delivery available! Guaranteed delivery within 48-72 hours with free insurance.");
+      setDeliveryStatus(
+        "✅ Express Delivery available! Guaranteed delivery within 48-72 hours with free insurance.",
+      );
     }, 600);
   };
 
@@ -405,15 +463,20 @@ export default function ProductDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 transition-all">
+      {" "}
       {/* Click backdrop to close */}
-      <div className="fixed inset-0" onClick={onClose} />
-
+      <div className="fixed inset-0" onClick={onClose} />{" "}
       {/* Modal Card Window / Mobile Bottom Sheet */}
-      <div ref={modalContainerRef} className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#a4492e]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1c1b18] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury">
+      <div
+        ref={modalContainerRef}
+        className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#a4492e]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1c1b18] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury"
+      >
+        {" "}
         {/* Mobile Drag Handle Bar */}
-        <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />
+        <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />{" "}
         {/* Header Action Buttons (Close Button + Share Button directly below it) */}
         <div className="absolute top-4 right-4 z-30 flex flex-col items-center gap-2.5">
+          {" "}
           {/* 1. Close Button (✕) */}
           <button
             onClick={onClose}
@@ -421,11 +484,18 @@ export default function ProductDetailModal({
             aria-label="Close modal"
             title="Close"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
-
+            {" "}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-5 w-5"
+            >
+              {" "}
+              <path d="M18 6L6 18M6 6l12 12" />{" "}
+            </svg>{" "}
+          </button>{" "}
           {/* 2. Share Button (directly below Cross button) */}
           <button
             onClick={handleShare}
@@ -433,26 +503,37 @@ export default function ProductDetailModal({
             aria-label="Share product"
             title="Share this perfume"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
-              <circle cx="18" cy="5" r="3" />
-              <circle cx="6" cy="12" r="3" />
-              <circle cx="18" cy="19" r="3" />
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-            </svg>
-          </button>
-        </div>
-
+            {" "}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4.5 w-4.5"
+            >
+              {" "}
+              <circle cx="18" cy="5" r="3" /> <circle cx="6" cy="12" r="3" />{" "}
+              <circle cx="18" cy="19" r="3" />{" "}
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />{" "}
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />{" "}
+            </svg>{" "}
+          </button>{" "}
+        </div>{" "}
         {/* ── BREADCRUMB ── */}
         <div className="px-6 pt-6 pb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#1c1b18]/40 pr-16">
-          <span>Home</span> <span className="mx-1.5">•</span> <span>Fragrances</span> <span className="mx-1.5">•</span>{" "}
-          <span className="text-[#a4492e] font-bold">{product.name}</span>
-        </div>
-
+          {" "}
+          <span>Home</span> <span className="mx-1.5">•</span>{" "}
+          <span>Fragrances</span> <span className="mx-1.5">•</span>{" "}
+          <span className="text-[#a4492e] font-bold">{product.name}</span>{" "}
+        </div>{" "}
         {/* ── TOP BUY BOX GRID ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 lg:p-10">
+          {" "}
           {/* LEFT COLUMN: MULTI-IMAGE GALLERY & SCENT PYRAMID ACCORD */}
           <div className="lg:col-span-6 space-y-6">
+            {" "}
             {/* Main Featured Image Box with Touch Swipe & Click-to-Zoom Lightbox */}
             <div
               className="relative aspect-square sm:aspect-[4/5] w-full max-w-[340px] sm:max-w-none mx-auto overflow-hidden rounded-3xl bg-[#151412] border border-[#a4492e]/30 p-2 sm:p-4 flex items-center justify-center group shadow-xl select-none cursor-zoom-in"
@@ -464,17 +545,18 @@ export default function ProductDetailModal({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
+              {" "}
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                 loading="eager"
                 decoding="sync"
                 className="h-full w-full object-cover sm:object-contain rounded-2xl transition-transform duration-500 ease-out group-hover:scale-105"
-              />
-
+              />{" "}
               {/* Navigation Arrows for Desktop */}
               {galleryImages.length > 1 && (
                 <>
+                  {" "}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -483,8 +565,9 @@ export default function ProductDetailModal({
                     className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Previous image"
                   >
+                    {" "}
                     ‹
-                  </button>
+                  </button>{" "}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -493,20 +576,21 @@ export default function ProductDetailModal({
                     className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Next image"
                   >
+                    {" "}
                     ›
-                  </button>
+                  </button>{" "}
                 </>
               )}
-
               {product.badge && (
                 <span className="absolute top-4 left-4 rounded-full bg-[#151412] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.22em] text-[#a4492e] shadow-md">
+                  {" "}
                   {product.badge}
                 </span>
               )}
-            </div>
-
+            </div>{" "}
             {/* Thumbnail Selectors */}
             <div className="flex gap-3 justify-center">
+              {" "}
               {galleryImages.map((img, idx) => (
                 <button
                   key={idx}
@@ -518,81 +602,122 @@ export default function ProductDetailModal({
                   }`}
                   aria-label={`Select fragrance view ${idx + 1}`}
                 >
-                  <img src={img} alt={`Sentire ${product.name} view ${idx + 1}`} width="80" height="80" loading="lazy" decoding="async" className="h-full w-full object-contain" />
+                  {" "}
+                  <img
+                    src={img}
+                    alt={`Sentire ${product.name} view ${idx + 1}`}
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-contain"
+                  />{" "}
                 </button>
               ))}
-            </div>
-          </div>
-
+            </div>{" "}
+          </div>{" "}
           {/* RIGHT COLUMN: BUY BOX & INTERACTIVE SIZE SELECTOR */}
           <div className="lg:col-span-6 space-y-6">
+            {" "}
             {/* Header info */}
             <div>
+              {" "}
               <div className="flex items-center gap-3 mb-1">
+                {" "}
                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                  {" "}
                   {product.num} · EXTRAIT DE PARFUM
-                </span>
+                </span>{" "}
                 <span className="rounded-full bg-[#a4492e]/10 px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#a4492e]">
+                  {" "}
                   UNISEX LUXURY
-                </span>
-              </div>
-
+                </span>{" "}
+              </div>{" "}
               <h1 className="font-display text-3xl sm:text-4xl text-[#1c1b18] font-medium tracking-tight">
+                {" "}
                 {product.name}
-              </h1>
-
+              </h1>{" "}
               {/* Star rating summary & Share action */}
               <div className="flex items-center justify-between gap-2 mt-2">
+                {" "}
                 <div className="flex items-center gap-2">
-                  <div className="flex text-amber-500 text-sm">★★★★★</div>
-                  <span className="text-xs font-semibold text-[#1c1b18]">{reviewStats.averageRating.toFixed(1)}</span>
-                  <span className="text-xs text-[#1c1b18]/40">({reviewStats.count} Verified Reviews)</span>
-                </div>
-
+                  {" "}
+                  <div className="flex text-amber-500 text-sm"></div>{" "}
+                  <span className="text-xs font-semibold text-[#1c1b18]">
+                    {reviewStats.averageRating.toFixed(1)}
+                  </span>{" "}
+                  <span className="text-xs text-[#1c1b18]/40">
+                    ({reviewStats.count} Verified Reviews)
+                  </span>{" "}
+                </div>{" "}
                 <button
                   onClick={handleShare}
                   className="flex items-center gap-1.5 rounded-full border border-[#a4492e]/40 bg-[#a4492e]/10 px-3.5 py-1 text-[11px] font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
                   title="Share this perfume"
                   aria-label="Share this perfume"
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                  </svg>
-                  <span>{copiedShareLink ? "Copied!" : "Share"}</span>
-                </button>
-              </div>
-            </div>
-
+                  {" "}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-3.5 w-3.5"
+                  >
+                    {" "}
+                    <circle cx="18" cy="5" r="3" />{" "}
+                    <circle cx="6" cy="12" r="3" />{" "}
+                    <circle cx="18" cy="19" r="3" />{" "}
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />{" "}
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />{" "}
+                  </svg>{" "}
+                  <span>{copiedShareLink ? "Copied!" : "Share"}</span>{" "}
+                </button>{" "}
+              </div>{" "}
+            </div>{" "}
             {/* Price & Discounts */}
             <div className="flex items-baseline gap-3 pt-2 border-t border-black/8">
+              {" "}
               <span className="font-sans font-bold text-3xl text-[#1c1b18] tracking-tight tabular-nums inline-flex items-baseline gap-0.5">
+                {" "}
                 ₹{currentPrice.toLocaleString("en-IN")}
-              </span>
-              <span className="font-sans text-sm text-[#1c1b18]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">₹{originalPrice.toLocaleString("en-IN")}</span>
+              </span>{" "}
+              <span className="font-sans text-sm text-[#1c1b18]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
+                ₹{originalPrice.toLocaleString("en-IN")}
+              </span>{" "}
               <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+                {" "}
                 {discountPercent}% OFF
-              </span>
-              <span className="text-[10px] text-[#1c1b18]/40 block font-light">Taxes Included • Free Shipping</span>
-            </div>
-
+              </span>{" "}
+              <span className="text-[10px] text-[#1c1b18]/40 block font-light">
+                Taxes Included • Free Shipping
+              </span>{" "}
+            </div>{" "}
             {/* ── INTERACTIVE BOTTLE SIZE SELECTOR ── */}
             <div className="space-y-3">
+              {" "}
               <div className="flex items-center justify-between">
+                {" "}
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e] block">
+                  {" "}
                   SELECT BOTTLE VOLUME
-                </span>
+                </span>{" "}
                 <span className="text-[11px] text-[#1c1b18]/50 font-medium">
-                  Selected: <strong className="text-[#1c1b18]">{selectedSize} ML</strong>
-                </span>
-              </div>
-
+                  {" "}
+                  Selected:{" "}
+                  <strong className="text-[#1c1b18]">
+                    {selectedSize} ML
+                  </strong>{" "}
+                </span>{" "}
+              </div>{" "}
               <div className="grid grid-cols-3 gap-3">
+                {" "}
                 {product.sizes.map((sz) => {
-                  const isOutOfStock = Boolean(product.outOfStockSizes?.includes(sz));
+                  const isOutOfStock = Boolean(
+                    product.outOfStockSizes?.includes(sz),
+                  );
                   const isSelected = selectedSize === sz;
                   const itemPrice = product.prices[sz] || currentPrice;
                   const perMl = Math.round(itemPrice / sz);
@@ -608,83 +733,114 @@ export default function ProductDetailModal({
                             ? "bg-stone-800 text-white border-2 border-stone-600 shadow-md"
                             : "bg-[#151412] text-white border-2 border-[#a4492e] shadow-[0_0_20px_rgba(164, 73, 46,0.3)] scale-[1.02]"
                           : isOutOfStock
-                          ? "border border-stone-200 bg-stone-100/70 text-stone-400"
-                          : "border border-black/12 bg-white text-[#1c1b18] hover:border-[#a4492e] hover:bg-[#a4492e]/5"
+                            ? "border border-stone-200 bg-stone-100/70 text-stone-400"
+                            : "border border-black/12 bg-white text-[#1c1b18] hover:border-[#a4492e] hover:bg-[#a4492e]/5"
                       }`}
                     >
+                      {" "}
                       {/* Best Value & Personalisation Badge */}
                       {isBestValue && !isOutOfStock && (
                         <span className="absolute -top-2.5 rounded-full bg-[#a4492e] px-2 py-0.5 text-[8px] font-extrabold text-black uppercase tracking-wider shadow-sm">
-                          ✨ Best Value · Personalisable
+                          {" "}
+                          Best Value · Personalisable
                         </span>
                       )}
-
                       {/* Selected check mark */}
                       {isSelected && (
                         <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#a4492e] text-[9px] text-black font-bold">
+                          {" "}
                           ✓
                         </span>
                       )}
-
                       <div className="my-1">
+                        {" "}
                         <span
                           className={`font-display text-sm font-bold block ${
-                            isOutOfStock ? "line-through decoration-red-500/80" : ""
+                            isOutOfStock
+                              ? "line-through decoration-red-500/80"
+                              : ""
                           }`}
                         >
+                          {" "}
                           {sz} ML
-                        </span>
+                        </span>{" "}
                         <span className="text-[9px] opacity-70 block mt-0.5">
-                          {sz === 10 ? "Travel Purse Spray" : sz === 30 ? "Signature Flacon" : "Extrait De Parfum"}
-                        </span>
-                      </div>
-
+                          {" "}
+                          {sz === 10
+                            ? "Travel Purse Spray"
+                            : sz === 30
+                              ? "Signature Flacon"
+                              : "Extrait De Parfum"}
+                        </span>{" "}
+                      </div>{" "}
                       <div className="mt-2 border-t border-white/10 pt-1.5 w-full">
+                        {" "}
                         <span
                           className={`block text-xs font-bold ${
-                            isOutOfStock ? "text-red-500" : isSelected ? "text-[#d9a08a]" : "text-[#a4492e]"
+                            isOutOfStock
+                              ? "text-red-500"
+                              : isSelected
+                                ? "text-[#d9a08a]"
+                                : "text-[#a4492e]"
                           }`}
                         >
-                          {isOutOfStock ? "Out of Stock" : `₹${itemPrice.toLocaleString("en-IN")}`}
-                        </span>
+                          {" "}
+                          {isOutOfStock
+                            ? "Out of Stock"
+                            : `₹${itemPrice.toLocaleString("en-IN")}`}
+                        </span>{" "}
                         {!isOutOfStock && (
                           <span className="text-[8px] text-black/50 block font-medium group-hover:text-black/70">
+                            {" "}
                             (₹{perMl}/ml)
                           </span>
                         )}
-                      </div>
+                      </div>{" "}
                     </button>
                   );
                 })}
-              </div>
-            </div>
-
+              </div>{" "}
+            </div>{" "}
             {/* Action Buttons: Quantity Stepper & Add to Bag / Buy Now */}
             <div className="space-y-3 pt-2">
+              {" "}
               {(() => {
-                const isSelectedSizeOut = Boolean(product.outOfStockSizes?.includes(selectedSize as (10 | 30 | 50)));
+                const isSelectedSizeOut = Boolean(
+                  product.outOfStockSizes?.includes(
+                    selectedSize as 10 | 30 | 50,
+                  ),
+                );
 
                 if (isSelectedSizeOut) {
                   return (
                     <div className="space-y-3 w-full">
+                      {" "}
                       <button
                         disabled
                         className="w-full rounded-full border border-stone-300 bg-stone-100 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-stone-400 cursor-not-allowed text-center shadow-xs"
                       >
-                        🚫 Out of Stock in {selectedSize} ML
-                      </button>
-
+                        {" "}
+                        Out of Stock in {selectedSize} ML
+                      </button>{" "}
                       {/* Notify Me Form */}
-                      <form onSubmit={handleNotifySubmit} className="rounded-xl border border-[#a4492e]/30 bg-[#a4492e]/5 p-3.5 space-y-2">
+                      <form
+                        onSubmit={handleNotifySubmit}
+                        className="rounded-xl border border-[#a4492e]/30 bg-[#a4492e]/5 p-3.5 space-y-2"
+                      >
+                        {" "}
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
-                          📩 Get Notified When {selectedSize}ML Restocks
-                        </span>
+                          {" "}
+                          Get Notified When {selectedSize}ML Restocks
+                        </span>{" "}
                         {notifySubmitted ? (
                           <p className="text-xs font-semibold text-emerald-700">
-                            ✓ Success! We will email you the moment stock arrives.
+                            {" "}
+                            ✓ Success! We will email you the moment stock
+                            arrives.
                           </p>
                         ) : (
                           <div className="flex gap-2">
+                            {" "}
                             <input
                               type="email"
                               required
@@ -692,40 +848,62 @@ export default function ProductDetailModal({
                               value={notifyEmail}
                               onChange={(e) => setNotifyEmail(e.target.value)}
                               className="flex-1 rounded-xl border border-black/15 bg-white px-3 py-2 text-xs font-medium outline-none focus:border-[#a4492e]"
-                            />
+                            />{" "}
                             <button
                               type="submit"
                               className="rounded-xl bg-[#a4492e] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#8a3b24] transition-all cursor-pointer"
                             >
+                              {" "}
                               Notify Me
-                            </button>
+                            </button>{" "}
                           </div>
                         )}
-                      </form>
+                      </form>{" "}
                     </div>
                   );
                 }
 
                 return (
                   <div className="flex gap-3">
+                    {" "}
                     {cartQty > 0 ? (
                       <div className="flex-1 flex items-center justify-between rounded-full border-2 border-[#a4492e] bg-[#151412] px-6 py-3 text-white shadow-md">
-                        <span className="text-xs font-bold text-[#a4492e] uppercase tracking-wider">In Bag:</span>
+                        {" "}
+                        <span className="text-xs font-bold text-[#a4492e] uppercase tracking-wider">
+                          In Bag:
+                        </span>{" "}
                         <div className="flex items-center gap-3">
+                          {" "}
                           <button
-                            onClick={() => onUpdateCartQuantity?.(product.id, selectedSize, -1)}
+                            onClick={() =>
+                              onUpdateCartQuantity?.(
+                                product.id,
+                                selectedSize,
+                                -1,
+                              )
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer"
                           >
+                            {" "}
                             −
-                          </button>
-                          <span className="text-sm font-bold text-white px-2">{cartQty}</span>
+                          </button>{" "}
+                          <span className="text-sm font-bold text-white px-2">
+                            {cartQty}
+                          </span>{" "}
                           <button
-                            onClick={() => onUpdateCartQuantity?.(product.id, selectedSize, 1)}
+                            onClick={() =>
+                              onUpdateCartQuantity?.(
+                                product.id,
+                                selectedSize,
+                                1,
+                              )
+                            }
                             className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer"
                           >
+                            {" "}
                             +
-                          </button>
-                        </div>
+                          </button>{" "}
+                        </div>{" "}
                       </div>
                     ) : (
                       <button
@@ -737,19 +915,24 @@ export default function ProductDetailModal({
                               num: product.num,
                               img: product.img,
                               isPersonalised: hasPersonalisation,
-                              engravingText: hasPersonalisation ? engravingText.trim() : "",
-                              engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
+                              engravingText: hasPersonalisation
+                                ? engravingText.trim()
+                                : "",
+                              engravingDate:
+                                hasPersonalisation && includeDate
+                                  ? engravingDate
+                                  : "",
                             },
                             selectedSize,
-                            currentPrice
+                            currentPrice,
                           )
                         }
-                        className="flex-1 rounded-full border border-[#a4492e]/50 bg-[#a4492e]/15 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all shadow-md cursor-pointer"
+                        className="flex-1 rounded-full bg-[#1c1b18] py-3.5 text-[14px] font-medium text-[#f4f2ee] hover:bg-[#a4492e] transition-colors cursor-pointer min-h-[48px]"
                       >
+                        {" "}
                         Add to Bag — ₹{currentPrice.toLocaleString("en-IN")}
                       </button>
                     )}
-
                     <button
                       onClick={() => {
                         onAddToCart?.(
@@ -759,45 +942,59 @@ export default function ProductDetailModal({
                             num: product.num,
                             img: product.img,
                             isPersonalised: hasPersonalisation,
-                            engravingText: hasPersonalisation ? engravingText.trim() : "",
-                            engravingDate: hasPersonalisation && includeDate ? engravingDate : "",
+                            engravingText: hasPersonalisation
+                              ? engravingText.trim()
+                              : "",
+                            engravingDate:
+                              hasPersonalisation && includeDate
+                                ? engravingDate
+                                : "",
                           },
                           selectedSize,
-                          currentPrice
+                          currentPrice,
                         );
                         onOpenCart?.();
                         onClose();
                       }}
-                      className="flex-1 rounded-full bg-[#1c1b18] py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
+                      className="flex-1 rounded-full border border-[#1c1b18] py-3.5 text-[14px] font-medium text-[#1c1b18] hover:bg-[#1c1b18] hover:text-[#f4f2ee] transition-colors cursor-pointer min-h-[48px]"
                     >
-                      Buy It Now
-                    </button>
+                      {" "}
+                      Buy it now
+                    </button>{" "}
                   </div>
                 );
               })()}
-
               {/* Product Personalisation Section (Available ONLY for 50ML) */}
               <div className="space-y-3">
+                {" "}
                 {selectedSize !== 50 ? (
                   <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl border border-dashed border-[#a4492e]/40 bg-[#f7f5f2] p-3.5 shadow-xs transition-all">
+                    {" "}
                     <div className="flex items-center gap-3 text-left">
+                      {" "}
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#a4492e]/15 text-[#a4492e] text-sm font-bold">
-                        🔒
-                      </span>
+                        {" "}
+                      </span>{" "}
                       <div>
+                        {" "}
                         <div className="flex items-center gap-2">
+                          {" "}
                           <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#1c1b18]/70">
+                            {" "}
                             Product Personalisation
-                          </span>
+                          </span>{" "}
                           <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[9px] font-bold text-amber-900 uppercase tracking-wider">
+                            {" "}
                             50ML ONLY
-                          </span>
-                        </div>
+                          </span>{" "}
+                        </div>{" "}
                         <span className="text-[11px] text-[#1c1b18]/60 block mt-0.5">
-                          Bottle personalisation &amp; custom engraving is exclusively available for 50ML flacons.
-                        </span>
-                      </div>
-                    </div>
+                          {" "}
+                          Bottle personalisation &amp; custom engraving is
+                          exclusively available for 50ML flacons.
+                        </span>{" "}
+                      </div>{" "}
+                    </div>{" "}
                     <button
                       type="button"
                       onClick={() => {
@@ -806,8 +1003,9 @@ export default function ProductDetailModal({
                       }}
                       className="shrink-0 rounded-xl bg-gradient-to-r from-[#a4492e] to-[#8a3b24] px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                     >
-                      ✨ Switch to 50ML
-                    </button>
+                      {" "}
+                      Switch to 50ML
+                    </button>{" "}
                   </div>
                 ) : (
                   <button
@@ -819,49 +1017,66 @@ export default function ProductDetailModal({
                         : "border-[#a4492e]/40 bg-gradient-to-r from-[#a4492e]/5 via-amber-500/5 to-[#a4492e]/5 hover:border-[#a4492e] hover:bg-[#a4492e]/10 text-[#1c1b18]"
                     }`}
                   >
+                    {" "}
                     <div className="flex items-center gap-2.5 text-left min-w-0 flex-1">
+                      {" "}
                       <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#a4492e]/20 text-[#a4492e] text-xs sm:text-sm font-bold">
-                        ✒️
-                      </span>
+                        {" "}
+                        ✒
+                      </span>{" "}
                       <div className="min-w-0 flex-1">
+                        {" "}
                         <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#1c1b18] block truncate">
+                          {" "}
                           Product Personalisation
-                        </span>
+                        </span>{" "}
                         <span className="text-[10px] sm:text-[11px] text-[#1c1b18]/65 block mt-0.5 truncate">
+                          {" "}
                           {engravingText || includeDate
                             ? `Custom Engraving: ${[
                                 engravingText ? `"${engravingText}"` : null,
-                                includeDate && engravingDate ? `Date: ${engravingDate}` : null,
+                                includeDate && engravingDate
+                                  ? `Date: ${engravingDate}`
+                                  : null,
                               ]
                                 .filter(Boolean)
                                 .join(" • ")} (+ ₹200)`
                             : "Add custom name & date engraving (+ ₹200)"}
-                        </span>
-                      </div>
-                    </div>
+                        </span>{" "}
+                      </div>{" "}
+                    </div>{" "}
                     <span className="text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-[#a4492e] shrink-0 whitespace-nowrap bg-[#a4492e]/15 px-2.5 py-1 rounded-lg">
-                      {isPersonalising ? "Close" : (engravingText || includeDate) ? "Edit (₹200)" : "+ Add (₹200)"}
-                    </span>
+                      {" "}
+                      {isPersonalising
+                        ? "Close"
+                        : engravingText || includeDate
+                          ? "Edit (₹200)"
+                          : "+ Add (₹200)"}
+                    </span>{" "}
                   </button>
                 )}
-
                 {/* Interactive Personalisation Panel */}
                 {isPersonalising && (
                   <div className="rounded-2xl border border-[#a4492e]/30 bg-[#f7f5f2] p-4 space-y-4 shadow-sm animate-in fade-in">
+                    {" "}
                     <div className="flex items-center justify-between border-b border-black/8 pb-2">
+                      {" "}
                       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e]">
+                        {" "}
                         Custom Bottle Engraving
-                      </span>
+                      </span>{" "}
                       <span className="text-[10px] font-semibold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                        {" "}
                         + ₹200 FEE
-                      </span>
-                    </div>
-
+                      </span>{" "}
+                    </div>{" "}
                     {/* 1. Custom Name / Monogram Engraving */}
                     <div className="space-y-2">
+                      {" "}
                       <label className="text-[11px] font-semibold text-[#1c1b18]/80 block">
+                        {" "}
                         Custom Name or Monogram (Max 15 Characters)
-                      </label>
+                      </label>{" "}
                       <input
                         type="text"
                         maxLength={15}
@@ -869,16 +1084,19 @@ export default function ProductDetailModal({
                         onChange={(e) => setEngravingText(e.target.value)}
                         placeholder="e.g. R.S. ALEXANDER"
                         className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#1c1b18] placeholder:text-[#1c1b18]/30 focus:border-[#a4492e] focus:outline-none shadow-xs font-serif tracking-widest uppercase"
-                      />
-                    </div>
-
+                      />{" "}
+                    </div>{" "}
                     {/* 2. Date Engraving Toggle & Picker */}
                     <div className="space-y-2.5 pt-2 border-t border-black/8">
+                      {" "}
                       <div className="flex items-center justify-between">
+                        {" "}
                         <label className="text-[11px] font-semibold text-[#1c1b18]/80 block">
+                          {" "}
                           Include Date Engraving?
-                        </label>
+                        </label>{" "}
                         <div className="flex items-center gap-1.5 rounded-full border border-black/10 bg-white p-1">
+                          {" "}
                           <button
                             type="button"
                             onClick={() => {
@@ -886,103 +1104,132 @@ export default function ProductDetailModal({
                               setEngravingDate("");
                             }}
                             className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                              !includeDate ? "bg-[#1c1b18] text-white shadow-xs" : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
+                              !includeDate
+                                ? "bg-[#1c1b18] text-white shadow-xs"
+                                : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
                             }`}
                           >
+                            {" "}
                             No
-                          </button>
+                          </button>{" "}
                           <button
                             type="button"
                             onClick={() => setIncludeDate(true)}
                             className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                              includeDate ? "bg-[#a4492e] text-white shadow-xs" : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
+                              includeDate
+                                ? "bg-[#a4492e] text-white shadow-xs"
+                                : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
                             }`}
                           >
+                            {" "}
                             Yes
-                          </button>
-                        </div>
-                      </div>
-
+                          </button>{" "}
+                        </div>{" "}
+                      </div>{" "}
                       {includeDate && (
                         <div className="space-y-1.5 pt-1 animate-in fade-in">
+                          {" "}
                           <label className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                            {" "}
                             Select Engraving Date
-                          </label>
+                          </label>{" "}
                           <input
                             type="date"
                             value={engravingDate}
                             onChange={(e) => setEngravingDate(e.target.value)}
                             className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#1c1b18] focus:border-[#a4492e] focus:outline-none shadow-xs font-medium"
-                          />
+                          />{" "}
                         </div>
                       )}
-                    </div>
-
+                    </div>{" "}
                     <button
                       type="button"
                       onClick={() => setIsPersonalising(false)}
                       className="w-full rounded-xl bg-[#a4492e] py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-[#8a3b24] transition-all shadow-xs cursor-pointer mt-2"
                     >
+                      {" "}
                       Save Personalisation Details
-                    </button>
+                    </button>{" "}
                   </div>
                 )}
-              </div>
-            </div>
-
+              </div>{" "}
+            </div>{" "}
             {/* Pincode Delivery Estimator */}
             <div className="rounded-2xl border border-black/10 bg-white p-3.5 sm:p-4 space-y-3">
+              {" "}
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1b18]/50 block">
+                {" "}
                 DELIVERY &amp; AVAILABILITY CHECKER
-              </span>
-              <form onSubmit={handlePincodeCheck} className="flex items-center gap-2 w-full">
+              </span>{" "}
+              <form
+                onSubmit={handlePincodeCheck}
+                className="flex items-center gap-2 w-full"
+              >
+                {" "}
                 <input
                   type="text"
                   maxLength={6}
                   placeholder="Enter 6-digit Pincode"
                   value={pincode}
-                  onChange={(e) => setPincode(e.target.value.replace(/[^\d]/g, ""))}
+                  onChange={(e) =>
+                    setPincode(e.target.value.replace(/[^\d]/g, ""))
+                  }
                   className="flex-1 min-w-0 w-full rounded-xl border border-black/15 bg-cream/50 px-3 sm:px-4 py-2 text-xs font-medium outline-none focus:border-[#a4492e]"
-                />
+                />{" "}
                 <button
                   type="submit"
                   disabled={isCheckingPincode}
                   className="shrink-0 rounded-xl bg-[#1c1b18] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#a4492e] transition-all cursor-pointer whitespace-nowrap"
                 >
+                  {" "}
                   {isCheckingPincode ? "Checking..." : "VERIFY"}
-                </button>
-              </form>
-              {deliveryStatus && <p className="text-xs font-medium text-[#1c1b18]/80 pt-1">{deliveryStatus}</p>}
-            </div>
-
+                </button>{" "}
+              </form>{" "}
+              {deliveryStatus && (
+                <p className="text-xs font-medium text-[#1c1b18]/80 pt-1">
+                  {deliveryStatus}
+                </p>
+              )}
+            </div>{" "}
             {/* Trust Badges */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center pt-3 border-t border-black/10 text-[9px] font-bold text-[#1c1b18] uppercase">
+              {" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
-                <span className="text-base">🧪</span>
-                <span className="leading-tight text-[9px]">IFRA Certified Ethyl Alcohol</span>
-              </div>
-
+                {" "}
+                <span className="text-base"></span>{" "}
+                <span className="leading-tight text-[9px]">
+                  IFRA Certified Ethyl Alcohol
+                </span>{" "}
+              </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
-                <span className="text-base">🛡️</span>
-                <span className="leading-tight text-[9px]">FDA Approved</span>
-              </div>
-
+                {" "}
+                <span className="text-base"></span>{" "}
+                <span className="leading-tight text-[9px]">
+                  FDA Approved
+                </span>{" "}
+              </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
-                <span className="text-base">🌿</span>
-                <span className="leading-tight text-[9px]">Gentle Formula</span>
-              </div>
-
+                {" "}
+                <span className="text-base"></span>{" "}
+                <span className="leading-tight text-[9px]">
+                  Gentle Formula
+                </span>{" "}
+              </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
-                <span className="text-base">🐇</span>
-                <span className="leading-tight text-[9px]">Cruelty Free</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
+                {" "}
+                <span className="text-base"></span>{" "}
+                <span className="leading-tight text-[9px]">
+                  Cruelty Free
+                </span>{" "}
+              </div>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
         {/* ── ACCORDION TABS SECTION ── */}
         <div className="border-t border-black/10 px-6 lg:px-10 py-8 bg-white space-y-6">
+          {" "}
           <div className="flex border-b border-black/10 overflow-x-auto gap-8 text-xs font-bold uppercase tracking-[0.18em]">
+            {" "}
             {[
               { id: "description", label: "Description" },
               { id: "notes", label: "Fragrance Notes" },
@@ -993,197 +1240,303 @@ export default function ProductDetailModal({
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`pb-3 transition-all cursor-pointer whitespace-nowrap border-b-2 ${
-                  activeTab === tab.id ? "border-[#a4492e] text-[#a4492e]" : "border-transparent text-[#1c1b18]/50 hover:text-[#1c1b18]"
+                  activeTab === tab.id
+                    ? "border-[#a4492e] text-[#a4492e]"
+                    : "border-transparent text-[#1c1b18]/50 hover:text-[#1c1b18]"
                 }`}
               >
+                {" "}
                 {tab.label}
               </button>
             ))}
-          </div>
-
+          </div>{" "}
           <div className="py-4 text-xs text-[#1c1b18]/80 leading-relaxed font-light">
+            {" "}
             {activeTab === "description" && (
               <div className="space-y-3 max-w-3xl">
+                {" "}
                 <p className="text-sm text-[#1c1b18] font-normal leading-relaxed">
+                  {" "}
                   {product.fullDesc || product.desc}
-                </p>
+                </p>{" "}
                 <p>
-                  Crafted by master perfumers using rare cold-pressed essential oils and pure extrait de parfum concentration. Each bottle undergoes a 90-day aging process to allow rich woody and floral accords to marry harmoniously.
-                </p>
+                  {" "}
+                  Crafted by master perfumers using rare cold-pressed essential
+                  oils and pure extrait de parfum concentration. Each bottle
+                  undergoes a 90-day aging process to allow rich woody and
+                  floral accords to marry harmoniously.
+                </p>{" "}
               </div>
             )}
-
             {activeTab === "notes" && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl">
+                {" "}
                 <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">Top Notes</span>
-                  <p className="font-medium text-[#1c1b18]">{product.traces[0] || "Fresh Bergamot"}, Pink Pepper</p>
-                </div>
+                  {" "}
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                    Top Notes
+                  </span>{" "}
+                  <p className="font-medium text-[#1c1b18]">
+                    {product.traces[0] || "Fresh Bergamot"}, Pink Pepper
+                  </p>{" "}
+                </div>{" "}
                 <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">Heart Notes</span>
-                  <p className="font-medium text-[#1c1b18]">{product.traces[1] || "Blooming Jasmine"}, Rose Accord</p>
-                </div>
+                  {" "}
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                    Heart Notes
+                  </span>{" "}
+                  <p className="font-medium text-[#1c1b18]">
+                    {product.traces[1] || "Blooming Jasmine"}, Rose Accord
+                  </p>{" "}
+                </div>{" "}
                 <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">Base Notes</span>
-                  <p className="font-medium text-[#1c1b18]">{product.traces[2] || "Sandalwood"}, Amber &amp; Velvet Musk</p>
-                </div>
+                  {" "}
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                    Base Notes
+                  </span>{" "}
+                  <p className="font-medium text-[#1c1b18]">
+                    {product.traces[2] || "Sandalwood"}, Amber &amp; Velvet Musk
+                  </p>{" "}
+                </div>{" "}
               </div>
             )}
-
             {activeTab === "longevity" && (
               <div className="space-y-4 max-w-xl">
+                {" "}
                 <div>
+                  {" "}
                   <div className="flex justify-between text-xs font-bold text-[#1c1b18] mb-1">
-                    <span>Longevity: 12-16 Hours</span>
-                    <span className="text-[#a4492e]">Very High (Extrait)</span>
-                  </div>
+                    {" "}
+                    <span>Longevity: 12-16 Hours</span>{" "}
+                    <span className="text-[#a4492e]">
+                      Very High (Extrait)
+                    </span>{" "}
+                  </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
-                    <div className="h-full w-[92%] rounded-full bg-[#a4492e]" />
-                  </div>
-                </div>
+                    {" "}
+                    <div className="h-full w-[92%] rounded-full bg-[#a4492e]" />{" "}
+                  </div>{" "}
+                </div>{" "}
                 <div>
+                  {" "}
                   <div className="flex justify-between text-xs font-bold text-[#1c1b18] mb-1">
-                    <span>Sillage &amp; Projection</span>
-                    <span className="text-[#a4492e]">Magnetic Trail</span>
-                  </div>
+                    {" "}
+                    <span>Sillage &amp; Projection</span>{" "}
+                    <span className="text-[#a4492e]">Magnetic Trail</span>{" "}
+                  </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
-                    <div className="h-full w-[88%] rounded-full bg-[#a4492e]" />
-                  </div>
-                </div>
+                    {" "}
+                    <div className="h-full w-[88%] rounded-full bg-[#a4492e]" />{" "}
+                  </div>{" "}
+                </div>{" "}
               </div>
             )}
-
             {activeTab === "shipping" && (
               <div className="space-y-2 max-w-2xl">
-                <p>• Complimentary Express Shipping on all orders above ₹999 across India.</p>
-                <p>• Orders are dispatched within 24 hours in rigid tamper-evident coffret packaging.</p>
-                <p>• 7-Day Hassle-Free Returns &amp; Exchanges policy.</p>
+                {" "}
+                <p>
+                  • Complimentary Express Shipping on all orders above ₹999
+                  across India.
+                </p>{" "}
+                <p>
+                  • Orders are dispatched within 24 hours in rigid
+                  tamper-evident coffret packaging.
+                </p>{" "}
+                <p>• 7-Day Hassle-Free Returns &amp; Exchanges policy.</p>{" "}
               </div>
             )}
-          </div>
-        </div>
-
+          </div>{" "}
+        </div>{" "}
         {/* ── EDITORIAL MOOD BANNER ── */}
         <div className="relative overflow-hidden bg-[#151412] text-white p-8 lg:p-14 border-t border-[#a4492e]/30">
+          {" "}
           <div className="max-w-2xl space-y-3">
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">HAUTE PARFUMERIE STORY</span>
+            {" "}
+            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+              HAUTE PARFUMERIE STORY
+            </span>{" "}
             <h3 className="font-display text-2xl sm:text-3xl text-white font-normal leading-tight">
+              {" "}
               The Essence of {product.name}
-            </h3>
+            </h3>{" "}
             <p className="text-xs sm:text-sm text-white/70 font-light leading-relaxed">
-              Inspired by moments of intense emotion and effortless allure. Step into the light wearing a scent that leaves an indelible memory long after you have departed.
-            </p>
-          </div>
-        </div>
-
+              {" "}
+              Inspired by moments of intense emotion and effortless allure. Step
+              into the light wearing a scent that leaves an indelible memory
+              long after you have departed.
+            </p>{" "}
+          </div>{" "}
+        </div>{" "}
         {/* ── RECOMMENDED PRODUCTS ── */}
         {recommendedProducts.length > 0 && (
           <div className="px-6 lg:px-10 py-10 border-t border-black/10 bg-[#f4f2ee] space-y-6">
+            {" "}
             <div className="flex items-center justify-between">
-              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">You Might Also Like</h3>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">Curated Suggestions</span>
-            </div>
-
+              {" "}
+              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">
+                You Might Also Like
+              </h3>{" "}
+              <span className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                Curated Suggestions
+              </span>{" "}
+            </div>{" "}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {" "}
               {recommendedProducts.map((rec) => (
                 <div
                   key={rec.id}
                   onClick={() => {
                     if (modalContainerRef.current) {
-                      modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                      modalContainerRef.current.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                      });
                     }
                     onSelectProduct?.(rec);
                   }}
                   className="group rounded-2xl border border-[#e8e2d9] bg-white p-4 transition-all duration-300 hover:shadow-xl hover:border-[#a4492e]/50 hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
                 >
+                  {" "}
                   <div>
+                    {" "}
                     <div className="aspect-[4/5] rounded-xl bg-[#f5efe6] p-4 flex items-center justify-center mb-3 overflow-hidden">
+                      {" "}
                       <img
                         src={rec.img}
                         alt={`Sentire ${rec.name} luxury perfume flacon with 35%+ oil concentration`}
                         width="250"
                         height="300"
                         className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a4492e]">{rec.num}</span>
+                      />{" "}
+                    </div>{" "}
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a4492e]">
+                      {rec.num}
+                    </span>{" "}
                     <h4 className="font-display text-lg font-medium text-[#1c1b18] group-hover:text-[#a4492e] transition-colors">
+                      {" "}
                       {rec.name}
-                    </h4>
-                    <p className="text-xs text-[#1c1b18]/60 font-light truncate">{rec.desc}</p>
-                  </div>
+                    </h4>{" "}
+                    <p className="text-xs text-[#1c1b18]/60 font-light truncate">
+                      {rec.desc}
+                    </p>{" "}
+                  </div>{" "}
                   <div className="mt-4 pt-3 border-t border-black/8 flex items-center justify-between">
-                    <span className="font-sans font-bold text-sm text-[#1c1b18] tabular-nums inline-flex items-baseline gap-0.5">₹{rec.prices[50] || rec.prices[30] || 799}</span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e]">View Product →</span>
-                  </div>
+                    {" "}
+                    <span className="font-sans font-bold text-sm text-[#1c1b18] tabular-nums inline-flex items-baseline gap-0.5">
+                      ₹{rec.prices[50] || rec.prices[30] || 799}
+                    </span>{" "}
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e]">
+                      View Product →
+                    </span>{" "}
+                  </div>{" "}
                 </div>
               ))}
-            </div>
+            </div>{" "}
           </div>
         )}
-
         {/* ── VERIFIED CUSTOMER REVIEWS & RATINGS ── */}
         <div className="px-6 lg:px-10 py-12 border-t border-black/10 bg-white space-y-8">
+          {" "}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/10 pb-6">
+            {" "}
             <div>
-              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">Customer Reviews</h3>
+              {" "}
+              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">
+                Customer Reviews
+              </h3>{" "}
               <div className="flex items-center gap-3 mt-1">
-                <div className="flex text-amber-500 text-lg">★★★★★</div>
-                <span className="font-display text-xl font-bold text-[#1c1b18]">{reviewStats.averageRating.toFixed(1)} out of 5</span>
-                <span className="text-xs text-[#1c1b18]/50">Based on {reviewStats.count} verified customer reviews</span>
-              </div>
-            </div>
-
+                {" "}
+                <div className="flex text-amber-500 text-lg"></div>{" "}
+                <span className="font-display text-xl font-bold text-[#1c1b18]">
+                  {reviewStats.averageRating.toFixed(1)} out of 5
+                </span>{" "}
+                <span className="text-xs text-[#1c1b18]/50">
+                  Based on {reviewStats.count} verified customer reviews
+                </span>{" "}
+              </div>{" "}
+            </div>{" "}
             <button
               onClick={() => setIsWritingReview((prev) => !prev)}
               className="rounded-full bg-[#1c1b18] px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-white hover:bg-[#a4492e] transition-all shadow-md cursor-pointer"
             >
+              {" "}
               {isWritingReview ? "Cancel Review" : "Write a Review"}
-            </button>
-          </div>
-
+            </button>{" "}
+          </div>{" "}
           {/* Rating Breakdown & Highlights Box */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 rounded-2xl border border-black/8 bg-[#f4f2ee] p-5 sm:p-6">
+            {" "}
             <div className="sm:col-span-5 flex flex-col justify-center border-b sm:border-b-0 sm:border-r border-black/8 pb-4 sm:pb-0 sm:pr-6">
+              {" "}
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-4xl sm:text-5xl font-bold text-[#1c1b18]">{reviewStats.averageRating.toFixed(1)}</span>
-                <span className="text-xs text-[#1c1b18]/50 font-medium">/ 5.0</span>
-              </div>
-              <div className="flex text-amber-500 text-sm mt-1">★★★★★</div>
+                {" "}
+                <span className="font-display text-4xl sm:text-5xl font-bold text-[#1c1b18]">
+                  {reviewStats.averageRating.toFixed(1)}
+                </span>{" "}
+                <span className="text-xs text-[#1c1b18]/50 font-medium">
+                  / 5.0
+                </span>{" "}
+              </div>{" "}
+              <div className="flex text-amber-500 text-sm mt-1"></div>{" "}
               <span className="text-xs font-semibold text-emerald-800 mt-2 flex items-center gap-1">
+                {" "}
                 <span>✓</span> 100% Verified Purchases across India
-              </span>
+              </span>{" "}
               <span className="text-[11px] text-[#1c1b18]/50 mt-0.5">
+                {" "}
                 {reviewStats.count} fragrance lovers rated this creation
-              </span>
-            </div>
-
+              </span>{" "}
+            </div>{" "}
             <div className="sm:col-span-7 space-y-1.5 justify-center flex flex-col">
+              {" "}
               {[5, 4, 3, 2, 1].map((star) => {
-                const count = reviewStats.ratingBreakdown[star as keyof typeof reviewStats.ratingBreakdown] || 0;
-                const pct = reviewStats.count > 0 ? Math.round((count / reviewStats.count) * 100) : 0;
+                const count =
+                  reviewStats.ratingBreakdown[
+                    star as keyof typeof reviewStats.ratingBreakdown
+                  ] || 0;
+                const pct =
+                  reviewStats.count > 0
+                    ? Math.round((count / reviewStats.count) * 100)
+                    : 0;
                 return (
                   <div key={star} className="flex items-center gap-2 text-xs">
-                    <span className="w-12 text-[#1c1b18]/70 font-medium text-[11px] shrink-0">{star} stars</span>
+                    {" "}
+                    <span className="w-12 text-[#1c1b18]/70 font-medium text-[11px] shrink-0">
+                      {star} stars
+                    </span>{" "}
                     <div className="h-2 flex-1 rounded-full bg-black/10 overflow-hidden">
-                      <div className="h-full rounded-full bg-[#a4492e]" style={{ width: `${pct}%` }} />
-                    </div>
-                    <span className="w-9 text-right text-[11px] text-[#1c1b18]/50 font-mono shrink-0">{pct}%</span>
+                      {" "}
+                      <div
+                        className="h-full rounded-full bg-[#a4492e]"
+                        style={{ width: `${pct}%` }}
+                      />{" "}
+                    </div>{" "}
+                    <span className="w-9 text-right text-[11px] text-[#1c1b18]/50 font-mono shrink-0">
+                      {pct}%
+                    </span>{" "}
                   </div>
                 );
               })}
-            </div>
-          </div>
-
+            </div>{" "}
+          </div>{" "}
           {/* Write Review Form */}
           {isWritingReview && (
-            <form onSubmit={handleAddReview} className="rounded-2xl border border-[#a4492e]/40 bg-[#a4492e]/5 p-6 space-y-4 animate-in fade-in">
-              <h4 className="font-display text-lg font-medium text-[#1c1b18]">Share Your Fragrance Experience</h4>
+            <form
+              onSubmit={handleAddReview}
+              className="rounded-2xl border border-[#a4492e]/40 bg-[#a4492e]/5 p-6 space-y-4 animate-in fade-in"
+            >
+              {" "}
+              <h4 className="font-display text-lg font-medium text-[#1c1b18]">
+                Share Your Fragrance Experience
+              </h4>{" "}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {" "}
                 <div>
+                  {" "}
                   <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                    {" "}
                     Your Name
-                  </label>
+                  </label>{" "}
                   <input
                     type="text"
                     required
@@ -1191,27 +1544,32 @@ export default function ProductDetailModal({
                     onChange={(e) => setNewReviewAuthor(e.target.value)}
                     placeholder="e.g. Ananya Roy"
                     className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
-                  />
-                </div>
+                  />{" "}
+                </div>{" "}
                 <div>
+                  {" "}
                   <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                    {" "}
                     Rating
-                  </label>
+                  </label>{" "}
                   <select
                     value={newReviewRating}
                     onChange={(e) => setNewReviewRating(Number(e.target.value))}
                     className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
                   >
-                    <option value={5}>★★★★★ 5 Stars - Outstanding</option>
-                    <option value={4}>★★★★☆ 4 Stars - Great</option>
-                    <option value={3}>★★★☆☆ 3 Stars - Average</option>
-                  </select>
-                </div>
-              </div>
+                    {" "}
+                    <option value={5}> 5 Stars - Outstanding</option>{" "}
+                    <option value={4}> 4 Stars - Great</option>{" "}
+                    <option value={3}> 3 Stars - Average</option>{" "}
+                  </select>{" "}
+                </div>{" "}
+              </div>{" "}
               <div>
+                {" "}
                 <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                  {" "}
                   Review Headline
-                </label>
+                </label>{" "}
                 <input
                   type="text"
                   required
@@ -1219,12 +1577,14 @@ export default function ProductDetailModal({
                   onChange={(e) => setNewReviewTitle(e.target.value)}
                   placeholder="e.g. Unbelievable Sillage &amp; Elegant Packaging!"
                   className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
-                />
-              </div>
+                />{" "}
+              </div>{" "}
               <div>
+                {" "}
                 <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                  {" "}
                   Your Review
-                </label>
+                </label>{" "}
                 <textarea
                   required
                   rows={3}
@@ -1232,96 +1592,126 @@ export default function ProductDetailModal({
                   onChange={(e) => setNewReviewComment(e.target.value)}
                   placeholder="Describe the scent, longevity, and how it made you feel..."
                   className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
-                />
-              </div>
+                />{" "}
+              </div>{" "}
               <button
                 type="submit"
                 className="rounded-full bg-[#a4492e] px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
               >
+                {" "}
                 Submit Review
-              </button>
+              </button>{" "}
             </form>
           )}
-
           {/* Review List */}
           <div className="space-y-4">
+            {" "}
             {productReviews.slice(0, visibleReviewsCount).map((rev) => (
-              <div key={rev.id} className="rounded-2xl border border-black/8 bg-[#f7f5f2] p-5 sm:p-6 space-y-2 shadow-2xs">
+              <div
+                key={rev.id}
+                className="rounded-2xl border border-black/8 bg-[#f7f5f2] p-5 sm:p-6 space-y-2 shadow-2xs"
+              >
+                {" "}
                 <div className="flex items-center justify-between">
+                  {" "}
                   <div className="flex items-center gap-2">
-                    <span className="font-display font-medium text-[#1c1b18]">{rev.author}</span>
+                    {" "}
+                    <span className="font-display font-medium text-[#1c1b18]">
+                      {rev.author}
+                    </span>{" "}
                     {rev.verified && (
                       <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                        {" "}
                         ✓ Verified Buyer
                       </span>
                     )}
-                  </div>
-                  <span className="text-[11px] text-[#1c1b18]/40 font-light">{rev.date}</span>
-                </div>
-                <div className="flex text-amber-500 text-xs">{"★".repeat(rev.rating)}</div>
-                <h5 className="font-semibold text-[#1c1b18] text-sm pt-1">{rev.title}</h5>
-                <p className="text-xs text-[#1c1b18]/70 font-light leading-relaxed">{rev.comment}</p>
+                  </div>{" "}
+                  <span className="text-[11px] text-[#1c1b18]/40 font-light">
+                    {rev.date}
+                  </span>{" "}
+                </div>{" "}
+                <div className="flex text-amber-500 text-xs">
+                  {"".repeat(rev.rating)}
+                </div>{" "}
+                <h5 className="font-semibold text-[#1c1b18] text-sm pt-1">
+                  {rev.title}
+                </h5>{" "}
+                <p className="text-xs text-[#1c1b18]/70 font-light leading-relaxed">
+                  {rev.comment}
+                </p>{" "}
               </div>
             ))}
-          </div>
-
+          </div>{" "}
           {/* Load More Reviews Button */}
           {visibleReviewsCount < productReviews.length && (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              {" "}
               <button
                 type="button"
-                onClick={() => setVisibleReviewsCount((prev) => Math.min(prev + 8, productReviews.length))}
+                onClick={() =>
+                  setVisibleReviewsCount((prev) =>
+                    Math.min(prev + 8, productReviews.length),
+                  )
+                }
                 className="rounded-full border border-[#a4492e] bg-[#a4492e]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
               >
-                Load More Reviews (+8) · {productReviews.length - visibleReviewsCount} Remaining
-              </button>
+                {" "}
+                Load More Reviews (+8) ·{" "}
+                {productReviews.length - visibleReviewsCount} Remaining
+              </button>{" "}
               <button
                 type="button"
                 onClick={() => setVisibleReviewsCount(productReviews.length)}
                 className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#1c1b18]/70 hover:border-black/30 hover:text-[#1c1b18] transition-all cursor-pointer"
               >
+                {" "}
                 View All ({productReviews.length})
-              </button>
+              </button>{" "}
             </div>
           )}
-        </div>
-
+        </div>{" "}
         {/* ── STICKY MOBILE COMMERCE ACTION BAR ── */}
-        <div
-          className="sticky left-0 right-0 bottom-0 z-40 flex items-center justify-between border-t border-[#a4492e]/30 bg-[#151412] px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom,12px))] text-white shadow-2xl md:hidden"
-        >
+        <div className="sticky left-0 right-0 bottom-0 z-40 flex items-center justify-between border-t border-[#a4492e]/30 bg-[#151412] px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom,12px))] text-white shadow-2xl md:hidden">
+          {" "}
           <div>
+            {" "}
             <span className="text-[9px] font-bold uppercase tracking-wider text-[#a4492e] block">
+              {" "}
               {product.name} • {selectedSize}ML
-            </span>
+            </span>{" "}
             <span className="font-display text-lg font-bold text-white">
+              {" "}
               ₹{currentPrice.toLocaleString("en-IN")}
-            </span>
-          </div>
-
+            </span>{" "}
+          </div>{" "}
           <button
             onClick={() => {
               onAddToCart?.(
-                { id: product.id, name: product.name, num: product.num, img: product.img },
+                {
+                  id: product.id,
+                  name: product.name,
+                  num: product.num,
+                  img: product.img,
+                },
                 selectedSize,
-                currentPrice
+                currentPrice,
               );
               onClose();
             }}
             className="rounded-full bg-[#a4492e] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black hover:bg-[#8a3b24] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >
+            {" "}
             Add to Bag →
-          </button>
-        </div>
-
+          </button>{" "}
+        </div>{" "}
         {/* Floating Toast Notification */}
         {toastMessage && (
           <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-[#151412] border border-[#a4492e] px-6 py-2.5 text-xs font-bold text-[#a4492e] shadow-2xl animate-in fade-in slide-in-from-bottom-4">
+            {" "}
             {toastMessage}
           </div>
         )}
-      </div>
-
+      </div>{" "}
       {/* ── High-Resolution Lightbox Zoom Modal ── */}
       {isLightboxOpen && (
         <div
@@ -1331,12 +1721,15 @@ export default function ProductDetailModal({
             setIsZoomed(false);
           }}
         >
+          {" "}
           <div
             className="relative max-w-5xl max-h-[92vh] w-full flex flex-col items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
+            {" "}
             {/* Top Toolbar Controls */}
             <div className="absolute top-[-52px] right-0 flex items-center gap-3 z-30">
+              {" "}
               <button
                 onClick={() => {
                   setIsLightboxOpen(false);
@@ -1346,10 +1739,10 @@ export default function ProductDetailModal({
                 aria-label="Close Lightbox"
                 title="Close Lightbox (Esc)"
               >
+                {" "}
                 ✕
-              </button>
-            </div>
-
+              </button>{" "}
+            </div>{" "}
             {/* Lightbox Main Image Container */}
             <div
               className={`relative overflow-auto rounded-3xl max-h-[82vh] max-w-full border border-white/15 bg-black/80 shadow-[0_25px_90px_rgba(0,0,0,0.9)] flex items-center justify-center p-4 transition-all duration-300 ${
@@ -1357,21 +1750,25 @@ export default function ProductDetailModal({
               }`}
               onClick={() => setIsZoomed((z) => !z)}
             >
+              {" "}
               <img
                 src={galleryImages[selectedImageIndex] || product.img}
                 alt={`Sentire ${product.name} high-resolution flacon view`}
                 className={`object-contain transition-transform duration-300 ease-out ${
                   isZoomed ? "scale-175 sm:scale-200" : "max-h-[76vh] w-auto"
                 }`}
-              />
-            </div>
-
+              />{" "}
+            </div>{" "}
             {/* Bottom Caption & Thumbnail Navigation */}
             <div className="mt-4 flex items-center justify-between w-full max-w-md px-4">
+              {" "}
               <span className="text-xs font-bold tracking-widest text-[#a4492e] uppercase">
-                {product.name} • View {selectedImageIndex + 1} of {galleryImages.length}
-              </span>
+                {" "}
+                {product.name} • View {selectedImageIndex + 1} of{" "}
+                {galleryImages.length}
+              </span>{" "}
               <div className="flex items-center gap-2">
+                {" "}
                 {galleryImages.map((_, idx) => (
                   <button
                     key={idx}
@@ -1381,14 +1778,16 @@ export default function ProductDetailModal({
                       setIsZoomed(false);
                     }}
                     className={`h-2.5 rounded-full transition-all cursor-pointer ${
-                      selectedImageIndex === idx ? "w-8 bg-[#a4492e]" : "w-2.5 bg-white/40 hover:bg-white/70"
+                      selectedImageIndex === idx
+                        ? "w-8 bg-[#a4492e]"
+                        : "w-2.5 bg-white/40 hover:bg-white/70"
                     }`}
                     aria-label={`View image ${idx + 1}`}
                   />
                 ))}
-              </div>
-            </div>
-          </div>
+              </div>{" "}
+            </div>{" "}
+          </div>{" "}
         </div>
       )}
     </div>

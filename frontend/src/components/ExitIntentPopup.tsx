@@ -89,53 +89,76 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
       aria-modal="true"
       aria-label="Offer"
     >
+      {" "}
       <div
         className="ed-offer-card relative w-full max-w-3xl overflow-hidden bg-paper sm:rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
+        {" "}
         <button
           onClick={handleClose}
           aria-label="Close"
           className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center text-ink/70 transition-colors hover:text-ink sm:text-paper/80 sm:hover:text-paper"
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5}>
-            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-          </svg>
-        </button>
-
+          {" "}
+          <svg
+            viewBox="0 0 24 24"
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            {" "}
+            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />{" "}
+          </svg>{" "}
+        </button>{" "}
         <div className="grid sm:grid-cols-2">
+          {" "}
           <div className="order-2 flex flex-col justify-center p-6 sm:order-1 sm:p-10">
-            <p className="ed-label">A note before you go</p>
+            {" "}
+            <p className="ed-label">A note before you go</p>{" "}
             <h2 className="mt-4 font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-ink">
+              {" "}
               ₹200 off your first <em className="italic">extrait</em>.
-            </h2>
+            </h2>{" "}
             <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+              {" "}
               Use code{" "}
               <span className="font-mono text-[13px] tracking-[0.02em] text-ink underline underline-offset-4">
+                {" "}
                 PC200
               </span>{" "}
               on orders above ₹1,999. Shipping is on us.
-            </p>
+            </p>{" "}
             <p className="ed-label mt-5 tabular-nums">
+              {" "}
               Expires in {mStr}:{sStr}
-            </p>
-            <button onClick={handleClaimPrivilege} className="ed-btn ed-btn-solid mt-7 w-full sm:w-auto">
+            </p>{" "}
+            <button
+              onClick={handleClaimPrivilege}
+              className="ed-btn ed-btn-solid mt-7 w-full sm:w-auto"
+            >
+              {" "}
               Shop the library
-            </button>
-          </div>
-
+            </button>{" "}
+          </div>{" "}
           <div className="order-1 relative min-h-[180px] bg-ink sm:order-2 sm:min-h-[420px]">
+            {" "}
             <picture>
-              <source srcSet="/assets/sentire_purple_oud_popup.webp" type="image/webp" />
+              {" "}
+              <source
+                srcSet="/assets/sentire_purple_oud_popup.webp"
+                type="image/webp"
+              />{" "}
               <img
                 src="/assets/sentire_purple_oud_popup.jpg"
                 alt="Purple Oud extrait de parfum"
                 className="absolute inset-0 h-full w-full object-cover"
-              />
-            </picture>
-          </div>
-        </div>
-      </div>
+              />{" "}
+            </picture>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }

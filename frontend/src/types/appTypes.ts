@@ -11,7 +11,8 @@ export type PageName =
   | "personalised-perfume"
   | "personalisation"
   | "extrait-de-parfum"
-  | "account";
+  | "account"
+  | "cart";
 
 export interface PerfumeProduct {
   id: string;

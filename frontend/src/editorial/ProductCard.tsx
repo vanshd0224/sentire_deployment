@@ -16,7 +16,12 @@ const BADGE_COPY: Record<string, string> = {
   exclusive: "Exclusive",
 };
 
-export default function ProductCard({ product, index = 0, onAddToCart, onSelectProduct }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  index = 0,
+  onAddToCart,
+  onSelectProduct,
+}: ProductCardProps) {
   const sizes = product.sizes ?? [50];
   const [size, setSize] = useState<number>(sizes.includes(50) ? 50 : sizes[0]);
   const [added, setAdded] = useState(false);
@@ -39,7 +44,7 @@ export default function ProductCard({ product, index = 0, onAddToCart, onSelectP
         size,
       },
       size,
-      price
+      price,
     );
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1600);
@@ -51,7 +56,11 @@ export default function ProductCard({ product, index = 0, onAddToCart, onSelectP
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: Math.min(index, 4) * 0.06, ease: EASE_OUT_EXPO }}
+      transition={{
+        duration: 0.7,
+        delay: Math.min(index, 4) * 0.06,
+        ease: EASE_OUT_EXPO,
+      }}
     >
       <button
         type="button"
@@ -100,7 +109,11 @@ export default function ProductCard({ product, index = 0, onAddToCart, onSelectP
 
         {/* Size selector — mono text toggles, 44px tap targets */}
         {sizes.length > 1 && (
-          <div className="mt-4 flex items-center gap-1" role="group" aria-label="Choose size">
+          <div
+            className="mt-4 flex items-center gap-1"
+            role="group"
+            aria-label="Choose size"
+          >
             {sizes.map((s) => (
               <button
                 key={s}
@@ -121,7 +134,9 @@ export default function ProductCard({ product, index = 0, onAddToCart, onSelectP
 
         <div className="mt-auto flex items-end justify-between gap-4 pt-4">
           <p className="text-[15px]">
-            <span className="tabular-nums">₹{price?.toLocaleString("en-IN")}</span>
+            <span className="tabular-nums">
+              ₹{price?.toLocaleString("en-IN")}
+            </span>
             {mrp && mrp > (price ?? 0) && (
               <span className="ml-2 font-mono text-[11px] text-stone line-through tabular-nums">
                 ₹{mrp.toLocaleString("en-IN")}

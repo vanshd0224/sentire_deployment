@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
-import EditorialHero from "./editorial/Hero";
+import Hero from "./components/Hero";
 import NoteMarquee from "./editorial/NoteMarquee";
 import CollectionRail from "./editorial/CollectionRail";
 import Atelier from "./editorial/Atelier";
@@ -37,12 +37,16 @@ import { auth } from "./lib/firebase";
 import type { PageName } from "./types/appTypes";
 export type { PageName };
 
-const BEST_SELLERS = ALL_PERFUMES.filter((p) => p.badge === "bestseller" || p.badge === "exclusive").slice(0, 8);
+const BEST_SELLERS = ALL_PERFUMES.filter(
+  (p) => p.badge === "bestseller" || p.badge === "exclusive",
+).slice(0, 8);
 const NEW_ARRIVALS = ALL_PERFUMES.filter((p) => p.badge === "new").slice(0, 8);
 
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<PerfumeFilterOptions | undefined>(undefined);
+  const [activeFilters, setActiveFilters] = useState<
+    PerfumeFilterOptions | undefined
+  >(undefined);
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem("sentire_cart_items");
@@ -59,7 +63,11 @@ export default function App() {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
-  const [cartToast, setCartToast] = useState<{ id: number; message: string; img?: string } | null>(null);
+  const [cartToast, setCartToast] = useState<{
+    id: number;
+    message: string;
+    img?: string;
+  } | null>(null);
 
   useEffect(() => {
     try {
@@ -76,15 +84,21 @@ export default function App() {
     }
   }, [cartToast]);
 
-
-
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
-    const ref = (typeof document !== "undefined" ? document.referrer : "").toLowerCase();
-    const wentToCheckout = typeof sessionStorage !== "undefined" && sessionStorage.getItem("sentire_went_to_checkout") === "true";
+    const ref = (
+      typeof document !== "undefined" ? document.referrer : ""
+    ).toLowerCase();
+    const wentToCheckout =
+      typeof sessionStorage !== "undefined" &&
+      sessionStorage.getItem("sentire_went_to_checkout") === "true";
 
-    if (wentToCheckout || ref.includes("myshopify.com") || ref.includes("checkouts")) {
+    if (
+      wentToCheckout ||
+      ref.includes("myshopify.com") ||
+      ref.includes("checkouts")
+    ) {
       try {
         sessionStorage.removeItem("sentire_went_to_checkout");
       } catch (e) {}
@@ -92,34 +106,95 @@ export default function App() {
     }
 
     if (hash === "#account" || path.includes("account")) return "account";
-    if (hash === "#cart" || path.includes("cart") || path.includes("bag") || hash === "#bag") return "cart";
-    if (hash === "#discovery-set" || path.includes("discovery-set") || hash === "#discoveryset" || path.includes("discoveryset")) return "discovery-set";
-    if (hash === "#about" || path.includes("about") || path.includes("our-story") || path.includes("extrait-de-parfum") || path.includes("35-percent")) return "about";
-    if (hash === "#byob" || path.includes("byob") || path.includes("build-your-own-bundle")) return "byob";
-    if (hash === "#personalisation" || path.includes("personalisation") || path.includes("personalised-perfume")) return "perfumes";
-    if (hash === "#discovery-set" || path.includes("discovery-set")) return "discovery-set";
-    if (hash === "#new-arrivals" || path.includes("new-arrivals")) return "new-arrivals";
-    if (hash === "#bestsellers" || path.includes("bestsellers") || path.includes("best-sellers")) return "bestsellers";
-    if (hash === "#perfumes" || path.includes("perfumes") || path.includes("collections") || path.includes("products") || path.includes("product")) return "perfumes";
-    if (hash === "#client-services" || path.includes("client-services") || path.includes("contact") || path.includes("faqs") || path.includes("shipping")) return "client-services";
-    if (hash === "#track-order" || path.includes("track-order")) return "track-order";
+    if (
+      hash === "#cart" ||
+      path.includes("cart") ||
+      path.includes("bag") ||
+      hash === "#bag"
+    )
+      return "cart";
+    if (
+      hash === "#discovery-set" ||
+      path.includes("discovery-set") ||
+      hash === "#discoveryset" ||
+      path.includes("discoveryset")
+    )
+      return "discovery-set";
+    if (
+      hash === "#about" ||
+      path.includes("about") ||
+      path.includes("our-story") ||
+      path.includes("extrait-de-parfum") ||
+      path.includes("35-percent")
+    )
+      return "about";
+    if (
+      hash === "#byob" ||
+      path.includes("byob") ||
+      path.includes("build-your-own-bundle")
+    )
+      return "byob";
+    if (
+      hash === "#personalisation" ||
+      path.includes("personalisation") ||
+      path.includes("personalised-perfume")
+    )
+      return "personalisation";
+    if (hash === "#discovery-set" || path.includes("discovery-set"))
+      return "discovery-set";
+    if (hash === "#new-arrivals" || path.includes("new-arrivals"))
+      return "new-arrivals";
+    if (
+      hash === "#bestsellers" ||
+      path.includes("bestsellers") ||
+      path.includes("best-sellers")
+    )
+      return "bestsellers";
+    if (
+      hash === "#perfumes" ||
+      path.includes("perfumes") ||
+      path.includes("collections") ||
+      path.includes("products") ||
+      path.includes("product")
+    )
+      return "perfumes";
+    if (
+      hash === "#client-services" ||
+      path.includes("client-services") ||
+      path.includes("contact") ||
+      path.includes("faqs") ||
+      path.includes("shipping")
+    )
+      return "client-services";
+    if (hash === "#track-order" || path.includes("track-order"))
+      return "track-order";
     return "home";
   });
 
   const handleOpenProductModal = (product: any, size?: number) => {
     if (!product) return;
-    const targetSize = size || product.initialSize || (product.sizes?.includes(50) ? 50 : product.sizes?.[0] || 50);
+    const targetSize =
+      size ||
+      product.initialSize ||
+      (product.sizes?.includes(50) ? 50 : product.sizes?.[0] || 50);
     setSelectedProductModal({ ...product, initialSize: targetSize });
     if (product && product.id) {
       try {
-        window.history.pushState(null, "", `/perfumes/${product.id}/${targetSize}ml`);
+        window.history.pushState(
+          null,
+          "",
+          `/perfumes/${product.id}/${targetSize}ml`,
+        );
       } catch (e) {}
     }
   };
 
   const handleCloseProductModal = () => {
     setSelectedProductModal(null);
-    if (window.location.pathname.includes("/perfumes/") || window.location.pathname.includes("/products/")) {
+    if (
+      window.location.pathname.includes("/perfumes/") ||
+      window.location.pathname.includes("/products/")
+    ) {
       try {
         window.history.pushState(null, "", "/perfumes");
       } catch (e) {}
@@ -158,13 +233,20 @@ export default function App() {
     // Extract perfume ID from path parts
     if (!targetProductId) {
       for (const part of pathParts) {
-        if (["perfumes", "products", "product"].includes(part) || /^\d+(?:-?ml)?$/.test(part)) continue;
-        const cleanPart = part.replace(/^sentire-/, "").replace(/-(10|30|50)ml$/, "").split(".")[0];
+        if (
+          ["perfumes", "products", "product"].includes(part) ||
+          /^\d+(?:-?ml)?$/.test(part)
+        )
+          continue;
+        const cleanPart = part
+          .replace(/^sentire-/, "")
+          .replace(/-(10|30|50)ml$/, "")
+          .split(".")[0];
         const found = ALL_PERFUMES.find(
           (p) =>
             p.id.toLowerCase() === part.toLowerCase() ||
             p.id.toLowerCase() === cleanPart.toLowerCase() ||
-            cleanPart.toLowerCase().startsWith(p.id.toLowerCase() + "-")
+            cleanPart.toLowerCase().startsWith(p.id.toLowerCase() + "-"),
         );
         if (found) {
           targetProductId = found.id;
@@ -175,13 +257,17 @@ export default function App() {
 
     if (targetProductId) {
       const match = ALL_PERFUMES.find(
-        (p) => p.id.toLowerCase() === targetProductId?.toLowerCase()
+        (p) => p.id.toLowerCase() === targetProductId?.toLowerCase(),
       );
       if (match) {
         setSelectedProductModal({ ...match, initialSize: targetSize });
         if (targetSize) {
           try {
-            window.history.replaceState(null, "", `/perfumes/${match.id}/${targetSize}ml`);
+            window.history.replaceState(
+              null,
+              "",
+              `/perfumes/${match.id}/${targetSize}ml`,
+            );
           } catch (e) {}
         }
       }
@@ -190,23 +276,70 @@ export default function App() {
     const handlePopState = () => {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
-      if (hash === "#account" || popPath.includes("account")) setCurrentPage("account");
-      else if (hash === "#cart" || popPath.includes("cart") || popPath.includes("bag")) setCurrentPage("cart");
-      else if (hash === "#discovery-set" || popPath.includes("discovery-set") || hash === "#discoveryset" || popPath.includes("discoveryset")) setCurrentPage("discovery-set");
-      else if (hash === "#about" || popPath.includes("about") || popPath.includes("extrait-de-parfum") || popPath.includes("35-percent")) setCurrentPage("about");
-      else if (hash === "#byob" || popPath.includes("byob") || popPath.includes("build-your-own-bundle")) setCurrentPage("byob");
-      else if (hash === "#personalisation" || popPath.includes("personalisation") || popPath.includes("personalised-perfume")) setCurrentPage("personalisation");
-      else if (hash === "#discovery-set" || popPath.includes("discovery-set")) setCurrentPage("discovery-set");
-      else if (hash === "#new-arrivals" || popPath.includes("new-arrivals")) setCurrentPage("new-arrivals");
-      else if (hash === "#bestsellers" || popPath.includes("bestsellers")) setCurrentPage("bestsellers");
-      else if (hash === "#perfumes" || popPath.includes("perfumes") || popPath.includes("products")) setCurrentPage("perfumes");
-      else if (hash === "#client-services" || popPath.includes("client-services") || popPath.includes("contact")) setCurrentPage("client-services");
-      else if (hash === "#track-order" || popPath.includes("track-order")) setCurrentPage("track-order");
+      if (hash === "#account" || popPath.includes("account"))
+        setCurrentPage("account");
+      else if (
+        hash === "#cart" ||
+        popPath.includes("cart") ||
+        popPath.includes("bag")
+      )
+        setCurrentPage("cart");
+      else if (
+        hash === "#discovery-set" ||
+        popPath.includes("discovery-set") ||
+        hash === "#discoveryset" ||
+        popPath.includes("discoveryset")
+      )
+        setCurrentPage("discovery-set");
+      else if (
+        hash === "#about" ||
+        popPath.includes("about") ||
+        popPath.includes("extrait-de-parfum") ||
+        popPath.includes("35-percent")
+      )
+        setCurrentPage("about");
+      else if (
+        hash === "#byob" ||
+        popPath.includes("byob") ||
+        popPath.includes("build-your-own-bundle")
+      )
+        setCurrentPage("byob");
+      else if (
+        hash === "#personalisation" ||
+        popPath.includes("personalisation") ||
+        popPath.includes("personalised-perfume")
+      )
+        setCurrentPage("personalisation");
+      else if (hash === "#discovery-set" || popPath.includes("discovery-set"))
+        setCurrentPage("discovery-set");
+      else if (hash === "#new-arrivals" || popPath.includes("new-arrivals"))
+        setCurrentPage("new-arrivals");
+      else if (hash === "#bestsellers" || popPath.includes("bestsellers"))
+        setCurrentPage("bestsellers");
+      else if (
+        hash === "#perfumes" ||
+        popPath.includes("perfumes") ||
+        popPath.includes("products")
+      )
+        setCurrentPage("perfumes");
+      else if (
+        hash === "#client-services" ||
+        popPath.includes("client-services") ||
+        popPath.includes("contact")
+      )
+        setCurrentPage("client-services");
+      else if (hash === "#track-order" || popPath.includes("track-order"))
+        setCurrentPage("track-order");
       else setCurrentPage("home");
 
       if (popPath.startsWith("/perfumes/")) {
-        const slug = popPath.replace("/perfumes/", "").split("/")[0].split(".")[0];
-        const match = ALL_PERFUMES.find((p) => p.id.toLowerCase() === slug.toLowerCase());
+        const slug = popPath
+          .replace("/perfumes/", "")
+          .split("/")[0]
+          .split(".")[0];
+        const match = ALL_PERFUMES.find(
+          (p) => p.id.toLowerCase() === slug.toLowerCase(),
+        );
         if (match) setSelectedProductModal(match);
       }
     };
@@ -224,7 +357,8 @@ export default function App() {
   }, []);
 
   const handleAccountClick = () => {
-    const isStoredLoggedIn = localStorage.getItem("sentire_is_logged_in") === "true";
+    const isStoredLoggedIn =
+      localStorage.getItem("sentire_is_logged_in") === "true";
     if (auth.currentUser || isStoredLoggedIn) {
       handleNavigate("account");
     } else {
@@ -232,10 +366,7 @@ export default function App() {
     }
   };
 
-  const handleNavigate = (
-    page: PageName,
-    filters?: PerfumeFilterOptions
-  ) => {
+  const handleNavigate = (page: PageName, filters?: PerfumeFilterOptions) => {
     setCurrentPage(page);
     setActiveFilters(filters);
     const targetPath = page === "home" ? "/" : `/${page}`;
@@ -251,16 +382,30 @@ export default function App() {
 
   const handleAddToCart = (item: any, sizeArg?: number, priceArg?: number) => {
     const qtyToAdd = item?.quantity ?? 1;
-    const safePrice = typeof priceArg === "number" ? priceArg : typeof item?.price === "number" ? item.price : 1489;
-    const safeSize = typeof sizeArg === "number" ? sizeArg : typeof item?.size === "number" ? item.size : 50;
+    const safePrice =
+      typeof priceArg === "number"
+        ? priceArg
+        : typeof item?.price === "number"
+          ? item.price
+          : 1489;
+    const safeSize =
+      typeof sizeArg === "number"
+        ? sizeArg
+        : typeof item?.size === "number"
+          ? item.size
+          : 50;
     const safeProductId = item?.productId || item?.id || "perfume-1";
     const safeName = item?.name || item?.product || "Luxury Extrait de Parfum";
-    
-    const pData = ALL_PERFUMES.find((p) => p.id === safeProductId || p.id === item?.id);
+
+    const pData = ALL_PERFUMES.find(
+      (p) => p.id === safeProductId || p.id === item?.id,
+    );
     const safeImage =
       item?.image ||
       item?.img ||
-      (item?.swatch && item.swatch.startsWith("/assets/perfumes") ? item.swatch : null) ||
+      (item?.swatch && item.swatch.startsWith("/assets/perfumes")
+        ? item.swatch
+        : null) ||
       pData?.img ||
       pData?.sizeImages?.[safeSize as 10 | 30 | 50]?.[0] ||
       "/assets/purple-oud-arrival.png";
@@ -286,11 +431,21 @@ export default function App() {
     setCartItems((prev) => {
       // If adding a personalised bottle, replace any unpersonalised version of the same product & size!
       const baseList = isPersonalised
-        ? prev.filter((i) => !(i.productId === safeProductId && i.size === safeSize && !i.isPersonalised))
+        ? prev.filter(
+            (i) =>
+              !(
+                i.productId === safeProductId &&
+                i.size === safeSize &&
+                !i.isPersonalised
+              ),
+          )
         : prev;
 
       const existingIndex = baseList.findIndex(
-        (i) => i.productId === safeProductId && i.size === safeSize && Boolean(i.isPersonalised) === Boolean(isPersonalised)
+        (i) =>
+          i.productId === safeProductId &&
+          i.size === safeSize &&
+          Boolean(i.isPersonalised) === Boolean(isPersonalised),
       );
       if (existingIndex > -1) {
         const updated = [...baseList];
@@ -306,7 +461,7 @@ export default function App() {
       }
       return [...baseList, newItem];
     });
-    
+
     // Trigger real-time Shopify Storefront GraphQL mutation (cartCreate / cartLinesAdd)
     syncAddToCartToShopifyStorefront(newItem, qtyToAdd);
 
@@ -318,7 +473,11 @@ export default function App() {
     });
   };
 
-  const handleUpdateCartQuantity = (productId: string, size: number, delta: number) => {
+  const handleUpdateCartQuantity = (
+    productId: string,
+    size: number,
+    delta: number,
+  ) => {
     setCartItems((prev) => {
       return prev
         .map((item) => {
@@ -334,7 +493,9 @@ export default function App() {
 
   const handleRemoveCartItem = (productId: string, size: number) => {
     setCartItems((prev) =>
-      prev.filter((item) => !(item.productId === productId && item.size === size))
+      prev.filter(
+        (item) => !(item.productId === productId && item.size === size),
+      ),
     );
   };
 
@@ -343,12 +504,15 @@ export default function App() {
 
   const totalCartCount = useMemo(
     () => cartItems.reduce((sum, item) => sum + item.quantity, 0),
-    [cartItems]
+    [cartItems],
   );
 
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
-      <SEOHead currentPage={currentPage} selectedProductModal={selectedProductModal} />
+      <SEOHead
+        currentPage={currentPage}
+        selectedProductModal={selectedProductModal}
+      />
       {currentPage !== "cart" && (
         <Navbar
           onOpenBundleModal={openBundleModal}
@@ -383,7 +547,7 @@ export default function App() {
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => handleNavigate("cart")}
         />
-            ) : currentPage === "discovery-set" ? (
+      ) : currentPage === "discovery-set" ? (
         <DiscoverySetPage
           onAddToCart={handleAddToCart}
           onOpenCart={() => handleNavigate("cart")}
@@ -451,7 +615,7 @@ export default function App() {
         />
       ) : (
         <main>
-          <EditorialHero onNavigate={handleNavigate} />
+          <Hero onNavigate={handleNavigate} />
           <NoteMarquee />
           <CollectionRail
             label="Haute parfumerie"
@@ -462,7 +626,10 @@ export default function App() {
             onAddToCart={handleAddToCart}
             onSelectProduct={handleOpenProductModal}
           />
-          <Collections onNavigate={handleNavigate} onOpenBundleModal={openBundleModal} />
+          <Collections
+            onNavigate={handleNavigate}
+            onOpenBundleModal={openBundleModal}
+          />
           <Atelier />
           <Campaign onNavigate={handleNavigate} />
           <CollectionRail
@@ -489,20 +656,23 @@ export default function App() {
 
       <Footer onNavigate={handleNavigate} />
 
-      {!isCartOpen && !isBundleModalOpen && currentPage !== "personalisation" && currentPage !== "cart" && (
-        <MobileBottomNav
-          currentPage={currentPage}
-          onNavigate={handleNavigate}
-          onOpenCart={() => handleNavigate("cart")}
-          onOpenAccount={handleAccountClick}
-          onOpenBundleModal={openBundleModal}
-          onToggleSearch={() => {
-            setIsSearchOpen(true);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          cartCount={totalCartCount}
-        />
-      )}
+      {!isCartOpen &&
+        !isBundleModalOpen &&
+        currentPage !== "personalisation" &&
+        currentPage !== "cart" && (
+          <MobileBottomNav
+            currentPage={currentPage}
+            onNavigate={handleNavigate}
+            onOpenCart={() => handleNavigate("cart")}
+            onOpenAccount={handleAccountClick}
+            onOpenBundleModal={openBundleModal}
+            onToggleSearch={() => {
+              setIsSearchOpen(true);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            cartCount={totalCartCount}
+          />
+        )}
 
       <BundleBuilderModal
         isOpen={isBundleModalOpen}
@@ -522,7 +692,10 @@ export default function App() {
       {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}
       {selectedProductModal && (
         <ProductDetailModal
-          product={ALL_PERFUMES.find(ap => ap.id === selectedProductModal.id) || selectedProductModal}
+          product={
+            ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
+            selectedProductModal
+          }
           onClose={handleCloseProductModal}
           cartItems={cartItems}
           onAddToCart={(prod, size, price) => {
@@ -539,7 +712,7 @@ export default function App() {
                 engravingDate: prod.engravingDate,
               },
               size,
-              price
+              price,
             );
             handleCloseProductModal();
           }}
@@ -571,12 +744,21 @@ export default function App() {
           <div className="flex items-center gap-3 min-w-0">
             {cartToast.img && (
               <div className="h-11 w-11 shrink-0 rounded-xl bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
-                <img src={cartToast.img} alt="Cart item thumbnail" className="h-full w-full object-contain" />
+                <img
+                  src={cartToast.img}
+                  alt="Cart item thumbnail"
+                  className="h-full w-full object-contain"
+                />
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-xs font-bold text-[#a4492e] tracking-wide truncate">{cartToast.message}</p>
-              <p className="text-[10px] text-white/70 font-medium">Cart Updated ({totalCartCount} item{totalCartCount === 1 ? "" : "s"})</p>
+              <p className="text-xs font-bold text-[#a4492e] tracking-wide truncate">
+                {cartToast.message}
+              </p>
+              <p className="text-[10px] text-white/70 font-medium">
+                Cart Updated ({totalCartCount} item
+                {totalCartCount === 1 ? "" : "s"})
+              </p>
             </div>
           </div>
 
@@ -588,8 +770,18 @@ export default function App() {
             className="shrink-0 rounded-full bg-[#8a3b24] px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#a4492e] transition-all shadow-md cursor-pointer flex items-center gap-1"
           >
             <span>View Bag</span>
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            <svg
+              className="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
             </svg>
           </button>
         </div>

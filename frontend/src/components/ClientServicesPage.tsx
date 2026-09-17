@@ -22,20 +22,90 @@ export type EnquiryCategory =
   | "careers"
   | "other-enquiry";
 
-const CATEGORIES: { id: EnquiryCategory; label: string; icon: string; desc: string }[] = [
-  { id: "order-support", label: "Order Support", icon: "📦", desc: "Order changes, payment & confirmation" },
-  { id: "delivery-tracking", label: "Delivery & Tracking", icon: "🚚", desc: "Dispatch, courier updates & address" },
-  { id: "returns-exchanges", label: "Returns & Exchanges", icon: "↩️", desc: "Damaged item, returns & refund status" },
-  { id: "product-guidance", label: "Product & Fragrance Guidance", icon: "✨", desc: "Notes, scent family & fragrance concierge" },
-  { id: "personalisation", label: "Personalisation & Engraving", icon: "✒️", desc: "Bottle laser-engraving & custom box packaging" },
-  { id: "corporate-gifting", label: "Corporate & Bulk Gifting", icon: "🎁", desc: "Client gifts, festive hampers & volume orders" },
-  { id: "weddings-events", label: "Weddings & Celebrations", icon: "💍", desc: "Wedding favours, party gifts & custom blends" },
-  { id: "wholesale-distribution", label: "Wholesale & Distribution", icon: "🏢", desc: "Retailers, boutiques & global distribution" },
-  { id: "hospitality-business", label: "Hospitality & Business", icon: "🏨", desc: "Luxury hotels, spas & amenity scenting" },
-  { id: "press-media", label: "Press & Media", icon: "📰", desc: "Press releases, editorial samples & founder interviews" },
-  { id: "partnerships-creators", label: "Partnerships & Creators", icon: "🤝", desc: "Brand collaborations & creator gifted reviews" },
-  { id: "careers", label: "Careers & Talent", icon: "💼", desc: "Join our Jaipur perfume house team" },
-  { id: "other-enquiry", label: "General & Other Enquiry", icon: "💬", desc: "Any other question for Sentire Client Services" },
+const CATEGORIES: {
+  id: EnquiryCategory;
+  label: string;
+  icon: string;
+  desc: string;
+}[] = [
+  {
+    id: "order-support",
+    label: "Order Support",
+    icon: "",
+    desc: "Order changes, payment & confirmation",
+  },
+  {
+    id: "delivery-tracking",
+    label: "Delivery & Tracking",
+    icon: "",
+    desc: "Dispatch, courier updates & address",
+  },
+  {
+    id: "returns-exchanges",
+    label: "Returns & Exchanges",
+    icon: "↩",
+    desc: "Damaged item, returns & refund status",
+  },
+  {
+    id: "product-guidance",
+    label: "Product & Fragrance Guidance",
+    icon: "",
+    desc: "Notes, scent family & fragrance concierge",
+  },
+  {
+    id: "personalisation",
+    label: "Personalisation & Engraving",
+    icon: "✒",
+    desc: "Bottle laser-engraving & custom box packaging",
+  },
+  {
+    id: "corporate-gifting",
+    label: "Corporate & Bulk Gifting",
+    icon: "",
+    desc: "Client gifts, festive hampers & volume orders",
+  },
+  {
+    id: "weddings-events",
+    label: "Weddings & Celebrations",
+    icon: "",
+    desc: "Wedding favours, party gifts & custom blends",
+  },
+  {
+    id: "wholesale-distribution",
+    label: "Wholesale & Distribution",
+    icon: "",
+    desc: "Retailers, boutiques & global distribution",
+  },
+  {
+    id: "hospitality-business",
+    label: "Hospitality & Business",
+    icon: "",
+    desc: "Luxury hotels, spas & amenity scenting",
+  },
+  {
+    id: "press-media",
+    label: "Press & Media",
+    icon: "",
+    desc: "Press releases, editorial samples & founder interviews",
+  },
+  {
+    id: "partnerships-creators",
+    label: "Partnerships & Creators",
+    icon: "",
+    desc: "Brand collaborations & creator gifted reviews",
+  },
+  {
+    id: "careers",
+    label: "Careers & Talent",
+    icon: "",
+    desc: "Join our Jaipur perfume house team",
+  },
+  {
+    id: "other-enquiry",
+    label: "General & Other Enquiry",
+    icon: "",
+    desc: "Any other question for Sentire Client Services",
+  },
 ];
 
 const FAQS = [
@@ -94,7 +164,8 @@ export default function ClientServicesPage({
   onNavigateToTrackOrder,
   onNavigateToPerfumes,
 }: ClientServicesPageProps) {
-  const [activeCategory, setActiveCategory] = useState<EnquiryCategory>("order-support");
+  const [activeCategory, setActiveCategory] =
+    useState<EnquiryCategory>("order-support");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionRef, setSubmissionRef] = useState<string | null>(null);
@@ -105,7 +176,11 @@ export default function ClientServicesPage({
     const search = window.location.search.toLowerCase();
     const path = window.location.pathname.toLowerCase();
 
-    if (hash.includes("faq") || search.includes("faq") || path.includes("faq")) {
+    if (
+      hash.includes("faq") ||
+      search.includes("faq") ||
+      path.includes("faq")
+    ) {
       setTimeout(() => {
         const el = document.getElementById("faqs-section");
         el?.scrollIntoView({ behavior: "smooth" });
@@ -169,7 +244,9 @@ export default function ClientServicesPage({
   const [corpStep, setCorpStep] = useState(1);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -186,13 +263,15 @@ export default function ClientServicesPage({
     setIsSubmitting(true);
 
     try {
-      const backendUrl = window.location.hostname.includes('run.app') || window.location.hostname.includes('sentirebypc.com')
-        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/api/enquiries'
-        : '/api/enquiries';
+      const backendUrl =
+        window.location.hostname.includes("run.app") ||
+        window.location.hostname.includes("sentirebypc.com")
+          ? "https://ecommerce-backend-1041917436859.asia-south1.run.app/api/enquiries"
+          : "/api/enquiries";
 
       const res = await fetch(backendUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           category: activeCategory,
           firstName: formData.firstName,
@@ -202,8 +281,8 @@ export default function ClientServicesPage({
           preferredContact: formData.preferredContact,
           orderNumber: formData.orderNumber,
           queryType: formData.issueType,
-          message: formData.message
-        })
+          message: formData.message,
+        }),
       });
 
       const data = await res.json();
@@ -230,61 +309,84 @@ export default function ClientServicesPage({
 
   return (
     <div className="min-h-screen bg-[#f4f2ee] text-[#1c1b18] font-sans">
+      {" "}
       {/* ── Breadcrumb Bar ── */}
       <div className="border-b border-[#a4492e]/15 bg-[#f4f2ee] px-5 py-4 lg:px-12">
+        {" "}
         <div className="mx-auto flex max-w-[1280px] items-center justify-between text-[11px] font-medium tracking-[0.12em] uppercase text-ink/60">
+          {" "}
           <div className="flex items-center gap-2">
-            <button onClick={onBackToHome} className="hover:text-[#a4492e] transition-colors cursor-pointer">
+            {" "}
+            <button
+              onClick={onBackToHome}
+              className="hover:text-[#a4492e] transition-colors cursor-pointer"
+            >
+              {" "}
               Home
-            </button>
-            <span>/</span>
-            <span className="text-[#a4492e] font-bold">Client Services</span>
-          </div>
+            </button>{" "}
+            <span>/</span>{" "}
+            <span className="text-[#a4492e] font-bold">
+              Client Services
+            </span>{" "}
+          </div>{" "}
           <span className="hidden sm:inline text-[10px] tracking-[0.2em] text-[#a4492e]">
+            {" "}
             S P Ventures • Jaipur Maison Desk
-          </span>
-        </div>
-      </div>
-
+          </span>{" "}
+        </div>{" "}
+      </div>{" "}
       {/* ── Section 01: Hero Section ── */}
       <section className="relative overflow-hidden border-b border-[#a4492e]/15 bg-[#151412] text-[#f4f2ee] py-20 lg:py-28 px-5 lg:px-12">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#a4492e]/20 via-transparent to-transparent opacity-30 pointer-events-none" />
-        
+        {" "}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#a4492e]/20 via-transparent to-transparent opacity-30 pointer-events-none" />{" "}
         <div className="mx-auto max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          {" "}
           <div className="lg:col-span-7 space-y-6">
+            {" "}
             <span className="inline-block rounded-full bg-[#a4492e]/15 border border-[#a4492e]/30 px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e]">
+              {" "}
               SENTIRE CLIENT SERVICES
-            </span>
+            </span>{" "}
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal tracking-[0.06em] text-white leading-tight">
+              {" "}
               How may we assist you?
-            </h1>
+            </h1>{" "}
             <p className="text-sm sm:text-base text-white/75 leading-relaxed max-w-xl font-light">
-              From choosing your Extrait de Parfum signature to arranging a bespoke corporate commission, our Client Services team is here to guide you personally through every step of your Sentire experience.
-            </p>
+              {" "}
+              From choosing your Extrait de Parfum signature to arranging a
+              bespoke corporate commission, our Client Services team is here to
+              guide you personally through every step of your Sentire
+              experience.
+            </p>{" "}
             <p className="text-xs text-[#a4492e] italic font-serif tracking-wide">
+              {" "}
               "Consider us your private point of contact with Sentire."
-            </p>
-
+            </p>{" "}
             <div className="flex flex-wrap items-center gap-4 pt-4">
+              {" "}
               <a
                 href="#enquiry-form"
                 className="px-7 py-3.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.22em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
               >
+                {" "}
                 BEGIN AN ENQUIRY
-              </a>
+              </a>{" "}
               <a
                 href="#contact-channels"
                 className="px-6 py-3.5 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.18em] hover:border-[#a4492e] hover:text-[#a4492e] transition-all cursor-pointer"
               >
+                {" "}
                 VIEW CONTACT OPTIONS →
-              </a>
-            </div>
-          </div>
-
+              </a>{" "}
+            </div>{" "}
+          </div>{" "}
           {/* Hero Visual */}
           <div className="lg:col-span-5 relative flex justify-center">
+            {" "}
             <div className="relative w-full max-w-[380px] rounded-2xl overflow-hidden border border-[#a4492e]/30 shadow-2xl bg-[#151412] p-6 text-center">
+              {" "}
               <div className="h-64 w-full rounded-xl overflow-hidden bg-[#1f1913] flex items-center justify-center relative mb-5">
+                {" "}
                 <img
                   src="/assets/white-oud.png"
                   alt="Sentire by PC luxury packaging and private client concierge services in Jaipur"
@@ -292,201 +394,301 @@ export default function ClientServicesPage({
                   height="300"
                   loading="lazy"
                   className="h-full w-full object-contain p-4 hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#151412] via-transparent to-transparent opacity-60" />
-              </div>
+                />{" "}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#151412] via-transparent to-transparent opacity-60" />{" "}
+              </div>{" "}
               <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+                {" "}
                 PRIVATE CLIENT DESK
-              </span>
+              </span>{" "}
               <h3 className="font-display text-lg text-white font-medium mt-1">
+                {" "}
                 Personal Olfactory Care
-              </h3>
+              </h3>{" "}
               <p className="text-[11px] text-white/60 mt-1">
+                {" "}
                 Jaipur, Rajasthan • Mon – Sat | 10:00 AM – 7:00 PM IST
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 02 & 08: Quick Contact Bar & Availability ── */}
-      <section id="contact-channels" className="border-b border-[#a4492e]/15 bg-white py-10 px-5 lg:px-12">
+      <section
+        id="contact-channels"
+        className="border-b border-[#a4492e]/15 bg-white py-10 px-5 lg:px-12"
+      >
+        {" "}
         <div className="mx-auto max-w-[1280px]">
+          {" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {" "}
             {/* Call */}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+              {" "}
               <div>
-                <span className="text-xl">📞</span>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">CALL CLIENT SERVICES</h4>
-                <p className="text-[11px] text-ink/60 mt-1">Speak directly with our team</p>
-                <a href="tel:+919950891935" className="font-display text-base font-semibold text-[#a4492e] mt-2 block hover:underline">
+                {" "}
+                <span className="text-xl"></span>{" "}
+                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                  Call client services
+                </h4>{" "}
+                <p className="text-[11px] text-ink/60 mt-1">
+                  Speak directly with our team
+                </p>{" "}
+                <a
+                  href="tel:+919950891935"
+                  className="font-display text-base font-semibold text-[#a4492e] mt-2 block hover:underline"
+                >
+                  {" "}
                   +91 99508 91935
-                </a>
-              </div>
-              <span className="text-[9.5px] text-ink/40 mt-3 block">Mon – Sat | 10:00 AM – 7:00 PM IST</span>
-            </div>
-
+                </a>{" "}
+              </div>{" "}
+              <span className="text-[9.5px] text-ink/40 mt-3 block">
+                Mon – Sat | 10:00 AM – 7:00 PM IST
+              </span>{" "}
+            </div>{" "}
             {/* Email */}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+              {" "}
               <div>
-                <span className="text-xl">✉️</span>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">EMAIL US</h4>
-                <p className="text-[11px] text-ink/60 mt-1">For general & order enquiries</p>
-                <a href="mailto:support@sentirebypc.com" className="font-display text-sm font-semibold text-[#a4492e] mt-2 block hover:underline truncate">
+                {" "}
+                <span className="text-xl">✉</span>{" "}
+                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                  Email us
+                </h4>{" "}
+                <p className="text-[11px] text-ink/60 mt-1">
+                  For general & order enquiries
+                </p>{" "}
+                <a
+                  href="mailto:support@sentirebypc.com"
+                  className="font-display text-sm font-semibold text-[#a4492e] mt-2 block hover:underline truncate"
+                >
+                  {" "}
                   support@sentirebypc.com
-                </a>
-              </div>
-              <span className="text-[9.5px] text-ink/40 mt-3 block">Response within one business day</span>
-            </div>
-
+                </a>{" "}
+              </div>{" "}
+              <span className="text-[9.5px] text-ink/40 mt-3 block">
+                Response within one business day
+              </span>{" "}
+            </div>{" "}
             {/* WhatsApp */}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+              {" "}
               <div>
-                <span className="text-xl">💬</span>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">WHATSAPP CARE</h4>
-                <p className="text-[11px] text-ink/60 mt-1">Instant messaging concierge</p>
+                {" "}
+                <span className="text-xl"></span>{" "}
+                <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                  Whatsapp care
+                </h4>{" "}
+                <p className="text-[11px] text-ink/60 mt-1">
+                  Instant messaging concierge
+                </p>{" "}
                 <a
                   href="https://wa.me/919950891935"
                   target="_blank"
                   rel="noreferrer"
                   className="font-display text-sm font-semibold text-[#a4492e] mt-2 block hover:underline"
                 >
+                  {" "}
                   Chat on WhatsApp →
-                </a>
-              </div>
-              <span className="text-[9.5px] text-ink/40 mt-3 block">Available during operating hours</span>
-            </div>
-
+                </a>{" "}
+              </div>{" "}
+              <span className="text-[9.5px] text-ink/40 mt-3 block">
+                Available during operating hours
+              </span>{" "}
+            </div>{" "}
             {/* Track Order */}
             <div className="p-5 rounded-2xl bg-[#151412] text-white border border-[#a4492e]/30 flex flex-col justify-between shadow-md">
+              {" "}
               <div>
-                <span className="text-xl">🚚</span>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-gold mt-2">TRACK YOUR ORDER</h4>
-                <p className="text-[11px] text-white/60 mt-1">Check delivery & AWB status</p>
-              </div>
+                {" "}
+                <span className="text-xl"></span>{" "}
+                <h4 className="text-xs font-bold uppercase tracking-wider text-gold mt-2">
+                  Track your order
+                </h4>{" "}
+                <p className="text-[11px] text-white/60 mt-1">
+                  Check delivery & AWB status
+                </p>{" "}
+              </div>{" "}
               <button
                 onClick={onNavigateToTrackOrder}
                 className="mt-4 px-4 py-2.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-[10px] uppercase tracking-widest hover:bg-[#a4492e] transition-all cursor-pointer text-center"
               >
+                {" "}
                 TRACK PACKAGE →
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section: Shipping & Delivery Policy Card ── */}
-      <section id="shipping-delivery" className="py-12 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24">
+      <section
+        id="shipping-delivery"
+        className="py-12 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24"
+      >
+        {" "}
         <div className="bg-white rounded-3xl border border-[#a4492e]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+          {" "}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
+            {" "}
             <div>
+              {" "}
               <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e] block mb-1">
+                {" "}
                 POLICY & DISPATCH CONCIERGE
-              </span>
+              </span>{" "}
               <h2 className="font-display text-3xl font-semibold text-ink flex items-center gap-3">
-                <span>🚚</span> Shipping & Express Delivery
-              </h2>
-            </div>
+                {" "}
+                <span></span> Shipping & Express Delivery
+              </h2>{" "}
+            </div>{" "}
             <span className="px-4 py-1.5 rounded-full bg-[#f4f2ee] border border-[#a4492e]/30 text-xs font-bold text-[#a4492e] uppercase tracking-widest self-start md:self-auto">
+              {" "}
               Pan-India 28,000+ Pincodes
-            </span>
-          </div>
-
+            </span>{" "}
+          </div>{" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">⚡</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">24-Hour Dispatch</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                24-Hour Dispatch
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Handcrafted and precision-checked at our Jaipur atelier, dispatched within 24 hours of order placement.
-              </p>
-            </div>
-
+                {" "}
+                Handcrafted and precision-checked at our Jaipur atelier,
+                dispatched within 24 hours of order placement.
+              </p>{" "}
+            </div>{" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">🚀</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">3-5 Day Express Transit</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                3-5 Day Express Transit
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Partnered with Bluedart & Delhivery express air couriers for swift 3 to 5 business day nationwide arrival.
-              </p>
-            </div>
-
+                {" "}
+                Partnered with Bluedart & Delhivery express air couriers for
+                swift 3 to 5 business day nationwide arrival.
+              </p>{" "}
+            </div>{" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">🎁</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Free Delivery Above ₹999</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                Free Delivery Above ₹999
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Complimentary insured shipping on all orders above ₹999. Standard ₹99 delivery fee applies on smaller orders.
-              </p>
-            </div>
-
+                {" "}
+                Complimentary insured shipping on all orders above ₹999.
+                Standard ₹99 delivery fee applies on smaller orders.
+              </p>{" "}
+            </div>{" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">🛡️</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Break-Proof Packaging</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                Break-Proof Packaging
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Shipped in custom shock-absorbing eco-luxury presentation boxes to guarantee 100% bottle safety in transit.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+                {" "}
+                Shipped in custom shock-absorbing eco-luxury presentation boxes
+                to guarantee 100% bottle safety in transit.
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section: Returns & Exchanges Policy Card ── */}
-      <section id="returns-exchanges" className="py-6 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24">
+      <section
+        id="returns-exchanges"
+        className="py-6 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24"
+      >
+        {" "}
         <div className="bg-white rounded-3xl border border-[#a4492e]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+          {" "}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
+            {" "}
             <div>
+              {" "}
               <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e] block mb-1">
+                {" "}
                 GUARANTEE & REPLACEMENT CONCIERGE
-              </span>
+              </span>{" "}
               <h2 className="font-display text-3xl font-semibold text-ink flex items-center gap-3">
-                <span>↩️</span> Returns & Replacements Policy
-              </h2>
-            </div>
+                {" "}
+                <span>↩</span> Returns & Replacements Policy
+              </h2>{" "}
+            </div>{" "}
             <span className="px-4 py-1.5 rounded-full bg-[#f4f2ee] border border-[#a4492e]/30 text-xs font-bold text-[#a4492e] uppercase tracking-widest self-start md:self-auto">
+              {" "}
               100% Transit Guarantee
-            </span>
-          </div>
-
+            </span>{" "}
+          </div>{" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">🛡️</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Transit Damage Replacement</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                Transit Damage Replacement
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                If your perfume flacon arrives damaged or leaking, we dispatch an immediate complimentary replacement without hassle.
-              </p>
-            </div>
-
+                {" "}
+                If your perfume flacon arrives damaged or leaking, we dispatch
+                an immediate complimentary replacement without hassle.
+              </p>{" "}
+            </div>{" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">⏱️</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">7-Day Assistance Window</h4>
+              {" "}
+              <span className="text-xl">⏱</span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                7-Day Assistance Window
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Contact our Jaipur Client Services desk within 7 days of receiving your order to initiate an exchange or replacement request.
-              </p>
-            </div>
-
+                {" "}
+                Contact our Jaipur Client Services desk within 7 days of
+                receiving your order to initiate an exchange or replacement
+                request.
+              </p>{" "}
+            </div>{" "}
             <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
-              <span className="text-xl">📸</span>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">Quick Photo Verification</h4>
+              {" "}
+              <span className="text-xl"></span>{" "}
+              <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
+                Quick Photo Verification
+              </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
-                Simply upload 2 photos of the damaged package using our online form below for instant 1-step verification.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+                {" "}
+                Simply upload 2 photos of the damaged package using our online
+                form below for instant 1-step verification.
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 09: "How Can We Assist?" Category Selector ── */}
       <section className="py-16 px-5 lg:px-12 mx-auto max-w-[1280px]">
+        {" "}
         <div className="text-center max-w-2xl mx-auto mb-10">
+          {" "}
           <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+            {" "}
             SELECT YOUR ENQUIRY TYPE
-          </span>
-          <h2 className="font-display text-3xl font-normal text-ink">How Can We Assist You Today?</h2>
+          </span>{" "}
+          <h2 className="font-display text-3xl font-normal text-ink">
+            How Can We Assist You Today?
+          </h2>{" "}
           <p className="text-xs text-ink/60 mt-2">
-            Select the topic of your enquiry below to tailor your communication directly with our dedicated department.
-          </p>
-        </div>
-
+            {" "}
+            Select the topic of your enquiry below to tailor your communication
+            directly with our dedicated department.
+          </p>{" "}
+        </div>{" "}
         {/* Categories selector chips */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {" "}
           {CATEGORIES.map((cat) => {
             const isSelected = activeCategory === cat.id;
             return (
@@ -502,83 +704,122 @@ export default function ClientServicesPage({
                     : "bg-white text-ink border-black/10 hover:border-[#a4492e]/50 hover:bg-[#fcf8f2]"
                 }`}
               >
+                {" "}
                 <div className="flex items-center justify-between">
-                  <span className="text-xl">{cat.icon}</span>
-                  {isSelected && <span className="h-2 w-2 rounded-full bg-[#a4492e]" />}
-                </div>
+                  {" "}
+                  <span className="text-xl">{cat.icon}</span>{" "}
+                  {isSelected && (
+                    <span className="h-2 w-2 rounded-full bg-[#a4492e]" />
+                  )}
+                </div>{" "}
                 <div className="mt-3">
-                  <h4 className={`text-xs font-bold uppercase tracking-wider ${isSelected ? "text-gold" : "text-ink"}`}>
+                  {" "}
+                  <h4
+                    className={`text-xs font-bold uppercase tracking-wider ${isSelected ? "text-gold" : "text-ink"}`}
+                  >
+                    {" "}
                     {cat.label}
-                  </h4>
-                  <p className={`text-[10px] mt-1 line-clamp-2 ${isSelected ? "text-white/60" : "text-ink/50"}`}>
+                  </h4>{" "}
+                  <p
+                    className={`text-[10px] mt-1 line-clamp-2 ${isSelected ? "text-white/60" : "text-ink/50"}`}
+                  >
+                    {" "}
                     {cat.desc}
-                  </p>
-                </div>
+                  </p>{" "}
+                </div>{" "}
               </button>
             );
           })}
-        </div>
-      </section>
-
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 10–35: Intelligent Contact Form ── */}
-      <section id="enquiry-form" className="py-12 px-5 lg:px-12 bg-[#eeebe5] border-y border-[#a4492e]/15">
+      <section
+        id="enquiry-form"
+        className="py-12 px-5 lg:px-12 bg-[#eeebe5] border-y border-[#a4492e]/15"
+      >
+        {" "}
         <div className="mx-auto max-w-[900px]">
+          {" "}
           <div className="bg-white rounded-3xl border border-[#a4492e]/25 p-6 sm:p-12 shadow-2xl">
+            {" "}
             {/* Header of form */}
             <div className="border-b border-black/10 pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              {" "}
               <div>
+                {" "}
                 <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                  {" "}
                   CLIENT SERVICES FORM
-                </span>
+                </span>{" "}
                 <h3 className="font-display text-2xl font-semibold text-ink mt-1">
+                  {" "}
                   {CATEGORIES.find((c) => c.id === activeCategory)?.label}
-                </h3>
-              </div>
+                </h3>{" "}
+              </div>{" "}
               <span className="px-3 py-1 rounded-full bg-[#f4f2ee] border border-black/10 text-[10px] font-bold text-ink/70 uppercase tracking-widest self-start sm:self-auto">
+                {" "}
                 {CATEGORIES.find((c) => c.id === activeCategory)?.desc}
-              </span>
-            </div>
-
+              </span>{" "}
+            </div>{" "}
             {/* Submission Confirmation Result */}
             {submissionRef ? (
               <div className="text-center py-12 px-4 space-y-5 animate-fadeIn">
+                {" "}
                 <div className="h-16 w-16 rounded-full bg-[#a4492e]/20 border border-[#a4492e] text-[#a4492e] flex items-center justify-center text-2xl mx-auto">
+                  {" "}
                   ✓
-                </div>
+                </div>{" "}
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#a4492e] block">
+                  {" "}
                   ENQUIRY RECEIVED
-                </span>
-                <h3 className="font-display text-3xl font-normal text-ink">Thank you for contacting Sentire.</h3>
+                </span>{" "}
+                <h3 className="font-display text-3xl font-normal text-ink">
+                  Thank you for contacting Sentire.
+                </h3>{" "}
                 <p className="text-xs text-ink/70 leading-relaxed max-w-md mx-auto">
-                  Your message has been received by our Jaipur Client Services desk. A confirmation has been sent to your email.
-                </p>
+                  {" "}
+                  Your message has been received by our Jaipur Client Services
+                  desk. A confirmation has been sent to your email.
+                </p>{" "}
                 <div className="bg-[#f4f2ee] border border-[#a4492e]/30 p-4 rounded-xl inline-block text-center">
-                  <span className="text-[9px] font-bold text-ink/50 uppercase tracking-widest block">Reference Code</span>
-                  <span className="font-display text-xl font-bold text-[#a4492e]">{submissionRef}</span>
-                </div>
+                  {" "}
+                  <span className="text-[9px] font-bold text-ink/50 uppercase tracking-widest block">
+                    Reference Code
+                  </span>{" "}
+                  <span className="font-display text-xl font-bold text-[#a4492e]">
+                    {submissionRef}
+                  </span>{" "}
+                </div>{" "}
                 <div className="pt-4 flex flex-wrap justify-center gap-4">
+                  {" "}
                   <button
                     onClick={() => setSubmissionRef(null)}
                     className="px-6 py-3 rounded-lg border border-black/20 text-ink font-bold text-xs uppercase tracking-widest hover:border-[#a4492e] transition-colors cursor-pointer"
                   >
+                    {" "}
                     Submit Another Enquiry
-                  </button>
+                  </button>{" "}
                   <button
                     onClick={onNavigateToPerfumes}
                     className="px-6 py-3 rounded-lg bg-[#151412] text-[#a4492e] font-bold text-xs uppercase tracking-widest hover:bg-[#1a1511] transition-colors cursor-pointer"
                   >
+                    {" "}
                     Explore Perfume Library →
-                  </button>
-                </div>
+                  </button>{" "}
+                </div>{" "}
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {" "}
                 {/* ── Common Contact Fields ── */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {" "}
                   <div>
+                    {" "}
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                      {" "}
                       First Name *
-                    </label>
+                    </label>{" "}
                     <input
                       type="text"
                       name="firstName"
@@ -587,12 +828,14 @@ export default function ClientServicesPage({
                       required
                       placeholder="e.g. Alexander"
                       className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
-                    />
-                  </div>
+                    />{" "}
+                  </div>{" "}
                   <div>
+                    {" "}
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                      {" "}
                       Last Name
-                    </label>
+                    </label>{" "}
                     <input
                       type="text"
                       name="lastName"
@@ -600,15 +843,17 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       placeholder="e.g. Wright"
                       className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
-                    />
-                  </div>
-                </div>
-
+                    />{" "}
+                  </div>{" "}
+                </div>{" "}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {" "}
                   <div>
+                    {" "}
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                      {" "}
                       Email Address *
-                    </label>
+                    </label>{" "}
                     <input
                       type="email"
                       name="email"
@@ -617,12 +862,14 @@ export default function ClientServicesPage({
                       required
                       placeholder="name@example.com"
                       className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
-                    />
-                  </div>
+                    />{" "}
+                  </div>{" "}
                   <div>
+                    {" "}
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                      {" "}
                       Phone Number (Optional)
-                    </label>
+                    </label>{" "}
                     <input
                       type="tel"
                       name="phone"
@@ -630,17 +877,23 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       placeholder="+91 98765 43210"
                       className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
-                    />
-                  </div>
-                </div>
-
+                    />{" "}
+                  </div>{" "}
+                </div>{" "}
                 <div>
+                  {" "}
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    {" "}
                     Preferred Contact Channel
-                  </label>
+                  </label>{" "}
                   <div className="flex gap-4">
+                    {" "}
                     {["Email", "Phone", "WhatsApp"].map((method) => (
-                      <label key={method} className="flex items-center gap-2 text-xs text-ink cursor-pointer">
+                      <label
+                        key={method}
+                        className="flex items-center gap-2 text-xs text-ink cursor-pointer"
+                      >
+                        {" "}
                         <input
                           type="radio"
                           name="preferredContact"
@@ -648,27 +901,31 @@ export default function ClientServicesPage({
                           checked={formData.preferredContact === method}
                           onChange={handleInputChange}
                           className="accent-[#a4492e]"
-                        />
+                        />{" "}
                         {method}
                       </label>
                     ))}
-                  </div>
-                </div>
-
+                  </div>{" "}
+                </div>{" "}
                 {/* ── Dynamic Category Specific Fields ── */}
                 {/* 1. Order Support / Delivery / Returns */}
                 {(activeCategory === "order-support" ||
                   activeCategory === "delivery-tracking" ||
                   activeCategory === "returns-exchanges") && (
                   <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                    {" "}
                     <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                      {" "}
                       Order & Delivery Details
-                    </h4>
+                    </h4>{" "}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Order Number *
-                        </label>
+                        </label>{" "}
                         <input
                           type="text"
                           name="orderNumber"
@@ -677,97 +934,136 @@ export default function ClientServicesPage({
                           required
                           placeholder="e.g. SNT-84920"
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
-                        />
-                      </div>
+                        />{" "}
+                      </div>{" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Specific Query Type
-                        </label>
+                        </label>{" "}
                         <select
                           name="issueType"
                           value={formData.issueType}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
                         >
-                          <option value="Order Status / Update">Where is my order?</option>
-                          <option value="Address Change">Delivery address update</option>
-                          <option value="Damaged Item">Damaged item / bottle in transit</option>
-                          <option value="Incorrect Item">Incorrect item received</option>
-                          <option value="Return Request">Return / Exchange request</option>
-                          <option value="GST Invoice">GST Invoice request</option>
-                        </select>
-                      </div>
-                    </div>
-
+                          {" "}
+                          <option value="Order Status / Update">
+                            Where is my order?
+                          </option>{" "}
+                          <option value="Address Change">
+                            Delivery address update
+                          </option>{" "}
+                          <option value="Damaged Item">
+                            Damaged item / bottle in transit
+                          </option>{" "}
+                          <option value="Incorrect Item">
+                            Incorrect item received
+                          </option>{" "}
+                          <option value="Return Request">
+                            Return / Exchange request
+                          </option>{" "}
+                          <option value="GST Invoice">
+                            GST Invoice request
+                          </option>{" "}
+                        </select>{" "}
+                      </div>{" "}
+                    </div>{" "}
                     {/* File Upload Guideline */}
                     {activeCategory === "returns-exchanges" && (
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Upload Photo of Product / Package (Optional)
-                        </label>
+                        </label>{" "}
                         <input
                           type="file"
                           onChange={handleFileChange}
                           accept="image/*"
                           className="w-full bg-white border border-black/15 rounded-xl p-2 text-xs text-ink file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#a4492e] file:text-black hover:file:bg-[#a4492e]"
-                        />
+                        />{" "}
                         {formData.fileName && (
                           <span className="text-[10px] text-green-700 font-bold mt-1 block">
+                            {" "}
                             Attached: {formData.fileName}
                           </span>
                         )}
                         <p className="text-[10px] text-ink/50 mt-1 italic">
-                          Please keep original packaging while our Jaipur team reviews your request.
-                        </p>
+                          {" "}
+                          Please keep original packaging while our Jaipur team
+                          reviews your request.
+                        </p>{" "}
                       </div>
                     )}
                   </div>
                 )}
-
                 {/* 2. Product Guidance */}
                 {activeCategory === "product-guidance" && (
                   <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                    {" "}
                     <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                      {" "}
                       Scent Preference Profile
-                    </h4>
+                    </h4>{" "}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Primary Occasion
-                        </label>
+                        </label>{" "}
                         <select className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none">
-                          <option>Everyday Signature Scent</option>
-                          <option>Evening & Dinner Parties</option>
-                          <option>Special Celebrations & Weddings</option>
-                          <option>Luxury Gift for Someone Else</option>
-                        </select>
-                      </div>
+                          {" "}
+                          <option>Everyday Signature Scent</option>{" "}
+                          <option>Evening & Dinner Parties</option>{" "}
+                          <option>Special Celebrations & Weddings</option>{" "}
+                          <option>Luxury Gift for Someone Else</option>{" "}
+                        </select>{" "}
+                      </div>{" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Favorite Scent Family
-                        </label>
+                        </label>{" "}
                         <select className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none">
-                          <option>Woody & Smoky Oud (e.g., White Oud, Purple Oud)</option>
-                          <option>Fresh Aquatic Citrus (e.g., Mirai, O809)</option>
-                          <option>Velvet Floral & Rose (e.g., Calantha, Seductive)</option>
-                          <option>Spiced Oriental Amber (e.g., Rich, Herrlich)</option>
-                        </select>
-                      </div>
-                    </div>
+                          {" "}
+                          <option>
+                            Woody & Smoky Oud (e.g., White Oud, Purple Oud)
+                          </option>{" "}
+                          <option>
+                            Fresh Aquatic Citrus (e.g., Mirai, O809)
+                          </option>{" "}
+                          <option>
+                            Velvet Floral & Rose (e.g., Calantha, Seductive)
+                          </option>{" "}
+                          <option>
+                            Spiced Oriental Amber (e.g., Rich, Herrlich)
+                          </option>{" "}
+                        </select>{" "}
+                      </div>{" "}
+                    </div>{" "}
                   </div>
                 )}
-
                 {/* 3. Personalisation */}
                 {activeCategory === "personalisation" && (
                   <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                    {" "}
                     <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                      {" "}
                       Bespoke Laser Engraving & Packaging
-                    </h4>
+                    </h4>{" "}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Desired Engraving Text (Max 20 chars)
-                        </label>
+                        </label>{" "}
                         <input
                           type="text"
                           name="customText"
@@ -776,52 +1072,60 @@ export default function ClientServicesPage({
                           placeholder="e.g. P.C. • 2026"
                           maxLength={20}
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
-                        />
-                      </div>
+                        />{" "}
+                      </div>{" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Required Delivery Date
-                        </label>
+                        </label>{" "}
                         <input
                           type="date"
                           name="requiredDate"
                           value={formData.requiredDate}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
-                        />
-                      </div>
-                    </div>
+                        />{" "}
+                      </div>{" "}
+                    </div>{" "}
                   </div>
                 )}
-
                 {/* 4. Corporate & Bulk Gifting (Special Wizard Layout) */}
                 {activeCategory === "corporate-gifting" && (
                   <div className="p-5 rounded-2xl bg-[#151412] text-white border border-[#a4492e]/40 space-y-4 shadow-xl">
+                    {" "}
                     <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                      {" "}
                       <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                        {" "}
                         B2B & CORPORATE ENQUIRY WIZARD — STEP 0{corpStep} OF 02
-                      </span>
+                      </span>{" "}
                       <div className="flex gap-2">
+                        {" "}
                         <button
                           type="button"
                           onClick={() => setCorpStep(1)}
                           className={`h-2 w-6 rounded-full transition-all ${corpStep === 1 ? "bg-[#a4492e]" : "bg-white/20"}`}
-                        />
+                        />{" "}
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
                           className={`h-2 w-6 rounded-full transition-all ${corpStep === 2 ? "bg-[#a4492e]" : "bg-white/20"}`}
-                        />
-                      </div>
-                    </div>
-
+                        />{" "}
+                      </div>{" "}
+                    </div>{" "}
                     {corpStep === 1 ? (
                       <div className="space-y-4">
+                        {" "}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {" "}
                           <div>
+                            {" "}
                             <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                              {" "}
                               Company / Organisation *
-                            </label>
+                            </label>{" "}
                             <input
                               type="text"
                               name="companyName"
@@ -829,73 +1133,87 @@ export default function ClientServicesPage({
                               onChange={handleInputChange}
                               placeholder="e.g. Luxury Private Group"
                               className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
-                            />
-                          </div>
+                            />{" "}
+                          </div>{" "}
                           <div>
+                            {" "}
                             <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                              {" "}
                               Purpose of Gifting
-                            </label>
+                            </label>{" "}
                             <select
                               name="purpose"
                               value={formData.purpose}
                               onChange={handleInputChange}
                               className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
                             >
-                              <option>Corporate & Client Gifting</option>
-                              <option>Employee Appreciation & Festive</option>
-                              <option>Executive VIP Welcome Kits</option>
-                              <option>Luxury Event & Conference favours</option>
-                            </select>
-                          </div>
-                        </div>
-
+                              {" "}
+                              <option>Corporate & Client Gifting</option>{" "}
+                              <option>Employee Appreciation & Festive</option>{" "}
+                              <option>Executive VIP Welcome Kits</option>{" "}
+                              <option>
+                                Luxury Event & Conference favours
+                              </option>{" "}
+                            </select>{" "}
+                          </div>{" "}
+                        </div>{" "}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {" "}
                           <div>
+                            {" "}
                             <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                              {" "}
                               Estimated Quantity
-                            </label>
+                            </label>{" "}
                             <select
                               name="quantity"
                               value={formData.quantity}
                               onChange={handleInputChange}
                               className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
                             >
-                              <option>20 – 50 units</option>
-                              <option>50 – 150 units</option>
-                              <option>150 – 500 units</option>
-                              <option>500+ units (Custom Run)</option>
-                            </select>
-                          </div>
+                              {" "}
+                              <option>20 – 50 units</option>{" "}
+                              <option>50 – 150 units</option>{" "}
+                              <option>150 – 500 units</option>{" "}
+                              <option>500+ units (Custom Run)</option>{" "}
+                            </select>{" "}
+                          </div>{" "}
                           <div>
+                            {" "}
                             <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                              {" "}
                               GST Invoice Required?
-                            </label>
+                            </label>{" "}
                             <select
                               name="gstRequired"
                               value={formData.gstRequired}
                               onChange={handleInputChange}
                               className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
                             >
-                              <option>Yes — GST Invoice Required</option>
-                              <option>No — Retail Purchase</option>
-                            </select>
-                          </div>
-                        </div>
-
+                              {" "}
+                              <option>Yes — GST Invoice Required</option>{" "}
+                              <option>No — Retail Purchase</option>{" "}
+                            </select>{" "}
+                          </div>{" "}
+                        </div>{" "}
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
                           className="mt-2 w-full py-2.5 rounded-xl bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-widest hover:bg-[#a4492e] transition-all cursor-pointer"
                         >
+                          {" "}
                           Next: Presentation & Details →
-                        </button>
+                        </button>{" "}
                       </div>
                     ) : (
                       <div className="space-y-4">
+                        {" "}
                         <div>
+                          {" "}
                           <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            {" "}
                             Delivery Destination(s)
-                          </label>
+                          </label>{" "}
                           <input
                             type="text"
                             name="deliveryLocation"
@@ -903,13 +1221,15 @@ export default function ClientServicesPage({
                             onChange={handleInputChange}
                             placeholder="e.g. Single HQ in Mumbai OR Multi-address across India"
                             className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
-                          />
-                        </div>
+                          />{" "}
+                        </div>{" "}
                         {formData.gstRequired.startsWith("Yes") && (
                           <div>
+                            {" "}
                             <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                              {" "}
                               Company GSTIN Number
-                            </label>
+                            </label>{" "}
                             <input
                               type="text"
                               name="gstin"
@@ -917,7 +1237,7 @@ export default function ClientServicesPage({
                               onChange={handleInputChange}
                               placeholder="e.g. 08AAAAA0000A1Z5"
                               className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
-                            />
+                            />{" "}
                           </div>
                         )}
                         <button
@@ -925,41 +1245,51 @@ export default function ClientServicesPage({
                           onClick={() => setCorpStep(1)}
                           className="text-[10px] text-gold hover:underline cursor-pointer"
                         >
+                          {" "}
                           ← Back to Step 1
-                        </button>
+                        </button>{" "}
                       </div>
                     )}
                   </div>
                 )}
-
                 {/* 5. Wholesale & Distribution */}
                 {activeCategory === "wholesale-distribution" && (
                   <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                    {" "}
                     <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                      {" "}
                       Commercial Wholesale & Distribution Footprint
-                    </h4>
+                    </h4>{" "}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Business Model
-                        </label>
+                        </label>{" "}
                         <select
                           name="businessType"
                           value={formData.businessType}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
                         >
-                          <option>Boutique Retailer</option>
-                          <option>Department Store</option>
-                          <option>Regional Distributor</option>
-                          <option>E-Commerce Marketplace</option>
-                          <option>International Distribution Partner</option>
-                        </select>
-                      </div>
+                          {" "}
+                          <option>Boutique Retailer</option>{" "}
+                          <option>Department Store</option>{" "}
+                          <option>Regional Distributor</option>{" "}
+                          <option>E-Commerce Marketplace</option>{" "}
+                          <option>
+                            International Distribution Partner
+                          </option>{" "}
+                        </select>{" "}
+                      </div>{" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Country / Territory
-                        </label>
+                        </label>{" "}
                         <input
                           type="text"
                           name="countryRegion"
@@ -967,12 +1297,14 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           placeholder="e.g. India / UAE"
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
-                        />
-                      </div>
+                        />{" "}
+                      </div>{" "}
                       <div>
+                        {" "}
                         <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                          {" "}
                           Website / Portfolio URL
-                        </label>
+                        </label>{" "}
                         <input
                           type="url"
                           name="website"
@@ -980,17 +1312,18 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           placeholder="https://..."
                           className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
-                        />
-                      </div>
-                    </div>
+                        />{" "}
+                      </div>{" "}
+                    </div>{" "}
                   </div>
                 )}
-
                 {/* Message Text Area */}
                 <div>
+                  {" "}
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    {" "}
                     Your Message / Specific Instructions *
-                  </label>
+                  </label>{" "}
                   <textarea
                     name="message"
                     value={formData.message}
@@ -999,71 +1332,100 @@ export default function ClientServicesPage({
                     rows={4}
                     placeholder="Tell us about your requirement or how our Client Services desk may guide you..."
                     className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
-                  />
-                </div>
-
+                  />{" "}
+                </div>{" "}
                 {/* Consent & Security Note */}
                 <div className="space-y-3 pt-2">
+                  {" "}
                   <p className="text-[10.5px] text-ink/60 leading-relaxed">
-                    By submitting this enquiry, you agree that Sentire may use your provided information to respond to your request. View our{" "}
+                    {" "}
+                    By submitting this enquiry, you agree that Sentire may use
+                    your provided information to respond to your request. View
+                    our{" "}
                     <a href="#" className="underline text-[#a4492e]">
+                      {" "}
                       Privacy Policy
-                    </a>
+                    </a>{" "}
                     .
-                  </p>
+                  </p>{" "}
                   {/* Security Anti-Phishing Banner */}
                   <div className="p-3 rounded-xl bg-[#fffcf7] border border-[#a4492e]/30 flex items-center gap-2.5 text-[10px] text-ink/70">
-                    <span className="text-base">🔒</span>
+                    {" "}
+                    <span className="text-base"></span>{" "}
                     <span>
-                      <strong className="text-ink">Security Notice:</strong> Sentire Client Services will never ask you to share an OTP, CVV, or complete credit card details over form or email.
-                    </span>
-                  </div>
-                </div>
-
+                      {" "}
+                      <strong className="text-ink">
+                        Security Notice:
+                      </strong>{" "}
+                      Sentire Client Services will never ask you to share an
+                      OTP, CVV, or complete credit card details over form or
+                      email.
+                    </span>{" "}
+                  </div>{" "}
+                </div>{" "}
                 {/* Submit CTA */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="w-full py-4 rounded-xl bg-[#151412] text-[#a4492e] font-bold text-xs uppercase tracking-[0.25em] hover:bg-[#1a1511] hover:text-[#a4492e] transition-all shadow-xl cursor-pointer shrink-0 disabled:opacity-50"
                 >
-                  {isSubmitting ? "TRANSMITTING TO CLIENT DESK..." : "SUBMIT TO CLIENT SERVICES →"}
-                </button>
+                  {" "}
+                  {isSubmitting
+                    ? "TRANSMITTING TO CLIENT DESK..."
+                    : "SUBMIT TO CLIENT SERVICES →"}
+                </button>{" "}
               </form>
             )}
-          </div>
-        </div>
-      </section>
-
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 17: Private & Corporate Services Showcase (Dark Section) ── */}
       <section className="py-20 px-5 lg:px-12 bg-[#151412] text-[#f4f2ee] border-b border-[#a4492e]/15">
+        {" "}
         <div className="mx-auto max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {" "}
           <div className="lg:col-span-6 space-y-5">
+            {" "}
             <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+              {" "}
               PRIVATE & CORPORATE SERVICES
-            </span>
+            </span>{" "}
             <h2 className="font-display text-3xl sm:text-4xl font-normal text-white leading-tight">
+              {" "}
               Gifting at scale, without losing the personal touch.
-            </h2>
+            </h2>{" "}
             <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-light">
-              From intimate client gestures to large corporate galas and wedding celebrations, Sentire curates fragrance gifts, bespoke presentation, laser-engraving, and nationwide multi-address delivery tailored to your occasion.
-            </p>
-
+              {" "}
+              From intimate client gestures to large corporate galas and wedding
+              celebrations, Sentire curates fragrance gifts, bespoke
+              presentation, laser-engraving, and nationwide multi-address
+              delivery tailored to your occasion.
+            </p>{" "}
             <ul className="space-y-2 text-xs text-white/80 pt-2 font-sans">
+              {" "}
               <li className="flex items-center gap-2">
-                <span className="text-[#a4492e]">✦</span> Custom Laser Engraving (Names, Monograms & Dates)
-              </li>
+                {" "}
+                <span className="text-[#a4492e]">✦</span> Custom Laser Engraving
+                (Names, Monograms & Dates)
+              </li>{" "}
               <li className="flex items-center gap-2">
-                <span className="text-[#a4492e]">✦</span> Gold Foil-Stamped Velvet Gift Packaging
-              </li>
+                {" "}
+                <span className="text-[#a4492e]">✦</span> Gold Foil-Stamped
+                Velvet Gift Packaging
+              </li>{" "}
               <li className="flex items-center gap-2">
-                <span className="text-[#a4492e]">✦</span> Pan-India Multi-Destination Express Shipping
-              </li>
+                {" "}
+                <span className="text-[#a4492e]">✦</span> Pan-India
+                Multi-Destination Express Shipping
+              </li>{" "}
               <li className="flex items-center gap-2">
-                <span className="text-[#a4492e]">✦</span> Compliant GST B2B Invoicing & Account Support
-              </li>
-            </ul>
-
+                {" "}
+                <span className="text-[#a4492e]">✦</span> Compliant GST B2B
+                Invoicing & Account Support
+              </li>{" "}
+            </ul>{" "}
             <div className="pt-4">
+              {" "}
               <button
                 onClick={() => {
                   setActiveCategory("corporate-gifting");
@@ -1072,142 +1434,203 @@ export default function ClientServicesPage({
                 }}
                 className="px-7 py-3.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.22em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
               >
+                {" "}
                 DISCUSS A BULK ORDER →
-              </button>
-            </div>
-          </div>
-
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
           <div className="lg:col-span-6 grid grid-cols-2 gap-4">
+            {" "}
             <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
-              <span className="text-2xl">🏢</span>
-              <h4 className="font-display text-base font-semibold text-white mt-2">Corporate Gifting</h4>
-              <p className="text-[10.5px] text-white/50 mt-1">Client appreciation, holiday gifts & VIP rewards.</p>
-            </div>
+              {" "}
+              <span className="text-2xl"></span>{" "}
+              <h4 className="font-display text-base font-semibold text-white mt-2">
+                Corporate Gifting
+              </h4>{" "}
+              <p className="text-[10.5px] text-white/50 mt-1">
+                Client appreciation, holiday gifts & VIP rewards.
+              </p>{" "}
+            </div>{" "}
             <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
-              <span className="text-2xl">💍</span>
-              <h4 className="font-display text-base font-semibold text-white mt-2">Weddings & Galas</h4>
-              <p className="text-[10.5px] text-white/50 mt-1">Wedding favours, bridal party gifts & welcome boxes.</p>
-            </div>
+              {" "}
+              <span className="text-2xl"></span>{" "}
+              <h4 className="font-display text-base font-semibold text-white mt-2">
+                Weddings & Galas
+              </h4>{" "}
+              <p className="text-[10.5px] text-white/50 mt-1">
+                Wedding favours, bridal party gifts & welcome boxes.
+              </p>{" "}
+            </div>{" "}
             <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
-              <span className="text-2xl">🏨</span>
-              <h4 className="font-display text-base font-semibold text-white mt-2">Luxury Hospitality</h4>
-              <p className="text-[10.5px] text-white/50 mt-1">Resorts, boutique hotels & executive suites.</p>
-            </div>
+              {" "}
+              <span className="text-2xl"></span>{" "}
+              <h4 className="font-display text-base font-semibold text-white mt-2">
+                Luxury Hospitality
+              </h4>{" "}
+              <p className="text-[10.5px] text-white/50 mt-1">
+                Resorts, boutique hotels & executive suites.
+              </p>{" "}
+            </div>{" "}
             <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
-              <span className="text-2xl">🌐</span>
-              <h4 className="font-display text-base font-semibold text-white mt-2">Wholesale Trade</h4>
-              <p className="text-[10.5px] text-white/50 mt-1">Boutiques, niche perfumeries & retailers.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+              {" "}
+              <span className="text-2xl"></span>{" "}
+              <h4 className="font-display text-base font-semibold text-white mt-2">
+                Wholesale Trade
+              </h4>{" "}
+              <p className="text-[10.5px] text-white/50 mt-1">
+                Boutiques, niche perfumeries & retailers.
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 15: FAQ Accordion ── */}
-      <section id="faqs-section" className="py-20 px-5 lg:px-12 mx-auto max-w-[1000px]">
+      <section
+        id="faqs-section"
+        className="py-20 px-5 lg:px-12 mx-auto max-w-[1000px]"
+      >
+        {" "}
         <div className="text-center max-w-xl mx-auto mb-12">
+          {" "}
           <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+            {" "}
             CLIENT SERVICES FAQ
-          </span>
-          <h2 className="font-display text-3xl font-normal text-ink">Frequently Asked Questions</h2>
+          </span>{" "}
+          <h2 className="font-display text-3xl font-normal text-ink">
+            Frequently Asked Questions
+          </h2>{" "}
           <p className="text-xs text-ink/60 mt-2">
-            Quick answers regarding orders, shipping, returns, engraving, and corporate gifting.
-          </p>
-        </div>
-
+            {" "}
+            Quick answers regarding orders, shipping, returns, engraving, and
+            corporate gifting.
+          </p>{" "}
+        </div>{" "}
         <div className="divide-y divide-black/10 border-y border-black/10">
+          {" "}
           {FAQS.map((faq, idx) => {
             const isOpen = openFaqIndex === idx;
             return (
               <div key={idx} className="py-4">
+                {" "}
                 <button
                   onClick={() => toggleFaq(idx)}
                   className="flex w-full items-center justify-between text-left py-2 font-display text-base sm:text-lg font-medium text-ink hover:text-[#a4492e] transition-colors cursor-pointer"
                 >
-                  <span>{faq.q}</span>
+                  {" "}
+                  <span>{faq.q}</span>{" "}
                   <span className="text-[#a4492e] font-bold text-xl ml-4 shrink-0">
+                    {" "}
                     {isOpen ? "−" : "+"}
-                  </span>
-                </button>
+                  </span>{" "}
+                </button>{" "}
                 {isOpen && (
                   <div className="mt-2 text-xs sm:text-sm text-ink/70 leading-relaxed pr-8 pb-3 animate-fadeIn font-sans">
+                    {" "}
                     {faq.a}
                   </div>
                 )}
               </div>
             );
           })}
-        </div>
-      </section>
-
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 16 & 49: Registered Office & Verified Details Card ── */}
       <section className="py-16 px-5 lg:px-12 bg-[#eeebe5] border-t border-[#a4492e]/15">
+        {" "}
         <div className="mx-auto max-w-[1280px]">
+          {" "}
           <div className="rounded-3xl bg-white border border-[#a4492e]/25 p-8 sm:p-12 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8">
+            {" "}
             <div>
+              {" "}
               <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+                {" "}
                 REGISTERED OFFICE & CORRESPONDENCE
-              </span>
-              <h3 className="font-display text-xl font-semibold text-ink">S P Ventures</h3>
+              </span>{" "}
+              <h3 className="font-display text-xl font-semibold text-ink">
+                S P Ventures
+              </h3>{" "}
               <p className="text-xs text-ink/70 leading-relaxed mt-2 font-sans">
-                First Floor 109-110, Beriwal Tower,<br />
-                Subhash Nagar Shopping Centre,<br />
-                Jaipur, Rajasthan - 302016, India
-              </p>
-            </div>
-
+                {" "}
+                First Floor 109-110, Beriwal Tower,
+                <br /> Subhash Nagar Shopping Centre,
+                <br /> Jaipur, Rajasthan - 302016, India
+              </p>{" "}
+            </div>{" "}
             <div>
+              {" "}
               <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+                {" "}
                 CLIENT SERVICE HOURS
-              </span>
-              <h3 className="font-display text-xl font-semibold text-ink">Operating Schedule</h3>
+              </span>{" "}
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Operating Schedule
+              </h3>{" "}
               <p className="text-xs text-ink/70 leading-relaxed mt-2 font-sans">
-                Monday – Saturday<br />
-                10:00 AM – 7:00 PM IST<br />
-                <span className="text-[#a4492e] font-semibold mt-1 block">Closed on Sundays & National Holidays</span>
-              </p>
-            </div>
-
+                {" "}
+                Monday – Saturday
+                <br /> 10:00 AM – 7:00 PM IST
+                <br />{" "}
+                <span className="text-[#a4492e] font-semibold mt-1 block">
+                  Closed on Sundays & National Holidays
+                </span>{" "}
+              </p>{" "}
+            </div>{" "}
             <div>
+              {" "}
               <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+                {" "}
                 DIRECT CHANNELS
-              </span>
-              <h3 className="font-display text-xl font-semibold text-ink">Reach Us</h3>
+              </span>{" "}
+              <h3 className="font-display text-xl font-semibold text-ink">
+                Reach Us
+              </h3>{" "}
               <p className="text-xs text-ink/70 leading-relaxed mt-2 font-sans">
-                Telephone: <strong>+91 98765 43210</strong><br />
-                Email: <strong>support@sentirebypc.com</strong><br />
-                Domain: <strong>sentirebypc.com</strong>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+                {" "}
+                Telephone: <strong>+91 98765 43210</strong>
+                <br /> Email: <strong>support@sentirebypc.com</strong>
+                <br /> Domain: <strong>sentirebypc.com</strong>{" "}
+              </p>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       {/* ── Section 17: Final Concierge CTA Bar ── */}
       <section className="relative overflow-hidden bg-[#151412] text-[#f4f2ee] py-16 px-5 lg:px-12 text-center border-t border-[#a4492e]/30">
+        {" "}
         <div className="mx-auto max-w-[800px] relative z-10 space-y-4">
+          {" "}
           <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            {" "}
             A MORE PERSONAL CONVERSATION
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-normal text-white">Still unsure where to begin?</h2>
+          </span>{" "}
+          <h2 className="font-display text-3xl sm:text-4xl font-normal text-white">
+            Still unsure where to begin?
+          </h2>{" "}
           <p className="text-xs sm:text-sm text-white/70 leading-relaxed max-w-lg mx-auto font-sans">
-            Tell us what you need. Our Client Services team will guide you to the right fragrance or bespoke solution.
-          </p>
+            {" "}
+            Tell us what you need. Our Client Services team will guide you to
+            the right fragrance or bespoke solution.
+          </p>{" "}
           <div className="pt-4 flex flex-wrap justify-center gap-4">
+            {" "}
             <a
               href="#enquiry-form"
               className="px-7 py-3 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
             >
+              {" "}
               CONTACT SENTIRE
-            </a>
+            </a>{" "}
             <button
               onClick={onNavigateToPerfumes}
               className="px-6 py-3 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.18em] hover:border-[#a4492e] hover:text-[#a4492e] transition-all cursor-pointer"
             >
+              {" "}
               DISCOVER YOUR FRAGRANCE →
-            </button>
-          </div>
-        </div>
-      </section>
+            </button>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
     </div>
   );
 }

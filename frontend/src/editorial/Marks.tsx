@@ -26,9 +26,15 @@ export default function Marks() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
-              transition={{ duration: 0.6, delay: i * 0.05, ease: EASE_OUT_EXPO }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.05,
+                ease: EASE_OUT_EXPO,
+              }}
             >
-              <p className="font-serif text-lg font-light leading-snug">{name}</p>
+              <p className="font-serif text-lg font-light leading-snug">
+                {name}
+              </p>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.02em] text-paper/50">
                 {sub}
               </p>

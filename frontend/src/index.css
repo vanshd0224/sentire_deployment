@@ -1590,3 +1590,95 @@ footer h3 {
 [class*="rounded-full"] {
   border-radius: 999px !important;
 }
+
+/* Display headings keep their authored casing — the shouted all-caps serif
+   was the loudest "template" signal on the inner pages. Small mono labels
+   (eyebrows, badges) stay uppercase on purpose. */
+h1.uppercase,
+h2.uppercase,
+h3.uppercase,
+h1 .uppercase,
+h2 .uppercase,
+h3 .uppercase {
+  text-transform: none !important;
+  letter-spacing: -0.015em !important;
+}
+
+h1,
+h2 {
+  text-wrap: balance;
+}
+
+/* ── Mobile legibility floor ────────────────────────────────
+   The older pages set 8–11px type in dozens of places, which is
+   below the readable minimum on a phone. Raise it at small widths
+   only, so desktop keeps its finer detail. */
+@media (max-width: 640px) {
+  [class~="text-[8px]"],
+  [class~="text-[8.5px]"],
+  [class~="text-[9px]"],
+  [class~="text-[9.5px]"],
+  [class~="text-[10px]"],
+  [class~="text-[10.5px]"],
+  [class~="text-[11px]"],
+  [class~="text-[11.5px]"],
+  .text-\[8px\],
+  .text-\[9px\],
+  .text-\[10px\],
+  .text-\[11px\] {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Icon-only controls still need a thumb-sized hit area. */
+  nav button,
+  nav a,
+  header button,
+  header a,
+  footer a {
+    min-height: 40px;
+  }
+}
+
+/* Thumb-sized controls on phones. Min-height only: nothing reflows sideways,
+   small pills simply grow to a tappable size. */
+@media (max-width: 640px) {
+  button,
+  [role="button"],
+  a.inline-flex,
+  input[type="submit"] {
+    min-height: 36px;
+  }
+}
+
+/* ── Page-level entrance ────────────────────────────────────
+   Inner pages built before the redesign have no motion of their own.
+   A short fade-up on route change gives them the same arrival as the
+   home page without touching each component. Transform + opacity only. */
+@keyframes edPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main,
+[class*="min-h-screen"] > section:first-of-type {
+  animation: edPageIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Section reveals for the legacy pages: CSS-only, one paint each. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    section > div > h2,
+    section > div > h3 {
+      animation: edPageIn linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 28%;
+    }
+  }
+}

@@ -1,41 +1,116 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { createOrGetShopifyCheckoutUrl, resolveShopifyVariantId } from "../utils/shopifyCart";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
+import {
+  createOrGetShopifyCheckoutUrl,
+  resolveShopifyVariantId,
+} from "../utils/shopifyCart";
 import { auth } from "../lib/firebase";
 import { ALL_PERFUMES } from "../data/perfumes";
 
 const IconClose = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 18L18 6M6 6l12 12"
+    />{" "}
   </svg>
 );
 
 const IconCheck = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+  <svg
+    className="w-3.5 h-3.5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2.5}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M5 13l4 4L19 7"
+    />{" "}
   </svg>
 );
 
 const IconArrow = () => (
-  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M14 5l7 7m0 0l-7 7m7-7H3"
+    />{" "}
   </svg>
 );
 
 const IconLock = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+    />{" "}
   </svg>
 );
 
 const IconShield = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+    />{" "}
   </svg>
 );
 
 const IconDiamond = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 9l10 13 10-13-10-7z" />
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    {" "}
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 2L2 9l10 13 10-13-10-7z"
+    />{" "}
   </svg>
 );
 
@@ -130,7 +205,12 @@ export default function CartDrawer({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null || window.innerWidth >= 768) return;
+    if (
+      touchStartX.current === null ||
+      touchStartY.current === null ||
+      window.innerWidth >= 768
+    )
+      return;
     const deltaX = e.touches[0].clientX - touchStartX.current;
     const deltaY = e.touches[0].clientY - touchStartY.current;
 
@@ -216,18 +296,20 @@ export default function CartDrawer({
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   // Calculations
   const totalCount = useMemo(
     () => items.reduce((acc, item) => acc + item.quantity, 0),
-    [items]
+    [items],
   );
 
   const subtotal = useMemo(
     () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
-    [items]
+    [items],
   );
 
   const couponDiscount = useMemo(() => {
@@ -290,11 +372,16 @@ export default function CartDrawer({
   const FREE_SHIPPING_THRESHOLD = 999;
   const progressPercent = Math.min(
     100,
-    subtotal > 0 ? (subtotal / FREE_SHIPPING_THRESHOLD) * 100 : 0
+    subtotal > 0 ? (subtotal / FREE_SHIPPING_THRESHOLD) * 100 : 0,
   );
-  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const isFreeShippingUnlocked = subtotal >= FREE_SHIPPING_THRESHOLD && items.length > 0;
-  const shippingCost = items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 100;
+  const remainingForFreeShipping = Math.max(
+    0,
+    FREE_SHIPPING_THRESHOLD - subtotal,
+  );
+  const isFreeShippingUnlocked =
+    subtotal >= FREE_SHIPPING_THRESHOLD && items.length > 0;
+  const shippingCost =
+    items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 100;
   const finalTotal = Math.max(0, subtotal - couponDiscount + shippingCost);
 
   const handleQuantityChange = useCallback(
@@ -303,7 +390,7 @@ export default function CartDrawer({
       onUpdateQuantity(item.productId, item.size, delta);
       setTimeout(() => setAnimatingItemId(null), 220);
     },
-    [onUpdateQuantity]
+    [onUpdateQuantity],
   );
 
   const handleSwitchSize = (item: CartItem, newSize: number) => {
@@ -312,16 +399,24 @@ export default function CartDrawer({
     const newPrice = pData?.prices?.[newSize] ?? item.price;
     onRemoveItem(item.productId, item.size);
     if (onAddToCart) {
-      onAddToCart({ ...item, size: newSize, price: newPrice }, newSize, newPrice);
+      onAddToCart(
+        { ...item, size: newSize, price: newPrice },
+        newSize,
+        newPrice,
+      );
     }
   };
 
   const handleApplyEngravingToTarget = () => {
     if (!engraveName.trim()) return;
-    const targetItem = items.find((i) => `${i.productId}-${i.size}` === engraveTargetKey) || items[0];
+    const targetItem =
+      items.find((i) => `${i.productId}-${i.size}` === engraveTargetKey) ||
+      items[0];
     if (!targetItem) return;
 
-    const basePrice = targetItem.isPersonalised ? targetItem.price : targetItem.price + 200;
+    const basePrice = targetItem.isPersonalised
+      ? targetItem.price
+      : targetItem.price + 200;
     if (onAddToCart) {
       onAddToCart(
         {
@@ -332,10 +427,12 @@ export default function CartDrawer({
           engravingDate: engraveDate.trim(),
         },
         targetItem.size,
-        basePrice
+        basePrice,
       );
     }
-    setCouponSuccess(`Personalised Engraving (+₹200) added to ${targetItem.name}!`);
+    setCouponSuccess(
+      `Personalised Engraving (+₹200) added to ${targetItem.name}!`,
+    );
     setTimeout(() => setCouponSuccess(null), 3000);
   };
 
@@ -350,6 +447,7 @@ export default function CartDrawer({
       aria-modal="true"
       aria-label="Shopping Bag"
     >
+      {" "}
       {/* ── Backdrop ─────────────────────────────────────────────────── */}
       <div
         className={`absolute inset-0 cart-backdrop-luxury cart-backdrop-animate cursor-pointer transition-opacity duration-300 ${
@@ -357,8 +455,7 @@ export default function CartDrawer({
         }`}
         onClick={handleCloseSmooth}
         aria-hidden="true"
-      />
-
+      />{" "}
       {/* ── Drawer Panel ─────────────────────────────────────────────── */}
       <div
         onTouchStart={handleTouchStart}
@@ -372,8 +469,8 @@ export default function CartDrawer({
           transition: isClosing
             ? "transform 280ms cubic-bezier(0.22, 1, 0.36, 1), opacity 280ms ease"
             : touchOffset > 0
-            ? "none"
-            : undefined,
+              ? "none"
+              : undefined,
         }}
         className={[
           "absolute top-0 bottom-0 right-0 z-10 flex flex-col h-full",
@@ -386,8 +483,10 @@ export default function CartDrawer({
           "overflow-hidden shadow-2xl",
         ].join(" ")}
       >
+        {" "}
         {/* ══ HEADER ══════════════════════════════════════════════════ */}
         <header className="cart-header-surface sticky top-0 z-20 px-5 md:px-6 pt-4 md:pt-5 pb-3.5 md:pb-4 shrink-0 salon-stagger-1">
+          {" "}
           {/* Eyebrow */}
           <p
             style={{
@@ -400,23 +499,26 @@ export default function CartDrawer({
               marginBottom: "5px",
             }}
           >
+            {" "}
             Your Private Selection
-          </p>
-
+          </p>{" "}
           {/* Title row */}
           <div className="flex items-center justify-between gap-3">
+            {" "}
             <div className="flex items-center gap-2.5 min-w-0">
+              {" "}
               <img
                 src="/assets/sentire-logo-user.jpg"
                 alt="SENTIRE By PC Logo"
                 className="h-7 md:h-8 object-contain max-w-[170px]"
-              />
+              />{" "}
               <span className="sentire-count-pill shrink-0">
+                {" "}
                 {countDisplay}&nbsp;{totalCount === 1 ? "Item" : "Items"}
-              </span>
-            </div>
-
+              </span>{" "}
+            </div>{" "}
             <div className="flex items-center gap-2 shrink-0">
+              {" "}
               {items.length > 0 && onClearCart && (
                 <button
                   onClick={onClearCart}
@@ -424,6 +526,7 @@ export default function CartDrawer({
                   title="Clear all items"
                   aria-label="Clear all items from bag"
                 >
+                  {" "}
                   Clear All
                 </button>
               )}
@@ -432,18 +535,20 @@ export default function CartDrawer({
                 className="sentire-close-btn w-9 h-9 md:w-10 md:h-10"
                 aria-label="Close shopping bag"
               >
-                <IconClose />
-              </button>
-            </div>
-          </div>
-        </header>
-
+                {" "}
+                <IconClose />{" "}
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
+        </header>{" "}
         {/* ── Scrollable body ───────────────────────────────────────── */}
         <div className="flex-1 overflow-y-auto luxury-scrollbar min-h-0 pb-12 md:pb-16">
-
+          {" "}
           {/* ══ DELIVERY PRIVILEGE ══════════════════════════════════ */}
           <div className="cart-delivery-band px-5 md:px-6 py-3.5 md:py-4 salon-stagger-2">
+            {" "}
             <div className="flex items-center justify-between gap-2 mb-1.5">
+              {" "}
               <p
                 style={{
                   fontFamily: "var(--font-sans)",
@@ -454,8 +559,9 @@ export default function CartDrawer({
                   color: "rgba(28, 27, 24,0.45)",
                 }}
               >
+                {" "}
                 ✦&nbsp; Private Delivery
-              </p>
+              </p>{" "}
               {isFreeShippingUnlocked && (
                 <span
                   style={{
@@ -467,20 +573,23 @@ export default function CartDrawer({
                     color: "#a4492e",
                   }}
                 >
+                  {" "}
                   Unlocked
                 </span>
               )}
-            </div>
-
+            </div>{" "}
             {isFreeShippingUnlocked ? (
               <div className="flex items-center justify-between gap-3">
+                {" "}
                 <div>
+                  {" "}
                   <p
                     className="font-display font-bold text-[#a4492e]"
                     style={{ fontSize: "13.5px", letterSpacing: "-0.01em" }}
                   >
-                    🎉 Congratulations! FREE Delivery Unlocked!
-                  </p>
+                    {" "}
+                    Congratulations! FREE Delivery Unlocked!
+                  </p>{" "}
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -490,9 +599,10 @@ export default function CartDrawer({
                       fontWeight: 400,
                     }}
                   >
+                    {" "}
                     Free Express Delivery on orders ₹999 & above
-                  </p>
-                </div>
+                  </p>{" "}
+                </div>{" "}
                 <div
                   className="flex items-center justify-center shrink-0"
                   style={{
@@ -504,23 +614,44 @@ export default function CartDrawer({
                     color: "#a4492e",
                   }}
                 >
-                  <IconCheck />
-                </div>
+                  {" "}
+                  <IconCheck />{" "}
+                </div>{" "}
               </div>
             ) : (
               <div>
+                {" "}
                 <p
                   className="font-display"
-                  style={{ fontSize: "13.5px", fontWeight: 400, color: "#151412" }}
+                  style={{
+                    fontSize: "13.5px",
+                    fontWeight: 400,
+                    color: "#151412",
+                  }}
                 >
+                  {" "}
                   {remainingForFreeShipping > 0 ? (
                     <>
-                      Add <strong style={{ color: "#a4492e", fontWeight: 700 }}>₹{(remainingForFreeShipping || 0).toLocaleString()}</strong> more to get <strong style={{ color: "#a4492e", textTransform: "uppercase", fontWeight: 700 }}>FREE Delivery</strong>
+                      {" "}
+                      Add{" "}
+                      <strong style={{ color: "#a4492e", fontWeight: 700 }}>
+                        ₹{(remainingForFreeShipping || 0).toLocaleString()}
+                      </strong>{" "}
+                      more to get{" "}
+                      <strong
+                        style={{
+                          color: "#a4492e",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                        }}
+                      >
+                        FREE Delivery
+                      </strong>{" "}
                     </>
                   ) : (
                     "Free shipping on orders over ₹999"
                   )}
-                </p>
+                </p>{" "}
                 <p
                   style={{
                     fontFamily: "var(--font-sans)",
@@ -530,17 +661,18 @@ export default function CartDrawer({
                     fontWeight: 400,
                   }}
                 >
+                  {" "}
                   Free delivery on orders ₹999 & above
-                </p>
+                </p>{" "}
               </div>
             )}
-
             {/* Progress bar */}
             <div className="cart-progress-track mt-2.5">
+              {" "}
               <div
                 className="cart-progress-fill"
                 style={{ width: `${progressPercent}%` }}
-              />
+              />{" "}
               {isFreeShippingUnlocked && (
                 <span
                   style={{
@@ -553,19 +685,19 @@ export default function CartDrawer({
                     fontWeight: 700,
                   }}
                 >
+                  {" "}
                   ◆
                 </span>
               )}
-            </div>
-          </div>
-
+            </div>{" "}
+          </div>{" "}
           {/* ══ CART ITEMS / EMPTY STATE ════════════════════════════ */}
           <div className="px-5 md:px-6 py-4 md:py-5 salon-stagger-3">
-
+            {" "}
             {items.length === 0 ? (
-
               /* ── Empty State ── */
               <div className="flex flex-col items-center text-center py-12 md:py-16 space-y-4 md:space-y-5">
+                {" "}
                 <div
                   style={{
                     width: "36px",
@@ -573,9 +705,9 @@ export default function CartDrawer({
                     background: "rgba(138, 59, 36,0.40)",
                     margin: "0 auto",
                   }}
-                />
-
+                />{" "}
                 <div className="space-y-1.5">
+                  {" "}
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -586,14 +718,23 @@ export default function CartDrawer({
                       color: "#a4492e",
                     }}
                   >
+                    {" "}
                     Your Private Selection
-                  </p>
+                  </p>{" "}
                   <h3
                     className="font-display"
-                    style={{ fontSize: "20px", fontWeight: 400, color: "#151412", letterSpacing: "-0.01em" }}
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: 400,
+                      color: "#151412",
+                      letterSpacing: "-0.01em",
+                    }}
                   >
-                    Your bag awaits<br />its first fragrance.
-                  </h3>
+                    {" "}
+                    Your bag awaits
+                    <br />
+                    its first fragrance.
+                  </h3>{" "}
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
@@ -605,20 +746,23 @@ export default function CartDrawer({
                       fontWeight: 400,
                     }}
                   >
-                    Discover compositions crafted to leave an unforgettable signature.
-                  </p>
-                </div>
-
+                    {" "}
+                    Discover compositions crafted to leave an unforgettable
+                    signature.
+                  </p>{" "}
+                </div>{" "}
                 <button
                   onClick={handleCloseSmooth}
                   className="sentire-checkout-btn mt-2"
                   style={{ maxWidth: "240px", height: "44px", fontSize: "9px" }}
                   aria-label="Explore the perfume library"
                 >
+                  {" "}
                   Explore Fragrances
-                  <span className="cta-arrow"><IconArrow /></span>
-                </button>
-
+                  <span className="cta-arrow">
+                    <IconArrow />
+                  </span>{" "}
+                </button>{" "}
                 <div
                   style={{
                     width: "36px",
@@ -626,13 +770,12 @@ export default function CartDrawer({
                     background: "rgba(138, 59, 36,0.40)",
                     margin: "0 auto",
                   }}
-                />
+                />{" "}
               </div>
-
             ) : (
-
               /* ── Items List ── */
               <div>
+                {" "}
                 <p
                   style={{
                     fontFamily: "var(--font-sans)",
@@ -644,10 +787,11 @@ export default function CartDrawer({
                     marginBottom: "14px",
                   }}
                 >
+                  {" "}
                   Your Fragrances ({items.length})
-                </p>
-
+                </p>{" "}
                 <div className="space-y-4 md:space-y-6">
+                  {" "}
                   {items.map((item, idx) => {
                     const isAnimating = animatingItemId === item.id;
                     return (
@@ -657,23 +801,24 @@ export default function CartDrawer({
                           animation: `salonFadeUp 380ms cubic-bezier(0.22,1,0.36,1) ${idx * 50 + 100}ms both`,
                         }}
                       >
+                        {" "}
                         {/* Product row */}
                         <div className="flex gap-3.5 md:gap-4 items-start">
-
+                          {" "}
                           {/* Image */}
                           <div className="cart-product-img-frame">
+                            {" "}
                             <img
                               src={item.img || (item as any).image}
                               alt={item.name}
                               draggable={false}
                               loading="eager"
                               decoding="async"
-                            />
-                          </div>
-
+                            />{" "}
+                          </div>{" "}
                           {/* Info */}
                           <div className="flex-1 min-w-0 pt-0.5">
-
+                            {" "}
                             {/* Product name */}
                             <h3
                               className="font-display leading-tight truncate text-[15px] sm:text-[17px]"
@@ -684,9 +829,9 @@ export default function CartDrawer({
                                 marginBottom: "2px",
                               }}
                             >
+                              {" "}
                               {item.name}
-                            </h3>
-
+                            </h3>{" "}
                             {/* Fragrance type · size */}
                             <p
                               style={{
@@ -699,34 +844,43 @@ export default function CartDrawer({
                                 marginBottom: "4px",
                               }}
                             >
-                              {item.productId === "discovery-set" || item.name?.toLowerCase().includes("discovery set")
+                              {" "}
+                              {item.productId === "discovery-set" ||
+                              item.name?.toLowerCase().includes("discovery set")
                                 ? "Discovery Set · 6 × 6 ML (36 ML)"
                                 : `Eau de Parfum · ${item.size} ML`}
-                            </p>
-
+                            </p>{" "}
                             {/* Inline Size Switcher Pills (10ML | 30ML | 50ML) */}
-                            {item.productId !== "discovery-set" && !item.name?.toLowerCase().includes("discovery set") && (
-                              <div className="mt-1.5 mb-2 flex items-center gap-1.5 flex-wrap">
-                                <span className="text-[9px] font-bold uppercase tracking-wider text-[#151412]/50">Size:</span>
-                                {[10, 30, 50].map((sz) => {
-                                  const isSelected = item.size === sz;
-                                  return (
-                                    <button
-                                      key={sz}
-                                      onClick={() => handleSwitchSize(item, sz)}
-                                      className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                                        isSelected
-                                          ? "bg-[#a4492e] text-white border border-[#a4492e] shadow-sm"
-                                          : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/10 hover:border-[#a4492e]"
-                                      }`}
-                                    >
-                                      {sz}ML
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            )}
-
+                            {item.productId !== "discovery-set" &&
+                              !item.name
+                                ?.toLowerCase()
+                                .includes("discovery set") && (
+                                <div className="mt-1.5 mb-2 flex items-center gap-1.5 flex-wrap">
+                                  {" "}
+                                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#151412]/50">
+                                    Size:
+                                  </span>{" "}
+                                  {[10, 30, 50].map((sz) => {
+                                    const isSelected = item.size === sz;
+                                    return (
+                                      <button
+                                        key={sz}
+                                        onClick={() =>
+                                          handleSwitchSize(item, sz)
+                                        }
+                                        className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                                          isSelected
+                                            ? "bg-[#a4492e] text-white border border-[#a4492e] shadow-sm"
+                                            : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/10 hover:border-[#a4492e]"
+                                        }`}
+                                      >
+                                        {" "}
+                                        {sz}ML
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
                             {/* Price */}
                             <p
                               style={{
@@ -739,48 +893,70 @@ export default function CartDrawer({
                                 marginBottom: "4px",
                               }}
                             >
+                              {" "}
                               ₹{(item.price || 0).toLocaleString()}
-                            </p>
-
+                            </p>{" "}
                             {/* Personalisation Badge & Notes */}
                             {item.isPersonalised && (
                               <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[#a4492e]/30 bg-[#a4492e]/10 px-2 py-1 text-[10px] text-[#1c1b18]">
-                                <span className="font-bold text-[#a4492e] tracking-wider uppercase">✨ Personalised (+₹200)</span>
-                                {item.engravingText && <span>Name: <strong className="font-serif uppercase tracking-wider">{item.engravingText}</strong></span>}
-                                {item.engravingDate && <span>Date: <strong>{item.engravingDate}</strong></span>}
+                                {" "}
+                                <span className="font-bold text-[#a4492e] tracking-wider uppercase">
+                                  {" "}
+                                  Personalised (+₹200)
+                                </span>{" "}
+                                {item.engravingText && (
+                                  <span>
+                                    Name:{" "}
+                                    <strong className="font-serif uppercase tracking-wider">
+                                      {item.engravingText}
+                                    </strong>
+                                  </span>
+                                )}
+                                {item.engravingDate && (
+                                  <span>
+                                    Date: <strong>{item.engravingDate}</strong>
+                                  </span>
+                                )}
                               </div>
                             )}
-
                             {/* Controls row */}
                             <div className="flex items-center justify-between gap-2">
-
+                              {" "}
                               {/* Quantity control */}
-                              <div className="sentire-qty-control" role="group" aria-label={`Quantity for ${item.name}`}>
+                              <div
+                                className="sentire-qty-control"
+                                role="group"
+                                aria-label={`Quantity for ${item.name}`}
+                              >
+                                {" "}
                                 <button
                                   className="sentire-qty-btn"
                                   onClick={() => handleQuantityChange(item, -1)}
                                   aria-label={`Decrease quantity of ${item.name}`}
                                 >
+                                  {" "}
                                   −
-                                </button>
+                                </button>{" "}
                                 <span
                                   className={`sentire-qty-num text-xs font-semibold ${isAnimating ? "qty-num-flip" : ""}`}
                                   aria-live="polite"
                                   aria-label={`${item.quantity} items`}
                                 >
+                                  {" "}
                                   {String(item.quantity).padStart(2, "0")}
-                                </span>
+                                </span>{" "}
                                 <button
                                   className="sentire-qty-btn"
                                   onClick={() => handleQuantityChange(item, 1)}
                                   aria-label={`Increase quantity of ${item.name}`}
                                 >
+                                  {" "}
                                   +
-                                </button>
-                              </div>
-
+                                </button>{" "}
+                              </div>{" "}
                               {/* Item total + remove */}
                               <div className="flex flex-col items-end gap-1">
+                                {" "}
                                 {item.quantity > 1 && (
                                   <p
                                     style={{
@@ -791,59 +967,81 @@ export default function CartDrawer({
                                       fontVariantNumeric: "tabular-nums",
                                     }}
                                   >
-                                    ₹{((item.price || 0) * (item.quantity || 1)).toLocaleString()}
+                                    {" "}
+                                    ₹
+                                    {(
+                                      (item.price || 0) * (item.quantity || 1)
+                                    ).toLocaleString()}
                                   </p>
                                 )}
                                 <button
                                   className="sentire-remove-btn"
-                                  onClick={() => onRemoveItem(item.productId, item.size)}
+                                  onClick={() =>
+                                    onRemoveItem(item.productId, item.size)
+                                  }
                                   aria-label={`Remove ${item.name} from bag`}
                                 >
+                                  {" "}
                                   Remove
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
+                                </button>{" "}
+                              </div>{" "}
+                            </div>{" "}
+                          </div>{" "}
+                        </div>{" "}
                         {/* Divider */}
                         {idx < items.length - 1 && (
                           <div className="cart-ornament-divider mt-4 md:mt-6">
+                            {" "}
                             ✦
                           </div>
                         )}
                       </div>
                     );
                   })}
-                </div>
-
-                {/* ══ 🏷️ PROMINENT COUPON & DISCOUNTS CARD ══════════════════════ */}
+                </div>{" "}
+                {/* ══  PROMINENT COUPON & DISCOUNTS CARD ══════════════════════ */}
                 <div className="mt-5 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-2.5">
+                  {" "}
                   <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
+                    {" "}
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[#a4492e] text-sm">🏷️</span>
-                      <h4 className="font-serif text-sm font-bold text-[#151412]">Apply Coupon & Atelier Offers</h4>
-                    </div>
-                    <span className="text-[9px] font-bold text-[#a4492e] uppercase tracking-wider">Instant Savings</span>
-                  </div>
-
+                      {" "}
+                      <span className="text-[#a4492e] text-sm"></span>{" "}
+                      <h4 className="font-serif text-sm font-bold text-[#151412]">
+                        Apply Coupon & Atelier Offers
+                      </h4>{" "}
+                    </div>{" "}
+                    <span className="text-[9px] font-bold text-[#a4492e] uppercase tracking-wider">
+                      Instant Savings
+                    </span>{" "}
+                  </div>{" "}
                   {appliedCoupon ? (
                     <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/40 rounded-xl p-2.5 text-xs">
+                      {" "}
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">🎉 {appliedCoupon}</span>
-                        <span className="text-emerald-700 font-extrabold text-xs">(Saved ₹{couponDiscount})</span>
-                      </div>
+                        {" "}
+                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">
+                          {" "}
+                          {appliedCoupon}
+                        </span>{" "}
+                        <span className="text-emerald-700 font-extrabold text-xs">
+                          (Saved ₹{couponDiscount})
+                        </span>{" "}
+                      </div>{" "}
                       <button
                         onClick={handleRemoveCoupon}
                         className="text-red-600 hover:text-red-800 font-bold text-xs px-2 py-0.5 rounded bg-white border border-red-200"
                       >
+                        {" "}
                         Remove
-                      </button>
+                      </button>{" "}
                     </div>
                   ) : (
                     <div className="space-y-2">
+                      {" "}
                       {/* 1-Tap Pill Chips */}
                       <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-0.5">
+                        {" "}
                         <button
                           onClick={() => handleApplyCoupon("PC100")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
@@ -852,8 +1050,9 @@ export default function CartDrawer({
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
-                          ⚡ PC100 (₹100 OFF &gt; ₹999)
-                        </button>
+                          {" "}
+                          PC100 (₹100 OFF &gt; ₹999)
+                        </button>{" "}
                         <button
                           onClick={() => handleApplyCoupon("PC200")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
@@ -862,70 +1061,97 @@ export default function CartDrawer({
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
-                          ⚡ PC200 (₹200 OFF &gt; ₹1,999)
-                        </button>
-                      </div>
-
+                          {" "}
+                          PC200 (₹200 OFF &gt; ₹1,999)
+                        </button>{" "}
+                      </div>{" "}
                       {/* Manual Code Input */}
                       <div className="flex items-center gap-1.5 w-full">
+                        {" "}
                         <input
                           type="text"
                           placeholder="ENTER PROMO CODE"
                           value={couponInput}
-                          onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                          onChange={(e) =>
+                            setCouponInput(e.target.value.toUpperCase())
+                          }
                           onKeyDown={(e) => {
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
                           className="flex-1 min-w-0 rounded-xl border border-[#151412]/20 bg-[#f4f2ee] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#151412] focus:border-[#a4492e] focus:outline-none"
-                        />
+                        />{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
                           className="shrink-0 rounded-xl bg-[#151412] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-colors"
                         >
+                          {" "}
                           Apply
-                        </button>
-                      </div>
+                        </button>{" "}
+                      </div>{" "}
                     </div>
                   )}
-
                   {couponError && (
-                    <p className="text-[10px] text-red-500 font-medium">{couponError}</p>
+                    <p className="text-[10px] text-red-500 font-medium">
+                      {couponError}
+                    </p>
                   )}
                   {couponSuccess && (
                     <p className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
+                      {" "}
                       <span>✓</span> {couponSuccess}
                     </p>
                   )}
-                </div>
-
+                </div>{" "}
                 {/* ══ ₹200 PERSONALISATION ENGRAVING MODULE ══════════════════════ */}
                 <div className="mt-6 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-3">
+                  {" "}
                   <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
+                    {" "}
                     <div>
-                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#a4492e]">Personalised Craftsmanship</span>
-                      <h4 className="font-serif text-sm font-bold text-[#151412]">Add Custom Name & Date Engraving (+₹200)</h4>
-                    </div>
-                    <span className="rounded bg-[#a4492e]/10 border border-[#a4492e]/30 px-2 py-0.5 text-[9px] font-bold text-[#a4492e]">Jaipur Laser Engraved</span>
-                  </div>
-
+                      {" "}
+                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#a4492e]">
+                        Personalised Craftsmanship
+                      </span>{" "}
+                      <h4 className="font-serif text-sm font-bold text-[#151412]">
+                        Add Custom Name & Date Engraving (+₹200)
+                      </h4>{" "}
+                    </div>{" "}
+                    <span className="rounded bg-[#a4492e]/10 border border-[#a4492e]/30 px-2 py-0.5 text-[9px] font-bold text-[#a4492e]">
+                      Jaipur Laser Engraved
+                    </span>{" "}
+                  </div>{" "}
                   <div>
-                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Select Perfume to Engrave:</label>
+                    {" "}
+                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                      Select Perfume to Engrave:
+                    </label>{" "}
                     <select
-                      value={engraveTargetKey || `${items[0]?.productId}-${items[0]?.size}`}
+                      value={
+                        engraveTargetKey ||
+                        `${items[0]?.productId}-${items[0]?.size}`
+                      }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
                       className="w-full rounded-xl border border-[#151412]/20 bg-[#f4f2ee] p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
                     >
+                      {" "}
                       {items.map((i) => (
-                        <option key={`${i.productId}-${i.size}`} value={`${i.productId}-${i.size}`}>
+                        <option
+                          key={`${i.productId}-${i.size}`}
+                          value={`${i.productId}-${i.size}`}
+                        >
+                          {" "}
                           {i.name} ({i.size}ML)
                         </option>
                       ))}
-                    </select>
-                  </div>
-
+                    </select>{" "}
+                  </div>{" "}
                   <div className="grid grid-cols-2 gap-2">
+                    {" "}
                     <div>
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Name (Max 12 Chars):</label>
+                      {" "}
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                        Name (Max 12 Chars):
+                      </label>{" "}
                       <input
                         type="text"
                         maxLength={12}
@@ -933,10 +1159,13 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
                         className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
-                      />
-                    </div>
+                      />{" "}
+                    </div>{" "}
                     <div>
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">Date (Max 10 Chars):</label>
+                      {" "}
+                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                        Date (Max 10 Chars):
+                      </label>{" "}
                       <input
                         type="text"
                         maxLength={10}
@@ -944,30 +1173,31 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
                         className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
+                      />{" "}
+                    </div>{" "}
+                  </div>{" "}
                   <button
                     onClick={handleApplyEngravingToTarget}
                     className="w-full rounded-xl border-2 border-[#a4492e] bg-[#f4f2ee] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all shadow-sm"
                   >
+                    {" "}
                     Apply Engraving to Bottle (+₹200)
-                  </button>
-                </div>
+                  </button>{" "}
+                </div>{" "}
               </div>
             )}
-          </div>
-
-        </div>
+          </div>{" "}
+        </div>{" "}
         {/* ── End scrollable body ─ */}
-
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
           <footer className="cart-footer-surface bg-[#f4f2ee] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
+            {" "}
             {/* Promo Code Input & Badges */}
             <div className="mb-2 md:mb-3">
+              {" "}
               <div className="flex items-center justify-between mb-1">
+                {" "}
                 <span
                   style={{
                     fontFamily: "var(--font-sans)",
@@ -978,46 +1208,59 @@ export default function CartDrawer({
                     color: "#a4492e",
                   }}
                 >
+                  {" "}
                   Promo / Coupon Code
-                </span>
-              </div>
-
+                </span>{" "}
+              </div>{" "}
               {appliedCoupon ? (
                 <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/30 rounded-lg px-2.5 py-1.5 text-xs">
+                  {" "}
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-[#151412] font-mono tracking-wider text-[11px]">{appliedCoupon}</span>
-                    <span className="text-[#a4492e] font-semibold text-[11px]">(-₹{couponDiscount})</span>
-                  </div>
+                    {" "}
+                    <span className="font-semibold text-[#151412] font-mono tracking-wider text-[11px]">
+                      {appliedCoupon}
+                    </span>{" "}
+                    <span className="text-[#a4492e] font-semibold text-[11px]">
+                      (-₹{couponDiscount})
+                    </span>{" "}
+                  </div>{" "}
                   <button
                     onClick={handleRemoveCoupon}
                     className="text-gray-500 hover:text-red-500 font-bold text-base px-1.5 leading-none cursor-pointer"
                     title="Remove Code"
                   >
+                    {" "}
                     ×
-                  </button>
+                  </button>{" "}
                 </div>
               ) : (
                 <div>
+                  {" "}
                   <div className="flex items-center gap-1.5 w-full">
+                    {" "}
                     <input
                       type="text"
                       placeholder="Enter promo code"
                       value={couponInput}
-                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setCouponInput(e.target.value.toUpperCase())
+                      }
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
                       className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#a4492e] font-sans tracking-tight text-[#151412] h-6 sm:h-8"
-                    />
+                    />{" "}
                     <button
                       onClick={() => handleApplyCoupon()}
                       className="bg-[#1c1b18] text-[#eeebe5] hover:bg-[#a4492e] hover:text-[#151412] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
                     >
+                      {" "}
                       Apply
-                    </button>
-                  </div>
+                    </button>{" "}
+                  </div>{" "}
                   {/* Quick Code Pills */}
                   <div className="flex items-center gap-1.5 mt-1 md:mt-1.5">
+                    {" "}
                     <button
                       onClick={() => handleApplyCoupon("PC100")}
                       className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
@@ -1026,8 +1269,9 @@ export default function CartDrawer({
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
+                      {" "}
                       PC100 (₹100 OFF &gt; ₹999)
-                    </button>
+                    </button>{" "}
                     <button
                       onClick={() => handleApplyCoupon("PC200")}
                       className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
@@ -1036,69 +1280,146 @@ export default function CartDrawer({
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
+                      {" "}
                       PC200 (₹200 OFF &gt; ₹1999)
-                    </button>
-                  </div>
+                    </button>{" "}
+                  </div>{" "}
                 </div>
               )}
-
               {couponError && (
-                <p className="text-[9.5px] text-red-500 mt-1 font-sans">{couponError}</p>
+                <p className="text-[9.5px] text-red-500 mt-1 font-sans">
+                  {couponError}
+                </p>
               )}
               {couponSuccess && (
-                <p className="text-[9.5px] text-emerald-600 mt-1 font-sans font-medium">{couponSuccess}</p>
+                <p className="text-[9.5px] text-emerald-600 mt-1 font-sans font-medium">
+                  {couponSuccess}
+                </p>
               )}
-            </div>
-
+            </div>{" "}
             {/* Order Summary Rows */}
             <div className="space-y-1 md:space-y-1.5 pt-0.5 md:pt-1">
+              {" "}
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(28, 27, 24,0.60)" }}>
+                {" "}
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "11px",
+                    color: "rgba(28, 27, 24,0.60)",
+                  }}
+                >
+                  {" "}
                   Subtotal
-                </span>
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#1c1b18", fontWeight: 500 }}>
+                </span>{" "}
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "12px",
+                    color: "#1c1b18",
+                    fontWeight: 500,
+                  }}
+                >
+                  {" "}
                   ₹{(subtotal || 0).toLocaleString()}
-                </span>
-              </div>
-
+                </span>{" "}
+              </div>{" "}
               {couponDiscount > 0 && (
                 <div className="flex justify-between items-baseline">
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "#a4492e", fontWeight: 500 }}>
+                  {" "}
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "11px",
+                      color: "#a4492e",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {" "}
                     Promo Discount ({appliedCoupon})
-                  </span>
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#a4492e", fontWeight: 600 }}>
+                  </span>{" "}
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "12px",
+                      color: "#a4492e",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {" "}
                     -₹{couponDiscount.toLocaleString()}
-                  </span>
+                  </span>{" "}
                 </div>
               )}
-
               <div className="flex justify-between items-baseline">
-                <span style={{ fontFamily: "var(--font-sans)", fontSize: "11px", color: "rgba(28, 27, 24,0.60)" }}>
+                {" "}
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "11px",
+                    color: "rgba(28, 27, 24,0.60)",
+                  }}
+                >
+                  {" "}
                   Express Delivery
-                </span>
+                </span>{" "}
                 {isFreeShippingUnlocked ? (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "9.5px", fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "#a4492e" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "9.5px",
+                      fontWeight: 600,
+                      letterSpacing: "0.10em",
+                      textTransform: "uppercase",
+                      color: "#a4492e",
+                    }}
+                  >
+                    {" "}
                     Complimentary
                   </span>
                 ) : (
-                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "12px", color: "#1c1b18", fontWeight: 500 }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "12px",
+                      color: "#1c1b18",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {" "}
                     ₹100
                   </span>
                 )}
-              </div>
-            </div>
-
-            <div className="cart-summary-rule my-1.5 md:my-2.5" />
-
+              </div>{" "}
+            </div>{" "}
+            <div className="cart-summary-rule my-1.5 md:my-2.5" />{" "}
             <div className="flex justify-between items-baseline mb-2 md:mb-3">
-              <span className="font-display" style={{ fontSize: "14px", fontWeight: 400, color: "#151412", letterSpacing: "-0.01em" }}>
+              {" "}
+              <span
+                className="font-display"
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  color: "#151412",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {" "}
                 Estimated Total
-              </span>
-              <span className="font-display" style={{ fontSize: "19px", fontWeight: 400, color: "#151412", letterSpacing: "-0.02em" }}>
+              </span>{" "}
+              <span
+                className="font-display"
+                style={{
+                  fontSize: "19px",
+                  fontWeight: 400,
+                  color: "#151412",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {" "}
                 ₹{(finalTotal || 0).toLocaleString()}
-              </span>
-            </div>
-
+              </span>{" "}
+            </div>{" "}
             {/* Checkout CTA */}
             <button
               className={`sentire-checkout-btn salon-stagger-6 cursor-pointer flex items-center justify-center gap-2 ${
@@ -1109,7 +1430,8 @@ export default function CartDrawer({
                 if (items.length === 0 || isRedirecting) return;
 
                 const currentUser = auth.currentUser;
-                const isStoredLoggedIn = localStorage.getItem("sentire_is_logged_in") === "true";
+                const isStoredLoggedIn =
+                  localStorage.getItem("sentire_is_logged_in") === "true";
                 const isLoggedIn = !!currentUser || isStoredLoggedIn;
 
                 if (!isLoggedIn) {
@@ -1125,15 +1447,25 @@ export default function CartDrawer({
                 try {
                   sessionStorage.setItem("sentire_went_to_checkout", "true");
                 } catch (e) {}
-                const userEmail = currentUser?.email || localStorage.getItem("sentire_user_email") || undefined;
-                const userPhone = currentUser?.phoneNumber || localStorage.getItem("sentire_user_phone") || undefined;
+                const userEmail =
+                  currentUser?.email ||
+                  localStorage.getItem("sentire_user_email") ||
+                  undefined;
+                const userPhone =
+                  currentUser?.phoneNumber ||
+                  localStorage.getItem("sentire_user_phone") ||
+                  undefined;
 
                 // Save snapshot of order to register under user's Account upon return from Shopify
                 try {
                   const pendingOrder = {
                     id: `SNT-${Math.floor(10000 + Math.random() * 90000)}`,
                     orderNumber: `SNT-${Math.floor(10000 + Math.random() * 90000)}`,
-                    date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+                    date: new Date().toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    }),
                     status: "Confirmed",
                     total: finalTotal,
                     items: items.map((i) => ({
@@ -1144,11 +1476,19 @@ export default function CartDrawer({
                       img: i.img || i.image,
                     })),
                   };
-                  localStorage.setItem("sentire_pending_checkout_order", JSON.stringify(pendingOrder));
+                  localStorage.setItem(
+                    "sentire_pending_checkout_order",
+                    JSON.stringify(pendingOrder),
+                  );
                 } catch (e) {}
 
                 const winRef = window;
-                createOrGetShopifyCheckoutUrl(items, appliedCoupon || undefined, userEmail, userPhone)
+                createOrGetShopifyCheckoutUrl(
+                  items,
+                  appliedCoupon || undefined,
+                  userEmail,
+                  userPhone,
+                )
                   .then((checkoutUrl) => {
                     if (checkoutUrl) {
                       winRef.location.href = checkoutUrl;
@@ -1163,16 +1503,19 @@ export default function CartDrawer({
               }}
               aria-label={`Proceed to checkout. Total: ₹${(finalTotal || 0).toLocaleString()}`}
             >
+              {" "}
               {isRedirecting ? (
                 <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#eeebe5] border-t-transparent" />
               ) : (
                 <>
-                  <span>Proceed to Checkout</span>
-                  <span className="cta-arrow" aria-hidden="true"><IconArrow /></span>
+                  {" "}
+                  <span>Proceed to Checkout</span>{" "}
+                  <span className="cta-arrow" aria-hidden="true">
+                    <IconArrow />
+                  </span>{" "}
                 </>
               )}
-            </button>
-
+            </button>{" "}
             {/* Trust signals */}
             <div
               className="flex items-center justify-center gap-3 mt-2.5"
@@ -1185,19 +1528,20 @@ export default function CartDrawer({
                 color: "rgba(28, 27, 24,0.40)",
               }}
             >
+              {" "}
               <span className="flex items-center gap-1">
-                <IconLock aria-hidden="true" />
-                Secure Checkout
-              </span>
-              <span style={{ color: "rgba(28, 27, 24,0.20)" }}>◇</span>
+                {" "}
+                <IconLock aria-hidden="true" /> Secure Checkout
+              </span>{" "}
+              <span style={{ color: "rgba(28, 27, 24,0.20)" }}>◇</span>{" "}
               <span className="flex items-center gap-1">
-                <IconDiamond aria-hidden="true" />
-                Authentic Sentire
-              </span>
-            </div>
+                {" "}
+                <IconDiamond aria-hidden="true" /> Authentic Sentire
+              </span>{" "}
+            </div>{" "}
           </footer>
         )}
-      </div>
+      </div>{" "}
     </div>
   );
 }

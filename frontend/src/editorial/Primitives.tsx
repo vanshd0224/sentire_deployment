@@ -1,9 +1,21 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { EASE_OUT_EXPO, fadeUp, imageWipe, maskLine, viewportOnce } from "./motion";
+import {
+  EASE_OUT_EXPO,
+  fadeUp,
+  imageWipe,
+  maskLine,
+  viewportOnce,
+} from "./motion";
 
 /** Small mono label used above every section heading. */
-export function Label({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Label({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return <p className={`ed-label ${className}`}>{children}</p>;
 }
 
@@ -44,8 +56,15 @@ export function MaskedHeading({
         viewport={viewportOnce}
       >
         {words.map((word, i) => (
-          <span key={`${word}-${i}`} className="overflow-hidden pb-[0.08em] pr-[0.26em]">
-            <motion.span className="block will-change-transform" variants={maskLine} custom={i + delay}>
+          <span
+            key={`${word}-${i}`}
+            className="overflow-hidden pb-[0.08em] pr-[0.26em]"
+          >
+            <motion.span
+              className="block will-change-transform"
+              variants={maskLine}
+              custom={i + delay}
+            >
               {word}
             </motion.span>
           </span>

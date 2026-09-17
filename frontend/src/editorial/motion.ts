@@ -18,8 +18,15 @@ export function useMotionBudget() {
 
     const evaluate = () => {
       const cores = navigator.hardwareConcurrency ?? 4;
-      const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
-      setRich(!reduced.matches && fine.matches && wide.matches && cores >= 4 && memory >= 4);
+      const memory =
+        (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+      setRich(
+        !reduced.matches &&
+          fine.matches &&
+          wide.matches &&
+          cores >= 4 &&
+          memory >= 4,
+      );
     };
 
     evaluate();
@@ -52,7 +59,12 @@ export function usePrefersReducedMotion() {
 
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
-export const softSpring: Transition = { type: "spring", stiffness: 220, damping: 30, mass: 0.9 };
+export const softSpring: Transition = {
+  type: "spring",
+  stiffness: 220,
+  damping: 30,
+  mass: 0.9,
+};
 
 /** Word/line mask reveal — the line slides out from behind its own clip. */
 export const maskLine: Variants = {

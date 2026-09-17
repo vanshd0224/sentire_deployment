@@ -1,25 +1,26 @@
 const items = [
   {
     text: "GET FLAT ₹100 OFF ON ORDERS ABOVE ₹999 - USE CODE PC100",
-    icon: "♦",
+    icon: "",
   },
   {
     text: "GET FLAT ₹200 OFF ON ORDERS ABOVE ₹1,999 - USE CODE PC200",
-    icon: "♦",
+    icon: "",
   },
   {
     text: "35%+ EXTRAIT DE PARFUM",
-    icon: "♦",
+    icon: "",
   },
   {
     text: "COMPLIMENTARY SHIPPING ON ALL ORDERS ABOVE ₹999",
-    icon: "♦",
+    icon: "",
   },
 ];
 
 export default function AnnouncementBar() {
   return (
     <>
+      {" "}
       <style>{`
         @keyframes marqueeScroll {
           0% { transform: translateX(0%); }
@@ -35,25 +36,39 @@ export default function AnnouncementBar() {
           width: max-content;
           animation: marqueeScroll 20s linear infinite;
         }
-      `}</style>
+      `}</style>{" "}
       <div className="sentire-announcement-bar w-full text-[#f4f2ee] overflow-hidden select-none py-1.5 z-50">
+        {" "}
         <div className="sentire-marquee-track text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-white">
+          {" "}
           {/* First Loop */}
           {items.map((item, i) => (
-            <span key={`m1-${i}`} className="inline-flex items-center whitespace-nowrap px-4 sm:px-8">
-              <span>{item.text}</span>
-              <span className="ml-4 sm:ml-8 text-[#a4492e]">{item.icon}</span>
+            <span
+              key={`m1-${i}`}
+              className="inline-flex items-center whitespace-nowrap px-4 sm:px-8"
+            >
+              {" "}
+              <span>{item.text}</span>{" "}
+              <span className="ml-4 sm:ml-8 text-[#a4492e]">
+                {item.icon}
+              </span>{" "}
             </span>
           ))}
           {/* Duplicate Loop for Infinite Seamless Scroll */}
           {items.map((item, i) => (
-            <span key={`m2-${i}`} className="inline-flex items-center whitespace-nowrap px-4 sm:px-8">
-              <span>{item.text}</span>
-              <span className="ml-4 sm:ml-8 text-[#a4492e]">{item.icon}</span>
+            <span
+              key={`m2-${i}`}
+              className="inline-flex items-center whitespace-nowrap px-4 sm:px-8"
+            >
+              {" "}
+              <span>{item.text}</span>{" "}
+              <span className="ml-4 sm:ml-8 text-[#a4492e]">
+                {item.icon}
+              </span>{" "}
             </span>
           ))}
-        </div>
-      </div>
+        </div>{" "}
+      </div>{" "}
     </>
   );
 }

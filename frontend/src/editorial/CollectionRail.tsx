@@ -95,7 +95,10 @@ export default function CollectionRail({
         </div>
         <div className="hide-scrollbar mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:gap-6 md:px-10 lg:hidden">
           {products.map((product, i) => (
-            <div key={product.id} className="w-[72vw] shrink-0 snap-start sm:w-[46vw] md:w-[34vw]">
+            <div
+              key={product.id}
+              className="w-[72vw] shrink-0 snap-start sm:w-[46vw] md:w-[34vw]"
+            >
               <ProductCard
                 product={product}
                 index={i}
@@ -110,12 +113,20 @@ export default function CollectionRail({
   }
 
   return (
-    <section ref={wrapperRef} className="relative bg-paper" style={{ height: `${distance + 900}px` }}>
+    <section
+      ref={wrapperRef}
+      className="relative bg-paper"
+      style={{ height: `${distance + 900}px` }}
+    >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-10">
         <div className="ed-container">
           <SectionHead label={label} title={title} action={viewAll} />
         </div>
-        <motion.div ref={trackRef} style={{ x }} className="mt-10 flex gap-8 pl-10 will-change-transform">
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="mt-10 flex gap-8 pl-10 will-change-transform"
+        >
           {products.map((product, i) => (
             <div key={product.id} className="w-[22vw] min-w-[280px] shrink-0">
               <ProductCard
