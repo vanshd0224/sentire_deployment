@@ -40,6 +40,10 @@ router.post('/orders-create', async (req, res) => {
   }
 
   try {
+    // Send 100% Guaranteed Server-Side Meta CAPI Purchase Event
+    const metaCapiService = require('../services/metaCapiService');
+    metaCapiService.sendServerPurchaseEvent(payload);
+
     // Lazy require queueManager to avoid circular dependencies
     const queueManager = require('../utils/queueManager');
     await queueManager.addJob('webhook-queue', 'process-order-created', payload);
