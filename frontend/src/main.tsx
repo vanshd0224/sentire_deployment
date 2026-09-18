@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { MotionConfig } from "framer-motion";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
@@ -25,7 +26,12 @@ if (typeof window !== "undefined") {
     } else {
       b.head.appendChild(t);
     }
-  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  })(
+    window,
+    document,
+    "script",
+    "https://connect.facebook.net/en_US/fbevents.js",
+  );
 
   try {
     if (typeof window.fbq === "function") {
@@ -38,7 +44,10 @@ if (typeof window !== "undefined") {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
-      <App />
+      {/* Every framer-motion animation honours the OS "reduce motion" setting. */}
+      <MotionConfig reducedMotion="user">
+        <App />
+      </MotionConfig>
     </ErrorBoundary>
-  </StrictMode>
+  </StrictMode>,
 );

@@ -275,3 +275,107 @@ export const PERKS = [
   ["Zero-risk discovery", "VIP card inside, redeemable against a 50ML flacon"],
   ["Leak-proof travel sprays", "Anodised, cabin-bag approved"],
 ];
+
+// ── Copy restored from the live page ───────────────────────────────────────
+
+export const SPECS: [string, string][] = [
+  ["Volume", "6 × 6ML (36ML)"],
+  ["Spray count", "~360 fine mists"],
+  ["Portability", "TSA & clutch safe"],
+];
+
+export const WHY_6ML_QUOTE =
+  "Each vial holds roughly 55 to 60 sprays — around a month of wear if you're using it a couple of times a day. This isn't a paper strip in a store. It's enough to know how a fragrance behaves on you, in the evening, hours after you put it on.";
+
+export const PAPER_STRIP = {
+  kicker: "The outdated mall way",
+  title: "Department store paper strip",
+  sub: "Why 80% of full-bottle blind purchases end in regret",
+  points: [
+    [
+      "Fades in 10 minutes",
+      "Paper blotters don't have warmth, natural skin oils, or perspiration.",
+    ],
+    [
+      "Masks the drydown",
+      "You only smell top notes; base amber and agarwood never bloom properly.",
+    ],
+    [
+      "Olfactory fatigue",
+      "Store air is saturated with 50 other perfumes, confusing your senses.",
+    ],
+    [
+      "High financial risk",
+      "Forcing a ₹2,000–₹5,000 blind purchase after a 5-second sniff.",
+    ],
+  ],
+};
+
+export const SENTIRE_WAY = {
+  kicker: "The Sentire way",
+  title: "Sentire 6ML travel extrait",
+  sub: "True intimate luxury tested on your skin across weeks",
+  points: [
+    [
+      "55 to 60 fine-mist sprays",
+      "One full month of real daily skin wear per fragrance.",
+    ],
+    [
+      "True skin chemistry",
+      "Observe how body heat transforms delicate florals and rich Cambodian oud across 12 hours.",
+    ],
+    [
+      "Clutch & carry-on safe",
+      "Anodised leak-proof protective overcap prevents accidental spills in transit.",
+    ],
+    [
+      "Total freedom",
+      "Find your genuine signature fragrance without spending thousands up front.",
+    ],
+  ],
+};
+
+export const RITUAL_QUOTE =
+  "Give each fragrance its own day. Notice which one people mention. Then try layering two — a warm base under something brighter — and you'll have a scent nobody else is wearing.";
+
+export const RITUAL = [
+  {
+    n: "01",
+    title: "Give each its own day",
+    body: "Apply on pulse points (inside wrists, side of neck) in the morning. Notice how the top citrus or berries soften into warm amber and florals as your body temperature rises throughout the day.",
+  },
+  {
+    n: "02",
+    title: "The compliment test",
+    body: "Pay attention to what strangers, friends, and partners notice. A signature scent isn't just what smells pleasant in a bottle; it's what leaves an unforgettable scent trail in your wake.",
+  },
+  {
+    n: "03",
+    title: "Layer like an alchemist",
+    body: "Never smell like anyone else. Lay down a deep, warm base (Purple Oud or MIRAI) and veil it with an aquatic or citrus high note (Rich or Seductive). Use the layering studio below.",
+  },
+];
+
+export const PACKAGING_WARNING =
+  "WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it";
+
+export const PACKAGING_FEATURES = [
+  {
+    title: "Stepped tiered architecture",
+    body: "Each 6ML vial rests in an elevated staircase tray, allowing you to view all six bottles simultaneously the instant you flip the case open.",
+  },
+  {
+    title: "Oxblood velvet interior",
+    body: "Deep burgundy velvet lining cushions the glass vials against vibration and shock, preserving the concentrated perfume oils during flights and commute.",
+  },
+  {
+    title: "Included scent-map guide card",
+    body: "An embossed heavy-stock card tucked into the lid guides your journey through olfactory families, notes pyramids, and compliment profiles.",
+  },
+];
+
+export const CLOSING = {
+  kicker: "36ML · 6 travel sprays · ₹549",
+  title: "Find the scent that belongs to your skin.",
+  body: "Six distinct olfactory identities in fine-mist travel vials. Dispatched within 24 hours with express courier tracking across India.",
+};
