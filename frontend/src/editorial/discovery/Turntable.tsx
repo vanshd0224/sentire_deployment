@@ -29,7 +29,7 @@ export default function Turntable() {
   const py = useSpring(0, { stiffness: 160, damping: 20 });
   const tiltY = useTransform(px, [-1, 1], [-7, 7]);
   const tiltX = useTransform(py, [-1, 1], [5, -5]);
-  
+
   return (
     <div>
       <div
@@ -37,7 +37,8 @@ export default function Turntable() {
         style={{
           perspective: 1400,
           // Matches the studio backdrop the case was shot on (light top-right, falling off bottom-left).
-          background: "linear-gradient(215deg, #e2e2e2 0%, #d6d6d6 38%, #c6c6c6 70%, #b5b5b5 100%)",
+          background:
+            "linear-gradient(215deg, #e2e2e2 0%, #d6d6d6 38%, #c6c6c6 70%, #b5b5b5 100%)",
         }}
         onPointerMove={(e) => {
           if (!rich) return;
@@ -58,8 +59,6 @@ export default function Turntable() {
         <p className="ed-label absolute right-5 top-5 z-10 hidden sm:block">
           Drag to turn
         </p>
-
-
 
         <motion.div
           className="relative h-[96%] w-auto"

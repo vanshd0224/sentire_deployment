@@ -389,3 +389,7 @@ export const CLOSING = {
   title: "Find the scent that belongs to your skin.",
   body: "Six distinct olfactory identities in fine-mist travel vials. Dispatched within 24 hours with express courier tracking across India.",
 };
+
+/** "PURPLE OUD" / "MIRAI" → "Purple Oud" / "Mirai" for display. */
+export const displayName = (name: string) =>
+  name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());

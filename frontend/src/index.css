@@ -24,6 +24,8 @@
   --color-clay: #a4492e;
   --color-clay-dark: #8a3b24;
   --color-clay-light: #d9a08a;
+  /* Sampled from the Discovery Set case's hot-stamp (used only on that page) */
+  --color-print: #cdd43f;
 
   /* legacy aliases so existing classes follow the new palette */
   --color-cream: #f4f2ee;
@@ -1680,5 +1682,30 @@ main,
       animation-timeline: view();
       animation-range: entry 10% cover 28%;
     }
+  }
+}
+
+/* Review wall on the Discovery Set page: two rows drifting in opposite directions. */
+@keyframes edMarqueeL {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes edMarqueeR {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ed-marquee {
+    animation: none !important;
   }
 }
