@@ -5,8 +5,6 @@ import {
   useMotionTemplate,
   useScroll,
   useSpring,
-  useTransform,
-  type MotionValue,
 } from "framer-motion";
 import type { PageName } from "../types/appTypes";
 import {
@@ -758,7 +756,7 @@ export default function DiscoverySetPage({
             transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
             className="fixed inset-x-0 bottom-[62px] z-40 border-t border-[color:var(--color-rule)] bg-paper/95 backdrop-blur-sm lg:bottom-0"
           >
-            <div className="ed-container flex items-center justify-between gap-4 py-3 pr-24 lg:pr-28">
+            <div className="ed-container flex items-center justify-between gap-4 py-3">
               <div className="flex min-w-0 items-center gap-3">
                 <img
                   src={BOX_ANGLES[0].img}
@@ -775,9 +773,10 @@ export default function DiscoverySetPage({
                   </p>
                 </div>
               </div>
+              {/* mr-* leaves room for the floating concierge button bottom-right */}
               <button
                 onClick={addToCart}
-                className="ed-btn ed-btn-solid shrink-0"
+                className="ed-btn ed-btn-solid mr-20 shrink-0 lg:mr-24"
               >
                 {added ? "Added ✓" : "Add to bag"}
               </button>
@@ -1268,27 +1267,19 @@ function ClosingBand({
   onAdd: () => void;
   onBrowse: () => void;
 }) {
-  const ref = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end end"],
-  });
-  const spread = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
-  const fanOpacity = useTransform(scrollYProgress, [0.2, 0.7], [0, 1]);
-
   return (
-    <section
-      ref={ref}
-      className="relative overflow-hidden bg-ink py-20 text-paper md:py-28"
-    >
-      {/* The six vials fanned faintly behind the type */}
+    <section className="relative overflow-hidden bg-ink py-20 text-paper md:py-28">
+      {/* The six vials fan open faintly behind the type as the band arrives */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 justify-center"
-        style={{ opacity: fanOpacity }}
+        className="pointer-events-none absolute inset-x-0 top-1/2 flex h-44 -translate-y-1/2 items-center justify-center sm:h-52"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 1 }}
       >
         {DISCOVERY_FRAGRANCES.map((f, i) => (
-          <FanVial key={f.id} src={f.img} offset={i - 2.5} spread={spread} />
+          <FanVial key={f.id} src={f.img} offset={i - 2.5} />
         ))}
       </motion.div>
 
@@ -1326,23 +1317,20 @@ function ClosingBand({
   );
 }
 
-function FanVial({
-  src,
-  offset,
-  spread,
-}: {
-  src: string;
-  offset: number;
-  spread: MotionValue<number>;
-}) {
-  const x = useTransform(spread, (v) => offset * 150 * v);
+function FanVial({ src, offset }: { src: string; offset: number }) {
   return (
     <motion.img
       src={src}
       alt=""
-      loading="lazy"
       className="absolute h-32 w-32 rounded-[2px] object-cover opacity-25 sm:h-44 sm:w-44"
-      style={{ x, rotate: offset * 7, y: Math.abs(offset) * 14 }}
+      initial={{ x: offset * 60, rotate: 0, y: 0 }}
+      whileInView={{
+        x: offset * 150,
+        rotate: offset * 7,
+        y: Math.abs(offset) * 14,
+      }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 1.2, ease: EASE_OUT_EXPO }}
     />
   );
 }
