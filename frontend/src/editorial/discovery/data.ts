@@ -253,10 +253,6 @@ export const FAQS = [
     a: "All six fragrances in the SENTIRE Discovery Set are formulated at Haute Extrait de Parfum concentration (35%+ pure perfume oil load), ensuring profound projection and 10 to 14 hours of persistent longevity on skin and fabric.",
   },
   {
-    q: "Can I redeem my purchase towards a full 50ML flacon?",
-    a: "Yes! Every Discovery Set box comes with an exclusive VIP redemption card inside. Once you find your signature scent, use the enclosed code at checkout to apply a special privilege discount toward your full 50ML bottle.",
-  },
-  {
     q: "How fast is express delivery across India?",
     a: "All Discovery Set orders are dispatched within 24 hours from our Mumbai studio via premium express air couriers. Delivery typically takes 2 to 4 business days with real-time SMS tracking at every step.",
   },
@@ -282,7 +278,6 @@ export const REVIEWS = [
 
 export const PERKS = [
   ["Free express shipping", "Across India, arrives in 2–4 days"],
-  ["Zero-risk discovery", "VIP card inside, redeemable against a 50ML flacon"],
   ["Leak-proof travel sprays", "Anodised, cabin-bag approved"],
 ];
 

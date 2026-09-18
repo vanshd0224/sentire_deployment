@@ -41,7 +41,7 @@ export default function Prelude({
   return (
     <section
       ref={ref}
-      className="ed-grain relative isolate overflow-hidden text-paper"
+      className="relative isolate overflow-hidden text-paper"
       style={{
         minHeight: "calc(100svh - 96px)",
         background:
@@ -140,7 +140,7 @@ export default function Prelude({
 
           <motion.div className="md:text-right" {...reveal(3)}>
             <div className="flex items-baseline gap-3 md:justify-end">
-              <span className="font-serif text-[2.75rem] font-light leading-none">
+              <span className="font-sans text-[2.75rem] font-light leading-none tracking-[-0.02em]">
                 <Ticker value={549} prefix="₹" />
               </span>
               <span className="font-mono text-[13px] text-paper/40 line-through">

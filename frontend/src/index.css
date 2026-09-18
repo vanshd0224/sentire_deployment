@@ -6,14 +6,16 @@
    Paper / ink with a single Jaipur clay accent.
    ═══════════════════════════════════════════════════════════ */
 @theme {
-  --font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
-  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --font-script: "Newsreader", Georgia, serif;
-  --font-cinzel: "Newsreader", Georgia, serif;
-  --font-garamond: "Newsreader", Georgia, serif;
-  --font-montserrat: "Geist", ui-sans-serif, system-ui, sans-serif;
+  /* Didone display + Futura-lineage sans: the fashion-press pairing perfume
+     houses have used for a century, rather than today's startup defaults. */
+  --font-serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: "Jost", "Futura", "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Jost", "Futura", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Bodoni Moda", Georgia, serif;
+  --font-cinzel: "Bodoni Moda", Georgia, serif;
+  --font-garamond: "Bodoni Moda", Georgia, serif;
+  --font-montserrat: "Jost", "Futura", ui-sans-serif, system-ui, sans-serif;
 
   --color-paper: #f4f2ee;
   --color-paper-2: #eae7e1;
@@ -44,7 +46,7 @@ body {
   background-color: #f4f2ee;
   color: #1c1b18;
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
+  font-feature-settings: "kern", "liga";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1336,10 +1338,11 @@ body.cart-drawer-open #sentire-suite-container {
 }
 
 .ed-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 500;
   line-height: 1.4;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #57534c;
 }
@@ -1708,4 +1711,48 @@ main,
   .ed-marquee {
     animation: none !important;
   }
+}
+
+
+/* ── Type details for Bodoni Moda + Jost ───────────────────────────────
+   Didones need a touch less negative tracking than the old serif, and their
+   hairlines want the optical-size axis so small sizes stay sturdy. Small caps
+   labels set in Jost get fashion-press letter-spacing. */
+.font-serif,
+.font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: normal;
+}
+
+[class*="font-mono"][class*="uppercase"],
+.font-mono.uppercase {
+  font-weight: 500;
+  letter-spacing: 0.14em !important;
+}
+
+/* Bodoni's word spaces open up at display sizes; pull them in, and track the
+   big settings slightly tight the way magazine mastheads are set. */
+.font-serif,
+.font-display {
+  word-spacing: -0.06em;
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+h1.font-serif,
+h2.font-serif {
+  letter-spacing: -0.022em;
+}
+
+h3.font-serif {
+  letter-spacing: -0.012em;
+}
+
+/* Fixed-width digits only in the sans; in Bodoni they leave gaps ("₹5 49"). */
+.font-serif .tabular-nums,
+.font-serif.tabular-nums {
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums lining-nums;
 }

@@ -388,10 +388,6 @@ export default function DiscoverySetPage({
                   "A scent map",
                   "Families, notes and when to wear each, on a card in the lid.",
                 ],
-                [
-                  "A VIP card",
-                  "Redeem it against the full 50ML bottle of the one you choose.",
-                ],
               ].map(([t, b], i) => (
                 <motion.li
                   key={t}
@@ -419,7 +415,7 @@ export default function DiscoverySetPage({
             </ul>
 
             <div className="mt-8 flex flex-wrap items-baseline gap-3">
-              <span className="font-serif text-[3.25rem] font-light leading-none">
+              <span className="font-sans text-[3.25rem] font-light leading-none tracking-[-0.02em]">
                 ₹{PRICE}
               </span>
               <span className="font-mono text-[13px] text-stone line-through">
@@ -560,7 +556,7 @@ export default function DiscoverySetPage({
             animate={{ y: 0 }}
             exit={{ y: 90 }}
             transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
-            className="fixed inset-x-0 bottom-[62px] z-40 border-t border-white/10 bg-[#141312]/95 text-paper backdrop-blur-sm lg:bottom-0"
+            className="fixed inset-x-0 bottom-[62px] z-40 border-t border-white/10 bg-[#141312] text-paper lg:bottom-0"
           >
             <div className="ed-container flex items-center justify-between gap-4 py-3">
               <div className="flex min-w-0 items-center gap-3">
@@ -739,7 +735,7 @@ function Week() {
                 Your signature
               </p>
               <p className="text-[13px] leading-snug text-ink-soft">
-                Redeem the VIP card on 50ML
+                Then order the full 50ML
               </p>
             </motion.li>
           </ol>
@@ -862,11 +858,7 @@ function Blend({
           scale: [0.94, 1, 0.97, 1],
         }}
         initial={{ x: -160 }}
-        transition={{
-          duration: 1.1,
-          ease: EASE_OUT_EXPO,
-          scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
-        }}
+        transition={{ duration: 1.1, ease: EASE_OUT_EXPO }}
         style={{ opacity: 0.82 }}
       />
       <motion.div
@@ -877,11 +869,7 @@ function Blend({
           scale: [1, 0.95, 1.02, 1],
         }}
         initial={{ x: 160 }}
-        transition={{
-          duration: 1.1,
-          ease: EASE_OUT_EXPO,
-          scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-        }}
+        transition={{ duration: 1.1, ease: EASE_OUT_EXPO }}
         style={{ opacity: 0.72 }}
       />
       <div className="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[11px] uppercase tracking-[0.02em] text-ink-soft">

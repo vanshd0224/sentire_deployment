@@ -53,20 +53,21 @@ function PinnedReel({ onPick }: { onPick?: (index: number) => void }) {
   });
 
   const x = useTransform(p, [0, 1], ["0vw", `-${(n - 1) * 100}vw`]);
-  const stops = DISCOVERY_FRAGRANCES.map((_, i) => i / (n - 1));
-  const bg = useTransform(
-    p,
-    stops,
-    DISCOVERY_FRAGRANCES.map((f) => tone(f.colorHex)),
-  );
   const bar = useTransform(p, [0, 1], [1 / n, 1]);
 
   return (
     <div ref={ref} style={{ height: `${n * 100}vh` }} className="relative">
-      <motion.div
-        className="sticky top-0 h-screen overflow-hidden text-paper"
-        style={{ backgroundColor: bg }}
-      >
+      <div className="sticky top-0 h-screen overflow-hidden bg-ink text-paper">
+        {/* One painted layer per fragrance, cross-faded — opacity only, so the
+            room changes colour without repainting a full screen every frame. */}
+        {DISCOVERY_FRAGRANCES.map((f, i) => (
+          <RoomTone
+            key={f.id}
+            index={i}
+            colour={tone(f.colorHex)}
+            progress={p}
+          />
+        ))}
         <div className="ed-container absolute inset-x-0 top-0 z-20 flex items-center justify-between pt-24">
           <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/60">
             The six, one at a time
@@ -80,15 +81,37 @@ function PinnedReel({ onPick }: { onPick?: (index: number) => void }) {
         </div>
 
         <motion.div
-          className="flex h-full will-change-transform"
+          className="relative flex h-full will-change-transform"
           style={{ x, width: `${n * 100}vw` }}
         >
           {DISCOVERY_FRAGRANCES.map((f, i) => (
             <Panel key={f.id} f={f} index={i} progress={p} onPick={onPick} />
           ))}
         </motion.div>
-      </motion.div>
+      </div>
     </div>
+  );
+}
+
+function RoomTone({
+  index,
+  colour,
+  progress,
+}: {
+  index: number;
+  colour: string;
+  progress: MotionValue<number>;
+}) {
+  const n = DISCOVERY_FRAGRANCES.length;
+  const c = index / (n - 1);
+  const w = 1 / (n - 1);
+  const opacity = useTransform(progress, [c - w, c, c + w], [0, 1, 0]);
+  return (
+    <motion.div
+      aria-hidden
+      className="absolute inset-0"
+      style={{ backgroundColor: colour, opacity, willChange: "opacity" }}
+    />
   );
 }
 
