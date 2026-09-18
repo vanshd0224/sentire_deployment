@@ -106,8 +106,8 @@ export default function DiscoverySetPage({
       price: PRICE,
       size: 36,
       quantity,
-      image: "/images/discovery-set/box-front.jpg",
-      img: "/images/discovery-set/box-front.jpg",
+      image: "/discovery/studio/box-front.jpg",
+      img: "/discovery/studio/box-front.jpg",
       variantTitle: "6 × 6ML Travel Sprays (36ML Total)",
     });
     setAdded(true);

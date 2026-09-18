@@ -3,41 +3,51 @@
  * stays about layout and motion. Copy and imagery are unchanged.
  */
 // Angles for the discovery set flip-top packaging
+// Studio set: six angles on grey, ordered as a walk around the case so the
+// turntable reads as the box turning. Print colour is the case's real
+// chartreuse, so the copy no longer calls it gold.
 export const BOX_ANGLES = [
   {
     id: "front",
     label: "Case Front",
     tagline: "SENTIRE DISCOVERY SET · 6 ML × 6",
-    img: "/discovery/box_case_front.jpg?v=v8_4k_crisp",
-    desc: "Matte black flip-top case with gold hot-stamped emblem and stepped interior architecture.",
+    img: "/discovery/studio/box-front.webp",
+    desc: "Matte black flip-top case with a hot-stamped emblem and stepped interior architecture.",
   },
   {
-    id: "warning",
-    label: "The Manifesto",
-    tagline: "“The COOLEST Thing SOMEBODY can OWN”",
-    img: "/discovery/box_manifesto.jpg?v=v9_no_star",
-    desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
+    id: "profile-right",
+    label: "Tailored Case",
+    tagline: "MINIMALIST LUXURY SILHOUETTE",
+    img: "/discovery/studio/box-profile-right.webp",
+    desc: "Compact dimensions tailored to fit evening clutches, breast pockets, and carry-ons without spilling a drop.",
   },
   {
     id: "rare",
     label: "Side Profile",
     tagline: "IRRESISTIBLY RARE",
-    img: "/discovery/box_side_profile.jpg?v=v8_4k_crisp",
+    img: "/discovery/studio/box-rare.webp",
     desc: "Precision angled silhouette engineered for smooth one-hand flip opening.",
+  },
+  {
+    id: "warning",
+    label: "The Manifesto",
+    tagline: "“The COOLEST Thing SOMEBODY can OWN”",
+    img: "/discovery/studio/box-manifesto.webp",
+    desc: "The authentic back warning stamp: ‘WARNING: The COOLEST Thing SOMEBODY can OWN. just feel it’.",
+  },
+  {
+    id: "profile-left",
+    label: "Flip-top Lid",
+    tagline: "ANGLED MAGNETIC CLASP",
+    img: "/discovery/studio/box-profile-left.webp",
+    desc: "The slanted lid line marks the magnetic flip-top — one thumb opens the case.",
   },
   {
     id: "top",
     label: "Crest Monogram",
     tagline: "PC EMBLEM OF HAUTE PARFUMERIE",
-    img: "/discovery/box_crest_monogram.jpg?v=v8_4k_crisp",
-    desc: "Hand-finished cursive PC seal in reflective metallic gold on deep matte noir.",
-  },
-  {
-    id: "minimal",
-    label: "Tailored Case",
-    tagline: "MINIMALIST LUXURY SILHOUETTE",
-    img: "/discovery/box_tailored_case.jpg?v=v8_4k_crisp",
-    desc: "Compact dimensions tailored to fit evening clutches, breast pockets, and carry-ons without spilling a drop.",
+    img: "/discovery/studio/box-monogram.webp",
+    desc: "Hand-finished cursive PC seal hot-stamped on deep matte noir.",
   },
 ];
 

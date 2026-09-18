@@ -29,13 +29,16 @@ export default function Turntable() {
   const py = useSpring(0, { stiffness: 160, damping: 20 });
   const tiltY = useTransform(px, [-1, 1], [-7, 7]);
   const tiltX = useTransform(py, [-1, 1], [5, -5]);
-  const shadowX = useTransform(px, [-1, 1], [18, -18]);
-
+  
   return (
     <div>
       <div
-        className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-[2px] bg-paper-2 sm:aspect-[5/4]"
-        style={{ perspective: 1400 }}
+        className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-[2px] sm:aspect-[5/4]"
+        style={{
+          perspective: 1400,
+          // Matches the studio backdrop the case was shot on (light top-right, falling off bottom-left).
+          background: "linear-gradient(215deg, #e2e2e2 0%, #d6d6d6 38%, #c6c6c6 70%, #b5b5b5 100%)",
+        }}
         onPointerMove={(e) => {
           if (!rich) return;
           const r = e.currentTarget.getBoundingClientRect();
@@ -56,15 +59,10 @@ export default function Turntable() {
           Drag to turn
         </p>
 
-        {/* Soft contact shadow under the print */}
-        <motion.div
-          aria-hidden
-          className="absolute bottom-[9%] h-6 w-[46%] rounded-[50%] bg-ink/25 blur-xl"
-          style={rich ? { x: shadowX } : undefined}
-        />
+
 
         <motion.div
-          className="relative h-[78%] w-auto"
+          className="relative h-[96%] w-auto"
           style={
             rich
               ? {
@@ -110,8 +108,15 @@ export default function Turntable() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.75, ease: EASE_OUT_EXPO }}
-              className="h-full w-auto cursor-grab select-none rounded-[2px] object-cover shadow-[0_30px_60px_-30px_rgba(21,20,18,0.55)] active:cursor-grabbing"
-              style={{ backfaceVisibility: "hidden" }}
+              className="h-full w-auto cursor-grab select-none object-contain active:cursor-grabbing"
+              style={{
+                backfaceVisibility: "hidden",
+                // Feather the square photo into the stage so only the case reads.
+                WebkitMaskImage:
+                  "radial-gradient(ellipse 54% 58% at 50% 50%, #000 74%, transparent 100%)",
+                maskImage:
+                  "radial-gradient(ellipse 54% 58% at 50% 50%, #000 74%, transparent 100%)",
+              }}
             />
           </AnimatePresence>
         </motion.div>
