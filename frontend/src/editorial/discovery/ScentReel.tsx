@@ -182,7 +182,7 @@ function Panel({
             No. 0{index + 1} · {f.familyBadge}
           </p>
           <motion.h3
-            className="mt-3 font-serif font-light leading-[0.9] tracking-[-0.04em]"
+            className="ds-reel-name mt-3 font-serif font-light leading-[0.9] tracking-[-0.04em]"
             style={{ x: nameX, fontSize: "clamp(4rem, 9vw, 9.5rem)" }}
           >
             {displayName(f.name)}
@@ -259,7 +259,7 @@ function StackedReel({ onPick }: { onPick?: (index: number) => void }) {
               <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/60">
                 No. 0{i + 1} · {f.familyBadge}
               </p>
-              <h3 className="mt-2 font-serif text-[3.5rem] font-light leading-[0.95] tracking-[-0.03em]">
+              <h3 className="ds-reel-name mt-2 font-serif text-[3.5rem] font-light leading-[0.95] tracking-[-0.03em]">
                 {displayName(f.name)}
               </h3>
               <p className="mt-3 font-serif text-xl font-light italic text-paper/80">

@@ -6,16 +6,17 @@
    Paper / ink with a single Jaipur clay accent.
    ═══════════════════════════════════════════════════════════ */
 @theme {
-  /* Didone display + Futura-lineage sans: the fashion-press pairing perfume
-     houses have used for a century, rather than today's startup defaults. */
-  --font-serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --font-sans: "Jost", "Futura", "Century Gothic", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Jost", "Futura", ui-sans-serif, system-ui, sans-serif;
-  --font-script: "Bodoni Moda", Georgia, serif;
-  --font-cinzel: "Bodoni Moda", Georgia, serif;
-  --font-garamond: "Bodoni Moda", Georgia, serif;
-  --font-montserrat: "Jost", "Futura", ui-sans-serif, system-ui, sans-serif;
+  /* One family, taken from the Discovery Set case itself: the box is printed
+     in a wide, squarish grotesk. Archivo's width axis covers both the
+     expanded display cut and a normal-width text face. */
+  --font-serif: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-script: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-cinzel: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-garamond: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-montserrat: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --color-paper: #f4f2ee;
   --color-paper-2: #eae7e1;
@@ -1755,4 +1756,101 @@ h3.font-serif {
 
 .font-mono {
   font-variant-numeric: tabular-nums lining-nums;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   TYPE SYSTEM — Archivo, after the packaging
+   Headlines: expanded width, heavy, tight — like "IRRESISTIBLY RARE"
+   on the case. Text: normal width, regular. No italic flourishes: the
+   second line of a headline drops to light weight instead.
+   ═══════════════════════════════════════════════════════════ */
+body {
+  font-stretch: 100%;
+}
+
+.font-serif,
+.font-display,
+.font-serif-luxe,
+.font-garamond,
+.font-cinzel {
+  font-stretch: 125%;
+  font-weight: 700 !important;
+  word-spacing: normal;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+h1.font-serif,
+h2.font-serif {
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+/* Running text set in the display class reads better light and normal width. */
+p.font-serif,
+blockquote.font-serif,
+figure .font-serif,
+.font-serif.italic,
+dd.font-serif:not([class*="text-[clamp"]) {
+  font-stretch: 100%;
+  font-weight: 350 !important;
+  font-style: normal;
+  letter-spacing: -0.01em;
+}
+
+/* Italic accents inside headlines become a weight change, not a slant. */
+h1 em,
+h2 em,
+h3 em,
+h1 .italic,
+h2 .italic,
+h3 .italic {
+  font-style: normal;
+  font-weight: 300 !important;
+  font-stretch: 112%;
+}
+
+/* Small caps labels: semi-expanded, bold, modest tracking — like the
+   "DISCOVERY SET" line on the case. */
+.ed-label,
+[class*="font-mono"][class*="uppercase"],
+.font-mono.uppercase {
+  font-family: var(--font-sans);
+  font-stretch: 115%;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Discovery Set page: headlines in capitals, exactly as the box is printed. */
+.ds h1,
+.ds h2,
+.ds h3.font-serif {
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 0.92;
+}
+
+/* Wide capitals take roughly a third more room than the old serif, so the
+   Discovery headlines step down a size to keep the same line breaks. */
+.ds h1.font-serif,
+.ds h1 {
+  font-size: clamp(2.1rem, 5vw, 4.4rem) !important;
+}
+
+.ds h2.font-serif {
+  font-size: clamp(1.8rem, 4.2vw, 3.5rem) !important;
+}
+
+.ds .ds-reel-name {
+  font-size: clamp(2.4rem, 6.2vw, 6.2rem) !important;
+  line-height: 0.9;
+}
+
+.ds h3.font-serif:not(.ds-reel-name) {
+  font-size: clamp(1.4rem, 2.6vw, 2.1rem) !important;
 }

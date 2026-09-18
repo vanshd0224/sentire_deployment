@@ -119,7 +119,7 @@ export default function DiscoverySetPage({
     reelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <div className="min-h-screen bg-paper text-ink antialiased">
+    <div className="ds min-h-screen bg-paper text-ink antialiased">
       {/* ── 1. The case ─────────────────────────────────────────── */}
       <Prelude
         onAdd={addToCart}
