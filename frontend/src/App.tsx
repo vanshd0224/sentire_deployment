@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
-import IndexHero from "./editorial/home/IndexHero";
+import ClassicHero from "./editorial/home/ClassicHero";
 import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
 import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
@@ -603,7 +603,7 @@ export default function App() {
         <main>
           <ScrollProgress />
           <CursorLabel />
-          <IndexHero
+          <ClassicHero
             onNavigate={handleNavigate}
             onSelectProduct={handleOpenProductModal}
           />
