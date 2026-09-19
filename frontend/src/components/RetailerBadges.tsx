@@ -28,13 +28,13 @@ export default function RetailerBadges() {
             {marqueeLogos.map((item, index) => (
               <div
                 key={`${item.name}-${index}`}
-                className="flex items-center justify-center bg-white border border-[color:var(--accent)]/25 hover:border-[color:var(--accent)] rounded-lg px-4 py-2 transition-all duration-300 shadow-xs hover:shadow-md h-11 min-w-[120px]"
+                className="flex h-11 min-w-[110px] items-center justify-center px-2"
               >
                 {" "}
                 <img
                   src={item.src}
                   alt={item.name}
-                  className="h-6 sm:h-8 w-auto max-w-[130px] object-contain filter-none opacity-100 hover:scale-105 transition-transform duration-300"
+                  className="h-6 w-auto max-w-[120px] object-contain opacity-55 grayscale transition-[filter,opacity] duration-500 hover:opacity-100 hover:grayscale-0 sm:h-7"
                 />{" "}
               </div>
             ))}

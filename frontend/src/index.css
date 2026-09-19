@@ -1872,18 +1872,6 @@ h3 .italic {
   letter-spacing: 0.08em;
 }
 
-/* Home hero: the thin line that fills while a bottle is facing you */
-.hero-turn {
-  transform: scaleX(0);
-  animation-name: heroTurn;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-@keyframes heroTurn {
-  to {
-    transform: scaleX(1);
-  }
-}
 
 /* Accent words in headings: a real italic, not a slanted grotesk */
 h1 em,
