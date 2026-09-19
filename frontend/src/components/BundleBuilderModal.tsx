@@ -242,25 +242,25 @@ export default function BundleBuilderModal({
       <div className="fixed inset-0" onClick={onClose} />{" "}
       {/* Main Luxury Glassmorphic Modal Window / Mobile Bottom Sheet */}
       <div
-        className="relative z-10 w-full max-w-4xl max-h-[94vh] overflow-hidden rounded-t-3xl md:rounded-3xl border-t md:border border-[#a4492e]/40 bg-[#151412] text-cream shadow-[0_25px_80px_rgba(164, 73, 46,0.25)] transition-all duration-300 glass-bottom-sheet"
+        className="on-dark relative z-10 w-full max-w-4xl max-h-[94vh] overflow-hidden rounded-t-3xl md:rounded-[4px] border-t md:border border-[color:var(--accent)]/40 bg-[#111111] text-cream shadow-[0_25px_80px_rgba(95, 101, 22,0.25)] transition-all duration-300 glass-bottom-sheet"
         style={{ fontFamily: "var(--font-sans)" }}
       >
         {" "}
         {/* Mobile Drag Handle Bar */}
         <div className="w-12 h-1.5 rounded-full bg-white/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />{" "}
         {/* ── HEADER HERO BANNER & REAL-TIME ₹300 SAVINGS TRACKER ── */}
-        <div className="relative flex flex-col items-center justify-center overflow-hidden border-b border-[#a4492e]/30 px-6 py-7 text-center sm:py-9">
+        <div className="relative flex flex-col items-center justify-center overflow-hidden border-b border-[color:var(--accent)]/30 px-6 py-7 text-center sm:py-9">
           {" "}
           {/* Background image preview blend with gold aura */}
           <div
             className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity transition-opacity duration-700 hover:opacity-35"
             style={{ backgroundImage: `url('/images/build-bundle.png')` }}
           />{" "}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#151412] via-[#151412]/85 to-[#151412]/40" />{" "}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/85 to-[#111111]/40" />{" "}
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 z-20 flex h-9 w-9 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/15 bg-black/60 text-cream/70 backdrop-blur-md transition-all hover:border-[#a4492e] hover:bg-[#a4492e] hover:text-black cursor-pointer shadow-lg active:scale-95 touch-manipulation"
+            className="absolute right-4 top-4 z-20 flex h-9 w-9 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/15 bg-black/60 text-cream/70 backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black cursor-pointer shadow-lg active:scale-95 touch-manipulation"
             aria-label="Close modal"
           >
             {" "}
@@ -269,17 +269,17 @@ export default function BundleBuilderModal({
           {/* Filigree Gold Header Accent */}
           <div className="relative z-10 mb-2 flex items-center gap-3">
             {" "}
-            <span className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#a4492e]" />{" "}
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#a4492e]">
+            <span className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#5f6516]" />{" "}
+            <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.4em] text-[color:var(--accent)]">
               {" "}
               SENTIRE HAUTE PARFUMERIE
             </span>{" "}
-            <span className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#a4492e]" />{" "}
+            <span className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#5f6516]" />{" "}
           </div>{" "}
-          <h2 className="font-display relative z-10 text-2xl uppercase tracking-widest text-white sm:text-4xl">
+          <h2 className="font-display relative z-10 text-2xl uppercase tracking-[0.06em] text-white sm:text-4xl">
             {" "}
             BUILD YOUR{" "}
-            <span className="text-[#a4492e] drop-shadow-[0_0_15px_rgba(164, 73, 46,0.5)]">
+            <span className="text-[color:var(--accent)] drop-shadow-[0_0_15px_rgba(95, 101, 22,0.5)]">
               3-BOTTLE BUNDLE
             </span>{" "}
           </h2>{" "}
@@ -290,12 +290,12 @@ export default function BundleBuilderModal({
             <div
               className={`inline-flex items-center gap-2.5 rounded-full border px-5 py-2 text-xs transition-all duration-500 backdrop-blur-md ${
                 isComplete
-                  ? "border-[#a4492e] bg-gradient-to-r from-[#a4492e]/30 via-[#d9a08a]/20 to-[#a4492e]/30 text-white shadow-[0_0_25px_rgba(164, 73, 46,0.4)]"
-                  : "border-[#a4492e]/40 bg-[#a4492e]/10 text-[#d9a08a]"
+                  ? "border-[color:var(--accent)] bg-gradient-to-r from-[#5f6516]/30 via-[#cdd43f]/20 to-[#5f6516]/30 text-white shadow-[0_0_25px_rgba(95, 101, 22,0.4)]"
+                  : "border-[color:var(--accent)]/40 bg-[#5f6516]/10 text-[#cdd43f]"
               }`}
             >
               {" "}
-              <span className="flex h-5 items-center rounded bg-[#a4492e] px-2 text-[10px] font-black uppercase text-black">
+              <span className="flex h-5 items-center rounded bg-[#5f6516] px-2 text-[10px] max-sm:text-[12px] font-black uppercase text-black">
                 {" "}
                 ₹300 OFF
               </span>{" "}
@@ -321,19 +321,19 @@ export default function BundleBuilderModal({
             {/* Liquid Gold Slot Progress Bar */}
             <div className="w-full space-y-1.5 px-4">
               {" "}
-              <div className="flex items-center justify-between text-[11px] font-semibold text-cream/70">
+              <div className="flex items-center justify-between text-[11px] max-sm:text-[12px] font-semibold text-cream/70">
                 {" "}
                 <span className="uppercase tracking-wider">
                   Bundle Progress
                 </span>{" "}
-                <span className="text-[#a4492e]">
+                <span className="text-[color:var(--accent)]">
                   {filledCount} of 3 Slots Filled ({progressPercent}%)
                 </span>{" "}
               </div>{" "}
               <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10 p-0.5 border border-white/10">
                 {" "}
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#a4492e] via-[#d9a08a] to-[#a4492e] transition-all duration-500 shadow-[0_0_12px_rgba(164, 73, 46,0.8)]"
+                  className="h-full rounded-full bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] transition-all duration-500 shadow-[0_0_12px_rgba(95, 101, 22,0.8)]"
                   style={{ width: `${progressPercent}%` }}
                 />{" "}
               </div>{" "}
@@ -342,7 +342,7 @@ export default function BundleBuilderModal({
         </div>{" "}
         {/* ── TOAST NOTIFICATION POPUP INSIDE MODAL ── */}
         {toastMessage && (
-          <div className="absolute top-24 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[#a4492e]/60 bg-black/90 px-5 py-2 text-xs font-semibold text-[#d9a08a] shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-lg animate-in fade-in slide-in-from-top-2">
+          <div className="on-dark absolute top-24 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[color:var(--accent)]/60 bg-black/90 px-5 py-2 text-xs font-semibold text-[#cdd43f] shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-lg animate-in fade-in slide-in-from-top-2">
             {" "}
             {toastMessage}
           </div>
@@ -355,11 +355,11 @@ export default function BundleBuilderModal({
             {" "}
             <div className="flex items-center justify-between">
               {" "}
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+              <p className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                 {" "}
                 Interactive 3-Bottle Visualizer
               </p>{" "}
-              <span className="text-[11px] text-cream/50">
+              <span className="text-[11px] max-sm:text-[12px] text-cream/50">
                 {" "}
                 {activeSlot !== null
                   ? `Editing Slot ${activeSlot + 1}`
@@ -376,29 +376,29 @@ export default function BundleBuilderModal({
                   <div
                     key={slotIdx}
                     onClick={() => setActiveSlot(slotIdx)}
-                    className={`group relative flex cursor-pointer flex-col items-center rounded-2xl border p-2.5 sm:p-4 transition-all duration-300 touch-manipulation ${
+                    className={`group relative flex cursor-pointer flex-col items-center rounded-[4px] border p-2.5 sm:p-4 transition-all duration-300 touch-manipulation ${
                       isActive
-                        ? "border-[#a4492e] bg-[#a4492e]/20 shadow-[0_0_30px_rgba(164, 73, 46,0.45)] ring-2 ring-[#a4492e]/60 scale-[1.02]"
+                        ? "border-[color:var(--accent)] bg-[#5f6516]/20 shadow-[0_0_30px_rgba(95, 101, 22,0.45)] ring-2 ring-[#5f6516]/60 scale-[1.02]"
                         : item
-                          ? "border-[#a4492e]/40 bg-white/[0.04] hover:border-[#a4492e] hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(164, 73, 46,0.2)]"
-                          : "border-dashed border-white/20 bg-transparent hover:border-[#a4492e]/60 hover:bg-white/[0.03]"
+                          ? "border-[color:var(--accent)]/40 bg-white/[0.04] hover:border-[color:var(--accent)] hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(95, 101, 22,0.2)]"
+                          : "border-dashed border-white/20 bg-transparent hover:border-[color:var(--accent)]/60 hover:bg-white/[0.03]"
                     }`}
                   >
                     {" "}
                     {/* Slot badge */}
                     <div className="flex w-full items-center justify-between border-b border-white/10 pb-1.5 mb-2">
                       {" "}
-                      <span className="rounded bg-black/70 px-1.5 sm:px-2.5 py-0.5 text-[8px] sm:text-[9px] font-bold tracking-widest text-[#a4492e]">
+                      <span className="rounded bg-black/70 px-1.5 sm:px-2.5 py-0.5 text-[8px] max-sm:text-[12px] sm:text-[9px] font-bold tracking-[0.06em] text-[color:var(--accent)]">
                         {" "}
                         SLOT {slotIdx + 1}
                       </span>{" "}
                       {item ? (
-                        <span className="text-[8px] sm:text-[9px] text-emerald-400 font-semibold flex items-center gap-0.5 sm:gap-1">
+                        <span className="text-[8px] max-sm:text-[12px] sm:text-[9px] text-emerald-400 font-semibold flex items-center gap-0.5 sm:gap-1">
                           {" "}
                           ✓ Filled
                         </span>
                       ) : (
-                        <span className="text-[8px] sm:text-[9px] text-cream/40 uppercase tracking-wider">
+                        <span className="text-[8px] max-sm:text-[12px] sm:text-[9px] text-cream/40 uppercase tracking-wider">
                           Empty
                         </span>
                       )}
@@ -417,9 +417,9 @@ export default function BundleBuilderModal({
                           ✕
                         </button>{" "}
                         {/* Gold Aura Glowing Bottle Preview */}
-                        <div className="relative my-1 flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#1a140f] to-[#151412] p-1.5 sm:p-2 border border-[#a4492e]/20 shadow-[0_0_15px_rgba(164, 73, 46,0.15)] group-hover:border-[#a4492e]/50">
+                        <div className="relative my-1 flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center overflow-hidden rounded-[4px] bg-gradient-to-b from-[#1a140f] to-[#111111] p-1.5 sm:p-2 border border-[color:var(--accent)]/20 shadow-[0_0_15px_rgba(95, 101, 22,0.15)] group-hover:border-[color:var(--accent)]/50">
                           {" "}
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(164, 73, 46,0.2)_0,transparent_70%)] opacity-60" />{" "}
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(95, 101, 22,0.2)_0,transparent_70%)] opacity-60" />{" "}
                           <img
                             src={item.image}
                             alt={item.name}
@@ -428,7 +428,7 @@ export default function BundleBuilderModal({
                         </div>{" "}
                         <div>
                           {" "}
-                          <span className="rounded bg-[#a4492e]/15 px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-[#d9a08a]">
+                          <span className="rounded bg-[#5f6516]/15 px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-[#cdd43f]">
                             {" "}
                             {item.tag}
                           </span>{" "}
@@ -436,7 +436,7 @@ export default function BundleBuilderModal({
                             {" "}
                             {item.name}
                           </h4>{" "}
-                          <p className="text-[9px] sm:text-[11px] text-[#a4492e] truncate max-w-[90px] sm:max-w-none">
+                          <p className="text-[9px] max-sm:text-[12px] sm:text-[11px] text-[color:var(--accent)] truncate max-w-[90px] sm:max-w-none">
                             {item.sub}
                           </p>{" "}
                         </div>{" "}
@@ -446,14 +446,14 @@ export default function BundleBuilderModal({
                           {item.notes.slice(0, 2).map((n, i) => (
                             <span
                               key={i}
-                              className="rounded-full bg-white/5 px-2 py-0.5 text-[9px] text-cream/70"
+                              className="rounded-full bg-white/5 px-2 py-0.5 text-[9px] max-sm:text-[12px] text-cream/70"
                             >
                               {" "}
                               {n}
                             </span>
                           ))}
                         </div>{" "}
-                        <p className="text-[10px] sm:text-xs font-bold text-white pt-0.5">
+                        <p className="text-[10px] max-sm:text-[12px] sm:text-xs font-bold text-white pt-0.5">
                           {" "}
                           ₹{item.price.toLocaleString("en-IN")}
                         </p>{" "}
@@ -461,7 +461,7 @@ export default function BundleBuilderModal({
                     ) : (
                       <div className="flex min-h-[120px] sm:min-h-[160px] flex-col items-center justify-center text-center space-y-2">
                         {" "}
-                        <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-dashed border-[#a4492e]/60 text-[#a4492e] transition-transform duration-300 group-hover:scale-110 group-hover:border-[#a4492e] group-hover:bg-[#a4492e]/10">
+                        <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-dashed border-[color:var(--accent)]/60 text-[color:var(--accent)] transition-transform duration-300 group-hover:scale-110 group-hover:border-[color:var(--accent)] group-hover:bg-[#5f6516]/10">
                           {" "}
                           <svg
                             className="h-5 w-5 sm:h-6 sm:w-6"
@@ -478,10 +478,10 @@ export default function BundleBuilderModal({
                             />{" "}
                           </svg>{" "}
                         </div>{" "}
-                        <span className="text-[10px] sm:text-xs font-medium text-cream/70">
+                        <span className="text-[10px] max-sm:text-[12px] sm:text-xs font-medium text-cream/70">
                           Tap to Select
                         </span>{" "}
-                        <span className="hidden sm:block text-[10px] text-cream/40">
+                        <span className="hidden sm:block text-[10px] max-sm:text-[12px] text-cream/40">
                           Pick any scent from palette
                         </span>{" "}
                       </div>
@@ -498,13 +498,13 @@ export default function BundleBuilderModal({
               {" "}
               <div>
                 {" "}
-                <h3 className="text-xs font-bold uppercase tracking-[0.25em] text-cream/90">
+                <h3 className="text-xs font-bold uppercase tracking-[0.06em] text-cream/90">
                   {" "}
                   {activeSlot !== null
                     ? `Selecting Fragrance for Slot ${activeSlot + 1}`
                     : "Fragrance Palette"}
                 </h3>{" "}
-                <p className="text-[11px] text-cream/50 mt-0.5">
+                <p className="text-[11px] max-sm:text-[12px] text-cream/50 mt-0.5">
                   {" "}
                   Select 3 scents to complete your bespoke luxury bundle
                 </p>{" "}
@@ -523,9 +523,9 @@ export default function BundleBuilderModal({
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider transition-all cursor-pointer touch-manipulation ${
+                    className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-semibold uppercase tracking-wider transition-all cursor-pointer touch-manipulation ${
                       activeCategory === cat.id
-                        ? "bg-[#a4492e] text-black shadow-[0_0_12px_rgba(164, 73, 46,0.5)]"
+                        ? "bg-[#5f6516] text-black shadow-[0_0_12px_rgba(95, 101, 22,0.5)]"
                         : "bg-white/5 text-cream/70 hover:bg-white/10 hover:text-white"
                     }`}
                   >
@@ -549,27 +549,27 @@ export default function BundleBuilderModal({
                   <button
                     key={perfume.id}
                     onClick={() => handleSelectPerfume(perfume)}
-                    className={`group relative flex flex-col justify-between items-center rounded-xl border p-2.5 sm:p-3.5 text-center transition-all duration-300 cursor-pointer touch-manipulation ${
+                    className={`group relative flex flex-col justify-between items-center rounded-[4px] border p-2.5 sm:p-3.5 text-center transition-all duration-300 cursor-pointer touch-manipulation ${
                       isSelected
-                        ? "border-[#a4492e] bg-[#a4492e]/15 shadow-[0_0_15px_rgba(164, 73, 46,0.25)]"
-                        : "border-white/10 bg-white/[0.04] hover:border-[#a4492e]/60 hover:bg-white/[0.08]"
+                        ? "border-[color:var(--accent)] bg-[#5f6516]/15 shadow-[0_0_15px_rgba(95, 101, 22,0.25)]"
+                        : "border-white/10 bg-white/[0.04] hover:border-[color:var(--accent)]/60 hover:bg-white/[0.08]"
                     }`}
                   >
                     {" "}
                     {/* Tag Badge Overlay */}
-                    <span className="absolute top-2 left-2 rounded-full bg-[#a4492e]/20 border border-[#a4492e]/40 px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#d9a08a] backdrop-blur-xs">
+                    <span className="absolute top-2 left-2 rounded-full bg-[#5f6516]/20 border border-[color:var(--accent)]/40 px-2 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f] backdrop-blur-xs">
                       {" "}
                       {perfume.tag}
                     </span>{" "}
                     {/* Selected Badge */}
                     {isSelected && (
-                      <span className="absolute right-2 top-2 rounded-full bg-[#a4492e] px-2 py-0.5 text-[8px] font-extrabold text-black shadow-md">
+                      <span className="absolute right-2 top-2 rounded-full bg-[#5f6516] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-black shadow-md">
                         {" "}
                         Slot {selectedInSlots.join(", ")}
                       </span>
                     )}
                     {/* 1:1 Square Media Frame */}
-                    <div className="mt-5 mb-2 aspect-square w-full overflow-hidden rounded-lg bg-gradient-to-b from-[#1a140f] to-[#151412] p-2 flex items-center justify-center border border-white/5">
+                    <div className="mt-5 mb-2 aspect-square w-full overflow-hidden rounded-lg bg-gradient-to-b from-[#1a140f] to-[#111111] p-2 flex items-center justify-center border border-white/5">
                       {" "}
                       <img
                         src={perfume.image}
@@ -579,21 +579,21 @@ export default function BundleBuilderModal({
                     </div>{" "}
                     <div className="w-full text-center space-y-0.5">
                       {" "}
-                      <span className="font-display text-[11px] sm:text-xs uppercase tracking-wider text-white font-bold block truncate">
+                      <span className="font-display text-[11px] max-sm:text-[12px] sm:text-xs uppercase tracking-wider text-white font-bold block truncate">
                         {" "}
                         {perfume.name} 50ML
                       </span>{" "}
-                      <span className="text-[9.5px] sm:text-[10px] text-[#a4492e] font-normal block truncate">
+                      <span className="text-[9.5px] max-sm:text-[12px] sm:text-[10px] text-[color:var(--accent)] font-normal block truncate">
                         {" "}
                         {perfume.sub.replace("&", "|")}
                       </span>{" "}
-                      <span className="text-[11px] sm:text-xs font-bold text-white block mt-1">
+                      <span className="text-[11px] max-sm:text-[12px] sm:text-xs font-bold text-white block mt-1">
                         {" "}
                         ₹{perfume.price.toLocaleString("en-IN")}
                       </span>{" "}
                     </div>{" "}
                     {/* Add to Bundle CTA Button */}
-                    <span className="mt-2.5 w-full rounded-md border border-[#a4492e]/40 bg-white/5 py-1.5 text-center text-[9px] font-bold uppercase tracking-wider text-[#d9a08a] transition-colors group-hover:bg-[#a4492e] group-hover:text-black">
+                    <span className="mt-2.5 w-full rounded-md border border-[color:var(--accent)]/40 bg-white/5 py-1.5 text-center text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f] transition-colors group-hover:bg-[#5f6516] group-hover:text-black">
                       {" "}
                       {isSelected ? "Add Again +" : "+ Select"}
                     </span>{" "}
@@ -604,7 +604,7 @@ export default function BundleBuilderModal({
           </div>{" "}
         </div>{" "}
         {/* ── MODAL FOOTER & CHECKOUT BAR ── */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-[#a4492e]/30 bg-black/80 px-6 py-4 backdrop-blur-md sm:flex-row sm:px-8">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-[color:var(--accent)]/30 bg-black/80 px-6 py-4 backdrop-blur-md sm:flex-row sm:px-8">
           {" "}
           <div className="flex items-center gap-4 text-center sm:text-left">
             {" "}
@@ -623,13 +623,13 @@ export default function BundleBuilderModal({
                   ₹{finalPrice.toLocaleString("en-IN")}
                 </span>{" "}
                 {isComplete && (
-                  <span className="rounded bg-[#a4492e] px-2 py-0.5 text-[10px] font-extrabold text-black uppercase shadow-[0_0_10px_rgba(164, 73, 46,0.5)]">
+                  <span className="rounded bg-[#5f6516] px-2 py-0.5 text-[10px] max-sm:text-[12px] font-extrabold text-black uppercase shadow-[0_0_10px_rgba(95, 101, 22,0.5)]">
                     {" "}
                     SAVED ₹300
                   </span>
                 )}
               </div>{" "}
-              <p className="text-[11px] text-cream/60 mt-0.5">
+              <p className="text-[11px] max-sm:text-[12px] text-cream/60 mt-0.5">
                 {" "}
                 {isComplete
                   ? "✓ Bundle Complete • Complimentary Express Delivery"
@@ -640,11 +640,11 @@ export default function BundleBuilderModal({
           <button
             onClick={handleAddToCart}
             disabled={!isComplete || addedToCart}
-            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[4px] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.06em] transition-all duration-300 cursor-pointer ${
               addedToCart
                 ? "bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.5)]"
                 : isComplete
-                  ? "bg-gradient-to-r from-[#a4492e] via-[#d9a08a] to-[#a4492e] text-black shadow-[0_0_25px_rgba(164, 73, 46,0.5)] hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(164, 73, 46,0.7)]"
+                  ? "bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] text-black shadow-[0_0_25px_rgba(95, 101, 22,0.5)] hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(95, 101, 22,0.7)]"
                   : "cursor-not-allowed bg-white/10 text-white/40"
             }`}
           >

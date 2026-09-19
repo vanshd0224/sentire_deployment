@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface SentireLogoProps {
   variant?: "navbar" | "footer" | "hero" | "compact";
@@ -12,7 +12,6 @@ interface SentireLogoProps {
 export default function SentireLogo({
   variant = "navbar",
   theme = "auto",
-  animated = true,
   className = "",
   onClick,
   height,

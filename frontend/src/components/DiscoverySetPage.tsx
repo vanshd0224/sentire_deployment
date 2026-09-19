@@ -132,7 +132,7 @@ export default function DiscoverySetPage({
       <Week />
 
       {/* ── 5. The numbers ─────────────────────────────────────── */}
-      <section className="bg-ink py-20 text-paper md:py-28">
+      <section className="on-dark bg-ink py-20 text-paper md:py-28">
         <div className="ed-container">
           <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
             How far 36ML goes
@@ -175,7 +175,7 @@ export default function DiscoverySetPage({
           <div className="mt-16 rounded-[2px] border border-paper/15 p-6 md:p-10">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55">
+                <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
                   How long will 36ML last you?
                 </p>
                 <p className="mt-2 font-serif text-2xl font-light">
@@ -407,7 +407,7 @@ export default function DiscoverySetPage({
               Buy it now
             </button>
 
-            <p className="mt-6 font-mono text-[11px] uppercase leading-relaxed tracking-[0.04em] text-ink-soft">
+            <p className="mt-6 font-mono text-[11px] max-sm:text-[12px] uppercase leading-relaxed tracking-[0.04em] text-ink-soft">
               Dispatched within 24 hours · free express shipping, 2–4 days ·
               leak-proof, cabin-bag safe
             </p>
@@ -523,7 +523,7 @@ export default function DiscoverySetPage({
 function Stat({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
-      <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/50">
+      <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/50">
         {label}
       </p>
       <p className="mt-2 font-serif text-[clamp(2rem,4vw,3.25rem)] font-light leading-none">
@@ -605,7 +605,7 @@ function Week() {
           />
           <motion.div
             aria-hidden
-            className="absolute left-0 right-0 top-[11px] hidden h-px origin-left bg-ink md:block"
+            className="on-dark absolute left-0 right-0 top-[11px] hidden h-px origin-left bg-ink md:block"
             style={{ scaleX: draw }}
           />
           <ol className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-4 md:grid-cols-7">
@@ -621,7 +621,7 @@ function Week() {
                   ease: EASE_OUT_EXPO,
                 }}
               >
-                <span className="relative z-10 inline-flex h-6 items-center bg-paper pr-2 font-mono text-[11px] uppercase tracking-[0.04em] text-ink-soft">
+                <span className="relative z-10 inline-flex h-6 items-center bg-paper pr-2 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-ink-soft">
                   Day {i + 1}
                 </span>
                 <motion.div
@@ -650,10 +650,10 @@ function Week() {
               viewport={viewportOnce}
               transition={{ duration: 0.7, delay: 0.5, ease: EASE_OUT_EXPO }}
             >
-              <span className="relative z-10 inline-flex h-6 items-center bg-paper pr-2 font-mono text-[11px] uppercase tracking-[0.04em] text-clay">
+              <span className="relative z-10 inline-flex h-6 items-center bg-paper pr-2 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-clay">
                 Day 7
               </span>
-              <div className="mt-4 flex aspect-square items-center justify-center rounded-[2px] bg-ink p-4 text-center">
+              <div className="on-dark mt-4 flex aspect-square items-center justify-center rounded-[2px] bg-ink p-4 text-center">
                 <p className="font-serif text-[22px] font-light italic leading-tight text-paper">
                   Wear the one they asked about.
                 </p>
@@ -676,9 +676,9 @@ function Week() {
 function Reviews() {
   const quotes = [...REVIEWS, ...REVIEWS];
   return (
-    <section className="overflow-hidden bg-ink py-20 text-paper md:py-28">
+    <section className="on-dark overflow-hidden bg-ink py-20 text-paper md:py-28">
       <div className="ed-container">
-        <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55">
+        <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
           4.9 · 428 verified reviews
         </p>
         <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
@@ -699,13 +699,13 @@ function Reviews() {
                   key={`${row}-${i}`}
                   className="w-[78vw] max-w-[440px] shrink-0 rounded-[2px] border border-paper/15 p-6 sm:w-[440px]"
                 >
-                  <p className="font-mono text-[11px] text-[color:var(--color-print)]">
+                  <p className="font-mono text-[11px] max-sm:text-[12px] text-[color:var(--color-print)]">
                     ★★★★★
                   </p>
                   <blockquote className="mt-3 font-serif text-[18px] font-light leading-[1.55] text-paper/90">
                     “{r.quote}”
                   </blockquote>
-                  <figcaption className="mt-4 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/45">
+                  <figcaption className="mt-4 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/45">
                     {r.name} — verified buyer
                   </figcaption>
                 </figure>

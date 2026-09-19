@@ -382,7 +382,6 @@ export const SEARCHABLE_PRODUCTS = [
 ];
 
 export default function Navbar({
-  onOpenBundleModal,
   onNavigate,
   currentPage,
   cartCount = 0,
@@ -483,7 +482,7 @@ export default function Navbar({
       <style>{`
         @keyframes badgePop {
           0%   { transform: scale(1); }
-          50%  { transform: scale(1.35); color: #a4492e; }
+          50%  { transform: scale(1.35); color: #5f6516; }
           100% { transform: scale(1); }
         }
         @keyframes megaIn {
@@ -498,7 +497,7 @@ export default function Navbar({
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          color: #1c1b18;
+          color: #161616;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           cursor: pointer;
           background: transparent;
@@ -510,15 +509,15 @@ export default function Navbar({
           position: absolute;
           inset: 0;
           border-radius: 50%;
-          background: rgba(164, 73, 46, 0.14);
+          background: rgba(95, 101, 22, 0.14);
           transform: scale(0);
           transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .nav-icon-btn:hover::before { transform: scale(1); }
-        .nav-icon-btn:hover { color: #a4492e; }
+        .nav-icon-btn:hover { color: #5f6516; }
         .nav-icon-btn svg { position: relative; z-index: 1; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         .nav-icon-btn:hover svg { transform: scale(1.12); }
-        .nav-icon-btn.active { background: #151412; color: #a4492e; box-shadow: 0 0 0 1px rgba(164, 73, 46,.45), 0 4px 16px rgba(0,0,0,.2); }
+        .nav-icon-btn.active { background: #111111; color: #5f6516; box-shadow: 0 0 0 1px rgba(95, 101, 22,.45), 0 4px 16px rgba(0,0,0,.2); }
         @media (max-width: 900px) {
           .sentire-mobile-hamburger { display: flex !important; }
           .sentire-mobile-logo { display: flex !important; }
@@ -536,7 +535,7 @@ export default function Navbar({
           .sentire-desktop-divider { display: block !important; }
         }
       `}</style>{" "}
-      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[#a4492e]/15 bg-white transition-all">
+      <header className="sticky top-0 z-50 w-full border-b border-black/5 md:border-[color:var(--accent)]/15 bg-white transition-all">
         {" "}
         <AnnouncementBar />{" "}
         <div
@@ -555,7 +554,7 @@ export default function Navbar({
             <button
               aria-label="Toggle Mobile Navigation"
               onClick={() => setMobileNavOpen(true)}
-              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#21150F]"
+              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#161616]"
               style={{
                 width: "clamp(32px, 5.1vw, 44px)",
                 height: "clamp(32px, 4.4vw, 38px)",
@@ -679,16 +678,16 @@ export default function Navbar({
                         onNavigate?.("home");
                       }
                     }}
-                    className={`group relative flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
+                    className={`group relative flex items-center gap-1.5 text-[11px] max-sm:text-[12px] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 py-1 ${
                       isCurrent
-                        ? "text-[#a4492e] font-bold"
-                        : "text-[#1c1b18]/85 hover:text-[#a4492e]"
+                        ? "text-[color:var(--accent)] font-bold"
+                        : "text-[#161616]/85 hover:text-[color:var(--accent)]"
                     }`}
                   >
                     {" "}
                     <span>{link.label}</span>{" "}
                     {"badge" in link && Boolean(link.badge) && (
-                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] font-extrabold tracking-wider bg-gradient-to-r from-[#a4492e]/25 to-[#a4492e]/30 text-[#846124] border border-[#a4492e]/45 uppercase shadow-xs">
+                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] max-sm:text-[12px] font-extrabold tracking-wider bg-gradient-to-r from-[#5f6516]/25 to-[#5f6516]/30 text-[#4a4f10] border border-[color:var(--accent)]/45 uppercase shadow-xs">
                         {" "}
                         Hero
                       </span>
@@ -699,14 +698,14 @@ export default function Navbar({
                         fill="none"
                         stroke="currentColor"
                         strokeWidth={1.8}
-                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[#a4492e]" : ""}`}
+                        className={`h-3 w-3 transition-transform duration-200 ${megaOpen ? "rotate-180 text-[color:var(--accent)]" : ""}`}
                       >
                         {" "}
                         <path d="m6 9 6 6 6-6" />{" "}
                       </svg>
                     )}
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#a4492e] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`}
+                      className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#5f6516] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`}
                     />{" "}
                   </a>{" "}
                 </div>
@@ -785,7 +784,7 @@ export default function Navbar({
                 <path d="M3 6h18" /> <path d="M16 10a4 4 0 0 1-8 0" />{" "}
               </svg>{" "}
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#1c1b18] text-[9px] font-bold text-[#f5e3cd] shadow-md border border-[#a4492e]/40">
+                <span className="on-dark absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#161616] text-[9px] max-sm:text-[12px] font-bold text-[#f2f2f0] shadow-md border border-[color:var(--accent)]/40">
                   {" "}
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
@@ -794,11 +793,11 @@ export default function Navbar({
           </div>{" "}
           {/* ── Seamless Full Header Search Bar Overlay (Never Overflows Frame) ── */}
           {searchOpen && (
-            <div className="absolute inset-0 z-50 bg-[#FEFDFB] flex items-center justify-between px-4 sm:px-8 max-w-[1440px] mx-auto border-b border-[#a4492e]/30 shadow-md animate-fadeIn">
+            <div className="absolute inset-0 z-50 bg-[#fbfbfa] flex items-center justify-between px-4 sm:px-8 max-w-[1440px] mx-auto border-b border-[color:var(--accent)]/30 shadow-md animate-fadeIn">
               {" "}
               <div className="flex items-center gap-3 flex-1 mr-4">
                 {" "}
-                <span className="text-[#a4492e] shrink-0">
+                <span className="text-[color:var(--accent)] shrink-0">
                   {" "}
                   <svg
                     viewBox="0 0 24 24"
@@ -860,11 +859,11 @@ export default function Navbar({
                 </svg>{" "}
               </button>{" "}
               {/* Live Search Results Dropdown Popover */}
-              <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-2xl border border-[#a4492e]/40 bg-[#fdfbf8] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
+              <div className="absolute left-4 right-4 sm:left-8 sm:right-8 top-full mt-2 z-50 rounded-[4px] border border-[color:var(--accent)]/40 bg-[#fbfbfa] p-4 shadow-2xl backdrop-blur-2xl animate-fadeIn max-h-[440px] overflow-y-auto luxury-scrollbar">
                 {" "}
                 <div className="flex items-center justify-between border-b border-black/8 pb-2 px-2 mb-2.5">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#a4492e]">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                     {" "}
                     {searchQuery.trim() === ""
                       ? "Curated Fragrance Suggestions"
@@ -873,7 +872,7 @@ export default function Navbar({
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery("")}
-                      className="text-[10.5px] text-ink/50 hover:text-ink cursor-pointer font-medium"
+                      className="text-[10.5px] max-sm:text-[12px] text-ink/50 hover:text-ink cursor-pointer font-medium"
                     >
                       {" "}
                       Clear
@@ -883,7 +882,7 @@ export default function Navbar({
                 {searchQuery.trim() === "" ? (
                   <div>
                     {" "}
-                    <p className="text-[11px] text-ink/60 mb-2 px-1">
+                    <p className="text-[11px] max-sm:text-[12px] text-ink/60 mb-2 px-1">
                       Popular searches & signature extraits:
                     </p>{" "}
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -900,7 +899,7 @@ export default function Navbar({
                         <button
                           key={tag}
                           onClick={() => setSearchQuery(tag)}
-                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#f3ece0] text-[#21150F] hover:bg-[#a4492e] hover:text-white transition-colors cursor-pointer border border-[#a4492e]/20"
+                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#eeeeec] text-[#161616] hover:bg-[#5f6516] hover:text-white transition-colors cursor-pointer border border-[color:var(--accent)]/20"
                         >
                           {" "}
                           {tag}
@@ -918,10 +917,10 @@ export default function Navbar({
                             setSearchOpen(false);
                             setSearchQuery("");
                           }}
-                          className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#a4492e] hover:shadow-md transition-all cursor-pointer group"
+                          className="flex items-center gap-3 rounded-[4px] border border-black/6 bg-white p-2.5 hover:border-[color:var(--accent)] hover:shadow-md transition-all cursor-pointer group"
                         >
                           {" "}
-                          <div className="h-11 w-11 shrink-0 rounded-lg bg-[#eeebe5] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                          <div className="h-11 w-11 shrink-0 rounded-lg bg-[#e9e9e6] p-1 flex items-center justify-center overflow-hidden border border-black/5">
                             {" "}
                             <img
                               src={product.img}
@@ -931,11 +930,11 @@ export default function Navbar({
                           </div>{" "}
                           <div className="flex-1 min-w-0">
                             {" "}
-                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#a4492e] transition-colors">
+                            <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[color:var(--accent)] transition-colors">
                               {" "}
                               {product.name}
                             </h4>{" "}
-                            <p className="text-[10px] text-ink/55 truncate">
+                            <p className="text-[10px] max-sm:text-[12px] text-ink/55 truncate">
                               {product.notes}
                             </p>{" "}
                           </div>{" "}
@@ -954,7 +953,7 @@ export default function Navbar({
                   <div className="py-8 text-center text-xs text-ink/60 font-medium">
                     {" "}
                     <p>No fragrances found for "{searchQuery}"</p>{" "}
-                    <p className="text-[10.5px] text-[#a4492e] mt-1">
+                    <p className="text-[10.5px] max-sm:text-[12px] text-[color:var(--accent)] mt-1">
                       Try "Oud", "Lavender", "Amber", or "Floral"
                     </p>{" "}
                   </div>
@@ -970,10 +969,10 @@ export default function Navbar({
                           setSearchOpen(false);
                           setSearchQuery("");
                         }}
-                        className="flex items-center gap-3 rounded-xl border border-black/6 bg-white p-2.5 hover:border-[#a4492e] hover:shadow-md transition-all cursor-pointer group"
+                        className="flex items-center gap-3 rounded-[4px] border border-black/6 bg-white p-2.5 hover:border-[color:var(--accent)] hover:shadow-md transition-all cursor-pointer group"
                       >
                         {" "}
-                        <div className="h-12 w-12 shrink-0 rounded-lg bg-[#eeebe5] p-1 flex items-center justify-center overflow-hidden border border-black/5">
+                        <div className="h-12 w-12 shrink-0 rounded-lg bg-[#e9e9e6] p-1 flex items-center justify-center overflow-hidden border border-black/5">
                           {" "}
                           <img
                             src={product.img}
@@ -985,20 +984,20 @@ export default function Navbar({
                           {" "}
                           <div className="flex items-center gap-1.5">
                             {" "}
-                            <span className="text-[8px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                            <span className="text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                               {" "}
                               {product.num}
                             </span>{" "}
-                            <span className="text-[8px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#a4492e]/10 text-[#a4492e] border border-[#a4492e]/20">
+                            <span className="text-[8px] max-sm:text-[12px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#5f6516]/10 text-[color:var(--accent)] border border-[color:var(--accent)]/20">
                               {" "}
                               {product.scentFamily}
                             </span>{" "}
                           </div>{" "}
-                          <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[#a4492e] transition-colors mt-0.5">
+                          <h4 className="font-display text-xs font-bold text-ink truncate group-hover:text-[color:var(--accent)] transition-colors mt-0.5">
                             {" "}
                             {product.name}
                           </h4>{" "}
-                          <p className="text-[10px] text-ink/55 truncate mt-0.5">
+                          <p className="text-[10px] max-sm:text-[12px] text-ink/55 truncate mt-0.5">
                             {product.notes}
                           </p>{" "}
                         </div>{" "}
@@ -1008,7 +1007,7 @@ export default function Navbar({
                             {" "}
                             ₹{product.price.toLocaleString()}
                           </span>{" "}
-                          <span className="text-[9px] text-[#a4492e] font-medium group-hover:underline">
+                          <span className="text-[9px] max-sm:text-[12px] text-[color:var(--accent)] font-medium group-hover:underline">
                             {" "}
                             View Scent →
                           </span>{" "}
@@ -1053,7 +1052,7 @@ export default function Navbar({
                         <div key={cat.title} className="flex-1 px-8 py-8">
                           {" "}
                           <p
-                            className="mb-4 text-[9.5px] font-bold uppercase tracking-[0.28em] text-[#a4492e]"
+                            className="mb-4 text-[9.5px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]"
                             style={{ fontFamily: "var(--font-sans)" }}
                           >
                             {" "}
@@ -1066,29 +1065,29 @@ export default function Navbar({
                                 {" "}
                                 <a
                                   href={
-                                    item.filter?.size
+                                    item.filter && "size" in item.filter
                                       ? `/perfumes?size=${item.filter.size}`
-                                      : `/perfumes?mood=${item.filter?.mood || "all"}`
+                                      : `/perfumes?mood=${item.filter && "mood" in item.filter ? item.filter.mood : "all"}`
                                   }
                                   onClick={(e) => {
                                     e.preventDefault();
                                     setMegaOpen(false);
                                     onNavigate?.("perfumes", item.filter);
                                   }}
-                                  className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:bg-[#f4f2ee] cursor-pointer"
+                                  className="group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:bg-[#f2f2f0] cursor-pointer"
                                 >
                                   {" "}
                                   <span>
                                     {" "}
                                     <span
-                                      className="block text-[13px] font-semibold text-ink transition-colors duration-200 group-hover:text-[#a4492e]"
+                                      className="block text-[13px] font-semibold text-ink transition-colors duration-200 group-hover:text-[color:var(--accent)]"
                                       style={{ fontFamily: "var(--font-sans)" }}
                                     >
                                       {" "}
                                       {item.label}
                                     </span>{" "}
                                     <span
-                                      className="block text-[11px] text-ink/50"
+                                      className="block text-[11px] max-sm:text-[12px] text-ink/50"
                                       style={{ fontFamily: "var(--font-sans)" }}
                                     >
                                       {" "}
@@ -1100,7 +1099,7 @@ export default function Navbar({
                                     fill="none"
                                     stroke="currentColor"
                                     strokeWidth={1.6}
-                                    className="h-3.5 w-3.5 translate-x-0 text-ink/20 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:text-[#a4492e] group-hover:opacity-100"
+                                    className="h-3.5 w-3.5 translate-x-0 text-ink/20 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:text-[color:var(--accent)] group-hover:opacity-100"
                                   >
                                     {" "}
                                     <path
@@ -1124,8 +1123,8 @@ export default function Navbar({
                         setMegaOpen(false);
                         onNavigate?.("perfumes", featured.filter);
                       }}
-                      className="group relative flex w-80 shrink-0 flex-col overflow-hidden text-left cursor-pointer border-l border-[#a4492e]/30"
-                      style={{ background: "#151412" }}
+                      className="group relative flex w-80 shrink-0 flex-col overflow-hidden text-left cursor-pointer border-l border-[color:var(--accent)]/30"
+                      style={{ background: "#111111" }}
                     >
                       {" "}
                       {/* Full-bleed background image with smooth zoom on hover */}
@@ -1144,7 +1143,7 @@ export default function Navbar({
                         <div className="absolute inset-0 p-7 flex flex-col justify-end">
                           {" "}
                           <span
-                            className="self-start rounded-full bg-[#a4492e]/25 backdrop-blur-md border border-[#a4492e]/50 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.22em] text-[#a4492e] mb-2 shadow-sm"
+                            className="self-start rounded-full bg-[#5f6516]/25 backdrop-blur-md border border-[color:var(--accent)]/50 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2 shadow-sm"
                             style={{ fontFamily: "var(--font-sans)" }}
                           >
                             {" "}
@@ -1155,7 +1154,7 @@ export default function Navbar({
                             {featured.name}
                           </h4>{" "}
                           <p
-                            className="mt-1 text-[11px] leading-relaxed text-[#f4f2ee]/75 line-clamp-2"
+                            className="mt-1 text-[11px] max-sm:text-[12px] leading-relaxed text-[#f2f2f0]/75 line-clamp-2"
                             style={{ fontFamily: "var(--font-sans)" }}
                           >
                             {" "}
@@ -1163,7 +1162,7 @@ export default function Navbar({
                           </p>{" "}
                           {/* CTA with gold arrow */}
                           <div
-                            className="mt-4 flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.2em] text-[#a4492e] transition-all duration-300 group-hover:text-white group-hover:gap-2.5"
+                            className="mt-4 flex items-center gap-1.5 text-[9.5px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] transition-all duration-300 group-hover:text-white group-hover:gap-2.5"
                             style={{ fontFamily: "var(--font-sans)" }}
                           >
                             {" "}
@@ -1198,7 +1197,7 @@ export default function Navbar({
             className="fixed inset-0 bg-black/75 backdrop-blur-md animate-fadeIn"
             onClick={() => setMobileNavOpen(false)}
           />{" "}
-          <div className="relative w-4/5 max-w-sm bg-[#f4f2ee] h-full shadow-2xl p-6 flex flex-col justify-between animate-drawerSlideInLeft border-r border-[#a4492e]/30 overflow-y-auto">
+          <div className="relative w-4/5 max-w-sm bg-[#f2f2f0] h-full shadow-2xl p-6 flex flex-col justify-between animate-drawerSlideInLeft border-r border-[color:var(--accent)]/30 overflow-y-auto">
             {" "}
             <div>
               {" "}
@@ -1256,8 +1255,8 @@ export default function Navbar({
                         link.label === "Discovery Set") ||
                       (currentPage === "perfumes" &&
                         link.label === "All Perfumes")
-                        ? "bg-[#a4492e]/15 text-[#8d6a2f]"
-                        : "text-ink hover:bg-black/5 hover:text-[#a4492e]"
+                        ? "bg-[#5f6516]/15 text-[#8d6a2f]"
+                        : "text-ink hover:bg-black/5 hover:text-[color:var(--accent)]"
                     }`}
                   >
                     {" "}
@@ -1265,13 +1264,13 @@ export default function Navbar({
                       {" "}
                       <span>{link.label}</span>{" "}
                       {"badge" in link && Boolean(link.badge) && (
-                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider bg-[#a4492e]/25 text-[#7f5d23] border border-[#a4492e]/40 uppercase">
+                        <span className="px-2 py-0.5 rounded-full text-[9px] max-sm:text-[12px] font-bold tracking-wider bg-[#5f6516]/25 text-[#7f5d23] border border-[color:var(--accent)]/40 uppercase">
                           {" "}
                           {link.badge}
                         </span>
                       )}
                     </span>{" "}
-                    <span className="text-[#a4492e]">→</span>{" "}
+                    <span className="text-[color:var(--accent)]">→</span>{" "}
                   </a>
                 ))}
               </div>{" "}
@@ -1283,7 +1282,7 @@ export default function Navbar({
                   setMobileNavOpen(false);
                   onOpenAccount?.();
                 }}
-                className="w-full py-3.5 bg-[#151412] hover:bg-[#a4492e] text-[#a4492e] text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#a4492e]/30"
+                className="on-dark w-full py-3.5 bg-[#111111] hover:bg-[#5f6516] text-[color:var(--accent)] text-xs font-bold uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[color:var(--accent)]/30"
               >
                 {" "}
                 {isLoggedIn ? (
@@ -1293,13 +1292,13 @@ export default function Navbar({
                       {" "}
                       MY ACCOUNT {userName ? `(${userName.toUpperCase()})` : ""}
                     </span>{" "}
-                    <span className="text-xs text-[#a4492e]">&rarr;</span>{" "}
+                    <span className="text-xs text-[color:var(--accent)]">&rarr;</span>{" "}
                   </>
                 ) : (
                   <span>SIGN IN / MY ACCOUNT</span>
                 )}
               </button>{" "}
-              <p className="text-center text-[10px] text-ink/40 uppercase tracking-widest pt-2">
+              <p className="text-center text-[10px] max-sm:text-[12px] text-ink/40 uppercase tracking-[0.06em] pt-2">
                 {" "}
                 Born in Heaven, Worn on Earth
               </p>{" "}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ProductCard from "../editorial/ProductCard";
 import ProductDetailModal from "./ProductDetailModal";
 import type { CartItem } from "./CartDrawer";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
@@ -164,27 +165,13 @@ export default function BestSellersPage({
       }
     }
   }, [selectedDetailProduct]);
-  const [selectedSizes, setSelectedSizes] = useState<Record<string, number>>(
-    {},
-  );
   const [activeCategoryPill, setActiveCategoryPill] = useState("all");
   const [selectedMood, setSelectedMood] = useState("all");
   const [selectedFamily, setSelectedFamily] = useState("all");
   const [selectedSizeFilter, setSelectedSizeFilter] = useState("all");
   const [sortBy, setSortBy] = useState("rank");
-  const [addedToast, setAddedToast] = useState<string | null>(null);
 
-  const getItemQuantity = (productId: string, size: number): number => {
-    const item = cartItems.find(
-      (ci) => ci.productId === productId && ci.size === size,
-    );
-    return item ? item.quantity : 0;
-  };
 
-  const showToast = (msg: string) => {
-    setAddedToast(msg);
-    setTimeout(() => setAddedToast(null), 2500);
-  };
 
   const filteredProducts = BEST_SELLERS_DATA.filter((p) => {
     if (activeCategoryPill === "woody" && p.family !== "woody") return false;
@@ -195,26 +182,17 @@ export default function BestSellersPage({
   });
 
   return (
-    <div className="min-h-screen w-full bg-[#f4f2ee] text-ink font-sans">
+    <div className="min-h-screen w-full bg-[#f2f2f0] text-ink font-sans">
       {" "}
-      {addedToast && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#a4492e]/40 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl animate-bounce">
-          {" "}
-          <span className="flex items-center gap-2">
-            {" "}
-            <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-pulse" />{" "}
-            {addedToast}
-          </span>{" "}
-        </div>
-      )}
+      
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-32 sm:pb-20">
         {" "}
         {/* Breadcrumb matching Screenshot 111 */}
-        <div className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wider text-ink/50 uppercase">
+        <div className="mb-6 flex items-center gap-2 text-[11px] max-sm:text-[12px] font-medium tracking-wider text-ink/50 uppercase">
           {" "}
           <button
             onClick={onBackToHome}
-            className="hover:text-[#a4492e] transition-colors cursor-pointer"
+            className="hover:text-[color:var(--accent)] transition-colors cursor-pointer"
           >
             {" "}
             Home
@@ -225,7 +203,7 @@ export default function BestSellersPage({
         {/* Pre-title & Title matching Screenshot 111 */}
         <div className="mb-8">
           {" "}
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+          <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
             {" "}
             HAUTE PARFUMERIE • TOP 6 BEST SELLERS
           </span>{" "}
@@ -244,9 +222,9 @@ export default function BestSellersPage({
           {" "}
           <button
             onClick={() => setActiveCategoryPill("all")}
-            className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
+            className={`on-dark rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
               activeCategoryPill === "all"
-                ? "bg-[#151412] text-white shadow"
+                ? "bg-[#111111] text-white shadow"
                 : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
@@ -255,9 +233,9 @@ export default function BestSellersPage({
           </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("woody")}
-            className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
+            className={`on-dark rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
               activeCategoryPill === "woody"
-                ? "bg-[#151412] text-white shadow"
+                ? "bg-[#111111] text-white shadow"
                 : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
@@ -266,9 +244,9 @@ export default function BestSellersPage({
           </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("floral")}
-            className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
+            className={`on-dark rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
               activeCategoryPill === "floral"
-                ? "bg-[#151412] text-white shadow"
+                ? "bg-[#111111] text-white shadow"
                 : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
@@ -277,9 +255,9 @@ export default function BestSellersPage({
           </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("oriental")}
-            className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
+            className={`on-dark rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
               activeCategoryPill === "oriental"
-                ? "bg-[#151412] text-white shadow"
+                ? "bg-[#111111] text-white shadow"
                 : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
@@ -288,9 +266,9 @@ export default function BestSellersPage({
           </button>{" "}
           <button
             onClick={() => setActiveCategoryPill("50ml")}
-            className={`rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
+            className={`on-dark rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
               activeCategoryPill === "50ml"
-                ? "bg-[#151412] text-white shadow"
+                ? "bg-[#111111] text-white shadow"
                 : "bg-white text-ink border border-black/10 hover:border-black/30"
             }`}
           >
@@ -306,7 +284,7 @@ export default function BestSellersPage({
             <select
               value={selectedMood}
               onChange={(e) => setSelectedMood(e.target.value)}
-              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
+              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
             >
               {" "}
               <option value="all">All Moods</option>{" "}
@@ -317,7 +295,7 @@ export default function BestSellersPage({
             <select
               value={selectedFamily}
               onChange={(e) => setSelectedFamily(e.target.value)}
-              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
+              className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
             >
               {" "}
               <option value="all">All Scent Families</option>{" "}
@@ -331,7 +309,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("all")}
                 className={`rounded-full px-3 py-1 transition-all ${
                   selectedSizeFilter === "all"
-                    ? "bg-[#a4492e] text-black"
+                    ? "bg-[#5f6516] text-black"
                     : "text-ink/60"
                 }`}
               >
@@ -342,7 +320,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("10")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "10"
-                    ? "bg-[#a4492e] text-black"
+                    ? "bg-[#5f6516] text-black"
                     : "text-ink/60"
                 }`}
               >
@@ -353,7 +331,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("30")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "30"
-                    ? "bg-[#a4492e] text-black"
+                    ? "bg-[#5f6516] text-black"
                     : "text-ink/60"
                 }`}
               >
@@ -364,7 +342,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("50")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "50"
-                    ? "bg-[#a4492e] text-black"
+                    ? "bg-[#5f6516] text-black"
                     : "text-ink/60"
                 }`}
               >
@@ -376,7 +354,7 @@ export default function BestSellersPage({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[#a4492e]"
+            className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
           >
             {" "}
             <option value="rank">Sort by Rank</option>{" "}
@@ -387,7 +365,7 @@ export default function BestSellersPage({
         {/* Section Subhead matching Screenshot 111 */}
         <div className="mb-8">
           {" "}
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+          <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
             {" "}
             TOP RATED FORMULATIONS
           </span>{" "}
@@ -397,141 +375,20 @@ export default function BestSellersPage({
           </h2>{" "}
         </div>{" "}
         {/* Grid of Cards matching Screenshot 111 */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-          {" "}
-          {filteredProducts.map((p) => {
-            const fullProd = ALL_PERFUMES.find((ap) => ap.id === p.id);
-            const availableSizes =
-              fullProd?.sizes || Object.keys(p.prices).map(Number);
-            const currentSize =
-              selectedSizes[p.id] ||
-              (availableSizes.includes(50) ? 50 : availableSizes[0]);
-            const priceInfo = p.prices[currentSize] ||
-              p.prices[availableSizes[0]] || {
-                price: 999,
-                originalPrice: 1409,
-              };
-            const qty = getItemQuantity(p.id, currentSize);
-            const displayImage =
-              (fullProd?.sizeImages &&
-                (fullProd.sizeImages[
-                  currentSize as keyof typeof fullProd.sizeImages
-                ]?.[0] ||
-                  (fullProd.sizeImages as any)[String(currentSize)]?.[0])) ||
-              fullProd?.img ||
-              p.image;
-
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+          {filteredProducts.map((p, i) => {
+            const perfume = ALL_PERFUMES.find((ap) => ap.id === p.id);
+            if (!perfume) return null;
             return (
-              <div
-                key={p.id}
-                className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all"
-              >
-                {" "}
-                <div>
-                  {" "}
-                  <div
-                    onClick={() =>
-                      fullProd && setSelectedDetailProduct(fullProd)
-                    }
-                    className="relative aspect-square w-full rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer"
-                  >
-                    {" "}
-                    <img
-                      src={displayImage}
-                      alt={p.name}
-                      loading="eager"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />{" "}
-                    <span className="absolute top-2 left-2 rounded-full bg-[#151412] px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#a4492e]">
-                      {" "}
-                      {p.badge}
-                    </span>{" "}
-                  </div>{" "}
-                  <div className="mt-3 text-center">
-                    {" "}
-                    <h3
-                      onClick={() =>
-                        fullProd && setSelectedDetailProduct(fullProd)
-                      }
-                      className="font-display text-sm sm:text-base font-bold text-ink cursor-pointer hover:text-[#a4492e] leading-snug truncate block w-full"
-                    >
-                      {" "}
-                      {p.name}
-                    </h3>{" "}
-                    <p className="text-xs text-ink/60 truncate mt-0.5">
-                      {p.notes}
-                    </p>{" "}
-                  </div>{" "}
-                  <div className="flex items-center justify-center gap-1 my-2.5 w-full max-w-full">
-                    {" "}
-                    {availableSizes.map((sz) => (
-                      <button
-                        key={sz}
-                        onClick={() =>
-                          setSelectedSizes((prev) => ({ ...prev, [p.id]: sz }))
-                        }
-                        className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-bold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                          currentSize === sz
-                            ? "bg-[#151412] text-[#a4492e] border-[#151412]"
-                            : "bg-white text-ink border-black/15"
-                        }`}
-                      >
-                        {" "}
-                        {sz}ML
-                      </button>
-                    ))}
-                  </div>{" "}
-                  <div className="flex items-baseline justify-center gap-2 my-2">
-                    {" "}
-                    <span className="font-sans font-bold text-base text-ink tabular-nums inline-flex items-baseline gap-0.5">
-                      ₹{priceInfo.price.toLocaleString("en-IN")}
-                    </span>{" "}
-                    <span className="font-sans text-xs text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
-                      MRP ₹{priceInfo.originalPrice.toLocaleString("en-IN")}
-                    </span>{" "}
-                  </div>{" "}
-                </div>{" "}
-                {qty > 0 ? (
-                  <div className="mt-3 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 py-1 sm:px-3 sm:py-2 min-w-0">
-                    {" "}
-                    <button
-                      onClick={() =>
-                        onUpdateCartQuantity?.(p.id, currentSize, -1)
-                      }
-                      className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0"
-                    >
-                      −
-                    </button>{" "}
-                    <span className="text-[8.5px] sm:text-xs font-bold text-[#d9a08a] truncate px-0.5">
-                      {qty} IN BAG
-                    </span>{" "}
-                    <button
-                      onClick={() =>
-                        onUpdateCartQuantity?.(p.id, currentSize, 1)
-                      }
-                      className="text-xs sm:text-sm font-bold text-[#a4492e] shrink-0"
-                    >
-                      +
-                    </button>{" "}
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => {
-                      onAddToCart?.(
-                        { id: p.id, name: p.name, img: p.image },
-                        currentSize,
-                        priceInfo.price,
-                      );
-                      showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
-                    }}
-                    className="mt-3 w-full rounded-md bg-[#151412] py-2 sm:py-2.5 px-1 text-[8.5px] sm:text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
-                  >
-                    {" "}
-                    Add to Bag
-                  </button>
-                )}
-              </div>
+              <ProductCard
+                key={perfume.id}
+                product={perfume}
+                index={i}
+                onAddToCart={(item, size, price) =>
+                  onAddToCart?.(item, size ?? 50, price ?? item.price)
+                }
+                onSelectProduct={() => setSelectedDetailProduct(perfume)}
+              />
             );
           })}
         </div>{" "}

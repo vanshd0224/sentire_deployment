@@ -1,12 +1,11 @@
 import { ALL_PERFUMES } from "../data/perfumes";
+import ProductCard from "../editorial/ProductCard";
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { PerfumeFilterOptions } from "./Navbar";
 import ProductDetailModal from "./ProductDetailModal";
 
 import type { PerfumeProduct } from "../types/appTypes";
 export type { PerfumeProduct };
-
-const ALL_SIZES_PRODUCTS: PerfumeProduct[] = ALL_PERFUMES;
 
 const EXCLUSIVE_PURPLE_OUD: PerfumeProduct = {
   id: "purple-oud",
@@ -31,8 +30,6 @@ const EXCLUSIVE_PURPLE_OUD: PerfumeProduct = {
   img: "/assets/perfumes/purple-oud-50ml-2.png?v=3",
   traces: ["Cambodian Oud", "Fiery Saffron", "Amethyst Rose", "Amberwood"],
 };
-
-const THIRTY_ML_PRODUCTS: PerfumeProduct[] = [];
 
 import type { CartItem } from "./CartDrawer";
 
@@ -80,9 +77,6 @@ export default function PerfumesPage({
   const [isSortOpen, setIsSortOpen] = useState<boolean>(false);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [selectedProductSizes, setSelectedProductSizes] = useState<
-    Record<string, number>
-  >({});
   const [isQuizOpen, setIsQuizOpen] = useState<boolean>(false);
   const [quizStep, setQuizStep] = useState<number>(0);
   const [quickViewProduct, setQuickViewProduct] =
@@ -282,9 +276,6 @@ export default function PerfumesPage({
     ],
   );
 
-  const handleProductSizeSelect = (productId: string, size: number) => {
-    setSelectedProductSizes((prev) => ({ ...prev, [productId]: size }));
-  };
 
   const getItemQuantity = (productId: string, size: number): number => {
     const item = cartItems.find(
@@ -293,270 +284,25 @@ export default function PerfumesPage({
     return item ? item.quantity : 0;
   };
 
-  const getProductSize = (p: PerfumeProduct): number => {
-    // 1. If manually selected for this specific product, use it
-    if (
-      selectedProductSizes[p.id] &&
-      p.sizes.includes(selectedProductSizes[p.id] as any)
-    ) {
-      return selectedProductSizes[p.id];
-    }
-    // 2. If a size filter is active (e.g. 10 ML), default to that active size!
-    if (selectedSizes.length > 0) {
-      const activeSize = selectedSizes[0];
-      if (p.sizes.includes(activeSize as any)) {
-        return activeSize;
+
+  const renderProductCard = (p: PerfumeProduct, i: number) => (
+    <ProductCard
+      key={p.id}
+      product={p}
+      index={i}
+      onAddToCart={(item, size, price) =>
+        onAddToCart?.(item, size ?? 50, price ?? item.price)
       }
-    }
-    // 3. When no size filter is applied, auto-select 50 ML if in stock!
-    const outStock = p.outOfStockSizes || [];
-    if (p.sizes.includes(50) && !outStock.includes(50)) {
-      return 50;
-    }
-    // Otherwise select largest available in-stock size
-    const inStock = p.sizes.filter((s) => !outStock.includes(s));
-    if (inStock.length > 0) {
-      return inStock[inStock.length - 1];
-    }
-    return p.sizes[0];
-  };
-
-  const renderProductCard = (p: PerfumeProduct) => {
-    const currentSize = getProductSize(p);
-    const currentPrice = p.prices[currentSize] || p.prices[p.sizes[0]] || 799;
-    const isOutOfStock =
-      p.outOfStockSizes?.includes(currentSize as any) ?? false;
-    const qtyInBag = getItemQuantity(p.id, currentSize);
-    const notesString =
-      p.traces && p.traces.length > 0
-        ? p.traces.slice(0, 2).join(" · ")
-        : p.desc;
-    const badgeText =
-      p.badge === "bestseller"
-        ? "BEST SELLER"
-        : p.badge === "new"
-          ? "NEW LAUNCH"
-          : p.badge
-            ? p.badge.toUpperCase()
-            : null;
-
-    return (
-      <div
-        key={p.id}
-        className="group flex flex-col justify-between rounded-2xl border border-black/8 bg-white p-3 sm:p-4 shadow-sm hover:border-[#a4492e]/50 hover:shadow-md transition-all"
-      >
-        {" "}
-        {/* Top Content */}
-        <div>
-          {" "}
-          {/* Media box */}
-          <a
-            href={`/perfumes?id=${p.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              setSelectedDetailProduct(p);
-            }}
-            className="relative w-full aspect-square rounded-xl bg-[#eeebe5] overflow-hidden flex items-center justify-center cursor-pointer block"
-            title={`View info for ${p.name}`}
-            aria-label={`View Sentire ${p.name} personalised perfume details`}
-          >
-            {" "}
-            {badgeText && (
-              <span className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-[#1c1b18] to-[#151412] text-[#a4492e] text-[8px] font-bold uppercase tracking-widest px-2.5 py-0.5 border border-[#a4492e]/40 shadow-sm">
-                {" "}
-                {badgeText}
-              </span>
-            )}
-            <img
-              src={
-                (p.sizeImages &&
-                  (p.sizeImages[currentSize]?.[0] ||
-                    (p.sizeImages as any)[String(currentSize)]?.[0])) ||
-                p.img
-              }
-              alt={`Sentire ${p.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
-              loading="eager"
-              decoding="async"
-              width="300"
-              height="300"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 filter drop-shadow-sm"
-            />{" "}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-              {" "}
-              <span className="bg-white/95 text-ink text-[9px] font-bold tracking-widest uppercase px-3 py-1 rounded-full shadow-md border border-[#a4492e]/40">
-                {" "}
-                Quick View
-              </span>{" "}
-            </div>{" "}
-          </a>{" "}
-          {/* Details */}
-          <div className="mt-3 text-center">
-            {" "}
-            <h3
-              className="font-sans text-[11px] sm:text-sm font-bold uppercase tracking-wide text-ink hover:text-[#a4492e] transition-colors cursor-pointer block truncate w-full"
-              title={`View info for ${p.name}`}
-            >
-              {" "}
-              <a
-                href={`/perfumes?id=${p.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedDetailProduct(p);
-                }}
-                className="hover:text-[#a4492e]"
-              >
-                {" "}
-                {p.name}
-              </a>{" "}
-            </h3>{" "}
-            <p
-              onClick={() => setSelectedDetailProduct(p)}
-              className="text-[10px] text-ink/60 mt-0.5 truncate cursor-pointer hover:text-ink/90 transition-colors"
-            >
-              {" "}
-              {notesString}
-            </p>{" "}
-            {/* Scent Info link */}
-            <button
-              type="button"
-              onClick={() => setSelectedDetailProduct(p)}
-              className="mt-1 mb-1 inline-flex items-center justify-center gap-1 text-[9.5px] font-bold tracking-widest text-[#a4492e] hover:text-ink uppercase transition-colors cursor-pointer"
-            >
-              {" "}
-              <span>View Scent Info</span>{" "}
-              <span aria-hidden="true">→</span>{" "}
-            </button>{" "}
-            {/* Size Pills */}
-            <div className="flex items-center justify-center gap-1 my-2 w-full max-w-full">
-              {" "}
-              {p.sizes.map((sz) => {
-                const isSizeOut = Boolean(
-                  p.outOfStockSizes?.includes(sz as any),
-                );
-                const isSelected = currentSize === sz;
-
-                if (isSizeOut) {
-                  return (
-                    <button
-                      key={sz}
-                      disabled
-                      type="button"
-                      className="rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-semibold tracking-tight bg-stone-100 text-stone-400 border border-stone-200 opacity-40 line-through cursor-not-allowed select-none shrink-0"
-                      title="Out of stock in this size"
-                    >
-                      {" "}
-                      {sz}ML
-                    </button>
-                  );
-                }
-
-                return (
-                  <button
-                    key={sz}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleProductSizeSelect(p.id, sz);
-                    }}
-                    className={`rounded px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9.5px] font-semibold tracking-tight border transition-all cursor-pointer shrink-0 ${
-                      isSelected
-                        ? "bg-[#151412] text-[#a4492e] border-[#151412] font-bold shadow-xs scale-102"
-                        : "bg-[#f7f5f2] text-[#1c1b18] border-black/15 hover:border-[#a4492e] hover:text-[#a4492e]"
-                    }`}
-                  >
-                    {" "}
-                    {sz}ML
-                  </button>
-                );
-              })}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-        {/* Pricing & Cart Stepper */}
-        <div className="mt-2 text-center">
-          {" "}
-          <div className="flex items-baseline justify-center gap-1.5 text-center">
-            {" "}
-            <span className="font-sans font-bold text-xs sm:text-sm text-ink tabular-nums inline-flex items-baseline gap-0.5">
-              ₹{currentPrice.toLocaleString()}
-            </span>{" "}
-            <span className="font-sans text-[10px] text-ink/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
-              MRP ₹
-              {(p.mrps && p.mrps[currentSize]
-                ? p.mrps[currentSize]
-                : Math.round(currentPrice * 1.35)
-              ).toLocaleString()}
-            </span>{" "}
-          </div>{" "}
-          {isOutOfStock ? (
-            <button
-              disabled
-              className="mt-2 w-full rounded-md bg-stone-200 py-2 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-stone-400 cursor-not-allowed"
-            >
-              {" "}
-              Out of Stock
-            </button>
-          ) : qtyInBag > 0 ? (
-            <div className="mt-2 flex items-center justify-between rounded-md bg-[#151412] text-white border border-[#a4492e]/40 px-1.5 py-1 sm:px-2 sm:py-1.5 shadow-xs min-w-0">
-              {" "}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onUpdateCartQuantity?.(p.id, currentSize, -1);
-                }}
-                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#a4492e] hover:bg-white/10 rounded transition-all cursor-pointer"
-                aria-label="Decrease quantity"
-              >
-                {" "}
-                −
-              </button>{" "}
-              <span className="text-[8.5px] sm:text-[10px] font-extrabold text-[#d9a08a] tracking-tight uppercase truncate px-0.5">
-                {" "}
-                {qtyInBag} IN BAG ({currentSize}ML)
-              </span>{" "}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onUpdateCartQuantity?.(p.id, currentSize, 1);
-                }}
-                className="flex h-5 w-5 shrink-0 items-center justify-center text-xs font-bold text-[#a4492e] hover:bg-white/10 rounded transition-all cursor-pointer"
-                aria-label="Increase quantity"
-              >
-                {" "}
-                +
-              </button>{" "}
-            </div>
-          ) : (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddToCart?.(
-                  { id: p.id, name: p.name, num: p.num, img: p.img },
-                  currentSize,
-                  currentPrice,
-                );
-                showToast(`Added ${p.name} (${currentSize}ML) to Bag`);
-              }}
-              className="mt-2 w-full rounded-md bg-[#151412] py-2 px-1 text-[8.5px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all shadow-xs border border-[#a4492e]/40 cursor-pointer truncate whitespace-nowrap"
-            >
-              {" "}
-              Add to Bag
-            </button>
-          )}
-        </div>{" "}
-      </div>
-    );
-  };
+      onSelectProduct={() => setSelectedDetailProduct(p)}
+    />
+  );
 
   return (
-    <div className="min-h-screen w-full bg-[#f4f2ee] text-ink font-sans selection:bg-gold/20 selection:text-ink">
+    <div className="min-h-screen w-full bg-[#f2f2f0] text-ink font-sans selection:bg-gold/20 selection:text-ink">
       {" "}
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-gold/30 bg-[#151412] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl transition-all animate-bounce">
+        <div className="on-dark fixed bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-full border border-gold/30 bg-[#111111] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-2xl transition-all animate-bounce">
           {" "}
           <span className="flex items-center gap-2">
             {" "}
@@ -566,21 +312,21 @@ export default function PerfumesPage({
         </div>
       )}
       {/* ── MOBILE EDITORIAL HERO ── */}
-      <section className="block sm:hidden border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f4f2ee] to-[#f4f2ee] pt-6 pb-6 px-4">
+      <section className="block sm:hidden border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f2f2f0] to-[#f2f2f0] pt-6 pb-6 px-4">
         {" "}
-        <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] text-ink/40 mb-2">
+        <div className="flex items-center gap-2 text-[9px] max-sm:text-[12px] uppercase tracking-[0.06em] text-ink/40 mb-2">
           {" "}
           <button
             onClick={onBackToHome}
-            className="hover:text-[#a4492e] transition-colors cursor-pointer"
+            className="hover:text-[color:var(--accent)] transition-colors cursor-pointer"
           >
             {" "}
             Home
           </button>{" "}
-          <span className="text-[#a4492e]/50">•</span>{" "}
+          <span className="text-[color:var(--accent)]/50">•</span>{" "}
           <span className="text-ink font-semibold">Perfume Library</span>{" "}
         </div>{" "}
-        <span className="inline-block rounded-full border border-[#a4492e]/40 bg-[#a4492e]/10 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.25em] text-[#a4492e] mb-2">
+        <span className="inline-block rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/10 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2">
           {" "}
           SENTIRE BY PC
         </span>{" "}
@@ -598,9 +344,9 @@ export default function PerfumesPage({
           {" "}
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
+            className={`on-dark shrink-0 rounded-full px-3.5 py-1.5 text-[9px] max-sm:text-[12px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "all"
-                ? "bg-[#151412] text-[#a4492e] shadow-xs"
+                ? "bg-[#111111] text-[color:var(--accent)] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -609,9 +355,9 @@ export default function PerfumesPage({
           </button>{" "}
           <button
             onClick={() => setSelectedCategory("bestsellers")}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
+            className={`on-dark shrink-0 rounded-full px-3.5 py-1.5 text-[9px] max-sm:text-[12px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "bestsellers"
-                ? "bg-[#151412] text-[#a4492e] shadow-xs"
+                ? "bg-[#111111] text-[color:var(--accent)] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -620,9 +366,9 @@ export default function PerfumesPage({
           </button>{" "}
           <button
             onClick={() => setSelectedCategory("woody-oud")}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
+            className={`on-dark shrink-0 rounded-full px-3.5 py-1.5 text-[9px] max-sm:text-[12px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "woody-oud"
-                ? "bg-[#151412] text-[#a4492e] shadow-xs"
+                ? "bg-[#111111] text-[color:var(--accent)] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -631,9 +377,9 @@ export default function PerfumesPage({
           </button>{" "}
           <button
             onClick={() => setSelectedCategory("fresh-aquatic")}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
+            className={`on-dark shrink-0 rounded-full px-3.5 py-1.5 text-[9px] max-sm:text-[12px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "fresh-aquatic"
-                ? "bg-[#151412] text-[#a4492e] shadow-xs"
+                ? "bg-[#111111] text-[color:var(--accent)] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -642,9 +388,9 @@ export default function PerfumesPage({
           </button>{" "}
           <button
             onClick={() => setSelectedCategory("floral-gourmand")}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[9px] font-bold tracking-wider uppercase transition-all ${
+            className={`on-dark shrink-0 rounded-full px-3.5 py-1.5 text-[9px] max-sm:text-[12px] font-bold tracking-wider uppercase transition-all ${
               selectedCategory === "floral-gourmand"
-                ? "bg-[#151412] text-[#a4492e] shadow-xs"
+                ? "bg-[#111111] text-[color:var(--accent)] shadow-xs"
                 : "bg-white border border-black/10 text-ink/70"
             }`}
           >
@@ -655,7 +401,7 @@ export default function PerfumesPage({
       </section>{" "}
       {/* ── LUXURY EDITORIAL HERO DESKTOP ── */}
       <section
-        className={`hidden sm:block relative border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f4f2ee] to-[#f4f2ee] pt-14 pb-16 px-6 lg:px-16 ${isSortOpen ? "z-40" : "z-30"}`}
+        className={`hidden sm:block relative border-b border-black/5 bg-gradient-to-b from-[#f4eee5] via-[#f2f2f0] to-[#f2f2f0] pt-14 pb-16 px-6 lg:px-16 ${isSortOpen ? "z-40" : "z-30"}`}
       >
         {" "}
         {/* Subtle Ambient Background Light */}
@@ -663,7 +409,7 @@ export default function PerfumesPage({
         <div className="relative mx-auto max-w-[1400px]">
           {" "}
           {/* Top Breadcrumb */}
-          <div className="mb-6 flex items-center gap-2.5 text-[11px] uppercase tracking-[0.18em] text-ink/40">
+          <div className="mb-6 flex items-center gap-2.5 text-[11px] max-sm:text-[12px] uppercase tracking-[0.06em] text-ink/40">
             {" "}
             <button
               onClick={onBackToHome}
@@ -673,7 +419,7 @@ export default function PerfumesPage({
               Home
             </button>{" "}
             <span className="text-gold/50">•</span>{" "}
-            <span className="text-ink font-semibold tracking-[0.2em]">
+            <span className="text-ink font-semibold tracking-[0.06em]">
               Haute Parfumerie
             </span>{" "}
           </div>{" "}
@@ -681,7 +427,7 @@ export default function PerfumesPage({
             {" "}
             <div className="max-w-2xl">
               {" "}
-              <span className="inline-block rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.28em] text-gold mb-3">
+              <span className="inline-block rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold mb-3">
                 {" "}
                 SENTIRE BY PC
               </span>{" "}
@@ -704,7 +450,7 @@ export default function PerfumesPage({
                 {" "}
                 <button
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center gap-3 rounded-full border border-gold/40 bg-[#151412] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-md hover:border-gold hover:bg-[#1a140f] transition-all cursor-pointer group"
+                  className="on-dark flex items-center gap-3 rounded-full border border-gold/40 bg-[#111111] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-md hover:border-gold hover:bg-[#1a140f] transition-all cursor-pointer group"
                 >
                   {" "}
                   <span className="text-gold font-bold">Sort By:</span>{" "}
@@ -741,15 +487,15 @@ export default function PerfumesPage({
                       className="fixed inset-0 z-40"
                       onClick={() => setIsSortOpen(false)}
                     />{" "}
-                    <div className="absolute right-0 top-full mt-2.5 z-50 w-72 rounded-2xl border border-gold/30 bg-[#14100c]/95 p-2 shadow-2xl backdrop-blur-xl animate-fadeIn">
+                    <div className="absolute right-0 top-full mt-2.5 z-50 w-72 rounded-[4px] border border-gold/30 bg-[#14100c]/95 p-2 shadow-2xl backdrop-blur-xl animate-fadeIn">
                       {" "}
                       <div className="px-3.5 py-2 border-b border-white/10 mb-1">
                         {" "}
-                        <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold block mb-0.5">
+                        <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold block mb-0.5">
                           {" "}
                           Haute Parfumerie Order
                         </span>{" "}
-                        <span className="text-[11px] text-white/50">
+                        <span className="text-[11px] max-sm:text-[12px] text-white/50">
                           Select preferred sort arrangement
                         </span>{" "}
                       </div>{" "}
@@ -791,7 +537,7 @@ export default function PerfumesPage({
                                 setSortOption(option.id);
                                 setIsSortOpen(false);
                               }}
-                              className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-left transition-all cursor-pointer ${
+                              className={`w-full flex items-center justify-between rounded-[4px] px-3.5 py-2.5 text-left transition-all cursor-pointer ${
                                 isSelected
                                   ? "bg-gold/20 border border-gold/40 text-gold"
                                   : "hover:bg-white/5 text-white/80 hover:text-white"
@@ -806,12 +552,12 @@ export default function PerfumesPage({
                                   {" "}
                                   {option.label}
                                 </span>{" "}
-                                <span className="block text-[10px] text-white/40 mt-0.5">
+                                <span className="block text-[10px] max-sm:text-[12px] text-white/40 mt-0.5">
                                   {option.sub}
                                 </span>{" "}
                               </div>{" "}
                               {isSelected && (
-                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-white shadow-xs ml-2">
+                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-[10px] max-sm:text-[12px] font-bold text-white shadow-xs ml-2">
                                   {" "}
                                   ✓
                                 </span>
@@ -829,7 +575,7 @@ export default function PerfumesPage({
         </div>{" "}
       </section>{" "}
       {/* ── STICKY CONTROL BAR & QUICK CATEGORIES ── */}
-      <section className="sticky top-[71px] z-20 border-b border-black/8 bg-[#f4f2ee]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
+      <section className="sticky top-[71px] z-20 border-b border-black/8 bg-[#f2f2f0]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
         {" "}
         <div className="mx-auto max-w-[1400px] flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
           {" "}
@@ -838,7 +584,7 @@ export default function PerfumesPage({
             {" "}
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-ink/20 bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-gold hover:border-gold transition-all cursor-pointer shadow-sm"
+              className="on-dark flex items-center gap-2 rounded-full border border-ink/20 bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white hover:bg-gold hover:border-gold transition-all cursor-pointer shadow-sm"
             >
               {" "}
               <svg
@@ -853,7 +599,7 @@ export default function PerfumesPage({
               </svg>{" "}
               All Filters
               {activeFilterCount > 0 && (
-                <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[9px] font-bold text-white">
+                <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[9px] max-sm:text-[12px] font-bold text-white">
                   {" "}
                   {activeFilterCount}
                 </span>
@@ -896,7 +642,7 @@ export default function PerfumesPage({
             {onOpenCart && (
               <button
                 onClick={onOpenCart}
-                className="flex items-center gap-1.5 rounded-full border border-ink/20 bg-ink px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white hover:bg-gold transition-all cursor-pointer shadow-xs"
+                className="on-dark flex items-center gap-1.5 rounded-full border border-ink/20 bg-ink px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white hover:bg-gold transition-all cursor-pointer shadow-xs"
               >
                 {" "}
                 <span>
@@ -919,13 +665,13 @@ export default function PerfumesPage({
               {" "}
               <div>
                 {" "}
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold block mb-1">
+                <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold block mb-1">
                   {" "}
                   CURATED COLLECTION
                 </span>{" "}
                 <h2 className="font-display text-2xl sm:text-3xl text-ink font-normal tracking-tight">
                   {" "}
-                  Available in {selectedSizes[0]} ML Formulations
+                  Available in {selectedSizes[0]} ml Formulations
                 </h2>{" "}
               </div>{" "}
               <span className="text-xs font-medium tracking-wider text-ink/40 uppercase">
@@ -933,7 +679,7 @@ export default function PerfumesPage({
                 {filteredUnifiedList.length} Formulations
               </span>{" "}
             </div>{" "}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
               {" "}
               {filteredUnifiedList.map(renderProductCard)}
             </div>{" "}
@@ -942,23 +688,23 @@ export default function PerfumesPage({
           <>
             {" "}
             {/* ── SECTION 1: PURPLE OUD — VOGUE STYLE HIGH LUXURY BANNER (TOP HERO PRODUCT) ── */}
-            <section className="relative overflow-hidden rounded-2xl bg-[#121110] border border-[#a4492e]/30 text-white p-5 sm:p-8 lg:p-16 shadow-2xl">
+            <section className="on-dark relative overflow-hidden rounded-[4px] bg-[#0e0e0e] border border-[color:var(--accent)]/30 text-white p-5 sm:p-8 lg:p-16 shadow-2xl">
               {" "}
-              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#a4492e]/15 blur-3xl opacity-60" />{" "}
+              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#5f6516]/15 blur-3xl opacity-60" />{" "}
               <div className="relative z-10 flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                 {" "}
                 <div className="lg:col-span-7 space-y-3 sm:space-y-6 w-full text-left">
                   {" "}
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/40 bg-[#a4492e]/15 px-3 py-1 text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/15 px-3 py-1 text-[8px] max-sm:text-[12px] sm:text-[9px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                     {" "}
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e] animate-ping" />{" "}
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#5f6516] animate-ping" />{" "}
                     HAUTE PARFUMERIE · 50 ML EXCLUSIVE
                   </div>{" "}
                   <h2
                     onClick={() =>
                       setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
                     }
-                    className="font-display text-3xl sm:text-4xl lg:text-6xl text-white font-normal leading-[1.05] tracking-tight cursor-pointer hover:text-[#a4492e] transition-colors"
+                    className="font-display text-3xl sm:text-4xl lg:text-6xl text-white font-normal leading-[1.05] tracking-tight cursor-pointer hover:text-[color:var(--accent)] transition-colors"
                   >
                     {" "}
                     Purple Oud
@@ -973,12 +719,12 @@ export default function PerfumesPage({
                     {" "}
                     <div>
                       {" "}
-                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e]/70 block">
+                      <span className="text-[9px] max-sm:text-[12px] sm:text-[10px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]/70 block">
                         {" "}
                         Exclusive Edition
                       </span>{" "}
                       <div className="flex items-baseline gap-3">
-                        <span className="font-sans font-bold text-2xl sm:text-3xl text-[#a4492e] tracking-tight inline-flex items-baseline gap-0.5">
+                        <span className="font-sans font-bold text-2xl sm:text-3xl text-[color:var(--accent)] tracking-tight inline-flex items-baseline gap-0.5">
                           ₹1,489
                         </span>
                         <span className="font-sans text-sm text-white/40 line-through inline-flex items-baseline gap-0.5">
@@ -995,7 +741,7 @@ export default function PerfumesPage({
                         );
                         if (purpleOudQty > 0) {
                           return (
-                            <div className="flex-1 sm:flex-none flex items-center gap-3 rounded-full bg-[#151412] border border-[#a4492e] px-6 py-2.5 text-white shadow-lg">
+                            <div className="on-dark flex-1 sm:flex-none flex items-center gap-3 rounded-full bg-[#111111] border border-[color:var(--accent)] px-6 py-2.5 text-white shadow-lg">
                               {" "}
                               <button
                                 onClick={() =>
@@ -1005,12 +751,12 @@ export default function PerfumesPage({
                                     -1,
                                   )
                                 }
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer"
                               >
                                 {" "}
                                 −
                               </button>{" "}
-                              <span className="text-xs font-extrabold text-[#d9a08a] uppercase tracking-wider px-2">
+                              <span className="text-xs font-extrabold text-[#cdd43f] uppercase tracking-wider px-2">
                                 {" "}
                                 {purpleOudQty} IN BAG (50ML)
                               </span>{" "}
@@ -1022,7 +768,7 @@ export default function PerfumesPage({
                                     1,
                                   )
                                 }
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer"
                               >
                                 {" "}
                                 +
@@ -1046,7 +792,7 @@ export default function PerfumesPage({
                               );
                               showToast("Added Purple Oud (50 ML) to Bag");
                             }}
-                            className="flex-1 sm:flex-none rounded-full bg-[#a4492e] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-black hover:bg-[#8a3b24] transition-all shadow-lg cursor-pointer min-h-[44px]"
+                            className="flex-1 sm:flex-none rounded-full bg-[#5f6516] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-black hover:bg-[#4a4f10] transition-all shadow-lg cursor-pointer min-h-[44px]"
                           >
                             {" "}
                             Acquire 50 ML Bottle
@@ -1057,7 +803,7 @@ export default function PerfumesPage({
                         onClick={() =>
                           setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
                         }
-                        className="flex-1 sm:flex-none rounded-full border border-[#a4492e]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[#a4492e] hover:bg-[#a4492e] hover:text-black transition-all cursor-pointer min-h-[44px]"
+                        className="flex-1 sm:flex-none rounded-full border border-[color:var(--accent)]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer min-h-[44px]"
                       >
                         {" "}
                         Explore Details
@@ -1071,7 +817,7 @@ export default function PerfumesPage({
                     onClick={() =>
                       setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
                     }
-                    className="relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-2xl border border-[#a4492e]/40 bg-[#121110] shadow-2xl group cursor-pointer"
+                    className="on-dark relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-[4px] border border-[color:var(--accent)]/40 bg-[#0e0e0e] shadow-2xl group cursor-pointer"
                   >
                     {" "}
                     <img
@@ -1093,7 +839,7 @@ export default function PerfumesPage({
                   {" "}
                   <div>
                     {" "}
-                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold block mb-1">
+                    <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold block mb-1">
                       {" "}
                       SIGNATURE COLLECTION
                     </span>{" "}
@@ -1107,7 +853,7 @@ export default function PerfumesPage({
                     {filteredAllSizes.length} Formulations
                   </span>{" "}
                 </div>{" "}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
                   {" "}
                   {filteredAllSizes.map(renderProductCard)}
                 </div>{" "}
@@ -1121,7 +867,7 @@ export default function PerfumesPage({
                   {" "}
                   <div>
                     {" "}
-                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold block mb-1">
+                    <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold block mb-1">
                       {" "}
                       ESSENTIAL EDITION
                     </span>{" "}
@@ -1135,7 +881,7 @@ export default function PerfumesPage({
                     {filteredThirtyMl.length} Formulations
                   </span>{" "}
                 </div>{" "}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
                   {" "}
                   {filteredThirtyMl.map(renderProductCard)}
                 </div>{" "}
@@ -1152,7 +898,7 @@ export default function PerfumesPage({
             className="fixed inset-0"
             onClick={() => setIsFilterDrawerOpen(false)}
           />{" "}
-          <div className="relative w-full md:max-w-md bg-[#f4f2ee] max-h-[90vh] md:max-h-full md:h-full rounded-t-3xl md:rounded-none overflow-y-auto p-6 md:p-8 shadow-2xl flex flex-col justify-between z-10 glass-bottom-sheet md:shadow-2xl border-t border-gold/40 md:border-t-0">
+          <div className="relative w-full md:max-w-md bg-[#f2f2f0] max-h-[90vh] md:max-h-full md:h-full rounded-t-3xl md:rounded-none overflow-y-auto p-6 md:p-8 shadow-2xl flex flex-col justify-between z-10 glass-bottom-sheet md:shadow-2xl border-t border-gold/40 md:border-t-0">
             {" "}
             {/* Mobile Drag Handle Bar */}
             <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mb-4 md:hidden" />{" "}
@@ -1162,7 +908,7 @@ export default function PerfumesPage({
                 {" "}
                 <div>
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold">
                     HAUTE FILTERS
                   </span>{" "}
                   <h3 className="font-display text-2xl text-ink font-medium">
@@ -1181,7 +927,7 @@ export default function PerfumesPage({
               {/* By Size */}
               <div className="space-y-3">
                 {" "}
-                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+                <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-gold">
                   Bottle Size
                 </h4>{" "}
                 <div className="flex gap-3">
@@ -1196,14 +942,14 @@ export default function PerfumesPage({
                           );
                         else setSelectedSizes((prev) => [...prev, sz]);
                       }}
-                      className={`flex-1 rounded-xl py-3 min-h-[44px] text-xs font-semibold tracking-wider transition-all cursor-pointer active:scale-95 ${
+                      className={`on-dark flex-1 rounded-[4px] py-3 min-h-[44px] text-xs font-semibold tracking-wider transition-all cursor-pointer active:scale-95 ${
                         selectedSizes.includes(sz)
                           ? "bg-ink text-white shadow-md border border-gold/40"
                           : "border border-black/10 bg-white text-ink/70 hover:border-gold"
                       }`}
                     >
                       {" "}
-                      {sz} ML
+                      {sz} ml
                     </button>
                   ))}
                 </div>{" "}
@@ -1211,7 +957,7 @@ export default function PerfumesPage({
               {/* By Mood */}
               <div className="space-y-3">
                 {" "}
-                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+                <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-gold">
                   Olfactory Mood
                 </h4>{" "}
                 <div className="grid grid-cols-2 gap-2.5 text-xs">
@@ -1228,7 +974,7 @@ export default function PerfumesPage({
                       onClick={() =>
                         setSelectedMood(selectedMood === m.id ? "all" : m.id)
                       }
-                      className={`rounded-xl p-3 min-h-[44px] text-left text-xs font-medium transition-all cursor-pointer active:scale-95 ${
+                      className={`rounded-[4px] p-3 min-h-[44px] text-left text-xs font-medium transition-all cursor-pointer active:scale-95 ${
                         selectedMood === m.id
                           ? "bg-gold text-white font-semibold shadow-sm"
                           : "border border-black/10 bg-white text-ink/70 hover:border-gold/50"
@@ -1243,7 +989,7 @@ export default function PerfumesPage({
               {/* By Scent Family */}
               <div className="space-y-3">
                 {" "}
-                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold">
+                <h4 className="text-xs font-bold uppercase tracking-[0.06em] text-gold">
                   Fragrance Family
                 </h4>{" "}
                 <div className="grid grid-cols-2 gap-2.5 text-xs">
@@ -1265,7 +1011,7 @@ export default function PerfumesPage({
                           );
                         else setSelectedScents((prev) => [...prev, sc]);
                       }}
-                      className={`rounded-xl p-3 min-h-[44px] text-left text-xs font-medium capitalize transition-all cursor-pointer active:scale-95 ${
+                      className={`rounded-[4px] p-3 min-h-[44px] text-left text-xs font-medium capitalize transition-all cursor-pointer active:scale-95 ${
                         selectedScents.includes(sc)
                           ? "bg-gold text-white font-semibold shadow-sm"
                           : "border border-black/10 bg-white text-ink/70 hover:border-gold/50"
@@ -1289,7 +1035,7 @@ export default function PerfumesPage({
               </button>{" "}
               <button
                 onClick={() => setIsFilterDrawerOpen(false)}
-                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#8a3b24] shadow-md cursor-pointer active:scale-95"
+                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#4a4f10] shadow-md cursor-pointer active:scale-95"
               >
                 {" "}
                 Apply ({filteredUnifiedList.length})
@@ -1302,7 +1048,7 @@ export default function PerfumesPage({
       {quickViewProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fadeIn">
           {" "}
-          <div className="w-full max-w-2xl rounded-2xl bg-[#f4f2ee] border border-gold/30 p-8 shadow-2xl relative grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full max-w-2xl rounded-[4px] bg-[#f2f2f0] border border-gold/30 p-8 shadow-2xl relative grid grid-cols-1 md:grid-cols-2 gap-8">
             {" "}
             <button
               onClick={() => setQuickViewProduct(null)}
@@ -1311,7 +1057,7 @@ export default function PerfumesPage({
               {" "}
               ✕
             </button>{" "}
-            <div className="aspect-[4/5] rounded-xl bg-[#f4eee6] p-4 flex items-center justify-center">
+            <div className="aspect-[4/5] rounded-[4px] bg-[#f4eee6] p-4 flex items-center justify-center">
               {" "}
               <img
                 src={quickViewProduct.img}
@@ -1325,7 +1071,7 @@ export default function PerfumesPage({
               {" "}
               <div>
                 {" "}
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold">
+                <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold">
                   {" "}
                   {quickViewProduct.num}
                 </span>{" "}
@@ -1343,7 +1089,7 @@ export default function PerfumesPage({
                 )}
                 <div className="mt-4 pt-3 border-t border-black/8 space-y-2">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-ink/40">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink/40">
                     Key Notes:
                   </span>{" "}
                   <div className="flex flex-wrap gap-1.5">
@@ -1351,7 +1097,7 @@ export default function PerfumesPage({
                     {quickViewProduct.traces.map((note) => (
                       <span
                         key={note}
-                        className="rounded-full bg-gold/10 px-3 py-1 text-[10px] font-medium text-gold"
+                        className="rounded-full bg-gold/10 px-3 py-1 text-[10px] max-sm:text-[12px] font-medium text-gold"
                       >
                         {" "}
                         {note}
@@ -1393,7 +1139,7 @@ export default function PerfumesPage({
                       showToast(`Added ${quickViewProduct.name} to Bag`);
                       setQuickViewProduct(null);
                     }}
-                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
+                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
                   >
                     {" "}
                     Add to Bag
@@ -1419,7 +1165,7 @@ export default function PerfumesPage({
       {isQuizOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 backdrop-blur-sm p-4">
           {" "}
-          <div className="w-full max-w-lg rounded-2xl bg-[#f4f2ee] border border-gold/30 p-8 shadow-2xl relative">
+          <div className="w-full max-w-lg rounded-[4px] bg-[#f2f2f0] border border-gold/30 p-8 shadow-2xl relative">
             {" "}
             <button
               onClick={() => {
@@ -1431,7 +1177,7 @@ export default function PerfumesPage({
               {" "}
               ✕
             </button>{" "}
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold block mb-1">
+            <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold block mb-1">
               {" "}
               HAUTE PARFUMERIE CONCIERGE
             </span>{" "}
@@ -1457,7 +1203,7 @@ export default function PerfumesPage({
                   <button
                     key={ans}
                     onClick={() => setQuizStep(1)}
-                    className="w-full rounded-xl border border-black/10 bg-white p-3.5 text-left text-xs font-medium text-ink hover:border-gold hover:bg-gold/5 transition-all cursor-pointer"
+                    className="w-full rounded-[4px] border border-black/10 bg-white p-3.5 text-left text-xs font-medium text-ink hover:border-gold hover:bg-gold/5 transition-all cursor-pointer"
                   >
                     {" "}
                     {ans}
@@ -1481,7 +1227,7 @@ export default function PerfumesPage({
                   <button
                     key={ans}
                     onClick={() => setQuizStep(2)}
-                    className="w-full rounded-xl border border-black/10 bg-white p-3.5 text-left text-xs font-medium text-ink hover:border-gold hover:bg-gold/5 transition-all cursor-pointer"
+                    className="w-full rounded-[4px] border border-black/10 bg-white p-3.5 text-left text-xs font-medium text-ink hover:border-gold hover:bg-gold/5 transition-all cursor-pointer"
                   >
                     {" "}
                     {ans}
@@ -1495,7 +1241,7 @@ export default function PerfumesPage({
                 <div className="text-4xl animate-bounce"></div>{" "}
                 <div>
                   {" "}
-                  <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gold">
+                  <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-gold">
                     Match Found
                   </span>{" "}
                   <h4 className="font-display text-2xl font-normal text-ink mt-1">
@@ -1513,7 +1259,7 @@ export default function PerfumesPage({
                     setQuizStep(0);
                     showToast("Fragrance match applied to collection");
                   }}
-                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md"
+                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md"
                 >
                   {" "}
                   Explore Match

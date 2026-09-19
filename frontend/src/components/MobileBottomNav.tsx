@@ -14,7 +14,6 @@ export default function MobileBottomNav({
   currentPage,
   onNavigate,
   onOpenCart,
-  onOpenBundleModal,
   onToggleSearch,
   cartCount,
 }: MobileBottomNavProps) {
@@ -188,7 +187,7 @@ export default function MobileBottomNav({
           padding: 0 3.5px;
           border-radius: 999px;
           background: #D9B266;
-          color: #21150F;
+          color: #161616;
           font-size: 8px;
           font-weight: 700;
           font-family: 'Montserrat', sans-serif;

@@ -25,7 +25,7 @@ export default function Newsletter() {
             <p className="text-[13px] font-medium tracking-[0.05em] text-ink uppercase">
               Be the First to Know
             </p>{" "}
-            <p className="mt-0.5 text-[11.5px] text-ink/50">
+            <p className="mt-0.5 text-[11.5px] max-sm:text-[12px] text-ink/50">
               {" "}
               Join our community for exclusive offers, new launches and
               fragrance stories.
@@ -42,7 +42,7 @@ export default function Newsletter() {
             type="email"
             required
             placeholder="Enter your email address"
-            className="w-full border border-black/15 bg-white px-4 py-3 text-[12px] text-ink placeholder:text-ink/40 focus:border-[#a4492e] focus:outline-none rounded-md sm:rounded-none sm:rounded-l-md"
+            className="w-full border border-black/15 bg-white px-4 py-3 text-[12px] text-ink placeholder:text-ink/40 focus:border-[color:var(--accent)] focus:outline-none rounded-md sm:rounded-none sm:rounded-l-md"
             style={{ fontFamily: "var(--font-sans)" }}
           />{" "}
           <button

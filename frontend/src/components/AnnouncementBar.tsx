@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
         .sentire-announcement-bar {
           display: block !important;
           background-color: #000000 !important;
-          border-bottom: 1px solid rgba(164, 73, 46, 0.25);
+          border-bottom: 1px solid rgba(95, 101, 22, 0.25);
         }
         .sentire-marquee-track {
           display: flex;
@@ -37,9 +37,9 @@ export default function AnnouncementBar() {
           animation: marqueeScroll 20s linear infinite;
         }
       `}</style>{" "}
-      <div className="sentire-announcement-bar w-full text-[#f4f2ee] overflow-hidden select-none py-1.5 z-50">
+      <div className="sentire-announcement-bar w-full text-[#f2f2f0] overflow-hidden select-none py-1.5 z-50">
         {" "}
-        <div className="sentire-marquee-track text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-white">
+        <div className="sentire-marquee-track text-[10px] max-sm:text-[12px] sm:text-[11px] font-sans font-bold tracking-[0.06em] uppercase text-white">
           {" "}
           {/* First Loop */}
           {items.map((item, i) => (
@@ -49,7 +49,7 @@ export default function AnnouncementBar() {
             >
               {" "}
               <span>{item.text}</span>{" "}
-              <span className="ml-4 sm:ml-8 text-[#a4492e]">
+              <span className="ml-4 sm:ml-8 text-[color:var(--accent)]">
                 {item.icon}
               </span>{" "}
             </span>
@@ -62,7 +62,7 @@ export default function AnnouncementBar() {
             >
               {" "}
               <span>{item.text}</span>{" "}
-              <span className="ml-4 sm:ml-8 text-[#a4492e]">
+              <span className="ml-4 sm:ml-8 text-[color:var(--accent)]">
                 {item.icon}
               </span>{" "}
             </span>

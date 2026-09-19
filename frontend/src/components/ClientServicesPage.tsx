@@ -308,42 +308,42 @@ export default function ClientServicesPage({
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f2ee] text-[#1c1b18] font-sans">
+    <div className="min-h-screen bg-[#f2f2f0] text-[#161616] font-sans">
       {" "}
       {/* ── Breadcrumb Bar ── */}
-      <div className="border-b border-[#a4492e]/15 bg-[#f4f2ee] px-5 py-4 lg:px-12">
+      <div className="border-b border-[color:var(--accent)]/15 bg-[#f2f2f0] px-5 py-4 lg:px-12">
         {" "}
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between text-[11px] font-medium tracking-[0.12em] uppercase text-ink/60">
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between text-[11px] max-sm:text-[12px] font-medium tracking-[0.12em] uppercase text-ink/60">
           {" "}
           <div className="flex items-center gap-2">
             {" "}
             <button
               onClick={onBackToHome}
-              className="hover:text-[#a4492e] transition-colors cursor-pointer"
+              className="hover:text-[color:var(--accent)] transition-colors cursor-pointer"
             >
               {" "}
               Home
             </button>{" "}
             <span>/</span>{" "}
-            <span className="text-[#a4492e] font-bold">
+            <span className="text-[color:var(--accent)] font-bold">
               Client Services
             </span>{" "}
           </div>{" "}
-          <span className="hidden sm:inline text-[10px] tracking-[0.2em] text-[#a4492e]">
+          <span className="hidden sm:inline text-[10px] max-sm:text-[12px] tracking-[0.06em] text-[color:var(--accent)]">
             {" "}
             S P Ventures • Jaipur Maison Desk
           </span>{" "}
         </div>{" "}
       </div>{" "}
       {/* ── Section 01: Hero Section ── */}
-      <section className="relative overflow-hidden border-b border-[#a4492e]/15 bg-[#151412] text-[#f4f2ee] py-20 lg:py-28 px-5 lg:px-12">
+      <section className="on-dark relative overflow-hidden border-b border-[color:var(--accent)]/15 bg-[#111111] text-[#f2f2f0] py-20 lg:py-28 px-5 lg:px-12">
         {" "}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#a4492e]/20 via-transparent to-transparent opacity-30 pointer-events-none" />{" "}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#5f6516]/20 via-transparent to-transparent opacity-30 pointer-events-none" />{" "}
         <div className="mx-auto max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {" "}
           <div className="lg:col-span-7 space-y-6">
             {" "}
-            <span className="inline-block rounded-full bg-[#a4492e]/15 border border-[#a4492e]/30 px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e]">
+            <span className="inline-block rounded-full bg-[#5f6516]/15 border border-[color:var(--accent)]/30 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
               SENTIRE CLIENT SERVICES
             </span>{" "}
@@ -358,7 +358,7 @@ export default function ClientServicesPage({
               guide you personally through every step of your Sentire
               experience.
             </p>{" "}
-            <p className="text-xs text-[#a4492e] italic font-serif tracking-wide">
+            <p className="text-xs text-[color:var(--accent)] italic font-serif tracking-wide">
               {" "}
               "Consider us your private point of contact with Sentire."
             </p>{" "}
@@ -366,14 +366,14 @@ export default function ClientServicesPage({
               {" "}
               <a
                 href="#enquiry-form"
-                className="px-7 py-3.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.22em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
+                className="px-7 py-3.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
               >
                 {" "}
                 BEGIN AN ENQUIRY
               </a>{" "}
               <a
                 href="#contact-channels"
-                className="px-6 py-3.5 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.18em] hover:border-[#a4492e] hover:text-[#a4492e] transition-all cursor-pointer"
+                className="px-6 py-3.5 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.06em] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all cursor-pointer"
               >
                 {" "}
                 VIEW CONTACT OPTIONS →
@@ -383,9 +383,9 @@ export default function ClientServicesPage({
           {/* Hero Visual */}
           <div className="lg:col-span-5 relative flex justify-center">
             {" "}
-            <div className="relative w-full max-w-[380px] rounded-2xl overflow-hidden border border-[#a4492e]/30 shadow-2xl bg-[#151412] p-6 text-center">
+            <div className="on-dark relative w-full max-w-[380px] rounded-[4px] overflow-hidden border border-[color:var(--accent)]/30 shadow-2xl bg-[#111111] p-6 text-center">
               {" "}
-              <div className="h-64 w-full rounded-xl overflow-hidden bg-[#1f1913] flex items-center justify-center relative mb-5">
+              <div className="h-64 w-full rounded-[4px] overflow-hidden bg-[#1f1913] flex items-center justify-center relative mb-5">
                 {" "}
                 <img
                   src="/assets/white-oud.png"
@@ -395,9 +395,9 @@ export default function ClientServicesPage({
                   loading="lazy"
                   className="h-full w-full object-contain p-4 hover:scale-105 transition-transform duration-700"
                 />{" "}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#151412] via-transparent to-transparent opacity-60" />{" "}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent opacity-60" />{" "}
               </div>{" "}
-              <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+              <span className="text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                 {" "}
                 PRIVATE CLIENT DESK
               </span>{" "}
@@ -405,7 +405,7 @@ export default function ClientServicesPage({
                 {" "}
                 Personal Olfactory Care
               </h3>{" "}
-              <p className="text-[11px] text-white/60 mt-1">
+              <p className="text-[11px] max-sm:text-[12px] text-white/60 mt-1">
                 {" "}
                 Jaipur, Rajasthan • Mon – Sat | 10:00 AM – 7:00 PM IST
               </p>{" "}
@@ -416,7 +416,7 @@ export default function ClientServicesPage({
       {/* ── Section 02 & 08: Quick Contact Bar & Availability ── */}
       <section
         id="contact-channels"
-        className="border-b border-[#a4492e]/15 bg-white py-10 px-5 lg:px-12"
+        className="border-b border-[color:var(--accent)]/15 bg-white py-10 px-5 lg:px-12"
       >
         {" "}
         <div className="mx-auto max-w-[1280px]">
@@ -424,7 +424,7 @@ export default function ClientServicesPage({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {" "}
             {/* Call */}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/20 flex flex-col justify-between hover:border-[color:var(--accent)] transition-all">
               {" "}
               <div>
                 {" "}
@@ -432,23 +432,23 @@ export default function ClientServicesPage({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
                   Call client services
                 </h4>{" "}
-                <p className="text-[11px] text-ink/60 mt-1">
+                <p className="text-[11px] max-sm:text-[12px] text-ink/60 mt-1">
                   Speak directly with our team
                 </p>{" "}
                 <a
                   href="tel:+919950891935"
-                  className="font-display text-base font-semibold text-[#a4492e] mt-2 block hover:underline"
+                  className="font-display text-base font-semibold text-[color:var(--accent)] mt-2 block hover:underline"
                 >
                   {" "}
                   +91 99508 91935
                 </a>{" "}
               </div>{" "}
-              <span className="text-[9.5px] text-ink/40 mt-3 block">
+              <span className="text-[9.5px] max-sm:text-[12px] text-ink/40 mt-3 block">
                 Mon – Sat | 10:00 AM – 7:00 PM IST
               </span>{" "}
             </div>{" "}
             {/* Email */}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/20 flex flex-col justify-between hover:border-[color:var(--accent)] transition-all">
               {" "}
               <div>
                 {" "}
@@ -456,23 +456,23 @@ export default function ClientServicesPage({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
                   Email us
                 </h4>{" "}
-                <p className="text-[11px] text-ink/60 mt-1">
+                <p className="text-[11px] max-sm:text-[12px] text-ink/60 mt-1">
                   For general & order enquiries
                 </p>{" "}
                 <a
                   href="mailto:support@sentirebypc.com"
-                  className="font-display text-sm font-semibold text-[#a4492e] mt-2 block hover:underline truncate"
+                  className="font-display text-sm font-semibold text-[color:var(--accent)] mt-2 block hover:underline truncate"
                 >
                   {" "}
                   support@sentirebypc.com
                 </a>{" "}
               </div>{" "}
-              <span className="text-[9.5px] text-ink/40 mt-3 block">
+              <span className="text-[9.5px] max-sm:text-[12px] text-ink/40 mt-3 block">
                 Response within one business day
               </span>{" "}
             </div>{" "}
             {/* WhatsApp */}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/20 flex flex-col justify-between hover:border-[#a4492e] transition-all">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/20 flex flex-col justify-between hover:border-[color:var(--accent)] transition-all">
               {" "}
               <div>
                 {" "}
@@ -480,25 +480,25 @@ export default function ClientServicesPage({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
                   Whatsapp care
                 </h4>{" "}
-                <p className="text-[11px] text-ink/60 mt-1">
+                <p className="text-[11px] max-sm:text-[12px] text-ink/60 mt-1">
                   Instant messaging concierge
                 </p>{" "}
                 <a
                   href="https://wa.me/919950891935"
                   target="_blank"
                   rel="noreferrer"
-                  className="font-display text-sm font-semibold text-[#a4492e] mt-2 block hover:underline"
+                  className="font-display text-sm font-semibold text-[color:var(--accent)] mt-2 block hover:underline"
                 >
                   {" "}
                   Chat on WhatsApp →
                 </a>{" "}
               </div>{" "}
-              <span className="text-[9.5px] text-ink/40 mt-3 block">
+              <span className="text-[9.5px] max-sm:text-[12px] text-ink/40 mt-3 block">
                 Available during operating hours
               </span>{" "}
             </div>{" "}
             {/* Track Order */}
-            <div className="p-5 rounded-2xl bg-[#151412] text-white border border-[#a4492e]/30 flex flex-col justify-between shadow-md">
+            <div className="on-dark p-5 rounded-[4px] bg-[#111111] text-white border border-[color:var(--accent)]/30 flex flex-col justify-between shadow-md">
               {" "}
               <div>
                 {" "}
@@ -506,13 +506,13 @@ export default function ClientServicesPage({
                 <h4 className="text-xs font-bold uppercase tracking-wider text-gold mt-2">
                   Track your order
                 </h4>{" "}
-                <p className="text-[11px] text-white/60 mt-1">
+                <p className="text-[11px] max-sm:text-[12px] text-white/60 mt-1">
                   Check delivery & AWB status
                 </p>{" "}
               </div>{" "}
               <button
                 onClick={onNavigateToTrackOrder}
-                className="mt-4 px-4 py-2.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-[10px] uppercase tracking-widest hover:bg-[#a4492e] transition-all cursor-pointer text-center"
+                className="mt-4 px-4 py-2.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all cursor-pointer text-center"
               >
                 {" "}
                 TRACK PACKAGE →
@@ -527,13 +527,13 @@ export default function ClientServicesPage({
         className="py-12 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24"
       >
         {" "}
-        <div className="bg-white rounded-3xl border border-[#a4492e]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+        <div className="bg-white rounded-[4px] border border-[color:var(--accent)]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
           {" "}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
             {" "}
             <div>
               {" "}
-              <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e] block mb-1">
+              <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
                 POLICY & DISPATCH CONCIERGE
               </span>{" "}
@@ -542,14 +542,14 @@ export default function ClientServicesPage({
                 <span></span> Shipping & Express Delivery
               </h2>{" "}
             </div>{" "}
-            <span className="px-4 py-1.5 rounded-full bg-[#f4f2ee] border border-[#a4492e]/30 text-xs font-bold text-[#a4492e] uppercase tracking-widest self-start md:self-auto">
+            <span className="px-4 py-1.5 rounded-full bg-[#f2f2f0] border border-[color:var(--accent)]/30 text-xs font-bold text-[color:var(--accent)] uppercase tracking-[0.06em] self-start md:self-auto">
               {" "}
               Pan-India 28,000+ Pincodes
             </span>{" "}
           </div>{" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
             {" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -561,7 +561,7 @@ export default function ClientServicesPage({
                 dispatched within 24 hours of order placement.
               </p>{" "}
             </div>{" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -573,7 +573,7 @@ export default function ClientServicesPage({
                 swift 3 to 5 business day nationwide arrival.
               </p>{" "}
             </div>{" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -585,7 +585,7 @@ export default function ClientServicesPage({
                 Standard ₹99 delivery fee applies on smaller orders.
               </p>{" "}
             </div>{" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -606,13 +606,13 @@ export default function ClientServicesPage({
         className="py-6 px-5 lg:px-12 mx-auto max-w-[1280px] scroll-mt-24"
       >
         {" "}
-        <div className="bg-white rounded-3xl border border-[#a4492e]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
+        <div className="bg-white rounded-[4px] border border-[color:var(--accent)]/30 p-8 lg:p-10 shadow-xl relative overflow-hidden">
           {" "}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-black/10">
             {" "}
             <div>
               {" "}
-              <span className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#a4492e] block mb-1">
+              <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
                 GUARANTEE & REPLACEMENT CONCIERGE
               </span>{" "}
@@ -621,14 +621,14 @@ export default function ClientServicesPage({
                 <span>↩</span> Returns & Replacements Policy
               </h2>{" "}
             </div>{" "}
-            <span className="px-4 py-1.5 rounded-full bg-[#f4f2ee] border border-[#a4492e]/30 text-xs font-bold text-[#a4492e] uppercase tracking-widest self-start md:self-auto">
+            <span className="px-4 py-1.5 rounded-full bg-[#f2f2f0] border border-[color:var(--accent)]/30 text-xs font-bold text-[color:var(--accent)] uppercase tracking-[0.06em] self-start md:self-auto">
               {" "}
               100% Transit Guarantee
             </span>{" "}
           </div>{" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -640,7 +640,7 @@ export default function ClientServicesPage({
                 an immediate complimentary replacement without hassle.
               </p>{" "}
             </div>{" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl">⏱</span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -653,7 +653,7 @@ export default function ClientServicesPage({
                 request.
               </p>{" "}
             </div>{" "}
-            <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-black/5">
+            <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
@@ -673,7 +673,7 @@ export default function ClientServicesPage({
         {" "}
         <div className="text-center max-w-2xl mx-auto mb-10">
           {" "}
-          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+          <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
             {" "}
             SELECT YOUR ENQUIRY TYPE
           </span>{" "}
@@ -698,10 +698,10 @@ export default function ClientServicesPage({
                   setActiveCategory(cat.id);
                   setSubmissionRef(null);
                 }}
-                className={`p-4 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`on-dark p-4 rounded-[4px] border text-left transition-all cursor-pointer flex flex-col justify-between ${
                   isSelected
-                    ? "bg-[#151412] text-white border-[#a4492e] shadow-lg scale-[1.02]"
-                    : "bg-white text-ink border-black/10 hover:border-[#a4492e]/50 hover:bg-[#fcf8f2]"
+                    ? "bg-[#111111] text-white border-[color:var(--accent)] shadow-lg scale-[1.02]"
+                    : "bg-white text-ink border-black/10 hover:border-[color:var(--accent)]/50 hover:bg-[#fcf8f2]"
                 }`}
               >
                 {" "}
@@ -709,7 +709,7 @@ export default function ClientServicesPage({
                   {" "}
                   <span className="text-xl">{cat.icon}</span>{" "}
                   {isSelected && (
-                    <span className="h-2 w-2 rounded-full bg-[#a4492e]" />
+                    <span className="h-2 w-2 rounded-full bg-[#5f6516]" />
                   )}
                 </div>{" "}
                 <div className="mt-3">
@@ -721,7 +721,7 @@ export default function ClientServicesPage({
                     {cat.label}
                   </h4>{" "}
                   <p
-                    className={`text-[10px] mt-1 line-clamp-2 ${isSelected ? "text-white/60" : "text-ink/50"}`}
+                    className={`text-[10px] max-sm:text-[12px] mt-1 line-clamp-2 ${isSelected ? "text-white/60" : "text-ink/50"}`}
                   >
                     {" "}
                     {cat.desc}
@@ -735,19 +735,19 @@ export default function ClientServicesPage({
       {/* ── Section 10–35: Intelligent Contact Form ── */}
       <section
         id="enquiry-form"
-        className="py-12 px-5 lg:px-12 bg-[#eeebe5] border-y border-[#a4492e]/15"
+        className="py-12 px-5 lg:px-12 bg-[#e9e9e6] border-y border-[color:var(--accent)]/15"
       >
         {" "}
         <div className="mx-auto max-w-[900px]">
           {" "}
-          <div className="bg-white rounded-3xl border border-[#a4492e]/25 p-6 sm:p-12 shadow-2xl">
+          <div className="bg-white rounded-[4px] border border-[color:var(--accent)]/25 p-6 sm:p-12 shadow-2xl">
             {" "}
             {/* Header of form */}
             <div className="border-b border-black/10 pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               {" "}
               <div>
                 {" "}
-                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                   {" "}
                   CLIENT SERVICES FORM
                 </span>{" "}
@@ -756,7 +756,7 @@ export default function ClientServicesPage({
                   {CATEGORIES.find((c) => c.id === activeCategory)?.label}
                 </h3>{" "}
               </div>{" "}
-              <span className="px-3 py-1 rounded-full bg-[#f4f2ee] border border-black/10 text-[10px] font-bold text-ink/70 uppercase tracking-widest self-start sm:self-auto">
+              <span className="px-3 py-1 rounded-full bg-[#f2f2f0] border border-black/10 text-[10px] max-sm:text-[12px] font-bold text-ink/70 uppercase tracking-[0.06em] self-start sm:self-auto">
                 {" "}
                 {CATEGORIES.find((c) => c.id === activeCategory)?.desc}
               </span>{" "}
@@ -765,11 +765,11 @@ export default function ClientServicesPage({
             {submissionRef ? (
               <div className="text-center py-12 px-4 space-y-5 animate-fadeIn">
                 {" "}
-                <div className="h-16 w-16 rounded-full bg-[#a4492e]/20 border border-[#a4492e] text-[#a4492e] flex items-center justify-center text-2xl mx-auto">
+                <div className="h-16 w-16 rounded-full bg-[#5f6516]/20 border border-[color:var(--accent)] text-[color:var(--accent)] flex items-center justify-center text-2xl mx-auto">
                   {" "}
                   ✓
                 </div>{" "}
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#a4492e] block">
+                <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block">
                   {" "}
                   ENQUIRY RECEIVED
                 </span>{" "}
@@ -781,12 +781,12 @@ export default function ClientServicesPage({
                   Your message has been received by our Jaipur Client Services
                   desk. A confirmation has been sent to your email.
                 </p>{" "}
-                <div className="bg-[#f4f2ee] border border-[#a4492e]/30 p-4 rounded-xl inline-block text-center">
+                <div className="bg-[#f2f2f0] border border-[color:var(--accent)]/30 p-4 rounded-[4px] inline-block text-center">
                   {" "}
-                  <span className="text-[9px] font-bold text-ink/50 uppercase tracking-widest block">
+                  <span className="text-[9px] max-sm:text-[12px] font-bold text-ink/50 uppercase tracking-[0.06em] block">
                     Reference Code
                   </span>{" "}
-                  <span className="font-display text-xl font-bold text-[#a4492e]">
+                  <span className="font-display text-xl font-bold text-[color:var(--accent)]">
                     {submissionRef}
                   </span>{" "}
                 </div>{" "}
@@ -794,14 +794,14 @@ export default function ClientServicesPage({
                   {" "}
                   <button
                     onClick={() => setSubmissionRef(null)}
-                    className="px-6 py-3 rounded-lg border border-black/20 text-ink font-bold text-xs uppercase tracking-widest hover:border-[#a4492e] transition-colors cursor-pointer"
+                    className="px-6 py-3 rounded-lg border border-black/20 text-ink font-bold text-xs uppercase tracking-[0.06em] hover:border-[color:var(--accent)] transition-colors cursor-pointer"
                   >
                     {" "}
                     Submit Another Enquiry
                   </button>{" "}
                   <button
                     onClick={onNavigateToPerfumes}
-                    className="px-6 py-3 rounded-lg bg-[#151412] text-[#a4492e] font-bold text-xs uppercase tracking-widest hover:bg-[#1a1511] transition-colors cursor-pointer"
+                    className="on-dark px-6 py-3 rounded-lg bg-[#111111] text-[color:var(--accent)] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#1a1511] transition-colors cursor-pointer"
                   >
                     {" "}
                     Explore Perfume Library →
@@ -816,7 +816,7 @@ export default function ClientServicesPage({
                   {" "}
                   <div>
                     {" "}
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                       {" "}
                       First Name *
                     </label>{" "}
@@ -827,12 +827,12 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       required
                       placeholder="e.g. Alexander"
-                      className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
+                      className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
                     />{" "}
                   </div>{" "}
                   <div>
                     {" "}
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                       {" "}
                       Last Name
                     </label>{" "}
@@ -842,7 +842,7 @@ export default function ClientServicesPage({
                       value={formData.lastName}
                       onChange={handleInputChange}
                       placeholder="e.g. Wright"
-                      className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
+                      className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
                     />{" "}
                   </div>{" "}
                 </div>{" "}
@@ -850,7 +850,7 @@ export default function ClientServicesPage({
                   {" "}
                   <div>
                     {" "}
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                       {" "}
                       Email Address *
                     </label>{" "}
@@ -861,12 +861,12 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       required
                       placeholder="name@example.com"
-                      className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
+                      className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
                     />{" "}
                   </div>{" "}
                   <div>
                     {" "}
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                    <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                       {" "}
                       Phone Number (Optional)
                     </label>{" "}
@@ -876,13 +876,13 @@ export default function ClientServicesPage({
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 98765 43210"
-                      className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
+                      className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
                     />{" "}
                   </div>{" "}
                 </div>{" "}
                 <div>
                   {" "}
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                  <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                     {" "}
                     Preferred Contact Channel
                   </label>{" "}
@@ -900,7 +900,7 @@ export default function ClientServicesPage({
                           value={method}
                           checked={formData.preferredContact === method}
                           onChange={handleInputChange}
-                          className="accent-[#a4492e]"
+                          className="accent-[#5f6516]"
                         />{" "}
                         {method}
                       </label>
@@ -912,9 +912,9 @@ export default function ClientServicesPage({
                 {(activeCategory === "order-support" ||
                   activeCategory === "delivery-tracking" ||
                   activeCategory === "returns-exchanges") && (
-                  <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                  <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/30 space-y-4">
                     {" "}
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       {" "}
                       Order & Delivery Details
                     </h4>{" "}
@@ -922,7 +922,7 @@ export default function ClientServicesPage({
                       {" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Order Number *
                         </label>{" "}
@@ -933,12 +933,12 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           required
                           placeholder="e.g. SNT-84920"
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
                         />{" "}
                       </div>{" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Specific Query Type
                         </label>{" "}
@@ -946,7 +946,7 @@ export default function ClientServicesPage({
                           name="issueType"
                           value={formData.issueType}
                           onChange={handleInputChange}
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
                         >
                           {" "}
                           <option value="Order Status / Update">
@@ -974,7 +974,7 @@ export default function ClientServicesPage({
                     {activeCategory === "returns-exchanges" && (
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Upload Photo of Product / Package (Optional)
                         </label>{" "}
@@ -982,15 +982,15 @@ export default function ClientServicesPage({
                           type="file"
                           onChange={handleFileChange}
                           accept="image/*"
-                          className="w-full bg-white border border-black/15 rounded-xl p-2 text-xs text-ink file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#a4492e] file:text-black hover:file:bg-[#a4492e]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] p-2 text-xs text-ink file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#5f6516] file:text-black hover:file:bg-[#5f6516]"
                         />{" "}
                         {formData.fileName && (
-                          <span className="text-[10px] text-green-700 font-bold mt-1 block">
+                          <span className="text-[10px] max-sm:text-[12px] text-green-700 font-bold mt-1 block">
                             {" "}
                             Attached: {formData.fileName}
                           </span>
                         )}
-                        <p className="text-[10px] text-ink/50 mt-1 italic">
+                        <p className="text-[10px] max-sm:text-[12px] text-ink/50 mt-1 italic">
                           {" "}
                           Please keep original packaging while our Jaipur team
                           reviews your request.
@@ -1001,9 +1001,9 @@ export default function ClientServicesPage({
                 )}
                 {/* 2. Product Guidance */}
                 {activeCategory === "product-guidance" && (
-                  <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                  <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/30 space-y-4">
                     {" "}
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       {" "}
                       Scent Preference Profile
                     </h4>{" "}
@@ -1011,11 +1011,11 @@ export default function ClientServicesPage({
                       {" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Primary Occasion
                         </label>{" "}
-                        <select className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none">
+                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none">
                           {" "}
                           <option>Everyday Signature Scent</option>{" "}
                           <option>Evening & Dinner Parties</option>{" "}
@@ -1025,11 +1025,11 @@ export default function ClientServicesPage({
                       </div>{" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Favorite Scent Family
                         </label>{" "}
-                        <select className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none">
+                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none">
                           {" "}
                           <option>
                             Woody & Smoky Oud (e.g., White Oud, Purple Oud)
@@ -1050,9 +1050,9 @@ export default function ClientServicesPage({
                 )}
                 {/* 3. Personalisation */}
                 {activeCategory === "personalisation" && (
-                  <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                  <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/30 space-y-4">
                     {" "}
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       {" "}
                       Bespoke Laser Engraving & Packaging
                     </h4>{" "}
@@ -1060,7 +1060,7 @@ export default function ClientServicesPage({
                       {" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Desired Engraving Text (Max 20 chars)
                         </label>{" "}
@@ -1071,12 +1071,12 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           placeholder="e.g. P.C. • 2026"
                           maxLength={20}
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
                         />{" "}
                       </div>{" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Required Delivery Date
                         </label>{" "}
@@ -1085,7 +1085,7 @@ export default function ClientServicesPage({
                           name="requiredDate"
                           value={formData.requiredDate}
                           onChange={handleInputChange}
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[#a4492e]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
                         />{" "}
                       </div>{" "}
                     </div>{" "}
@@ -1093,11 +1093,11 @@ export default function ClientServicesPage({
                 )}
                 {/* 4. Corporate & Bulk Gifting (Special Wizard Layout) */}
                 {activeCategory === "corporate-gifting" && (
-                  <div className="p-5 rounded-2xl bg-[#151412] text-white border border-[#a4492e]/40 space-y-4 shadow-xl">
+                  <div className="on-dark p-5 rounded-[4px] bg-[#111111] text-white border border-[color:var(--accent)]/40 space-y-4 shadow-xl">
                     {" "}
                     <div className="flex items-center justify-between border-b border-white/10 pb-3">
                       {" "}
-                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                      <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                         {" "}
                         B2B & CORPORATE ENQUIRY WIZARD — STEP 0{corpStep} OF 02
                       </span>{" "}
@@ -1106,12 +1106,12 @@ export default function ClientServicesPage({
                         <button
                           type="button"
                           onClick={() => setCorpStep(1)}
-                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 1 ? "bg-[#a4492e]" : "bg-white/20"}`}
+                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 1 ? "bg-[#5f6516]" : "bg-white/20"}`}
                         />{" "}
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
-                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 2 ? "bg-[#a4492e]" : "bg-white/20"}`}
+                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 2 ? "bg-[#5f6516]" : "bg-white/20"}`}
                         />{" "}
                       </div>{" "}
                     </div>{" "}
@@ -1122,7 +1122,7 @@ export default function ClientServicesPage({
                           {" "}
                           <div>
                             {" "}
-                            <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                               {" "}
                               Company / Organisation *
                             </label>{" "}
@@ -1132,12 +1132,12 @@ export default function ClientServicesPage({
                               value={formData.companyName}
                               onChange={handleInputChange}
                               placeholder="e.g. Luxury Private Group"
-                              className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
+                              className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
                             />{" "}
                           </div>{" "}
                           <div>
                             {" "}
-                            <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                               {" "}
                               Purpose of Gifting
                             </label>{" "}
@@ -1145,7 +1145,7 @@ export default function ClientServicesPage({
                               name="purpose"
                               value={formData.purpose}
                               onChange={handleInputChange}
-                              className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
+                              className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
                             >
                               {" "}
                               <option>Corporate & Client Gifting</option>{" "}
@@ -1161,7 +1161,7 @@ export default function ClientServicesPage({
                           {" "}
                           <div>
                             {" "}
-                            <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                               {" "}
                               Estimated Quantity
                             </label>{" "}
@@ -1169,7 +1169,7 @@ export default function ClientServicesPage({
                               name="quantity"
                               value={formData.quantity}
                               onChange={handleInputChange}
-                              className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
+                              className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
                             >
                               {" "}
                               <option>20 – 50 units</option>{" "}
@@ -1180,7 +1180,7 @@ export default function ClientServicesPage({
                           </div>{" "}
                           <div>
                             {" "}
-                            <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                               {" "}
                               GST Invoice Required?
                             </label>{" "}
@@ -1188,7 +1188,7 @@ export default function ClientServicesPage({
                               name="gstRequired"
                               value={formData.gstRequired}
                               onChange={handleInputChange}
-                              className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#a4492e]"
+                              className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
                             >
                               {" "}
                               <option>Yes — GST Invoice Required</option>{" "}
@@ -1199,7 +1199,7 @@ export default function ClientServicesPage({
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
-                          className="mt-2 w-full py-2.5 rounded-xl bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-widest hover:bg-[#a4492e] transition-all cursor-pointer"
+                          className="mt-2 w-full py-2.5 rounded-[4px] bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all cursor-pointer"
                         >
                           {" "}
                           Next: Presentation & Details →
@@ -1210,7 +1210,7 @@ export default function ClientServicesPage({
                         {" "}
                         <div>
                           {" "}
-                          <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                          <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                             {" "}
                             Delivery Destination(s)
                           </label>{" "}
@@ -1220,13 +1220,13 @@ export default function ClientServicesPage({
                             value={formData.deliveryLocation}
                             onChange={handleInputChange}
                             placeholder="e.g. Single HQ in Mumbai OR Multi-address across India"
-                            className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
+                            className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
                           />{" "}
                         </div>{" "}
                         {formData.gstRequired.startsWith("Yes") && (
                           <div>
                             {" "}
-                            <label className="block text-[10.5px] font-bold uppercase tracking-wider text-white/80 mb-1">
+                            <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white/80 mb-1">
                               {" "}
                               Company GSTIN Number
                             </label>{" "}
@@ -1236,14 +1236,14 @@ export default function ClientServicesPage({
                               value={formData.gstin}
                               onChange={handleInputChange}
                               placeholder="e.g. 08AAAAA0000A1Z5"
-                              className="w-full bg-[#1c1b18] border border-white/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[#a4492e]"
+                              className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
                             />{" "}
                           </div>
                         )}
                         <button
                           type="button"
                           onClick={() => setCorpStep(1)}
-                          className="text-[10px] text-gold hover:underline cursor-pointer"
+                          className="text-[10px] max-sm:text-[12px] text-gold hover:underline cursor-pointer"
                         >
                           {" "}
                           ← Back to Step 1
@@ -1254,9 +1254,9 @@ export default function ClientServicesPage({
                 )}
                 {/* 5. Wholesale & Distribution */}
                 {activeCategory === "wholesale-distribution" && (
-                  <div className="p-5 rounded-2xl bg-[#f7f5f2] border border-[#a4492e]/30 space-y-4">
+                  <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-[color:var(--accent)]/30 space-y-4">
                     {" "}
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       {" "}
                       Commercial Wholesale & Distribution Footprint
                     </h4>{" "}
@@ -1264,7 +1264,7 @@ export default function ClientServicesPage({
                       {" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Business Model
                         </label>{" "}
@@ -1272,7 +1272,7 @@ export default function ClientServicesPage({
                           name="businessType"
                           value={formData.businessType}
                           onChange={handleInputChange}
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
                         >
                           {" "}
                           <option>Boutique Retailer</option>{" "}
@@ -1286,7 +1286,7 @@ export default function ClientServicesPage({
                       </div>{" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Country / Territory
                         </label>{" "}
@@ -1296,12 +1296,12 @@ export default function ClientServicesPage({
                           value={formData.countryRegion}
                           onChange={handleInputChange}
                           placeholder="e.g. India / UAE"
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
                         />{" "}
                       </div>{" "}
                       <div>
                         {" "}
-                        <label className="block text-[10.5px] font-bold uppercase tracking-wider text-ink mb-1.5">
+                        <label className="block text-[10.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-1.5">
                           {" "}
                           Website / Portfolio URL
                         </label>{" "}
@@ -1311,7 +1311,7 @@ export default function ClientServicesPage({
                           value={formData.website}
                           onChange={handleInputChange}
                           placeholder="https://..."
-                          className="w-full bg-white border border-black/15 rounded-xl px-3.5 py-2.5 text-xs text-ink outline-none"
+                          className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
                         />{" "}
                       </div>{" "}
                     </div>{" "}
@@ -1320,7 +1320,7 @@ export default function ClientServicesPage({
                 {/* Message Text Area */}
                 <div>
                   {" "}
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-ink mb-2">
+                  <label className="block text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-ink mb-2">
                     {" "}
                     Your Message / Specific Instructions *
                   </label>{" "}
@@ -1331,25 +1331,25 @@ export default function ClientServicesPage({
                     required
                     rows={4}
                     placeholder="Tell us about your requirement or how our Client Services desk may guide you..."
-                    className="w-full bg-[#f7f5f2] border border-black/15 rounded-xl px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[#a4492e]"
+                    className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
                   />{" "}
                 </div>{" "}
                 {/* Consent & Security Note */}
                 <div className="space-y-3 pt-2">
                   {" "}
-                  <p className="text-[10.5px] text-ink/60 leading-relaxed">
+                  <p className="text-[10.5px] max-sm:text-[12px] text-ink/60 leading-relaxed">
                     {" "}
                     By submitting this enquiry, you agree that Sentire may use
                     your provided information to respond to your request. View
                     our{" "}
-                    <a href="#" className="underline text-[#a4492e]">
+                    <a href="#" className="underline text-[color:var(--accent)]">
                       {" "}
                       Privacy Policy
                     </a>{" "}
                     .
                   </p>{" "}
                   {/* Security Anti-Phishing Banner */}
-                  <div className="p-3 rounded-xl bg-[#fffcf7] border border-[#a4492e]/30 flex items-center gap-2.5 text-[10px] text-ink/70">
+                  <div className="p-3 rounded-[4px] bg-[#fffcf7] border border-[color:var(--accent)]/30 flex items-center gap-2.5 text-[10px] max-sm:text-[12px] text-ink/70">
                     {" "}
                     <span className="text-base"></span>{" "}
                     <span>
@@ -1367,7 +1367,7 @@ export default function ClientServicesPage({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 rounded-xl bg-[#151412] text-[#a4492e] font-bold text-xs uppercase tracking-[0.25em] hover:bg-[#1a1511] hover:text-[#a4492e] transition-all shadow-xl cursor-pointer shrink-0 disabled:opacity-50"
+                  className="on-dark w-full py-4 rounded-[4px] bg-[#111111] text-[color:var(--accent)] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#1a1511] hover:text-[color:var(--accent)] transition-all shadow-xl cursor-pointer shrink-0 disabled:opacity-50"
                 >
                   {" "}
                   {isSubmitting
@@ -1380,13 +1380,13 @@ export default function ClientServicesPage({
         </div>{" "}
       </section>{" "}
       {/* ── Section 17: Private & Corporate Services Showcase (Dark Section) ── */}
-      <section className="py-20 px-5 lg:px-12 bg-[#151412] text-[#f4f2ee] border-b border-[#a4492e]/15">
+      <section className="on-dark py-20 px-5 lg:px-12 bg-[#111111] text-[#f2f2f0] border-b border-[color:var(--accent)]/15">
         {" "}
         <div className="mx-auto max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {" "}
           <div className="lg:col-span-6 space-y-5">
             {" "}
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
               PRIVATE & CORPORATE SERVICES
             </span>{" "}
@@ -1405,22 +1405,22 @@ export default function ClientServicesPage({
               {" "}
               <li className="flex items-center gap-2">
                 {" "}
-                <span className="text-[#a4492e]">✦</span> Custom Laser Engraving
+                <span className="text-[color:var(--accent)]">✦</span> Custom Laser Engraving
                 (Names, Monograms & Dates)
               </li>{" "}
               <li className="flex items-center gap-2">
                 {" "}
-                <span className="text-[#a4492e]">✦</span> Gold Foil-Stamped
+                <span className="text-[color:var(--accent)]">✦</span> Gold Foil-Stamped
                 Velvet Gift Packaging
               </li>{" "}
               <li className="flex items-center gap-2">
                 {" "}
-                <span className="text-[#a4492e]">✦</span> Pan-India
+                <span className="text-[color:var(--accent)]">✦</span> Pan-India
                 Multi-Destination Express Shipping
               </li>{" "}
               <li className="flex items-center gap-2">
                 {" "}
-                <span className="text-[#a4492e]">✦</span> Compliant GST B2B
+                <span className="text-[color:var(--accent)]">✦</span> Compliant GST B2B
                 Invoicing & Account Support
               </li>{" "}
             </ul>{" "}
@@ -1432,7 +1432,7 @@ export default function ClientServicesPage({
                   const el = document.getElementById("enquiry-form");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-7 py-3.5 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.22em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
+                className="px-7 py-3.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
               >
                 {" "}
                 DISCUSS A BULK ORDER →
@@ -1441,43 +1441,43 @@ export default function ClientServicesPage({
           </div>{" "}
           <div className="lg:col-span-6 grid grid-cols-2 gap-4">
             {" "}
-            <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
+            <div className="on-dark p-6 rounded-[4px] bg-[#111111] border border-white/10 hover:border-[color:var(--accent)]/50 transition-all">
               {" "}
               <span className="text-2xl"></span>{" "}
               <h4 className="font-display text-base font-semibold text-white mt-2">
                 Corporate Gifting
               </h4>{" "}
-              <p className="text-[10.5px] text-white/50 mt-1">
+              <p className="text-[10.5px] max-sm:text-[12px] text-white/50 mt-1">
                 Client appreciation, holiday gifts & VIP rewards.
               </p>{" "}
             </div>{" "}
-            <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
+            <div className="on-dark p-6 rounded-[4px] bg-[#111111] border border-white/10 hover:border-[color:var(--accent)]/50 transition-all">
               {" "}
               <span className="text-2xl"></span>{" "}
               <h4 className="font-display text-base font-semibold text-white mt-2">
                 Weddings & Galas
               </h4>{" "}
-              <p className="text-[10.5px] text-white/50 mt-1">
+              <p className="text-[10.5px] max-sm:text-[12px] text-white/50 mt-1">
                 Wedding favours, bridal party gifts & welcome boxes.
               </p>{" "}
             </div>{" "}
-            <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
+            <div className="on-dark p-6 rounded-[4px] bg-[#111111] border border-white/10 hover:border-[color:var(--accent)]/50 transition-all">
               {" "}
               <span className="text-2xl"></span>{" "}
               <h4 className="font-display text-base font-semibold text-white mt-2">
                 Luxury Hospitality
               </h4>{" "}
-              <p className="text-[10.5px] text-white/50 mt-1">
+              <p className="text-[10.5px] max-sm:text-[12px] text-white/50 mt-1">
                 Resorts, boutique hotels & executive suites.
               </p>{" "}
             </div>{" "}
-            <div className="p-6 rounded-2xl bg-[#151412] border border-white/10 hover:border-[#a4492e]/50 transition-all">
+            <div className="on-dark p-6 rounded-[4px] bg-[#111111] border border-white/10 hover:border-[color:var(--accent)]/50 transition-all">
               {" "}
               <span className="text-2xl"></span>{" "}
               <h4 className="font-display text-base font-semibold text-white mt-2">
                 Wholesale Trade
               </h4>{" "}
-              <p className="text-[10.5px] text-white/50 mt-1">
+              <p className="text-[10.5px] max-sm:text-[12px] text-white/50 mt-1">
                 Boutiques, niche perfumeries & retailers.
               </p>{" "}
             </div>{" "}
@@ -1492,7 +1492,7 @@ export default function ClientServicesPage({
         {" "}
         <div className="text-center max-w-xl mx-auto mb-12">
           {" "}
-          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+          <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
             {" "}
             CLIENT SERVICES FAQ
           </span>{" "}
@@ -1514,11 +1514,11 @@ export default function ClientServicesPage({
                 {" "}
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="flex w-full items-center justify-between text-left py-2 font-display text-base sm:text-lg font-medium text-ink hover:text-[#a4492e] transition-colors cursor-pointer"
+                  className="flex w-full items-center justify-between text-left py-2 font-display text-base sm:text-lg font-medium text-ink hover:text-[color:var(--accent)] transition-colors cursor-pointer"
                 >
                   {" "}
                   <span>{faq.q}</span>{" "}
-                  <span className="text-[#a4492e] font-bold text-xl ml-4 shrink-0">
+                  <span className="text-[color:var(--accent)] font-bold text-xl ml-4 shrink-0">
                     {" "}
                     {isOpen ? "−" : "+"}
                   </span>{" "}
@@ -1535,15 +1535,15 @@ export default function ClientServicesPage({
         </div>{" "}
       </section>{" "}
       {/* ── Section 16 & 49: Registered Office & Verified Details Card ── */}
-      <section className="py-16 px-5 lg:px-12 bg-[#eeebe5] border-t border-[#a4492e]/15">
+      <section className="py-16 px-5 lg:px-12 bg-[#e9e9e6] border-t border-[color:var(--accent)]/15">
         {" "}
         <div className="mx-auto max-w-[1280px]">
           {" "}
-          <div className="rounded-3xl bg-white border border-[#a4492e]/25 p-8 sm:p-12 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="rounded-[4px] bg-white border border-[color:var(--accent)]/25 p-8 sm:p-12 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-8">
             {" "}
             <div>
               {" "}
-              <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+              <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
                 REGISTERED OFFICE & CORRESPONDENCE
               </span>{" "}
@@ -1559,7 +1559,7 @@ export default function ClientServicesPage({
             </div>{" "}
             <div>
               {" "}
-              <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+              <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
                 CLIENT SERVICE HOURS
               </span>{" "}
@@ -1571,14 +1571,14 @@ export default function ClientServicesPage({
                 Monday – Saturday
                 <br /> 10:00 AM – 7:00 PM IST
                 <br />{" "}
-                <span className="text-[#a4492e] font-semibold mt-1 block">
+                <span className="text-[color:var(--accent)] font-semibold mt-1 block">
                   Closed on Sundays & National Holidays
                 </span>{" "}
               </p>{" "}
             </div>{" "}
             <div>
               {" "}
-              <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e] block mb-1">
+              <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
                 DIRECT CHANNELS
               </span>{" "}
@@ -1596,11 +1596,11 @@ export default function ClientServicesPage({
         </div>{" "}
       </section>{" "}
       {/* ── Section 17: Final Concierge CTA Bar ── */}
-      <section className="relative overflow-hidden bg-[#151412] text-[#f4f2ee] py-16 px-5 lg:px-12 text-center border-t border-[#a4492e]/30">
+      <section className="on-dark relative overflow-hidden bg-[#111111] text-[#f2f2f0] py-16 px-5 lg:px-12 text-center border-t border-[color:var(--accent)]/30">
         {" "}
         <div className="mx-auto max-w-[800px] relative z-10 space-y-4">
           {" "}
-          <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+          <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
             {" "}
             A MORE PERSONAL CONVERSATION
           </span>{" "}
@@ -1616,14 +1616,14 @@ export default function ClientServicesPage({
             {" "}
             <a
               href="#enquiry-form"
-              className="px-7 py-3 rounded-lg bg-[#a4492e] text-[#151412] font-bold text-xs uppercase tracking-[0.2em] hover:bg-[#a4492e] transition-all shadow-lg cursor-pointer"
+              className="px-7 py-3 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
             >
               {" "}
               CONTACT SENTIRE
             </a>{" "}
             <button
               onClick={onNavigateToPerfumes}
-              className="px-6 py-3 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.18em] hover:border-[#a4492e] hover:text-[#a4492e] transition-all cursor-pointer"
+              className="px-6 py-3 rounded-lg border border-white/20 text-white font-medium text-xs uppercase tracking-[0.06em] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] transition-all cursor-pointer"
             >
               {" "}
               DISCOVER YOUR FRAGRANCE →

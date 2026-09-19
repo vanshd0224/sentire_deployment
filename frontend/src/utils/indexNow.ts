@@ -4,7 +4,8 @@
  */
 
 export const INDEXNOW_KEY = "c7e48b39401b4424a1b0288f3478912e";
-export const INDEXNOW_KEY_LOCATION = "https://sentirebypc.com/c7e48b39401b4424a1b0288f3478912e.txt";
+export const INDEXNOW_KEY_LOCATION =
+  "https://sentirebypc.com/c7e48b39401b4424a1b0288f3478912e.txt";
 export const PRODUCTION_HOST = "sentirebypc.com";
 
 export interface IndexNowPayload {
@@ -17,12 +18,16 @@ export interface IndexNowPayload {
 /**
  * Submits an array of canonical URLs to the IndexNow API.
  */
-export async function submitToIndexNow(urlList: string[]): Promise<{ success: boolean; status?: number; error?: string }> {
+export async function submitToIndexNow(
+  urlList: string[],
+): Promise<{ success: boolean; status?: number; error?: string }> {
   const payload: IndexNowPayload = {
     host: PRODUCTION_HOST,
     key: INDEXNOW_KEY,
     keyLocation: INDEXNOW_KEY_LOCATION,
-    urlList: urlList.map((u) => (u.startsWith("http") ? u : `https://${PRODUCTION_HOST}${u}`)),
+    urlList: urlList.map((u) =>
+      u.startsWith("http") ? u : `https://${PRODUCTION_HOST}${u}`,
+    ),
   };
 
   try {
@@ -35,7 +40,8 @@ export async function submitToIndexNow(urlList: string[]): Promise<{ success: bo
     });
 
     return {
-      success: response.ok || response.status === 200 || response.status === 202,
+      success:
+        response.ok || response.status === 200 || response.status === 202,
       status: response.status,
     };
   } catch (err: any) {

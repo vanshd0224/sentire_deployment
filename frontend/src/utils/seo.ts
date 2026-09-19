@@ -30,31 +30,31 @@ export const BASE_KEYWORDS = [
   "long lasting perfume for men",
   "long lasting perfume for women",
   "custom engraved perfume bottle",
-  "express perfume delivery India"
+  "express perfume delivery India",
 ].join(", ");
 
 const PRODUCT_SEO_SUBTITLES: Record<string, string> = {
-  "dapper": "Tobacco & Smoky Woods",
+  dapper: "Tobacco & Smoky Woods",
   "woo-dy": "Cedarwood & Sandalwood",
   "white-oud": "Clean Woody Oud & Lavender",
   "purple-oud": "Cambodian Oud & Saffron",
-  "calantha": "Blooming Florals & Sandalwood",
+  calantha: "Blooming Florals & Sandalwood",
   "deep-crush": "Warm Musk & Tobacco Woods",
-  "herrlich": "Fresh Bergamot & Dark Chocolate",
-  "midnight": "Blackcurrant & Vanilla Musk",
-  "mirai": "Roasted Coffee & Sweet Vanilla",
+  herrlich: "Fresh Bergamot & Dark Chocolate",
+  midnight: "Blackcurrant & Vanilla Musk",
+  mirai: "Roasted Coffee & Sweet Vanilla",
   "0809": "Sichuan Pepper & Earthy Vetiver",
-  "personna": "Aquatic Marine & Dry Woods",
-  "rich": "Icy Fruits & Polished Cedar",
-  "seductive": "Italian Limon & Black Pepper",
-  "zephyrine": "White Florals & Citrus",
-  "bijou": "Floral Bouquet & Warm Vanilla",
+  personna: "Aquatic Marine & Dry Woods",
+  rich: "Icy Fruits & Polished Cedar",
+  seductive: "Italian Limon & Black Pepper",
+  zephyrine: "White Florals & Citrus",
+  bijou: "Floral Bouquet & Warm Vanilla",
   "le-chocolat": "Dark Cocoa & Creamy Vanilla",
   "pc-leather": "Fine Italian Leather & Spices",
-  "quantillion": "Vibrant Mandarin & Amberwood",
-  "reiz": "Smoky Leather & Amber",
+  quantillion: "Vibrant Mandarin & Amberwood",
+  reiz: "Smoky Leather & Amber",
   "sent-aura": "Aromatic Woods & Florals",
-  "vanaco": "Pure Madagascar Vanilla & Woods"
+  vanaco: "Pure Madagascar Vanilla & Woods",
 };
 
 /**
@@ -72,15 +72,20 @@ export function getPageMetadata(
     prices?: Record<number, number> | number;
     scentFamily?: string;
     sizes?: number[];
-  } | null
+  } | null,
 ): PageMetadata {
-  const defaultRobots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  const defaultRobots =
+    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
   // Product Detail Modal or Deep-linked Product Page
   if (product && product.name) {
     const productName = product.name;
-    const noteSubtitle = PRODUCT_SEO_SUBTITLES[product.id] || (product.desc ? product.desc.split('·')[0].trim() : "35%+ Extrait de Parfum");
-    
+    const noteSubtitle =
+      PRODUCT_SEO_SUBTITLES[product.id] ||
+      (product.desc
+        ? product.desc.split("·")[0].trim()
+        : "35%+ Extrait de Parfum");
+
     return {
       title: `${productName} Extrait de Parfum | ${noteSubtitle} | SENTIRE By PC`,
       description: `Crafted with rare 35%+ pure perfume oil concentration for 12+ hour sillage. Customise ${productName} (${noteSubtitle}) with complimentary laser photo or name bottle engraving in Jaipur.`,
@@ -89,7 +94,10 @@ export function getPageMetadata(
       ogType: "product",
       ogTitle: `${productName} Extrait de Parfum (${noteSubtitle}) | SENTIRE By PC`,
       ogDescription: `Artisanal 35%+ perfume oil Extrait de Parfum outlasting standard 15% EDPs. Precision laser bottle etching and express delivery across India.`,
-      ogImage: product.img || product.image || `${PRODUCTION_DOMAIN}/assets/perfumes/${product.id}-50ml-1.png?v=2`,
+      ogImage:
+        product.img ||
+        product.image ||
+        `${PRODUCTION_DOMAIN}/assets/perfumes/${product.id}-50ml-1.png?v=2`,
       twitterCard: "summary_large_image",
       keywords: `${productName} extrait de parfum, ${productName} perfume, personalised ${productName}, laser engraved ${productName}, ${productName} 35% oil, ${BASE_KEYWORDS}`,
     };
@@ -101,12 +109,14 @@ export function getPageMetadata(
     case "personalisation":
       return {
         title: "Product Personalisation | SENTIRE By PC",
-        description: "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
+        description:
+          "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
         canonical: `${PRODUCTION_DOMAIN}/personalised-perfume`,
         robots: defaultRobots,
         ogType: "article",
         ogTitle: "Product Personalisation | SENTIRE By PC",
-        ogDescription: "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
+        ogDescription:
+          "Personalise your SENTIRE perfume with photo and name laser engraving. 100% complimentary on all 50ml extraits de parfum in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/category-personalisation.jpg`,
         twitterCard: "summary_large_image",
         keywords: `product personalisation, personalised perfume, personalised perfume India, photo engraved perfume, image engraved perfume, name engraved perfume, custom perfume bottle, personalised perfume gift, ${BASE_KEYWORDS}`,
@@ -116,26 +126,34 @@ export function getPageMetadata(
     case "35-percent-extrait-de-parfum":
     case "extrait-de-parfum":
       return {
-        title: "Extrait de Parfum India | 35%+ Pure Fragrance Oil | SENTIRE By PC",
-        description: "Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.",
+        title:
+          "Extrait de Parfum India | 35%+ Pure Fragrance Oil | SENTIRE By PC",
+        description:
+          "Why 35%+ pure perfume oil concentration outlasts standard 12-18% Eau de Parfum. Understand the science of sillage, longevity, and climate engineering.",
         canonical: `${PRODUCTION_DOMAIN}/extrait-de-parfum`,
         robots: defaultRobots,
         ogType: "article",
-        ogTitle: "Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC",
-        ogDescription: "The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.",
+        ogTitle:
+          "Why 35%+ Extrait de Parfum Outlasts Standard Perfumes | SENTIRE By PC",
+        ogDescription:
+          "The difference between 15% EDP and 35%+ Extrait de Parfum in tropical climates. Higher oil concentration, zero alcohol blast, and 12+ hour sillage.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
         keywords: `extrait de parfum India, 35% perfume oil concentration, extrait de parfum vs edp, long lasting perfume concentration, beast mode perfume India, ${BASE_KEYWORDS}`,
       };
     case "home":
       return {
-        title: "Personalised Extrait de Parfum & Luxury Perfumes | SENTIRE By PC",
-        description: "Discover India's rare 35%+ pure perfume oil extraits de parfum engineered for 12+ hour sillage. Customise with bespoke photo and name laser engraving in Jaipur.",
+        title:
+          "Personalised Extrait de Parfum & Luxury Perfumes | SENTIRE By PC",
+        description:
+          "Discover India's rare 35%+ pure perfume oil extraits de parfum engineered for 12+ hour sillage. Customise with bespoke photo and name laser engraving in Jaipur.",
         canonical: `${PRODUCTION_DOMAIN}/`,
         robots: defaultRobots,
         ogType: "website",
-        ogTitle: "SENTIRE By PC | 35%+ Pure Perfume Oil Extraits & Photo Engraving",
-        ogDescription: "Experience rare 35%+ perfume oil concentration that outlasts standard 15% EDPs. Personalise with complimentary laser photo or name flacon engraving.",
+        ogTitle:
+          "SENTIRE By PC | 35%+ Pure Perfume Oil Extraits & Photo Engraving",
+        ogDescription:
+          "Experience rare 35%+ perfume oil concentration that outlasts standard 15% EDPs. Personalise with complimentary laser photo or name flacon engraving.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
         keywords: BASE_KEYWORDS,
@@ -144,12 +162,14 @@ export function getPageMetadata(
     case "perfumes":
       return {
         title: "All Perfumes | 35%+ Extrait de Parfum | SENTIRE By PC",
-        description: "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving.",
+        description:
+          "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving.",
         canonical: `${PRODUCTION_DOMAIN}/perfumes`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "All Perfumes | SENTIRE By PC",
-        ogDescription: "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.",
+        ogDescription:
+          "Explore the complete collection of 35%+ pure perfume oil extraits de parfum with complimentary laser photo flacon engraving in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
         keywords: `all perfumes, 35% perfume oil concentration, extrait de parfum India, long lasting perfume for men, ${BASE_KEYWORDS}`,
@@ -158,12 +178,14 @@ export function getPageMetadata(
     case "bestsellers":
       return {
         title: "Best Sellers | SENTIRE By PC",
-        description: "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
+        description:
+          "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
         canonical: `${PRODUCTION_DOMAIN}/bestsellers`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Best Sellers | SENTIRE By PC",
-        ogDescription: "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
+        ogDescription:
+          "Discover SENTIRE By PC best-selling extraits de parfum, including our most-loved oud, woody, fresh and signature fragrances.",
         ogImage: `${PRODUCTION_DOMAIN}/images/product-white-oud.jpg`,
         twitterCard: "summary_large_image",
         keywords: `best sellers, best long lasting perfume India, 35% oil concentration bestsellers, ${BASE_KEYWORDS}`,
@@ -172,12 +194,14 @@ export function getPageMetadata(
     case "new-arrivals":
       return {
         title: "New Arrivals | SENTIRE By PC",
-        description: "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
+        description:
+          "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
         canonical: `${PRODUCTION_DOMAIN}/new-arrivals`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "New Arrivals | SENTIRE By PC",
-        ogDescription: "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
+        ogDescription:
+          "Explore the latest fragrance launches and new extrait de parfum creations from SENTIRE By PC.",
         ogImage: `${PRODUCTION_DOMAIN}/images/purple-oud-arrival.png`,
         twitterCard: "summary_large_image",
         keywords: `new arrivals, new extrait de parfum, 35% concentration releases, ${BASE_KEYWORDS}`,
@@ -185,13 +209,17 @@ export function getPageMetadata(
 
     case "discovery-set":
       return {
-        title: "SENTIRE Discovery Set (6 × 6ML) | Find Your Signature Fragrance | ₹549",
-        description: "Six fragrances. One box. Find the one that's yours. Six 6ML travel sprays in a matte black flip-top case with gold emblem and oxblood interior. ₹549 for 36ML total.",
+        title:
+          "SENTIRE Discovery Set (6 × 6ML) | Find Your Signature Fragrance | ₹549",
+        description:
+          "Six fragrances. One box. Find the one that's yours. Six 6ML travel sprays in a matte black flip-top case with gold emblem and oxblood interior. ₹549 for 36ML total.",
         canonical: `${PRODUCTION_DOMAIN}/discovery-set`,
         robots: defaultRobots,
         ogType: "product",
-        ogTitle: "SENTIRE Discovery Set (6 × 6ML) | Six Fragrances. One Box. ₹549",
-        ogDescription: "Choosing a signature scent shouldn't mean committing to a full bottle. Six 6ML travel sprays (55-60 sprays each). Purple Oud, MIRAI, CALANTHA, Rich, Seductive, Deep Crush.",
+        ogTitle:
+          "SENTIRE Discovery Set (6 × 6ML) | Six Fragrances. One Box. ₹549",
+        ogDescription:
+          "Choosing a signature scent shouldn't mean committing to a full bottle. Six 6ML travel sprays (55-60 sprays each). Purple Oud, MIRAI, CALANTHA, Rich, Seductive, Deep Crush.",
         ogImage: `${PRODUCTION_DOMAIN}/images/discovery-set/box-front.jpg`,
         twitterCard: "summary_large_image",
         keywords: `sentire discovery set, perfume discovery set, 6ml travel spray, perfume sample set India, purple oud, mirai, calantha, rich, seductive, deep crush, ${BASE_KEYWORDS}`,
@@ -200,12 +228,14 @@ export function getPageMetadata(
     case "byob":
       return {
         title: "Build Your Own Bundle | SENTIRE By PC",
-        description: "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
+        description:
+          "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
         canonical: `${PRODUCTION_DOMAIN}/byob`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Build Your Own Bundle | SENTIRE By PC",
-        ogDescription: "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
+        ogDescription:
+          "Create your own SENTIRE perfume bundle. Choose your favourite fragrances and build a personalised set from our extrait de parfum collection.",
         ogImage: `${PRODUCTION_DOMAIN}/images/build-bundle.png`,
         twitterCard: "summary_large_image",
         keywords: `build your own bundle, custom perfume gift box, 35% perfume discovery set, ${BASE_KEYWORDS}`,
@@ -214,12 +244,14 @@ export function getPageMetadata(
     case "about":
       return {
         title: "About SENTIRE | Jaipur Haute Parfumerie | SENTIRE By PC",
-        description: "Born in Jaipur with 10,000+ bottles crafted offline. Sentire by PC is one of India's only perfume houses bottling 35%+ pure perfume oil extraits with laser engraving.",
+        description:
+          "Born in Jaipur with 10,000+ bottles crafted offline. Sentire by PC is one of India's only perfume houses bottling 35%+ pure perfume oil extraits with laser engraving.",
         canonical: `${PRODUCTION_DOMAIN}/about`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "About SENTIRE | SENTIRE By PC",
-        ogDescription: "Why Sentire refuses to dilute to 15% EDP. 35%+ pure fragrance oil formulation combined with bespoke laser bottle engraving in Jaipur.",
+        ogDescription:
+          "Why Sentire refuses to dilute to 15% EDP. 35%+ pure fragrance oil formulation combined with bespoke laser bottle engraving in Jaipur.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary_large_image",
         keywords: `about sentire by pc, about sentire, 35% perfume oil jaipur, luxury perfumery jaipur, ${BASE_KEYWORDS}`,
@@ -228,12 +260,14 @@ export function getPageMetadata(
     case "client-services":
       return {
         title: "Client Services & Express Delivery | SENTIRE By PC",
-        description: "Private client concierge, express shipping timelines, returns policy, and care guidance for Sentire 35%+ extraits de parfum and engraved flacons.",
+        description:
+          "Private client concierge, express shipping timelines, returns policy, and care guidance for Sentire 35%+ extraits de parfum and engraved flacons.",
         canonical: `${PRODUCTION_DOMAIN}/client-services`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Client Services | SENTIRE By PC",
-        ogDescription: "Dedicated concierge for Sentire by PC artisanal extraits de parfum and custom engraved orders.",
+        ogDescription:
+          "Dedicated concierge for Sentire by PC artisanal extraits de parfum and custom engraved orders.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
         keywords: `client services, express perfume delivery India, ${BASE_KEYWORDS}`,
@@ -242,12 +276,14 @@ export function getPageMetadata(
     case "track-order":
       return {
         title: "Track Your Order | SENTIRE By PC",
-        description: "Track your SENTIRE By PC order and view the latest delivery status.",
+        description:
+          "Track your SENTIRE By PC order and view the latest delivery status.",
         canonical: `${PRODUCTION_DOMAIN}/track-order`,
         robots: defaultRobots,
         ogType: "website",
         ogTitle: "Track Your Order | SENTIRE By PC",
-        ogDescription: "Track your SENTIRE By PC order and view the latest delivery status.",
+        ogDescription:
+          "Track your SENTIRE By PC order and view the latest delivery status.",
         ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
         twitterCard: "summary",
         keywords: `track your order, track order, delivery tracking, ${BASE_KEYWORDS}`,
@@ -256,7 +292,8 @@ export function getPageMetadata(
     case "account":
       return {
         title: "Your Account | SENTIRE By PC",
-        description: "Manage your Sentire by PC account, VIP rewards, and order history.",
+        description:
+          "Manage your Sentire by PC account, VIP rewards, and order history.",
         canonical: `${PRODUCTION_DOMAIN}/account`,
         robots: "noindex, nofollow",
         ogType: "website",
@@ -266,8 +303,10 @@ export function getPageMetadata(
 
     default:
       return {
-        title: "Personalised Extrait de Parfum & Luxury Perfumes | SENTIRE By PC",
-        description: "Discover Sentire by PC personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, premium presentation and express delivery.",
+        title:
+          "Personalised Extrait de Parfum & Luxury Perfumes | SENTIRE By PC",
+        description:
+          "Discover Sentire by PC personalised perfumes with photo or name laser engraving, 35%+ perfume oil concentration, premium presentation and express delivery.",
         canonical: `${PRODUCTION_DOMAIN}/`,
         robots: defaultRobots,
         ogType: "website",
@@ -277,4 +316,3 @@ export function getPageMetadata(
       };
   }
 }
-

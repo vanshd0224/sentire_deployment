@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getPageMetadata, PRODUCTION_DOMAIN } from "../utils/seo";
+import { getPageMetadata } from "../utils/seo";
 import { getStructuredDataForPage } from "../utils/schemaGenerator";
 
 interface SEOHeadProps {

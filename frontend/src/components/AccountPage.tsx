@@ -218,12 +218,12 @@ export default function AccountPage({
   // Display a smooth luxury loader while Firebase initializes on page reload or Shopify return
   if (authLoading) {
     return (
-      <div className="min-h-[75vh] bg-[#f4f2ee] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-[75vh] bg-[#f2f2f0] flex flex-col items-center justify-center p-6 text-center">
         {" "}
         <div className="flex flex-col items-center gap-3">
           {" "}
-          <div className="w-10 h-10 border-2 border-[#1c1b18] border-t-transparent rounded-full animate-spin" />{" "}
-          <p className="text-xs uppercase tracking-widest text-[#777777] font-mono">
+          <div className="w-10 h-10 border-2 border-[#161616] border-t-transparent rounded-full animate-spin" />{" "}
+          <p className="text-xs uppercase tracking-[0.06em] text-[#777777] font-mono">
             Authenticating Private Account...
           </p>{" "}
         </div>{" "}
@@ -233,14 +233,14 @@ export default function AccountPage({
 
   if (!user && !isStoredLoggedIn) {
     return (
-      <div className="min-h-[75vh] bg-[#f4f2ee] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-[75vh] bg-[#f2f2f0] flex flex-col items-center justify-center p-6 text-center">
         {" "}
-        <div className="max-w-md w-full bg-[#ffffff] p-8 sm:p-10 rounded-3xl border border-[#dedad3] shadow-sm">
+        <div className="max-w-md w-full bg-[#ffffff] p-8 sm:p-10 rounded-[4px] border border-[#dadad6] shadow-sm">
           {" "}
-          <div className="w-16 h-16 bg-[#eeebe5] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+          <div className="w-16 h-16 bg-[#e9e9e6] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
             {" "}
           </div>{" "}
-          <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-2">
+          <h2 className="text-2xl font-serif font-bold text-[#161616] mb-2">
             My Account
           </h2>{" "}
           <p className="text-xs text-[#666666] mb-8 leading-relaxed">
@@ -250,7 +250,7 @@ export default function AccountPage({
           </p>{" "}
           <button
             onClick={() => onOpenLoginModal?.()}
-            className="w-full py-4 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md cursor-pointer"
+            className="on-dark w-full py-4 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-xs uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md cursor-pointer"
           >
             {" "}
             Login / Sign Up Now
@@ -264,27 +264,27 @@ export default function AccountPage({
   const displayName = profileData.firstName;
 
   return (
-    <div className="min-h-screen bg-[#f4f2ee] text-[#1c1b18] pt-8 pb-16 px-4 sm:px-8 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#f2f2f0] text-[#161616] pt-8 pb-16 px-4 sm:px-8 max-w-7xl mx-auto">
       {" "}
       {/* Breadcrumb Navigation */}
       <div className="mb-6 flex items-center gap-2 text-xs text-[#777777]">
         {" "}
         <button
           onClick={() => onNavigate("home")}
-          className="hover:text-[#1c1b18] cursor-pointer"
+          className="hover:text-[#161616] cursor-pointer"
         >
           {" "}
           Home
         </button>{" "}
         <span>/</span>{" "}
-        <span className="font-semibold text-[#1c1b18]">Account</span>{" "}
+        <span className="font-semibold text-[#161616]">Account</span>{" "}
       </div>{" "}
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         {" "}
         {/* Left Sidebar */}
-        <div className="w-full lg:w-80 bg-[#ffffff] p-6 rounded-2xl border border-[#dedad3] shadow-sm shrink-0">
+        <div className="w-full lg:w-80 bg-[#ffffff] p-6 rounded-[4px] border border-[#dadad6] shadow-sm shrink-0">
           {" "}
-          <div className="bg-[#f4f2ee] p-4 rounded-xl border border-[#e6e3dd] mb-6">
+          <div className="bg-[#f2f2f0] p-4 rounded-[4px] border border-[#e2e2df] mb-6">
             {" "}
             <div className="flex items-center justify-between">
               {" "}
@@ -292,27 +292,27 @@ export default function AccountPage({
                 {" "}
                 <button
                   onClick={() => setActiveTab("profile")}
-                  className="font-bold text-sm text-[#1c1b18] hover:text-[#a4492e] transition-colors flex items-center gap-1 cursor-pointer"
+                  className="font-bold text-sm text-[#161616] hover:text-[color:var(--accent)] transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   {" "}
                   Hey, {displayName} &gt;
                 </button>{" "}
-                <p className="text-[11px] text-[#666666] mt-0.5">
+                <p className="text-[11px] max-sm:text-[12px] text-[#666666] mt-0.5">
                   Logged with {userPhone}
                 </p>{" "}
               </div>{" "}
-              <div className="w-10 h-10 rounded-full bg-[#1c1b18] text-[#a4492e] font-bold text-base flex items-center justify-center">
+              <div className="on-dark w-10 h-10 rounded-full bg-[#161616] text-[color:var(--accent)] font-bold text-base flex items-center justify-center">
                 {" "}
                 {displayName.charAt(0).toUpperCase()}
               </div>{" "}
             </div>{" "}
           </div>{" "}
-          <div className="bg-[#ffffff] p-4 rounded-xl border border-[#e6e3dd] text-center mb-6">
+          <div className="bg-[#ffffff] p-4 rounded-[4px] border border-[#e2e2df] text-center mb-6">
             {" "}
-            <span className="text-2xl font-bold text-[#1c1b18]">
+            <span className="text-2xl font-bold text-[#161616]">
               {userOrders.length}
             </span>{" "}
-            <p className="text-[10px] text-[#777777] uppercase font-semibold tracking-wider mt-0.5">
+            <p className="text-[10px] max-sm:text-[12px] text-[#777777] uppercase font-semibold tracking-wider mt-0.5">
               {" "}
               Total Orders
             </p>{" "}
@@ -321,10 +321,10 @@ export default function AccountPage({
             {" "}
             <button
               onClick={() => setActiveTab("overview")}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`on-dark w-full flex items-center justify-between px-4 py-3 rounded-[4px] text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === "overview"
-                  ? "bg-[#1c1b18] text-[#ffffff] shadow-md"
-                  : "text-[#555555] hover:bg-[#f4f2ee]"
+                  ? "bg-[#161616] text-[#ffffff] shadow-md"
+                  : "text-[#555555] hover:bg-[#f2f2f0]"
               }`}
             >
               {" "}
@@ -336,10 +336,10 @@ export default function AccountPage({
             </button>{" "}
             <button
               onClick={() => setActiveTab("orders")}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`on-dark w-full flex items-center justify-between px-4 py-3 rounded-[4px] text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === "orders"
-                  ? "bg-[#1c1b18] text-[#ffffff] shadow-md"
-                  : "text-[#555555] hover:bg-[#f4f2ee]"
+                  ? "bg-[#161616] text-[#ffffff] shadow-md"
+                  : "text-[#555555] hover:bg-[#f2f2f0]"
               }`}
             >
               {" "}
@@ -351,10 +351,10 @@ export default function AccountPage({
             </button>{" "}
             <button
               onClick={() => setActiveTab("addresses")}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`on-dark w-full flex items-center justify-between px-4 py-3 rounded-[4px] text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === "addresses"
-                  ? "bg-[#1c1b18] text-[#ffffff] shadow-md"
-                  : "text-[#555555] hover:bg-[#f4f2ee]"
+                  ? "bg-[#161616] text-[#ffffff] shadow-md"
+                  : "text-[#555555] hover:bg-[#f2f2f0]"
               }`}
             >
               {" "}
@@ -366,10 +366,10 @@ export default function AccountPage({
             </button>{" "}
             <button
               onClick={() => setActiveTab("profile")}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`on-dark w-full flex items-center justify-between px-4 py-3 rounded-[4px] text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === "profile"
-                  ? "bg-[#1c1b18] text-[#ffffff] shadow-md"
-                  : "text-[#555555] hover:bg-[#f4f2ee]"
+                  ? "bg-[#161616] text-[#ffffff] shadow-md"
+                  : "text-[#555555] hover:bg-[#f2f2f0]"
               }`}
             >
               {" "}
@@ -382,34 +382,34 @@ export default function AccountPage({
           </nav>{" "}
           <button
             onClick={handleLogout}
-            className="w-full mt-8 py-3 px-4 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl flex items-center justify-start gap-3 transition-all cursor-pointer border border-red-100"
+            className="w-full mt-8 py-3 px-4 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-[4px] flex items-center justify-start gap-3 transition-all cursor-pointer border border-red-100"
           >
             {" "}
             <span></span> Logout
           </button>{" "}
         </div>{" "}
         {/* Right Main Content Area */}
-        <div className="w-full bg-[#ffffff] p-6 sm:p-8 rounded-2xl border border-[#dedad3] shadow-sm min-h-[500px]">
+        <div className="w-full bg-[#ffffff] p-6 sm:p-8 rounded-[4px] border border-[#dadad6] shadow-sm min-h-[500px]">
           {" "}
           {activeTab === "overview" && (
             <div className="space-y-8">
               {" "}
-              <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+              <h2 className="text-2xl font-serif font-bold text-[#161616]">
                 Overview
               </h2>{" "}
               <div className="space-y-3">
                 {" "}
-                <h3 className="text-xs font-bold text-[#1c1b18] uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-[#161616] uppercase tracking-wider">
                   {" "}
                   My Orders ({userOrders.length})
                 </h3>{" "}
                 {userOrders.length === 0 ? (
-                  <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
+                  <div className="bg-[#f2f2f0] p-8 rounded-[4px] border border-[#e2e2df] text-center">
                     {" "}
-                    <div className="w-14 h-14 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
+                    <div className="w-14 h-14 bg-[#ffffff] border border-[#dadad6] rounded-[4px] flex items-center justify-center mx-auto mb-3 text-3xl">
                       {" "}
                     </div>{" "}
-                    <h4 className="text-sm font-bold text-[#1c1b18]">
+                    <h4 className="text-sm font-bold text-[#161616]">
                       No Past Orders Yet
                     </h4>{" "}
                     <p className="text-xs text-[#777777] mt-1 mb-4">
@@ -418,7 +418,7 @@ export default function AccountPage({
                     </p>{" "}
                     <button
                       onClick={() => onNavigate("perfumes")}
-                      className="px-6 py-2.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
                     >
                       {" "}
                       Shop Now
@@ -430,26 +430,26 @@ export default function AccountPage({
                     {userOrders.slice(0, 2).map((ord: any, idx: number) => (
                       <div
                         key={ord.id || idx}
-                        className="bg-[#f4f2ee] p-4 rounded-xl border border-[#dedad3] flex items-center justify-between text-xs"
+                        className="bg-[#f2f2f0] p-4 rounded-[4px] border border-[#dadad6] flex items-center justify-between text-xs"
                       >
                         {" "}
                         <div>
                           {" "}
-                          <p className="font-bold text-[#1c1b18]">
+                          <p className="font-bold text-[#161616]">
                             Order #
                             {ord.orderNumber || ord.id || `SC-${1000 + idx}`}
                           </p>{" "}
-                          <p className="text-[11px] text-[#777]">
+                          <p className="text-[11px] max-sm:text-[12px] text-[#777]">
                             {ord.date || "Recent Order"} ·{" "}
                             {ord.items?.length || 1} Item(s)
                           </p>{" "}
                         </div>{" "}
                         <div className="text-right">
                           {" "}
-                          <span className="font-bold text-[#1c1b18]">
+                          <span className="font-bold text-[#161616]">
                             ₹{(ord.total || 0).toLocaleString()}
                           </span>{" "}
-                          <p className="text-[10px] text-emerald-600 font-semibold">
+                          <p className="text-[10px] max-sm:text-[12px] text-emerald-600 font-semibold">
                             {ord.status || "Confirmed"}
                           </p>{" "}
                         </div>{" "}
@@ -462,25 +462,25 @@ export default function AccountPage({
                 {" "}
                 <div className="flex items-center justify-between">
                   {" "}
-                  <h3 className="text-xs font-bold text-[#1c1b18] uppercase tracking-wider">
+                  <h3 className="text-xs font-bold text-[#161616] uppercase tracking-wider">
                     {" "}
                     Saved Addresses
                   </h3>{" "}
                   <button
                     onClick={() => setIsAddressModalOpen(true)}
-                    className="text-xs font-semibold text-[#a4492e] hover:underline cursor-pointer"
+                    className="text-xs font-semibold text-[color:var(--accent)] hover:underline cursor-pointer"
                   >
                     {" "}
                     + Add New
                   </button>{" "}
                 </div>{" "}
                 {addresses.length === 0 ? (
-                  <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
+                  <div className="bg-[#f2f2f0] p-8 rounded-[4px] border border-[#e2e2df] text-center">
                     {" "}
-                    <div className="w-14 h-14 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl">
+                    <div className="w-14 h-14 bg-[#ffffff] border border-[#dadad6] rounded-[4px] flex items-center justify-center mx-auto mb-3 text-3xl">
                       {" "}
                     </div>{" "}
-                    <h4 className="text-sm font-bold text-[#1c1b18]">
+                    <h4 className="text-sm font-bold text-[#161616]">
                       No Address Saved Yet
                     </h4>{" "}
                     <p className="text-xs text-[#777777] mt-1 mb-4">
@@ -489,7 +489,7 @@ export default function AccountPage({
                     </p>{" "}
                     <button
                       onClick={() => setIsAddressModalOpen(true)}
-                      className="px-6 py-2.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
                     >
                       {" "}
                       Add New Address Now
@@ -501,16 +501,16 @@ export default function AccountPage({
                     {addresses.map((addr) => (
                       <div
                         key={addr.id}
-                        className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs"
+                        className="bg-[#f2f2f0] p-5 rounded-[4px] border border-[#dadad6] space-y-1 text-xs"
                       >
                         {" "}
                         <div className="flex items-center justify-between mb-2">
                           {" "}
-                          <span className="font-bold text-sm text-[#1c1b18]">
+                          <span className="font-bold text-sm text-[#161616]">
                             {addr.name}
                           </span>{" "}
                           {addr.isDefault && (
-                            <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                            <span className="bg-[#5f6516]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
                               Default
                             </span>
                           )}
@@ -532,16 +532,16 @@ export default function AccountPage({
           {activeTab === "orders" && (
             <div>
               {" "}
-              <h2 className="text-2xl font-serif font-bold text-[#1c1b18] mb-6">
+              <h2 className="text-2xl font-serif font-bold text-[#161616] mb-6">
                 My Orders
               </h2>{" "}
               {userOrders.length === 0 ? (
-                <div className="bg-[#f4f2ee] p-12 rounded-2xl border border-[#e6e3dd] text-center">
+                <div className="bg-[#f2f2f0] p-12 rounded-[4px] border border-[#e2e2df] text-center">
                   {" "}
-                  <div className="w-16 h-16 bg-[#ffffff] border border-[#dedad3] rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                  <div className="w-16 h-16 bg-[#ffffff] border border-[#dadad6] rounded-[4px] flex items-center justify-center mx-auto mb-4 text-3xl">
                     {" "}
                   </div>{" "}
-                  <h3 className="text-base font-bold text-[#1c1b18]">
+                  <h3 className="text-base font-bold text-[#161616]">
                     No Active Orders
                   </h3>{" "}
                   <p className="text-xs text-[#666666] mt-1 mb-6 max-w-sm mx-auto">
@@ -551,7 +551,7 @@ export default function AccountPage({
                   </p>{" "}
                   <button
                     onClick={() => onNavigate("perfumes")}
-                    className="px-8 py-3 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-xl transition-all shadow-md cursor-pointer uppercase tracking-wider"
+                    className="on-dark px-8 py-3 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-md cursor-pointer uppercase tracking-wider"
                   >
                     {" "}
                     Explore Perfumes Collection
@@ -563,28 +563,28 @@ export default function AccountPage({
                   {userOrders.map((ord: any, idx: number) => (
                     <div
                       key={ord.id || idx}
-                      className="bg-[#f4f2ee] p-5 sm:p-6 rounded-2xl border border-[#dedad3] space-y-4"
+                      className="bg-[#f2f2f0] p-5 sm:p-6 rounded-[4px] border border-[#dadad6] space-y-4"
                     >
                       {" "}
-                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e6e3dd] pb-3">
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e2e2df] pb-3">
                         {" "}
                         <div>
                           {" "}
-                          <span className="font-bold text-sm text-[#1c1b18]">
+                          <span className="font-bold text-sm text-[#161616]">
                             Order #
                             {ord.orderNumber || ord.id || `SC-${1000 + idx}`}
                           </span>{" "}
-                          <p className="text-[11px] text-[#777777] mt-0.5">
+                          <p className="text-[11px] max-sm:text-[12px] text-[#777777] mt-0.5">
                             Placed on {ord.date || "Today"}
                           </p>{" "}
                         </div>{" "}
                         <div className="flex items-center gap-3">
                           {" "}
-                          <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                          <span className="bg-emerald-100 text-emerald-800 text-[10px] max-sm:text-[12px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                             {" "}
                             {ord.status || "Confirmed"}
                           </span>{" "}
-                          <span className="font-serif font-bold text-sm text-[#1c1b18]">
+                          <span className="font-serif font-bold text-sm text-[#161616]">
                             {" "}
                             ₹{(ord.total || 0).toLocaleString()}
                           </span>{" "}
@@ -604,23 +604,23 @@ export default function AccountPage({
                                 <img
                                   src={item.img || item.image}
                                   alt={item.name}
-                                  className="w-10 h-10 object-cover rounded-lg border border-[#dedad3]"
+                                  className="w-10 h-10 object-cover rounded-lg border border-[#dadad6]"
                                 />
                               ) : (
-                                <div className="w-10 h-10 bg-[#eeebe5] rounded-lg border border-[#dedad3] flex items-center justify-center text-base"></div>
+                                <div className="w-10 h-10 bg-[#e9e9e6] rounded-lg border border-[#dadad6] flex items-center justify-center text-base"></div>
                               )}
                               <div>
                                 {" "}
-                                <p className="font-semibold text-[#1c1b18]">
+                                <p className="font-semibold text-[#161616]">
                                   {item.name}
                                 </p>{" "}
-                                <p className="text-[10px] text-[#777777]">
+                                <p className="text-[10px] max-sm:text-[12px] text-[#777777]">
                                   Size: {item.size || 50} ML · Qty:{" "}
                                   {item.quantity || 1}
                                 </p>{" "}
                               </div>{" "}
                             </div>{" "}
-                            <span className="font-medium text-[#1c1b18]">
+                            <span className="font-medium text-[#161616]">
                               ₹
                               {(
                                 (item.price || 0) * (item.quantity || 1)
@@ -629,9 +629,9 @@ export default function AccountPage({
                           </div>
                         ))}
                       </div>{" "}
-                      <div className="pt-2 border-t border-[#e6e3dd] flex items-center justify-between">
+                      <div className="pt-2 border-t border-[#e2e2df] flex items-center justify-between">
                         {" "}
-                        <span className="text-[11px] text-[#777777]">
+                        <span className="text-[11px] max-sm:text-[12px] text-[#777777]">
                           Shipped via Express Courier
                         </span>{" "}
                         <button
@@ -644,7 +644,7 @@ export default function AccountPage({
                             }
                             onNavigate("track-order");
                           }}
-                          className="text-xs font-semibold text-[#a4492e] hover:underline cursor-pointer flex items-center gap-1"
+                          className="text-xs font-semibold text-[color:var(--accent)] hover:underline cursor-pointer flex items-center gap-1"
                         >
                           {" "}
                           Track Order Details &rarr;
@@ -661,26 +661,26 @@ export default function AccountPage({
               {" "}
               <div className="flex justify-between items-center mb-6">
                 {" "}
-                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+                <h2 className="text-2xl font-serif font-bold text-[#161616]">
                   Saved Addresses
                 </h2>{" "}
                 <button
                   onClick={() => setIsAddressModalOpen(true)}
-                  className="px-4 py-2 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] text-xs font-semibold rounded-xl transition-all cursor-pointer"
+                  className="on-dark px-4 py-2 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] text-xs font-semibold rounded-[4px] transition-all cursor-pointer"
                 >
                   {" "}
                   + Add New Address
                 </button>{" "}
               </div>{" "}
               {addresses.length === 0 ? (
-                <div className="bg-[#f4f2ee] p-8 rounded-2xl border border-[#e6e3dd] text-center">
+                <div className="bg-[#f2f2f0] p-8 rounded-[4px] border border-[#e2e2df] text-center">
                   {" "}
                   <p className="text-xs text-[#666666] mb-4">
                     No default shipping address configured.
                   </p>{" "}
                   <button
                     onClick={() => setIsAddressModalOpen(true)}
-                    className="px-6 py-2.5 bg-[#a4492e] text-[#000000] text-xs font-semibold rounded-xl"
+                    className="px-6 py-2.5 bg-[#5f6516] text-[#000000] text-xs font-semibold rounded-[4px]"
                   >
                     {" "}
                     Add Shipping Address
@@ -692,16 +692,16 @@ export default function AccountPage({
                   {addresses.map((addr) => (
                     <div
                       key={addr.id}
-                      className="bg-[#f4f2ee] p-5 rounded-xl border border-[#dedad3] space-y-1 text-xs"
+                      className="bg-[#f2f2f0] p-5 rounded-[4px] border border-[#dadad6] space-y-1 text-xs"
                     >
                       {" "}
                       <div className="flex items-center justify-between mb-2">
                         {" "}
-                        <span className="font-bold text-sm text-[#1c1b18]">
+                        <span className="font-bold text-sm text-[#161616]">
                           {addr.name}
                         </span>{" "}
                         {addr.isDefault && (
-                          <span className="bg-[#a4492e]/15 text-[#a4492e] px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                          <span className="bg-[#5f6516]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
                             Default
                           </span>
                         )}
@@ -724,7 +724,7 @@ export default function AccountPage({
               {" "}
               <div className="flex justify-between items-center mb-6">
                 {" "}
-                <h2 className="text-2xl font-serif font-bold text-[#1c1b18]">
+                <h2 className="text-2xl font-serif font-bold text-[#161616]">
                   Profile Details
                 </h2>{" "}
                 <button
@@ -732,21 +732,21 @@ export default function AccountPage({
                     if (isEditing) handleSaveProfile();
                     else setIsEditing(true);
                   }}
-                  className="px-5 py-2.5 bg-[#a4492e] hover:bg-[#1c1b18] text-[#000000] hover:text-[#ffffff] text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm"
+                  className="px-5 py-2.5 bg-[#5f6516] hover:bg-[#161616] text-[#000000] hover:text-[#ffffff] text-xs font-bold rounded-[4px] transition-all cursor-pointer shadow-sm"
                 >
                   {" "}
                   {isEditing ? "Save Changes" : "Edit Profile"}
                 </button>{" "}
               </div>{" "}
               {saveMessage && (
-                <div className="p-3 bg-green-50 text-green-700 text-xs rounded-xl mb-4 text-center font-semibold">
+                <div className="p-3 bg-green-50 text-green-700 text-xs rounded-[4px] mb-4 text-center font-semibold">
                   {" "}
                   {saveMessage}
                 </div>
               )}
               <div className="space-y-4">
                 {" "}
-                <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
+                <div className="p-4 bg-[#f2f2f0] rounded-[4px] border border-[#e2e2df] flex justify-between items-center">
                   {" "}
                   <span className="text-xs text-[#666666] font-medium">
                     First Name
@@ -761,24 +761,24 @@ export default function AccountPage({
                           firstName: e.target.value,
                         })
                       }
-                      className="px-3 py-1.5 bg-[#ffffff] border border-[#a4492e] rounded-lg text-xs outline-none text-[#1c1b18] font-semibold"
+                      className="px-3 py-1.5 bg-[#ffffff] border border-[color:var(--accent)] rounded-lg text-xs outline-none text-[#161616] font-semibold"
                     />
                   ) : (
-                    <span className="text-xs font-semibold text-[#1c1b18]">
+                    <span className="text-xs font-semibold text-[#161616]">
                       {displayName}
                     </span>
                   )}
                 </div>{" "}
-                <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
+                <div className="p-4 bg-[#f2f2f0] rounded-[4px] border border-[#e2e2df] flex justify-between items-center">
                   {" "}
                   <span className="text-xs text-[#666666] font-medium">
                     Phone Number
                   </span>{" "}
-                  <span className="text-xs font-semibold text-[#1c1b18]">
+                  <span className="text-xs font-semibold text-[#161616]">
                     {userPhone}
                   </span>{" "}
                 </div>{" "}
-                <div className="p-4 bg-[#f4f2ee] rounded-xl border border-[#e6e3dd] flex justify-between items-center">
+                <div className="p-4 bg-[#f2f2f0] rounded-[4px] border border-[#e2e2df] flex justify-between items-center">
                   {" "}
                   <span className="text-xs text-[#666666] font-medium">
                     Email ID
@@ -793,10 +793,10 @@ export default function AccountPage({
                           email: e.target.value,
                         })
                       }
-                      className="px-3 py-1.5 bg-[#ffffff] border border-[#a4492e] rounded-lg text-xs outline-none text-[#1c1b18] font-semibold"
+                      className="px-3 py-1.5 bg-[#ffffff] border border-[color:var(--accent)] rounded-lg text-xs outline-none text-[#161616] font-semibold"
                     />
                   ) : (
-                    <span className="text-xs font-semibold text-[#1c1b18]">
+                    <span className="text-xs font-semibold text-[#161616]">
                       {profileData.email}
                     </span>
                   )}
@@ -810,7 +810,7 @@ export default function AccountPage({
       {isAddressModalOpen && (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 p-4">
           {" "}
-          <div className="bg-[#ffffff] text-[#1c1b18] p-6 sm:p-8 rounded-2xl max-w-md w-full shadow-2xl border border-[#dedad3]">
+          <div className="bg-[#ffffff] text-[#161616] p-6 sm:p-8 rounded-[4px] max-w-md w-full shadow-2xl border border-[#dadad6]">
             {" "}
             <div className="flex justify-between items-center mb-4">
               {" "}
@@ -833,7 +833,7 @@ export default function AccountPage({
                 onChange={(e) =>
                   setNewAddr({ ...newAddr, name: e.target.value })
                 }
-                className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
+                className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
               />{" "}
               <input
@@ -843,7 +843,7 @@ export default function AccountPage({
                 onChange={(e) =>
                   setNewAddr({ ...newAddr, street: e.target.value })
                 }
-                className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
+                className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
               />{" "}
               <div className="grid grid-cols-2 gap-2">
@@ -855,7 +855,7 @@ export default function AccountPage({
                   onChange={(e) =>
                     setNewAddr({ ...newAddr, city: e.target.value })
                   }
-                  className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
+                  className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                   required
                 />{" "}
                 <input
@@ -865,7 +865,7 @@ export default function AccountPage({
                   onChange={(e) =>
                     setNewAddr({ ...newAddr, pincode: e.target.value })
                   }
-                  className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
+                  className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                   required
                 />{" "}
               </div>{" "}
@@ -876,12 +876,12 @@ export default function AccountPage({
                 onChange={(e) =>
                   setNewAddr({ ...newAddr, phone: e.target.value })
                 }
-                className="w-full p-3 border border-[#ccc] rounded-xl outline-none"
+                className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
               />{" "}
               <button
                 type="submit"
-                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] font-semibold text-xs rounded-xl transition-all mt-2"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] font-semibold text-xs rounded-[4px] transition-all mt-2"
               >
                 {" "}
                 Save Shipping Address

@@ -531,7 +531,6 @@ export default function App() {
           onAddToCart={handleAddToCart}
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => handleNavigate("cart")}
-          onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "bestsellers" ? (
         <BestSellersPage
@@ -556,18 +555,11 @@ export default function App() {
           onUpdateCartQuantity={handleUpdateCartQuantity}
           onOpenCart={() => handleNavigate("cart")}
         />
-      ) : currentPage === "discovery-set" ? (
-        <DiscoverySetPage
-          onBackToHome={() => handleNavigate("home")}
-          onAddToCart={handleAddToCart}
-          onOpenCart={() => handleNavigate("cart")}
-          onNavigate={handleNavigate}
-        />
       ) : currentPage === "about" ? (
         <AboutPage
           onBackToHome={() => handleNavigate("home")}
           onNavigateToPerfumes={() => handleNavigate("perfumes")}
-          onNavigate={handleNavigate}
+          onNavigate={(page) => handleNavigate(page as PageName)}
         />
       ) : currentPage === "byob" ? (
         <ByobPage
@@ -581,12 +573,11 @@ export default function App() {
           onBackToHome={() => handleNavigate("home")}
           onAddToCart={handleAddToCart}
           onOpenCart={() => handleNavigate("cart")}
-          onOpenAccount={handleAccountClick}
         />
       ) : currentPage === "client-services" ? (
         <ClientServicesPage
           onBackToHome={() => handleNavigate("home")}
-          onNavigate={handleNavigate}
+          onNavigate={(page) => handleNavigate(page as PageName)}
         />
       ) : currentPage === "account" ? (
         <AccountPage
@@ -596,7 +587,7 @@ export default function App() {
       ) : currentPage === "track-order" ? (
         <TrackOrderPage
           onBackToHome={() => handleNavigate("home")}
-          onNavigate={handleNavigate}
+          onNavigateToContact={() => handleNavigate("client-services")}
         />
       ) : currentPage === "cart" ? (
         <CartPage
@@ -605,7 +596,7 @@ export default function App() {
           onRemoveItem={handleRemoveCartItem}
           onClearCart={() => setCartItems([])}
           onAddToCart={handleAddToCart}
-          onNavigate={handleNavigate}
+          onNavigate={(page) => handleNavigate(page as PageName)}
         />
       ) : (
         <main>
@@ -723,11 +714,11 @@ export default function App() {
       {cartToast && (
         <div
           key={cartToast.id}
-          className="fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-2xl border border-[#8a3b24]/60 bg-[#151412]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
+          className="on-dark fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-[4px] border border-[#4a4f10]/60 bg-[#111111]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
         >
           <div className="flex items-center gap-3 min-w-0">
             {cartToast.img && (
-              <div className="h-11 w-11 shrink-0 rounded-xl bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
+              <div className="h-11 w-11 shrink-0 rounded-[4px] bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
                 <img
                   src={cartToast.img}
                   alt="Cart item thumbnail"
@@ -736,10 +727,10 @@ export default function App() {
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-xs font-bold text-[#a4492e] tracking-wide truncate">
+              <p className="text-xs font-bold text-[color:var(--accent)] tracking-wide truncate">
                 {cartToast.message}
               </p>
-              <p className="text-[10px] text-white/70 font-medium">
+              <p className="text-[10px] max-sm:text-[12px] text-white/70 font-medium">
                 Cart Updated ({totalCartCount} item
                 {totalCartCount === 1 ? "" : "s"})
               </p>
@@ -751,7 +742,7 @@ export default function App() {
               setCartToast(null);
               handleNavigate("cart");
             }}
-            className="shrink-0 rounded-full bg-[#8a3b24] px-3.5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#a4492e] transition-all shadow-md cursor-pointer flex items-center gap-1"
+            className="shrink-0 rounded-full bg-[#4a4f10] px-3.5 py-2 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5f6516] transition-all shadow-md cursor-pointer flex items-center gap-1"
           >
             <span>View Bag</span>
             <svg

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { ALL_PERFUMES } from "../data/perfumes";
 
@@ -257,7 +257,7 @@ export default function CartPage({
       } catch (e) {}
       const checkoutUrl = await createOrGetShopifyCheckoutUrl(
         items,
-        appliedCoupon,
+        appliedCoupon ?? undefined,
       );
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
@@ -272,16 +272,16 @@ export default function CartPage({
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f2ee] text-[#151412] pb-28 md:pb-20">
+    <div className="min-h-screen bg-[#f2f2f0] text-[#111111] pb-28 md:pb-20">
       {" "}
       {/* ══ HEADER WITH OFFICIAL BURGUNDY LOGO ══════════════════════════ */}
-      <header className="sticky top-0 z-50 border-b border-[#151412]/10 bg-[#f4f2ee]/95 backdrop-blur-md px-4 sm:px-8 py-3">
+      <header className="sticky top-0 z-50 border-b border-[#111111]/10 bg-[#f2f2f0]/95 backdrop-blur-md px-4 sm:px-8 py-3">
         {" "}
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           {" "}
           <button
             onClick={() => onNavigate?.("home")}
-            className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#151412]/70 hover:text-[#8a3b24] transition-colors"
+            className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#111111]/70 hover:text-[#4a4f10] transition-colors"
           >
             {" "}
             <svg
@@ -312,7 +312,7 @@ export default function CartPage({
               className="h-10 sm:h-12 object-contain max-w-[220px] mix-blend-multiply scale-110"
             />{" "}
           </div>{" "}
-          <div className="flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#8a3b24]">
+          <div className="flex items-center gap-1.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-[#4a4f10]">
             {" "}
             <svg
               className="h-4 w-4"
@@ -375,7 +375,7 @@ export default function CartPage({
               <div className="mt-3 h-px w-full max-w-md mx-auto bg-[color:var(--color-rule)] overflow-hidden">
                 {" "}
                 <div
-                  className="h-full bg-ink transition-all duration-500"
+                  className="on-dark h-full bg-ink transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />{" "}
               </div>{" "}
@@ -386,11 +386,11 @@ export default function CartPage({
           /* Empty State */
           <div className="flex flex-col items-center text-center py-16 space-y-4">
             {" "}
-            <div className="h-px w-16 bg-[#8a3b24]/40" />{" "}
-            <h2 className="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-light text-[#151412]">
+            <div className="h-px w-16 bg-[#4a4f10]/40" />{" "}
+            <h2 className="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-light text-[#111111]">
               Your Atelier Bag is Empty
             </h2>{" "}
-            <p className="text-[15px] leading-relaxed text-[#151412]/65 max-w-sm">
+            <p className="text-[15px] leading-relaxed text-[#111111]/65 max-w-sm">
               Discover our rare 35%+ pure perfume oil extraits de parfum crafted
               in Jaipur.
             </p>{" "}
@@ -409,16 +409,16 @@ export default function CartPage({
             {/* LEFT COLUMN: Products & Customization (7 Cols) */}
             <div className="lg:col-span-7 space-y-5">
               {" "}
-              <div className="flex items-center justify-between border-b border-[#151412]/10 pb-3">
+              <div className="flex items-center justify-between border-b border-[#111111]/10 pb-3">
                 {" "}
-                <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#151412]">
+                <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#111111]">
                   {" "}
                   Selected Fragrances ({totalCount})
                 </h2>{" "}
                 {onClearCart && (
                   <button
                     onClick={onClearCart}
-                    className="text-xs uppercase tracking-widest text-[#8a3b24] font-bold hover:underline"
+                    className="text-xs uppercase tracking-[0.06em] text-[#4a4f10] font-bold hover:underline"
                   >
                     {" "}
                     Clear Bag
@@ -451,13 +451,13 @@ export default function CartPage({
                   return (
                     <div
                       key={item.id}
-                      className="rounded-2xl border border-[#151412]/10 bg-white p-3 sm:p-4 shadow-sm space-y-3 overflow-hidden"
+                      className="rounded-[4px] border border-[#111111]/10 bg-white p-3 sm:p-4 shadow-sm space-y-3 overflow-hidden"
                     >
                       {" "}
                       <div className="flex gap-3 sm:gap-4">
                         {" "}
                         {/* Bottle Thumbnail */}
-                        <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-[#f4f2ee] border border-[#151412]/10 flex items-center justify-center">
+                        <div className="relative h-24 sm:h-28 w-20 sm:w-24 shrink-0 overflow-hidden rounded-[4px] bg-[#f2f2f0] border border-[#111111]/10 flex items-center justify-center">
                           {" "}
                           <img
                             src={displayImg}
@@ -465,7 +465,7 @@ export default function CartPage({
                             className="h-full w-full object-contain p-1"
                           />{" "}
                           {item.isPersonalised && (
-                            <div className="absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[#a4492e] truncate px-1 py-0.5 border border-[#8a3b24]/60 shadow">
+                            <div className="on-dark absolute bottom-0.5 left-0.5 right-0.5 rounded bg-black/90 text-center text-[7px] font-bold text-[color:var(--accent)] truncate px-1 py-0.5 border border-[#4a4f10]/60 shadow">
                               {" "}
                               {item.engravingText}{" "}
                               {item.engravingDate
@@ -483,20 +483,20 @@ export default function CartPage({
                               {" "}
                               <div className="min-w-0 flex-1">
                                 {" "}
-                                <h3 className="font-sans text-sm sm:text-lg font-bold text-[#151412] leading-tight truncate">
+                                <h3 className="font-sans text-sm sm:text-lg font-bold text-[#111111] leading-tight truncate">
                                   {displayName}
                                 </h3>{" "}
-                                <p className="text-[10px] text-[#8a3b24] font-bold uppercase tracking-wider">
+                                <p className="text-[10px] max-sm:text-[12px] text-[#4a4f10] font-bold uppercase tracking-wider">
                                   35%+ Pure Oil Extrait
                                 </p>{" "}
                               </div>{" "}
-                              <span className="font-sans text-sm sm:text-base font-extrabold text-[#151412] shrink-0 whitespace-nowrap ml-1">
+                              <span className="font-sans text-sm sm:text-base font-extrabold text-[#111111] shrink-0 whitespace-nowrap ml-1">
                                 ₹{(item.price * item.quantity).toLocaleString()}
                               </span>{" "}
                             </div>{" "}
                             {/* Personalisation Badge */}
                             {item.isPersonalised && (
-                              <div className="mt-1 flex items-center gap-1 text-[10px] font-bold text-[#8a3b24]">
+                              <div className="mt-1 flex items-center gap-1 text-[10px] max-sm:text-[12px] font-bold text-[#4a4f10]">
                                 {" "}
                                 <span>
                                   {" "}
@@ -514,7 +514,7 @@ export default function CartPage({
                             availableSizes.length > 1 && (
                               <div className="mt-2 flex items-center gap-1.5 flex-wrap">
                                 {" "}
-                                <span className="text-[10px] font-bold text-[#151412]/60 uppercase">
+                                <span className="text-[10px] max-sm:text-[12px] font-bold text-[#111111]/60 uppercase">
                                   Size:
                                 </span>{" "}
                                 <div className="flex flex-wrap gap-1">
@@ -527,10 +527,10 @@ export default function CartPage({
                                         onClick={() =>
                                           handleSwitchSize(item, sz)
                                         }
-                                        className={`px-2.5 py-0.5 rounded-md text-[11px] font-bold transition-all ${
+                                        className={`on-dark px-2.5 py-0.5 rounded-md text-[11px] max-sm:text-[12px] font-bold transition-all ${
                                           isSelected
                                             ? "bg-black text-white border border-black shadow-xs"
-                                            : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/15 hover:border-black"
+                                            : "bg-[#111111]/5 text-[#111111]/70 border border-[#111111]/15 hover:border-black"
                                         }`}
                                       >
                                         {" "}
@@ -544,7 +544,7 @@ export default function CartPage({
                           {/* Quantity Stepper & Remove */}
                           <div className="mt-3 flex items-center justify-between">
                             {" "}
-                            <div className="flex items-center rounded-full border border-[#151412]/30 bg-white px-2 py-0.5 gap-1.5">
+                            <div className="flex items-center rounded-full border border-[#111111]/30 bg-white px-2 py-0.5 gap-1.5">
                               {" "}
                               <button
                                 onClick={() =>
@@ -554,18 +554,18 @@ export default function CartPage({
                                     -1,
                                   )
                                 }
-                                className="font-bold text-sm text-[#151412] hover:opacity-75 px-1"
+                                className="font-bold text-sm text-[#111111] hover:opacity-75 px-1"
                               >
                                 -
                               </button>{" "}
-                              <span className="w-4 text-center text-xs font-bold text-[#151412]">
+                              <span className="w-4 text-center text-xs font-bold text-[#111111]">
                                 {item.quantity}
                               </span>{" "}
                               <button
                                 onClick={() =>
                                   onUpdateQuantity(item.productId, item.size, 1)
                                 }
-                                className="font-bold text-sm text-[#151412] hover:opacity-75 px-1"
+                                className="font-bold text-sm text-[#111111] hover:opacity-75 px-1"
                               >
                                 +
                               </button>{" "}
@@ -574,7 +574,7 @@ export default function CartPage({
                               onClick={() =>
                                 onRemoveItem(item.productId, item.size)
                               }
-                              className="text-[11px] text-red-600 font-semibold hover:underline"
+                              className="text-[11px] max-sm:text-[12px] text-red-600 font-semibold hover:underline"
                             >
                               {" "}
                               Remove
@@ -588,15 +588,15 @@ export default function CartPage({
               </div>{" "}
               {/*  ₹200 CUSTOM LASER ENGRAVING MODULE (RESTRICTED TO 50ML BOTTLES ONLY) */}
               {engravingEligibleItems.length > 0 ? (
-                <div className="rounded-2xl border border-[#151412]/15 bg-white p-4 shadow-sm space-y-3">
+                <div className="rounded-[4px] border border-[#111111]/15 bg-white p-4 shadow-sm space-y-3">
                   {" "}
                   <div>
                     {" "}
-                    <h3 className="font-sans text-base font-bold text-[#151412]">
+                    <h3 className="font-sans text-base font-bold text-[#111111]">
                       {" "}
                       Custom Laser Name & Date Engraving (+₹200)
                     </h3>{" "}
-                    <p className="text-[10px] text-[#8a3b24] font-bold mt-0.5">
+                    <p className="text-[10px] max-sm:text-[12px] text-[#4a4f10] font-bold mt-0.5">
                       Exclusively available on 50ml signature Extrait bottles
                     </p>{" "}
                   </div>{" "}
@@ -608,7 +608,7 @@ export default function CartPage({
                         `${engravingEligibleItems[0]?.productId}-${engravingEligibleItems[0]?.size}`
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
-                      className="w-full rounded-xl border border-[#151412]/20 bg-[#f4f2ee] p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
+                      className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4a4f10] focus:outline-none"
                     >
                       {" "}
                       {engravingEligibleItems.map((i) => {
@@ -631,7 +631,7 @@ export default function CartPage({
                     {" "}
                     <div>
                       {" "}
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                      <label className="block text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/70 mb-1">
                         Name
                       </label>{" "}
                       <input
@@ -640,12 +640,12 @@ export default function CartPage({
                         value={engraveName}
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
-                        className="w-full rounded-xl border border-[#151412]/20 p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
+                        className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4a4f10] focus:outline-none"
                       />{" "}
                     </div>{" "}
                     <div>
                       {" "}
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                      <label className="block text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/70 mb-1">
                         Date
                       </label>{" "}
                       <input
@@ -654,26 +654,26 @@ export default function CartPage({
                         value={engraveDate}
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
-                        className="w-full rounded-xl border border-[#151412]/20 p-2.5 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
+                        className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4a4f10] focus:outline-none"
                       />{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
                     onClick={handleApplyEngravingToTarget}
-                    className="w-full rounded-xl border border-[#151412] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#151412] hover:bg-black hover:text-white transition-all shadow-xs"
+                    className="w-full rounded-[4px] border border-[#111111] bg-white py-2.5 text-center text-xs font-bold uppercase tracking-wider text-[#111111] hover:bg-black hover:text-white transition-all shadow-xs"
                   >
                     {" "}
                     PREVIEW / APPLY ENGRAVING (+₹200)
                   </button>{" "}
                 </div>
               ) : (
-                <div className="rounded-2xl border border-[#151412]/10 bg-white p-4 shadow-sm space-y-1">
+                <div className="rounded-[4px] border border-[#111111]/10 bg-white p-4 shadow-sm space-y-1">
                   {" "}
-                  <h3 className="font-sans text-sm font-bold text-[#151412]">
+                  <h3 className="font-sans text-sm font-bold text-[#111111]">
                     {" "}
                     Custom Laser Name & Date Engraving (+₹200)
                   </h3>{" "}
-                  <p className="text-xs text-[#151412]/70">
+                  <p className="text-xs text-[#111111]/70">
                     {" "}
                     Custom laser name & date engraving (+₹200) is exclusively
                     available on <strong>50ml Extrait bottles</strong>.
@@ -684,26 +684,26 @@ export default function CartPage({
             {/* RIGHT COLUMN: Order Summary & Checkout (5 Cols) */}
             <div className="lg:col-span-5 space-y-4">
               {" "}
-              <div className="sticky top-24 rounded-2xl border border-[#8a3b24]/30 bg-white p-4 sm:p-5 shadow-xl space-y-4 sm:space-y-5 overflow-hidden">
+              <div className="sticky top-24 rounded-[4px] border border-[#4a4f10]/30 bg-white p-4 sm:p-5 shadow-xl space-y-4 sm:space-y-5 overflow-hidden">
                 {" "}
-                <div className="border-b border-[#151412]/10 pb-3 flex items-center justify-between">
+                <div className="border-b border-[#111111]/10 pb-3 flex items-center justify-between">
                   {" "}
-                  <h3 className="font-sans text-lg sm:text-xl font-bold text-[#151412]">
+                  <h3 className="font-sans text-lg sm:text-xl font-bold text-[#111111]">
                     Atelier Order Summary
                   </h3>{" "}
                 </div>{" "}
                 {/*  1-TAP COUPON CARD */}
                 <div className="space-y-2">
                   {" "}
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#151412]/70">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#111111]/70">
                     Apply Atelier Coupons
                   </label>{" "}
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[#8a3b24]/10 border border-[#8a3b24]/40 rounded-xl p-2.5 text-xs">
+                    <div className="flex items-center justify-between bg-[#4a4f10]/10 border border-[#4a4f10]/40 rounded-[4px] p-2.5 text-xs">
                       {" "}
                       <div className="flex items-center gap-2">
                         {" "}
-                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">
+                        <span className="font-bold text-[#111111] font-mono tracking-wider text-xs">
                           {" "}
                           {appliedCoupon}
                         </span>{" "}
@@ -726,9 +726,9 @@ export default function CartPage({
                         {" "}
                         <button
                           onClick={() => handleApplyCoupon("PC100")}
-                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider border transition-all ${
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider border transition-all ${
                             subtotal >= 999
-                              ? "bg-[#f4f2ee] text-[#8a3b24] border-[#8a3b24] hover:bg-[#8a3b24] hover:text-white"
+                              ? "bg-[#f2f2f0] text-[#4a4f10] border-[#4a4f10] hover:bg-[#4a4f10] hover:text-white"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -737,9 +737,9 @@ export default function CartPage({
                         </button>{" "}
                         <button
                           onClick={() => handleApplyCoupon("PC200")}
-                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider border transition-all ${
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider border transition-all ${
                             subtotal >= 1999
-                              ? "bg-[#f4f2ee] text-[#8a3b24] border-[#8a3b24] hover:bg-[#8a3b24] hover:text-white"
+                              ? "bg-[#f2f2f0] text-[#4a4f10] border-[#4a4f10] hover:bg-[#4a4f10] hover:text-white"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -759,11 +759,11 @@ export default function CartPage({
                           onKeyDown={(e) => {
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
-                          className="flex-1 min-w-0 rounded-xl border border-[#151412]/20 bg-[#f4f2ee] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#151412] focus:border-[#8a3b24] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[#4a4f10] focus:outline-none"
                         />{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="shrink-0 rounded-xl bg-[#151412] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[#a4492e] hover:bg-[#8a3b24] hover:text-white transition-colors"
+                          className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[color:var(--accent)] hover:bg-[#4a4f10] hover:text-white transition-colors"
                         >
                           {" "}
                           Apply
@@ -772,20 +772,20 @@ export default function CartPage({
                     </div>
                   )}
                   {couponError && (
-                    <p className="text-[10px] text-red-500 font-medium">
+                    <p className="text-[10px] max-sm:text-[12px] text-red-500 font-medium">
                       {couponError}
                     </p>
                   )}
                   {couponSuccess && (
-                    <p className="text-[10px] text-emerald-600 font-bold">
+                    <p className="text-[10px] max-sm:text-[12px] text-emerald-600 font-bold">
                       ✓ {couponSuccess}
                     </p>
                   )}
                 </div>{" "}
                 {/* Breakdown */}
-                <div className="space-y-2 border-t border-b border-[#151412]/10 py-3 text-xs">
+                <div className="space-y-2 border-t border-b border-[#111111]/10 py-3 text-xs">
                   {" "}
-                  <div className="flex justify-between text-[#151412]/80">
+                  <div className="flex justify-between text-[#111111]/80">
                     {" "}
                     <span>Items Subtotal ({totalCount} items)</span>{" "}
                     <span className="font-bold">
@@ -799,34 +799,34 @@ export default function CartPage({
                       <span>- ₹ {couponDiscount.toLocaleString()}</span>{" "}
                     </div>
                   )}
-                  <div className="flex justify-between text-[#151412]/80">
+                  <div className="flex justify-between text-[#111111]/80">
                     {" "}
                     <span>Express Shipping</span>{" "}
                     <span className="font-bold text-emerald-700">
                       {isFreeShippingUnlocked ? "FREE" : "₹ 100"}
                     </span>{" "}
                   </div>{" "}
-                  <div className="flex justify-between border-t border-dashed border-[#151412]/10 pt-2 text-base font-bold text-[#151412]">
+                  <div className="flex justify-between border-t border-dashed border-[#111111]/10 pt-2 text-base font-bold text-[#111111]">
                     {" "}
                     <span className="font-sans font-bold">
                       Total Payable
                     </span>{" "}
-                    <span className="font-sans text-xl font-extrabold text-[#151412]">
+                    <span className="font-sans text-xl font-extrabold text-[#111111]">
                       ₹ {finalTotal.toLocaleString()}
                     </span>{" "}
                   </div>{" "}
                 </div>{" "}
                 {/*  PINCODE DELIVERY & COD CHECKER WIDGET */}
-                <div className="rounded-xl border border-[#8a3b24]/30 bg-[#f4f2ee] p-3 space-y-2">
+                <div className="rounded-[4px] border border-[#4a4f10]/30 bg-[#f2f2f0] p-3 space-y-2">
                   {" "}
                   <div className="flex items-center justify-between">
                     {" "}
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#151412]/80 flex items-center gap-1">
+                    <span className="text-[11px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/80 flex items-center gap-1">
                       {" "}
                       Check Delivery & COD
                     </span>{" "}
                     {pincodeResult && (
-                      <span className="text-[10px] font-bold text-[#8a3b24] uppercase">
+                      <span className="text-[10px] max-sm:text-[12px] font-bold text-[#4a4f10] uppercase">
                         Checked
                       </span>
                     )}
@@ -844,24 +844,24 @@ export default function CartPage({
                         if (e.key === "Enter") handleCheckPincode();
                       }}
                       placeholder="Enter 6-digit Pincode"
-                      className="flex-1 min-w-0 rounded-lg border border-[#151412]/20 bg-white px-3 py-2 text-xs font-semibold text-[#151412] focus:border-[#8a3b24] focus:outline-none"
+                      className="flex-1 min-w-0 rounded-lg border border-[#111111]/20 bg-white px-3 py-2 text-xs font-semibold text-[#111111] focus:border-[#4a4f10] focus:outline-none"
                     />{" "}
                     <button
                       onClick={() => handleCheckPincode()}
                       disabled={isCheckingPincode}
-                      className="shrink-0 rounded-lg bg-[#151412] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#8a3b24] hover:text-white transition-all shadow-sm disabled:opacity-50"
+                      className="on-dark shrink-0 rounded-lg bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#4a4f10] hover:text-white transition-all shadow-sm disabled:opacity-50"
                     >
                       {" "}
                       {isCheckingPincode ? "..." : "CHECK"}
                     </button>{" "}
                   </div>{" "}
                   {pincodeError && (
-                    <p className="text-[10px] text-red-500 font-medium">
+                    <p className="text-[10px] max-sm:text-[12px] text-red-500 font-medium">
                       {pincodeError}
                     </p>
                   )}
                   {pincodeResult && (
-                    <div className="mt-2 rounded-lg p-2.5 text-xs space-y-1 border bg-white border-[#8a3b24]/30">
+                    <div className="mt-2 rounded-lg p-2.5 text-xs space-y-1 border bg-white border-[#4a4f10]/30">
                       {" "}
                       {pincodeResult.express ? (
                         <div className="flex items-center gap-1.5 font-bold text-amber-900">
@@ -881,7 +881,7 @@ export default function CartPage({
                           </span>{" "}
                         </div>
                       )}
-                      <div className="flex items-center gap-1 text-[11px] text-[#151412]/80">
+                      <div className="flex items-center gap-1 text-[11px] max-sm:text-[12px] text-[#111111]/80">
                         {" "}
                         <span>
                           {" "}
@@ -900,7 +900,7 @@ export default function CartPage({
                 <button
                   onClick={handleProceedToShopifyCheckout}
                   disabled={isRedirecting}
-                  className="hidden lg:flex w-full rounded-full bg-[#8a3b24] hover:bg-[#a4492e] py-3.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-white shadow-md items-center justify-center gap-2 transition-all"
+                  className="hidden lg:flex w-full rounded-full bg-[#4a4f10] hover:bg-[#5f6516] py-3.5 text-center text-xs font-bold uppercase tracking-[0.06em] text-white shadow-md items-center justify-center gap-2 transition-all"
                 >
                   {" "}
                   <span>
@@ -930,23 +930,23 @@ export default function CartPage({
       </main>{" "}
       {/* ══ MOBILE STICKY BOTTOM CHECKOUT DOCK (MATCHING IMAGE 3) ══════════════════════════ */}
       {items.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#151412]/10 bg-[#f4f2ee]/95 backdrop-blur-md p-3 text-[#151412] lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.12)]">
+        <div className="fixed bottom-0 left-0 right-0 z-[999] border-t border-[#111111]/10 bg-[#f2f2f0]/95 backdrop-blur-md p-3 text-[#111111] lg:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.12)]">
           {" "}
           <div className="mx-auto flex max-w-lg items-center justify-between gap-3 px-1">
             {" "}
             <div className="flex items-center gap-1.5">
               {" "}
-              <span className="text-xs font-bold text-[#151412]">
+              <span className="text-xs font-bold text-[#111111]">
                 Total:
               </span>{" "}
-              <p className="font-sans text-lg font-extrabold text-[#151412]">
+              <p className="font-sans text-lg font-extrabold text-[#111111]">
                 ₹{finalTotal.toLocaleString()}
               </p>{" "}
             </div>{" "}
             <button
               onClick={handleProceedToShopifyCheckout}
               disabled={isRedirecting}
-              className="flex-1 rounded-full bg-[#8a3b24] py-3 px-4 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 hover:bg-[#a4492e] transition-all"
+              className="flex-1 rounded-full bg-[#4a4f10] py-3 px-4 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md flex items-center justify-center gap-1.5 hover:bg-[#5f6516] transition-all"
             >
               {" "}
               <span>

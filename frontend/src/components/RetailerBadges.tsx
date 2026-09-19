@@ -12,20 +12,20 @@ const marqueeLogos = [...logos, ...logos, ...logos, ...logos];
 
 export default function RetailerBadges() {
   return (
-    <section className="w-full bg-[#f4f2ee] border-y border-[#a4492e]/15 py-3.5 overflow-hidden select-none">
+    <section className="w-full bg-[#f2f2f0] border-y border-[color:var(--accent)]/15 py-3.5 overflow-hidden select-none">
       {" "}
       {/* Logos Marquee Loop Track */}
       <div className="relative w-full overflow-hidden">
         {" "}
         {/* Left & Right Gradient Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#f4f2ee] via-[#f4f2ee]/80 to-transparent z-10 pointer-events-none" />{" "}
-        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#f4f2ee] via-[#f4f2ee]/80 to-transparent z-10 pointer-events-none" />{" "}
+        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#f2f2f0] via-[#f2f2f0]/80 to-transparent z-10 pointer-events-none" />{" "}
+        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#f2f2f0] via-[#f2f2f0]/80 to-transparent z-10 pointer-events-none" />{" "}
         <div className="ticker-track flex items-center gap-6 sm:gap-12 w-max">
           {" "}
           {marqueeLogos.map((item, index) => (
             <div
               key={`${item.name}-${index}`}
-              className="flex items-center justify-center bg-white border border-[#a4492e]/25 hover:border-[#a4492e] rounded-lg px-4 py-2 transition-all duration-300 shadow-xs hover:shadow-md h-11 min-w-[120px]"
+              className="flex items-center justify-center bg-white border border-[color:var(--accent)]/25 hover:border-[color:var(--accent)] rounded-lg px-4 py-2 transition-all duration-300 shadow-xs hover:shadow-md h-11 min-w-[120px]"
             >
               {" "}
               <img

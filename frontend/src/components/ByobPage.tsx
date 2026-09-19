@@ -218,7 +218,6 @@ interface ByobPageProps {
 export default function ByobPage({
   onBackToHome,
   onAddToCart,
-  onOpenCart,
   onOpenAccount: _onOpenAccount,
 }: ByobPageProps) {
   // ── CORE BUNDLE STATE ──
@@ -361,13 +360,13 @@ export default function ByobPage({
   }, [activeCategory, searchQuery]);
 
   return (
-    <div className="min-h-screen w-full bg-[#f7f5f2] text-[#1c1917] font-sans selection:bg-[#a4492e] selection:text-white pb-28 lg:pb-16">
+    <div className="min-h-screen w-full bg-[#f7f7f5] text-[#161616] font-sans selection:bg-[#5f6516] selection:text-white pb-28 lg:pb-16">
       {" "}
       {/* ── TOAST NOTIFICATION ── */}
       {toastMessage && (
-        <div className="fixed top-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[#a4492e]/40 bg-[#151412]/95 px-5 py-2 text-xs font-medium tracking-wide text-[#d9a08a] shadow-xl backdrop-blur-md animate-in fade-in flex items-center gap-2">
+        <div className="on-dark fixed top-20 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[color:var(--accent)]/40 bg-[#111111]/95 px-5 py-2 text-xs font-medium tracking-wide text-[#cdd43f] shadow-xl backdrop-blur-md animate-in fade-in flex items-center gap-2">
           {" "}
-          <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e]" />{" "}
+          <span className="h-1.5 w-1.5 rounded-full bg-[#5f6516]" />{" "}
           <span>{toastMessage}</span>{" "}
         </div>
       )}
@@ -376,48 +375,48 @@ export default function ByobPage({
         {" "}
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           {" "}
-          <div className="flex items-center gap-2 text-xs tracking-wider text-[#78716c]">
+          <div className="flex items-center gap-2 text-xs tracking-wider text-[#767676]">
             {" "}
             <button
               onClick={onBackToHome}
-              className="hover:text-[#a4492e] transition-colors cursor-pointer"
+              className="hover:text-[color:var(--accent)] transition-colors cursor-pointer"
             >
               {" "}
               ← BOUTIQUE
             </button>{" "}
             <span className="text-black/20">/</span>{" "}
-            <span className="font-semibold text-[#151412] uppercase tracking-widest">
+            <span className="font-semibold text-[#111111] uppercase tracking-[0.06em]">
               {" "}
               BUILD YOUR OWN BOX (50ML EXTRAITS)
             </span>{" "}
           </div>{" "}
-          <span className="hidden sm:inline-block text-[11px] font-bold text-[#8a3b24] uppercase tracking-widest">
+          <span className="hidden sm:inline-block text-[11px] max-sm:text-[12px] font-bold text-[#4a4f10] uppercase tracking-[0.06em]">
             {" "}
             35%+ EXTRAIT DE PARFUM
           </span>{" "}
         </div>{" "}
       </div>{" "}
       {/* ── HERO HEADER ── */}
-      <section className="border-b border-black/[0.06] bg-gradient-to-b from-white via-[#f7f5f2] to-[#f7f2ea] px-6 py-10 sm:py-14 lg:px-12 text-center">
+      <section className="border-b border-black/[0.06] bg-gradient-to-b from-white via-[#f7f7f5] to-[#f7f2ea] px-6 py-10 sm:py-14 lg:px-12 text-center">
         {" "}
         <div className="mx-auto max-w-3xl space-y-3">
           {" "}
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/30 bg-white px-4 py-1 shadow-xs">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-white px-4 py-1 shadow-xs">
             {" "}
             <span className="text-xs">✦</span>{" "}
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+            <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#4a4f10]">
               {" "}
               HAUTE PARFUMERIE BESPOKE SET
             </span>{" "}
           </div>{" "}
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-[#151412]">
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight text-[#111111]">
             {" "}
             Build Your Own{" "}
-            <span className="italic font-serif text-[#a4492e] font-normal">
+            <span className="italic font-serif text-[color:var(--accent)] font-normal">
               Bundle
             </span>{" "}
           </h1>{" "}
-          <p className="mx-auto max-w-xl text-xs sm:text-sm text-[#57534e] leading-relaxed">
+          <p className="mx-auto max-w-xl text-xs sm:text-sm text-[#555555] leading-relaxed">
             {" "}
             Create your own SENTIRE perfume bundle. Choose your favourite
             fragrances and build a personalised set from our extrait de parfum
@@ -428,24 +427,24 @@ export default function ByobPage({
             automatic bundle savings.
           </p>{" "}
           {/* Value Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-1 text-[11px] font-semibold text-[#78716c]">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-1 text-[11px] max-sm:text-[12px] font-semibold text-[#767676]">
             {" "}
             <span className="flex items-center gap-1.5">
               {" "}
-              <span className="text-[#a4492e]">✓</span> 35%+ Extrait
+              <span className="text-[color:var(--accent)]">✓</span> 35%+ Extrait
               Concentration
             </span>{" "}
             <span className="flex items-center gap-1.5">
               {" "}
-              <span className="text-[#a4492e]">✓</span> 12+ Hour Longevity
+              <span className="text-[color:var(--accent)]">✓</span> 12+ Hour Longevity
             </span>{" "}
             <span className="flex items-center gap-1.5">
               {" "}
-              <span className="text-[#a4492e]">✓</span> Free Express Delivery
+              <span className="text-[color:var(--accent)]">✓</span> Free Express Delivery
             </span>{" "}
             <span className="flex items-center gap-1.5">
               {" "}
-              <span className="text-[#a4492e]">✓</span> Save up to ₹400
+              <span className="text-[color:var(--accent)]">✓</span> Save up to ₹400
             </span>{" "}
           </div>{" "}
         </div>{" "}
@@ -457,11 +456,11 @@ export default function ByobPage({
           {" "}
           <div className="text-center space-y-1">
             {" "}
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+            <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#4a4f10]">
               {" "}
               STEP 01 — SELECT BOX SIZE
             </span>{" "}
-            <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#151412]">
+            <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#111111]">
               {" "}
               Choose number of bottles
             </h2>{" "}
@@ -495,15 +494,15 @@ export default function ByobPage({
               <div
                 key={tier.size}
                 onClick={() => handleSizeChange(tier.size)}
-                className={`relative flex flex-col justify-between rounded-2xl border p-5 cursor-pointer transition-all ${
+                className={`relative flex flex-col justify-between rounded-[4px] border p-5 cursor-pointer transition-all ${
                   bundleSize === tier.size
-                    ? "border-[#a4492e] bg-[#f7f5f2] ring-2 ring-[#a4492e] shadow-md"
-                    : "border-black/10 bg-white hover:border-[#a4492e]/60 hover:shadow-xs"
+                    ? "border-[color:var(--accent)] bg-[#f7f7f5] ring-2 ring-[#5f6516] shadow-md"
+                    : "border-black/10 bg-white hover:border-[color:var(--accent)]/60 hover:shadow-xs"
                 }`}
               >
                 {" "}
                 {tier.badge && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-[#a4492e] px-3 py-0.5 text-[8px] font-bold uppercase tracking-wider text-white shadow-xs">
+                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-[#5f6516] px-3 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white shadow-xs">
                     {" "}
                     {tier.badge}
                   </span>
@@ -512,29 +511,29 @@ export default function ByobPage({
                   {" "}
                   <div className="flex items-center justify-between">
                     {" "}
-                    <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
+                    <h3 className="font-display text-lg font-bold uppercase text-[#111111]">
                       {tier.title}
                     </h3>{" "}
-                    <span className="rounded bg-[#151412] px-2 py-0.5 text-[9px] font-bold text-[#d9a08a]">
+                    <span className="on-dark rounded bg-[#111111] px-2 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[#cdd43f]">
                       {" "}
                       {tier.save}
                     </span>{" "}
                   </div>{" "}
-                  <p className="text-xs font-medium text-[#8a3b24]">
+                  <p className="text-xs font-medium text-[#4a4f10]">
                     {tier.sub}
                   </p>{" "}
-                  <p className="text-[11px] text-[#78716c] pt-1">
+                  <p className="text-[11px] max-sm:text-[12px] text-[#767676] pt-1">
                     {tier.desc}
                   </p>{" "}
                 </div>{" "}
                 <div className="mt-4 border-t border-black/[0.06] pt-3 flex items-center justify-between text-xs font-semibold">
                   {" "}
-                  <span className="text-[#78716c]">50ML Extraits</span>{" "}
+                  <span className="text-[#767676]">50ML Extraits</span>{" "}
                   <span
                     className={
                       bundleSize === tier.size
-                        ? "text-[#8a3b24]"
-                        : "text-[#78716c]"
+                        ? "text-[#4a4f10]"
+                        : "text-[#767676]"
                     }
                   >
                     {" "}
@@ -556,11 +555,11 @@ export default function ByobPage({
             {" "}
             <div>
               {" "}
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+              <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#4a4f10]">
                 {" "}
                 STEP 02 — CHOOSE YOUR FRAGRANCES
               </span>{" "}
-              <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#151412]">
+              <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-[#111111]">
                 {" "}
                 SELECT {bundleSize} SIGNATURE 50ML SCENTS
               </h2>{" "}
@@ -580,10 +579,10 @@ export default function ByobPage({
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`on-dark rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       activeCategory === cat.id
-                        ? "bg-[#151412] text-white"
-                        : "text-[#78716c] hover:text-[#151412]"
+                        ? "bg-[#111111] text-white"
+                        : "text-[#767676] hover:text-[#111111]"
                     }`}
                   >
                     {" "}
@@ -596,7 +595,7 @@ export default function ByobPage({
                 placeholder="Search scent..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="rounded-full border border-black/15 bg-white px-3.5 py-1 text-xs text-[#151412] placeholder-[#a8a29e] focus:border-[#a4492e] focus:outline-none w-36"
+                className="rounded-full border border-black/15 bg-white px-3.5 py-1 text-xs text-[#111111] placeholder-[#a3a3a3] focus:border-[color:var(--accent)] focus:outline-none w-36"
               />{" "}
             </div>{" "}
           </div>{" "}
@@ -617,22 +616,22 @@ export default function ByobPage({
                   return (
                     <div
                       key={perfume.id}
-                      className={`group relative flex flex-col justify-between rounded-2xl border bg-white p-5 transition-all duration-300 ${
+                      className={`group relative flex flex-col justify-between rounded-[4px] border bg-white p-5 transition-all duration-300 ${
                         isAssigned
-                          ? "border-[#a4492e] ring-1 ring-[#a4492e]/50 shadow-sm"
-                          : "border-black/10 hover:border-[#a4492e]/50 hover:shadow-md"
+                          ? "border-[color:var(--accent)] ring-1 ring-[#5f6516]/50 shadow-sm"
+                          : "border-black/10 hover:border-[color:var(--accent)]/50 hover:shadow-md"
                       }`}
                     >
                       {" "}
                       {/* Top badge */}
                       <div className="flex items-center justify-between border-b border-black/[0.04] pb-2">
                         {" "}
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#8a3b24]">
+                        <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#4a4f10]">
                           {" "}
                           {perfume.num} • {perfume.family}
                         </span>{" "}
                         {isAssigned && (
-                          <span className="rounded-full bg-[#151412] px-2.5 py-0.5 text-[9px] font-bold text-[#d9a08a] uppercase">
+                          <span className="on-dark rounded-full bg-[#111111] px-2.5 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[#cdd43f] uppercase">
                             {" "}
                             SLOT 0{assignedSlots.join(", 0")}
                           </span>
@@ -641,7 +640,7 @@ export default function ByobPage({
                       {/* Bottle image */}
                       <div
                         onClick={() => setQuickViewPerfume(perfume)}
-                        className="my-3 flex aspect-square w-full items-center justify-center rounded-xl bg-[#f4f2ee] p-4 cursor-pointer group-hover:bg-[#f5efe6] transition-colors"
+                        className="my-3 flex aspect-square w-full items-center justify-center rounded-[4px] bg-[#f2f2f0] p-4 cursor-pointer group-hover:bg-[#f5efe6] transition-colors"
                       >
                         {" "}
                         <img
@@ -655,23 +654,23 @@ export default function ByobPage({
                         {" "}
                         <div className="flex items-baseline justify-between">
                           {" "}
-                          <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
+                          <h3 className="font-display text-lg font-bold uppercase text-[#111111]">
                             {" "}
                             {perfume.name}
                           </h3>{" "}
                           <div className="text-right">
                             {" "}
-                            <span className="font-bold text-sm text-[#151412]">
+                            <span className="font-bold text-sm text-[#111111]">
                               {" "}
                               ₹{perfume.price50ml.toLocaleString("en-IN")}
                             </span>{" "}
-                            <span className="block text-[10px] text-[#a8a29e] line-through">
+                            <span className="block text-[10px] max-sm:text-[12px] text-[#a3a3a3] line-through">
                               {" "}
                               ₹{perfume.mrp50ml.toLocaleString("en-IN")}
                             </span>{" "}
                           </div>{" "}
                         </div>{" "}
-                        <p className="text-xs text-[#57534e] line-clamp-2">
+                        <p className="text-xs text-[#555555] line-clamp-2">
                           {" "}
                           {perfume.subtitle}
                         </p>{" "}
@@ -684,7 +683,7 @@ export default function ByobPage({
                             .map((note, i) => (
                               <span
                                 key={i}
-                                className="rounded bg-black/[0.04] px-1.5 py-0.5 text-[9px] text-[#78716c]"
+                                className="rounded bg-black/[0.04] px-1.5 py-0.5 text-[9px] max-sm:text-[12px] text-[#767676]"
                               >
                                 {" "}
                                 {note}
@@ -696,10 +695,10 @@ export default function ByobPage({
                           {" "}
                           <button
                             onClick={() => handleSelectPerfume(perfume)}
-                            className={`flex-1 rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                            className={`on-dark flex-1 rounded-[4px] py-2.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                               isAssigned
-                                ? "border border-[#a4492e] bg-[#a4492e]/15 text-[#8a3b24] hover:bg-[#a4492e] hover:text-black"
-                                : "border border-black/10 bg-[#151412] text-white hover:bg-[#a4492e] hover:text-black hover:border-[#a4492e]"
+                                ? "border border-[color:var(--accent)] bg-[#5f6516]/15 text-[#4a4f10] hover:bg-[#5f6516] hover:text-black"
+                                : "border border-black/10 bg-[#111111] text-white hover:bg-[#5f6516] hover:text-black hover:border-[color:var(--accent)]"
                             }`}
                           >
                             {" "}
@@ -707,7 +706,7 @@ export default function ByobPage({
                           </button>{" "}
                           <button
                             onClick={() => setQuickViewPerfume(perfume)}
-                            className="rounded-xl border border-black/10 bg-white px-3 py-2.5 text-xs text-[#78716c] hover:text-black hover:border-black/30 transition-colors cursor-pointer"
+                            className="rounded-[4px] border border-black/10 bg-white px-3 py-2.5 text-xs text-[#767676] hover:text-black hover:border-black/30 transition-colors cursor-pointer"
                             title="View Notes"
                           >
                             {" "}
@@ -723,7 +722,7 @@ export default function ByobPage({
             {/* ── RIGHT: STICKY FULLY-SCROLLABLE BOX TRAY (NO OVERFLOW CUTOFF) ── */}
             <div className="lg:col-span-5 xl:col-span-4">
               {" "}
-              <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-3xl border border-[#a4492e]/30 bg-white p-5 sm:p-6 space-y-4 shadow-xl scrollbar-thin">
+              <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-[4px] border border-[color:var(--accent)]/30 bg-white p-5 sm:p-6 space-y-4 shadow-xl scrollbar-thin">
                 {" "}
                 {/* Header & Progress */}
                 <div className="border-b border-black/[0.06] pb-3 space-y-2">
@@ -732,16 +731,16 @@ export default function ByobPage({
                     {" "}
                     <div>
                       {" "}
-                      <h3 className="font-display text-lg font-bold uppercase text-[#151412]">
+                      <h3 className="font-display text-lg font-bold uppercase text-[#111111]">
                         {" "}
                         Your bespoke box
                       </h3>{" "}
-                      <span className="text-[11px] text-[#78716c]">
+                      <span className="text-[11px] max-sm:text-[12px] text-[#767676]">
                         {" "}
                         {bundleSize}-Bottle 50ML Collection
                       </span>{" "}
                     </div>{" "}
-                    <span className="rounded-full bg-[#a4492e]/15 px-2.5 py-0.5 text-xs font-bold text-[#8a3b24]">
+                    <span className="rounded-full bg-[#5f6516]/15 px-2.5 py-0.5 text-xs font-bold text-[#4a4f10]">
                       {" "}
                       {filledCount} / {bundleSize} SLOTS
                     </span>{" "}
@@ -749,7 +748,7 @@ export default function ByobPage({
                   {/* Progress Bar */}
                   <div className="space-y-1">
                     {" "}
-                    <div className="flex justify-between text-[10px] font-semibold text-[#78716c]">
+                    <div className="flex justify-between text-[10px] max-sm:text-[12px] font-semibold text-[#767676]">
                       {" "}
                       <span>
                         {isComplete
@@ -761,7 +760,7 @@ export default function ByobPage({
                     <div className="h-1.5 w-full overflow-hidden rounded-full bg-black/5">
                       {" "}
                       <div
-                        className="h-full rounded-full bg-[#a4492e] transition-all duration-300"
+                        className="h-full rounded-full bg-[#5f6516] transition-all duration-300"
                         style={{ width: `${progressPercent}%` }}
                       />{" "}
                     </div>{" "}
@@ -778,18 +777,18 @@ export default function ByobPage({
                       <div
                         key={slotIdx}
                         onClick={() => setActiveSlot(slotIdx)}
-                        className={`flex items-center justify-between rounded-xl border p-2.5 cursor-pointer transition-all ${
+                        className={`flex items-center justify-between rounded-[4px] border p-2.5 cursor-pointer transition-all ${
                           isActive
-                            ? "border-[#a4492e] bg-[#f7f5f2] ring-2 ring-[#a4492e]"
+                            ? "border-[color:var(--accent)] bg-[#f7f7f5] ring-2 ring-[#5f6516]"
                             : item
-                              ? "border-black/10 bg-white hover:border-[#a4492e]/60"
-                              : "border-dashed border-black/20 bg-[#f4f2ee] hover:border-[#a4492e]/60 hover:bg-white"
+                              ? "border-black/10 bg-white hover:border-[color:var(--accent)]/60"
+                              : "border-dashed border-black/20 bg-[#f2f2f0] hover:border-[color:var(--accent)]/60 hover:bg-white"
                         }`}
                       >
                         {" "}
                         <div className="flex items-center gap-2.5">
                           {" "}
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#151412] text-[9px] font-bold text-[#d9a08a]">
+                          <span className="on-dark flex h-5 w-5 items-center justify-center rounded-full bg-[#111111] text-[9px] max-sm:text-[12px] font-bold text-[#cdd43f]">
                             {" "}
                             0{slotIdx + 1}
                           </span>{" "}
@@ -803,10 +802,10 @@ export default function ByobPage({
                               />{" "}
                               <div>
                                 {" "}
-                                <h4 className="font-display text-xs font-bold uppercase text-[#151412] leading-tight">
+                                <h4 className="font-display text-xs font-bold uppercase text-[#111111] leading-tight">
                                   {item.name}
                                 </h4>{" "}
-                                <span className="block text-[10px] text-[#8a3b24] font-medium">
+                                <span className="block text-[10px] max-sm:text-[12px] text-[#4a4f10] font-medium">
                                   50 ML • ₹{item.price50ml}
                                 </span>{" "}
                               </div>{" "}
@@ -814,10 +813,10 @@ export default function ByobPage({
                           ) : (
                             <div>
                               {" "}
-                              <span className="block text-xs font-semibold text-[#151412] leading-tight">
+                              <span className="block text-xs font-semibold text-[#111111] leading-tight">
                                 EMPTY SLOT
                               </span>{" "}
-                              <span className="block text-[9px] text-[#a8a29e]">
+                              <span className="block text-[9px] max-sm:text-[12px] text-[#a3a3a3]">
                                 Click any perfume to assign
                               </span>{" "}
                             </div>
@@ -826,7 +825,7 @@ export default function ByobPage({
                         {item && (
                           <button
                             onClick={(e) => handleRemoveSlot(slotIdx, e)}
-                            className="flex h-6 w-6 items-center justify-center rounded-full text-xs text-[#a8a29e] hover:bg-red-50 hover:text-red-500 cursor-pointer"
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-xs text-[#a3a3a3] hover:bg-red-50 hover:text-red-500 cursor-pointer"
                           >
                             {" "}
                             ✕
@@ -839,7 +838,7 @@ export default function ByobPage({
                 {/* Pricing Breakdown */}
                 <div className="border-t border-black/[0.08] pt-3 space-y-1.5 text-xs">
                   {" "}
-                  <div className="flex justify-between text-[#78716c]">
+                  <div className="flex justify-between text-[#767676]">
                     {" "}
                     <span>Subtotal ({bundleSize} × 50ML):</span>{" "}
                     <span>₹{rawSubtotal.toLocaleString("en-IN")}</span>{" "}
@@ -853,23 +852,23 @@ export default function ByobPage({
                         : `Unlock ₹${discount} OFF`}
                     </span>{" "}
                   </div>{" "}
-                  <div className="flex justify-between text-[#78716c]">
+                  <div className="flex justify-between text-[#767676]">
                     {" "}
                     <span>Express Delivery:</span>{" "}
                     <span className="text-emerald-600 font-semibold">
                       FREE
                     </span>{" "}
                   </div>{" "}
-                  <div className="flex justify-between border-t border-black/[0.08] pt-2 font-display text-base font-bold text-[#151412]">
+                  <div className="flex justify-between border-t border-black/[0.08] pt-2 font-display text-base font-bold text-[#111111]">
                     {" "}
                     <span>Set Total:</span>{" "}
                     <div className="text-right">
                       {" "}
-                      <span className="block text-lg text-[#151412]">
+                      <span className="block text-lg text-[#111111]">
                         ₹{finalPrice.toLocaleString("en-IN")}
                       </span>{" "}
                       {rawMrpTotal > finalPrice && (
-                        <span className="block text-[9px] font-sans font-normal text-emerald-600">
+                        <span className="block text-[9px] max-sm:text-[12px] font-sans font-normal text-emerald-600">
                           {" "}
                           Save ₹
                           {(rawMrpTotal - finalPrice).toLocaleString(
@@ -887,10 +886,10 @@ export default function ByobPage({
                   <button
                     onClick={handleAddBundleToBag}
                     disabled={!isComplete || isAdding}
-                    className={`w-full rounded-2xl py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition-all cursor-pointer ${
+                    className={`w-full rounded-[4px] py-3.5 text-xs font-bold uppercase tracking-[0.06em] transition-all cursor-pointer ${
                       isComplete
-                        ? "border border-[#a4492e] bg-gradient-to-r from-[#a4492e] via-[#d9a08a] to-[#a4492e] text-[#151412] shadow-lg hover:scale-[1.01]"
-                        : "border border-black/10 bg-black/5 text-[#a8a29e] cursor-not-allowed"
+                        ? "border border-[color:var(--accent)] bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] text-[#111111] shadow-lg hover:scale-[1.01]"
+                        : "border border-black/10 bg-black/5 text-[#a3a3a3] cursor-not-allowed"
                     }`}
                   >
                     {" "}
@@ -900,7 +899,7 @@ export default function ByobPage({
                         ? `ADD ${bundleSize}-BOTTLE BOX TO BAG • ₹${finalPrice.toLocaleString("en-IN")} →`
                         : `SELECT ${bundleSize - filledCount} MORE SCENT(S)`}
                   </button>{" "}
-                  <p className="text-[9px] text-center text-[#a8a29e]">
+                  <p className="text-[9px] max-sm:text-[12px] text-center text-[#a3a3a3]">
                     {" "}
                     Includes 30-Day Discovery Guarantee & free trial sample
                     vials
@@ -918,11 +917,11 @@ export default function ByobPage({
           {" "}
           <div className="text-center space-y-1">
             {" "}
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a3b24]">
+            <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#4a4f10]">
               {" "}
               ASSURANCES
             </span>{" "}
-            <h2 className="font-display text-2xl uppercase tracking-tight text-[#151412]">
+            <h2 className="font-display text-2xl uppercase tracking-tight text-[#111111]">
               {" "}
               Frequently asked questions
             </h2>{" "}
@@ -936,16 +935,16 @@ export default function ByobPage({
                   {" "}
                   <button
                     onClick={() => setFaqOpenIdx(isOpen ? null : idx)}
-                    className="flex w-full items-center justify-between text-left font-display text-sm font-bold text-[#151412] cursor-pointer"
+                    className="flex w-full items-center justify-between text-left font-display text-sm font-bold text-[#111111] cursor-pointer"
                   >
                     {" "}
                     <span>{faq.q}</span>{" "}
-                    <span className="text-[#a4492e] font-bold text-base">
+                    <span className="text-[color:var(--accent)] font-bold text-base">
                       {isOpen ? "−" : "+"}
                     </span>{" "}
                   </button>{" "}
                   {isOpen && (
-                    <p className="mt-2 text-xs text-[#57534e] leading-relaxed">
+                    <p className="mt-2 text-xs text-[#555555] leading-relaxed">
                       {faq.a}
                     </p>
                   )}
@@ -959,25 +958,25 @@ export default function ByobPage({
       {quickViewPerfume && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
           {" "}
-          <div className="relative w-full max-w-lg rounded-3xl border border-[#a4492e]/40 bg-white p-6 sm:p-8 shadow-2xl space-y-5">
+          <div className="relative w-full max-w-lg rounded-[4px] border border-[color:var(--accent)]/40 bg-white p-6 sm:p-8 shadow-2xl space-y-5">
             {" "}
             <button
               onClick={() => setQuickViewPerfume(null)}
-              className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full bg-black/5 text-xs text-[#78716c] hover:bg-black/10 hover:text-black cursor-pointer"
+              className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full bg-black/5 text-xs text-[#767676] hover:bg-black/10 hover:text-black cursor-pointer"
             >
               {" "}
               ✕
             </button>{" "}
             <div className="border-b border-black/[0.06] pb-3">
               {" "}
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8a3b24]">
+              <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#4a4f10]">
                 {" "}
                 {quickViewPerfume.family} • 35%+ EXTRAIT
               </span>{" "}
-              <h3 className="font-display text-2xl font-bold uppercase text-[#151412]">
+              <h3 className="font-display text-2xl font-bold uppercase text-[#111111]">
                 {quickViewPerfume.name}
               </h3>{" "}
-              <p className="text-xs text-[#57534e] mt-0.5">
+              <p className="text-xs text-[#555555] mt-0.5">
                 {quickViewPerfume.subtitle}
               </p>{" "}
             </div>{" "}
@@ -986,32 +985,32 @@ export default function ByobPage({
               alt={quickViewPerfume.name}
               className="h-44 mx-auto object-contain drop-shadow-md"
             />{" "}
-            <div className="rounded-2xl border border-black/[0.06] bg-[#f4f2ee] p-4 space-y-2 text-xs">
+            <div className="rounded-[4px] border border-black/[0.06] bg-[#f2f2f0] p-4 space-y-2 text-xs">
               {" "}
               <div>
                 {" "}
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                <strong className="text-[10px] max-sm:text-[12px] text-[#4a4f10] uppercase block">
                   TOP NOTES:
                 </strong>{" "}
-                <span className="text-[#151412]">
+                <span className="text-[#111111]">
                   {quickViewPerfume.topNotes.join(" • ")}
                 </span>{" "}
               </div>{" "}
               <div>
                 {" "}
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                <strong className="text-[10px] max-sm:text-[12px] text-[#4a4f10] uppercase block">
                   HEART NOTES:
                 </strong>{" "}
-                <span className="text-[#151412]">
+                <span className="text-[#111111]">
                   {quickViewPerfume.heartNotes.join(" • ")}
                 </span>{" "}
               </div>{" "}
               <div>
                 {" "}
-                <strong className="text-[10px] text-[#8a3b24] uppercase block">
+                <strong className="text-[10px] max-sm:text-[12px] text-[#4a4f10] uppercase block">
                   BASE NOTES:
                 </strong>{" "}
-                <span className="text-[#151412]">
+                <span className="text-[#111111]">
                   {quickViewPerfume.baseNotes.join(" • ")}
                 </span>{" "}
               </div>{" "}
@@ -1021,7 +1020,7 @@ export default function ByobPage({
                 handleSelectPerfume(quickViewPerfume);
                 setQuickViewPerfume(null);
               }}
-              className="w-full rounded-full border border-[#a4492e] bg-[#151412] py-3.5 text-xs font-bold uppercase tracking-wider text-[#d9a08a] hover:bg-[#a4492e] hover:text-black transition-colors cursor-pointer"
+              className="on-dark w-full rounded-full border border-[color:var(--accent)] bg-[#111111] py-3.5 text-xs font-bold uppercase tracking-wider text-[#cdd43f] hover:bg-[#5f6516] hover:text-black transition-colors cursor-pointer"
             >
               {" "}
               + ADD {quickViewPerfume.name} TO BOX • ₹
@@ -1038,11 +1037,11 @@ export default function ByobPage({
         {" "}
         <div>
           {" "}
-          <span className="block text-[9px] font-bold uppercase tracking-wider text-[#8a3b24]">
+          <span className="block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#4a4f10]">
             {" "}
             {filledCount}/{bundleSize} FILLED • SAVE ₹{discount}
           </span>{" "}
-          <span className="font-display text-base font-bold text-[#151412]">
+          <span className="font-display text-base font-bold text-[#111111]">
             {" "}
             ₹{finalPrice.toLocaleString("en-IN")}
           </span>{" "}
@@ -1050,10 +1049,10 @@ export default function ByobPage({
         <button
           onClick={handleAddBundleToBag}
           disabled={!isComplete || isAdding}
-          className={`rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+          className={`on-dark rounded-full px-5 py-2.5 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
             isComplete
-              ? "border border-[#a4492e] bg-[#151412] text-[#d9a08a] shadow-md active:scale-95"
-              : "border border-black/10 bg-black/5 text-[#a8a29e]"
+              ? "border border-[color:var(--accent)] bg-[#111111] text-[#cdd43f] shadow-md active:scale-95"
+              : "border border-black/10 bg-black/5 text-[#a3a3a3]"
           }`}
         >
           {" "}

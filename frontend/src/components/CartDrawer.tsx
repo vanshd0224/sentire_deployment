@@ -5,10 +5,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import {
-  createOrGetShopifyCheckoutUrl,
-  resolveShopifyVariantId,
-} from "../utils/shopifyCart";
+import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { auth } from "../lib/firebase";
 import { ALL_PERFUMES } from "../data/perfumes";
 
@@ -76,23 +73,6 @@ const IconLock = ({ className = "w-4 h-4" }: { className?: string }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-    />{" "}
-  </svg>
-);
-
-const IconShield = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    {" "}
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
     />{" "}
   </svg>
 );
@@ -475,7 +455,7 @@ export default function CartDrawer({
         className={[
           "absolute top-0 bottom-0 right-0 z-10 flex flex-col h-full",
           "w-full max-w-[100vw] sm:max-w-[420px] md:w-[clamp(440px,32vw,520px)] md:max-w-[540px]",
-          "cart-drawer-surface bg-[#f4f2ee]",
+          "cart-drawer-surface bg-[#f2f2f0]",
           "rounded-none",
           isClosing
             ? "translate-x-full opacity-90"
@@ -495,7 +475,7 @@ export default function CartDrawer({
               fontWeight: 600,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "#a4492e",
+              color: "#5f6516",
               marginBottom: "5px",
             }}
           >
@@ -522,7 +502,7 @@ export default function CartDrawer({
               {items.length > 0 && onClearCart && (
                 <button
                   onClick={onClearCart}
-                  className="sentire-remove-btn text-[10px] md:text-xs"
+                  className="sentire-remove-btn text-[10px] max-sm:text-[12px] md:text-xs"
                   title="Clear all items"
                   aria-label="Clear all items from bag"
                 >
@@ -556,7 +536,7 @@ export default function CartDrawer({
                   fontWeight: 600,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "rgba(28, 27, 24,0.45)",
+                  color: "rgba(22, 22, 22,0.45)",
                 }}
               >
                 {" "}
@@ -570,7 +550,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "#a4492e",
+                    color: "#5f6516",
                   }}
                 >
                   {" "}
@@ -584,7 +564,7 @@ export default function CartDrawer({
                 <div>
                   {" "}
                   <p
-                    className="font-display font-bold text-[#a4492e]"
+                    className="font-display font-bold text-[color:var(--accent)]"
                     style={{ fontSize: "13.5px", letterSpacing: "-0.01em" }}
                   >
                     {" "}
@@ -594,7 +574,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "10px",
-                      color: "rgba(28, 27, 24,0.55)",
+                      color: "rgba(22, 22, 22,0.55)",
                       marginTop: "1px",
                       fontWeight: 400,
                     }}
@@ -609,9 +589,9 @@ export default function CartDrawer({
                     width: "22px",
                     height: "22px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(138, 59, 36,0.6)",
+                    border: "1px solid rgba(74, 79, 16,0.6)",
                     background: "rgba(200,154,70,0.15)",
-                    color: "#a4492e",
+                    color: "#5f6516",
                   }}
                 >
                   {" "}
@@ -626,7 +606,7 @@ export default function CartDrawer({
                   style={{
                     fontSize: "13.5px",
                     fontWeight: 400,
-                    color: "#151412",
+                    color: "#111111",
                   }}
                 >
                   {" "}
@@ -634,13 +614,13 @@ export default function CartDrawer({
                     <>
                       {" "}
                       Add{" "}
-                      <strong style={{ color: "#a4492e", fontWeight: 700 }}>
+                      <strong style={{ color: "#5f6516", fontWeight: 700 }}>
                         ₹{(remainingForFreeShipping || 0).toLocaleString()}
                       </strong>{" "}
                       more to get{" "}
                       <strong
                         style={{
-                          color: "#a4492e",
+                          color: "#5f6516",
                           textTransform: "uppercase",
                           fontWeight: 700,
                         }}
@@ -656,7 +636,7 @@ export default function CartDrawer({
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "10px",
-                    color: "rgba(28, 27, 24,0.55)",
+                    color: "rgba(22, 22, 22,0.55)",
                     marginTop: "1px",
                     fontWeight: 400,
                   }}
@@ -680,7 +660,7 @@ export default function CartDrawer({
                     right: 0,
                     top: "50%",
                     transform: "translateY(-50%) translateX(50%)",
-                    color: "#a4492e",
+                    color: "#5f6516",
                     fontSize: "7px",
                     fontWeight: 700,
                   }}
@@ -702,7 +682,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(138, 59, 36,0.40)",
+                    background: "rgba(74, 79, 16,0.40)",
                     margin: "0 auto",
                   }}
                 />{" "}
@@ -715,7 +695,7 @@ export default function CartDrawer({
                       fontWeight: 600,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
-                      color: "#a4492e",
+                      color: "#5f6516",
                     }}
                   >
                     {" "}
@@ -726,7 +706,7 @@ export default function CartDrawer({
                     style={{
                       fontSize: "20px",
                       fontWeight: 400,
-                      color: "#151412",
+                      color: "#111111",
                       letterSpacing: "-0.01em",
                     }}
                   >
@@ -740,7 +720,7 @@ export default function CartDrawer({
                       fontFamily: "var(--font-sans)",
                       fontSize: "10.5px",
                       lineHeight: "1.6",
-                      color: "rgba(28, 27, 24,0.50)",
+                      color: "rgba(22, 22, 22,0.50)",
                       maxWidth: "230px",
                       margin: "0 auto",
                       fontWeight: 400,
@@ -767,7 +747,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(138, 59, 36,0.40)",
+                    background: "rgba(74, 79, 16,0.40)",
                     margin: "0 auto",
                   }}
                 />{" "}
@@ -783,7 +763,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.20em",
                     textTransform: "uppercase",
-                    color: "rgba(28, 27, 24,0.40)",
+                    color: "rgba(22, 22, 22,0.40)",
                     marginBottom: "14px",
                   }}
                 >
@@ -824,7 +804,7 @@ export default function CartDrawer({
                               className="font-display leading-tight truncate text-[15px] sm:text-[17px]"
                               style={{
                                 fontWeight: 400,
-                                color: "#151412",
+                                color: "#111111",
                                 letterSpacing: "-0.01em",
                                 marginBottom: "2px",
                               }}
@@ -840,7 +820,7 @@ export default function CartDrawer({
                                 fontWeight: 500,
                                 letterSpacing: "0.14em",
                                 textTransform: "uppercase",
-                                color: "rgba(28, 27, 24,0.48)",
+                                color: "rgba(22, 22, 22,0.48)",
                                 marginBottom: "4px",
                               }}
                             >
@@ -857,7 +837,7 @@ export default function CartDrawer({
                                 .includes("discovery set") && (
                                 <div className="mt-1.5 mb-2 flex items-center gap-1.5 flex-wrap">
                                   {" "}
-                                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#151412]/50">
+                                  <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/50">
                                     Size:
                                   </span>{" "}
                                   {[10, 30, 50].map((sz) => {
@@ -868,14 +848,10 @@ export default function CartDrawer({
                                         onClick={() =>
                                           handleSwitchSize(item, sz)
                                         }
-                                        className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                                          isSelected
-                                            ? "bg-[#a4492e] text-white border border-[#a4492e] shadow-sm"
-                                            : "bg-[#151412]/5 text-[#151412]/70 border border-[#151412]/10 hover:border-[#a4492e]"
-                                        }`}
+                                        className={`size-chip ${isSelected ? "is-on" : ""}`}
                                       >
                                         {" "}
-                                        {sz}ML
+                                        {sz} ml
                                       </button>
                                     );
                                   })}
@@ -887,7 +863,7 @@ export default function CartDrawer({
                                 fontFamily: "var(--font-sans)",
                                 fontSize: "13.5px",
                                 fontWeight: 600,
-                                color: "#1c1b18",
+                                color: "#161616",
                                 letterSpacing: "0.01em",
                                 fontVariantNumeric: "tabular-nums",
                                 marginBottom: "4px",
@@ -898,9 +874,9 @@ export default function CartDrawer({
                             </p>{" "}
                             {/* Personalisation Badge & Notes */}
                             {item.isPersonalised && (
-                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[#a4492e]/30 bg-[#a4492e]/10 px-2 py-1 text-[10px] text-[#1c1b18]">
+                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-2 py-1 text-[10px] max-sm:text-[12px] text-[#161616]">
                                 {" "}
-                                <span className="font-bold text-[#a4492e] tracking-wider uppercase">
+                                <span className="font-bold text-[color:var(--accent)] tracking-wider uppercase">
                                   {" "}
                                   Personalised (+₹200)
                                 </span>{" "}
@@ -963,7 +939,7 @@ export default function CartDrawer({
                                       fontFamily: "var(--font-sans)",
                                       fontSize: "11.5px",
                                       fontWeight: 600,
-                                      color: "#1c1b18",
+                                      color: "#161616",
                                       fontVariantNumeric: "tabular-nums",
                                     }}
                                   >
@@ -1000,27 +976,27 @@ export default function CartDrawer({
                   })}
                 </div>{" "}
                 {/* ══  PROMINENT COUPON & DISCOUNTS CARD ══════════════════════ */}
-                <div className="mt-5 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-2.5">
+                <div className="mt-5 rounded-[4px] border border-[color:var(--accent)]/35 bg-white p-4 shadow-sm space-y-2.5">
                   {" "}
-                  <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
+                  <div className="flex items-center justify-between border-b border-[#111111]/10 pb-2">
                     {" "}
                     <div className="flex items-center gap-1.5">
                       {" "}
-                      <span className="text-[#a4492e] text-sm"></span>{" "}
-                      <h4 className="font-serif text-sm font-bold text-[#151412]">
+                      <span className="text-[color:var(--accent)] text-sm"></span>{" "}
+                      <h4 className="font-serif text-sm font-bold text-[#111111]">
                         Apply Coupon & Atelier Offers
                       </h4>{" "}
                     </div>{" "}
-                    <span className="text-[9px] font-bold text-[#a4492e] uppercase tracking-wider">
+                    <span className="text-[9px] max-sm:text-[12px] font-bold text-[color:var(--accent)] uppercase tracking-wider">
                       Instant Savings
                     </span>{" "}
                   </div>{" "}
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/40 rounded-xl p-2.5 text-xs">
+                    <div className="flex items-center justify-between bg-[#5f6516]/10 border border-[color:var(--accent)]/40 rounded-[4px] p-2.5 text-xs">
                       {" "}
                       <div className="flex items-center gap-2">
                         {" "}
-                        <span className="font-bold text-[#151412] font-mono tracking-wider text-xs">
+                        <span className="font-bold text-[#111111] font-mono tracking-wider text-xs">
                           {" "}
                           {appliedCoupon}
                         </span>{" "}
@@ -1044,9 +1020,9 @@ export default function CartDrawer({
                         {" "}
                         <button
                           onClick={() => handleApplyCoupon("PC100")}
-                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider transition-all border ${
                             subtotal >= 999
-                              ? "bg-[#f4f2ee] text-[#a4492e] border-[#a4492e] hover:bg-[#a4492e] hover:text-white shadow-sm"
+                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -1055,9 +1031,9 @@ export default function CartDrawer({
                         </button>{" "}
                         <button
                           onClick={() => handleApplyCoupon("PC200")}
-                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-bold tracking-wider transition-all border ${
+                          className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider transition-all border ${
                             subtotal >= 1999
-                              ? "bg-[#f4f2ee] text-[#a4492e] border-[#a4492e] hover:bg-[#a4492e] hover:text-white shadow-sm"
+                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -1078,11 +1054,11 @@ export default function CartDrawer({
                           onKeyDown={(e) => {
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
-                          className="flex-1 min-w-0 rounded-xl border border-[#151412]/20 bg-[#f4f2ee] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#151412] focus:border-[#a4492e] focus:outline-none"
+                          className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
                         />{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="shrink-0 rounded-xl bg-[#151412] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-colors"
+                          className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-colors"
                         >
                           {" "}
                           Apply
@@ -1091,38 +1067,38 @@ export default function CartDrawer({
                     </div>
                   )}
                   {couponError && (
-                    <p className="text-[10px] text-red-500 font-medium">
+                    <p className="text-[10px] max-sm:text-[12px] text-red-500 font-medium">
                       {couponError}
                     </p>
                   )}
                   {couponSuccess && (
-                    <p className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
+                    <p className="text-[10px] max-sm:text-[12px] text-emerald-600 font-bold flex items-center gap-1">
                       {" "}
                       <span>✓</span> {couponSuccess}
                     </p>
                   )}
                 </div>{" "}
                 {/* ══ ₹200 PERSONALISATION ENGRAVING MODULE ══════════════════════ */}
-                <div className="mt-6 rounded-2xl border border-[#a4492e]/35 bg-white p-4 shadow-sm space-y-3">
+                <div className="mt-6 rounded-[4px] border border-[color:var(--accent)]/35 bg-white p-4 shadow-sm space-y-3">
                   {" "}
-                  <div className="flex items-center justify-between border-b border-[#151412]/10 pb-2">
+                  <div className="flex items-center justify-between border-b border-[#111111]/10 pb-2">
                     {" "}
                     <div>
                       {" "}
-                      <span className="text-[8px] font-extrabold uppercase tracking-widest text-[#a4492e]">
+                      <span className="text-[8px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                         Personalised Craftsmanship
                       </span>{" "}
-                      <h4 className="font-serif text-sm font-bold text-[#151412]">
+                      <h4 className="font-serif text-sm font-bold text-[#111111]">
                         Add Custom Name & Date Engraving (+₹200)
                       </h4>{" "}
                     </div>{" "}
-                    <span className="rounded bg-[#a4492e]/10 border border-[#a4492e]/30 px-2 py-0.5 text-[9px] font-bold text-[#a4492e]">
+                    <span className="rounded bg-[#5f6516]/10 border border-[color:var(--accent)]/30 px-2 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[color:var(--accent)]">
                       Jaipur Laser Engraved
                     </span>{" "}
                   </div>{" "}
                   <div>
                     {" "}
-                    <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                    <label className="block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/70 mb-1">
                       Select Perfume to Engrave:
                     </label>{" "}
                     <select
@@ -1131,7 +1107,7 @@ export default function CartDrawer({
                         `${items[0]?.productId}-${items[0]?.size}`
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
-                      className="w-full rounded-xl border border-[#151412]/20 bg-[#f4f2ee] p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
+                      className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
                     >
                       {" "}
                       {items.map((i) => (
@@ -1149,7 +1125,7 @@ export default function CartDrawer({
                     {" "}
                     <div>
                       {" "}
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                      <label className="block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/70 mb-1">
                         Name (Max 12 Chars):
                       </label>{" "}
                       <input
@@ -1158,12 +1134,12 @@ export default function CartDrawer({
                         value={engraveName}
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
-                        className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
+                        className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
                       />{" "}
                     </div>{" "}
                     <div>
                       {" "}
-                      <label className="block text-[9px] font-bold uppercase tracking-wider text-[#151412]/70 mb-1">
+                      <label className="block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#111111]/70 mb-1">
                         Date (Max 10 Chars):
                       </label>{" "}
                       <input
@@ -1172,13 +1148,13 @@ export default function CartDrawer({
                         value={engraveDate}
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
-                        className="w-full rounded-xl border border-[#151412]/20 p-2 text-xs font-bold text-[#151412] focus:border-[#a4492e] focus:outline-none"
+                        className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
                       />{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
                     onClick={handleApplyEngravingToTarget}
-                    className="w-full rounded-xl border-2 border-[#a4492e] bg-[#f4f2ee] py-2 text-center text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all shadow-sm"
+                    className="w-full rounded-[4px] border-2 border-[color:var(--accent)] bg-[#f2f2f0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all shadow-sm"
                   >
                     {" "}
                     Apply Engraving to Bottle (+₹200)
@@ -1191,7 +1167,7 @@ export default function CartDrawer({
         {/* ── End scrollable body ─ */}
         {/* ══ FOOTER: ORDER SUMMARY + CTA ═════════════════════════════ */}
         {items.length > 0 && (
-          <footer className="cart-footer-surface bg-[#f4f2ee] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
+          <footer className="cart-footer-surface bg-[#f2f2f0] relative z-20 px-4 md:px-6 pt-2.5 md:pt-4 pb-[max(1rem,env(safe-area-inset-bottom,1rem))] md:pb-5 shrink-0 border-t border-black/10 shadow-[0_-10px_25px_rgba(0,0,0,0.06)]">
             {" "}
             {/* Promo Code Input & Badges */}
             <div className="mb-2 md:mb-3">
@@ -1205,7 +1181,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "#a4492e",
+                    color: "#5f6516",
                   }}
                 >
                   {" "}
@@ -1213,14 +1189,14 @@ export default function CartDrawer({
                 </span>{" "}
               </div>{" "}
               {appliedCoupon ? (
-                <div className="flex items-center justify-between bg-[#a4492e]/10 border border-[#a4492e]/30 rounded-lg px-2.5 py-1.5 text-xs">
+                <div className="flex items-center justify-between bg-[#5f6516]/10 border border-[color:var(--accent)]/30 rounded-lg px-2.5 py-1.5 text-xs">
                   {" "}
                   <div className="flex items-center gap-2">
                     {" "}
-                    <span className="font-semibold text-[#151412] font-mono tracking-wider text-[11px]">
+                    <span className="font-semibold text-[#111111] font-mono tracking-wider text-[11px] max-sm:text-[12px]">
                       {appliedCoupon}
                     </span>{" "}
-                    <span className="text-[#a4492e] font-semibold text-[11px]">
+                    <span className="text-[color:var(--accent)] font-semibold text-[11px] max-sm:text-[12px]">
                       (-₹{couponDiscount})
                     </span>{" "}
                   </div>{" "}
@@ -1248,11 +1224,11 @@ export default function CartDrawer({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
-                      className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] sm:text-xs focus:outline-none focus:border-[#a4492e] font-sans tracking-tight text-[#151412] h-6 sm:h-8"
+                      className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] max-sm:text-[12px] sm:text-xs focus:outline-none focus:border-[color:var(--accent)] font-sans tracking-tight text-[#111111] h-6 sm:h-8"
                     />{" "}
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="bg-[#1c1b18] text-[#eeebe5] hover:bg-[#a4492e] hover:text-[#151412] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
+                      className="on-dark bg-[#161616] text-[#e9e9e6] hover:bg-[#5f6516] hover:text-[#111111] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
                     >
                       {" "}
                       Apply
@@ -1263,9 +1239,9 @@ export default function CartDrawer({
                     {" "}
                     <button
                       onClick={() => handleApplyCoupon("PC100")}
-                      className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                      className={`text-[9px] max-sm:text-[12px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 999
-                          ? "bg-[#a4492e]/10 text-[#a4492e] border-[#a4492e]/30 hover:border-[#a4492e]"
+                          ? "bg-[#5f6516]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1274,9 +1250,9 @@ export default function CartDrawer({
                     </button>{" "}
                     <button
                       onClick={() => handleApplyCoupon("PC200")}
-                      className={`text-[9px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
+                      className={`text-[9px] max-sm:text-[12px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 1999
-                          ? "bg-[#a4492e]/10 text-[#a4492e] border-[#a4492e]/30 hover:border-[#a4492e]"
+                          ? "bg-[#5f6516]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1287,12 +1263,12 @@ export default function CartDrawer({
                 </div>
               )}
               {couponError && (
-                <p className="text-[9.5px] text-red-500 mt-1 font-sans">
+                <p className="text-[9.5px] max-sm:text-[12px] text-red-500 mt-1 font-sans">
                   {couponError}
                 </p>
               )}
               {couponSuccess && (
-                <p className="text-[9.5px] text-emerald-600 mt-1 font-sans font-medium">
+                <p className="text-[9.5px] max-sm:text-[12px] text-emerald-600 mt-1 font-sans font-medium">
                   {couponSuccess}
                 </p>
               )}
@@ -1306,7 +1282,7 @@ export default function CartDrawer({
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "11px",
-                    color: "rgba(28, 27, 24,0.60)",
+                    color: "rgba(22, 22, 22,0.60)",
                   }}
                 >
                   {" "}
@@ -1316,7 +1292,7 @@ export default function CartDrawer({
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "12px",
-                    color: "#1c1b18",
+                    color: "#161616",
                     fontWeight: 500,
                   }}
                 >
@@ -1331,7 +1307,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "11px",
-                      color: "#a4492e",
+                      color: "#5f6516",
                       fontWeight: 500,
                     }}
                   >
@@ -1342,7 +1318,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "12px",
-                      color: "#a4492e",
+                      color: "#5f6516",
                       fontWeight: 600,
                     }}
                   >
@@ -1357,7 +1333,7 @@ export default function CartDrawer({
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "11px",
-                    color: "rgba(28, 27, 24,0.60)",
+                    color: "rgba(22, 22, 22,0.60)",
                   }}
                 >
                   {" "}
@@ -1371,7 +1347,7 @@ export default function CartDrawer({
                       fontWeight: 600,
                       letterSpacing: "0.10em",
                       textTransform: "uppercase",
-                      color: "#a4492e",
+                      color: "#5f6516",
                     }}
                   >
                     {" "}
@@ -1382,7 +1358,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "12px",
-                      color: "#1c1b18",
+                      color: "#161616",
                       fontWeight: 500,
                     }}
                   >
@@ -1400,7 +1376,7 @@ export default function CartDrawer({
                 style={{
                   fontSize: "14px",
                   fontWeight: 400,
-                  color: "#151412",
+                  color: "#111111",
                   letterSpacing: "-0.01em",
                 }}
               >
@@ -1412,7 +1388,7 @@ export default function CartDrawer({
                 style={{
                   fontSize: "19px",
                   fontWeight: 400,
-                  color: "#151412",
+                  color: "#111111",
                   letterSpacing: "-0.02em",
                 }}
               >
@@ -1505,7 +1481,7 @@ export default function CartDrawer({
             >
               {" "}
               {isRedirecting ? (
-                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#eeebe5] border-t-transparent" />
+                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#e9e9e6] border-t-transparent" />
               ) : (
                 <>
                   {" "}
@@ -1525,7 +1501,7 @@ export default function CartDrawer({
                 fontWeight: 500,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "rgba(28, 27, 24,0.40)",
+                color: "rgba(22, 22, 22,0.40)",
               }}
             >
               {" "}
@@ -1533,7 +1509,7 @@ export default function CartDrawer({
                 {" "}
                 <IconLock aria-hidden="true" /> Secure Checkout
               </span>{" "}
-              <span style={{ color: "rgba(28, 27, 24,0.20)" }}>◇</span>{" "}
+              <span style={{ color: "rgba(22, 22, 22,0.20)" }}>◇</span>{" "}
               <span className="flex items-center gap-1">
                 {" "}
                 <IconDiamond aria-hidden="true" /> Authentic Sentire

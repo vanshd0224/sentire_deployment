@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../lib/firebase";
 import {
   RecaptchaVerifier,
-  signInWithPhoneNumber,
   ConfirmationResult,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
-  signInAnonymously,
   getRedirectResult,
 } from "firebase/auth";
 
@@ -28,15 +26,12 @@ export default function AccountDrawerModal({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [inputName, setInputName] = useState("");
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
-  const [confirmationResult, setConfirmationResult] =
-    useState<ConfirmationResult | null>(null);
+  const [, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [resendTimer, setResendTimer] = useState(30);
-
-  const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
 
   const handleLoginCompletion = () => {
     localStorage.setItem("sentire_is_logged_in", "true");
@@ -100,33 +95,6 @@ export default function AccountDrawerModal({
   if (!isOpen) return null;
 
   // Clean reCAPTCHA init
-  const setupRecaptcha = () => {
-    try {
-      const container = document.getElementById("recaptcha-container");
-      if (container) {
-        container.innerHTML = "";
-      }
-
-      if (window.recaptchaVerifier) {
-        try {
-          window.recaptchaVerifier.clear();
-        } catch (e) {}
-        window.recaptchaVerifier = undefined;
-      }
-
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        auth,
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: () => {},
-        },
-      );
-      recaptchaVerifierRef.current = window.recaptchaVerifier;
-    } catch (e: any) {
-      // Quiet notice
-    }
-  };
 
   // Submit Phone Number with E.164 formatting
   const handleSendOtp = async (e: React.FormEvent) => {
@@ -295,7 +263,7 @@ export default function AccountDrawerModal({
       }}
     >
       {" "}
-      <div className="relative w-full max-w-md bg-[#ffffff] text-[#1c1b18] rounded-2xl shadow-2xl overflow-hidden border border-[#a4492e]/30 transition-all p-8 sm:p-10 text-center">
+      <div className="relative w-full max-w-md bg-[#ffffff] text-[#161616] rounded-[4px] shadow-2xl overflow-hidden border border-[color:var(--accent)]/30 transition-all p-8 sm:p-10 text-center">
         {" "}
         {/* Top Controls */}
         <div className="flex items-center justify-between mb-4">
@@ -303,7 +271,7 @@ export default function AccountDrawerModal({
           {viewMode === "otp" ? (
             <button
               onClick={() => setViewMode("login")}
-              className="text-xs font-semibold text-[#1c1b18] hover:text-[#a4492e] flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-[#161616] hover:text-[color:var(--accent)] flex items-center gap-1 cursor-pointer"
             >
               {" "}
               ← Back
@@ -313,7 +281,7 @@ export default function AccountDrawerModal({
           )}
           <button
             onClick={onClose}
-            className="text-[#888888] hover:text-[#1c1b18] text-2xl font-light cursor-pointer leading-none"
+            className="text-[#888888] hover:text-[#161616] text-2xl font-light cursor-pointer leading-none"
             aria-label="Close modal"
           >
             {" "}
@@ -321,7 +289,7 @@ export default function AccountDrawerModal({
           </button>{" "}
         </div>{" "}
         <div id="recaptcha-container"></div> {/* Brand Header */}
-        <h2 className="text-3xl font-serif tracking-tight font-bold text-[#1c1b18] mb-1">
+        <h2 className="text-3xl font-serif tracking-tight font-bold text-[#161616] mb-1">
           {" "}
           SENTIRE
         </h2>{" "}
@@ -329,7 +297,7 @@ export default function AccountDrawerModal({
         {viewMode === "login" && (
           <div>
             {" "}
-            <h3 className="text-lg font-display font-semibold text-[#1c1b18] mb-1">
+            <h3 className="text-lg font-display font-semibold text-[#161616] mb-1">
               {" "}
               Login Now!
             </h3>{" "}
@@ -344,7 +312,7 @@ export default function AccountDrawerModal({
             )}
             <form onSubmit={handleSendOtp} className="space-y-4">
               {" "}
-              <div className="flex border border-[#e5e5e5] rounded-xl overflow-hidden focus-within:border-[#a4492e] transition-all bg-[#f7f5f2]">
+              <div className="flex border border-[#e5e5e5] rounded-[4px] overflow-hidden focus-within:border-[color:var(--accent)] transition-all bg-[#f7f7f5]">
                 {" "}
                 <span className="bg-[#f0ebe3] px-4 py-3 text-sm font-semibold text-[#333] border-r border-[#e5e5e5] flex items-center">
                   {" "}
@@ -366,14 +334,14 @@ export default function AccountDrawerModal({
                         : raw.slice(0, 10);
                     setPhoneNumber(clean);
                   }}
-                  className="w-full px-4 py-3 text-sm text-[#1c1b18] bg-transparent outline-none font-medium placeholder-[#aaa]"
+                  className="w-full px-4 py-3 text-sm text-[#161616] bg-transparent outline-none font-medium placeholder-[#aaa]"
                   required
                 />{" "}
               </div>{" "}
               <button
                 type="submit"
                 disabled={isSendingOtp || isGoogleLoading}
-                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 {isSendingOtp ? "Sending Code..." : "Submit"}
@@ -384,9 +352,9 @@ export default function AccountDrawerModal({
               {" "}
               <div className="absolute inset-0 flex items-center">
                 {" "}
-                <div className="w-full border-t border-[#dedad3]" />{" "}
+                <div className="w-full border-t border-[#dadad6]" />{" "}
               </div>{" "}
-              <span className="relative bg-[#ffffff] px-3 text-[11px] font-semibold uppercase tracking-widest text-[#999999]">
+              <span className="relative bg-[#ffffff] px-3 text-[11px] max-sm:text-[12px] font-semibold uppercase tracking-[0.06em] text-[#999999]">
                 {" "}
                 OR
               </span>{" "}
@@ -398,11 +366,11 @@ export default function AccountDrawerModal({
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={isSendingOtp || isGoogleLoading}
-                className="w-full py-3 border border-[#dedad3] bg-[#ffffff] hover:bg-[#f4f2ee] text-[#1c1b18] font-medium text-xs rounded-xl flex items-center justify-center gap-3 transition-all cursor-pointer shadow-sm hover:border-[#a4492e]/40"
+                className="w-full py-3 border border-[#dadad6] bg-[#ffffff] hover:bg-[#f2f2f0] text-[#161616] font-medium text-xs rounded-[4px] flex items-center justify-center gap-3 transition-all cursor-pointer shadow-sm hover:border-[color:var(--accent)]/40"
               >
                 {" "}
                 {isGoogleLoading ? (
-                  <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#1c1b18] border-t-transparent" />
+                  <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-[#161616] border-t-transparent" />
                 ) : (
                   <svg className="w-4 h-4" viewBox="0 0 24 24">
                     {" "}
@@ -440,7 +408,7 @@ export default function AccountDrawerModal({
             <p className="text-xs text-[#666666] mb-6">
               {" "}
               Verification code sent to{" "}
-              <strong className="text-[#1c1b18] font-semibold">
+              <strong className="text-[#161616] font-semibold">
                 {" "}
                 {phoneNumber
                   ? phoneNumber.startsWith("+91")
@@ -450,7 +418,7 @@ export default function AccountDrawerModal({
               </strong>{" "}
               <button
                 onClick={() => setViewMode("login")}
-                className="text-[#a4492e] underline text-xs ml-1 cursor-pointer font-semibold"
+                className="text-[color:var(--accent)] underline text-xs ml-1 cursor-pointer font-semibold"
               >
                 {" "}
                 Edit
@@ -473,7 +441,7 @@ export default function AccountDrawerModal({
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpInput(idx, e.target.value)}
-                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-xl outline-none focus:border-[#a4492e] focus:ring-2 focus:ring-[#a4492e]/20 bg-[#f7f5f2]"
+                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-[4px] outline-none focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[#5f6516]/20 bg-[#f7f7f5]"
                   />
                 ))}
               </div>{" "}
@@ -484,7 +452,7 @@ export default function AccountDrawerModal({
                   type="button"
                   disabled={resendTimer > 0}
                   onClick={() => setResendTimer(30)}
-                  className="text-[#a4492e] font-semibold underline disabled:opacity-50 cursor-pointer"
+                  className="text-[color:var(--accent)] font-semibold underline disabled:opacity-50 cursor-pointer"
                 >
                   {" "}
                   Resend OTP {resendTimer > 0 ? `(${resendTimer}s)` : ""}
@@ -493,7 +461,7 @@ export default function AccountDrawerModal({
               <button
                 type="submit"
                 disabled={isVerifyingOtp}
-                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 {isVerifyingOtp ? "Verifying..." : "Verify & Continue"}
@@ -505,7 +473,7 @@ export default function AccountDrawerModal({
         {viewMode === "name-prompt" && (
           <div>
             {" "}
-            <h3 className="text-lg font-display font-semibold text-[#1c1b18] mb-1">
+            <h3 className="text-lg font-display font-semibold text-[#161616] mb-1">
               {" "}
               Welcome to Sentire!
             </h3>{" "}
@@ -530,13 +498,13 @@ export default function AccountDrawerModal({
                 placeholder="Enter Your Full Name (e.g. Vansh Dhamija)"
                 value={inputName}
                 onChange={(e) => setInputName(e.target.value)}
-                className="w-full px-4 py-3.5 text-sm text-[#1c1b18] bg-[#f7f5f2] border border-[#e5e5e5] rounded-xl outline-none focus:border-[#a4492e] font-medium"
+                className="w-full px-4 py-3.5 text-sm text-[#161616] bg-[#f7f7f5] border border-[#e5e5e5] rounded-[4px] outline-none focus:border-[color:var(--accent)] font-medium"
                 autoFocus
                 required
               />{" "}
               <button
                 type="submit"
-                className="w-full py-3.5 bg-[#1c1b18] hover:bg-[#a4492e] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-xl tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 Save & Continue →

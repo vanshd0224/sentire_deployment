@@ -69,7 +69,7 @@ export default function ExploreSentireSection({
 }: ExploreSentireProps) {
   return (
     <section
-      className="w-full bg-[#f4f2ee] py-12 sm:py-16 border-t border-[#a4492e]/15"
+      className="w-full bg-[#f2f2f0] py-12 sm:py-16 border-t border-[color:var(--accent)]/15"
       aria-label="Explore SENTIRE Navigation"
     >
       {" "}
@@ -77,7 +77,7 @@ export default function ExploreSentireSection({
         {" "}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           {" "}
-          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] mb-2">
+          <p className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2">
             {" "}
             Haute Parfumerie Directory
           </p>{" "}
@@ -101,23 +101,23 @@ export default function ExploreSentireSection({
                 e.preventDefault();
                 onNavigate?.(item.page);
               }}
-              className="group flex flex-col justify-between p-5 sm:p-6 bg-white rounded-2xl border border-black/5 hover:border-[#a4492e]/50 shadow-sm hover:shadow-md transition-all duration-300"
+              className="group flex flex-col justify-between p-5 sm:p-6 bg-white rounded-[4px] border border-black/5 hover:border-[color:var(--accent)]/50 shadow-sm hover:shadow-md transition-all duration-300"
             >
               {" "}
               <div>
                 {" "}
                 <div className="flex items-center justify-between gap-2 mb-2">
                   {" "}
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#a4492e] bg-[#a4492e]/10 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] bg-[#5f6516]/10 px-2.5 py-0.5 rounded-full">
                     {" "}
                     {item.badge}
                   </span>{" "}
-                  <span className="text-sm text-[#a4492e] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                  <span className="text-sm text-[color:var(--accent)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
                     {" "}
                     →
                   </span>{" "}
                 </div>{" "}
-                <h3 className="font-display text-lg font-semibold text-ink group-hover:text-[#a4492e] transition-colors duration-200">
+                <h3 className="font-display text-lg font-semibold text-ink group-hover:text-[color:var(--accent)] transition-colors duration-200">
                   {" "}
                   {item.title}
                 </h3>{" "}
@@ -126,7 +126,7 @@ export default function ExploreSentireSection({
                   {item.description}
                 </p>{" "}
               </div>{" "}
-              <div className="mt-4 pt-3 border-t border-black/5 flex items-center text-[11px] font-semibold text-[#8C6228]">
+              <div className="mt-4 pt-3 border-t border-black/5 flex items-center text-[11px] max-sm:text-[12px] font-semibold text-[#8C6228]">
                 {" "}
                 <span>Explore {item.title}</span>{" "}
               </div>{" "}

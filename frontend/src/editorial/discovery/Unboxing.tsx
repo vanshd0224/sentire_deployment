@@ -67,7 +67,7 @@ function PinnedUnboxing({ onSelect }: { onSelect?: (index: number) => void }) {
 
         <motion.p
           style={{ opacity: hint }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 font-mono text-[11px] uppercase tracking-[0.02em] text-paper/55"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/55"
         >
           Scroll to open the case
         </motion.p>
@@ -137,7 +137,7 @@ function Vial({
         />
       </div>
       <motion.div style={{ opacity: label }} className="mt-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.02em] text-paper/45">
+        <p className="font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/45">
           No. {String(index + 1).padStart(2, "0")}
         </p>
         <p className="font-serif text-[17px] font-light text-paper">{f.name}</p>

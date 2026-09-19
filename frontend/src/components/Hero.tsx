@@ -9,13 +9,7 @@ interface HeroProps {
   cartCount?: number;
 }
 
-export default function Hero({
-  onNavigate,
-  onOpenCart,
-  onOpenAccount,
-  onToggleSearch,
-  cartCount = 0,
-}: HeroProps) {
+export default function Hero({ onNavigate }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -40,24 +34,12 @@ export default function Hero({
     }
   };
 
-  const scrollToNextSection = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const nextEl =
-      document.getElementById("perfumes") ||
-      document.querySelector("main > section:nth-of-type(2)");
-    if (nextEl) {
-      nextEl.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.scrollBy({ top: window.innerHeight * 0.85, behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       id="top"
       ref={sectionRef}
       aria-label="Sentire by PC Ganesh Chaturthi Luxury Fragrance Collection"
-      className="hero-section relative w-full overflow-hidden select-none bg-[#FAF7F7]"
+      className="hero-section relative w-full overflow-hidden select-none bg-[#f5f5f3]"
       style={{
         WebkitFontSmoothing: "antialiased",
         textRendering: "geometricPrecision",
@@ -89,7 +71,7 @@ export default function Hero({
         .hero-eyebrow-text {
           font-family: var(--font-mono) !important;
           font-weight: 400 !important;
-          color: #8a3b24 !important;
+          color: #4a4f10 !important;
           letter-spacing: 0.06em !important;
           text-indent: 0.06em;
         }
@@ -97,7 +79,7 @@ export default function Hero({
         .hero-happy-text {
           font-family: var(--font-mono) !important;
           font-weight: 400 !important;
-          color: #8a3b24 !important;
+          color: #4a4f10 !important;
           letter-spacing: 0.42em !important;
           text-indent: 0.42em;
         }
@@ -113,7 +95,7 @@ export default function Hero({
         .hero-body-text {
           font-family: var(--font-sans) !important;
           font-weight: 400 !important;
-          color: #49414A !important;
+          color: #4a4a4a !important;
           line-height: 1.55 !important;
           letter-spacing: 0.2px !important;
         }
@@ -134,7 +116,7 @@ export default function Hero({
           cursor: pointer;
         }
         .hero-cta-btn:hover {
-          background: #a4492e;
+          background: #5f6516;
           box-shadow: none;
           transform: none;
         }
@@ -160,10 +142,10 @@ export default function Hero({
           transform: none;
         }
         .hero-discovery-btn:hover span {
-          color: #F4F2EE !important;
+          color: #f2f2f0 !important;
         }
         .hero-discovery-btn:hover svg {
-          stroke: #F4F2EE !important;
+          stroke: #f2f2f0 !important;
         }
 
         /* Nav link hover */
@@ -179,7 +161,7 @@ export default function Hero({
           white-space: nowrap;
         }
         .hero-nav-link:hover {
-          color: #8a3b24;
+          color: #4a4f10;
         }
 
         .hero-icon-btn {
@@ -195,7 +177,7 @@ export default function Hero({
           padding: 0;
         }
         .hero-icon-btn:hover {
-          color: #8a3b24;
+          color: #4a4f10;
           transform: scale(1.08);
         }
 
@@ -432,12 +414,12 @@ export default function Hero({
             {/* Horizontal Line Left */}
             <div className="flex-1 flex items-center">
               {" "}
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#8a3b24] shrink-0" />{" "}
-              <div className="flex-1 h-[1.2px] bg-[#8a3b24]" />{" "}
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4a4f10] shrink-0" />{" "}
+              <div className="flex-1 h-[1.2px] bg-[#4a4f10]" />{" "}
             </div>{" "}
             {/* Center Circular Medallion */}
             <div
-              className="mx-[10px] flex items-center justify-center rounded-full bg-[#8a3b24] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
+              className="mx-[10px] flex items-center justify-center rounded-full bg-[#4a4f10] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
               style={{
                 width: "26px",
                 height: "26px",
@@ -458,8 +440,8 @@ export default function Hero({
             {/* Horizontal Line Right */}
             <div className="flex-1 flex items-center">
               {" "}
-              <div className="flex-1 h-[1.2px] bg-[#8a3b24]" />{" "}
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#8a3b24] shrink-0" />{" "}
+              <div className="flex-1 h-[1.2px] bg-[#4a4f10]" />{" "}
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4a4f10] shrink-0" />{" "}
             </div>{" "}
           </div>{" "}
           {/* 5. Subhead: WELCOME TO OUR NEW BEGINNING */}
@@ -513,7 +495,7 @@ export default function Hero({
                   className="h-[26px] w-auto object-contain"
                 />{" "}
               </div>{" "}
-              <span className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[10.5px] max-sm:text-[12px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
                 {" "}
                 DIVINE
                 <br /> BLESSINGS
@@ -539,7 +521,7 @@ export default function Hero({
                   className="h-[23px] w-auto object-contain"
                 />{" "}
               </div>{" "}
-              <span className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[10.5px] max-sm:text-[12px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
                 {" "}
                 NEW BEGINNINGS
                 <br /> NEW ESSENCES
@@ -565,7 +547,7 @@ export default function Hero({
                   className="h-[25px] w-auto object-contain"
                 />{" "}
               </div>{" "}
-              <span className="font-montserrat font-medium text-[10.5px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[10.5px] max-sm:text-[12px] leading-[1.25] tracking-[0.35px] text-[#31183A] uppercase">
                 {" "}
                 CRAFTED
                 <br /> WITH PASSION
@@ -584,7 +566,7 @@ export default function Hero({
             }}
           >
             {" "}
-            <span className="font-montserrat font-semibold text-[11.5px] sm:text-[12.5px] tracking-[0.8px] text-white mr-[8px]">
+            <span className="font-montserrat font-semibold text-[11.5px] max-sm:text-[12px] sm:text-[12.5px] tracking-[0.8px] text-white mr-[8px]">
               {" "}
               EXPLORE OUR FRAGRANCES
             </span>{" "}
@@ -619,7 +601,7 @@ export default function Hero({
             }}
           >
             {" "}
-            <span className="font-montserrat font-semibold text-[11px] sm:text-[12px] tracking-[0.8px] text-[#32113F] mr-[6px]">
+            <span className="font-montserrat font-semibold text-[11px] max-sm:text-[12px] sm:text-[12px] tracking-[0.8px] text-[#32113F] mr-[6px]">
               {" "}
               DISCOVERY SET • ₹549
             </span>{" "}
@@ -628,7 +610,7 @@ export default function Hero({
               height="9"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#8a3b24"
+              stroke="#4a4f10"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -645,7 +627,7 @@ export default function Hero({
           TABLET HERO (768px – 900px) — Preserved Tablet Layout
           ═════════════════════════════════════════════════════════════════ */}
       <div
-        className="hero-tablet-view relative w-full overflow-hidden select-none bg-[#FAF7F7]"
+        className="hero-tablet-view relative w-full overflow-hidden select-none bg-[#f5f5f3]"
         style={{
           aspectRatio: "941 / 1672",
         }}
@@ -729,9 +711,9 @@ export default function Hero({
             aria-hidden="true"
           >
             {" "}
-            <div className="flex-1 h-[1px] bg-[#8a3b24]" />{" "}
+            <div className="flex-1 h-[1px] bg-[#4a4f10]" />{" "}
             <div
-              className="mx-2 flex items-center justify-center rounded-full bg-[#8a3b24] shrink-0"
+              className="mx-2 flex items-center justify-center rounded-full bg-[#4a4f10] shrink-0"
               style={{ width: "22px", height: "22px" }}
             >
               {" "}
@@ -739,7 +721,7 @@ export default function Hero({
                 &amp;
               </span>{" "}
             </div>{" "}
-            <div className="flex-1 h-[1px] bg-[#8a3b24]" />{" "}
+            <div className="flex-1 h-[1px] bg-[#4a4f10]" />{" "}
           </div>{" "}
           <div
             className="hero-subhead-text uppercase text-center"
@@ -785,14 +767,14 @@ export default function Hero({
                 alt="Divine Blessings"
                 className="h-[30px] w-auto object-contain mb-1"
               />{" "}
-              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                 {" "}
                 DIVINE
                 <br />
                 BLESSINGS
               </span>{" "}
             </div>{" "}
-            <div className="w-[1px] h-[40px] bg-[#8a3b24]/40" />{" "}
+            <div className="w-[1px] h-[40px] bg-[#4a4f10]/40" />{" "}
             <div className="flex-1 flex flex-col items-center text-center px-1">
               {" "}
               <img
@@ -801,14 +783,14 @@ export default function Hero({
                 alt="New Beginnings"
                 className="h-[28px] w-auto object-contain mb-1"
               />{" "}
-              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                 {" "}
                 NEW BEGINNINGS
                 <br />
                 NEW ESSENCES
               </span>{" "}
             </div>{" "}
-            <div className="w-[1px] h-[40px] bg-[#8a3b24]/40" />{" "}
+            <div className="w-[1px] h-[40px] bg-[#4a4f10]/40" />{" "}
             <div className="flex-1 flex flex-col items-center text-center px-1">
               {" "}
               <img
@@ -817,7 +799,7 @@ export default function Hero({
                 alt="Crafted With Passion"
                 className="h-[30px] w-auto object-contain mb-1"
               />{" "}
-              <span className="font-montserrat font-medium text-[9.5px] leading-[1.25] text-[#31183A] uppercase">
+              <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                 {" "}
                 CRAFTED
                 <br />
@@ -832,7 +814,7 @@ export default function Hero({
             style={{ height: "42px" }}
           >
             {" "}
-            <span className="font-montserrat font-semibold text-[11.5px] tracking-[0.8px] text-white mr-2">
+            <span className="font-montserrat font-semibold text-[11.5px] max-sm:text-[12px] tracking-[0.8px] text-white mr-2">
               {" "}
               EXPLORE OUR FRAGRANCES
             </span>{" "}
@@ -859,7 +841,7 @@ export default function Hero({
             style={{ height: "40px" }}
           >
             {" "}
-            <span className="font-montserrat font-semibold text-[11px] tracking-[0.8px] text-[#32113F] mr-2">
+            <span className="font-montserrat font-semibold text-[11px] max-sm:text-[12px] tracking-[0.8px] text-[#32113F] mr-2">
               {" "}
               DISCOVERY SET • ₹549
             </span>{" "}
@@ -868,7 +850,7 @@ export default function Hero({
               height="9"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#8a3b24"
+              stroke="#4a4f10"
               strokeWidth="1.8"
             >
               {" "}
@@ -994,7 +976,7 @@ export default function Hero({
             </div>{" "}
             {/* Vertical Separator 1 */}
             <div
-              className="w-[1px] h-[30px] bg-[#8a3b24]/35 shrink-0"
+              className="w-[1px] h-[30px] bg-[#4a4f10]/35 shrink-0"
               aria-hidden="true"
             />{" "}
             {/* Column 2: New Beginnings */}
@@ -1020,7 +1002,7 @@ export default function Hero({
             </div>{" "}
             {/* Vertical Separator 2 */}
             <div
-              className="w-[1px] h-[30px] bg-[#8a3b24]/35 shrink-0"
+              className="w-[1px] h-[30px] bg-[#4a4f10]/35 shrink-0"
               aria-hidden="true"
             />{" "}
             {/* Column 3: Crafted With Passion */}
@@ -1062,7 +1044,7 @@ export default function Hero({
             }}
           >
             {" "}
-            <span className="mobile-hero-cta-text uppercase mr-1.5 text-[11px] sm:text-[11.5px] font-semibold tracking-[0.6px]">
+            <span className="mobile-hero-cta-text uppercase mr-1.5 text-[11px] max-sm:text-[12px] sm:text-[11.5px] font-semibold tracking-[0.6px]">
               {" "}
               EXPLORE OUR FRAGRANCES
             </span>{" "}
@@ -1108,7 +1090,7 @@ export default function Hero({
               height="8"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#8a3b24"
+              stroke="#4a4f10"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"

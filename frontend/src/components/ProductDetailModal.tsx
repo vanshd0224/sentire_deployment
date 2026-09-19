@@ -21,7 +21,15 @@ interface ProductDetailModalProps {
   onClose: () => void;
   cartItems?: CartItem[];
   onAddToCart?: (
-    product: { id: string; name: string; num?: string; img: string },
+    product: {
+      id: string;
+      name: string;
+      num?: string;
+      img: string;
+      isPersonalised?: boolean;
+      engravingText?: string;
+      engravingDate?: string;
+    },
     size: number,
     price: number,
   ) => void;
@@ -53,7 +61,7 @@ export default function ProductDetailModal({
   const [pincode, setPincode] = useState<string>("");
   const [deliveryStatus, setDeliveryStatus] = useState<string | null>(null);
   const [isCheckingPincode, setIsCheckingPincode] = useState<boolean>(false);
-  const [selectedNote, setSelectedNote] = useState<ScentNote | null>(null);
+  const [, setSelectedNote] = useState<ScentNote | null>(null);
   const [notifyEmail, setNotifyEmail] = useState<string>("");
   const [notifySubmitted, setNotifySubmitted] = useState<boolean>(false);
   const [copiedShareLink, setCopiedShareLink] = useState<boolean>(false);
@@ -216,7 +224,6 @@ export default function ProductDetailModal({
             product.prices?.[50] ||
             product.prices?.[30] ||
             product.prices?.[10] ||
-            product.price ||
             1489,
           category: product.scentFamily || "Perfumes",
           variant: defaultSz,
@@ -252,20 +259,6 @@ export default function ProductDetailModal({
     }
   }, [selectedSize]);
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPhotoFile(file);
-      const url = URL.createObjectURL(file);
-      setPhotoPreviewUrl(url);
-    }
-  };
-
-  const removePhotoFile = () => {
-    setPhotoFile(null);
-    setPhotoPreviewUrl(null);
-  };
-
   const hasPersonalisation =
     selectedSize === 50 &&
     (isPersonalising ||
@@ -297,75 +290,6 @@ export default function ProductDetailModal({
   }, [cartItems, product, selectedSize, hasPersonalisation]);
 
   // Comprehensive Scent Pyramid Notes & Tags
-  const scentPyramid = useMemo(() => {
-    if (!product) return { top: [], heart: [], base: [] };
-
-    const traces = product.traces || [];
-    const t0 = traces[0] || "Calabrian Bergamot";
-    const t1 = traces[1] || "French Jasmine";
-    const t2 = traces[2] || "Smoky Oud";
-    const t3 = traces[3] || "Golden Amber";
-
-    const topNotes: ScentNote[] = [
-      {
-        name: t0,
-        tier: "Top Note",
-        icon: "",
-        desc: "Bright, sparkling opening accord that creates an instantaneous uplifting aroma.",
-        intensity: 85,
-      },
-      {
-        name: "Pink Pepper",
-        tier: "Top Note",
-        icon: "",
-        desc: "Warm spicy sparkle adding vibrant energetic character to initial spritz.",
-        intensity: 75,
-      },
-    ];
-
-    const heartNotes: ScentNote[] = [
-      {
-        name: t1,
-        tier: "Heart Note",
-        icon: "",
-        desc: "Opulent floral heart unfolding 15 minutes after application.",
-        intensity: 90,
-      },
-      {
-        name: "Velvet Rose Accord",
-        tier: "Heart Note",
-        icon: "",
-        desc: "Deep, romantic bouquet giving rich texture and unisex elegance.",
-        intensity: 88,
-      },
-    ];
-
-    const baseNotes: ScentNote[] = [
-      {
-        name: t2,
-        tier: "Base Note",
-        icon: "",
-        desc: "Precious rare wood base anchoring long-lasting persistence.",
-        intensity: 95,
-      },
-      {
-        name: t3,
-        tier: "Base Note",
-        icon: "",
-        desc: "Radiant golden resin providing warm velvet sillage on dry-down.",
-        intensity: 92,
-      },
-      {
-        name: "Madagascar Vanilla & Musk",
-        tier: "Base Note",
-        icon: "",
-        desc: "Smooth comforting embrace leaving an indelible memory trail.",
-        intensity: 90,
-      },
-    ];
-
-    return { top: topNotes, heart: heartNotes, base: baseNotes };
-  }, [product]);
 
   // Verified Customer Reviews for this product
   const productReviews: Review[] = useMemo(() => {
@@ -469,7 +393,7 @@ export default function ProductDetailModal({
       {/* Modal Card Window / Mobile Bottom Sheet */}
       <div
         ref={modalContainerRef}
-        className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-3xl bg-[#fcfbf7] border-t md:border border-[#a4492e]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#1c1b18] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury"
+        className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-[4px] bg-[#fcfbf7] border-t md:border border-[color:var(--accent)]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#161616] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury"
       >
         {" "}
         {/* Mobile Drag Handle Bar */}
@@ -480,7 +404,7 @@ export default function ProductDetailModal({
           {/* 1. Close Button (✕) */}
           <button
             onClick={onClose}
-            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#1c1b18]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
             aria-label="Close modal"
             title="Close"
           >
@@ -499,7 +423,7 @@ export default function ProductDetailModal({
           {/* 2. Share Button (directly below Cross button) */}
           <button
             onClick={handleShare}
-            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#1c1b18]/80 shadow-lg backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white cursor-pointer active:scale-95 touch-manipulation border border-black/5"
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/80 shadow-lg backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white cursor-pointer active:scale-95 touch-manipulation border border-black/5"
             aria-label="Share product"
             title="Share this perfume"
           >
@@ -522,11 +446,11 @@ export default function ProductDetailModal({
           </button>{" "}
         </div>{" "}
         {/* ── BREADCRUMB ── */}
-        <div className="px-6 pt-6 pb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#1c1b18]/40 pr-16">
+        <div className="px-6 pt-6 pb-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#161616]/40 pr-16">
           {" "}
           <span>Home</span> <span className="mx-1.5">•</span>{" "}
           <span>Fragrances</span> <span className="mx-1.5">•</span>{" "}
-          <span className="text-[#a4492e] font-bold">{product.name}</span>{" "}
+          <span className="text-[color:var(--accent)] font-bold">{product.name}</span>{" "}
         </div>{" "}
         {/* ── TOP BUY BOX GRID ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 lg:p-10">
@@ -536,7 +460,7 @@ export default function ProductDetailModal({
             {" "}
             {/* Main Featured Image Box with Touch Swipe & Click-to-Zoom Lightbox */}
             <div
-              className="relative aspect-square sm:aspect-[4/5] w-full max-w-[340px] sm:max-w-none mx-auto overflow-hidden rounded-3xl bg-[#151412] border border-[#a4492e]/30 p-2 sm:p-4 flex items-center justify-center group shadow-xl select-none cursor-zoom-in"
+              className="on-dark relative aspect-square sm:aspect-[4/5] w-full max-w-[340px] sm:max-w-none mx-auto overflow-hidden rounded-[4px] bg-[#111111] border border-[color:var(--accent)]/30 p-2 sm:p-4 flex items-center justify-center group shadow-xl select-none cursor-zoom-in"
               onClick={() => {
                 setIsLightboxOpen(true);
                 setIsZoomed(false);
@@ -551,7 +475,7 @@ export default function ProductDetailModal({
                 alt={`Sentire ${product.name} personalised perfume bottle with 35%+ perfume oil concentration and laser engraving`}
                 loading="eager"
                 decoding="sync"
-                className="h-full w-full object-cover sm:object-contain rounded-2xl transition-transform duration-500 ease-out group-hover:scale-105"
+                className="h-full w-full object-cover sm:object-contain rounded-[4px] transition-transform duration-500 ease-out group-hover:scale-105"
               />{" "}
               {/* Navigation Arrows for Desktop */}
               {galleryImages.length > 1 && (
@@ -562,7 +486,7 @@ export default function ProductDetailModal({
                       e.stopPropagation();
                       handlePrevImage();
                     }}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white active:scale-95 cursor-pointer"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Previous image"
                   >
                     {" "}
@@ -573,7 +497,7 @@ export default function ProductDetailModal({
                       e.stopPropagation();
                       handleNextImage();
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#a4492e] hover:text-white active:scale-95 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Next image"
                   >
                     {" "}
@@ -582,7 +506,7 @@ export default function ProductDetailModal({
                 </>
               )}
               {product.badge && (
-                <span className="absolute top-4 left-4 rounded-full bg-[#151412] px-3.5 py-1 text-[9px] font-bold uppercase tracking-[0.22em] text-[#a4492e] shadow-md">
+                <span className="on-dark absolute top-4 left-4 rounded-full bg-[#111111] px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] shadow-md">
                   {" "}
                   {product.badge}
                 </span>
@@ -591,13 +515,13 @@ export default function ProductDetailModal({
             {/* Thumbnail Selectors */}
             <div className="flex gap-3 justify-center">
               {" "}
-              {galleryImages.map((img, idx) => (
+              {galleryImages.map((img: string, idx: number) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`h-14 w-14 sm:h-20 sm:w-20 overflow-hidden rounded-2xl border-2 bg-[#f5efe6] p-1.5 transition-all cursor-pointer touch-manipulation ${
+                  className={`h-14 w-14 sm:h-20 sm:w-20 overflow-hidden rounded-[4px] border-2 bg-[#f5efe6] p-1.5 transition-all cursor-pointer touch-manipulation ${
                     selectedImageIndex === idx
-                      ? "border-[#a4492e] scale-105 shadow-md ring-2 ring-[#a4492e]/30"
+                      ? "border-[color:var(--accent)] scale-105 shadow-md ring-2 ring-[#5f6516]/30"
                       : "border-transparent opacity-70 hover:opacity-100"
                   }`}
                   aria-label={`Select fragrance view ${idx + 1}`}
@@ -624,16 +548,16 @@ export default function ProductDetailModal({
               {" "}
               <div className="flex items-center gap-3 mb-1">
                 {" "}
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+                <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                   {" "}
                   {product.num} · EXTRAIT DE PARFUM
                 </span>{" "}
-                <span className="rounded-full bg-[#a4492e]/10 px-3 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#a4492e]">
+                <span className="rounded-full bg-[#5f6516]/10 px-3 py-0.5 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
                   {" "}
                   UNISEX LUXURY
                 </span>{" "}
               </div>{" "}
-              <h1 className="font-display text-3xl sm:text-4xl text-[#1c1b18] font-medium tracking-tight">
+              <h1 className="font-display text-3xl sm:text-4xl text-[#161616] font-medium tracking-tight">
                 {" "}
                 {product.name}
               </h1>{" "}
@@ -643,16 +567,16 @@ export default function ProductDetailModal({
                 <div className="flex items-center gap-2">
                   {" "}
                   <div className="flex text-amber-500 text-sm"></div>{" "}
-                  <span className="text-xs font-semibold text-[#1c1b18]">
+                  <span className="text-xs font-semibold text-[#161616]">
                     {reviewStats.averageRating.toFixed(1)}
                   </span>{" "}
-                  <span className="text-xs text-[#1c1b18]/40">
+                  <span className="text-xs text-[#161616]/40">
                     ({reviewStats.count} Verified Reviews)
                   </span>{" "}
                 </div>{" "}
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 rounded-full border border-[#a4492e]/40 bg-[#a4492e]/10 px-3.5 py-1 text-[11px] font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
+                  className="flex items-center gap-1.5 rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/10 px-3.5 py-1 text-[11px] max-sm:text-[12px] font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
                   title="Share this perfume"
                   aria-label="Share this perfume"
                 >
@@ -680,18 +604,18 @@ export default function ProductDetailModal({
             {/* Price & Discounts */}
             <div className="flex items-baseline gap-3 pt-2 border-t border-black/8">
               {" "}
-              <span className="font-sans font-bold text-3xl text-[#1c1b18] tracking-tight tabular-nums inline-flex items-baseline gap-0.5">
+              <span className="font-sans font-bold text-3xl text-[#161616] tracking-tight tabular-nums inline-flex items-baseline gap-0.5">
                 {" "}
                 ₹{currentPrice.toLocaleString("en-IN")}
               </span>{" "}
-              <span className="font-sans text-sm text-[#1c1b18]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
+              <span className="font-sans text-sm text-[#161616]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
                 ₹{originalPrice.toLocaleString("en-IN")}
               </span>{" "}
               <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
                 {" "}
                 {discountPercent}% OFF
               </span>{" "}
-              <span className="text-[10px] text-[#1c1b18]/40 block font-light">
+              <span className="text-[10px] max-sm:text-[12px] text-[#161616]/40 block font-light">
                 Taxes Included • Free Shipping
               </span>{" "}
             </div>{" "}
@@ -700,15 +624,15 @@ export default function ProductDetailModal({
               {" "}
               <div className="flex items-center justify-between">
                 {" "}
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e] block">
+                <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block">
                   {" "}
                   SELECT BOTTLE VOLUME
                 </span>{" "}
-                <span className="text-[11px] text-[#1c1b18]/50 font-medium">
+                <span className="text-[11px] max-sm:text-[12px] text-[#161616]/50 font-medium">
                   {" "}
                   Selected:{" "}
-                  <strong className="text-[#1c1b18]">
-                    {selectedSize} ML
+                  <strong className="text-[#161616]">
+                    {selectedSize} ml
                   </strong>{" "}
                 </span>{" "}
               </div>{" "}
@@ -727,27 +651,27 @@ export default function ProductDetailModal({
                     <button
                       key={sz}
                       onClick={() => handleSelectSize(sz)}
-                      className={`group relative flex flex-col items-center justify-between rounded-2xl p-3.5 text-center transition-all cursor-pointer ${
+                      className={`on-dark group relative flex flex-col items-center justify-between rounded-[4px] p-3.5 text-center transition-all cursor-pointer ${
                         isSelected
                           ? isOutOfStock
                             ? "bg-stone-800 text-white border-2 border-stone-600 shadow-md"
-                            : "bg-[#151412] text-white border-2 border-[#a4492e] shadow-[0_0_20px_rgba(164, 73, 46,0.3)] scale-[1.02]"
+                            : "bg-[#111111] text-white border-2 border-[color:var(--accent)] shadow-[0_0_20px_rgba(95, 101, 22,0.3)] scale-[1.02]"
                           : isOutOfStock
                             ? "border border-stone-200 bg-stone-100/70 text-stone-400"
-                            : "border border-black/12 bg-white text-[#1c1b18] hover:border-[#a4492e] hover:bg-[#a4492e]/5"
+                            : "border border-black/12 bg-white text-[#161616] hover:border-[color:var(--accent)] hover:bg-[#5f6516]/5"
                       }`}
                     >
                       {" "}
                       {/* Best Value & Personalisation Badge */}
                       {isBestValue && !isOutOfStock && (
-                        <span className="absolute -top-2.5 rounded-full bg-[#a4492e] px-2 py-0.5 text-[8px] font-extrabold text-black uppercase tracking-wider shadow-sm">
+                        <span className="absolute -top-2.5 rounded-full bg-[#5f6516] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-black uppercase tracking-wider shadow-sm">
                           {" "}
                           Best Value · Personalisable
                         </span>
                       )}
                       {/* Selected check mark */}
                       {isSelected && (
-                        <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#a4492e] text-[9px] text-black font-bold">
+                        <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#5f6516] text-[9px] max-sm:text-[12px] text-black font-bold">
                           {" "}
                           ✓
                         </span>
@@ -762,9 +686,9 @@ export default function ProductDetailModal({
                           }`}
                         >
                           {" "}
-                          {sz} ML
+                          {sz} ml
                         </span>{" "}
-                        <span className="text-[9px] opacity-70 block mt-0.5">
+                        <span className="text-[9px] max-sm:text-[12px] opacity-70 block mt-0.5">
                           {" "}
                           {sz === 10
                             ? "Travel Purse Spray"
@@ -780,8 +704,8 @@ export default function ProductDetailModal({
                             isOutOfStock
                               ? "text-red-500"
                               : isSelected
-                                ? "text-[#d9a08a]"
-                                : "text-[#a4492e]"
+                                ? "text-[#cdd43f]"
+                                : "text-[color:var(--accent)]"
                           }`}
                         >
                           {" "}
@@ -790,7 +714,7 @@ export default function ProductDetailModal({
                             : `₹${itemPrice.toLocaleString("en-IN")}`}
                         </span>{" "}
                         {!isOutOfStock && (
-                          <span className="text-[8px] text-black/50 block font-medium group-hover:text-black/70">
+                          <span className="text-[8px] max-sm:text-[12px] text-black/50 block font-medium group-hover:text-black/70">
                             {" "}
                             (₹{perMl}/ml)
                           </span>
@@ -817,18 +741,18 @@ export default function ProductDetailModal({
                       {" "}
                       <button
                         disabled
-                        className="w-full rounded-full border border-stone-300 bg-stone-100 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-stone-400 cursor-not-allowed text-center shadow-xs"
+                        className="w-full rounded-full border border-stone-300 bg-stone-100 py-3.5 text-xs font-bold uppercase tracking-[0.06em] text-stone-400 cursor-not-allowed text-center shadow-xs"
                       >
                         {" "}
-                        Out of Stock in {selectedSize} ML
+                        Out of Stock in {selectedSize} ml
                       </button>{" "}
                       {/* Notify Me Form */}
                       <form
                         onSubmit={handleNotifySubmit}
-                        className="rounded-xl border border-[#a4492e]/30 bg-[#a4492e]/5 p-3.5 space-y-2"
+                        className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#5f6516]/5 p-3.5 space-y-2"
                       >
                         {" "}
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                        <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                           {" "}
                           Get Notified When {selectedSize}ML Restocks
                         </span>{" "}
@@ -847,11 +771,11 @@ export default function ProductDetailModal({
                               placeholder="Enter your email address"
                               value={notifyEmail}
                               onChange={(e) => setNotifyEmail(e.target.value)}
-                              className="flex-1 rounded-xl border border-black/15 bg-white px-3 py-2 text-xs font-medium outline-none focus:border-[#a4492e]"
+                              className="flex-1 rounded-[4px] border border-black/15 bg-white px-3 py-2 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                             />{" "}
                             <button
                               type="submit"
-                              className="rounded-xl bg-[#a4492e] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#8a3b24] transition-all cursor-pointer"
+                              className="rounded-[4px] bg-[#5f6516] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#4a4f10] transition-all cursor-pointer"
                             >
                               {" "}
                               Notify Me
@@ -867,9 +791,9 @@ export default function ProductDetailModal({
                   <div className="flex gap-3">
                     {" "}
                     {cartQty > 0 ? (
-                      <div className="flex-1 flex items-center justify-between rounded-full border-2 border-[#a4492e] bg-[#151412] px-6 py-3 text-white shadow-md">
+                      <div className="on-dark flex-1 flex items-center justify-between rounded-full border-2 border-[color:var(--accent)] bg-[#111111] px-6 py-3 text-white shadow-md">
                         {" "}
-                        <span className="text-xs font-bold text-[#a4492e] uppercase tracking-wider">
+                        <span className="text-xs font-bold text-[color:var(--accent)] uppercase tracking-wider">
                           In Bag:
                         </span>{" "}
                         <div className="flex items-center gap-3">
@@ -882,7 +806,7 @@ export default function ProductDetailModal({
                                 -1,
                               )
                             }
-                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer"
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer"
                           >
                             {" "}
                             −
@@ -898,7 +822,7 @@ export default function ProductDetailModal({
                                 1,
                               )
                             }
-                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer"
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer"
                           >
                             {" "}
                             +
@@ -927,7 +851,7 @@ export default function ProductDetailModal({
                             currentPrice,
                           )
                         }
-                        className="flex-1 rounded-full bg-[#1c1b18] py-3.5 text-[14px] font-medium text-[#f4f2ee] hover:bg-[#a4492e] transition-colors cursor-pointer min-h-[48px]"
+                        className="on-dark flex-1 rounded-full bg-[#161616] py-3.5 text-[14px] font-medium text-[#f2f2f0] hover:bg-[#5f6516] transition-colors cursor-pointer min-h-[48px]"
                       >
                         {" "}
                         Add to Bag — ₹{currentPrice.toLocaleString("en-IN")}
@@ -956,7 +880,7 @@ export default function ProductDetailModal({
                         onOpenCart?.();
                         onClose();
                       }}
-                      className="flex-1 rounded-full border border-[#1c1b18] py-3.5 text-[14px] font-medium text-[#1c1b18] hover:bg-[#1c1b18] hover:text-[#f4f2ee] transition-colors cursor-pointer min-h-[48px]"
+                      className="flex-1 rounded-full border border-[#161616] py-3.5 text-[14px] font-medium text-[#161616] hover:bg-[#161616] hover:text-[#f2f2f0] transition-colors cursor-pointer min-h-[48px]"
                     >
                       {" "}
                       Buy it now
@@ -968,27 +892,27 @@ export default function ProductDetailModal({
               <div className="space-y-3">
                 {" "}
                 {selectedSize !== 50 ? (
-                  <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl border border-dashed border-[#a4492e]/40 bg-[#f7f5f2] p-3.5 shadow-xs transition-all">
+                  <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-[4px] border border-dashed border-[color:var(--accent)]/40 bg-[#f7f7f5] p-3.5 shadow-xs transition-all">
                     {" "}
                     <div className="flex items-center gap-3 text-left">
                       {" "}
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#a4492e]/15 text-[#a4492e] text-sm font-bold">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#5f6516]/15 text-[color:var(--accent)] text-sm font-bold">
                         {" "}
                       </span>{" "}
                       <div>
                         {" "}
                         <div className="flex items-center gap-2">
                           {" "}
-                          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#1c1b18]/70">
+                          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#161616]/70">
                             {" "}
                             Product Personalisation
                           </span>{" "}
-                          <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[9px] font-bold text-amber-900 uppercase tracking-wider">
+                          <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-amber-900 uppercase tracking-wider">
                             {" "}
                             50ML ONLY
                           </span>{" "}
                         </div>{" "}
-                        <span className="text-[11px] text-[#1c1b18]/60 block mt-0.5">
+                        <span className="text-[11px] max-sm:text-[12px] text-[#161616]/60 block mt-0.5">
                           {" "}
                           Bottle personalisation &amp; custom engraving is
                           exclusively available for 50ML flacons.
@@ -1001,7 +925,7 @@ export default function ProductDetailModal({
                         setSelectedSize(50);
                         setIsPersonalising(true);
                       }}
-                      className="shrink-0 rounded-xl bg-gradient-to-r from-[#a4492e] to-[#8a3b24] px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer"
+                      className="shrink-0 rounded-[4px] bg-gradient-to-r from-[#5f6516] to-[#4a4f10] px-3.5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                     >
                       {" "}
                       Switch to 50ML
@@ -1011,26 +935,26 @@ export default function ProductDetailModal({
                   <button
                     type="button"
                     onClick={() => setIsPersonalising(!isPersonalising)}
-                    className={`w-full flex items-center justify-between gap-2 rounded-xl border p-3 sm:p-3.5 transition-all cursor-pointer ${
+                    className={`w-full flex items-center justify-between gap-2 rounded-[4px] border p-3 sm:p-3.5 transition-all cursor-pointer ${
                       isPersonalising || engravingText || includeDate
-                        ? "border-[#a4492e] bg-[#a4492e]/10 text-[#1c1b18] shadow-md"
-                        : "border-[#a4492e]/40 bg-gradient-to-r from-[#a4492e]/5 via-amber-500/5 to-[#a4492e]/5 hover:border-[#a4492e] hover:bg-[#a4492e]/10 text-[#1c1b18]"
+                        ? "border-[color:var(--accent)] bg-[#5f6516]/10 text-[#161616] shadow-md"
+                        : "border-[color:var(--accent)]/40 bg-gradient-to-r from-[#5f6516]/5 via-amber-500/5 to-[#5f6516]/5 hover:border-[color:var(--accent)] hover:bg-[#5f6516]/10 text-[#161616]"
                     }`}
                   >
                     {" "}
                     <div className="flex items-center gap-2.5 text-left min-w-0 flex-1">
                       {" "}
-                      <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#a4492e]/20 text-[#a4492e] text-xs sm:text-sm font-bold">
+                      <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#5f6516]/20 text-[color:var(--accent)] text-xs sm:text-sm font-bold">
                         {" "}
                         ✒
                       </span>{" "}
                       <div className="min-w-0 flex-1">
                         {" "}
-                        <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#1c1b18] block truncate">
+                        <span className="text-[11px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#161616] block truncate">
                           {" "}
                           Product Personalisation
                         </span>{" "}
-                        <span className="text-[10px] sm:text-[11px] text-[#1c1b18]/65 block mt-0.5 truncate">
+                        <span className="text-[10px] max-sm:text-[12px] sm:text-[11px] text-[#161616]/65 block mt-0.5 truncate">
                           {" "}
                           {engravingText || includeDate
                             ? `Custom Engraving: ${[
@@ -1045,7 +969,7 @@ export default function ProductDetailModal({
                         </span>{" "}
                       </div>{" "}
                     </div>{" "}
-                    <span className="text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-[#a4492e] shrink-0 whitespace-nowrap bg-[#a4492e]/15 px-2.5 py-1 rounded-lg">
+                    <span className="text-[10.5px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shrink-0 whitespace-nowrap bg-[#5f6516]/15 px-2.5 py-1 rounded-lg">
                       {" "}
                       {isPersonalising
                         ? "Close"
@@ -1057,15 +981,15 @@ export default function ProductDetailModal({
                 )}
                 {/* Interactive Personalisation Panel */}
                 {isPersonalising && (
-                  <div className="rounded-2xl border border-[#a4492e]/30 bg-[#f7f5f2] p-4 space-y-4 shadow-sm animate-in fade-in">
+                  <div className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#f7f7f5] p-4 space-y-4 shadow-sm animate-in fade-in">
                     {" "}
                     <div className="flex items-center justify-between border-b border-black/8 pb-2">
                       {" "}
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#a4492e]">
+                      <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                         {" "}
                         Custom Bottle Engraving
                       </span>{" "}
-                      <span className="text-[10px] font-semibold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                      <span className="text-[10px] max-sm:text-[12px] font-semibold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
                         {" "}
                         + ₹200 FEE
                       </span>{" "}
@@ -1073,7 +997,7 @@ export default function ProductDetailModal({
                     {/* 1. Custom Name / Monogram Engraving */}
                     <div className="space-y-2">
                       {" "}
-                      <label className="text-[11px] font-semibold text-[#1c1b18]/80 block">
+                      <label className="text-[11px] max-sm:text-[12px] font-semibold text-[#161616]/80 block">
                         {" "}
                         Custom Name or Monogram (Max 15 Characters)
                       </label>{" "}
@@ -1083,7 +1007,7 @@ export default function ProductDetailModal({
                         value={engravingText}
                         onChange={(e) => setEngravingText(e.target.value)}
                         placeholder="e.g. R.S. ALEXANDER"
-                        className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#1c1b18] placeholder:text-[#1c1b18]/30 focus:border-[#a4492e] focus:outline-none shadow-xs font-serif tracking-widest uppercase"
+                        className="w-full rounded-[4px] border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#161616] placeholder:text-[#161616]/30 focus:border-[color:var(--accent)] focus:outline-none shadow-xs font-serif tracking-[0.06em] uppercase"
                       />{" "}
                     </div>{" "}
                     {/* 2. Date Engraving Toggle & Picker */}
@@ -1091,7 +1015,7 @@ export default function ProductDetailModal({
                       {" "}
                       <div className="flex items-center justify-between">
                         {" "}
-                        <label className="text-[11px] font-semibold text-[#1c1b18]/80 block">
+                        <label className="text-[11px] max-sm:text-[12px] font-semibold text-[#161616]/80 block">
                           {" "}
                           Include Date Engraving?
                         </label>{" "}
@@ -1103,10 +1027,10 @@ export default function ProductDetailModal({
                               setIncludeDate(false);
                               setEngravingDate("");
                             }}
-                            className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                            className={`on-dark rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                               !includeDate
-                                ? "bg-[#1c1b18] text-white shadow-xs"
-                                : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
+                                ? "bg-[#161616] text-white shadow-xs"
+                                : "text-[#161616]/60 hover:text-[#161616]"
                             }`}
                           >
                             {" "}
@@ -1115,10 +1039,10 @@ export default function ProductDetailModal({
                           <button
                             type="button"
                             onClick={() => setIncludeDate(true)}
-                            className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                            className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                               includeDate
-                                ? "bg-[#a4492e] text-white shadow-xs"
-                                : "text-[#1c1b18]/60 hover:text-[#1c1b18]"
+                                ? "bg-[#5f6516] text-white shadow-xs"
+                                : "text-[#161616]/60 hover:text-[#161616]"
                             }`}
                           >
                             {" "}
@@ -1129,7 +1053,7 @@ export default function ProductDetailModal({
                       {includeDate && (
                         <div className="space-y-1.5 pt-1 animate-in fade-in">
                           {" "}
-                          <label className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                          <label className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                             {" "}
                             Select Engraving Date
                           </label>{" "}
@@ -1137,7 +1061,7 @@ export default function ProductDetailModal({
                             type="date"
                             value={engravingDate}
                             onChange={(e) => setEngravingDate(e.target.value)}
-                            className="w-full rounded-xl border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#1c1b18] focus:border-[#a4492e] focus:outline-none shadow-xs font-medium"
+                            className="w-full rounded-[4px] border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#161616] focus:border-[color:var(--accent)] focus:outline-none shadow-xs font-medium"
                           />{" "}
                         </div>
                       )}
@@ -1145,7 +1069,7 @@ export default function ProductDetailModal({
                     <button
                       type="button"
                       onClick={() => setIsPersonalising(false)}
-                      className="w-full rounded-xl bg-[#a4492e] py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-[#8a3b24] transition-all shadow-xs cursor-pointer mt-2"
+                      className="w-full rounded-[4px] bg-[#5f6516] py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-[#4a4f10] transition-all shadow-xs cursor-pointer mt-2"
                     >
                       {" "}
                       Save Personalisation Details
@@ -1155,9 +1079,9 @@ export default function ProductDetailModal({
               </div>{" "}
             </div>{" "}
             {/* Pincode Delivery Estimator */}
-            <div className="rounded-2xl border border-black/10 bg-white p-3.5 sm:p-4 space-y-3">
+            <div className="rounded-[4px] border border-black/10 bg-white p-3.5 sm:p-4 space-y-3">
               {" "}
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1b18]/50 block">
+              <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#161616]/50 block">
                 {" "}
                 DELIVERY &amp; AVAILABILITY CHECKER
               </span>{" "}
@@ -1174,51 +1098,51 @@ export default function ProductDetailModal({
                   onChange={(e) =>
                     setPincode(e.target.value.replace(/[^\d]/g, ""))
                   }
-                  className="flex-1 min-w-0 w-full rounded-xl border border-black/15 bg-cream/50 px-3 sm:px-4 py-2 text-xs font-medium outline-none focus:border-[#a4492e]"
+                  className="flex-1 min-w-0 w-full rounded-[4px] border border-black/15 bg-cream/50 px-3 sm:px-4 py-2 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                 />{" "}
                 <button
                   type="submit"
                   disabled={isCheckingPincode}
-                  className="shrink-0 rounded-xl bg-[#1c1b18] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#a4492e] transition-all cursor-pointer whitespace-nowrap"
+                  className="on-dark shrink-0 rounded-[4px] bg-[#161616] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5f6516] transition-all cursor-pointer whitespace-nowrap"
                 >
                   {" "}
                   {isCheckingPincode ? "Checking..." : "VERIFY"}
                 </button>{" "}
               </form>{" "}
               {deliveryStatus && (
-                <p className="text-xs font-medium text-[#1c1b18]/80 pt-1">
+                <p className="text-xs font-medium text-[#161616]/80 pt-1">
                   {deliveryStatus}
                 </p>
               )}
             </div>{" "}
             {/* Trust Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center pt-3 border-t border-black/10 text-[9px] font-bold text-[#1c1b18] uppercase">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center pt-3 border-t border-black/10 text-[9px] max-sm:text-[12px] font-bold text-[#161616] uppercase">
               {" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
                 {" "}
                 <span className="text-base"></span>{" "}
-                <span className="leading-tight text-[9px]">
+                <span className="leading-tight text-[9px] max-sm:text-[12px]">
                   IFRA Certified Ethyl Alcohol
                 </span>{" "}
               </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
                 {" "}
                 <span className="text-base"></span>{" "}
-                <span className="leading-tight text-[9px]">
+                <span className="leading-tight text-[9px] max-sm:text-[12px]">
                   FDA Approved
                 </span>{" "}
               </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
                 {" "}
                 <span className="text-base"></span>{" "}
-                <span className="leading-tight text-[9px]">
+                <span className="leading-tight text-[9px] max-sm:text-[12px]">
                   Gentle Formula
                 </span>{" "}
               </div>{" "}
               <div className="flex flex-col items-center gap-1 p-2 rounded-lg bg-cream/40 border border-black/5 hover:border-black/20 transition-all">
                 {" "}
                 <span className="text-base"></span>{" "}
-                <span className="leading-tight text-[9px]">
+                <span className="leading-tight text-[9px] max-sm:text-[12px]">
                   Cruelty Free
                 </span>{" "}
               </div>{" "}
@@ -1228,7 +1152,7 @@ export default function ProductDetailModal({
         {/* ── ACCORDION TABS SECTION ── */}
         <div className="border-t border-black/10 px-6 lg:px-10 py-8 bg-white space-y-6">
           {" "}
-          <div className="flex border-b border-black/10 overflow-x-auto gap-8 text-xs font-bold uppercase tracking-[0.18em]">
+          <div className="flex border-b border-black/10 overflow-x-auto gap-8 text-xs font-bold uppercase tracking-[0.06em]">
             {" "}
             {[
               { id: "description", label: "Description" },
@@ -1241,8 +1165,8 @@ export default function ProductDetailModal({
                 onClick={() => setActiveTab(tab.id)}
                 className={`pb-3 transition-all cursor-pointer whitespace-nowrap border-b-2 ${
                   activeTab === tab.id
-                    ? "border-[#a4492e] text-[#a4492e]"
-                    : "border-transparent text-[#1c1b18]/50 hover:text-[#1c1b18]"
+                    ? "border-[color:var(--accent)] text-[color:var(--accent)]"
+                    : "border-transparent text-[#161616]/50 hover:text-[#161616]"
                 }`}
               >
                 {" "}
@@ -1250,12 +1174,12 @@ export default function ProductDetailModal({
               </button>
             ))}
           </div>{" "}
-          <div className="py-4 text-xs text-[#1c1b18]/80 leading-relaxed font-light">
+          <div className="py-4 text-xs text-[#161616]/80 leading-relaxed font-light">
             {" "}
             {activeTab === "description" && (
               <div className="space-y-3 max-w-3xl">
                 {" "}
-                <p className="text-sm text-[#1c1b18] font-normal leading-relaxed">
+                <p className="text-sm text-[#161616] font-normal leading-relaxed">
                   {" "}
                   {product.fullDesc || product.desc}
                 </p>{" "}
@@ -1271,30 +1195,30 @@ export default function ProductDetailModal({
             {activeTab === "notes" && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl">
                 {" "}
-                <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
+                <div className="rounded-[4px] border border-black/8 p-4 bg-[#f2f2f0] space-y-1">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                     Top Notes
                   </span>{" "}
-                  <p className="font-medium text-[#1c1b18]">
+                  <p className="font-medium text-[#161616]">
                     {product.traces[0] || "Fresh Bergamot"}, Pink Pepper
                   </p>{" "}
                 </div>{" "}
-                <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
+                <div className="rounded-[4px] border border-black/8 p-4 bg-[#f2f2f0] space-y-1">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                     Heart Notes
                   </span>{" "}
-                  <p className="font-medium text-[#1c1b18]">
+                  <p className="font-medium text-[#161616]">
                     {product.traces[1] || "Blooming Jasmine"}, Rose Accord
                   </p>{" "}
                 </div>{" "}
-                <div className="rounded-xl border border-black/8 p-4 bg-[#f4f2ee] space-y-1">
+                <div className="rounded-[4px] border border-black/8 p-4 bg-[#f2f2f0] space-y-1">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e] block">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
                     Base Notes
                   </span>{" "}
-                  <p className="font-medium text-[#1c1b18]">
+                  <p className="font-medium text-[#161616]">
                     {product.traces[2] || "Sandalwood"}, Amber &amp; Velvet Musk
                   </p>{" "}
                 </div>{" "}
@@ -1305,28 +1229,28 @@ export default function ProductDetailModal({
                 {" "}
                 <div>
                   {" "}
-                  <div className="flex justify-between text-xs font-bold text-[#1c1b18] mb-1">
+                  <div className="flex justify-between text-xs font-bold text-[#161616] mb-1">
                     {" "}
                     <span>Longevity: 12-16 Hours</span>{" "}
-                    <span className="text-[#a4492e]">
+                    <span className="text-[color:var(--accent)]">
                       Very High (Extrait)
                     </span>{" "}
                   </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
                     {" "}
-                    <div className="h-full w-[92%] rounded-full bg-[#a4492e]" />{" "}
+                    <div className="h-full w-[92%] rounded-full bg-[#5f6516]" />{" "}
                   </div>{" "}
                 </div>{" "}
                 <div>
                   {" "}
-                  <div className="flex justify-between text-xs font-bold text-[#1c1b18] mb-1">
+                  <div className="flex justify-between text-xs font-bold text-[#161616] mb-1">
                     {" "}
                     <span>Sillage &amp; Projection</span>{" "}
-                    <span className="text-[#a4492e]">Magnetic Trail</span>{" "}
+                    <span className="text-[color:var(--accent)]">Magnetic Trail</span>{" "}
                   </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
                     {" "}
-                    <div className="h-full w-[88%] rounded-full bg-[#a4492e]" />{" "}
+                    <div className="h-full w-[88%] rounded-full bg-[#5f6516]" />{" "}
                   </div>{" "}
                 </div>{" "}
               </div>
@@ -1348,11 +1272,11 @@ export default function ProductDetailModal({
           </div>{" "}
         </div>{" "}
         {/* ── EDITORIAL MOOD BANNER ── */}
-        <div className="relative overflow-hidden bg-[#151412] text-white p-8 lg:p-14 border-t border-[#a4492e]/30">
+        <div className="on-dark relative overflow-hidden bg-[#111111] text-white p-8 lg:p-14 border-t border-[color:var(--accent)]/30">
           {" "}
           <div className="max-w-2xl space-y-3">
             {" "}
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               HAUTE PARFUMERIE STORY
             </span>{" "}
             <h3 className="font-display text-2xl sm:text-3xl text-white font-normal leading-tight">
@@ -1369,14 +1293,14 @@ export default function ProductDetailModal({
         </div>{" "}
         {/* ── RECOMMENDED PRODUCTS ── */}
         {recommendedProducts.length > 0 && (
-          <div className="px-6 lg:px-10 py-10 border-t border-black/10 bg-[#f4f2ee] space-y-6">
+          <div className="px-6 lg:px-10 py-10 border-t border-black/10 bg-[#f2f2f0] space-y-6">
             {" "}
             <div className="flex items-center justify-between">
               {" "}
-              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">
+              <h3 className="font-display text-2xl text-[#161616] font-medium">
                 You Might Also Like
               </h3>{" "}
-              <span className="text-xs font-bold uppercase tracking-wider text-[#a4492e]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)]">
                 Curated Suggestions
               </span>{" "}
             </div>{" "}
@@ -1394,12 +1318,12 @@ export default function ProductDetailModal({
                     }
                     onSelectProduct?.(rec);
                   }}
-                  className="group rounded-2xl border border-[#e8e2d9] bg-white p-4 transition-all duration-300 hover:shadow-xl hover:border-[#a4492e]/50 hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
+                  className="group rounded-[4px] border border-[#e8e2d9] bg-white p-4 transition-all duration-300 hover:shadow-xl hover:border-[color:var(--accent)]/50 hover:-translate-y-1 cursor-pointer flex flex-col justify-between"
                 >
                   {" "}
                   <div>
                     {" "}
-                    <div className="aspect-[4/5] rounded-xl bg-[#f5efe6] p-4 flex items-center justify-center mb-3 overflow-hidden">
+                    <div className="aspect-[4/5] rounded-[4px] bg-[#f5efe6] p-4 flex items-center justify-center mb-3 overflow-hidden">
                       {" "}
                       <img
                         src={rec.img}
@@ -1409,23 +1333,23 @@ export default function ProductDetailModal({
                         className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />{" "}
                     </div>{" "}
-                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#a4492e]">
+                    <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                       {rec.num}
                     </span>{" "}
-                    <h4 className="font-display text-lg font-medium text-[#1c1b18] group-hover:text-[#a4492e] transition-colors">
+                    <h4 className="font-display text-lg font-medium text-[#161616] group-hover:text-[color:var(--accent)] transition-colors">
                       {" "}
                       {rec.name}
                     </h4>{" "}
-                    <p className="text-xs text-[#1c1b18]/60 font-light truncate">
+                    <p className="text-xs text-[#161616]/60 font-light truncate">
                       {rec.desc}
                     </p>{" "}
                   </div>{" "}
                   <div className="mt-4 pt-3 border-t border-black/8 flex items-center justify-between">
                     {" "}
-                    <span className="font-sans font-bold text-sm text-[#1c1b18] tabular-nums inline-flex items-baseline gap-0.5">
+                    <span className="font-sans font-bold text-sm text-[#161616] tabular-nums inline-flex items-baseline gap-0.5">
                       ₹{rec.prices[50] || rec.prices[30] || 799}
                     </span>{" "}
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#a4492e]">
+                    <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       View Product →
                     </span>{" "}
                   </div>{" "}
@@ -1441,39 +1365,39 @@ export default function ProductDetailModal({
             {" "}
             <div>
               {" "}
-              <h3 className="font-display text-2xl text-[#1c1b18] font-medium">
+              <h3 className="font-display text-2xl text-[#161616] font-medium">
                 Customer Reviews
               </h3>{" "}
               <div className="flex items-center gap-3 mt-1">
                 {" "}
                 <div className="flex text-amber-500 text-lg"></div>{" "}
-                <span className="font-display text-xl font-bold text-[#1c1b18]">
+                <span className="font-display text-xl font-bold text-[#161616]">
                   {reviewStats.averageRating.toFixed(1)} out of 5
                 </span>{" "}
-                <span className="text-xs text-[#1c1b18]/50">
+                <span className="text-xs text-[#161616]/50">
                   Based on {reviewStats.count} verified customer reviews
                 </span>{" "}
               </div>{" "}
             </div>{" "}
             <button
               onClick={() => setIsWritingReview((prev) => !prev)}
-              className="rounded-full bg-[#1c1b18] px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-white hover:bg-[#a4492e] transition-all shadow-md cursor-pointer"
+              className="on-dark rounded-full bg-[#161616] px-6 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#5f6516] transition-all shadow-md cursor-pointer"
             >
               {" "}
               {isWritingReview ? "Cancel Review" : "Write a Review"}
             </button>{" "}
           </div>{" "}
           {/* Rating Breakdown & Highlights Box */}
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 rounded-2xl border border-black/8 bg-[#f4f2ee] p-5 sm:p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 rounded-[4px] border border-black/8 bg-[#f2f2f0] p-5 sm:p-6">
             {" "}
             <div className="sm:col-span-5 flex flex-col justify-center border-b sm:border-b-0 sm:border-r border-black/8 pb-4 sm:pb-0 sm:pr-6">
               {" "}
               <div className="flex items-baseline gap-2">
                 {" "}
-                <span className="font-display text-4xl sm:text-5xl font-bold text-[#1c1b18]">
+                <span className="font-display text-4xl sm:text-5xl font-bold text-[#161616]">
                   {reviewStats.averageRating.toFixed(1)}
                 </span>{" "}
-                <span className="text-xs text-[#1c1b18]/50 font-medium">
+                <span className="text-xs text-[#161616]/50 font-medium">
                   / 5.0
                 </span>{" "}
               </div>{" "}
@@ -1482,7 +1406,7 @@ export default function ProductDetailModal({
                 {" "}
                 <span>✓</span> 100% Verified Purchases across India
               </span>{" "}
-              <span className="text-[11px] text-[#1c1b18]/50 mt-0.5">
+              <span className="text-[11px] max-sm:text-[12px] text-[#161616]/50 mt-0.5">
                 {" "}
                 {reviewStats.count} fragrance lovers rated this creation
               </span>{" "}
@@ -1501,17 +1425,17 @@ export default function ProductDetailModal({
                 return (
                   <div key={star} className="flex items-center gap-2 text-xs">
                     {" "}
-                    <span className="w-12 text-[#1c1b18]/70 font-medium text-[11px] shrink-0">
+                    <span className="w-12 text-[#161616]/70 font-medium text-[11px] max-sm:text-[12px] shrink-0">
                       {star} stars
                     </span>{" "}
                     <div className="h-2 flex-1 rounded-full bg-black/10 overflow-hidden">
                       {" "}
                       <div
-                        className="h-full rounded-full bg-[#a4492e]"
+                        className="h-full rounded-full bg-[#5f6516]"
                         style={{ width: `${pct}%` }}
                       />{" "}
                     </div>{" "}
-                    <span className="w-9 text-right text-[11px] text-[#1c1b18]/50 font-mono shrink-0">
+                    <span className="w-9 text-right text-[11px] max-sm:text-[12px] text-[#161616]/50 font-mono shrink-0">
                       {pct}%
                     </span>{" "}
                   </div>
@@ -1523,17 +1447,17 @@ export default function ProductDetailModal({
           {isWritingReview && (
             <form
               onSubmit={handleAddReview}
-              className="rounded-2xl border border-[#a4492e]/40 bg-[#a4492e]/5 p-6 space-y-4 animate-in fade-in"
+              className="rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/5 p-6 space-y-4 animate-in fade-in"
             >
               {" "}
-              <h4 className="font-display text-lg font-medium text-[#1c1b18]">
+              <h4 className="font-display text-lg font-medium text-[#161616]">
                 Share Your Fragrance Experience
               </h4>{" "}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {" "}
                 <div>
                   {" "}
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                  <label className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#161616]/60 block mb-1">
                     {" "}
                     Your Name
                   </label>{" "}
@@ -1543,19 +1467,19 @@ export default function ProductDetailModal({
                     value={newReviewAuthor}
                     onChange={(e) => setNewReviewAuthor(e.target.value)}
                     placeholder="e.g. Ananya Roy"
-                    className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
+                    className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                   />{" "}
                 </div>{" "}
                 <div>
                   {" "}
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                  <label className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#161616]/60 block mb-1">
                     {" "}
                     Rating
                   </label>{" "}
                   <select
                     value={newReviewRating}
                     onChange={(e) => setNewReviewRating(Number(e.target.value))}
-                    className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
+                    className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                   >
                     {" "}
                     <option value={5}> 5 Stars - Outstanding</option>{" "}
@@ -1566,7 +1490,7 @@ export default function ProductDetailModal({
               </div>{" "}
               <div>
                 {" "}
-                <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                <label className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#161616]/60 block mb-1">
                   {" "}
                   Review Headline
                 </label>{" "}
@@ -1576,12 +1500,12 @@ export default function ProductDetailModal({
                   value={newReviewTitle}
                   onChange={(e) => setNewReviewTitle(e.target.value)}
                   placeholder="e.g. Unbelievable Sillage &amp; Elegant Packaging!"
-                  className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
+                  className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                 />{" "}
               </div>{" "}
               <div>
                 {" "}
-                <label className="text-[10px] font-bold uppercase tracking-wider text-[#1c1b18]/60 block mb-1">
+                <label className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#161616]/60 block mb-1">
                   {" "}
                   Your Review
                 </label>{" "}
@@ -1591,12 +1515,12 @@ export default function ProductDetailModal({
                   value={newReviewComment}
                   onChange={(e) => setNewReviewComment(e.target.value)}
                   placeholder="Describe the scent, longevity, and how it made you feel..."
-                  className="w-full rounded-xl border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[#a4492e]"
+                  className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
                 />{" "}
               </div>{" "}
               <button
                 type="submit"
-                className="rounded-full bg-[#a4492e] px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
+                className="rounded-full bg-[#5f6516] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 Submit Review
@@ -1609,34 +1533,34 @@ export default function ProductDetailModal({
             {productReviews.slice(0, visibleReviewsCount).map((rev) => (
               <div
                 key={rev.id}
-                className="rounded-2xl border border-black/8 bg-[#f7f5f2] p-5 sm:p-6 space-y-2 shadow-2xs"
+                className="rounded-[4px] border border-black/8 bg-[#f7f7f5] p-5 sm:p-6 space-y-2 shadow-2xs"
               >
                 {" "}
                 <div className="flex items-center justify-between">
                   {" "}
                   <div className="flex items-center gap-2">
                     {" "}
-                    <span className="font-display font-medium text-[#1c1b18]">
+                    <span className="font-display font-medium text-[#161616]">
                       {rev.author}
                     </span>{" "}
                     {rev.verified && (
-                      <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                      <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-emerald-800">
                         {" "}
                         ✓ Verified Buyer
                       </span>
                     )}
                   </div>{" "}
-                  <span className="text-[11px] text-[#1c1b18]/40 font-light">
+                  <span className="text-[11px] max-sm:text-[12px] text-[#161616]/40 font-light">
                     {rev.date}
                   </span>{" "}
                 </div>{" "}
                 <div className="flex text-amber-500 text-xs">
                   {"".repeat(rev.rating)}
                 </div>{" "}
-                <h5 className="font-semibold text-[#1c1b18] text-sm pt-1">
+                <h5 className="font-semibold text-[#161616] text-sm pt-1">
                   {rev.title}
                 </h5>{" "}
-                <p className="text-xs text-[#1c1b18]/70 font-light leading-relaxed">
+                <p className="text-xs text-[#161616]/70 font-light leading-relaxed">
                   {rev.comment}
                 </p>{" "}
               </div>
@@ -1653,7 +1577,7 @@ export default function ProductDetailModal({
                     Math.min(prev + 8, productReviews.length),
                   )
                 }
-                className="rounded-full border border-[#a4492e] bg-[#a4492e]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#a4492e] hover:bg-[#a4492e] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
+                className="rounded-full border border-[color:var(--accent)] bg-[#5f6516]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
               >
                 {" "}
                 Load More Reviews (+8) ·{" "}
@@ -1662,7 +1586,7 @@ export default function ProductDetailModal({
               <button
                 type="button"
                 onClick={() => setVisibleReviewsCount(productReviews.length)}
-                className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#1c1b18]/70 hover:border-black/30 hover:text-[#1c1b18] transition-all cursor-pointer"
+                className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#161616]/70 hover:border-black/30 hover:text-[#161616] transition-all cursor-pointer"
               >
                 {" "}
                 View All ({productReviews.length})
@@ -1671,11 +1595,11 @@ export default function ProductDetailModal({
           )}
         </div>{" "}
         {/* ── STICKY MOBILE COMMERCE ACTION BAR ── */}
-        <div className="sticky left-0 right-0 bottom-0 z-40 flex items-center justify-between border-t border-[#a4492e]/30 bg-[#151412] px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom,12px))] text-white shadow-2xl md:hidden">
+        <div className="on-dark sticky left-0 right-0 bottom-0 z-40 flex items-center justify-between border-t border-[color:var(--accent)]/30 bg-[#111111] px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom,12px))] text-white shadow-2xl md:hidden">
           {" "}
           <div>
             {" "}
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#a4492e] block">
+            <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
               {" "}
               {product.name} • {selectedSize}ML
             </span>{" "}
@@ -1698,7 +1622,7 @@ export default function ProductDetailModal({
               );
               onClose();
             }}
-            className="rounded-full bg-[#a4492e] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black hover:bg-[#8a3b24] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
+            className="rounded-full bg-[#5f6516] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black hover:bg-[#4a4f10] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >
             {" "}
             Add to Bag →
@@ -1706,7 +1630,7 @@ export default function ProductDetailModal({
         </div>{" "}
         {/* Floating Toast Notification */}
         {toastMessage && (
-          <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-[#151412] border border-[#a4492e] px-6 py-2.5 text-xs font-bold text-[#a4492e] shadow-2xl animate-in fade-in slide-in-from-bottom-4">
+          <div className="on-dark fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-[#111111] border border-[color:var(--accent)] px-6 py-2.5 text-xs font-bold text-[color:var(--accent)] shadow-2xl animate-in fade-in slide-in-from-bottom-4">
             {" "}
             {toastMessage}
           </div>
@@ -1715,7 +1639,7 @@ export default function ProductDetailModal({
       {/* ── High-Resolution Lightbox Zoom Modal ── */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-[9999999] flex items-center justify-center bg-black/92 p-4 sm:p-8 backdrop-blur-xl animate-fadeIn select-none"
+          className="on-dark fixed inset-0 z-[9999999] flex items-center justify-center bg-black/92 p-4 sm:p-8 backdrop-blur-xl animate-fadeIn select-none"
           onClick={() => {
             setIsLightboxOpen(false);
             setIsZoomed(false);
@@ -1745,7 +1669,7 @@ export default function ProductDetailModal({
             </div>{" "}
             {/* Lightbox Main Image Container */}
             <div
-              className={`relative overflow-auto rounded-3xl max-h-[82vh] max-w-full border border-white/15 bg-black/80 shadow-[0_25px_90px_rgba(0,0,0,0.9)] flex items-center justify-center p-4 transition-all duration-300 ${
+              className={`relative overflow-auto rounded-[4px] max-h-[82vh] max-w-full border border-white/15 bg-black/80 shadow-[0_25px_90px_rgba(0,0,0,0.9)] flex items-center justify-center p-4 transition-all duration-300 ${
                 isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
               }`}
               onClick={() => setIsZoomed((z) => !z)}
@@ -1762,14 +1686,14 @@ export default function ProductDetailModal({
             {/* Bottom Caption & Thumbnail Navigation */}
             <div className="mt-4 flex items-center justify-between w-full max-w-md px-4">
               {" "}
-              <span className="text-xs font-bold tracking-widest text-[#a4492e] uppercase">
+              <span className="text-xs font-bold tracking-[0.06em] text-[color:var(--accent)] uppercase">
                 {" "}
                 {product.name} • View {selectedImageIndex + 1} of{" "}
                 {galleryImages.length}
               </span>{" "}
               <div className="flex items-center gap-2">
                 {" "}
-                {galleryImages.map((_, idx) => (
+                {galleryImages.map((_: string, idx: number) => (
                   <button
                     key={idx}
                     onClick={(e) => {
@@ -1779,7 +1703,7 @@ export default function ProductDetailModal({
                     }}
                     className={`h-2.5 rounded-full transition-all cursor-pointer ${
                       selectedImageIndex === idx
-                        ? "w-8 bg-[#a4492e]"
+                        ? "w-8 bg-[#5f6516]"
                         : "w-2.5 bg-white/40 hover:bg-white/70"
                     }`}
                     aria-label={`View image ${idx + 1}`}

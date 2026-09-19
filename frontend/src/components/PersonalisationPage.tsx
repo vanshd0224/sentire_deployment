@@ -116,7 +116,6 @@ function loadImage(src: string): Promise<HTMLImageElement | null> {
 export default function PersonalisationPage({
   onBackToHome,
   onAddToCart,
-  onOpenCart,
 }: PersonalisationPageProps) {
   // ── State
   const [selectedPerfume, setSelectedPerfume] = useState<PerfumeOption>(
@@ -189,8 +188,8 @@ export default function PersonalisationPage({
         H * 0.35,
         W * 0.42,
       );
-      glow.addColorStop(0, "rgba(164, 73, 46,0.12)");
-      glow.addColorStop(1, "rgba(164, 73, 46,0)");
+      glow.addColorStop(0, "rgba(95, 101, 22,0.12)");
+      glow.addColorStop(1, "rgba(95, 101, 22,0)");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, W, H);
 
@@ -251,7 +250,7 @@ export default function PersonalisationPage({
 
           // Gold border around uploaded image
           ctx.save();
-          ctx.strokeStyle = "rgba(164, 73, 46,0.55)";
+          ctx.strokeStyle = "rgba(95, 101, 22,0.55)";
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.moveTo(iX + cr, iY);
@@ -276,7 +275,7 @@ export default function PersonalisationPage({
 
           // Thin separator lines
           ctx.save();
-          ctx.strokeStyle = "rgba(164, 73, 46,0.45)";
+          ctx.strokeStyle = "rgba(95, 101, 22,0.45)";
           ctx.lineWidth = 0.8;
           ctx.beginPath();
           ctx.moveTo(cx - dw * 0.22, cy - 18);
@@ -297,7 +296,7 @@ export default function PersonalisationPage({
           );
           tg.addColorStop(0, "#9a6e2a");
           tg.addColorStop(0.35, "#d8b272");
-          tg.addColorStop(0.65, "#a4492e");
+          tg.addColorStop(0.65, "#5f6516");
           tg.addColorStop(1, "#8d5e1a");
 
           ctx.save();
@@ -328,7 +327,7 @@ export default function PersonalisationPage({
       // Brand text at bottom
       ctx.save();
       ctx.font = `500 ${W * 0.024}px Inter, sans-serif`;
-      ctx.fillStyle = "rgba(164, 73, 46,0.45)";
+      ctx.fillStyle = "rgba(95, 101, 22,0.45)";
       ctx.textAlign = "center";
       ctx.fillText("SENTIRE BY PC · EXTRAIT DE PARFUM · 50ML", W / 2, H * 0.93);
       ctx.restore();
@@ -388,14 +387,14 @@ export default function PersonalisationPage({
     const capG = ctx.createLinearGradient(bx, 0, bx + bw, 0);
     capG.addColorStop(0, "#7a4f10");
     capG.addColorStop(0.35, "#d4a055");
-    capG.addColorStop(0.65, "#a4492e");
+    capG.addColorStop(0.65, "#5f6516");
     capG.addColorStop(1, "#6b4412");
     ctx.fillStyle = capG;
     ctx.fillRect(nx - 8, by - 24, nw + 16, 24);
 
     // Gold border
     ctx.save();
-    ctx.strokeStyle = "rgba(164, 73, 46,0.35)";
+    ctx.strokeStyle = "rgba(95, 101, 22,0.35)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(bx + cr, by + bh * 0.14);
@@ -418,7 +417,7 @@ export default function PersonalisationPage({
       const fs = Math.min(bw * 0.24, 28);
 
       ctx.save();
-      ctx.strokeStyle = "rgba(164, 73, 46,0.4)";
+      ctx.strokeStyle = "rgba(95, 101, 22,0.4)";
       ctx.lineWidth = 0.8;
       ctx.beginPath();
       ctx.moveTo(bx + bw * 0.12, cy - 16);
@@ -504,10 +503,10 @@ export default function PersonalisationPage({
   const MAX_CHARS = 20;
 
   return (
-    <div className="min-h-screen w-full bg-[#151412] text-[#f4f2ee] selection:bg-[#a4492e] selection:text-black pb-32 sm:pb-16">
+    <div className="on-dark min-h-screen w-full bg-[#111111] text-[#f2f2f0] selection:bg-[#5f6516] selection:text-black pb-32 sm:pb-16">
       {" "}
       {/* ── HERO INTRO ─────────────────────────────────────────── */}
-      <div className="relative border-b border-[#a4492e]/20 bg-[#151412] pt-8 pb-10 text-center overflow-hidden">
+      <div className="on-dark relative border-b border-[color:var(--accent)]/20 bg-[#111111] pt-8 pb-10 text-center overflow-hidden">
         {" "}
         {/* Radial ambient glow */}
         <div
@@ -515,7 +514,7 @@ export default function PersonalisationPage({
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 0%, rgba(164, 73, 46,0.09) 0%, transparent 65%)",
+              "radial-gradient(ellipse at 50% 0%, rgba(95, 101, 22,0.09) 0%, transparent 65%)",
           }}
         />{" "}
         <div className="relative mx-auto max-w-3xl px-6">
@@ -523,7 +522,7 @@ export default function PersonalisationPage({
           {/* Back link */}
           <button
             onClick={onBackToHome}
-            className="group mb-6 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a4492e]/70 transition-colors hover:text-[#a4492e] cursor-pointer"
+            className="group mb-6 inline-flex items-center gap-2 text-[10px] max-sm:text-[12px] font-semibold uppercase tracking-[0.06em] text-[color:var(--accent)]/70 transition-colors hover:text-[color:var(--accent)] cursor-pointer"
           >
             {" "}
             <svg
@@ -543,25 +542,25 @@ export default function PersonalisationPage({
             Back to Boutique
           </button>{" "}
           {/* Eyebrow */}
-          <p className="mb-4 flex items-center justify-center gap-4 text-[9px] font-bold uppercase tracking-[0.35em] text-[#a4492e]">
+          <p className="mb-4 flex items-center justify-center gap-4 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
             {" "}
-            <span className="block h-px w-10 bg-gradient-to-r from-transparent via-[#a4492e] to-transparent" />{" "}
+            <span className="block h-px w-10 bg-gradient-to-r from-transparent via-[#5f6516] to-transparent" />{" "}
             BESPOKE ATELIER
-            <span className="block h-px w-10 bg-gradient-to-r from-transparent via-[#a4492e] to-transparent" />{" "}
+            <span className="block h-px w-10 bg-gradient-to-r from-transparent via-[#5f6516] to-transparent" />{" "}
           </p>{" "}
-          <h1 className="font-display text-3xl font-light leading-[1.08] tracking-tight text-[#f4f2ee] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-3xl font-light leading-[1.08] tracking-tight text-[#f2f2f0] sm:text-5xl lg:text-6xl">
             {" "}
             Product{" "}
-            <em className="font-serif not-italic text-[#a4492e]">
+            <em className="font-serif not-italic text-[color:var(--accent)]">
               Personalisation
             </em>{" "}
           </h1>{" "}
-          <p className="mt-4 text-sm font-light leading-relaxed text-[#f4f2ee]/70 sm:text-base">
+          <p className="mt-4 text-sm font-light leading-relaxed text-[#f2f2f0]/70 sm:text-base">
             {" "}
             Personalise your SENTIRE perfume with photo and name laser
             engraving.
           </p>{" "}
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#a4492e]/40 bg-[#a4492e]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#a4492e] shadow-sm">
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shadow-sm">
             {" "}
             <span></span> Personalisation Available Exclusively on 50ML Luxury
             Flacons
@@ -576,21 +575,21 @@ export default function PersonalisationPage({
           {/* ── LEFT: LIVE PREVIEW ─────────────────────────────── */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             {" "}
-            <div className="overflow-hidden rounded-2xl border border-[#a4492e]/18 bg-[#100c09] shadow-[0_32px_80px_rgba(0,0,0,0.75)]">
+            <div className="overflow-hidden rounded-[4px] border border-[color:var(--accent)]/18 bg-[#100c09] shadow-[0_32px_80px_rgba(0,0,0,0.75)]">
               {" "}
               {/* Live preview badge */}
               <div className="flex items-center justify-between border-b border-white/6 px-5 py-3">
                 {" "}
-                <span className="flex items-center gap-2 rounded-full border border-[#a4492e]/25 bg-[#a4492e]/10 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#a4492e]">
+                <span className="flex items-center gap-2 rounded-full border border-[color:var(--accent)]/25 bg-[#5f6516]/10 px-3 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                   {" "}
                   <span className="relative flex h-1.5 w-1.5">
                     {" "}
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a4492e] opacity-60" />{" "}
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#a4492e]" />{" "}
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#5f6516] opacity-60" />{" "}
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#5f6516]" />{" "}
                   </span>{" "}
                   LIVE PREVIEW
                 </span>{" "}
-                <span className="text-[9px] font-semibold uppercase tracking-widest text-[#f4f2ee]/30">
+                <span className="text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-[0.06em] text-[#f2f2f0]/30">
                   {" "}
                   {selectedPerfume.name} · 50ML
                 </span>{" "}
@@ -616,7 +615,7 @@ export default function PersonalisationPage({
                 {["SENTIRE BY PC", "EXTRAIT DE PARFUM", "50 ML"].map((s, i) => (
                   <span
                     key={i}
-                    className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#f4f2ee]/30"
+                    className="text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-[0.16em] text-[#f2f2f0]/30"
                   >
                     {" "}
                     {s}
@@ -629,15 +628,15 @@ export default function PersonalisationPage({
           <div className="flex flex-col gap-6">
             {" "}
             {/* Panel card */}
-            <div className="rounded-2xl border border-[#a4492e]/18 bg-[#151412]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:p-8">
+            <div className="on-dark rounded-[4px] border border-[color:var(--accent)]/18 bg-[#111111]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:p-8">
               {" "}
-              <div className="mb-7 border-b border-[#a4492e]/12 pb-6">
+              <div className="mb-7 border-b border-[color:var(--accent)]/12 pb-6">
                 {" "}
-                <h2 className="font-display text-2xl font-light text-[#f4f2ee] sm:text-3xl">
+                <h2 className="font-display text-2xl font-light text-[#f2f2f0] sm:text-3xl">
                   {" "}
                   Personalise
                 </h2>{" "}
-                <p className="mt-1.5 text-sm font-light text-[#f4f2ee]/50">
+                <p className="mt-1.5 text-sm font-light text-[#f2f2f0]/50">
                   {" "}
                   Choose your fragrance, add a name and upload an image.
                 </p>{" "}
@@ -645,7 +644,7 @@ export default function PersonalisationPage({
               {/* ── FRAGRANCE SELECTOR ─────────────────────────── */}
               <div className="mb-7">
                 {" "}
-                <label className="mb-3 block text-[9px] font-bold uppercase tracking-[0.2em] text-[#f4f2ee]/50">
+                <label className="mb-3 block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#f2f2f0]/50">
                   {" "}
                   SELECT FRAGRANCE
                 </label>{" "}
@@ -660,17 +659,17 @@ export default function PersonalisationPage({
                       <button
                         key={p.id}
                         onClick={() => setSelectedPerfume(p)}
-                        className={`group relative flex flex-shrink-0 flex-col items-center rounded-xl border px-2 py-2.5 text-center transition-all duration-200 cursor-pointer ${
+                        className={`group relative flex flex-shrink-0 flex-col items-center rounded-[4px] border px-2 py-2.5 text-center transition-all duration-200 cursor-pointer ${
                           active
-                            ? "border-[#a4492e] bg-[#a4492e]/12 shadow-[0_0_12px_rgba(164, 73, 46,0.22)]"
-                            : "border-white/8 bg-white/[0.02] hover:border-[#a4492e]/40 hover:bg-white/[0.05]"
+                            ? "border-[color:var(--accent)] bg-[#5f6516]/12 shadow-[0_0_12px_rgba(95, 101, 22,0.22)]"
+                            : "border-white/8 bg-white/[0.02] hover:border-[color:var(--accent)]/40 hover:bg-white/[0.05]"
                         }`}
                         style={{ width: 72 }}
                         aria-pressed={active}
                         title={p.name}
                       >
                         {" "}
-                        <div className="mb-1.5 h-12 w-full rounded-lg bg-gradient-to-b from-[#1c1510] to-[#151412] flex items-center justify-center overflow-hidden">
+                        <div className="mb-1.5 h-12 w-full rounded-lg bg-gradient-to-b from-[#1c1510] to-[#111111] flex items-center justify-center overflow-hidden">
                           {" "}
                           <img
                             src={p.image}
@@ -679,7 +678,7 @@ export default function PersonalisationPage({
                           />{" "}
                         </div>{" "}
                         <span
-                          className={`block w-full truncate text-[8px] font-bold uppercase tracking-wider ${active ? "text-[#a4492e]" : "text-[#f4f2ee]/60"}`}
+                          className={`block w-full truncate text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider ${active ? "text-[color:var(--accent)]" : "text-[#f2f2f0]/60"}`}
                         >
                           {" "}
                           {p.name}
@@ -688,12 +687,12 @@ export default function PersonalisationPage({
                     );
                   })}
                 </div>{" "}
-                <p className="mt-2 text-[10px] text-[#f4f2ee]/35">
+                <p className="mt-2 text-[10px] max-sm:text-[12px] text-[#f2f2f0]/35">
                   {" "}
                   {selectedPerfume.sub} · ₹
                   {selectedPerfume.price.toLocaleString("en-IN")} (50ML)
                   {selectedPerfume.id === "purple-oud" && (
-                    <span className="ml-2 rounded-full border border-[#a4492e]/30 bg-[#a4492e]/10 px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-[#a4492e]">
+                    <span className="ml-2 rounded-full border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-2 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
                       {" "}
                       EXCLUSIVE
                     </span>
@@ -707,18 +706,18 @@ export default function PersonalisationPage({
                   {" "}
                   <label
                     htmlFor="engravingInput"
-                    className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#f4f2ee]/50"
+                    className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#f2f2f0]/50"
                   >
                     {" "}
                     NAME FOR ENGRAVING
                   </label>{" "}
                   <span
-                    className={`text-[10px] font-medium tabular-nums transition-colors ${
+                    className={`text-[10px] max-sm:text-[12px] font-medium tabular-nums transition-colors ${
                       charCount >= MAX_CHARS
                         ? "text-red-400"
                         : charCount >= MAX_CHARS - 4
-                          ? "text-[#a4492e]"
-                          : "text-[#f4f2ee]/30"
+                          ? "text-[color:var(--accent)]"
+                          : "text-[#f2f2f0]/30"
                     }`}
                   >
                     {" "}
@@ -734,14 +733,14 @@ export default function PersonalisationPage({
                   spellCheck={false}
                   placeholder="Enter name or text"
                   onChange={(e) => setEngravingText(e.target.value)}
-                  className="w-full rounded-lg border border-[#a4492e]/22 bg-[#070503]/70 px-4 py-3.5 font-serif text-xl text-[#f4f2ee] placeholder:font-sans placeholder:text-sm placeholder:text-[#f4f2ee]/25 focus:border-[#a4492e] focus:outline-none focus:ring-1 focus:ring-[#a4492e]/20 transition-all"
+                  className="w-full rounded-lg border border-[color:var(--accent)]/22 bg-[#070503]/70 px-4 py-3.5 font-serif text-xl text-[#f2f2f0] placeholder:font-sans placeholder:text-sm placeholder:text-[#f2f2f0]/25 focus:border-[color:var(--accent)] focus:outline-none focus:ring-1 focus:ring-[#5f6516]/20 transition-all"
                   style={{
                     fontFamily:
                       '"Cormorant Garamond", "EB Garamond", Georgia, serif',
                     letterSpacing: "0.06em",
                   }}
                 />{" "}
-                <p className="mt-1.5 text-[10px] font-light text-[#f4f2ee]/30">
+                <p className="mt-1.5 text-[10px] max-sm:text-[12px] font-light text-[#f2f2f0]/30">
                   {" "}
                   Engraved in elegant serif lettering on the bottle.
                 </p>{" "}
@@ -749,7 +748,7 @@ export default function PersonalisationPage({
               {/* ── IMAGE UPLOAD ────────────────────────────────── */}
               <div className="mb-7">
                 {" "}
-                <label className="mb-2 block text-[9px] font-bold uppercase tracking-[0.2em] text-[#f4f2ee]/50">
+                <label className="mb-2 block text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#f2f2f0]/50">
                   {" "}
                   UPLOAD IMAGE
                 </label>{" "}
@@ -784,14 +783,14 @@ export default function PersonalisationPage({
                       const f = e.dataTransfer.files[0];
                       if (f) handleFile(f);
                     }}
-                    className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-8 text-center transition-all focus-visible:outline-[#a4492e] ${
+                    className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-[4px] border-2 border-dashed px-6 py-8 text-center transition-all focus-visible:outline-[#5f6516] ${
                       isDragOver
-                        ? "border-[#a4492e] bg-[#a4492e]/8"
-                        : "border-[#a4492e]/22 bg-[#070503]/50 hover:border-[#a4492e]/55 hover:bg-[#a4492e]/5"
+                        ? "border-[color:var(--accent)] bg-[#5f6516]/8"
+                        : "border-[color:var(--accent)]/22 bg-[#070503]/50 hover:border-[color:var(--accent)]/55 hover:bg-[#5f6516]/5"
                     }`}
                   >
                     {" "}
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#a4492e]/22 bg-[#a4492e]/10 text-[#a4492e]">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--accent)]/22 bg-[#5f6516]/10 text-[color:var(--accent)]">
                       {" "}
                       <svg
                         width="22"
@@ -809,12 +808,12 @@ export default function PersonalisationPage({
                     </div>{" "}
                     <div>
                       {" "}
-                      <p className="text-sm font-medium text-[#f4f2ee]">
+                      <p className="text-sm font-medium text-[#f2f2f0]">
                         Drag &amp; drop your image here
                       </p>{" "}
-                      <p className="mt-0.5 text-xs text-[#f4f2ee]/40">
+                      <p className="mt-0.5 text-xs text-[#f2f2f0]/40">
                         or{" "}
-                        <span className="text-[#a4492e] underline">
+                        <span className="text-[color:var(--accent)] underline">
                           browse files
                         </span>{" "}
                         · PNG, JPG up to 10MB
@@ -823,16 +822,16 @@ export default function PersonalisationPage({
                   </div>
                 ) : (
                   /* Uploaded state */
-                  <div className="flex items-center gap-4 rounded-xl border border-[#a4492e]/30 bg-[#a4492e]/6 px-4 py-3">
+                  <div className="flex items-center gap-4 rounded-[4px] border border-[color:var(--accent)]/30 bg-[#5f6516]/6 px-4 py-3">
                     {" "}
                     <div className="relative flex-shrink-0">
                       {" "}
                       <img
                         src={uploadedSrc}
                         alt="Your upload"
-                        className="h-14 w-14 rounded-lg border border-[#a4492e]/50 object-cover"
+                        className="h-14 w-14 rounded-lg border border-[color:var(--accent)]/50 object-cover"
                       />{" "}
-                      <span className="absolute -bottom-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#151412] bg-emerald-500 text-white">
+                      <span className="absolute -bottom-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-[#111111] bg-emerald-500 text-white">
                         {" "}
                         <svg
                           width="10"
@@ -849,24 +848,24 @@ export default function PersonalisationPage({
                     </div>{" "}
                     <div className="min-w-0 flex-1">
                       {" "}
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-[#a4492e]">
+                      <p className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
                         YOUR IMAGE
                       </p>{" "}
-                      <p className="mt-0.5 truncate text-sm font-medium text-[#f4f2ee]">
+                      <p className="mt-0.5 truncate text-sm font-medium text-[#f2f2f0]">
                         {uploadedFile}
                       </p>{" "}
                       <div className="mt-1.5 flex gap-3">
                         {" "}
                         <button
                           onClick={() => fileInputRef.current?.click()}
-                          className="text-[10px] font-semibold text-[#a4492e] underline underline-offset-2 cursor-pointer"
+                          className="text-[10px] max-sm:text-[12px] font-semibold text-[color:var(--accent)] underline underline-offset-2 cursor-pointer"
                         >
                           {" "}
                           Change
                         </button>{" "}
                         <button
                           onClick={clearUpload}
-                          className="text-[10px] font-semibold text-red-400/80 underline underline-offset-2 cursor-pointer hover:text-red-400"
+                          className="text-[10px] max-sm:text-[12px] font-semibold text-red-400/80 underline underline-offset-2 cursor-pointer hover:text-red-400"
                         >
                           {" "}
                           Remove
@@ -875,45 +874,45 @@ export default function PersonalisationPage({
                     </div>{" "}
                   </div>
                 )}
-                <p className="mt-2 text-[10px] font-light text-[#f4f2ee]/25">
+                <p className="mt-2 text-[10px] max-sm:text-[12px] font-light text-[#f2f2f0]/25">
                   {" "}
                   Images are used only for personalisation and never stored.
                 </p>{" "}
               </div>{" "}
               {/* ── PRICE SUMMARY ───────────────────────────────── */}
-              <div className="mb-6 rounded-xl border border-[#a4492e]/12 bg-[#a4492e]/4 px-5 py-4">
+              <div className="mb-6 rounded-[4px] border border-[color:var(--accent)]/12 bg-[#5f6516]/4 px-5 py-4">
                 {" "}
                 <div className="flex items-baseline justify-between">
                   {" "}
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#f4f2ee]/45">
+                  <span className="text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-[0.15em] text-[#f2f2f0]/45">
                     {" "}
                     FRAGRANCE
                   </span>{" "}
-                  <span className="text-sm font-medium text-[#f4f2ee]">
+                  <span className="text-sm font-medium text-[#f2f2f0]">
                     {" "}
                     ₹{selectedPerfume.price.toLocaleString("en-IN")}
                   </span>{" "}
                 </div>{" "}
                 <div className="mt-2 flex items-baseline justify-between">
                   {" "}
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#f4f2ee]/45">
+                  <span className="text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-[0.15em] text-[#f2f2f0]/45">
                     {" "}
                     PERSONALISATION FEE
                   </span>{" "}
-                  <span className="text-sm font-medium text-[#f4f2ee]">
+                  <span className="text-sm font-medium text-[#f2f2f0]">
                     {" "}
                     ₹{PERSONALISATION_FEE.toLocaleString("en-IN")}
                   </span>{" "}
                 </div>{" "}
-                <div className="my-3 h-px bg-[#a4492e]/12" />{" "}
+                <div className="my-3 h-px bg-[#5f6516]/12" />{" "}
                 <div className="flex items-baseline justify-between">
                   {" "}
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f4f2ee]">
+                  <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#f2f2f0]">
                     {" "}
                     TOTAL
                   </span>{" "}
                   <span
-                    className="font-display text-2xl font-semibold text-[#a4492e]"
+                    className="font-display text-2xl font-semibold text-[color:var(--accent)]"
                     style={{
                       fontFamily: '"Cormorant Garamond", Georgia, serif',
                     }}
@@ -928,7 +927,7 @@ export default function PersonalisationPage({
                 {" "}
                 <button
                   onClick={openPreview}
-                  className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#a4492e]/35 px-6 py-3.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#a4492e] transition-all hover:border-[#a4492e] hover:bg-[#a4492e]/8 cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[color:var(--accent)]/35 px-6 py-3.5 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] transition-all hover:border-[color:var(--accent)] hover:bg-[#5f6516]/8 cursor-pointer"
                 >
                   {" "}
                   <svg
@@ -947,7 +946,7 @@ export default function PersonalisationPage({
                 </button>{" "}
                 <button
                   onClick={handleAddToCart}
-                  className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-gradient-to-r from-[#a4492e] via-[#d8b272] to-[#a4492e] px-6 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-black shadow-[0_8px_24px_rgba(164, 73, 46,0.28)] transition-all hover:shadow-[0_12px_32px_rgba(164, 73, 46,0.42)] hover:-translate-y-px active:translate-y-0 cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-gradient-to-r from-[#5f6516] via-[#d8b272] to-[#5f6516] px-6 py-4 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-black shadow-[0_8px_24px_rgba(95, 101, 22,0.28)] transition-all hover:shadow-[0_12px_32px_rgba(95, 101, 22,0.42)] hover:-translate-y-px active:translate-y-0 cursor-pointer"
                 >
                   {" "}
                   <svg
@@ -1033,10 +1032,10 @@ export default function PersonalisationPage({
               ].map((b, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-center gap-2.5 rounded-xl border border-[#a4492e]/10 bg-[#151412]/80 px-3 py-4 text-center"
+                  className="flex flex-col items-center gap-2.5 rounded-[4px] border border-[color:var(--accent)]/10 bg-[#111111]/80 px-3 py-4 text-center"
                 >
                   {" "}
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#a4492e]/20 bg-[#a4492e]/8 text-[#a4492e]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--accent)]/20 bg-[#5f6516]/8 text-[color:var(--accent)]">
                     {" "}
                     <svg
                       width="16"
@@ -1050,7 +1049,7 @@ export default function PersonalisationPage({
                       {b.icon}
                     </svg>{" "}
                   </div>{" "}
-                  <span className="text-[8.5px] font-bold uppercase tracking-wider text-[#f4f2ee]/55">
+                  <span className="text-[8.5px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#f2f2f0]/55">
                     {" "}
                     {b.label}
                   </span>{" "}
@@ -1076,7 +1075,7 @@ export default function PersonalisationPage({
           />{" "}
           {/* Modal panel */}
           <div
-            className="relative z-10 flex w-full max-w-md flex-col items-center gap-5 overflow-y-auto rounded-2xl border border-[#a4492e]/22 bg-[#151412] p-6 shadow-[0_40px_100px_rgba(0,0,0,0.85)]"
+            className="on-dark relative z-10 flex w-full max-w-md flex-col items-center gap-5 overflow-y-auto rounded-[4px] border border-[color:var(--accent)]/22 bg-[#111111] p-6 shadow-[0_40px_100px_rgba(0,0,0,0.85)]"
             style={{
               maxHeight: "90vh",
               animation: "modalIn 0.28s cubic-bezier(.22,.68,0,1)",
@@ -1085,7 +1084,7 @@ export default function PersonalisationPage({
             {" "}
             <button
               onClick={closePreview}
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#f4f2ee]/50 transition-all hover:border-[#a4492e]/40 hover:text-[#a4492e] cursor-pointer"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[#f2f2f0]/50 transition-all hover:border-[color:var(--accent)]/40 hover:text-[color:var(--accent)] cursor-pointer"
               aria-label="Close preview"
             >
               {" "}
@@ -1101,11 +1100,11 @@ export default function PersonalisationPage({
                 <path d="m5 5 14 14M19 5 5 19" />{" "}
               </svg>{" "}
             </button>{" "}
-            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#a4492e]">
+            <p className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
               BESPOKE DESIGN PREVIEW
             </p>{" "}
-            <div className="w-full overflow-hidden rounded-xl border border-[#a4492e]/18">
+            <div className="w-full overflow-hidden rounded-[4px] border border-[color:var(--accent)]/18">
               {" "}
               <canvas
                 ref={modalCanvasRef}
@@ -1118,7 +1117,7 @@ export default function PersonalisationPage({
             <div className="text-center">
               {" "}
               <p
-                className="text-2xl text-[#a4492e]"
+                className="text-2xl text-[color:var(--accent)]"
                 style={{
                   fontFamily: '"Cormorant Garamond", Georgia, serif',
                   letterSpacing: "0.06em",
@@ -1127,7 +1126,7 @@ export default function PersonalisationPage({
                 {" "}
                 {engravingText.trim() || "—"}
               </p>{" "}
-              <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#f4f2ee]/30">
+              <p className="mt-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-[0.06em] text-[#f2f2f0]/30">
                 {" "}
                 SENTIRE BY PC · EXTRAIT DE PARFUM · 50ML
               </p>{" "}
@@ -1137,7 +1136,7 @@ export default function PersonalisationPage({
                 closePreview();
                 setTimeout(handleAddToCart, 200);
               }}
-              className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-gradient-to-r from-[#a4492e] via-[#d8b272] to-[#a4492e] px-6 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-black shadow-[0_8px_24px_rgba(164, 73, 46,0.28)] transition-all hover:shadow-[0_12px_32px_rgba(164, 73, 46,0.42)] cursor-pointer"
+              className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-gradient-to-r from-[#5f6516] via-[#d8b272] to-[#5f6516] px-6 py-4 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-black shadow-[0_8px_24px_rgba(95, 101, 22,0.28)] transition-all hover:shadow-[0_12px_32px_rgba(95, 101, 22,0.42)] cursor-pointer"
             >
               {" "}
               ADD PERSONALISED PRODUCT TO CART

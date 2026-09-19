@@ -180,7 +180,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                 cy="50"
                 r="44"
                 fill="none"
-                stroke="rgba(244,242,238,0.15)"
+                stroke="rgba(242, 242, 240,0.15)"
                 strokeWidth="3"
               />
               <circle
@@ -199,7 +199,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
               <p className="font-serif text-[2.6rem] leading-none tabular-nums">
                 {hour}h
               </p>
-              <p className="font-mono text-[11px] uppercase text-paper/55">
+              <p className="font-mono text-[11px] max-sm:text-[12px] uppercase text-paper/55">
                 on skin
               </p>
             </div>
@@ -247,7 +247,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                   className="pointer-events-none absolute inset-0 h-full w-full"
                   aria-hidden
                 />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-10 text-center font-mono text-[11px] uppercase text-paper/85">
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-10 text-center font-mono text-[11px] max-sm:text-[12px] uppercase text-paper/85">
                   {progress >= 1
                     ? "Hold again to replay"
                     : holding
@@ -288,7 +288,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
 
           {/* What you'd smell right now */}
           <div className="md:col-span-7">
-            <p className="font-mono text-[11px] uppercase text-paper/55">
+            <p className="font-mono text-[11px] max-sm:text-[12px] uppercase text-paper/55">
               {displayName(f.name)}
             </p>
 
@@ -308,7 +308,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                       />
                     </div>
                     <p
-                      className={`mt-2 font-mono text-[11px] uppercase ${on ? "text-paper" : "text-paper/45"}`}
+                      className={`mt-2 font-mono text-[11px] max-sm:text-[12px] uppercase ${on ? "text-paper" : "text-paper/45"}`}
                     >
                       {s.label}
                     </p>
@@ -333,7 +333,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                     </p>
                   ) : (
                     <>
-                      <p className="font-mono text-[11px] uppercase text-[color:var(--color-print)]">
+                      <p className="font-mono text-[11px] max-sm:text-[12px] uppercase text-[color:var(--color-print)]">
                         {stage.label} · {stage.hours}
                       </p>
                       <p className="mt-3 font-serif text-[clamp(1.6rem,3.4vw,2.8rem)] leading-[1.02]">

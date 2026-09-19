@@ -47,7 +47,7 @@ interface ShopByCategoryProps {
 
 export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
   return (
-    <section className="w-full bg-[#f4f2ee] py-14 md:py-20 overflow-hidden reveal-fade-up">
+    <section className="w-full bg-[#f2f2f0] py-14 md:py-20 overflow-hidden reveal-fade-up">
       {" "}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {" "}
@@ -61,15 +61,13 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
           {categories.map((cat) => {
             const targetHref = cat.isByob
               ? "/byob"
-              : cat.page === "about"
-                ? "/about"
-                : cat.page === "bestsellers"
-                  ? "/bestsellers"
-                  : cat.page === "new-arrivals"
-                    ? "/new-arrivals"
-                    : cat.page === "discovery-set"
-                      ? "/discovery-set"
-                      : "/perfumes";
+              : cat.page === "bestsellers"
+                ? "/bestsellers"
+                : cat.page === "new-arrivals"
+                  ? "/new-arrivals"
+                  : cat.page === "discovery-set"
+                    ? "/discovery-set"
+                    : "/perfumes";
 
             return (
               <a
@@ -79,8 +77,6 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                   e.preventDefault();
                   if (cat.isByob) {
                     onNavigate?.("byob");
-                  } else if (cat.page === "about") {
-                    onNavigate?.("about");
                   } else if (cat.page === "bestsellers") {
                     onNavigate?.("bestsellers");
                   } else if (cat.page === "new-arrivals") {
@@ -94,7 +90,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                 className="group flex flex-col text-left transition-transform duration-500 hover:-translate-y-2 cursor-pointer outline-none shrink-0 w-[78vw] sm:w-[280px] md:w-auto snap-center"
               >
                 {" "}
-                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-2xl shadow-lg border border-[#a4492e]/30 bg-[#120d09] group-hover:border-[#a4492e] group-hover:shadow-[0_16px_36px_rgba(164, 73, 46,0.22)] transition-all duration-500">
+                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-[4px] shadow-lg border border-[color:var(--accent)]/30 bg-[#120d09] group-hover:border-[color:var(--accent)] group-hover:shadow-[0_16px_36px_rgba(95, 101, 22,0.22)] transition-all duration-500">
                   {" "}
                   <img
                     src={cat.image}
@@ -108,9 +104,9 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                   {/* Gradient Scrim */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080604]/85 via-[#080604]/20 to-transparent" />{" "}
                   {/* Floating Glass Pill */}
-                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/40 backdrop-blur-md border border-white/15 group-hover:border-[#a4492e]/50 transition-colors">
+                  <div className="absolute bottom-4 left-4 right-4 p-3 rounded-[4px] bg-black/40 backdrop-blur-md border border-white/15 group-hover:border-[color:var(--accent)]/50 transition-colors">
                     {" "}
-                    <span className="text-[8.5px] font-bold uppercase tracking-[0.2em] text-[#a4492e] block">
+                    <span className="text-[8.5px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block">
                       {" "}
                       {cat.subtitle}
                     </span>{" "}
@@ -118,7 +114,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                       {" "}
                       {cat.title}
                     </p>{" "}
-                    <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] tracking-widest text-[#f4f2ee]/90 uppercase font-semibold group-hover:text-[#a4492e] transition-colors">
+                    <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] max-sm:text-[12px] tracking-[0.06em] text-[#f2f2f0]/90 uppercase font-semibold group-hover:text-[color:var(--accent)] transition-colors">
                       {" "}
                       Explore Collection{" "}
                       <span className="transition-transform duration-300 group-hover:translate-x-1">

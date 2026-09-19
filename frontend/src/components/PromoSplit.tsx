@@ -4,6 +4,6 @@ interface PromoSplitProps {
   onOpenBundleModal?: () => void;
 }
 
-export default function PromoSplit({ onOpenBundleModal }: PromoSplitProps) {
+export default function PromoSplit(_props: PromoSplitProps) {
   return <CelebrityReacts />;
 }

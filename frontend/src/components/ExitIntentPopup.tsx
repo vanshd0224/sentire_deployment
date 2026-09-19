@@ -142,7 +142,7 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
               Shop the library
             </button>{" "}
           </div>{" "}
-          <div className="order-1 relative min-h-[180px] bg-ink sm:order-2 sm:min-h-[420px]">
+          <div className="on-dark order-1 relative min-h-[180px] bg-ink sm:order-2 sm:min-h-[420px]">
             {" "}
             <picture>
               {" "}

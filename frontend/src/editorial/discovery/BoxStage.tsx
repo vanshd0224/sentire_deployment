@@ -270,7 +270,7 @@ export default function BoxStage({ scrollTurn, onSelectVial }: Props) {
           ref={(el) => {
             shadeRefs.current[shadeIndex] = el;
           }}
-          className="absolute inset-0 bg-black"
+          className="on-dark absolute inset-0 bg-black"
           style={{ opacity: 0.1, willChange: "opacity" }}
         />
       )}
@@ -301,7 +301,7 @@ export default function BoxStage({ scrollTurn, onSelectVial }: Props) {
       >
         <div
           ref={shadowRef}
-          className="h-10 w-[240px] rounded-[50%] bg-black/70 blur-2xl"
+          className="h-10 w-[240px] rounded-[50%] bg-black/45 blur-2xl"
           style={{ willChange: "transform" }}
         />
       </div>
@@ -390,7 +390,7 @@ export default function BoxStage({ scrollTurn, onSelectVial }: Props) {
                   className="group absolute -left-[46px] -top-[46px] w-[92px] cursor-pointer text-left transition-transform duration-300 hover:scale-[1.08]"
                   aria-label={`Read about ${displayName(f.name)}`}
                 >
-                  <div className="aspect-square overflow-hidden rounded-[2px] shadow-[0_18px_30px_-18px_rgba(0,0,0,0.95)] ring-1 ring-white/10">
+                  <div className="aspect-square overflow-hidden rounded-[2px] shadow-[0_18px_30px_-18px_rgba(0,0,0,0.95)] ring-1 ring-black/10">
                     <img
                       src={f.img}
                       alt=""
@@ -399,7 +399,7 @@ export default function BoxStage({ scrollTurn, onSelectVial }: Props) {
                       className="h-full w-full object-cover"
                     />
                   </div>
-                  <p className="mt-1.5 text-center font-mono text-[10px] uppercase tracking-[0.04em] text-paper/60 transition-colors group-hover:text-[color:var(--color-print)]">
+                  <p className="mt-1.5 text-center font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.04em] text-ink/65 transition-colors group-hover:text-ink">
                     {displayName(f.name)}
                   </p>
                 </button>

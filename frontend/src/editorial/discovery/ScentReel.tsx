@@ -57,7 +57,7 @@ function PinnedReel({ onPick }: { onPick?: (index: number) => void }) {
 
   return (
     <div ref={ref} style={{ height: `${n * 100}vh` }} className="relative">
-      <div className="sticky top-0 h-screen overflow-hidden bg-ink text-paper">
+      <div className="on-dark sticky top-0 h-screen overflow-hidden bg-ink text-paper">
         {/* One painted layer per fragrance, cross-faded — opacity only, so the
             room changes colour without repainting a full screen every frame. */}
         {DISCOVERY_FRAGRANCES.map((f, i) => (
@@ -69,7 +69,7 @@ function PinnedReel({ onPick }: { onPick?: (index: number) => void }) {
           />
         ))}
         <div className="ed-container absolute inset-x-0 top-0 z-20 flex items-center justify-between pt-24">
-          <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/60">
+          <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/60">
             The six, one at a time
           </p>
           <div className="h-px w-40 overflow-hidden bg-paper/20">
@@ -178,7 +178,7 @@ function Panel({
         </div>
 
         <div className="col-span-7">
-          <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/60">
+          <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/60">
             No. 0{index + 1} · {f.familyBadge}
           </p>
           <motion.h3
@@ -198,7 +198,7 @@ function Panel({
                 ["Dries down to", f.baseNotes],
               ].map(([k, v]) => (
                 <div key={k}>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.04em] text-paper/50">
+                  <dt className="font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/50">
                     {k}
                   </dt>
                   <dd className="mt-2 text-[15px] leading-snug text-paper/90">
@@ -207,7 +207,7 @@ function Panel({
                 </div>
               ))}
             </dl>
-            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55">
+            <p className="mt-6 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
               {f.longevity} · {f.sillage} · {f.bestTime}
             </p>
           </motion.div>
@@ -256,7 +256,7 @@ function StackedReel({ onPick }: { onPick?: (index: number) => void }) {
               viewport={viewportOnce}
               transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT_EXPO }}
             >
-              <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/60">
+              <p className="mt-8 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/60">
                 No. 0{i + 1} · {f.familyBadge}
               </p>
               <h3 className="ds-reel-name mt-2 font-serif text-[3.5rem] font-light leading-[0.95] tracking-[-0.03em]">
@@ -272,14 +272,14 @@ function StackedReel({ onPick }: { onPick?: (index: number) => void }) {
                   ["Dries down to", f.baseNotes],
                 ].map(([k, v]) => (
                   <div key={k} className="grid grid-cols-[108px_1fr] gap-3">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.04em] text-paper/50">
+                    <dt className="font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/50">
                       {k}
                     </dt>
                     <dd className="text-[15px] leading-snug">{v}</dd>
                   </div>
                 ))}
               </dl>
-              <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55">
+              <p className="mt-5 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
                 {f.longevity} · {f.bestTime}
               </p>
             </motion.div>

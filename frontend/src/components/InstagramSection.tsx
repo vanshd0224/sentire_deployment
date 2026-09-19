@@ -33,7 +33,7 @@ const INSTAGRAM_REELS = [
 
 export default function InstagramSection() {
   return (
-    <section className="w-full bg-[#0a0a0a] py-14 sm:py-20 border-t border-white/10">
+    <section className="on-dark w-full bg-[#0a0a0a] py-14 sm:py-20 border-t border-white/10">
       {" "}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {" "}
@@ -86,7 +86,7 @@ export default function InstagramSection() {
               </defs>{" "}
             </svg>{" "}
             <span
-              className="text-[13px] font-semibold tracking-[0.18em] text-white uppercase"
+              className="text-[13px] font-semibold tracking-[0.06em] text-white uppercase"
               style={{ fontFamily: "var(--font-sans)" }}
             >
               {" "}
@@ -95,14 +95,14 @@ export default function InstagramSection() {
           </div>{" "}
           <h2
             className="font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em]"
-            style={{ color: "#f4f2ee" }}
+            style={{ color: "#f2f2f0" }}
           >
             {" "}
             As seen on Instagram.
           </h2>{" "}
           <p
             className="text-[14px] leading-relaxed"
-            style={{ color: "rgba(244,242,238,0.65)" }}
+            style={{ color: "rgba(242, 242, 240,0.65)" }}
           >
             {" "}
             Tag{" "}
@@ -121,7 +121,7 @@ export default function InstagramSection() {
               href={post.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-[2px] bg-neutral-900 border border-white/10 hover:border-[#a4492e]/60 transition-all duration-300 shadow-md hover:shadow-xl"
+              className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-[2px] bg-neutral-900 border border-white/10 hover:border-[color:var(--accent)]/60 transition-all duration-300 shadow-md hover:shadow-xl"
             >
               {" "}
               {/* Real Instagram Reel Cover Image */}
@@ -135,7 +135,7 @@ export default function InstagramSection() {
                 decoding="async"
               />{" "}
               {/* Top-right play icon badge (just like user's original design) */}
-              <div className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-sm text-[11px] shadow-xs border border-white/10 transition-transform group-hover:scale-110">
+              <div className="absolute top-2.5 right-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-sm text-[11px] max-sm:text-[12px] shadow-xs border border-white/10 transition-transform group-hover:scale-110">
                 {" "}
                 ▶
               </div>{" "}
@@ -158,9 +158,9 @@ export default function InstagramSection() {
               background: "rgba(255,255,255,0.04)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#a4492e";
-              e.currentTarget.style.color = "#a4492e";
-              e.currentTarget.style.background = "rgba(164, 73, 46,0.08)";
+              e.currentTarget.style.borderColor = "#5f6516";
+              e.currentTarget.style.color = "#5f6516";
+              e.currentTarget.style.background = "rgba(95, 101, 22,0.08)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";

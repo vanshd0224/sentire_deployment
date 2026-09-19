@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -29,11 +29,11 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen w-full bg-[#050505] text-[#eeebe5] flex flex-col items-center justify-center p-6 text-center">
+        <div className="min-h-screen w-full bg-[#050505] text-[#e9e9e6] flex flex-col items-center justify-center p-6 text-center">
           {" "}
-          <div className="max-w-lg rounded-2xl border border-[#a4492e]/40 bg-[#151412] p-8 shadow-2xl">
+          <div className="on-dark max-w-lg rounded-[4px] border border-[color:var(--accent)]/40 bg-[#111111] p-8 shadow-2xl">
             {" "}
-            <h2 className="text-xl font-bold text-[#a4492e] font-display uppercase tracking-wider mb-2">
+            <h2 className="text-xl font-bold text-[color:var(--accent)] font-display uppercase tracking-wider mb-2">
               {" "}
               Something went wrong
             </h2>{" "}
@@ -59,7 +59,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 });
                 window.location.reload();
               }}
-              className="rounded-full bg-[#a4492e] px-8 py-3 text-xs font-bold uppercase tracking-[0.18em] text-black hover:bg-[#8a3b24] transition-all shadow-md cursor-pointer"
+              className="rounded-full bg-[#5f6516] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-black hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
             >
               {" "}
               Refresh Page

@@ -41,6 +41,7 @@ export default function ProductCard({
         name: product.name,
         price,
         image,
+        img: image,
         size,
       },
       size,
@@ -89,7 +90,7 @@ export default function ProductCard({
         </div>
 
         {product.badge && (
-          <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.02em] text-ink">
+          <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-2.5 py-1 font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.02em] text-ink">
             {BADGE_COPY[product.badge] ?? product.badge}
           </span>
         )}
@@ -97,7 +98,7 @@ export default function ProductCard({
 
       <div className="mt-4 flex flex-1 flex-col">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-serif text-xl font-light leading-tight tracking-[-0.01em]">
+          <h3 className="pc-name text-[20px] leading-tight">
             {product.name}
           </h3>
           <span className="ed-label shrink-0">{product.num}</span>
@@ -120,7 +121,7 @@ export default function ProductCard({
                 type="button"
                 onClick={() => setSize(s)}
                 aria-pressed={size === s}
-                className={`min-h-[36px] cursor-pointer rounded-full px-3 font-mono text-[11px] transition-colors ${
+                className={`on-dark min-h-[36px] cursor-pointer rounded-full px-3 font-mono text-[11px] max-sm:text-[12px] transition-colors ${
                   size === s
                     ? "bg-ink text-paper"
                     : "text-ink-soft hover:text-ink"
@@ -132,13 +133,13 @@ export default function ProductCard({
           </div>
         )}
 
-        <div className="mt-auto flex items-end justify-between gap-4 pt-4">
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-x-3 gap-y-1 pt-4">
           <p className="text-[15px]">
             <span className="tabular-nums">
               ₹{price?.toLocaleString("en-IN")}
             </span>
             {mrp && mrp > (price ?? 0) && (
-              <span className="ml-2 font-mono text-[11px] text-stone line-through tabular-nums">
+              <span className="ml-2 font-mono text-[11px] max-sm:text-[12px] text-stone line-through tabular-nums">
                 ₹{mrp.toLocaleString("en-IN")}
               </span>
             )}
@@ -148,7 +149,7 @@ export default function ProductCard({
             type="button"
             onClick={handleAdd}
             disabled={soldOut}
-            className="ed-link cursor-pointer text-[13px] font-medium disabled:cursor-not-allowed disabled:text-stone"
+            className="ed-link cursor-pointer whitespace-nowrap text-[13px] font-medium disabled:cursor-not-allowed disabled:text-stone"
           >
             {soldOut ? "Sold out" : added ? "Added ✓" : "Add to bag"}
           </button>

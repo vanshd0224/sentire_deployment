@@ -128,11 +128,11 @@ function MobileAccordionColumn({
       {" "}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between text-[11.5px] font-semibold tracking-[0.12em] text-ink uppercase md:cursor-default"
+        className="flex w-full items-center justify-between text-[11.5px] max-sm:text-[12px] font-semibold tracking-[0.12em] text-ink uppercase md:cursor-default"
       >
         {" "}
         <span>{title}</span>{" "}
-        <span className="text-[#a4492e] font-bold text-sm md:hidden">
+        <span className="text-[color:var(--accent)] font-bold text-sm md:hidden">
           {isOpen ? "−" : "+"}
         </span>{" "}
       </button>{" "}
@@ -222,7 +222,7 @@ function MobileAccordionColumn({
                     onNavigate?.("client-services");
                   }
                 }}
-                className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[#a4492e]"
+                className="text-[12.5px] text-ink/70 transition-colors duration-300 hover:text-[color:var(--accent)]"
               >
                 {" "}
                 {link}
@@ -237,7 +237,7 @@ function MobileAccordionColumn({
 
 export default function Footer({ onNavigate }: FooterProps) {
   return (
-    <footer className="w-full bg-[#f4f2ee] border-t border-[#a4492e]/15">
+    <footer className="w-full bg-[#f2f2f0] border-t border-[color:var(--accent)]/15">
       {" "}
       <div className="mx-auto max-w-[1440px] px-5 py-10 sm:py-14 lg:px-12">
         {" "}
@@ -263,7 +263,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] min-h-[44px] min-w-[44px]"
               >
                 {" "}
                 <InstagramIcon />{" "}
@@ -273,7 +273,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] min-h-[44px] min-w-[44px]"
               >
                 {" "}
                 <FacebookIcon />{" "}
@@ -283,7 +283,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Youtube"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[#a4492e] hover:text-[#a4492e] min-h-[44px] min-w-[44px]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition-colors duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] min-h-[44px] min-w-[44px]"
               >
                 {" "}
                 <YoutubeIcon />{" "}
@@ -307,7 +307,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           />{" "}
           <div className="pt-2 sm:pt-0">
             {" "}
-            <h3 className="text-[11.5px] font-semibold tracking-[0.12em] text-ink uppercase">
+            <h3 className="text-[11.5px] max-sm:text-[12px] font-semibold tracking-[0.12em] text-ink uppercase">
               Need Help?
             </h3>{" "}
             <ul className="mt-3 space-y-2.5 text-[12px] text-ink/70">
@@ -319,14 +319,14 @@ export default function Footer({ onNavigate }: FooterProps) {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={1.4}
-                  className="h-4 w-4 text-[#a4492e] shrink-0"
+                  className="h-4 w-4 text-[color:var(--accent)] shrink-0"
                 >
                   {" "}
                   <path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6z" />{" "}
                 </svg>{" "}
                 <a
                   href="tel:+919950891935"
-                  className="hover:text-[#a4492e] transition-colors"
+                  className="hover:text-[color:var(--accent)] transition-colors"
                 >
                   {" "}
                   +91 99508 91935
@@ -339,7 +339,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={1.4}
-                  className="h-4 w-4 text-[#a4492e] shrink-0"
+                  className="h-4 w-4 text-[color:var(--accent)] shrink-0"
                 >
                   {" "}
                   <rect x="3" y="5" width="18" height="14" rx="2" />{" "}
@@ -347,7 +347,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 </svg>{" "}
                 <a
                   href="mailto:support@sentirebypc.com"
-                  className="hover:text-[#a4492e] transition-colors"
+                  className="hover:text-[color:var(--accent)] transition-colors"
                 >
                   {" "}
                   support@sentirebypc.com
@@ -360,7 +360,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={1.4}
-                  className="h-4 w-4 text-[#a4492e] shrink-0"
+                  className="h-4 w-4 text-[color:var(--accent)] shrink-0"
                 >
                   {" "}
                   <circle cx="12" cy="12" r="9" />{" "}
@@ -372,9 +372,9 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>{" "}
         </div>{" "}
       </div>{" "}
-      <div className="border-t border-black/10 bg-[#eeebe5]">
+      <div className="border-t border-black/10 bg-[#e9e9e6]">
         {" "}
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-5 py-4 text-[10.5px] text-ink/50 sm:flex-row sm:justify-between lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-5 py-4 text-[10.5px] max-sm:text-[12px] text-ink/50 sm:flex-row sm:justify-between lg:px-12">
           {" "}
           <p>© 2026 Sentire by PC. All Rights Reserved.</p>{" "}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
@@ -385,7 +385,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 e.preventDefault();
                 onNavigate?.("client-services");
               }}
-              className="transition-colors duration-300 hover:text-[#a4492e]"
+              className="transition-colors duration-300 hover:text-[color:var(--accent)]"
             >
               {" "}
               Privacy Policy
@@ -396,14 +396,14 @@ export default function Footer({ onNavigate }: FooterProps) {
                 e.preventDefault();
                 onNavigate?.("client-services");
               }}
-              className="transition-colors duration-300 hover:text-[#a4492e]"
+              className="transition-colors duration-300 hover:text-[color:var(--accent)]"
             >
               {" "}
               Terms & Conditions
             </a>{" "}
             <span className="flex items-center gap-1">
               {" "}
-              Crafted with <span className="text-[#a4492e]"></span> in India
+              Crafted with <span className="text-[color:var(--accent)]"></span> in India
             </span>{" "}
           </div>{" "}
         </div>{" "}

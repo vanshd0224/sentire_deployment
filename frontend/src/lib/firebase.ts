@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: "sentire-perfumes.firebasestorage.app",
   messagingSenderId: "646931469677",
   appId: "1:646931469677:web:466d1c04e48e675949f664",
-  measurementId: "G-3R3PDHT3B0"
+  measurementId: "G-3R3PDHT3B0",
 };
 
 // Initialize Firebase

@@ -77,7 +77,7 @@ const benefits = [
 
 export default function BenefitsStrip() {
   return (
-    <section className="w-full bg-[#151412] text-white border-y border-white/8 reveal-fade-up">
+    <section className="on-dark w-full bg-[#111111] text-white border-y border-white/8 reveal-fade-up">
       {" "}
       <div
         className="mx-auto max-w-[1440px] px-6 py-8 sm:py-10 lg:px-12"
@@ -97,13 +97,13 @@ export default function BenefitsStrip() {
             }
           }
         `}</style>{" "}
-        {benefits.map((b, i) => (
+        {benefits.map((b) => (
           <div
             key={b.title}
-            className="benefits-cell flex items-center gap-3 sm:gap-4 py-5 px-4 sm:px-6 bg-[#151412] transition-colors duration-300 hover:bg-[#120f0b]"
+            className="on-dark benefits-cell flex items-center gap-3 sm:gap-4 py-5 px-4 sm:px-6 bg-[#111111] transition-colors duration-300 hover:bg-[#120f0b]"
           >
             {" "}
-            <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-[#a4492e]/20">
+            <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-[color:var(--accent)]/20">
               {" "}
               {b.icon}
             </span>{" "}
@@ -116,7 +116,7 @@ export default function BenefitsStrip() {
                   fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#eeebe5",
+                  color: "#e9e9e6",
                 }}
               >
                 {" "}

@@ -13,9 +13,9 @@ const MARKS: [string, string][] = [
 
 export default function Marks() {
   return (
-    <section className="bg-ink py-14 text-paper md:py-20">
+    <section className="on-dark bg-ink py-14 text-paper md:py-20">
       <div className="ed-container">
-        <p className="font-mono text-[11px] uppercase tracking-[0.02em] text-paper/55">
+        <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/55">
           Made responsibly
         </p>
         <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-6">
@@ -35,7 +35,7 @@ export default function Marks() {
               <p className="font-serif text-lg font-light leading-snug">
                 {name}
               </p>
-              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.02em] text-paper/50">
+              <p className="mt-1 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/50">
                 {sub}
               </p>
             </motion.div>

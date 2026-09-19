@@ -32,7 +32,7 @@ const TOP_NOTES: ScentNote[] = [
     warmth: 20,
     longevity: 45,
     projection: 80,
-    color: "#d9a08a",
+    color: "#cdd43f",
     tag: "Calantha / Mirai / White Oud",
   },
   {
@@ -116,7 +116,7 @@ const BASE_NOTES: ScentNote[] = [
     warmth: 100,
     longevity: 100,
     projection: 95,
-    color: "#a4492e",
+    color: "#5f6516",
     tag: "White Oud / Purple Oud / Seductive",
   },
   {
@@ -150,7 +150,6 @@ const BASE_NOTES: ScentNote[] = [
 export default function AboutPage({
   onBackToHome,
   onNavigateToPerfumes,
-  onOpenBundleModal,
   onNavigate,
 }: AboutPageProps) {
   const [, startTransition] = useTransition();
@@ -286,14 +285,14 @@ export default function AboutPage({
         : BASE_NOTES;
 
   return (
-    <div className="min-h-screen w-full bg-[#151412] text-[#f4f2ee] selection:bg-[#a4492e] selection:text-black font-sans relative overflow-x-hidden">
+    <div className="on-dark min-h-screen w-full bg-[#111111] text-[#f2f2f0] selection:bg-[#5f6516] selection:text-black font-sans relative overflow-x-hidden">
       {" "}
       {/* ── STICKY HIGH-TECH CHAPTER HUD & PROGRESS BAR ── */}
-      <div className="sticky top-16 z-40 w-full border-b border-[#a4492e]/30 bg-black/90 backdrop-blur-2xl py-3 px-4 md:px-8 shadow-2xl transition-all">
+      <div className="on-dark sticky top-16 z-40 w-full border-b border-[color:var(--accent)]/30 bg-black/90 backdrop-blur-2xl py-3 px-4 md:px-8 shadow-2xl transition-all">
         {" "}
         {/* Progress Bar Line */}
         <div
-          className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-[#a4492e] via-[#d9a08a] to-[#a4492e] transition-all duration-300 shadow-[0_0_10px_#a4492e]"
+          className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] transition-all duration-300 shadow-[0_0_10px_#5f6516]"
           style={{ width: `${scrollProgress}%` }}
         />{" "}
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
@@ -302,9 +301,9 @@ export default function AboutPage({
             {" "}
             <div className="flex h-2.5 w-2.5 items-center justify-center">
               {" "}
-              <span className="h-2 w-2 rounded-full bg-[#a4492e] animate-ping" />{" "}
+              <span className="h-2 w-2 rounded-full bg-[#5f6516] animate-ping" />{" "}
             </div>{" "}
-            <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
               HOUSE TELEMETRY{" "}
               <span className="hidden sm:inline text-white/40">
@@ -327,10 +326,10 @@ export default function AboutPage({
               <button
                 key={node.id}
                 onClick={() => scrollToSection(node.id, node.no)}
-                className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer border ${
+                className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer border ${
                   activeChapter === node.no
-                    ? "bg-[#a4492e] text-black border-[#a4492e] shadow-[0_0_15px_rgba(164, 73, 46,0.5)] scale-105"
-                    : "bg-white/5 text-[#f4f2ee]/60 border-white/10 hover:bg-white/10 hover:text-white hover:border-[#a4492e]/40"
+                    ? "bg-[#5f6516] text-black border-[color:var(--accent)] shadow-[0_0_15px_rgba(95, 101, 22,0.5)] scale-105"
+                    : "bg-white/5 text-[#f2f2f0]/60 border-white/10 hover:bg-white/10 hover:text-white hover:border-[color:var(--accent)]/40"
                 }`}
               >
                 {" "}
@@ -341,10 +340,10 @@ export default function AboutPage({
           {/* Ambience Audio Synthesizer Button */}
           <button
             onClick={toggleSoundscape}
-            className={`flex items-center gap-2 rounded-full border px-3.5 py-1 text-[10px] font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+            className={`flex items-center gap-2 rounded-full border px-3.5 py-1 text-[10px] max-sm:text-[12px] font-semibold uppercase tracking-wider transition-all cursor-pointer ${
               isAudioPlaying
-                ? "border-[#a4492e] bg-[#a4492e]/20 text-[#d9a08a] shadow-[0_0_12px_rgba(229,193,88,0.4)]"
-                : "border-white/20 bg-white/5 text-white/70 hover:border-[#a4492e]/50 hover:text-white"
+                ? "border-[color:var(--accent)] bg-[#5f6516]/20 text-[#cdd43f] shadow-[0_0_12px_rgba(229,193,88,0.4)]"
+                : "border-white/20 bg-white/5 text-white/70 hover:border-[color:var(--accent)]/50 hover:text-white"
             }`}
             title="Toggle Sensory Olfactory Ambience Soundscape"
           >
@@ -375,16 +374,16 @@ export default function AboutPage({
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity scale-105"
           style={{ backgroundImage: "url('/images/hero-bg.png')" }}
         />{" "}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_40%,rgba(164, 73, 46,0.18)_0%,rgba(13,9,6,0.98)_85%)]" />{" "}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_40%,rgba(95, 101, 22,0.18)_0%,rgba(13,9,6,0.98)_85%)]" />{" "}
         {/* Dynamic Morphing Golden Orbs */}
-        <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-[radial-gradient(circle,rgba(164, 73, 46,0.25)_0%,transparent_70%)] blur-3xl animate-pulse" />{" "}
+        <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-[radial-gradient(circle,rgba(95, 101, 22,0.25)_0%,transparent_70%)] blur-3xl animate-pulse" />{" "}
         <div className="pointer-events-none absolute bottom-10 right-10 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle,rgba(229,193,88,0.15)_0%,transparent_75%)] blur-2xl" />{" "}
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           {" "}
           {/* Back Button */}
           <button
             onClick={onBackToHome}
-            className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[#a4492e]/40 bg-black/60 backdrop-blur-md px-5 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#a4492e] transition-all duration-300 hover:border-[#a4492e] hover:bg-[#a4492e] hover:text-black cursor-pointer shadow-lg"
+            className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-black/60 backdrop-blur-md px-5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] transition-all duration-300 hover:border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black cursor-pointer shadow-lg"
           >
             {" "}
             <svg
@@ -404,21 +403,21 @@ export default function AboutPage({
             Return to Boutique
           </button>{" "}
           {/* Badge */}
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#a4492e]/30 bg-[#a4492e]/10 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#d9a08a] shadow-[0_0_20px_rgba(164, 73, 46,0.2)]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-4 py-1.5 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] shadow-[0_0_20px_rgba(95, 101, 22,0.2)]">
             {" "}
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d9a08a]" /> HAUTE
+            <span className="h-1.5 w-1.5 rounded-full bg-[#cdd43f]" /> HAUTE
             PARFUMERIE DOSSIER • JAIPUR 2023
           </div>{" "}
           {/* Headline */}
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6">
             {" "}
             The Science of Emotion, <br />{" "}
-            <span className="bg-gradient-to-r from-[#a4492e] via-[#f4f2ee] to-[#d9a08a] bg-clip-text text-transparent italic">
+            <span className="bg-gradient-to-r from-[#5f6516] via-[#f2f2f0] to-[#cdd43f] bg-clip-text text-transparent italic">
               {" "}
               The Alchemy of Oud
             </span>{" "}
           </h1>{" "}
-          <p className="max-w-2xl text-sm sm:text-base md:text-lg text-[#f4f2ee]/80 leading-relaxed font-light mb-10">
+          <p className="max-w-2xl text-sm sm:text-base md:text-lg text-[#f2f2f0]/80 leading-relaxed font-light mb-10">
             {" "}
             Founded in Jaipur by entrepreneur Pranav Chaudhary,{" "}
             <strong className="text-white font-medium">
@@ -426,7 +425,7 @@ export default function AboutPage({
             </strong>{" "}
             redefines niche perfumery. We synthesize French floral distillation
             with rare Indian Oud resins at an uncompromising{" "}
-            <span className="text-[#d9a08a] font-semibold">
+            <span className="text-[#cdd43f] font-semibold">
               35%+ Extrait de Parfum
             </span>{" "}
             concentration.
@@ -458,17 +457,17 @@ export default function AboutPage({
             ].map((card, i) => (
               <div
                 key={i}
-                className="group relative flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 text-center transition-all duration-300 hover:border-[#a4492e]/60 hover:bg-white/[0.07] hover:-translate-y-1 shadow-xl"
+                className="group relative flex flex-col items-center justify-center rounded-[4px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 text-center transition-all duration-300 hover:border-[color:var(--accent)]/60 hover:bg-white/[0.07] hover:-translate-y-1 shadow-xl"
               >
                 {" "}
-                <div className="text-2xl sm:text-3xl font-bold text-[#d9a08a] font-serif tracking-tight group-hover:scale-105 transition-transform">
+                <div className="text-2xl sm:text-3xl font-bold text-[#cdd43f] font-serif tracking-tight group-hover:scale-105 transition-transform">
                   {" "}
                   {card.stat}
                 </div>{" "}
-                <div className="text-[11px] font-semibold text-white mt-1">
+                <div className="text-[11px] max-sm:text-[12px] font-semibold text-white mt-1">
                   {card.label}
                 </div>{" "}
-                <div className="text-[9px] text-white/50 tracking-wider uppercase mt-0.5">
+                <div className="text-[9px] max-sm:text-[12px] text-white/50 tracking-wider uppercase mt-0.5">
                   {card.sub}
                 </div>{" "}
               </div>
@@ -477,15 +476,15 @@ export default function AboutPage({
           {/* Scroll Down Trigger */}
           <button
             onClick={() => scrollToSection("ch1", 1)}
-            className="group flex flex-col items-center gap-2 text-white/50 hover:text-[#a4492e] transition-colors cursor-pointer"
+            className="group flex flex-col items-center gap-2 text-white/50 hover:text-[color:var(--accent)] transition-colors cursor-pointer"
           >
             {" "}
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em]">
+            <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em]">
               Begin Telemetry Journey
             </span>{" "}
-            <div className="flex h-8 w-5 items-center justify-center rounded-full border border-white/20 group-hover:border-[#a4492e]">
+            <div className="flex h-8 w-5 items-center justify-center rounded-full border border-white/20 group-hover:border-[color:var(--accent)]">
               {" "}
-              <span className="h-1.5 w-1.5 rounded-full bg-[#a4492e] animate-bounce" />{" "}
+              <span className="h-1.5 w-1.5 rounded-full bg-[#5f6516] animate-bounce" />{" "}
             </div>{" "}
           </button>{" "}
         </div>{" "}
@@ -500,24 +499,24 @@ export default function AboutPage({
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 01
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Latin Genesis: What It Means to{" "}
-            <span className="italic text-[#d9a08a]">Feel</span>{" "}
+            <span className="italic text-[#cdd43f]">Feel</span>{" "}
           </h2>{" "}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {" "}
-            <div className="lg:col-span-7 space-y-6 text-[#f4f2ee]/80 text-sm sm:text-base leading-relaxed font-light">
+            <div className="lg:col-span-7 space-y-6 text-[#f2f2f0]/80 text-sm sm:text-base leading-relaxed font-light">
               {" "}
               <p>
                 {" "}
                 The name{" "}
-                <strong className="text-[#d9a08a] font-semibold">
+                <strong className="text-[#cdd43f] font-semibold">
                   "SENTIRE"
                 </strong>{" "}
                 originates from the ancient Latin verb meaning{" "}
@@ -534,9 +533,9 @@ export default function AboutPage({
                 scent armors that announce your presence before you speak and
                 leave a memorable echo long after you have departed the room.
               </p>{" "}
-              <div className="p-6 rounded-2xl border border-[#a4492e]/30 bg-[radial-gradient(ellipse_at_top_left,rgba(164, 73, 46,0.12)_0%,transparent_70%)] backdrop-blur-xl">
+              <div className="p-6 rounded-[4px] border border-[color:var(--accent)]/30 bg-[radial-gradient(ellipse_at_top_left,rgba(95, 101, 22,0.12)_0%,transparent_70%)] backdrop-blur-xl">
                 {" "}
-                <div className="text-xs font-bold uppercase tracking-wider text-[#a4492e] mb-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] mb-2">
                   FOUNDER'S CORE CONVICTION
                 </div>{" "}
                 <blockquote className="font-serif text-lg sm:text-xl italic text-white leading-snug">
@@ -570,12 +569,12 @@ export default function AboutPage({
               ].map((pillar, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-300 hover:border-[#a4492e]/50 hover:bg-white/[0.06]"
+                  className="rounded-[4px] border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)]/50 hover:bg-white/[0.06]"
                 >
                   {" "}
                   <div className="flex items-center gap-3 mb-2">
                     {" "}
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#a4492e]/20 text-xs font-bold text-[#d9a08a]">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5f6516]/20 text-xs font-bold text-[#cdd43f]">
                       {" "}
                       0{idx + 1}
                     </span>{" "}
@@ -595,43 +594,43 @@ export default function AboutPage({
       {/* ── CHAPTER 02: JAIPUR 2023 & FOUNDER'S STORY ── */}
       <section
         id="ch2"
-        className="relative w-full border-t border-white/10 bg-[#151412] py-24 px-6 lg:px-16"
+        className="on-dark relative w-full border-t border-white/10 bg-[#111111] py-24 px-6 lg:px-16"
       >
         {" "}
         <div className="mx-auto max-w-6xl">
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 02
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Born in Jaipur,{" "}
-            <span className="italic text-[#d9a08a]">December 2022</span>{" "}
+            <span className="italic text-[#cdd43f]">December 2022</span>{" "}
           </h2>{" "}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {" "}
             {/* Interactive Founder Dossier Card */}
-            <div className="lg:col-span-5 rounded-3xl border border-[#a4492e]/40 bg-[linear-gradient(145deg,rgba(164, 73, 46,0.15)_0%,rgba(13,9,6,0.95)_100%)] p-8 backdrop-blur-2xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
+            <div className="lg:col-span-5 rounded-[4px] border border-[color:var(--accent)]/40 bg-[linear-gradient(145deg,rgba(95, 101, 22,0.15)_0%,rgba(13,9,6,0.95)_100%)] p-8 backdrop-blur-2xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
               {" "}
-              <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-[#a4492e]/10 blur-3xl" />{" "}
+              <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-[#5f6516]/10 blur-3xl" />{" "}
               <div>
                 {" "}
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/30 bg-black/40 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#d9a08a] mb-6">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-black/40 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#cdd43f] mb-6">
                   {" "}
                   FOUNDER PROFILE • S P VENTURES
                 </div>{" "}
                 <h3 className="font-serif text-3xl font-bold text-white mb-2">
                   Pranav Chaudhary
                 </h3>{" "}
-                <p className="text-xs font-bold uppercase tracking-widest text-[#a4492e] mb-6">
+                <p className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-6">
                   Creator &amp; Master Strategist ("PC")
                 </p>{" "}
                 {/* Perspective Tabs */}
-                <div className="flex rounded-xl bg-black/50 p-1 border border-white/10 mb-6">
+                <div className="flex rounded-[4px] bg-black/50 p-1 border border-white/10 mb-6">
                   {" "}
                   <button
                     onClick={() =>
@@ -639,7 +638,7 @@ export default function AboutPage({
                     }
                     className={`flex-1 rounded-lg py-1.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       founderTab === "vision"
-                        ? "bg-[#a4492e] text-black shadow"
+                        ? "bg-[#5f6516] text-black shadow"
                         : "text-white/60 hover:text-white"
                     }`}
                   >
@@ -652,7 +651,7 @@ export default function AboutPage({
                     }
                     className={`flex-1 rounded-lg py-1.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       founderTab === "craft"
-                        ? "bg-[#a4492e] text-black shadow"
+                        ? "bg-[#5f6516] text-black shadow"
                         : "text-white/60 hover:text-white"
                     }`}
                   >
@@ -683,10 +682,10 @@ export default function AboutPage({
               </div>{" "}
               <div className="border-t border-white/10 pt-4 flex items-center justify-between">
                 {" "}
-                <span className="text-[10px] uppercase tracking-widest text-white/40">
+                <span className="text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] text-white/40">
                   HEADQUARTERS
                 </span>{" "}
-                <span className="text-xs font-bold text-[#d9a08a]">
+                <span className="text-xs font-bold text-[#cdd43f]">
                   Jaipur, Rajasthan (302016)
                 </span>{" "}
               </div>{" "}
@@ -722,10 +721,10 @@ export default function AboutPage({
               ].map((step, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-xl flex gap-4 items-start transition-all hover:border-[#a4492e]/40 hover:bg-white/[0.05]"
+                  className="rounded-[4px] border border-white/10 bg-white/[0.02] p-5 backdrop-blur-xl flex gap-4 items-start transition-all hover:border-[color:var(--accent)]/40 hover:bg-white/[0.05]"
                 >
                   {" "}
-                  <div className="rounded-xl border border-[#a4492e]/30 bg-[#a4492e]/10 px-3 py-1.5 text-xs font-bold text-[#d9a08a] whitespace-nowrap">
+                  <div className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-3 py-1.5 text-xs font-bold text-[#cdd43f] whitespace-nowrap">
                     {" "}
                     {step.year}
                   </div>{" "}
@@ -754,15 +753,15 @@ export default function AboutPage({
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 03
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             The Extrait Standard:{" "}
-            <span className="italic text-[#d9a08a]">
+            <span className="italic text-[#cdd43f]">
               Interactive Ion Density Meter
             </span>{" "}
           </h2>{" "}
@@ -773,7 +772,7 @@ export default function AboutPage({
             wear longevity.
           </p>{" "}
           {/* Interactive Density Simulator Box */}
-          <div className="rounded-3xl border border-[#a4492e]/40 bg-black/60 p-6 md:p-10 backdrop-blur-2xl shadow-2xl">
+          <div className="rounded-[4px] border border-[color:var(--accent)]/40 bg-black/60 p-6 md:p-10 backdrop-blur-2xl shadow-2xl">
             {" "}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {" "}
@@ -786,12 +785,12 @@ export default function AboutPage({
                     {" "}
                     <label
                       htmlFor="concentration-slider"
-                      className="text-xs font-bold uppercase tracking-widest text-[#a4492e]"
+                      className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]"
                     >
                       {" "}
                       Fragrance Oil Concentration Tier
                     </label>{" "}
-                    <span className="text-2xl font-bold font-serif text-[#d9a08a]">
+                    <span className="text-2xl font-bold font-serif text-[#cdd43f]">
                       {concentration}%
                     </span>{" "}
                   </div>{" "}
@@ -805,22 +804,22 @@ export default function AboutPage({
                     step={1}
                     value={concentration}
                     onChange={(e) => setConcentration(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#a4492e]"
+                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#5f6516]"
                   />{" "}
-                  <div className="flex justify-between text-[10px] text-white/40 mt-1 uppercase font-bold">
+                  <div className="flex justify-between text-[10px] max-sm:text-[12px] text-white/40 mt-1 uppercase font-bold">
                     {" "}
                     <span>10% Eau de Toilette</span>{" "}
                     <span>15% Eau de Parfum</span>{" "}
-                    <span className="text-[#d9a08a]">35%+ SENTIRE Extrait</span>{" "}
+                    <span className="text-[#cdd43f]">35%+ SENTIRE Extrait</span>{" "}
                     <span>35% Pure Essence</span>{" "}
                   </div>{" "}
                 </div>{" "}
                 {/* Dynamic Metrics Output */}
                 <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                   {" "}
-                  <div className="rounded-xl bg-white/5 p-3 text-center">
+                  <div className="rounded-[4px] bg-white/5 p-3 text-center">
                     {" "}
-                    <div className="text-[10px] text-white/50 uppercase font-bold">
+                    <div className="text-[10px] max-sm:text-[12px] text-white/50 uppercase font-bold">
                       Longevity
                     </div>{" "}
                     <div className="text-lg font-bold font-serif text-white mt-1">
@@ -832,9 +831,9 @@ export default function AboutPage({
                           : "18-24+ Hours"}
                     </div>{" "}
                   </div>{" "}
-                  <div className="rounded-xl bg-white/5 p-3 text-center">
+                  <div className="rounded-[4px] bg-white/5 p-3 text-center">
                     {" "}
-                    <div className="text-[10px] text-white/50 uppercase font-bold">
+                    <div className="text-[10px] max-sm:text-[12px] text-white/50 uppercase font-bold">
                       Sillage Radius
                     </div>{" "}
                     <div className="text-lg font-bold font-serif text-white mt-1">
@@ -846,9 +845,9 @@ export default function AboutPage({
                           : "3+ Meters"}
                     </div>{" "}
                   </div>{" "}
-                  <div className="rounded-xl bg-white/5 p-3 text-center">
+                  <div className="rounded-[4px] bg-white/5 p-3 text-center">
                     {" "}
-                    <div className="text-[10px] text-white/50 uppercase font-bold">
+                    <div className="text-[10px] max-sm:text-[12px] text-white/50 uppercase font-bold">
                       Resin Purity
                     </div>{" "}
                     <div className="text-lg font-bold font-serif text-white mt-1">
@@ -859,11 +858,11 @@ export default function AboutPage({
                 </div>{" "}
               </div>{" "}
               {/* Visual Particle Density Preview */}
-              <div className="lg:col-span-6 flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#151412] p-8 text-center relative overflow-hidden min-h-[260px]">
+              <div className="on-dark lg:col-span-6 flex flex-col items-center justify-center rounded-[4px] border border-white/10 bg-[#111111] p-8 text-center relative overflow-hidden min-h-[260px]">
                 {" "}
                 {/* Dynamic Glowing Rings based on concentration */}
                 <div
-                  className="absolute rounded-full border border-[#a4492e]/40 transition-all duration-500 animate-ping"
+                  className="absolute rounded-full border border-[color:var(--accent)]/40 transition-all duration-500 animate-ping"
                   style={{
                     width: `${concentration * 8}px`,
                     height: `${concentration * 8}px`,
@@ -871,7 +870,7 @@ export default function AboutPage({
                   }}
                 />{" "}
                 <div
-                  className="absolute rounded-full bg-[radial-gradient(circle,rgba(164, 73, 46,0.35)_0%,transparent_70%)] transition-all duration-300"
+                  className="absolute rounded-full bg-[radial-gradient(circle,rgba(95, 101, 22,0.35)_0%,transparent_70%)] transition-all duration-300"
                   style={{
                     width: `${concentration * 10}px`,
                     height: `${concentration * 10}px`,
@@ -879,7 +878,7 @@ export default function AboutPage({
                 />{" "}
                 <div className="relative z-10">
                   {" "}
-                  <div className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#a4492e] mb-2">
+                  <div className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2">
                     {" "}
                     {concentration >= 35
                       ? " SENTIRE EXTRAIT THRESHOLD ACHIEVED"
@@ -891,7 +890,7 @@ export default function AboutPage({
                       ? "Unrivaled Scent Signature"
                       : "Short-lived Surface Spray"}
                   </div>{" "}
-                  <p className="text-xs text-[#f4f2ee]/80 font-light max-w-sm">
+                  <p className="text-xs text-[#f2f2f0]/80 font-light max-w-sm">
                     {" "}
                     {concentration >= 35
                       ? "At 35%+ oil concentration, natural oud resins bond deeply with skin lipids to release evolving olfactory accords for up to 24 hours."
@@ -906,22 +905,22 @@ export default function AboutPage({
       {/* ── CHAPTER 04: THE OLFACTORY CRAFT & NOTE ALCHEMY LAB ── */}
       <section
         id="ch4"
-        className="relative w-full border-t border-white/10 bg-[#151412] py-24 px-6 lg:px-16"
+        className="on-dark relative w-full border-t border-white/10 bg-[#111111] py-24 px-6 lg:px-16"
       >
         {" "}
         <div className="mx-auto max-w-6xl">
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 04
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             Interactive Olfactory{" "}
-            <span className="italic text-[#d9a08a]">Alchemy Lab</span>{" "}
+            <span className="italic text-[#cdd43f]">Alchemy Lab</span>{" "}
           </h2>{" "}
           <p className="text-sm text-white/70 max-w-2xl font-light mb-10">
             {" "}
@@ -954,8 +953,8 @@ export default function AboutPage({
                 }}
                 className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer border ${
                   activeNoteCategory === tab.id
-                    ? "bg-[#a4492e] text-black border-[#a4492e] shadow-[0_0_15px_rgba(164, 73, 46,0.4)]"
-                    : "bg-white/5 text-white/70 border-white/10 hover:border-[#a4492e]/40 hover:text-white"
+                    ? "bg-[#5f6516] text-black border-[color:var(--accent)] shadow-[0_0_15px_rgba(95, 101, 22,0.4)]"
+                    : "bg-white/5 text-white/70 border-white/10 hover:border-[color:var(--accent)]/40 hover:text-white"
                 }`}
               >
                 {" "}
@@ -972,20 +971,20 @@ export default function AboutPage({
                 <button
                   key={idx}
                   onClick={() => startTransition(() => setSelectedNote(note))}
-                  className={`group rounded-2xl border p-5 text-left transition-all cursor-pointer ${
+                  className={`group rounded-[4px] border p-5 text-left transition-all cursor-pointer ${
                     selectedNote.name === note.name
-                      ? "border-[#a4492e] bg-white/[0.08] shadow-[0_0_20px_rgba(164, 73, 46,0.25)]"
+                      ? "border-[color:var(--accent)] bg-white/[0.08] shadow-[0_0_20px_rgba(95, 101, 22,0.25)]"
                       : "border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.04]"
                   }`}
                 >
                   {" "}
                   <div className="flex items-center justify-between mb-1">
                     {" "}
-                    <span className="font-serif text-lg font-bold text-white group-hover:text-[#d9a08a] transition-colors">
+                    <span className="font-serif text-lg font-bold text-white group-hover:text-[#cdd43f] transition-colors">
                       {" "}
                       {note.name}
                     </span>{" "}
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#a4492e]">
+                    <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                       {" "}
                       {note.family}
                     </span>{" "}
@@ -997,13 +996,13 @@ export default function AboutPage({
               ))}
             </div>{" "}
             {/* Selected Note Telemetry Detail Card */}
-            <div className="lg:col-span-7 rounded-3xl border border-[#a4492e]/40 bg-black/80 p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
+            <div className="lg:col-span-7 rounded-[4px] border border-[color:var(--accent)]/40 bg-black/80 p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
               {" "}
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
                 {" "}
                 <div>
                   {" "}
-                  <span className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-[#a4492e]">
+                  <span className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                     {" "}
                     INGREDIENT ORIGIN &amp; RADAR
                   </span>{" "}
@@ -1011,7 +1010,7 @@ export default function AboutPage({
                     {selectedNote.name}
                   </h3>{" "}
                 </div>{" "}
-                <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#d9a08a]">
+                <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f]">
                   {" "}
                   {selectedNote.origin}
                 </span>{" "}
@@ -1037,26 +1036,26 @@ export default function AboutPage({
                     <div className="flex justify-between text-xs font-semibold text-white/80 mb-1">
                       {" "}
                       <span>{bar.label}</span>{" "}
-                      <span className="text-[#d9a08a] font-bold">
+                      <span className="text-[#cdd43f] font-bold">
                         {bar.val}%
                       </span>{" "}
                     </div>{" "}
                     <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                       {" "}
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#a4492e] to-[#d9a08a] transition-all duration-500 shadow-[0_0_10px_#a4492e]"
+                        className="h-full rounded-full bg-gradient-to-r from-[#5f6516] to-[#cdd43f] transition-all duration-500 shadow-[0_0_10px_#5f6516]"
                         style={{ width: `${bar.val}%` }}
                       />{" "}
                     </div>{" "}
                   </div>
                 ))}
               </div>{" "}
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4 flex items-center justify-between">
+              <div className="rounded-[4px] border border-white/10 bg-white/5 p-4 flex items-center justify-between">
                 {" "}
                 <span className="text-xs text-white/60 font-medium">
                   FEATURED IN SIGNATURE PERFUMES:
                 </span>{" "}
-                <span className="text-xs font-bold text-[#d9a08a]">
+                <span className="text-xs font-bold text-[#cdd43f]">
                   {selectedNote.tag}
                 </span>{" "}
               </div>{" "}
@@ -1074,21 +1073,21 @@ export default function AboutPage({
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 05
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Kannauj Craftsmanship:{" "}
-            <span className="italic text-[#d9a08a]">
+            <span className="italic text-[#cdd43f]">
               The Deg &amp; Bhapka Legacy
             </span>{" "}
           </h2>{" "}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {" "}
-            <div className="lg:col-span-6 space-y-6 text-[#f4f2ee]/80 text-sm sm:text-base font-light leading-relaxed">
+            <div className="lg:col-span-6 space-y-6 text-[#f2f2f0]/80 text-sm sm:text-base font-light leading-relaxed">
               {" "}
               <p>
                 {" "}
@@ -1107,18 +1106,18 @@ export default function AboutPage({
               </p>{" "}
               <div className="grid grid-cols-2 gap-4 pt-4">
                 {" "}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <div className="rounded-[4px] border border-white/10 bg-white/[0.03] p-4">
                   {" "}
-                  <div className="text-2xl font-serif font-bold text-[#d9a08a]">
+                  <div className="text-2xl font-serif font-bold text-[#cdd43f]">
                     400+ Years
                   </div>{" "}
                   <div className="text-xs text-white/60 mt-1">
                     Heritage Distillation Legacy
                   </div>{" "}
                 </div>{" "}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <div className="rounded-[4px] border border-white/10 bg-white/[0.03] p-4">
                   {" "}
-                  <div className="text-2xl font-serif font-bold text-[#d9a08a]">
+                  <div className="text-2xl font-serif font-bold text-[#cdd43f]">
                     Zero Harm
                   </div>{" "}
                   <div className="text-xs text-white/60 mt-1">
@@ -1128,9 +1127,9 @@ export default function AboutPage({
               </div>{" "}
             </div>{" "}
             {/* Distillation Process Steps */}
-            <div className="lg:col-span-6 rounded-3xl border border-[#a4492e]/30 bg-black/60 p-6 md:p-8 backdrop-blur-2xl">
+            <div className="lg:col-span-6 rounded-[4px] border border-[color:var(--accent)]/30 bg-black/60 p-6 md:p-8 backdrop-blur-2xl">
               {" "}
-              <div className="text-xs font-bold uppercase tracking-widest text-[#a4492e] mb-6">
+              <div className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-6">
                 DISTILLATION WORKFLOW
               </div>{" "}
               <div className="space-y-6">
@@ -1155,7 +1154,7 @@ export default function AboutPage({
                 ].map((step, idx) => (
                   <div key={idx} className="flex gap-4 items-start">
                     {" "}
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#a4492e] text-black font-bold text-xs shrink-0 mt-0.5">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#5f6516] text-black font-bold text-xs shrink-0 mt-0.5">
                       {" "}
                       {idx + 1}
                     </div>{" "}
@@ -1178,22 +1177,22 @@ export default function AboutPage({
       {/* ── CHAPTER 06: BESPOKE WARDROBE & PERSONALIZATION ── */}
       <section
         id="ch6"
-        className="relative w-full border-t border-white/10 bg-[#151412] py-24 px-6 lg:px-16"
+        className="on-dark relative w-full border-t border-white/10 bg-[#111111] py-24 px-6 lg:px-16"
       >
         {" "}
         <div className="mx-auto max-w-6xl">
           {" "}
           <div className="flex items-center gap-3 mb-4">
             {" "}
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#a4492e]">
+            <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 06
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#a4492e]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             Tailored Luxury:{" "}
-            <span className="italic text-[#d9a08a]">
+            <span className="italic text-[#cdd43f]">
               Bespoke Personalization
             </span>{" "}
           </h2>{" "}
@@ -1206,11 +1205,11 @@ export default function AboutPage({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {" "}
             {/* Feature 1: Laser Bottle Engraving */}
-            <div className="group rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[#a4492e]/60 hover:bg-white/[0.06] hover:-translate-y-1 flex flex-col justify-between">
+            <div className="group rounded-[4px] border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)]/60 hover:bg-white/[0.06] hover:-translate-y-1 flex flex-col justify-between">
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#a4492e]/10 text-[#d9a08a] mb-6 group-hover:scale-110 transition-transform">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516]/10 text-[#cdd43f] mb-6 group-hover:scale-110 transition-transform">
                   {" "}
                   <svg
                     viewBox="0 0 24 24"
@@ -1238,18 +1237,18 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("perfumes")}
-                className="w-full rounded-xl border border-[#a4492e]/40 bg-[#a4492e]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#d9a08a] transition-all hover:bg-[#a4492e] hover:text-black cursor-pointer"
+                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#cdd43f] transition-all hover:bg-[#5f6516] hover:text-black cursor-pointer"
               >
                 {" "}
                 Personalize Bottle
               </button>{" "}
             </div>{" "}
             {/* Feature 2: AI Signature Scent Concierge */}
-            <div className="group rounded-3xl border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[#a4492e]/60 hover:bg-white/[0.06] hover:-translate-y-1 flex flex-col justify-between">
+            <div className="group rounded-[4px] border border-white/10 bg-white/[0.02] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)]/60 hover:bg-white/[0.06] hover:-translate-y-1 flex flex-col justify-between">
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#a4492e]/10 text-[#d9a08a] mb-6 group-hover:scale-110 transition-transform">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516]/10 text-[#cdd43f] mb-6 group-hover:scale-110 transition-transform">
                   {" "}
                   <svg
                     viewBox="0 0 24 24"
@@ -1277,22 +1276,22 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("perfumes")}
-                className="w-full rounded-xl border border-[#a4492e]/40 bg-[#a4492e]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#d9a08a] transition-all hover:bg-[#a4492e] hover:text-black cursor-pointer"
+                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#cdd43f] transition-all hover:bg-[#5f6516] hover:text-black cursor-pointer"
               >
                 {" "}
                 Start Scent Quiz
               </button>{" "}
             </div>{" "}
             {/* Feature 3: Build Your Own Bundle (BYOB) */}
-            <div className="group rounded-3xl border border-[#a4492e]/40 bg-[radial-gradient(ellipse_at_top_left,rgba(164, 73, 46,0.15)_0%,transparent_70%)] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[#a4492e] hover:-translate-y-1 flex flex-col justify-between shadow-xl">
+            <div className="group rounded-[4px] border border-[color:var(--accent)]/40 bg-[radial-gradient(ellipse_at_top_left,rgba(95, 101, 22,0.15)_0%,transparent_70%)] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)] hover:-translate-y-1 flex flex-col justify-between shadow-xl">
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#a4492e] text-black mb-6 group-hover:scale-110 transition-transform font-bold">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516] text-black mb-6 group-hover:scale-110 transition-transform font-bold">
                   {" "}
                   ₹300
                 </div>{" "}
-                <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#d9a08a] mb-1">
+                <div className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] mb-1">
                   AUTOMATED SAVINGS
                 </div>{" "}
                 <h3 className="font-serif text-xl font-bold text-white mb-2">
@@ -1306,7 +1305,7 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("byob")}
-                className="w-full rounded-xl bg-[#a4492e] py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-[#d9a08a] shadow-[0_0_15px_rgba(164, 73, 46,0.4)] cursor-pointer"
+                className="w-full rounded-[4px] bg-[#5f6516] py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-[#cdd43f] shadow-[0_0_15px_rgba(95, 101, 22,0.4)] cursor-pointer"
               >
                 {" "}
                 Curate 3-Bottle Set
@@ -1323,18 +1322,18 @@ export default function AboutPage({
         {" "}
         <div className="mx-auto max-w-4xl">
           {" "}
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#a4492e]/30 bg-[#a4492e]/10 px-4 py-1 text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#d9a08a] mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-4 py-1 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] mb-6">
             {" "}
             CHAPTER 07 • THE HOUSE MANIFESTO
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
             {" "}
             "Luxury should not be reserved for rare moments; it should be your{" "}
-            <span className="italic text-[#d9a08a]">everyday signature</span>."
+            <span className="italic text-[#cdd43f]">everyday signature</span>."
           </h2>{" "}
-          <div className="rounded-3xl border border-[#a4492e]/40 bg-black/80 p-8 sm:p-12 backdrop-blur-2xl shadow-2xl mb-12 text-left relative overflow-hidden">
+          <div className="rounded-[4px] border border-[color:var(--accent)]/40 bg-black/80 p-8 sm:p-12 backdrop-blur-2xl shadow-2xl mb-12 text-left relative overflow-hidden">
             {" "}
-            <div className="absolute top-0 right-0 h-40 w-40 bg-[#a4492e]/10 rounded-full blur-3xl" />{" "}
+            <div className="absolute top-0 right-0 h-40 w-40 bg-[#5f6516]/10 rounded-full blur-3xl" />{" "}
             <div className="space-y-4 text-xs sm:text-sm text-white/80 font-light leading-relaxed mb-8">
               {" "}
               <p>
@@ -1359,7 +1358,7 @@ export default function AboutPage({
                 <div className="font-serif text-xl font-bold text-white">
                   Pranav Chaudhary
                 </div>{" "}
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[#a4492e]">
+                <div className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                   Founder &amp; Visionary, SENTIRE By PC
                 </div>{" "}
               </div>{" "}
@@ -1368,7 +1367,7 @@ export default function AboutPage({
                 <div className="text-xs font-mono text-white/50">
                   Jaipur, Rajasthan
                 </div>{" "}
-                <div className="text-[10px] text-[#d9a08a] uppercase tracking-widest font-bold">
+                <div className="text-[10px] max-sm:text-[12px] text-[#cdd43f] uppercase tracking-[0.06em] font-bold">
                   EST. DEC 2022
                 </div>{" "}
               </div>{" "}
@@ -1379,14 +1378,14 @@ export default function AboutPage({
             {" "}
             <button
               onClick={onNavigateToPerfumes}
-              className="w-full sm:w-auto rounded-full bg-gradient-to-r from-[#a4492e] to-[#d9a08a] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.25em] text-black shadow-[0_0_25px_rgba(164, 73, 46,0.5)] transition-all hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto rounded-full bg-gradient-to-r from-[#5f6516] to-[#cdd43f] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-black shadow-[0_0_25px_rgba(95, 101, 22,0.5)] transition-all hover:scale-105 cursor-pointer"
             >
               {" "}
               Explore 21 Extrait Scents
             </button>{" "}
             <button
               onClick={() => onNavigate?.("byob")}
-              className="w-full sm:w-auto rounded-full border border-white/20 bg-white/5 px-8 py-4 text-xs font-extrabold uppercase tracking-[0.25em] text-white backdrop-blur-md transition-all hover:border-[#a4492e] hover:bg-white/10 hover:text-[#d9a08a] cursor-pointer"
+              className="w-full sm:w-auto rounded-full border border-white/20 bg-white/5 px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-white backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-white/10 hover:text-[#cdd43f] cursor-pointer"
             >
               {" "}
               Build Custom Discovery Set
@@ -1395,7 +1394,7 @@ export default function AboutPage({
         </div>{" "}
       </section>{" "}
       {/* Footer copyright indicator */}
-      <div className="w-full border-t border-white/10 bg-black py-6 text-center text-[10px] text-white/40 tracking-widest uppercase">
+      <div className="on-dark w-full border-t border-white/10 bg-black py-6 text-center text-[10px] max-sm:text-[12px] text-white/40 tracking-[0.06em] uppercase">
         {" "}
         © SENTIRE BY PC • S P VENTURES • JAIPUR, RAJASTHAN • HAUTE PARFUMERIE
       </div>{" "}

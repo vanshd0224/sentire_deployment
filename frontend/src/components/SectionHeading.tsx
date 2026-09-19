@@ -18,7 +18,7 @@ export default function SectionHeading({
       <div
         className="h-px w-full"
         style={{
-          background: light ? "rgba(244,242,238,0.22)" : "var(--color-rule)",
+          background: light ? "rgba(242, 242, 240,0.22)" : "var(--color-rule)",
         }}
       />{" "}
       <h2
@@ -27,7 +27,7 @@ export default function SectionHeading({
           fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
           letterSpacing: "-0.02em",
           lineHeight: 1.04,
-          color: light ? "#f4f2ee" : "#1c1b18",
+          color: light ? "#f2f2f0" : "#161616",
         }}
       >
         {" "}
@@ -36,7 +36,7 @@ export default function SectionHeading({
       {subtitle && (
         <p
           className="mt-3 max-w-xl text-left text-[15px] leading-relaxed"
-          style={{ color: light ? "rgba(244,242,238,0.7)" : "#57534c" }}
+          style={{ color: light ? "rgba(242, 242, 240,0.7)" : "#555555" }}
         >
           {" "}
           {subtitle}

@@ -18,7 +18,7 @@ export default function Campaign({ onNavigate }: CampaignProps) {
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-ink text-paper">
+    <section ref={ref} className="on-dark relative overflow-hidden bg-ink text-paper">
       <div className="relative h-[68vh] min-h-[420px] w-full overflow-hidden md:h-[80vh]">
         <motion.img
           src="/images/curated-personalisation.webp"
@@ -40,7 +40,7 @@ export default function Campaign({ onNavigate }: CampaignProps) {
             transition={{ duration: 0.9, ease: EASE_OUT_EXPO }}
             className="max-w-xl"
           >
-            <p className="font-mono text-[11px] uppercase tracking-[0.02em] text-paper/70">
+            <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/70">
               Personalisation
             </p>
             <h2 className="mt-4 font-serif text-[clamp(2.25rem,6vw,4.5rem)] font-light leading-[1] tracking-[-0.03em]">

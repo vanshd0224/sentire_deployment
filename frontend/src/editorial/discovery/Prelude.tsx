@@ -41,11 +41,11 @@ export default function Prelude({
   return (
     <section
       ref={ref}
-      className="relative isolate overflow-hidden text-paper"
+      className="relative isolate overflow-hidden text-ink"
       style={{
         minHeight: "calc(100svh - 96px)",
         background:
-          "radial-gradient(60% 55% at 50% 42%, #2c2925 0%, #191816 52%, #0e0d0c 100%)",
+          "linear-gradient(205deg, #e6e6e6 0%, #d6d6d6 46%, #c2c2c2 100%)",
       }}
       aria-label="The Discovery Set"
     >
@@ -56,7 +56,7 @@ export default function Prelude({
         style={{
           x: wordX,
           fontSize: "clamp(8rem, 26vw, 30rem)",
-          WebkitTextStroke: "1px rgba(244,242,238,0.09)",
+          WebkitTextStroke: "1px rgba(242, 242, 240,0.09)",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -69,17 +69,17 @@ export default function Prelude({
       <div className="ed-container relative z-20 flex justify-between pt-6">
         <motion.nav
           aria-label="Breadcrumb"
-          className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55"
+          className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-ink/60"
           {...reveal(0)}
         >
-          <button onClick={onHome} className="cursor-pointer hover:text-paper">
+          <button onClick={onHome} className="cursor-pointer hover:text-ink">
             Home
           </button>
           <span aria-hidden> / </span>
-          <span className="text-paper/80">The Discovery Set</span>
+          <span className="text-ink">The Discovery Set</span>
         </motion.nav>
         <motion.p
-          className="hidden font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55 sm:block"
+          className="hidden font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-ink/60 sm:block"
           {...reveal(0)}
         >
           6 × 6ML · 36ML · ~360 sprays
@@ -130,11 +130,11 @@ export default function Prelude({
               </span>
             </h1>
             <motion.p
-              className="mt-3 max-w-sm text-[15px] leading-relaxed text-paper/65"
+              className="mt-3 max-w-sm text-[15px] leading-relaxed text-ink/70"
               {...reveal(2)}
             >
-              The Discovery Set — find the one that's yours before you commit to
-              a full bottle.
+              All six Sentire fragrances in travel sprays. Wear them for a week,
+              then choose your full bottle.
             </motion.p>
           </div>
 
@@ -143,14 +143,12 @@ export default function Prelude({
               <span className="font-sans text-[2.75rem] font-light leading-none tracking-[-0.02em]">
                 <Ticker value={549} prefix="₹" />
               </span>
-              <span className="font-mono text-[13px] text-paper/40 line-through">
+              <span className="font-mono text-[13px] text-ink/45 line-through">
                 ₹999
               </span>
-              <span className="font-mono text-[12px] text-[color:var(--color-print)]">
-                Save 45%
-              </span>
+              <span className="font-mono text-[12px] text-clay">Save 45%</span>
             </div>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.04em] text-paper/50">
+            <p className="mt-2 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-ink/55">
               ★ 4.9 · 428 verified reviews · selling fast
             </p>
             <div className="mt-5 flex flex-wrap gap-3 md:justify-end">
@@ -158,7 +156,7 @@ export default function Prelude({
                 <motion.button
                   onClick={onAdd}
                   whileTap={{ scale: 0.97 }}
-                  className="ed-btn bg-[color:var(--color-print)] font-medium !text-[#141414] hover:bg-paper"
+                  className="on-dark ed-btn bg-ink font-medium !text-white hover:bg-clay"
                 >
                   {added ? "Added to bag ✓" : "Add to bag — ₹549"}
                 </motion.button>
@@ -166,7 +164,7 @@ export default function Prelude({
               <Magnetic>
                 <button
                   onClick={onExplore}
-                  className="ed-btn border border-paper/35 hover:border-paper"
+                  className="ed-btn border border-ink/40 hover:border-ink"
                 >
                   See what's inside ↓
                 </button>
@@ -176,7 +174,7 @@ export default function Prelude({
         </div>
 
         <motion.p
-          className="mt-8 hidden text-center font-mono text-[10px] uppercase tracking-[0.06em] text-paper/35 md:block"
+          className="mt-8 hidden text-center font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] text-ink/45 md:block"
           {...reveal(5)}
         >
           Drag the case to turn it · tap a vial to read it · scroll to see the
