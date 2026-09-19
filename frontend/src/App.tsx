@@ -3,13 +3,12 @@ import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
 import Hero from "./components/Hero";
-import NoteMarquee from "./editorial/NoteMarquee";
-import CollectionRail from "./editorial/CollectionRail";
-import Atelier from "./editorial/Atelier";
-import Collections from "./editorial/Collections";
-import Campaign from "./editorial/Campaign";
-import Marks from "./editorial/Marks";
-import EditorialNewsletter from "./editorial/Newsletter";
+import RetailerBadges from "./components/RetailerBadges";
+import ShopByCategory from "./components/ShopByCategory";
+import BestSellers from "./components/BestSellers";
+import NewArrivals from "./components/NewArrivals";
+import TrustBadges from "./components/TrustBadges";
+import Newsletter from "./components/Newsletter";
 import WatchAndBuy from "./components/WatchAndBuy";
 import CelebrityReacts from "./components/CelebrityReacts";
 import InstagramSection from "./components/InstagramSection";
@@ -36,11 +35,6 @@ import { auth } from "./lib/firebase";
 
 import type { PageName } from "./types/appTypes";
 export type { PageName };
-
-const BEST_SELLERS = ALL_PERFUMES.filter(
-  (p) => p.badge === "bestseller" || p.badge === "exclusive",
-).slice(0, 8);
-const NEW_ARRIVALS = ALL_PERFUMES.filter((p) => p.badge === "new").slice(0, 8);
 
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
@@ -616,40 +610,30 @@ export default function App() {
       ) : (
         <main>
           <Hero onNavigate={handleNavigate} />
-          <NoteMarquee />
-          <CollectionRail
-            label="Haute parfumerie"
-            title="Best sellers."
-            products={BEST_SELLERS}
-            href="/bestsellers"
-            onViewAll={() => handleNavigate("bestsellers")}
-            onAddToCart={handleAddToCart}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <Collections
-            onNavigate={handleNavigate}
-            onOpenBundleModal={openBundleModal}
-          />
-          <Atelier />
-          <Campaign onNavigate={handleNavigate} />
-          <CollectionRail
-            label="Haute selection"
-            title="New arrivals."
-            layout="grid"
-            products={NEW_ARRIVALS}
-            href="/new-arrivals"
-            onViewAll={() => handleNavigate("new-arrivals")}
-            onAddToCart={handleAddToCart}
-            onSelectProduct={handleOpenProductModal}
-          />
           <WatchAndBuy
             onAddToCart={handleAddToCart}
             onOpenCart={() => handleNavigate("cart")}
             onSelectProduct={handleOpenProductModal}
           />
+          <RetailerBadges />
+          <ShopByCategory onNavigate={handleNavigate} />
+          <BestSellers
+            cartItems={cartItems}
+            onAddToCart={handleAddToCart}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onNavigate={handleNavigate}
+            onSelectProduct={handleOpenProductModal}
+          />
+          <NewArrivals
+            cartItems={cartItems}
+            onAddToCart={handleAddToCart}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onNavigate={handleNavigate}
+            onSelectProduct={handleOpenProductModal}
+          />
           <CelebrityReacts />
-          <Marks />
-          <EditorialNewsletter />
+          <TrustBadges />
+          <Newsletter />
           <InstagramSection />
         </main>
       )}

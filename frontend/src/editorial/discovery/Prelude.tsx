@@ -115,17 +115,17 @@ export default function Prelude({
                   animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.25, ease: EASE_OUT_EXPO }}
                 >
-                  Six fragrances.
+                  The Discovery Set
                 </motion.span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
                 <motion.span
-                  className="block italic"
+                  className="block text-[0.42em] font-medium tracking-[0.02em]"
                   initial={{ y: "105%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.35, ease: EASE_OUT_EXPO }}
                 >
-                  One box.
+                  6 × 6ML extrait de parfum
                 </motion.span>
               </span>
             </h1>

@@ -11,12 +11,12 @@ import type { PageName } from "../types/appTypes";
 import {
   DISCOVERY_FRAGRANCES,
   FAQS,
-  LAYERING_RECIPES,
   REVIEWS,
   displayName,
 } from "../editorial/discovery/data";
 import Prelude from "../editorial/discovery/Prelude";
 import ScentReel from "../editorial/discovery/ScentReel";
+import SprayTest from "../editorial/discovery/SprayTest";
 import { Magnetic, StrikeLine, Ticker } from "../editorial/discovery/fx";
 import { EASE_OUT_EXPO, viewportOnce } from "../editorial/motion";
 
@@ -30,8 +30,6 @@ interface DiscoverySetPageProps {
 const PRICE = 549;
 const MRP = 999;
 const TOTAL_SPRAYS = 360;
-const BASES = DISCOVERY_FRAGRANCES.slice(0, 3);
-const ACCENTS = DISCOVERY_FRAGRANCES.slice(3);
 const byId = (id: string) => DISCOVERY_FRAGRANCES.find((f) => f.id === id)!;
 const title = displayName;
 
@@ -46,7 +44,7 @@ const WEEK = [
 ].map(byId);
 
 const INTRO =
-  "Nobody should commit to a full bottle after five seconds with a paper strip. So all six of our extraits go into one case — six millilitres each, enough to wear every one for a week, on your own skin, on ordinary days — and you decide slowly.";
+  "Nobody should buy a full bottle after smelling a paper strip for five seconds. So all six of our extraits go into one case, six millilitres each. That is enough to wear every one for a week, on your own skin, on ordinary days, before you decide.";
 
 export default function DiscoverySetPage({
   onBackToHome,
@@ -58,13 +56,12 @@ export default function DiscoverySetPage({
   const [added, setAdded] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [spraysPerDay, setSpraysPerDay] = useState(2);
-  const [baseId, setBaseId] = useState(BASES[0].id);
-  const [accentId, setAccentId] = useState(ACCENTS[0].id);
+  const [sprayPick, setSprayPick] = useState(0);
   const [showStickyBar, setShowStickyBar] = useState(false);
 
   const preludeEnd = useRef<HTMLDivElement>(null);
   const reelRef = useRef<HTMLDivElement>(null);
-  const labRef = useRef<HTMLElement>(null);
+  const sprayRef = useRef<HTMLDivElement>(null);
   const orderRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -81,16 +78,6 @@ export default function DiscoverySetPage({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const base = byId(baseId);
-  const accent = byId(accentId);
-  const recipe = LAYERING_RECIPES.find(
-    (r) => r.base === baseId && r.accent === accentId,
-  ) ?? {
-    name: `${title(base.name)} over ${title(accent.name)}`,
-    ratio: `2 sprays ${title(base.name)} + 1 spray ${title(accent.name)}`,
-    description: `${base.character} underneath, ${accent.character.toLowerCase()} on top. Nobody else will be wearing it.`,
-    vibe: "Your own",
-  };
   const days = Math.round(TOTAL_SPRAYS / spraysPerDay);
 
   const addToCart = () => {
@@ -108,11 +95,9 @@ export default function DiscoverySetPage({
     window.setTimeout(() => setAdded(false), 1600);
   };
 
-  const pickForLab = (i: number) => {
-    const f = DISCOVERY_FRAGRANCES[i];
-    if (BASES.includes(f)) setBaseId(f.id);
-    else setAccentId(f.id);
-    labRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const pickForSpray = (i: number) => {
+    setSprayPick(i);
+    sprayRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const toReel = () =>
@@ -140,7 +125,7 @@ export default function DiscoverySetPage({
 
       {/* ── 3. The six ─────────────────────────────────────────── */}
       <div ref={reelRef}>
-        <ScentReel onPick={pickForLab} />
+        <ScentReel onPick={pickForSpray} />
       </div>
 
       {/* ── 4. A week with the set ─────────────────────────────── */}
@@ -149,13 +134,8 @@ export default function DiscoverySetPage({
       {/* ── 5. The numbers ─────────────────────────────────────── */}
       <section className="bg-ink py-20 text-paper md:py-28">
         <div className="ed-container">
-          <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-paper/55">
-            The numbers
-          </p>
           <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
-            Small bottles.{" "}
-            <em className="italic text-[color:var(--color-print)]">Long</em>{" "}
-            weeks.
+            How far 36ML goes
           </h2>
 
           <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4">
@@ -270,60 +250,10 @@ export default function DiscoverySetPage({
         </div>
       </section>
 
-      {/* ── 6. Layering lab ────────────────────────────────────── */}
-      <section ref={labRef} className="scroll-mt-20 bg-paper-2 py-20 md:py-28">
-        <div className="ed-container">
-          <p className="ed-label">Layering lab</p>
-          <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
-            Two sprays. <em className="italic">One of one.</em>
-          </h2>
-          <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-ink-soft">
-            A warm one underneath, a bright one on top. Choose a pair and watch
-            them meet.
-          </p>
-
-          <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
-            <div className="space-y-8 lg:col-span-5">
-              <Picker
-                label="Underneath — chest & pulse points"
-                options={BASES}
-                value={baseId}
-                onChange={setBaseId}
-              />
-              <Picker
-                label="On top — neck & collar"
-                options={ACCENTS}
-                value={accentId}
-                onChange={setAccentId}
-              />
-            </div>
-            <div className="lg:col-span-7">
-              <Blend base={base} accent={accent} />
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={recipe.name}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
-                  className="mt-8"
-                >
-                  <p className="ed-label">{recipe.vibe}</p>
-                  <h3 className="mt-2 font-serif text-[clamp(1.9rem,3.5vw,2.75rem)] font-light leading-tight">
-                    {recipe.name}
-                  </h3>
-                  <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.02em] text-clay">
-                    {recipe.ratio}
-                  </p>
-                  <p className="mt-4 max-w-lg font-serif text-[18px] font-light italic leading-[1.6] text-ink-soft">
-                    {recipe.description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── 6. Spray test ─────────────────────────────────────── */}
+      <div ref={sprayRef} className="scroll-mt-20">
+        <SprayTest key={sprayPick} startIndex={sprayPick} />
+      </div>
 
       {/* ── 7. Reviews ─────────────────────────────────────────── */}
       <Reviews />
@@ -336,9 +266,8 @@ export default function DiscoverySetPage({
       >
         <div className="ed-container grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <p className="ed-label">What's in the box</p>
             <h2 className="mt-4 font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
-              Everything you need to choose.
+              What's in the box
             </h2>
             <div className="mt-10 flex items-end gap-5">
               <motion.img
@@ -490,9 +419,8 @@ export default function DiscoverySetPage({
       <section className="bg-paper-2 py-20 md:py-28">
         <div className="ed-container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="ed-label">Questions</p>
             <h2 className="mt-4 font-serif text-[clamp(2.2rem,5vw,3.75rem)] font-light leading-[1.02] tracking-[-0.025em]">
-              Before you order.
+              Questions
             </h2>
             <button
               onClick={() => onNavigate?.("perfumes")}
@@ -662,9 +590,8 @@ function Week() {
   return (
     <section className="bg-paper py-20 md:py-28">
       <div className="ed-container">
-        <p className="ed-label">A week with the set</p>
         <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
-          One a day. <em className="italic">Then keep one.</em>
+          Wear one a day for six days
         </h2>
         <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-ink-soft">
           Lightest first, deepest last. Wear each on pulse points in the morning
@@ -755,7 +682,7 @@ function Reviews() {
           4.9 · 428 verified reviews
         </p>
         <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
-          What they said <em className="italic">after the week.</em>
+          Reviews
         </h2>
       </div>
       <div className="group mt-14 space-y-5">
@@ -788,94 +715,5 @@ function Reviews() {
         ))}
       </div>
     </section>
-  );
-}
-
-function Picker({
-  label,
-  options,
-  value,
-  onChange,
-}: {
-  label: string;
-  options: typeof DISCOVERY_FRAGRANCES;
-  value: string;
-  onChange: (id: string) => void;
-}) {
-  return (
-    <div>
-      <p className="ed-label">{label}</p>
-      <div className="mt-3 grid grid-cols-3 gap-3">
-        {options.map((f) => {
-          const on = value === f.id;
-          return (
-            <motion.button
-              key={f.id}
-              onClick={() => onChange(f.id)}
-              aria-pressed={on}
-              whileTap={{ scale: 0.97 }}
-              className={`cursor-pointer rounded-[2px] border p-2 text-left transition-colors ${
-                on
-                  ? "border-ink bg-paper"
-                  : "border-[color:var(--color-rule)] hover:border-ink/40"
-              }`}
-            >
-              <div className="aspect-square overflow-hidden rounded-[2px]">
-                <img
-                  src={f.img}
-                  alt=""
-                  loading="lazy"
-                  className={`h-full w-full object-cover transition-all duration-300 ${on ? "" : "opacity-70 grayscale-[30%]"}`}
-                />
-              </div>
-              <p className="mt-2 font-serif text-[16px] font-light leading-tight">
-                {title(f.name)}
-              </p>
-              <p className="text-[12px] text-ink-soft">{f.character}</p>
-            </motion.button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-/** Two washes of colour drifting together; multiply mixes them where they overlap. */
-function Blend({
-  base,
-  accent,
-}: {
-  base: (typeof DISCOVERY_FRAGRANCES)[number];
-  accent: (typeof DISCOVERY_FRAGRANCES)[number];
-}) {
-  return (
-    <div className="relative flex h-[240px] items-center justify-center overflow-hidden rounded-[2px] bg-paper sm:h-[280px]">
-      <motion.div
-        className="absolute h-44 w-44 rounded-full mix-blend-multiply sm:h-56 sm:w-56"
-        animate={{
-          x: -46,
-          backgroundColor: base.colorHex,
-          scale: [0.94, 1, 0.97, 1],
-        }}
-        initial={{ x: -160 }}
-        transition={{ duration: 1.1, ease: EASE_OUT_EXPO }}
-        style={{ opacity: 0.82 }}
-      />
-      <motion.div
-        className="absolute h-44 w-44 rounded-full mix-blend-multiply sm:h-56 sm:w-56"
-        animate={{
-          x: 46,
-          backgroundColor: accent.colorHex,
-          scale: [1, 0.95, 1.02, 1],
-        }}
-        initial={{ x: 160 }}
-        transition={{ duration: 1.1, ease: EASE_OUT_EXPO }}
-        style={{ opacity: 0.72 }}
-      />
-      <div className="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[11px] uppercase tracking-[0.02em] text-ink-soft">
-        <span>{title(base.name)}</span>
-        <span>{title(accent.name)}</span>
-      </div>
-    </div>
   );
 }
