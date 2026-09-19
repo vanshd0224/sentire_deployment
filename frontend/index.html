@@ -81,15 +81,6 @@
     <!-- End Meta Pixel Code -->
 
     <!-- Font Optimization & Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Instrument+Serif:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Hero: Ganesh Chaturthi artwork, preloaded for a fast first paint -->
-    <link rel="preload" as="image" href="/images/hero-ganesh-mobile.webp" type="image/webp" media="(max-width: 900px)" />
-    <link rel="preload" as="image" href="/images/hero-ganesh-desktop.webp" type="image/webp" media="(min-width: 901px)" />
     <!-- Preload Exit Intent Popup Image for Instant 0ms Load -->
     <link rel="preload" as="image" href="/assets/sentire_purple_oud_popup.webp" type="image/webp" />
 
@@ -254,6 +245,9 @@
         will-change: transform;
       }
     </style>
+    <!-- Hero: the first bottle in the ring, so it paints with the page -->
+    <link rel="preload" as="image" type="image/webp" href="/images/bottles/mirai-front-sm.webp" media="(max-width: 1023px)" />
+    <link rel="preload" as="image" type="image/webp" href="/images/bottles/mirai-front-lg.webp" media="(min-width: 1024px)" />
   </head>
   <body class="bg-[#050505] text-[#f2f2f0] antialiased selection:bg-[#6b1422]/30 selection:text-[#6b1422]">
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4305047443093499&ev=PageView&noscript=1" /></noscript>

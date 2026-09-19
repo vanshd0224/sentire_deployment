@@ -1,5 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+// Fonts ship with the site (no Google Fonts round trip): Archivo with its
+// width + weight axes, and Instrument Serif for accent words.
+import "@fontsource-variable/archivo/standard.css";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import "./index.css";
 import { MotionConfig } from "framer-motion";
 import App from "./App";

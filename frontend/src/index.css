@@ -9,14 +9,14 @@
   /* One family, taken from the Discovery Set case itself: the box is printed
      in a wide, squarish grotesk. Archivo's width axis covers both the
      expanded display cut and a normal-width text face. */
-  --font-serif: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-script: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-cinzel: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-garamond: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-montserrat: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-script: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-cinzel: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-garamond: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-montserrat: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --color-paper: #f2f2f0;
   --color-paper-2: #e8e8e5;
