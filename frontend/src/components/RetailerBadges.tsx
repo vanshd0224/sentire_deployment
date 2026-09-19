@@ -34,7 +34,7 @@ export default function RetailerBadges() {
                 <img
                   src={item.src}
                   alt={item.name}
-                  className="h-6 w-auto max-w-[120px] object-contain opacity-55 grayscale transition-[filter,opacity] duration-500 hover:opacity-100 hover:grayscale-0 sm:h-7"
+                  className="h-6 w-auto max-w-[120px] object-contain transition-transform duration-300 hover:scale-105 sm:h-7"
                 />{" "}
               </div>
             ))}
