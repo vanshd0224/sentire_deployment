@@ -1458,17 +1458,7 @@ header.sticky {
   font-size: 13.5px !important;
   font-weight: 400 !important;
   letter-spacing: 0 !important;
-  text-transform: lowercase !important;
-}
-
-.sentire-desktop-nav a::first-line,
-.sentire-desktop-nav button::first-line {
-  text-transform: none;
-}
-
-.sentire-desktop-nav a::first-letter,
-.sentire-desktop-nav button::first-letter {
-  text-transform: uppercase;
+  text-transform: none !important;
 }
 
 /* Mobile dock: flat paper, mono captions, no floating gold pill */
