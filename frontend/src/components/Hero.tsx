@@ -71,7 +71,7 @@ export default function Hero({ onNavigate }: HeroProps) {
         .hero-eyebrow-text {
           font-family: var(--font-mono) !important;
           font-weight: 400 !important;
-          color: #4a4f10 !important;
+          color: #4f0e19 !important;
           letter-spacing: 0.06em !important;
           text-indent: 0.06em;
         }
@@ -79,7 +79,7 @@ export default function Hero({ onNavigate }: HeroProps) {
         .hero-happy-text {
           font-family: var(--font-mono) !important;
           font-weight: 400 !important;
-          color: #4a4f10 !important;
+          color: #4f0e19 !important;
           letter-spacing: 0.42em !important;
           text-indent: 0.42em;
         }
@@ -116,7 +116,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           cursor: pointer;
         }
         .hero-cta-btn:hover {
-          background: #5f6516;
+          background: #6b1422;
           box-shadow: none;
           transform: none;
         }
@@ -161,7 +161,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           white-space: nowrap;
         }
         .hero-nav-link:hover {
-          color: #4a4f10;
+          color: #4f0e19;
         }
 
         .hero-icon-btn {
@@ -177,7 +177,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           padding: 0;
         }
         .hero-icon-btn:hover {
-          color: #4a4f10;
+          color: #4f0e19;
           transform: scale(1.08);
         }
 
@@ -414,12 +414,12 @@ export default function Hero({ onNavigate }: HeroProps) {
             {/* Horizontal Line Left */}
             <div className="flex-1 flex items-center">
               {" "}
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4a4f10] shrink-0" />{" "}
-              <div className="flex-1 h-[1.2px] bg-[#4a4f10]" />{" "}
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4f0e19] shrink-0" />{" "}
+              <div className="flex-1 h-[1.2px] bg-[#4f0e19]" />{" "}
             </div>{" "}
             {/* Center Circular Medallion */}
             <div
-              className="mx-[10px] flex items-center justify-center rounded-full bg-[#4a4f10] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
+              className="mx-[10px] flex items-center justify-center rounded-full bg-[#4f0e19] shadow-[0_1px_4px_rgba(185,134,62,0.3)] shrink-0"
               style={{
                 width: "26px",
                 height: "26px",
@@ -440,8 +440,8 @@ export default function Hero({ onNavigate }: HeroProps) {
             {/* Horizontal Line Right */}
             <div className="flex-1 flex items-center">
               {" "}
-              <div className="flex-1 h-[1.2px] bg-[#4a4f10]" />{" "}
-              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4a4f10] shrink-0" />{" "}
+              <div className="flex-1 h-[1.2px] bg-[#4f0e19]" />{" "}
+              <span className="w-[4.5px] h-[4.5px] rounded-full bg-[#4f0e19] shrink-0" />{" "}
             </div>{" "}
           </div>{" "}
           {/* 5. Subhead: WELCOME TO OUR NEW BEGINNING */}
@@ -610,7 +610,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               height="9"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#4a4f10"
+              stroke="#4f0e19"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -711,9 +711,9 @@ export default function Hero({ onNavigate }: HeroProps) {
             aria-hidden="true"
           >
             {" "}
-            <div className="flex-1 h-[1px] bg-[#4a4f10]" />{" "}
+            <div className="flex-1 h-[1px] bg-[#4f0e19]" />{" "}
             <div
-              className="mx-2 flex items-center justify-center rounded-full bg-[#4a4f10] shrink-0"
+              className="mx-2 flex items-center justify-center rounded-full bg-[#4f0e19] shrink-0"
               style={{ width: "22px", height: "22px" }}
             >
               {" "}
@@ -721,7 +721,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 &amp;
               </span>{" "}
             </div>{" "}
-            <div className="flex-1 h-[1px] bg-[#4a4f10]" />{" "}
+            <div className="flex-1 h-[1px] bg-[#4f0e19]" />{" "}
           </div>{" "}
           <div
             className="hero-subhead-text uppercase text-center"
@@ -774,7 +774,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 BLESSINGS
               </span>{" "}
             </div>{" "}
-            <div className="w-[1px] h-[40px] bg-[#4a4f10]/40" />{" "}
+            <div className="w-[1px] h-[40px] bg-[#4f0e19]/40" />{" "}
             <div className="flex-1 flex flex-col items-center text-center px-1">
               {" "}
               <img
@@ -790,7 +790,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                 NEW ESSENCES
               </span>{" "}
             </div>{" "}
-            <div className="w-[1px] h-[40px] bg-[#4a4f10]/40" />{" "}
+            <div className="w-[1px] h-[40px] bg-[#4f0e19]/40" />{" "}
             <div className="flex-1 flex flex-col items-center text-center px-1">
               {" "}
               <img
@@ -850,7 +850,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               height="9"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#4a4f10"
+              stroke="#4f0e19"
               strokeWidth="1.8"
             >
               {" "}
@@ -976,7 +976,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             </div>{" "}
             {/* Vertical Separator 1 */}
             <div
-              className="w-[1px] h-[30px] bg-[#4a4f10]/35 shrink-0"
+              className="w-[1px] h-[30px] bg-[#4f0e19]/35 shrink-0"
               aria-hidden="true"
             />{" "}
             {/* Column 2: New Beginnings */}
@@ -1002,7 +1002,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             </div>{" "}
             {/* Vertical Separator 2 */}
             <div
-              className="w-[1px] h-[30px] bg-[#4a4f10]/35 shrink-0"
+              className="w-[1px] h-[30px] bg-[#4f0e19]/35 shrink-0"
               aria-hidden="true"
             />{" "}
             {/* Column 3: Crafted With Passion */}
@@ -1090,7 +1090,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               height="8"
               viewBox="0 0 20 12"
               fill="none"
-              stroke="#4a4f10"
+              stroke="#4f0e19"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"

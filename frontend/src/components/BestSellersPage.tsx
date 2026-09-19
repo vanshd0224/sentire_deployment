@@ -309,7 +309,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("all")}
                 className={`rounded-full px-3 py-1 transition-all ${
                   selectedSizeFilter === "all"
-                    ? "bg-[#5f6516] text-black"
+                    ? "bg-[#6b1422] text-white"
                     : "text-ink/60"
                 }`}
               >
@@ -320,7 +320,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("10")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "10"
-                    ? "bg-[#5f6516] text-black"
+                    ? "bg-[#6b1422] text-white"
                     : "text-ink/60"
                 }`}
               >
@@ -331,7 +331,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("30")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "30"
-                    ? "bg-[#5f6516] text-black"
+                    ? "bg-[#6b1422] text-white"
                     : "text-ink/60"
                 }`}
               >
@@ -342,7 +342,7 @@ export default function BestSellersPage({
                 onClick={() => setSelectedSizeFilter("50")}
                 className={`rounded-full px-2.5 py-1 transition-all ${
                   selectedSizeFilter === "50"
-                    ? "bg-[#5f6516] text-black"
+                    ? "bg-[#6b1422] text-white"
                     : "text-ink/60"
                 }`}
               >

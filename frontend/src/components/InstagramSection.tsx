@@ -158,9 +158,9 @@ export default function InstagramSection() {
               background: "rgba(255,255,255,0.04)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#5f6516";
-              e.currentTarget.style.color = "#5f6516";
-              e.currentTarget.style.background = "rgba(95, 101, 22,0.08)";
+              e.currentTarget.style.borderColor = "#6b1422";
+              e.currentTarget.style.color = "#6b1422";
+              e.currentTarget.style.background = "rgba(107,20,34,0.08)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";

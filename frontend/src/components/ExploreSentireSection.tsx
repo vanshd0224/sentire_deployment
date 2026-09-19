@@ -108,7 +108,7 @@ export default function ExploreSentireSection({
                 {" "}
                 <div className="flex items-center justify-between gap-2 mb-2">
                   {" "}
-                  <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] bg-[#5f6516]/10 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] bg-[#6b1422]/10 px-2.5 py-0.5 rounded-full">
                     {" "}
                     {item.badge}
                   </span>{" "}

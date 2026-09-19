@@ -338,12 +338,12 @@ export default function ClientServicesPage({
       {/* ── Section 01: Hero Section ── */}
       <section className="on-dark relative overflow-hidden border-b border-[color:var(--accent)]/15 bg-[#111111] text-[#f2f2f0] py-20 lg:py-28 px-5 lg:px-12">
         {" "}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#5f6516]/20 via-transparent to-transparent opacity-30 pointer-events-none" />{" "}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#6b1422]/20 via-transparent to-transparent opacity-30 pointer-events-none" />{" "}
         <div className="mx-auto max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {" "}
           <div className="lg:col-span-7 space-y-6">
             {" "}
-            <span className="inline-block rounded-full bg-[#5f6516]/15 border border-[color:var(--accent)]/30 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
+            <span className="inline-block rounded-full bg-[#6b1422]/15 border border-[color:var(--accent)]/30 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
               SENTIRE CLIENT SERVICES
             </span>{" "}
@@ -366,7 +366,7 @@ export default function ClientServicesPage({
               {" "}
               <a
                 href="#enquiry-form"
-                className="px-7 py-3.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
+                className="px-7 py-3.5 rounded-lg bg-[#6b1422] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all shadow-lg cursor-pointer"
               >
                 {" "}
                 BEGIN AN ENQUIRY
@@ -512,7 +512,7 @@ export default function ClientServicesPage({
               </div>{" "}
               <button
                 onClick={onNavigateToTrackOrder}
-                className="mt-4 px-4 py-2.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all cursor-pointer text-center"
+                className="mt-4 px-4 py-2.5 rounded-lg bg-[#6b1422] text-[#111111] font-bold text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all cursor-pointer text-center"
               >
                 {" "}
                 TRACK PACKAGE →
@@ -709,7 +709,7 @@ export default function ClientServicesPage({
                   {" "}
                   <span className="text-xl">{cat.icon}</span>{" "}
                   {isSelected && (
-                    <span className="h-2 w-2 rounded-full bg-[#5f6516]" />
+                    <span className="h-2 w-2 rounded-full bg-[#6b1422]" />
                   )}
                 </div>{" "}
                 <div className="mt-3">
@@ -765,7 +765,7 @@ export default function ClientServicesPage({
             {submissionRef ? (
               <div className="text-center py-12 px-4 space-y-5 animate-fadeIn">
                 {" "}
-                <div className="h-16 w-16 rounded-full bg-[#5f6516]/20 border border-[color:var(--accent)] text-[color:var(--accent)] flex items-center justify-center text-2xl mx-auto">
+                <div className="h-16 w-16 rounded-full bg-[#6b1422]/20 border border-[color:var(--accent)] text-[color:var(--accent)] flex items-center justify-center text-2xl mx-auto">
                   {" "}
                   ✓
                 </div>{" "}
@@ -900,7 +900,7 @@ export default function ClientServicesPage({
                           value={method}
                           checked={formData.preferredContact === method}
                           onChange={handleInputChange}
-                          className="accent-[#5f6516]"
+                          className="accent-[#6b1422]"
                         />{" "}
                         {method}
                       </label>
@@ -982,10 +982,10 @@ export default function ClientServicesPage({
                           type="file"
                           onChange={handleFileChange}
                           accept="image/*"
-                          className="w-full bg-white border border-black/15 rounded-[4px] p-2 text-xs text-ink file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#5f6516] file:text-black hover:file:bg-[#5f6516]"
+                          className="w-full bg-white border border-black/15 rounded-[4px] p-2 text-xs text-[#161616] file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#6b1422] file:text-white hover:file:bg-[#6b1422]"
                         />{" "}
                         {formData.fileName && (
-                          <span className="text-[10px] max-sm:text-[12px] text-green-700 font-bold mt-1 block">
+                          <span className="text-[10px] max-sm:text-[12px] text-[#6b1422] font-bold mt-1 block">
                             {" "}
                             Attached: {formData.fileName}
                           </span>
@@ -1106,12 +1106,12 @@ export default function ClientServicesPage({
                         <button
                           type="button"
                           onClick={() => setCorpStep(1)}
-                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 1 ? "bg-[#5f6516]" : "bg-white/20"}`}
+                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 1 ? "bg-[#6b1422]" : "bg-white/20"}`}
                         />{" "}
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
-                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 2 ? "bg-[#5f6516]" : "bg-white/20"}`}
+                          className={`h-2 w-6 rounded-full transition-all ${corpStep === 2 ? "bg-[#6b1422]" : "bg-white/20"}`}
                         />{" "}
                       </div>{" "}
                     </div>{" "}
@@ -1199,7 +1199,7 @@ export default function ClientServicesPage({
                         <button
                           type="button"
                           onClick={() => setCorpStep(2)}
-                          className="mt-2 w-full py-2.5 rounded-[4px] bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all cursor-pointer"
+                          className="mt-2 w-full py-2.5 rounded-[4px] bg-[#6b1422] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all cursor-pointer"
                         >
                           {" "}
                           Next: Presentation & Details →
@@ -1432,7 +1432,7 @@ export default function ClientServicesPage({
                   const el = document.getElementById("enquiry-form");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-7 py-3.5 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
+                className="px-7 py-3.5 rounded-lg bg-[#6b1422] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all shadow-lg cursor-pointer"
               >
                 {" "}
                 DISCUSS A BULK ORDER →
@@ -1616,7 +1616,7 @@ export default function ClientServicesPage({
             {" "}
             <a
               href="#enquiry-form"
-              className="px-7 py-3 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all shadow-lg cursor-pointer"
+              className="px-7 py-3 rounded-lg bg-[#6b1422] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all shadow-lg cursor-pointer"
             >
               {" "}
               CONTACT SENTIRE

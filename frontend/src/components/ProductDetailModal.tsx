@@ -404,7 +404,7 @@ export default function ProductDetailModal({
           {/* 1. Close Button (✕) */}
           <button
             onClick={onClose}
-            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/70 shadow-lg backdrop-blur-md transition-all hover:bg-[#6b1422] hover:text-white cursor-pointer active:scale-95 touch-manipulation"
             aria-label="Close modal"
             title="Close"
           >
@@ -423,7 +423,7 @@ export default function ProductDetailModal({
           {/* 2. Share Button (directly below Cross button) */}
           <button
             onClick={handleShare}
-            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/80 shadow-lg backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white cursor-pointer active:scale-95 touch-manipulation border border-black/5"
+            className="flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-[#161616]/80 shadow-lg backdrop-blur-md transition-all hover:bg-[#6b1422] hover:text-white cursor-pointer active:scale-95 touch-manipulation border border-black/5"
             aria-label="Share product"
             title="Share this perfume"
           >
@@ -486,7 +486,7 @@ export default function ProductDetailModal({
                       e.stopPropagation();
                       handlePrevImage();
                     }}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white active:scale-95 cursor-pointer"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#161616] shadow-md backdrop-blur-md transition-all hover:bg-[#6b1422] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Previous image"
                   >
                     {" "}
@@ -497,7 +497,7 @@ export default function ProductDetailModal({
                       e.stopPropagation();
                       handleNextImage();
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-md transition-all hover:bg-[#5f6516] hover:text-white active:scale-95 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#161616] shadow-md backdrop-blur-md transition-all hover:bg-[#6b1422] hover:text-white active:scale-95 cursor-pointer"
                     aria-label="Next image"
                   >
                     {" "}
@@ -521,7 +521,7 @@ export default function ProductDetailModal({
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`h-14 w-14 sm:h-20 sm:w-20 overflow-hidden rounded-[4px] border-2 bg-[#f5efe6] p-1.5 transition-all cursor-pointer touch-manipulation ${
                     selectedImageIndex === idx
-                      ? "border-[color:var(--accent)] scale-105 shadow-md ring-2 ring-[#5f6516]/30"
+                      ? "border-[color:var(--accent)] scale-105 shadow-md ring-2 ring-[#6b1422]/30"
                       : "border-transparent opacity-70 hover:opacity-100"
                   }`}
                   aria-label={`Select fragrance view ${idx + 1}`}
@@ -552,7 +552,7 @@ export default function ProductDetailModal({
                   {" "}
                   {product.num} · EXTRAIT DE PARFUM
                 </span>{" "}
-                <span className="rounded-full bg-[#5f6516]/10 px-3 py-0.5 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
+                <span className="rounded-full bg-[#6b1422]/10 px-3 py-0.5 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)]">
                   {" "}
                   UNISEX LUXURY
                 </span>{" "}
@@ -576,7 +576,7 @@ export default function ProductDetailModal({
                 </div>{" "}
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/10 px-3.5 py-1 text-[11px] max-sm:text-[12px] font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
+                  className="flex items-center gap-1.5 rounded-full border border-[color:var(--accent)]/40 bg-[#6b1422]/10 px-3.5 py-1 text-[11px] max-sm:text-[12px] font-bold text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95 touch-manipulation"
                   title="Share this perfume"
                   aria-label="Share this perfume"
                 >
@@ -611,7 +611,7 @@ export default function ProductDetailModal({
               <span className="font-sans text-sm text-[#161616]/40 line-through tabular-nums inline-flex items-baseline gap-0.5">
                 ₹{originalPrice.toLocaleString("en-IN")}
               </span>{" "}
-              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+              <span className="rounded-full bg-[#f4e6e8] px-2.5 py-0.5 text-xs font-bold text-[#6b1422]">
                 {" "}
                 {discountPercent}% OFF
               </span>{" "}
@@ -655,23 +655,23 @@ export default function ProductDetailModal({
                         isSelected
                           ? isOutOfStock
                             ? "bg-stone-800 text-white border-2 border-stone-600 shadow-md"
-                            : "bg-[#111111] text-white border-2 border-[color:var(--accent)] shadow-[0_0_20px_rgba(95, 101, 22,0.3)] scale-[1.02]"
+                            : "bg-[#111111] text-white border-2 border-[color:var(--accent)] shadow-[0_0_20px_rgba(107,20,34,0.3)] scale-[1.02]"
                           : isOutOfStock
                             ? "border border-stone-200 bg-stone-100/70 text-stone-400"
-                            : "border border-black/12 bg-white text-[#161616] hover:border-[color:var(--accent)] hover:bg-[#5f6516]/5"
+                            : "border border-black/12 bg-white text-[#161616] hover:border-[color:var(--accent)] hover:bg-[#6b1422]/5"
                       }`}
                     >
                       {" "}
                       {/* Best Value & Personalisation Badge */}
                       {isBestValue && !isOutOfStock && (
-                        <span className="absolute -top-2.5 rounded-full bg-[#5f6516] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-black uppercase tracking-wider shadow-sm">
+                        <span className="absolute -top-2.5 rounded-full bg-[#6b1422] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-white uppercase tracking-wider shadow-sm">
                           {" "}
                           Best Value · Personalisable
                         </span>
                       )}
                       {/* Selected check mark */}
                       {isSelected && (
-                        <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#5f6516] text-[9px] max-sm:text-[12px] text-black font-bold">
+                        <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#6b1422] text-[9px] max-sm:text-[12px] text-white font-bold">
                           {" "}
                           ✓
                         </span>
@@ -704,7 +704,7 @@ export default function ProductDetailModal({
                             isOutOfStock
                               ? "text-red-500"
                               : isSelected
-                                ? "text-[#cdd43f]"
+                                ? "text-[#e7bcc3]"
                                 : "text-[color:var(--accent)]"
                           }`}
                         >
@@ -749,7 +749,7 @@ export default function ProductDetailModal({
                       {/* Notify Me Form */}
                       <form
                         onSubmit={handleNotifySubmit}
-                        className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#5f6516]/5 p-3.5 space-y-2"
+                        className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#6b1422]/5 p-3.5 space-y-2"
                       >
                         {" "}
                         <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[color:var(--accent)] block">
@@ -757,7 +757,7 @@ export default function ProductDetailModal({
                           Get Notified When {selectedSize}ML Restocks
                         </span>{" "}
                         {notifySubmitted ? (
-                          <p className="text-xs font-semibold text-emerald-700">
+                          <p className="text-xs font-semibold text-[#6b1422]">
                             {" "}
                             ✓ Success! We will email you the moment stock
                             arrives.
@@ -775,7 +775,7 @@ export default function ProductDetailModal({
                             />{" "}
                             <button
                               type="submit"
-                              className="rounded-[4px] bg-[#5f6516] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#4a4f10] transition-all cursor-pointer"
+                              className="rounded-[4px] bg-[#6b1422] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#4f0e19] transition-all cursor-pointer"
                             >
                               {" "}
                               Notify Me
@@ -806,7 +806,7 @@ export default function ProductDetailModal({
                                 -1,
                               )
                             }
-                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer"
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer"
                           >
                             {" "}
                             −
@@ -822,7 +822,7 @@ export default function ProductDetailModal({
                                 1,
                               )
                             }
-                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer"
+                            className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer"
                           >
                             {" "}
                             +
@@ -851,7 +851,7 @@ export default function ProductDetailModal({
                             currentPrice,
                           )
                         }
-                        className="on-dark flex-1 rounded-full bg-[#161616] py-3.5 text-[14px] font-medium text-[#f2f2f0] hover:bg-[#5f6516] transition-colors cursor-pointer min-h-[48px]"
+                        className="on-dark flex-1 rounded-full bg-[#161616] py-3.5 text-[14px] font-medium text-[#f2f2f0] hover:bg-[#6b1422] transition-colors cursor-pointer min-h-[48px]"
                       >
                         {" "}
                         Add to Bag — ₹{currentPrice.toLocaleString("en-IN")}
@@ -896,7 +896,7 @@ export default function ProductDetailModal({
                     {" "}
                     <div className="flex items-center gap-3 text-left">
                       {" "}
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#5f6516]/15 text-[color:var(--accent)] text-sm font-bold">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#6b1422]/15 text-[color:var(--accent)] text-sm font-bold">
                         {" "}
                       </span>{" "}
                       <div>
@@ -925,7 +925,7 @@ export default function ProductDetailModal({
                         setSelectedSize(50);
                         setIsPersonalising(true);
                       }}
-                      className="shrink-0 rounded-[4px] bg-gradient-to-r from-[#5f6516] to-[#4a4f10] px-3.5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer"
+                      className="shrink-0 rounded-[4px] bg-gradient-to-r from-[#6b1422] to-[#4f0e19] px-3.5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-white shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer"
                     >
                       {" "}
                       Switch to 50ML
@@ -937,14 +937,14 @@ export default function ProductDetailModal({
                     onClick={() => setIsPersonalising(!isPersonalising)}
                     className={`w-full flex items-center justify-between gap-2 rounded-[4px] border p-3 sm:p-3.5 transition-all cursor-pointer ${
                       isPersonalising || engravingText || includeDate
-                        ? "border-[color:var(--accent)] bg-[#5f6516]/10 text-[#161616] shadow-md"
-                        : "border-[color:var(--accent)]/40 bg-gradient-to-r from-[#5f6516]/5 via-amber-500/5 to-[#5f6516]/5 hover:border-[color:var(--accent)] hover:bg-[#5f6516]/10 text-[#161616]"
+                        ? "border-[color:var(--accent)] bg-[#6b1422]/10 text-white shadow-md"
+                        : "border-[color:var(--accent)]/40 bg-gradient-to-r from-[#6b1422]/5 via-amber-500/5 to-[#6b1422]/5 hover:border-[color:var(--accent)] hover:bg-[#6b1422]/10 text-white"
                     }`}
                   >
                     {" "}
                     <div className="flex items-center gap-2.5 text-left min-w-0 flex-1">
                       {" "}
-                      <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#5f6516]/20 text-[color:var(--accent)] text-xs sm:text-sm font-bold">
+                      <span className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#6b1422]/20 text-[color:var(--accent)] text-xs sm:text-sm font-bold">
                         {" "}
                         ✒
                       </span>{" "}
@@ -969,7 +969,7 @@ export default function ProductDetailModal({
                         </span>{" "}
                       </div>{" "}
                     </div>{" "}
-                    <span className="text-[10.5px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shrink-0 whitespace-nowrap bg-[#5f6516]/15 px-2.5 py-1 rounded-lg">
+                    <span className="text-[10.5px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shrink-0 whitespace-nowrap bg-[#6b1422]/15 px-2.5 py-1 rounded-lg">
                       {" "}
                       {isPersonalising
                         ? "Close"
@@ -1041,8 +1041,8 @@ export default function ProductDetailModal({
                             onClick={() => setIncludeDate(true)}
                             className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer ${
                               includeDate
-                                ? "bg-[#5f6516] text-white shadow-xs"
-                                : "text-[#161616]/60 hover:text-[#161616]"
+                                ? "bg-[#6b1422] text-white shadow-xs"
+                                : "text-[#161616]/60 hover:text-white"
                             }`}
                           >
                             {" "}
@@ -1069,7 +1069,7 @@ export default function ProductDetailModal({
                     <button
                       type="button"
                       onClick={() => setIsPersonalising(false)}
-                      className="w-full rounded-[4px] bg-[#5f6516] py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-[#4a4f10] transition-all shadow-xs cursor-pointer mt-2"
+                      className="w-full rounded-[4px] bg-[#6b1422] py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white hover:bg-[#4f0e19] transition-all shadow-xs cursor-pointer mt-2"
                     >
                       {" "}
                       Save Personalisation Details
@@ -1103,7 +1103,7 @@ export default function ProductDetailModal({
                 <button
                   type="submit"
                   disabled={isCheckingPincode}
-                  className="on-dark shrink-0 rounded-[4px] bg-[#161616] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5f6516] transition-all cursor-pointer whitespace-nowrap"
+                  className="on-dark shrink-0 rounded-[4px] bg-[#161616] px-4 sm:px-5 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#6b1422] transition-all cursor-pointer whitespace-nowrap"
                 >
                   {" "}
                   {isCheckingPincode ? "Checking..." : "VERIFY"}
@@ -1238,7 +1238,7 @@ export default function ProductDetailModal({
                   </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
                     {" "}
-                    <div className="h-full w-[92%] rounded-full bg-[#5f6516]" />{" "}
+                    <div className="h-full w-[92%] rounded-full bg-[#6b1422]" />{" "}
                   </div>{" "}
                 </div>{" "}
                 <div>
@@ -1250,7 +1250,7 @@ export default function ProductDetailModal({
                   </div>{" "}
                   <div className="h-2 w-full rounded-full bg-black/10">
                     {" "}
-                    <div className="h-full w-[88%] rounded-full bg-[#5f6516]" />{" "}
+                    <div className="h-full w-[88%] rounded-full bg-[#6b1422]" />{" "}
                   </div>{" "}
                 </div>{" "}
               </div>
@@ -1381,7 +1381,7 @@ export default function ProductDetailModal({
             </div>{" "}
             <button
               onClick={() => setIsWritingReview((prev) => !prev)}
-              className="on-dark rounded-full bg-[#161616] px-6 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#5f6516] transition-all shadow-md cursor-pointer"
+              className="on-dark rounded-full bg-[#161616] px-6 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#6b1422] transition-all shadow-md cursor-pointer"
             >
               {" "}
               {isWritingReview ? "Cancel Review" : "Write a Review"}
@@ -1402,7 +1402,7 @@ export default function ProductDetailModal({
                 </span>{" "}
               </div>{" "}
               <div className="flex text-amber-500 text-sm mt-1"></div>{" "}
-              <span className="text-xs font-semibold text-emerald-800 mt-2 flex items-center gap-1">
+              <span className="text-xs font-semibold text-[#6b1422] mt-2 flex items-center gap-1">
                 {" "}
                 <span>✓</span> 100% Verified Purchases across India
               </span>{" "}
@@ -1431,7 +1431,7 @@ export default function ProductDetailModal({
                     <div className="h-2 flex-1 rounded-full bg-black/10 overflow-hidden">
                       {" "}
                       <div
-                        className="h-full rounded-full bg-[#5f6516]"
+                        className="h-full rounded-full bg-[#6b1422]"
                         style={{ width: `${pct}%` }}
                       />{" "}
                     </div>{" "}
@@ -1447,7 +1447,7 @@ export default function ProductDetailModal({
           {isWritingReview && (
             <form
               onSubmit={handleAddReview}
-              className="rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/5 p-6 space-y-4 animate-in fade-in"
+              className="rounded-[4px] border border-[color:var(--accent)]/40 bg-[#6b1422]/5 p-6 space-y-4 animate-in fade-in"
             >
               {" "}
               <h4 className="font-display text-lg font-medium text-[#161616]">
@@ -1520,7 +1520,7 @@ export default function ProductDetailModal({
               </div>{" "}
               <button
                 type="submit"
-                className="rounded-full bg-[#5f6516] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
+                className="rounded-full bg-[#6b1422] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4f0e19] transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 Submit Review
@@ -1544,7 +1544,7 @@ export default function ProductDetailModal({
                       {rev.author}
                     </span>{" "}
                     {rev.verified && (
-                      <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-emerald-800">
+                      <span className="rounded-full bg-[#f4e6e8] px-2.5 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[#6b1422]">
                         {" "}
                         ✓ Verified Buyer
                       </span>
@@ -1577,7 +1577,7 @@ export default function ProductDetailModal({
                     Math.min(prev + 8, productReviews.length),
                   )
                 }
-                className="rounded-full border border-[color:var(--accent)] bg-[#5f6516]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
+                className="rounded-full border border-[color:var(--accent)] bg-[#6b1422]/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
               >
                 {" "}
                 Load More Reviews (+8) ·{" "}
@@ -1622,7 +1622,7 @@ export default function ProductDetailModal({
               );
               onClose();
             }}
-            className="rounded-full bg-[#5f6516] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black hover:bg-[#4a4f10] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
+            className="rounded-full bg-[#6b1422] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-white hover:bg-[#4f0e19] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >
             {" "}
             Add to Bag →
@@ -1703,7 +1703,7 @@ export default function ProductDetailModal({
                     }}
                     className={`h-2.5 rounded-full transition-all cursor-pointer ${
                       selectedImageIndex === idx
-                        ? "w-8 bg-[#5f6516]"
+                        ? "w-8 bg-[#6b1422]"
                         : "w-2.5 bg-white/40 hover:bg-white/70"
                     }`}
                     aria-label={`View image ${idx + 1}`}

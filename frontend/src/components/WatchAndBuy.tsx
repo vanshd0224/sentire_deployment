@@ -457,7 +457,7 @@ export default function WatchAndBuy({
           }}
         >
           {" "}
-          <span className="h-2 w-2 rounded-full bg-[#5f6516] animate-pulse" />{" "}
+          <span className="h-2 w-2 rounded-full bg-[#6b1422] animate-pulse" />{" "}
           {toastMsg}
         </div>
       )}
@@ -983,7 +983,7 @@ export default function WatchAndBuy({
                     `${window.location.origin}/perfumes/${shareModalReel.id}`,
                   )
                 }
-                className="on-dark bg-[#161616] hover:bg-[#5f6516] text-white px-4 py-2 rounded-[4px] text-xs font-bold transition-all cursor-pointer shrink-0 shadow-sm"
+                className="on-dark bg-[#161616] hover:bg-[#6b1422] text-white px-4 py-2 rounded-[4px] text-xs font-bold transition-all cursor-pointer shrink-0 shadow-sm"
               >
                 {" "}
                 Copy Link

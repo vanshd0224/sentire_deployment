@@ -185,10 +185,10 @@ export default function TrackOrderPage({
       {/* ── Hero Section ── */}
       <section className="relative overflow-hidden border-b border-[color:var(--accent)]/15 bg-[#0d0a07] text-[#f2f2f0] py-16 lg:py-24 px-5 lg:px-12">
         {" "}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#5f6516]/15 via-transparent to-transparent opacity-40 pointer-events-none" />{" "}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#6b1422]/15 via-transparent to-transparent opacity-40 pointer-events-none" />{" "}
         <div className="mx-auto max-w-[900px] text-center relative z-10">
           {" "}
-          <span className="inline-block rounded-full bg-[#5f6516]/15 border border-[color:var(--accent)]/30 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
+          <span className="inline-block rounded-full bg-[#6b1422]/15 border border-[color:var(--accent)]/30 px-3.5 py-1 text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
             {" "}
             Order Tracking & Dispatch Status
           </span>{" "}
@@ -226,7 +226,7 @@ export default function TrackOrderPage({
               <button
                 type="submit"
                 disabled={isSearching}
-                className="px-6 py-3 rounded-lg bg-[#5f6516] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#5f6516] transition-all cursor-pointer shrink-0 disabled:opacity-50"
+                className="px-6 py-3 rounded-lg bg-[#6b1422] text-[#111111] font-bold text-xs uppercase tracking-[0.06em] hover:bg-[#6b1422] transition-all cursor-pointer shrink-0 disabled:opacity-50"
               >
                 {" "}
                 {isSearching ? "SEARCHING..." : "TRACK STATUS →"}
@@ -259,7 +259,7 @@ export default function TrackOrderPage({
               </div>{" "}
               <div className="inline-flex items-center gap-2 bg-[#f7f7f5] border border-[color:var(--accent)]/40 px-4 py-2 rounded-full self-start sm:self-auto">
                 {" "}
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />{" "}
+                <span className="h-2 w-2 rounded-full bg-[#6b1422] animate-pulse" />{" "}
                 <span className="text-xs font-bold text-ink uppercase tracking-wider">
                   {orderResult.statusText}
                 </span>{" "}
@@ -268,21 +268,21 @@ export default function TrackOrderPage({
             {/* Stepper Timeline */}
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 py-2">
               {" "}
-              <div className="p-4 rounded-[4px] bg-emerald-50 border border-emerald-200">
+              <div className="p-4 rounded-[4px] bg-[#f4e6e8] border border-[#6b1422]/30">
                 {" "}
-                <span className="text-xs font-bold text-emerald-800 uppercase block">
+                <span className="text-xs font-bold text-[#6b1422] uppercase block">
                   1. Confirmed
                 </span>{" "}
-                <span className="text-[10px] max-sm:text-[12px] text-emerald-700 mt-1 block">
+                <span className="text-[10px] max-sm:text-[12px] text-[#6b1422] mt-1 block">
                   Order received & verified
                 </span>{" "}
               </div>{" "}
-              <div className="p-4 rounded-[4px] bg-emerald-50 border border-emerald-200">
+              <div className="p-4 rounded-[4px] bg-[#f4e6e8] border border-[#6b1422]/30">
                 {" "}
-                <span className="text-xs font-bold text-emerald-800 uppercase block">
+                <span className="text-xs font-bold text-[#6b1422] uppercase block">
                   2. Formulated
                 </span>{" "}
-                <span className="text-[10px] max-sm:text-[12px] text-emerald-700 mt-1 block">
+                <span className="text-[10px] max-sm:text-[12px] text-[#6b1422] mt-1 block">
                   Extrait de parfum bottled
                 </span>{" "}
               </div>{" "}
@@ -331,7 +331,7 @@ export default function TrackOrderPage({
                 <span className="text-[10px] max-sm:text-[12px] font-bold text-ink/50 uppercase tracking-[0.06em] block">
                   Estimated Arrival
                 </span>{" "}
-                <span className="text-sm font-semibold text-emerald-700">
+                <span className="text-sm font-semibold text-[#6b1422]">
                   {orderResult.estimatedDelivery}
                 </span>{" "}
               </div>{" "}

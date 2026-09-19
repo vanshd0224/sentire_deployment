@@ -20,7 +20,12 @@ const STAGES = [
   { key: "base", label: "Drydown", from: 0.7, to: 1.01, hours: "5–12 h" },
 ] as const;
 
-type Particle = {
+// A real atomiser doesn't stream: each pump throws a short, fast cone of
+// fine droplets that brake hard in the air, and leaves a soft cloud behind
+// that hangs, spreads and drifts up. So the mist is two populations — spray
+// (tiny, quick, gone in half a second) and haze (big, faint, slow) — fired
+// in pulses while the vial is held.
+type Droplet = {
   x: number;
   y: number;
   vx: number;
@@ -28,7 +33,34 @@ type Particle = {
   r: number;
   life: number;
   max: number;
+  a: number;
 };
+type Haze = Droplet & { grow: number; seed: number };
+
+const PUMP_MS = 430; // one press of the pump
+const BURST_MS = 170; // how long each press actually sprays
+const AIM = -0.1; // radians; nozzle points slightly up and to the right
+const CONE = 0.24; // half-angle of the spray cone
+const MAX_DROPS = 700;
+const MAX_HAZE = 70;
+
+// One soft sprite, drawn once, stamped for every haze puff (far cheaper
+// than a radial gradient per particle per frame).
+let sprite: HTMLCanvasElement | null = null;
+function hazeSprite() {
+  if (sprite) return sprite;
+  sprite = document.createElement("canvas");
+  sprite.width = sprite.height = 128;
+  const g = sprite.getContext("2d")!;
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, "rgba(255,255,255,1)");
+  grad.addColorStop(0.35, "rgba(255,255,255,0.55)");
+  grad.addColorStop(0.7, "rgba(255,255,255,0.15)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 128, 128);
+  return sprite;
+}
 
 function tone(hex: string, k: number) {
   const n = parseInt(hex.slice(1), 16);
@@ -42,7 +74,10 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
   const f = DISCOVERY_FRAGRANCES[index];
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const particles = useRef<Particle[]>([]);
+  const drops = useRef<Droplet[]>([]);
+  const haze = useRef<Haze[]>([]);
+  const heldFor = useRef(0); // ms since the finger went down
+  const flash = useRef(0); // nozzle flash, 1 → 0
   const raf = useRef(0);
   const last = useRef(0);
   const held = useRef(false);
@@ -70,43 +105,121 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
     if (c && ctx) {
       const w = c.width;
       const h = c.height;
+      const u = w / 360; // one CSS-ish unit at this canvas size
+      const k = dt / 16.67; // frame step relative to 60fps
+      const nx = w * 0.53;
+      const ny = h * 0.13;
+
       if (held.current) {
-        // An atomiser fires sideways from the nozzle in a widening cone.
-        for (let i = 0; i < 4; i++) {
-          particles.current.push({
-            x: w * 0.53,
-            y: h * 0.13,
-            vx: (2.4 + Math.random() * 3.2) * (w / 360),
-            vy: (-0.7 + Math.random() * 1.4) * (w / 360),
-            r: (3 + Math.random() * 6) * (w / 360),
-            life: 0,
-            max: 45 + Math.random() * 40,
-          });
+        const before = heldFor.current;
+        heldFor.current += dt;
+        const phase = heldFor.current % PUMP_MS;
+        if (
+          Math.floor(before / PUMP_MS) !==
+            Math.floor(heldFor.current / PUMP_MS) ||
+          before === 0
+        )
+          flash.current = 1;
+        if (phase < BURST_MS && drops.current.length < MAX_DROPS) {
+          // Strongest at the start of the stroke, tailing off.
+          const strength = 1 - phase / BURST_MS;
+          const n = Math.round((10 + 26 * strength) * k);
+          for (let i = 0; i < n; i++) {
+            // Gaussian-ish angle: most droplets near the axis
+            const ang =
+              AIM +
+              ((Math.random() + Math.random() + Math.random()) / 1.5 - 1) *
+                CONE;
+            const sp = (7 + Math.random() * 9) * u * (0.55 + 0.45 * strength);
+            drops.current.push({
+              x: nx + Math.random() * 2 * u,
+              y: ny + (Math.random() - 0.5) * 2 * u,
+              vx: Math.cos(ang) * sp,
+              vy: Math.sin(ang) * sp,
+              r: (0.35 + Math.random() ** 3 * 1.4) * u,
+              life: 0,
+              max: 22 + Math.random() * 26,
+              a: 0.35 + Math.random() * 0.45,
+            });
+          }
+          if (haze.current.length < MAX_HAZE && Math.random() < 0.9 * k) {
+            const ang = AIM + (Math.random() - 0.5) * CONE * 1.4;
+            const sp = (3.5 + Math.random() * 4) * u;
+            haze.current.push({
+              x: nx + 10 * u,
+              y: ny,
+              vx: Math.cos(ang) * sp,
+              vy: Math.sin(ang) * sp,
+              r: (10 + Math.random() * 12) * u,
+              grow: (0.5 + Math.random() * 0.6) * u,
+              life: 0,
+              max: 110 + Math.random() * 70,
+              a: 0.12 + Math.random() * 0.1,
+              seed: Math.random() * 6.28,
+            });
+          }
         }
-        if (particles.current.length > 160)
-          particles.current.splice(0, particles.current.length - 160);
       }
+
       ctx.clearRect(0, 0, w, h);
-      particles.current = particles.current.filter((p) => p.life < p.max);
-      for (const p of particles.current) {
-        p.life += dt / 16;
-        p.x += p.vx * (dt / 16);
-        p.y += p.vy * (dt / 16);
-        p.vx *= 0.965;
-        p.vy -= 0.012;
-        p.r += 0.9 * (w / 360);
-        const a = 0.16 * (1 - p.life / p.max);
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-        g.addColorStop(0, `rgba(255,255,255,${a})`);
-        g.addColorStop(1, "rgba(255,255,255,0)");
-        ctx.fillStyle = g;
+
+      // Haze: slow, spreading, rising, wobbling
+      const img = hazeSprite();
+      const hz = haze.current;
+      for (let i = hz.length - 1; i >= 0; i--) {
+        const p = hz[i];
+        p.life += k;
+        if (p.life >= p.max) {
+          hz[i] = hz[hz.length - 1];
+          hz.pop();
+          continue;
+        }
+        const drag = Math.pow(0.955, k);
+        p.vx *= drag;
+        p.vy = p.vy * drag - 0.018 * u * k; // warm air lifts it
+        p.x += (p.vx + Math.sin(p.life * 0.05 + p.seed) * 0.25 * u) * k;
+        p.y += p.vy * k;
+        p.r += p.grow * k * (1 - p.life / p.max);
+        const t = p.life / p.max;
+        // fade in quickly, out slowly
+        ctx.globalAlpha = p.a * Math.min(1, t * 8) * (1 - t) * (1 - t);
+        ctx.drawImage(img, p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+      }
+
+      // Droplets: fast, braking hard, falling a touch as they slow
+      ctx.fillStyle = "#fff";
+      const dr = drops.current;
+      const drag = Math.pow(0.935, k);
+      for (let i = dr.length - 1; i >= 0; i--) {
+        const p = dr[i];
+        p.life += k;
+        if (p.life >= p.max) {
+          dr[i] = dr[dr.length - 1];
+          dr.pop();
+          continue;
+        }
+        p.vx *= drag;
+        p.vy = p.vy * drag + 0.03 * u * k;
+        p.x += p.vx * k;
+        p.y += p.vy * k;
+        const t = p.life / p.max;
+        ctx.globalAlpha = p.a * (1 - t);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r, 0, 6.2832);
         ctx.fill();
       }
+
+      // Nozzle flash: a dense white bloom right at the tip on each press
+      if (flash.current > 0.01) {
+        ctx.globalAlpha = 0.5 * flash.current;
+        const r = 14 * u;
+        ctx.drawImage(img, nx - r * 0.4, ny - r * 0.55, r * 1.8, r * 1.1);
+        flash.current *= Math.pow(0.8, k);
+      }
+      ctx.globalAlpha = 1;
     }
 
-    if (held.current || particles.current.length)
+    if (held.current || drops.current.length || haze.current.length)
       raf.current = requestAnimationFrame(loop);
     else last.current = 0;
   }, []);
@@ -117,6 +230,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
       setProgress(0);
     }
     held.current = true;
+    heldFor.current = 0;
     setHolding(true);
     cancelAnimationFrame(raf.current);
     last.current = 0;

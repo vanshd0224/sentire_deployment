@@ -32,7 +32,7 @@ const TOP_NOTES: ScentNote[] = [
     warmth: 20,
     longevity: 45,
     projection: 80,
-    color: "#cdd43f",
+    color: "#e7bcc3",
     tag: "Calantha / Mirai / White Oud",
   },
   {
@@ -116,7 +116,7 @@ const BASE_NOTES: ScentNote[] = [
     warmth: 100,
     longevity: 100,
     projection: 95,
-    color: "#5f6516",
+    color: "#6b1422",
     tag: "White Oud / Purple Oud / Seductive",
   },
   {
@@ -285,14 +285,14 @@ export default function AboutPage({
         : BASE_NOTES;
 
   return (
-    <div className="on-dark min-h-screen w-full bg-[#111111] text-[#f2f2f0] selection:bg-[#5f6516] selection:text-black font-sans relative overflow-x-hidden">
+    <div className="on-dark min-h-screen w-full bg-[#111111] text-[#f2f2f0] selection:bg-[#6b1422] selection:text-white font-sans relative overflow-x-hidden">
       {" "}
       {/* ── STICKY HIGH-TECH CHAPTER HUD & PROGRESS BAR ── */}
       <div className="on-dark sticky top-16 z-40 w-full border-b border-[color:var(--accent)]/30 bg-black/90 backdrop-blur-2xl py-3 px-4 md:px-8 shadow-2xl transition-all">
         {" "}
         {/* Progress Bar Line */}
         <div
-          className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] transition-all duration-300 shadow-[0_0_10px_#5f6516]"
+          className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-[#6b1422] via-[#e7bcc3] to-[#6b1422] transition-all duration-300 shadow-[0_0_10px_#6b1422]"
           style={{ width: `${scrollProgress}%` }}
         />{" "}
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
@@ -301,7 +301,7 @@ export default function AboutPage({
             {" "}
             <div className="flex h-2.5 w-2.5 items-center justify-center">
               {" "}
-              <span className="h-2 w-2 rounded-full bg-[#5f6516] animate-ping" />{" "}
+              <span className="h-2 w-2 rounded-full bg-[#6b1422] animate-ping" />{" "}
             </div>{" "}
             <span className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               {" "}
@@ -328,7 +328,7 @@ export default function AboutPage({
                 onClick={() => scrollToSection(node.id, node.no)}
                 className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider transition-all cursor-pointer border ${
                   activeChapter === node.no
-                    ? "bg-[#5f6516] text-black border-[color:var(--accent)] shadow-[0_0_15px_rgba(95, 101, 22,0.5)] scale-105"
+                    ? "bg-[#6b1422] text-white border-[color:var(--accent)] shadow-[0_0_15px_rgba(107,20,34,0.5)] scale-105"
                     : "bg-white/5 text-[#f2f2f0]/60 border-white/10 hover:bg-white/10 hover:text-white hover:border-[color:var(--accent)]/40"
                 }`}
               >
@@ -342,7 +342,7 @@ export default function AboutPage({
             onClick={toggleSoundscape}
             className={`flex items-center gap-2 rounded-full border px-3.5 py-1 text-[10px] max-sm:text-[12px] font-semibold uppercase tracking-wider transition-all cursor-pointer ${
               isAudioPlaying
-                ? "border-[color:var(--accent)] bg-[#5f6516]/20 text-[#cdd43f] shadow-[0_0_12px_rgba(229,193,88,0.4)]"
+                ? "border-[color:var(--accent)] bg-[#6b1422]/20 text-[#e7bcc3] shadow-[0_0_12px_rgba(229,193,88,0.4)]"
                 : "border-white/20 bg-white/5 text-white/70 hover:border-[color:var(--accent)]/50 hover:text-white"
             }`}
             title="Toggle Sensory Olfactory Ambience Soundscape"
@@ -374,16 +374,16 @@ export default function AboutPage({
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity scale-105"
           style={{ backgroundImage: "url('/images/hero-bg.png')" }}
         />{" "}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_40%,rgba(95, 101, 22,0.18)_0%,rgba(13,9,6,0.98)_85%)]" />{" "}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_40%,rgba(107,20,34,0.18)_0%,rgba(13,9,6,0.98)_85%)]" />{" "}
         {/* Dynamic Morphing Golden Orbs */}
-        <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-[radial-gradient(circle,rgba(95, 101, 22,0.25)_0%,transparent_70%)] blur-3xl animate-pulse" />{" "}
+        <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-[radial-gradient(circle,rgba(107,20,34,0.25)_0%,transparent_70%)] blur-3xl animate-pulse" />{" "}
         <div className="pointer-events-none absolute bottom-10 right-10 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle,rgba(229,193,88,0.15)_0%,transparent_75%)] blur-2xl" />{" "}
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           {" "}
           {/* Back Button */}
           <button
             onClick={onBackToHome}
-            className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-black/60 backdrop-blur-md px-5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] transition-all duration-300 hover:border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black cursor-pointer shadow-lg"
+            className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-black/60 backdrop-blur-md px-5 py-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] transition-all duration-300 hover:border-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white cursor-pointer shadow-lg"
           >
             {" "}
             <svg
@@ -403,16 +403,16 @@ export default function AboutPage({
             Return to Boutique
           </button>{" "}
           {/* Badge */}
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-4 py-1.5 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] shadow-[0_0_20px_rgba(95, 101, 22,0.2)]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#6b1422]/10 px-4 py-1.5 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#e7bcc3] shadow-[0_0_20px_rgba(107,20,34,0.2)]">
             {" "}
-            <span className="h-1.5 w-1.5 rounded-full bg-[#cdd43f]" /> HAUTE
+            <span className="h-1.5 w-1.5 rounded-full bg-[#e7bcc3]" /> HAUTE
             PARFUMERIE DOSSIER • JAIPUR 2023
           </div>{" "}
           {/* Headline */}
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6">
             {" "}
             The Science of Emotion, <br />{" "}
-            <span className="bg-gradient-to-r from-[#5f6516] via-[#f2f2f0] to-[#cdd43f] bg-clip-text text-transparent italic">
+            <span className="bg-gradient-to-r from-[#6b1422] via-[#f2f2f0] to-[#e7bcc3] bg-clip-text text-transparent italic">
               {" "}
               The Alchemy of Oud
             </span>{" "}
@@ -425,7 +425,7 @@ export default function AboutPage({
             </strong>{" "}
             redefines niche perfumery. We synthesize French floral distillation
             with rare Indian Oud resins at an uncompromising{" "}
-            <span className="text-[#cdd43f] font-semibold">
+            <span className="text-[#e7bcc3] font-semibold">
               35%+ Extrait de Parfum
             </span>{" "}
             concentration.
@@ -460,7 +460,7 @@ export default function AboutPage({
                 className="group relative flex flex-col items-center justify-center rounded-[4px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 text-center transition-all duration-300 hover:border-[color:var(--accent)]/60 hover:bg-white/[0.07] hover:-translate-y-1 shadow-xl"
               >
                 {" "}
-                <div className="text-2xl sm:text-3xl font-bold text-[#cdd43f] font-serif tracking-tight group-hover:scale-105 transition-transform">
+                <div className="text-2xl sm:text-3xl font-bold text-[#e7bcc3] font-serif tracking-tight group-hover:scale-105 transition-transform">
                   {" "}
                   {card.stat}
                 </div>{" "}
@@ -484,7 +484,7 @@ export default function AboutPage({
             </span>{" "}
             <div className="flex h-8 w-5 items-center justify-center rounded-full border border-white/20 group-hover:border-[color:var(--accent)]">
               {" "}
-              <span className="h-1.5 w-1.5 rounded-full bg-[#5f6516] animate-bounce" />{" "}
+              <span className="h-1.5 w-1.5 rounded-full bg-[#6b1422] animate-bounce" />{" "}
             </div>{" "}
           </button>{" "}
         </div>{" "}
@@ -502,12 +502,12 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 01
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Latin Genesis: What It Means to{" "}
-            <span className="italic text-[#cdd43f]">Feel</span>{" "}
+            <span className="italic text-[#e7bcc3]">Feel</span>{" "}
           </h2>{" "}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {" "}
@@ -516,7 +516,7 @@ export default function AboutPage({
               <p>
                 {" "}
                 The name{" "}
-                <strong className="text-[#cdd43f] font-semibold">
+                <strong className="text-[#e7bcc3] font-semibold">
                   "SENTIRE"
                 </strong>{" "}
                 originates from the ancient Latin verb meaning{" "}
@@ -533,7 +533,7 @@ export default function AboutPage({
                 scent armors that announce your presence before you speak and
                 leave a memorable echo long after you have departed the room.
               </p>{" "}
-              <div className="p-6 rounded-[4px] border border-[color:var(--accent)]/30 bg-[radial-gradient(ellipse_at_top_left,rgba(95, 101, 22,0.12)_0%,transparent_70%)] backdrop-blur-xl">
+              <div className="p-6 rounded-[4px] border border-[color:var(--accent)]/30 bg-[radial-gradient(ellipse_at_top_left,rgba(107,20,34,0.12)_0%,transparent_70%)] backdrop-blur-xl">
                 {" "}
                 <div className="text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] mb-2">
                   FOUNDER'S CORE CONVICTION
@@ -574,7 +574,7 @@ export default function AboutPage({
                   {" "}
                   <div className="flex items-center gap-3 mb-2">
                     {" "}
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#5f6516]/20 text-xs font-bold text-[#cdd43f]">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#6b1422]/20 text-xs font-bold text-[#e7bcc3]">
                       {" "}
                       0{idx + 1}
                     </span>{" "}
@@ -604,22 +604,22 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 02
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Born in Jaipur,{" "}
-            <span className="italic text-[#cdd43f]">December 2022</span>{" "}
+            <span className="italic text-[#e7bcc3]">December 2022</span>{" "}
           </h2>{" "}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {" "}
             {/* Interactive Founder Dossier Card */}
-            <div className="lg:col-span-5 rounded-[4px] border border-[color:var(--accent)]/40 bg-[linear-gradient(145deg,rgba(95, 101, 22,0.15)_0%,rgba(13,9,6,0.95)_100%)] p-8 backdrop-blur-2xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
+            <div className="lg:col-span-5 rounded-[4px] border border-[color:var(--accent)]/40 bg-[linear-gradient(145deg,rgba(107,20,34,0.15)_0%,rgba(13,9,6,0.95)_100%)] p-8 backdrop-blur-2xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
               {" "}
-              <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-[#5f6516]/10 blur-3xl" />{" "}
+              <div className="absolute -right-12 -bottom-12 h-64 w-64 rounded-full bg-[#6b1422]/10 blur-3xl" />{" "}
               <div>
                 {" "}
-                <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-black/40 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#cdd43f] mb-6">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-black/40 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#e7bcc3] mb-6">
                   {" "}
                   FOUNDER PROFILE • S P VENTURES
                 </div>{" "}
@@ -638,7 +638,7 @@ export default function AboutPage({
                     }
                     className={`flex-1 rounded-lg py-1.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       founderTab === "vision"
-                        ? "bg-[#5f6516] text-black shadow"
+                        ? "bg-[#6b1422] text-white shadow"
                         : "text-white/60 hover:text-white"
                     }`}
                   >
@@ -651,7 +651,7 @@ export default function AboutPage({
                     }
                     className={`flex-1 rounded-lg py-1.5 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       founderTab === "craft"
-                        ? "bg-[#5f6516] text-black shadow"
+                        ? "bg-[#6b1422] text-white shadow"
                         : "text-white/60 hover:text-white"
                     }`}
                   >
@@ -685,7 +685,7 @@ export default function AboutPage({
                 <span className="text-[10px] max-sm:text-[12px] uppercase tracking-[0.06em] text-white/40">
                   HEADQUARTERS
                 </span>{" "}
-                <span className="text-xs font-bold text-[#cdd43f]">
+                <span className="text-xs font-bold text-[#e7bcc3]">
                   Jaipur, Rajasthan (302016)
                 </span>{" "}
               </div>{" "}
@@ -724,7 +724,7 @@ export default function AboutPage({
                   className="rounded-[4px] border border-white/10 bg-white/[0.02] p-5 backdrop-blur-xl flex gap-4 items-start transition-all hover:border-[color:var(--accent)]/40 hover:bg-white/[0.05]"
                 >
                   {" "}
-                  <div className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-3 py-1.5 text-xs font-bold text-[#cdd43f] whitespace-nowrap">
+                  <div className="rounded-[4px] border border-[color:var(--accent)]/30 bg-[#6b1422]/10 px-3 py-1.5 text-xs font-bold text-[#e7bcc3] whitespace-nowrap">
                     {" "}
                     {step.year}
                   </div>{" "}
@@ -756,12 +756,12 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 03
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             The Extrait Standard:{" "}
-            <span className="italic text-[#cdd43f]">
+            <span className="italic text-[#e7bcc3]">
               Interactive Ion Density Meter
             </span>{" "}
           </h2>{" "}
@@ -790,7 +790,7 @@ export default function AboutPage({
                       {" "}
                       Fragrance Oil Concentration Tier
                     </label>{" "}
-                    <span className="text-2xl font-bold font-serif text-[#cdd43f]">
+                    <span className="text-2xl font-bold font-serif text-[#e7bcc3]">
                       {concentration}%
                     </span>{" "}
                   </div>{" "}
@@ -804,13 +804,13 @@ export default function AboutPage({
                     step={1}
                     value={concentration}
                     onChange={(e) => setConcentration(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#5f6516]"
+                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#6b1422]"
                   />{" "}
                   <div className="flex justify-between text-[10px] max-sm:text-[12px] text-white/40 mt-1 uppercase font-bold">
                     {" "}
                     <span>10% Eau de Toilette</span>{" "}
                     <span>15% Eau de Parfum</span>{" "}
-                    <span className="text-[#cdd43f]">35%+ SENTIRE Extrait</span>{" "}
+                    <span className="text-[#e7bcc3]">35%+ SENTIRE Extrait</span>{" "}
                     <span>35% Pure Essence</span>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -870,7 +870,7 @@ export default function AboutPage({
                   }}
                 />{" "}
                 <div
-                  className="absolute rounded-full bg-[radial-gradient(circle,rgba(95, 101, 22,0.35)_0%,transparent_70%)] transition-all duration-300"
+                  className="absolute rounded-full bg-[radial-gradient(circle,rgba(107,20,34,0.35)_0%,transparent_70%)] transition-all duration-300"
                   style={{
                     width: `${concentration * 10}px`,
                     height: `${concentration * 10}px`,
@@ -915,12 +915,12 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 04
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             Interactive Olfactory{" "}
-            <span className="italic text-[#cdd43f]">Alchemy Lab</span>{" "}
+            <span className="italic text-[#e7bcc3]">Alchemy Lab</span>{" "}
           </h2>{" "}
           <p className="text-sm text-white/70 max-w-2xl font-light mb-10">
             {" "}
@@ -953,7 +953,7 @@ export default function AboutPage({
                 }}
                 className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-all cursor-pointer border ${
                   activeNoteCategory === tab.id
-                    ? "bg-[#5f6516] text-black border-[color:var(--accent)] shadow-[0_0_15px_rgba(95, 101, 22,0.4)]"
+                    ? "bg-[#6b1422] text-white border-[color:var(--accent)] shadow-[0_0_15px_rgba(107,20,34,0.4)]"
                     : "bg-white/5 text-white/70 border-white/10 hover:border-[color:var(--accent)]/40 hover:text-white"
                 }`}
               >
@@ -973,14 +973,14 @@ export default function AboutPage({
                   onClick={() => startTransition(() => setSelectedNote(note))}
                   className={`group rounded-[4px] border p-5 text-left transition-all cursor-pointer ${
                     selectedNote.name === note.name
-                      ? "border-[color:var(--accent)] bg-white/[0.08] shadow-[0_0_20px_rgba(95, 101, 22,0.25)]"
+                      ? "border-[color:var(--accent)] bg-white/[0.08] shadow-[0_0_20px_rgba(107,20,34,0.25)]"
                       : "border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.04]"
                   }`}
                 >
                   {" "}
                   <div className="flex items-center justify-between mb-1">
                     {" "}
-                    <span className="font-serif text-lg font-bold text-white group-hover:text-[#cdd43f] transition-colors">
+                    <span className="font-serif text-lg font-bold text-white group-hover:text-[#e7bcc3] transition-colors">
                       {" "}
                       {note.name}
                     </span>{" "}
@@ -1010,7 +1010,7 @@ export default function AboutPage({
                     {selectedNote.name}
                   </h3>{" "}
                 </div>{" "}
-                <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f]">
+                <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#e7bcc3]">
                   {" "}
                   {selectedNote.origin}
                 </span>{" "}
@@ -1036,14 +1036,14 @@ export default function AboutPage({
                     <div className="flex justify-between text-xs font-semibold text-white/80 mb-1">
                       {" "}
                       <span>{bar.label}</span>{" "}
-                      <span className="text-[#cdd43f] font-bold">
+                      <span className="text-[#e7bcc3] font-bold">
                         {bar.val}%
                       </span>{" "}
                     </div>{" "}
                     <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                       {" "}
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#5f6516] to-[#cdd43f] transition-all duration-500 shadow-[0_0_10px_#5f6516]"
+                        className="h-full rounded-full bg-gradient-to-r from-[#6b1422] to-[#e7bcc3] transition-all duration-500 shadow-[0_0_10px_#6b1422]"
                         style={{ width: `${bar.val}%` }}
                       />{" "}
                     </div>{" "}
@@ -1055,7 +1055,7 @@ export default function AboutPage({
                 <span className="text-xs text-white/60 font-medium">
                   FEATURED IN SIGNATURE PERFUMES:
                 </span>{" "}
-                <span className="text-xs font-bold text-[#cdd43f]">
+                <span className="text-xs font-bold text-[#e7bcc3]">
                   {selectedNote.tag}
                 </span>{" "}
               </div>{" "}
@@ -1076,12 +1076,12 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 05
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-6">
             {" "}
             Kannauj Craftsmanship:{" "}
-            <span className="italic text-[#cdd43f]">
+            <span className="italic text-[#e7bcc3]">
               The Deg &amp; Bhapka Legacy
             </span>{" "}
           </h2>{" "}
@@ -1108,7 +1108,7 @@ export default function AboutPage({
                 {" "}
                 <div className="rounded-[4px] border border-white/10 bg-white/[0.03] p-4">
                   {" "}
-                  <div className="text-2xl font-serif font-bold text-[#cdd43f]">
+                  <div className="text-2xl font-serif font-bold text-[#e7bcc3]">
                     400+ Years
                   </div>{" "}
                   <div className="text-xs text-white/60 mt-1">
@@ -1117,7 +1117,7 @@ export default function AboutPage({
                 </div>{" "}
                 <div className="rounded-[4px] border border-white/10 bg-white/[0.03] p-4">
                   {" "}
-                  <div className="text-2xl font-serif font-bold text-[#cdd43f]">
+                  <div className="text-2xl font-serif font-bold text-[#e7bcc3]">
                     Zero Harm
                   </div>{" "}
                   <div className="text-xs text-white/60 mt-1">
@@ -1154,7 +1154,7 @@ export default function AboutPage({
                 ].map((step, idx) => (
                   <div key={idx} className="flex gap-4 items-start">
                     {" "}
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#5f6516] text-black font-bold text-xs shrink-0 mt-0.5">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#6b1422] text-white font-bold text-xs shrink-0 mt-0.5">
                       {" "}
                       {idx + 1}
                     </div>{" "}
@@ -1187,12 +1187,12 @@ export default function AboutPage({
             <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
               CHAPTER 06
             </span>{" "}
-            <span className="h-[1px] w-12 bg-[#5f6516]/40" />{" "}
+            <span className="h-[1px] w-12 bg-[#6b1422]/40" />{" "}
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
             {" "}
             Tailored Luxury:{" "}
-            <span className="italic text-[#cdd43f]">
+            <span className="italic text-[#e7bcc3]">
               Bespoke Personalization
             </span>{" "}
           </h2>{" "}
@@ -1209,7 +1209,7 @@ export default function AboutPage({
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516]/10 text-[#cdd43f] mb-6 group-hover:scale-110 transition-transform">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#6b1422]/10 text-[#e7bcc3] mb-6 group-hover:scale-110 transition-transform">
                   {" "}
                   <svg
                     viewBox="0 0 24 24"
@@ -1237,7 +1237,7 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("perfumes")}
-                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#cdd43f] transition-all hover:bg-[#5f6516] hover:text-black cursor-pointer"
+                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#6b1422]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#e7bcc3] transition-all hover:bg-[#6b1422] hover:text-white cursor-pointer"
               >
                 {" "}
                 Personalize Bottle
@@ -1248,7 +1248,7 @@ export default function AboutPage({
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516]/10 text-[#cdd43f] mb-6 group-hover:scale-110 transition-transform">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#6b1422]/10 text-[#e7bcc3] mb-6 group-hover:scale-110 transition-transform">
                   {" "}
                   <svg
                     viewBox="0 0 24 24"
@@ -1276,22 +1276,22 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("perfumes")}
-                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#5f6516]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#cdd43f] transition-all hover:bg-[#5f6516] hover:text-black cursor-pointer"
+                className="w-full rounded-[4px] border border-[color:var(--accent)]/40 bg-[#6b1422]/10 py-2.5 text-xs font-bold uppercase tracking-wider text-[#e7bcc3] transition-all hover:bg-[#6b1422] hover:text-white cursor-pointer"
               >
                 {" "}
                 Start Scent Quiz
               </button>{" "}
             </div>{" "}
             {/* Feature 3: Build Your Own Bundle (BYOB) */}
-            <div className="group rounded-[4px] border border-[color:var(--accent)]/40 bg-[radial-gradient(ellipse_at_top_left,rgba(95, 101, 22,0.15)_0%,transparent_70%)] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)] hover:-translate-y-1 flex flex-col justify-between shadow-xl">
+            <div className="group rounded-[4px] border border-[color:var(--accent)]/40 bg-[radial-gradient(ellipse_at_top_left,rgba(107,20,34,0.15)_0%,transparent_70%)] p-8 backdrop-blur-xl transition-all duration-300 hover:border-[color:var(--accent)] hover:-translate-y-1 flex flex-col justify-between shadow-xl">
               {" "}
               <div>
                 {" "}
-                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#5f6516] text-black mb-6 group-hover:scale-110 transition-transform font-bold">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[4px] bg-[#6b1422] text-white mb-6 group-hover:scale-110 transition-transform font-bold">
                   {" "}
                   ₹300
                 </div>{" "}
-                <div className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] mb-1">
+                <div className="text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#e7bcc3] mb-1">
                   AUTOMATED SAVINGS
                 </div>{" "}
                 <h3 className="font-serif text-xl font-bold text-white mb-2">
@@ -1305,7 +1305,7 @@ export default function AboutPage({
               </div>{" "}
               <button
                 onClick={() => onNavigate?.("byob")}
-                className="w-full rounded-[4px] bg-[#5f6516] py-2.5 text-xs font-bold uppercase tracking-wider text-black transition-all hover:bg-[#cdd43f] shadow-[0_0_15px_rgba(95, 101, 22,0.4)] cursor-pointer"
+                className="w-full rounded-[4px] bg-[#6b1422] py-2.5 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#e7bcc3] shadow-[0_0_15px_rgba(107,20,34,0.4)] cursor-pointer"
               >
                 {" "}
                 Curate 3-Bottle Set
@@ -1322,18 +1322,18 @@ export default function AboutPage({
         {" "}
         <div className="mx-auto max-w-4xl">
           {" "}
-          <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-4 py-1 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#cdd43f] mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/30 bg-[#6b1422]/10 px-4 py-1 text-[10px] max-sm:text-[12px] font-extrabold uppercase tracking-[0.06em] text-[#e7bcc3] mb-6">
             {" "}
             CHAPTER 07 • THE HOUSE MANIFESTO
           </div>{" "}
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
             {" "}
             "Luxury should not be reserved for rare moments; it should be your{" "}
-            <span className="italic text-[#cdd43f]">everyday signature</span>."
+            <span className="italic text-[#e7bcc3]">everyday signature</span>."
           </h2>{" "}
           <div className="rounded-[4px] border border-[color:var(--accent)]/40 bg-black/80 p-8 sm:p-12 backdrop-blur-2xl shadow-2xl mb-12 text-left relative overflow-hidden">
             {" "}
-            <div className="absolute top-0 right-0 h-40 w-40 bg-[#5f6516]/10 rounded-full blur-3xl" />{" "}
+            <div className="absolute top-0 right-0 h-40 w-40 bg-[#6b1422]/10 rounded-full blur-3xl" />{" "}
             <div className="space-y-4 text-xs sm:text-sm text-white/80 font-light leading-relaxed mb-8">
               {" "}
               <p>
@@ -1367,7 +1367,7 @@ export default function AboutPage({
                 <div className="text-xs font-mono text-white/50">
                   Jaipur, Rajasthan
                 </div>{" "}
-                <div className="text-[10px] max-sm:text-[12px] text-[#cdd43f] uppercase tracking-[0.06em] font-bold">
+                <div className="text-[10px] max-sm:text-[12px] text-[#e7bcc3] uppercase tracking-[0.06em] font-bold">
                   EST. DEC 2022
                 </div>{" "}
               </div>{" "}
@@ -1378,14 +1378,14 @@ export default function AboutPage({
             {" "}
             <button
               onClick={onNavigateToPerfumes}
-              className="w-full sm:w-auto rounded-full bg-gradient-to-r from-[#5f6516] to-[#cdd43f] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-black shadow-[0_0_25px_rgba(95, 101, 22,0.5)] transition-all hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto rounded-full bg-gradient-to-r from-[#6b1422] to-[#e7bcc3] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-black shadow-[0_0_25px_rgba(107,20,34,0.5)] transition-all hover:scale-105 cursor-pointer"
             >
               {" "}
               Explore 21 Extrait Scents
             </button>{" "}
             <button
               onClick={() => onNavigate?.("byob")}
-              className="w-full sm:w-auto rounded-full border border-white/20 bg-white/5 px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-white backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-white/10 hover:text-[#cdd43f] cursor-pointer"
+              className="w-full sm:w-auto rounded-full border border-white/20 bg-white/5 px-8 py-4 text-xs font-extrabold uppercase tracking-[0.06em] text-white backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-white/10 hover:text-[#e7bcc3] cursor-pointer"
             >
               {" "}
               Build Custom Discovery Set

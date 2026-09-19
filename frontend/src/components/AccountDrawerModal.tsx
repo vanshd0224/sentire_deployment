@@ -341,7 +341,7 @@ export default function AccountDrawerModal({
               <button
                 type="submit"
                 disabled={isSendingOtp || isGoogleLoading}
-                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 {isSendingOtp ? "Sending Code..." : "Submit"}
@@ -441,7 +441,7 @@ export default function AccountDrawerModal({
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpInput(idx, e.target.value)}
-                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-[4px] outline-none focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[#5f6516]/20 bg-[#f7f7f5]"
+                    className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-[4px] outline-none focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[#6b1422]/20 bg-[#f7f7f5]"
                   />
                 ))}
               </div>{" "}
@@ -461,7 +461,7 @@ export default function AccountDrawerModal({
               <button
                 type="submit"
                 disabled={isVerifyingOtp}
-                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 {isVerifyingOtp ? "Verifying..." : "Verify & Continue"}
@@ -504,7 +504,7 @@ export default function AccountDrawerModal({
               />{" "}
               <button
                 type="submit"
-                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"
               >
                 {" "}
                 Save & Continue →

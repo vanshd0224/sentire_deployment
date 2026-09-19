@@ -24,17 +24,17 @@
   --color-ink-soft: #555555;
   --color-stone: #8a8a8a;
   --color-rule: rgba(22, 22, 22, 0.14);
-  --color-clay: #5f6516; /* deep olive, from the case print */
-  --color-clay-dark: #4a4f10;
-  --color-clay-light: #cdd43f;
-  /* Sampled from the Discovery Set case's hot-stamp (used only on that page) */
-  --color-print: #cdd43f;
+  --color-clay: #6b1422; /* wine, from the SENTIRE logo */
+  --color-clay-dark: #4f0e19;
+  --color-clay-light: #e7bcc3;
+  /* Blush from the logo wine, for accents on black */
+  --color-print: #e7bcc3;
 
   /* legacy aliases so existing classes follow the new palette */
   --color-cream: #f2f2f0;
-  --color-gold: #5f6516;
-  --color-gold-dark: #4a4f10;
-  --color-gold-light: #cdd43f;
+  --color-gold: #6b1422;
+  --color-gold-dark: #4f0e19;
+  --color-gold-light: #e7bcc3;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -136,8 +136,8 @@ a {
 }
 
 @keyframes glowPulse {
-  0%, 100% { filter: drop-shadow(0 0 18px rgba(95, 101, 22, 0.45)) drop-shadow(0 0 40px rgba(95, 101, 22, 0.2)); }
-  50%       { filter: drop-shadow(0 0 28px rgba(95, 101, 22, 0.70)) drop-shadow(0 0 60px rgba(95, 101, 22, 0.3)); }
+  0%, 100% { filter: drop-shadow(0 0 18px rgba(107, 20, 34, 0.45)) drop-shadow(0 0 40px rgba(107, 20, 34, 0.2)); }
+  50%       { filter: drop-shadow(0 0 28px rgba(107, 20, 34, 0.70)) drop-shadow(0 0 60px rgba(107, 20, 34, 0.3)); }
 }
 
 @keyframes heroParticleFloat {
@@ -164,13 +164,13 @@ a {
 }
 
 @keyframes luxeHaloPulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(95, 101, 22, 0.35), 0 0 0 1px rgba(95, 101, 22, 0.4); }
-  50% { box-shadow: 0 8px 32px rgba(95, 101, 22, 0.65), 0 0 0 1px rgba(95, 101, 22, 0.8); }
+  0%, 100% { box-shadow: 0 4px 20px rgba(107, 20, 34, 0.35), 0 0 0 1px rgba(107, 20, 34, 0.4); }
+  50% { box-shadow: 0 8px 32px rgba(107, 20, 34, 0.65), 0 0 0 1px rgba(107, 20, 34, 0.8); }
 }
 
 @keyframes qtyPop {
   0% { transform: scale(1); }
-  50% { transform: scale(1.22); color: #5f6516; }
+  50% { transform: scale(1.22); color: #6b1422; }
   100% { transform: scale(1); }
 }
 
@@ -181,10 +181,10 @@ a {
 
 @keyframes goldAuraPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(95, 101, 22, 0.4), 0 8px 24px -4px rgba(95, 101, 22, 0.25);
+    box-shadow: 0 0 0 0 rgba(107, 20, 34, 0.4), 0 8px 24px -4px rgba(107, 20, 34, 0.25);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(95, 101, 22, 0), 0 12px 32px -4px rgba(95, 101, 22, 0.45);
+    box-shadow: 0 0 0 8px rgba(107, 20, 34, 0), 0 12px 32px -4px rgba(107, 20, 34, 0.45);
   }
 }
 
@@ -294,7 +294,7 @@ a {
 /* ── Luxury Scrollbar ── */
 .luxury-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(95, 101, 22, 0.4) rgba(0, 0, 0, 0.02);
+  scrollbar-color: rgba(107, 20, 34, 0.4) rgba(0, 0, 0, 0.02);
 }
 .luxury-scrollbar::-webkit-scrollbar {
   width: 5px;
@@ -303,11 +303,11 @@ a {
   background: rgba(0, 0, 0, 0.02);
 }
 .luxury-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(95, 101, 22, 0.35);
+  background: rgba(107, 20, 34, 0.35);
   border-radius: 999px;
 }
 .luxury-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(95, 101, 22, 0.75);
+  background: rgba(107, 20, 34, 0.75);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -318,11 +318,11 @@ a {
 .bg-gold-shimmer {
   background: linear-gradient(
     90deg,
-    #5f6516 0%,
-    #cdd43f 25%,
+    #6b1422 0%,
+    #e7bcc3 25%,
     #e9e9e6 50%,
-    #cdd43f 75%,
-    #5f6516 100%
+    #e7bcc3 75%,
+    #6b1422 100%
   );
   background-size: 200% 100%;
   animation: shimmer 3.5s linear infinite;
@@ -331,11 +331,11 @@ a {
 .text-gold-shimmer {
   background: linear-gradient(
     90deg,
-    #5f6516 0%,
-    #eef0c9 25%,
+    #6b1422 0%,
+    #f4e6e8 25%,
     #ffffff 50%,
-    #eef0c9 75%,
-    #4a4f10 100%
+    #f4e6e8 75%,
+    #4f0e19 100%
   );
   background-size: 200% auto;
   color: transparent;
@@ -352,7 +352,7 @@ a {
   justify-content: center;
   gap: 10px;
   padding: 14px 32px;
-  background: linear-gradient(135deg, #5f6516 0%, #5f6516 50%, #4a4f10 100%);
+  background: linear-gradient(135deg, #6b1422 0%, #6b1422 50%, #4f0e19 100%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   color: #111111;
@@ -363,7 +363,7 @@ a {
   text-transform: uppercase;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(95, 101, 22, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(107, 20, 34, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
 }
@@ -382,7 +382,7 @@ a {
 
 .btn-luxe-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(95, 101, 22, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(107, 20, 34, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   border-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -392,7 +392,7 @@ a {
 
 .btn-luxe-gold:active {
   transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(95, 101, 22, 0.4);
+  box-shadow: 0 2px 10px rgba(107, 20, 34, 0.4);
 }
 
 /* Secondary Obsidian & Frosted Glass Button */
@@ -404,7 +404,7 @@ a {
   gap: 10px;
   padding: 14px 32px;
   background: rgba(13, 9, 6, 0.65);
-  border: 1px solid rgba(95, 101, 22, 0.45);
+  border: 1px solid rgba(107, 20, 34, 0.45);
   border-radius: 4px;
   color: rgba(242, 242, 240, 0.95);
   font-family: var(--font-sans);
@@ -427,17 +427,17 @@ a {
   left: 0;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(95, 101, 22, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(107, 20, 34, 0.3), transparent);
   transform: translateX(-120%) skewX(-20deg);
   pointer-events: none;
 }
 
 .btn-luxe-ghost:hover {
   transform: translateY(-2px);
-  color: #5f6516;
-  border-color: #5f6516;
-  background: rgba(95, 101, 22, 0.15);
-  box-shadow: 0 6px 28px rgba(95, 101, 22, 0.3), inset 0 0 16px rgba(95, 101, 22, 0.2);
+  color: #6b1422;
+  border-color: #6b1422;
+  background: rgba(107, 20, 34, 0.15);
+  box-shadow: 0 6px 28px rgba(107, 20, 34, 0.3), inset 0 0 16px rgba(107, 20, 34, 0.2);
 }
 
 .btn-luxe-ghost:hover::after {
@@ -471,7 +471,7 @@ a {
 
 .btn-luxe-card:hover {
   background-color: #111111;
-  color: #5f6516;
+  color: #6b1422;
   border-color: #111111;
   box-shadow: 0 4px 16px rgba(17, 17, 17, 0.28);
 }
@@ -490,14 +490,14 @@ a {
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   box-shadow: 
     -20px 0 60px -10px rgba(0, 0, 0, 0.3),
-    inset 1px 0 0 0 rgba(95, 101, 22, 0.25);
+    inset 1px 0 0 0 rgba(107, 20, 34, 0.25);
 }
 
 .glass-card-luxury {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(95, 101, 22, 0.22);
+  border: 1px solid rgba(107, 20, 34, 0.22);
   box-shadow: 
     0 4px 24px -2px rgba(30, 30, 30, 0.05), 
     inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
@@ -505,19 +505,19 @@ a {
 }
 
 .glass-card-luxury:hover {
-  border-color: rgba(95, 101, 22, 0.65);
+  border-color: rgba(107, 20, 34, 0.65);
   box-shadow: 
-    0 16px 40px -4px rgba(95, 101, 22, 0.25), 
+    0 16px 40px -4px rgba(107, 20, 34, 0.25), 
     inset 0 1px 0 0 rgba(255, 255, 255, 1);
   transform: translateY(-3px);
 }
 
 .glass-pill-gold {
-  background: rgba(95, 101, 22, 0.12);
+  background: rgba(107, 20, 34, 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(95, 101, 22, 0.35);
-  color: #5f6516;
+  border: 1px solid rgba(107, 20, 34, 0.35);
+  color: #6b1422;
 }
 
 /* ─── Mobile luxury system ─── */
@@ -602,8 +602,8 @@ a {
   position: relative;
 }
 .fraganote-card:hover {
-  border-color: rgba(95, 101, 22, 0.6);
-  box-shadow: 0 12px 30px rgba(95, 101, 22, 0.2);
+  border-color: rgba(107, 20, 34, 0.6);
+  box-shadow: 0 12px 30px rgba(107, 20, 34, 0.2);
   transform: translateY(-3px);
 }
 @media (min-width: 640px) {
@@ -642,14 +642,14 @@ a {
   left: 8px;
   border-radius: 9999px;
   background: linear-gradient(135deg, #161616, #111111);
-  color: #5f6516;
+  color: #6b1422;
   font-size: 8px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   padding: 3.5px 9px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(95, 101, 22,0.45);
+  border: 1px solid rgba(107, 20, 34,0.45);
   z-index: 2;
 }
 
@@ -731,7 +731,7 @@ a {
 }
 .fraganote-size-btn.active {
   background: #111111;
-  color: #5f6516;
+  color: #6b1422;
   border-color: #111111;
   font-weight: 700;
   box-shadow: 0 2px 6px rgba(0,0,0,0.22);
@@ -772,8 +772,8 @@ a {
 .fraganote-discount-tag {
   font-size: 9px;
   font-weight: 700;
-  color: #5f6516;
-  background: rgba(95, 101, 22, 0.14);
+  color: #6b1422;
+  background: rgba(107, 20, 34, 0.14);
   padding: 1px 6px;
   border-radius: 3px;
 }
@@ -796,7 +796,7 @@ a {
 }
 .fraganote-btn:hover {
   background-color: #111111;
-  color: #5f6516;
+  color: #6b1422;
   border-color: #111111;
   box-shadow: 0 4px 16px rgba(17, 17, 17, 0.28);
 }
@@ -909,7 +909,7 @@ a {
 }
 .sentire-close-btn:hover {
   background: #111111;
-  color: #5f6516;
+  color: #6b1422;
   border-color: #111111;
   transform: scale(1.06);
 }
@@ -924,7 +924,7 @@ a {
   display: inline-flex;
   align-items: center;
   padding: 2px 10px;
-  border: 1px solid rgba(74, 79, 16, 0.45);
+  border: 1px solid rgba(79, 14, 25, 0.45);
   background: transparent;
   border-radius: 100px;
   font-size: 9px;
@@ -932,11 +932,11 @@ a {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(74, 79, 16, 0.95);
+  color: rgba(79, 14, 25, 0.95);
 }
 
 .cart-delivery-band {
-  background: linear-gradient(110deg, rgba(95, 101, 22, 0.08), rgba(252, 250, 245, 0.65), rgba(95, 101, 22, 0.05));
+  background: linear-gradient(110deg, rgba(107, 20, 34, 0.08), rgba(252, 250, 245, 0.65), rgba(107, 20, 34, 0.05));
   border-top: 1px solid rgba(22, 22, 22, 0.08);
   border-bottom: 1px solid rgba(22, 22, 22, 0.08);
 }
@@ -950,11 +950,11 @@ a {
 }
 .cart-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #5f6516, #5f6516);
+  background: linear-gradient(90deg, #6b1422, #6b1422);
   border-radius: 3px;
   transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
-  box-shadow: 0 0 10px rgba(95, 101, 22, 0.4);
+  box-shadow: 0 0 10px rgba(107, 20, 34, 0.4);
 }
 
 .cart-product-img-frame {
@@ -963,7 +963,7 @@ a {
   flex-shrink: 0;
   background: linear-gradient(160deg, #1A1410 0%, #0D0B08 100%);
   border-radius: 8px;
-  border: 1px solid rgba(74, 79, 16, 0.25);
+  border: 1px solid rgba(79, 14, 25, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1042,13 +1042,13 @@ a {
   width: 100%;
   height: 52px;
   background: #111111;
-  color: #5f6516;
+  color: #6b1422;
   font-family: var(--font-sans);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  border: 1px solid rgba(95, 101, 22,0.4);
+  border: 1px solid rgba(107, 20, 34,0.4);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1068,14 +1068,14 @@ a {
   left: 0;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(95, 101, 22, 0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(107, 20, 34, 0.35), transparent);
   transform: translateX(-120%) skewX(-20deg);
   pointer-events: none;
 }
 .sentire-checkout-btn:hover {
   background: #161616;
-  box-shadow: 0 8px 32px rgba(17, 17, 17, 0.5), 0 0 20px rgba(95, 101, 22, 0.2);
-  border-color: #5f6516;
+  box-shadow: 0 8px 32px rgba(17, 17, 17, 0.5), 0 0 20px rgba(107, 20, 34, 0.2);
+  border-color: #6b1422;
 }
 .sentire-checkout-btn:hover::before {
   animation: luxeLightSweep 0.85s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1186,8 +1186,8 @@ body.cart-drawer-open #sentire-suite-container {
 }
 
 .btn-luxe-gold:hover {
-  background: #5f6516;
-  border-color: #5f6516;
+  background: #6b1422;
+  border-color: #6b1422;
   transform: none;
   box-shadow: none;
 }
@@ -1213,8 +1213,8 @@ body.cart-drawer-open #sentire-suite-container {
 }
 
 .sentire-checkout-btn:hover {
-  background: #5f6516;
-  border-color: #5f6516;
+  background: #6b1422;
+  border-color: #6b1422;
   box-shadow: none;
 }
 
@@ -1290,7 +1290,7 @@ body.cart-drawer-open #sentire-suite-container {
 
 .fraganote-discount-tag {
   background: transparent;
-  color: #5f6516;
+  color: #6b1422;
   padding: 0;
 }
 
@@ -1382,7 +1382,7 @@ body.cart-drawer-open #sentire-suite-container {
 }
 
 .ed-btn-solid:hover {
-  background: #5f6516;
+  background: #6b1422;
 }
 
 .ed-btn-line {
@@ -1412,7 +1412,7 @@ body.cart-drawer-open #sentire-suite-container {
 }
 
 :focus-visible {
-  outline: 2px solid #5f6516;
+  outline: 2px solid #6b1422;
   outline-offset: 3px;
 }
 
@@ -1501,7 +1501,7 @@ header.sticky {
 }
 
 .snav-cart-badge {
-  background: #5f6516 !important;
+  background: #6b1422 !important;
   color: #f2f2f0 !important;
   border: none !important;
 }
@@ -1857,12 +1857,12 @@ h3 .italic {
    Olive on light grounds; any dark container carries `on-dark`, which
    swaps the accent to the case's print colour for everything inside it. */
 :root {
-  --accent: #5f6516;
+  --accent: #6b1422;
 }
 
 .on-dark {
-  --accent: #cdd43f;
-  --color-clay: #cdd43f;
+  --accent: #e7bcc3;
+  --color-clay: #e7bcc3;
 }
 
 .font-mono.uppercase {

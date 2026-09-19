@@ -61,7 +61,7 @@ export default function CelebrityReacts() {
         className="pointer-events-none absolute inset-0 z-0 opacity-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(95, 101, 22,0.12) 0%, transparent 75%)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(107,20,34,0.12) 0%, transparent 75%)",
         }}
       />{" "}
       {/* Section Header */}
@@ -88,7 +88,7 @@ export default function CelebrityReacts() {
               <div
                 key={`${imgSrc}-${idx}`}
                 onClick={() => setActiveModalIndex(originalIndex)}
-                className="on-dark group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-[4px] overflow-hidden border border-[color:var(--accent)]/30 bg-[#111111] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--accent)] hover:shadow-[0_12px_30px_rgba(95, 101, 22,0.3)]"
+                className="on-dark group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-[4px] overflow-hidden border border-[color:var(--accent)]/30 bg-[#111111] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--accent)] hover:shadow-[0_12px_30px_rgba(107,20,34,0.3)]"
               >
                 {" "}
                 <img
@@ -99,7 +99,7 @@ export default function CelebrityReacts() {
                   decoding="async"
                 />{" "}
                 {/* Subtle hover overlay highlight */}
-                <div className="absolute inset-0 bg-[#5f6516]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />{" "}
+                <div className="absolute inset-0 bg-[#6b1422]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />{" "}
               </div>
             );
           })}
@@ -120,7 +120,7 @@ export default function CelebrityReacts() {
             {/* Close Button */}
             <button
               onClick={() => setActiveModalIndex(null)}
-              className="absolute top-4 right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--accent)]/40 bg-[#0e0e0e]/80 text-[color:var(--accent)] transition-all hover:bg-[#5f6516] hover:text-[#0e0e0e]"
+              className="absolute top-4 right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--accent)]/40 bg-[#0e0e0e]/80 text-[color:var(--accent)] transition-all hover:bg-[#6b1422] hover:text-[#0e0e0e]"
               aria-label="Close celebrity modal"
             >
               {" "}
@@ -140,7 +140,7 @@ export default function CelebrityReacts() {
               {" "}
               <button
                 onClick={handlePrev}
-                className="flex items-center gap-2 rounded-lg border border-[color:var(--accent)]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[color:var(--accent)] transition-all hover:bg-[#5f6516]/10"
+                className="flex items-center gap-2 rounded-lg border border-[color:var(--accent)]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[color:var(--accent)] transition-all hover:bg-[#6b1422]/10"
               >
                 {" "}
                 ← Prev Photo
@@ -151,7 +151,7 @@ export default function CelebrityReacts() {
               </span>{" "}
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 rounded-lg border border-[color:var(--accent)]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[color:var(--accent)] transition-all hover:bg-[#5f6516]/10"
+                className="flex items-center gap-2 rounded-lg border border-[color:var(--accent)]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[color:var(--accent)] transition-all hover:bg-[#6b1422]/10"
               >
                 {" "}
                 Next Photo →

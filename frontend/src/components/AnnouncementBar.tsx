@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
         .sentire-announcement-bar {
           display: block !important;
           background-color: #000000 !important;
-          border-bottom: 1px solid rgba(95, 101, 22, 0.25);
+          border-bottom: 1px solid rgba(107,20,34, 0.25);
         }
         .sentire-marquee-track {
           display: flex;

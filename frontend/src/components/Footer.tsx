@@ -403,7 +403,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             </a>{" "}
             <span className="flex items-center gap-1">
               {" "}
-              Crafted with <span className="text-[color:var(--accent)]"></span> in India
+              Crafted with <span className="text-[color:var(--accent)]" aria-label="love">♥</span> in India
             </span>{" "}
           </div>{" "}
         </div>{" "}

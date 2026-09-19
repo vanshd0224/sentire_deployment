@@ -475,7 +475,7 @@ export default function CartDrawer({
               fontWeight: 600,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "#5f6516",
+              color: "#6b1422",
               marginBottom: "5px",
             }}
           >
@@ -550,7 +550,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "#5f6516",
+                    color: "#6b1422",
                   }}
                 >
                   {" "}
@@ -589,9 +589,9 @@ export default function CartDrawer({
                     width: "22px",
                     height: "22px",
                     borderRadius: "50%",
-                    border: "1px solid rgba(74, 79, 16,0.6)",
+                    border: "1px solid rgba(79,14,25,0.6)",
                     background: "rgba(200,154,70,0.15)",
-                    color: "#5f6516",
+                    color: "#6b1422",
                   }}
                 >
                   {" "}
@@ -614,13 +614,13 @@ export default function CartDrawer({
                     <>
                       {" "}
                       Add{" "}
-                      <strong style={{ color: "#5f6516", fontWeight: 700 }}>
+                      <strong style={{ color: "#6b1422", fontWeight: 700 }}>
                         ₹{(remainingForFreeShipping || 0).toLocaleString()}
                       </strong>{" "}
                       more to get{" "}
                       <strong
                         style={{
-                          color: "#5f6516",
+                          color: "#6b1422",
                           textTransform: "uppercase",
                           fontWeight: 700,
                         }}
@@ -660,7 +660,7 @@ export default function CartDrawer({
                     right: 0,
                     top: "50%",
                     transform: "translateY(-50%) translateX(50%)",
-                    color: "#5f6516",
+                    color: "#6b1422",
                     fontSize: "7px",
                     fontWeight: 700,
                   }}
@@ -682,7 +682,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(74, 79, 16,0.40)",
+                    background: "rgba(79,14,25,0.40)",
                     margin: "0 auto",
                   }}
                 />{" "}
@@ -695,7 +695,7 @@ export default function CartDrawer({
                       fontWeight: 600,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
-                      color: "#5f6516",
+                      color: "#6b1422",
                     }}
                   >
                     {" "}
@@ -747,7 +747,7 @@ export default function CartDrawer({
                   style={{
                     width: "36px",
                     height: "1px",
-                    background: "rgba(74, 79, 16,0.40)",
+                    background: "rgba(79,14,25,0.40)",
                     margin: "0 auto",
                   }}
                 />{" "}
@@ -874,7 +874,7 @@ export default function CartDrawer({
                             </p>{" "}
                             {/* Personalisation Badge & Notes */}
                             {item.isPersonalised && (
-                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[color:var(--accent)]/30 bg-[#5f6516]/10 px-2 py-1 text-[10px] max-sm:text-[12px] text-[#161616]">
+                              <div className="mb-2 flex flex-col gap-0.5 rounded-lg border border-[color:var(--accent)]/30 bg-[#6b1422]/10 px-2 py-1 text-[10px] max-sm:text-[12px] text-white">
                                 {" "}
                                 <span className="font-bold text-[color:var(--accent)] tracking-wider uppercase">
                                   {" "}
@@ -992,7 +992,7 @@ export default function CartDrawer({
                     </span>{" "}
                   </div>{" "}
                   {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-[#5f6516]/10 border border-[color:var(--accent)]/40 rounded-[4px] p-2.5 text-xs">
+                    <div className="flex items-center justify-between bg-[#6b1422]/10 border border-[color:var(--accent)]/40 rounded-[4px] p-2.5 text-xs">
                       {" "}
                       <div className="flex items-center gap-2">
                         {" "}
@@ -1000,7 +1000,7 @@ export default function CartDrawer({
                           {" "}
                           {appliedCoupon}
                         </span>{" "}
-                        <span className="text-emerald-700 font-extrabold text-xs">
+                        <span className="text-[#6b1422] font-extrabold text-xs">
                           (Saved ₹{couponDiscount})
                         </span>{" "}
                       </div>{" "}
@@ -1022,7 +1022,7 @@ export default function CartDrawer({
                           onClick={() => handleApplyCoupon("PC100")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider transition-all border ${
                             subtotal >= 999
-                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white shadow-sm"
+                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -1033,7 +1033,7 @@ export default function CartDrawer({
                           onClick={() => handleApplyCoupon("PC200")}
                           className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] max-sm:text-[12px] font-bold tracking-wider transition-all border ${
                             subtotal >= 1999
-                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white shadow-sm"
+                              ? "bg-[#f2f2f0] text-[color:var(--accent)] border-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white shadow-sm"
                               : "bg-black/5 text-gray-400 border-black/10"
                           }`}
                         >
@@ -1058,7 +1058,7 @@ export default function CartDrawer({
                         />{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
-                          className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-colors"
+                          className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-colors"
                         >
                           {" "}
                           Apply
@@ -1072,7 +1072,7 @@ export default function CartDrawer({
                     </p>
                   )}
                   {couponSuccess && (
-                    <p className="text-[10px] max-sm:text-[12px] text-emerald-600 font-bold flex items-center gap-1">
+                    <p className="text-[10px] max-sm:text-[12px] text-[#6b1422] font-bold flex items-center gap-1">
                       {" "}
                       <span>✓</span> {couponSuccess}
                     </p>
@@ -1092,7 +1092,7 @@ export default function CartDrawer({
                         Add Custom Name & Date Engraving (+₹200)
                       </h4>{" "}
                     </div>{" "}
-                    <span className="rounded bg-[#5f6516]/10 border border-[color:var(--accent)]/30 px-2 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[color:var(--accent)]">
+                    <span className="rounded bg-[#6b1422]/10 border border-[color:var(--accent)]/30 px-2 py-0.5 text-[9px] max-sm:text-[12px] font-bold text-[color:var(--accent)]">
                       Jaipur Laser Engraved
                     </span>{" "}
                   </div>{" "}
@@ -1154,7 +1154,7 @@ export default function CartDrawer({
                   </div>{" "}
                   <button
                     onClick={handleApplyEngravingToTarget}
-                    className="w-full rounded-[4px] border-2 border-[color:var(--accent)] bg-[#f2f2f0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-white transition-all shadow-sm"
+                    className="w-full rounded-[4px] border-2 border-[color:var(--accent)] bg-[#f2f2f0] py-2 text-center text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all shadow-sm"
                   >
                     {" "}
                     Apply Engraving to Bottle (+₹200)
@@ -1181,7 +1181,7 @@ export default function CartDrawer({
                     fontWeight: 600,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "#5f6516",
+                    color: "#6b1422",
                   }}
                 >
                   {" "}
@@ -1189,7 +1189,7 @@ export default function CartDrawer({
                 </span>{" "}
               </div>{" "}
               {appliedCoupon ? (
-                <div className="flex items-center justify-between bg-[#5f6516]/10 border border-[color:var(--accent)]/30 rounded-lg px-2.5 py-1.5 text-xs">
+                <div className="flex items-center justify-between bg-[#6b1422]/10 border border-[color:var(--accent)]/30 rounded-lg px-2.5 py-1.5 text-xs">
                   {" "}
                   <div className="flex items-center gap-2">
                     {" "}
@@ -1228,7 +1228,7 @@ export default function CartDrawer({
                     />{" "}
                     <button
                       onClick={() => handleApplyCoupon()}
-                      className="on-dark bg-[#161616] text-[#e9e9e6] hover:bg-[#5f6516] hover:text-[#111111] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
+                      className="on-dark bg-[#161616] text-[#e9e9e6] hover:bg-[#6b1422] hover:text-[#111111] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
                     >
                       {" "}
                       Apply
@@ -1241,7 +1241,7 @@ export default function CartDrawer({
                       onClick={() => handleApplyCoupon("PC100")}
                       className={`text-[9px] max-sm:text-[12px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 999
-                          ? "bg-[#5f6516]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
+                          ? "bg-[#6b1422]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1252,7 +1252,7 @@ export default function CartDrawer({
                       onClick={() => handleApplyCoupon("PC200")}
                       className={`text-[9px] max-sm:text-[12px] rounded px-2 py-0.5 font-mono tracking-wider transition-colors cursor-pointer border ${
                         subtotal >= 1999
-                          ? "bg-[#5f6516]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
+                          ? "bg-[#6b1422]/10 text-[color:var(--accent)] border-[color:var(--accent)]/30 hover:border-[color:var(--accent)]"
                           : "bg-black/5 text-gray-400 border-black/10"
                       }`}
                     >
@@ -1268,7 +1268,7 @@ export default function CartDrawer({
                 </p>
               )}
               {couponSuccess && (
-                <p className="text-[9.5px] max-sm:text-[12px] text-emerald-600 mt-1 font-sans font-medium">
+                <p className="text-[9.5px] max-sm:text-[12px] text-[#6b1422] mt-1 font-sans font-medium">
                   {couponSuccess}
                 </p>
               )}
@@ -1307,7 +1307,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "11px",
-                      color: "#5f6516",
+                      color: "#6b1422",
                       fontWeight: 500,
                     }}
                   >
@@ -1318,7 +1318,7 @@ export default function CartDrawer({
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: "12px",
-                      color: "#5f6516",
+                      color: "#6b1422",
                       fontWeight: 600,
                     }}
                   >
@@ -1347,7 +1347,7 @@ export default function CartDrawer({
                       fontWeight: 600,
                       letterSpacing: "0.10em",
                       textTransform: "uppercase",
-                      color: "#5f6516",
+                      color: "#6b1422",
                     }}
                   >
                     {" "}

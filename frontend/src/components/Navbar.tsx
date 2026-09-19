@@ -482,7 +482,7 @@ export default function Navbar({
       <style>{`
         @keyframes badgePop {
           0%   { transform: scale(1); }
-          50%  { transform: scale(1.35); color: #5f6516; }
+          50%  { transform: scale(1.35); color: #6b1422; }
           100% { transform: scale(1); }
         }
         @keyframes megaIn {
@@ -509,15 +509,15 @@ export default function Navbar({
           position: absolute;
           inset: 0;
           border-radius: 50%;
-          background: rgba(95, 101, 22, 0.14);
+          background: rgba(107,20,34, 0.14);
           transform: scale(0);
           transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .nav-icon-btn:hover::before { transform: scale(1); }
-        .nav-icon-btn:hover { color: #5f6516; }
+        .nav-icon-btn:hover { color: #6b1422; }
         .nav-icon-btn svg { position: relative; z-index: 1; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         .nav-icon-btn:hover svg { transform: scale(1.12); }
-        .nav-icon-btn.active { background: #111111; color: #5f6516; box-shadow: 0 0 0 1px rgba(95, 101, 22,.45), 0 4px 16px rgba(0,0,0,.2); }
+        .nav-icon-btn.active { background: #111111; color: #6b1422; box-shadow: 0 0 0 1px rgba(107,20,34,.45), 0 4px 16px rgba(0,0,0,.2); }
         @media (max-width: 900px) {
           .sentire-mobile-hamburger { display: flex !important; }
           .sentire-mobile-logo { display: flex !important; }
@@ -687,7 +687,7 @@ export default function Navbar({
                     {" "}
                     <span>{link.label}</span>{" "}
                     {"badge" in link && Boolean(link.badge) && (
-                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] max-sm:text-[12px] font-extrabold tracking-wider bg-gradient-to-r from-[#5f6516]/25 to-[#5f6516]/30 text-[#4a4f10] border border-[color:var(--accent)]/45 uppercase shadow-xs">
+                      <span className="px-1.5 py-0.5 rounded-full text-[8.5px] max-sm:text-[12px] font-extrabold tracking-wider bg-gradient-to-r from-[#6b1422]/25 to-[#6b1422]/30 text-[#4f0e19] border border-[color:var(--accent)]/45 uppercase shadow-xs">
                         {" "}
                         Hero
                       </span>
@@ -705,7 +705,7 @@ export default function Navbar({
                       </svg>
                     )}
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#5f6516] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`}
+                      className={`absolute -bottom-0.5 left-0 h-[1.5px] bg-[#6b1422] transition-all duration-300 ${isCurrent ? "w-full" : "w-0 group-hover:w-full"}`}
                     />{" "}
                   </a>{" "}
                 </div>
@@ -899,7 +899,7 @@ export default function Navbar({
                         <button
                           key={tag}
                           onClick={() => setSearchQuery(tag)}
-                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#eeeeec] text-[#161616] hover:bg-[#5f6516] hover:text-white transition-colors cursor-pointer border border-[color:var(--accent)]/20"
+                          className="px-3 py-1 rounded-full text-xs font-medium bg-[#eeeeec] text-[#161616] hover:bg-[#6b1422] hover:text-white transition-colors cursor-pointer border border-[color:var(--accent)]/20"
                         >
                           {" "}
                           {tag}
@@ -988,7 +988,7 @@ export default function Navbar({
                               {" "}
                               {product.num}
                             </span>{" "}
-                            <span className="text-[8px] max-sm:text-[12px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#5f6516]/10 text-[color:var(--accent)] border border-[color:var(--accent)]/20">
+                            <span className="text-[8px] max-sm:text-[12px] font-semibold uppercase px-1.5 py-0.2 rounded bg-[#6b1422]/10 text-[color:var(--accent)] border border-[color:var(--accent)]/20">
                               {" "}
                               {product.scentFamily}
                             </span>{" "}
@@ -1143,7 +1143,7 @@ export default function Navbar({
                         <div className="absolute inset-0 p-7 flex flex-col justify-end">
                           {" "}
                           <span
-                            className="self-start rounded-full bg-[#5f6516]/25 backdrop-blur-md border border-[color:var(--accent)]/50 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2 shadow-sm"
+                            className="self-start rounded-full bg-[#6b1422]/25 backdrop-blur-md border border-[color:var(--accent)]/50 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2 shadow-sm"
                             style={{ fontFamily: "var(--font-sans)" }}
                           >
                             {" "}
@@ -1255,8 +1255,8 @@ export default function Navbar({
                         link.label === "Discovery Set") ||
                       (currentPage === "perfumes" &&
                         link.label === "All Perfumes")
-                        ? "bg-[#5f6516]/15 text-[#8d6a2f]"
-                        : "text-ink hover:bg-black/5 hover:text-[color:var(--accent)]"
+                        ? "bg-[#6b1422]/15 text-[#8d6a2f]"
+                        : "text-white hover:bg-black/5 hover:text-[color:var(--accent)]"
                     }`}
                   >
                     {" "}
@@ -1264,7 +1264,7 @@ export default function Navbar({
                       {" "}
                       <span>{link.label}</span>{" "}
                       {"badge" in link && Boolean(link.badge) && (
-                        <span className="px-2 py-0.5 rounded-full text-[9px] max-sm:text-[12px] font-bold tracking-wider bg-[#5f6516]/25 text-[#7f5d23] border border-[color:var(--accent)]/40 uppercase">
+                        <span className="px-2 py-0.5 rounded-full text-[9px] max-sm:text-[12px] font-bold tracking-wider bg-[#6b1422]/25 text-[#7f5d23] border border-[color:var(--accent)]/40 uppercase">
                           {" "}
                           {link.badge}
                         </span>
@@ -1282,7 +1282,7 @@ export default function Navbar({
                   setMobileNavOpen(false);
                   onOpenAccount?.();
                 }}
-                className="on-dark w-full py-3.5 bg-[#111111] hover:bg-[#5f6516] text-[color:var(--accent)] text-xs font-bold uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[color:var(--accent)]/30"
+                className="on-dark w-full py-3.5 bg-[#111111] hover:bg-[#6b1422] text-[color:var(--accent)] text-xs font-bold uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[color:var(--accent)]/30"
               >
                 {" "}
                 {isLoggedIn ? (

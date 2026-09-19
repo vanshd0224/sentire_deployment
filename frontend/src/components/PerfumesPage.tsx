@@ -326,7 +326,7 @@ export default function PerfumesPage({
           <span className="text-[color:var(--accent)]/50">•</span>{" "}
           <span className="text-ink font-semibold">Perfume Library</span>{" "}
         </div>{" "}
-        <span className="inline-block rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/10 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2">
+        <span className="inline-block rounded-full border border-[color:var(--accent)]/40 bg-[#6b1422]/10 px-2.5 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] mb-2">
           {" "}
           SENTIRE BY PC
         </span>{" "}
@@ -690,14 +690,14 @@ export default function PerfumesPage({
             {/* ── SECTION 1: PURPLE OUD — VOGUE STYLE HIGH LUXURY BANNER (TOP HERO PRODUCT) ── */}
             <section className="on-dark relative overflow-hidden rounded-[4px] bg-[#0e0e0e] border border-[color:var(--accent)]/30 text-white p-5 sm:p-8 lg:p-16 shadow-2xl">
               {" "}
-              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#5f6516]/15 blur-3xl opacity-60" />{" "}
+              <div className="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-[#6b1422]/15 blur-3xl opacity-60" />{" "}
               <div className="relative z-10 flex flex-col-reverse lg:grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                 {" "}
                 <div className="lg:col-span-7 space-y-3 sm:space-y-6 w-full text-left">
                   {" "}
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-[#5f6516]/15 px-3 py-1 text-[8px] max-sm:text-[12px] sm:text-[9px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/40 bg-[#6b1422]/15 px-3 py-1 text-[8px] max-sm:text-[12px] sm:text-[9px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)]">
                     {" "}
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#5f6516] animate-ping" />{" "}
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#6b1422] animate-ping" />{" "}
                     HAUTE PARFUMERIE · 50 ML EXCLUSIVE
                   </div>{" "}
                   <h2
@@ -751,12 +751,12 @@ export default function PerfumesPage({
                                     -1,
                                   )
                                 }
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer"
                               >
                                 {" "}
                                 −
                               </button>{" "}
-                              <span className="text-xs font-extrabold text-[#cdd43f] uppercase tracking-wider px-2">
+                              <span className="text-xs font-extrabold text-[#e7bcc3] uppercase tracking-wider px-2">
                                 {" "}
                                 {purpleOudQty} IN BAG (50ML)
                               </span>{" "}
@@ -768,7 +768,7 @@ export default function PerfumesPage({
                                     1,
                                   )
                                 }
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer"
+                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer"
                               >
                                 {" "}
                                 +
@@ -792,7 +792,7 @@ export default function PerfumesPage({
                               );
                               showToast("Added Purple Oud (50 ML) to Bag");
                             }}
-                            className="flex-1 sm:flex-none rounded-full bg-[#5f6516] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-black hover:bg-[#4a4f10] transition-all shadow-lg cursor-pointer min-h-[44px]"
+                            className="flex-1 sm:flex-none rounded-full bg-[#6b1422] px-4 py-3 sm:px-8 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-white hover:bg-[#4f0e19] transition-all shadow-lg cursor-pointer min-h-[44px]"
                           >
                             {" "}
                             Acquire 50 ML Bottle
@@ -803,7 +803,7 @@ export default function PerfumesPage({
                         onClick={() =>
                           setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
                         }
-                        className="flex-1 sm:flex-none rounded-full border border-[color:var(--accent)]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black transition-all cursor-pointer min-h-[44px]"
+                        className="flex-1 sm:flex-none rounded-full border border-[color:var(--accent)]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer min-h-[44px]"
                       >
                         {" "}
                         Explore Details
@@ -1035,7 +1035,7 @@ export default function PerfumesPage({
               </button>{" "}
               <button
                 onClick={() => setIsFilterDrawerOpen(false)}
-                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#4a4f10] shadow-md cursor-pointer active:scale-95"
+                className="flex-1 rounded-full bg-gold py-3.5 min-h-[44px] text-xs font-bold uppercase tracking-wider text-white hover:bg-[#4f0e19] shadow-md cursor-pointer active:scale-95"
               >
                 {" "}
                 Apply ({filteredUnifiedList.length})
@@ -1139,7 +1139,7 @@ export default function PerfumesPage({
                       showToast(`Added ${quickViewProduct.name} to Bag`);
                       setQuickViewProduct(null);
                     }}
-                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
+                    className="flex-1 rounded-full bg-gold py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4f0e19] transition-all shadow-md cursor-pointer"
                   >
                     {" "}
                     Add to Bag
@@ -1259,7 +1259,7 @@ export default function PerfumesPage({
                     setQuizStep(0);
                     showToast("Fragrance match applied to collection");
                   }}
-                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4a4f10] transition-all shadow-md"
+                  className="rounded-full bg-gold px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4f0e19] transition-all shadow-md"
                 >
                   {" "}
                   Explore Match

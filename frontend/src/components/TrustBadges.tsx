@@ -78,11 +78,11 @@ const qualityBadges: QualityBadge[] = [
     name: "PHTHALATE FREE",
     sub: "NON-TOXIC",
     cardStyle:
-      "bg-emerald-50/90 border-emerald-200/90 hover:border-emerald-400 hover:shadow-emerald-100/50",
-    textStyle: "text-emerald-950 font-bold",
-    subStyle: "bg-emerald-600/10 text-emerald-700 border-emerald-300/40",
+      "bg-[#f4e6e8]/90 border-[#6b1422]/30 hover:border-[#6b1422] hover:shadow-black/10",
+    textStyle: "text-[#6b1422] font-bold",
+    subStyle: "bg-[#6b1422]/10 text-[#6b1422] border-[#6b1422]/30",
     icon: (
-      <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-green-700 text-white shadow-md shadow-emerald-500/25 shrink-0">
+      <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#6b1422] to-[#4f0e19] text-white shadow-md shadow-black/10 shrink-0">
         {" "}
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
           {" "}
@@ -121,7 +121,7 @@ const qualityBadges: QualityBadge[] = [
     textStyle: "text-cyan-950 font-bold",
     subStyle: "bg-cyan-600/10 text-cyan-700 border-cyan-300/40",
     icon: (
-      <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-teal-700 text-white shadow-md shadow-cyan-500/25 shrink-0">
+      <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-[#4f0e19] text-white shadow-md shadow-cyan-500/25 shrink-0">
         {" "}
         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
           {" "}

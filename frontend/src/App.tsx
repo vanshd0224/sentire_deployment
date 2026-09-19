@@ -714,7 +714,7 @@ export default function App() {
       {cartToast && (
         <div
           key={cartToast.id}
-          className="on-dark fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-[4px] border border-[#4a4f10]/60 bg-[#111111]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
+          className="on-dark fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-[4px] border border-[#4f0e19]/60 bg-[#111111]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
         >
           <div className="flex items-center gap-3 min-w-0">
             {cartToast.img && (
@@ -742,7 +742,7 @@ export default function App() {
               setCartToast(null);
               handleNavigate("cart");
             }}
-            className="shrink-0 rounded-full bg-[#4a4f10] px-3.5 py-2 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#5f6516] transition-all shadow-md cursor-pointer flex items-center gap-1"
+            className="shrink-0 rounded-full bg-[#4f0e19] px-3.5 py-2 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#6b1422] transition-all shadow-md cursor-pointer flex items-center gap-1"
           >
             <span>View Bag</span>
             <svg

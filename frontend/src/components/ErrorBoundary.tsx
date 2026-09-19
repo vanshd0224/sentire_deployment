@@ -59,7 +59,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 });
                 window.location.reload();
               }}
-              className="rounded-full bg-[#5f6516] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-black hover:bg-[#4a4f10] transition-all shadow-md cursor-pointer"
+              className="rounded-full bg-[#6b1422] px-8 py-3 text-xs font-bold uppercase tracking-[0.06em] text-white hover:bg-[#4f0e19] transition-all shadow-md cursor-pointer"
             >
               {" "}
               Refresh Page

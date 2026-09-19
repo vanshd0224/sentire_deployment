@@ -242,7 +242,7 @@ export default function BundleBuilderModal({
       <div className="fixed inset-0" onClick={onClose} />{" "}
       {/* Main Luxury Glassmorphic Modal Window / Mobile Bottom Sheet */}
       <div
-        className="on-dark relative z-10 w-full max-w-4xl max-h-[94vh] overflow-hidden rounded-t-3xl md:rounded-[4px] border-t md:border border-[color:var(--accent)]/40 bg-[#111111] text-cream shadow-[0_25px_80px_rgba(95, 101, 22,0.25)] transition-all duration-300 glass-bottom-sheet"
+        className="on-dark relative z-10 w-full max-w-4xl max-h-[94vh] overflow-hidden rounded-t-3xl md:rounded-[4px] border-t md:border border-[color:var(--accent)]/40 bg-[#111111] text-cream shadow-[0_25px_80px_rgba(107,20,34,0.25)] transition-all duration-300 glass-bottom-sheet"
         style={{ fontFamily: "var(--font-sans)" }}
       >
         {" "}
@@ -260,7 +260,7 @@ export default function BundleBuilderModal({
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 z-20 flex h-9 w-9 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/15 bg-black/60 text-cream/70 backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-[#5f6516] hover:text-black cursor-pointer shadow-lg active:scale-95 touch-manipulation"
+            className="absolute right-4 top-4 z-20 flex h-9 w-9 min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/15 bg-black/60 text-cream/70 backdrop-blur-md transition-all hover:border-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white cursor-pointer shadow-lg active:scale-95 touch-manipulation"
             aria-label="Close modal"
           >
             {" "}
@@ -269,17 +269,17 @@ export default function BundleBuilderModal({
           {/* Filigree Gold Header Accent */}
           <div className="relative z-10 mb-2 flex items-center gap-3">
             {" "}
-            <span className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#5f6516]" />{" "}
+            <span className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#6b1422]" />{" "}
             <span className="text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.4em] text-[color:var(--accent)]">
               {" "}
               SENTIRE HAUTE PARFUMERIE
             </span>{" "}
-            <span className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#5f6516]" />{" "}
+            <span className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#6b1422]" />{" "}
           </div>{" "}
           <h2 className="font-display relative z-10 text-2xl uppercase tracking-[0.06em] text-white sm:text-4xl">
             {" "}
             BUILD YOUR{" "}
-            <span className="text-[color:var(--accent)] drop-shadow-[0_0_15px_rgba(95, 101, 22,0.5)]">
+            <span className="text-[color:var(--accent)] drop-shadow-[0_0_15px_rgba(107,20,34,0.5)]">
               3-BOTTLE BUNDLE
             </span>{" "}
           </h2>{" "}
@@ -290,19 +290,19 @@ export default function BundleBuilderModal({
             <div
               className={`inline-flex items-center gap-2.5 rounded-full border px-5 py-2 text-xs transition-all duration-500 backdrop-blur-md ${
                 isComplete
-                  ? "border-[color:var(--accent)] bg-gradient-to-r from-[#5f6516]/30 via-[#cdd43f]/20 to-[#5f6516]/30 text-white shadow-[0_0_25px_rgba(95, 101, 22,0.4)]"
-                  : "border-[color:var(--accent)]/40 bg-[#5f6516]/10 text-[#cdd43f]"
+                  ? "border-[color:var(--accent)] bg-gradient-to-r from-[#6b1422]/30 via-[#e7bcc3]/20 to-[#6b1422]/30 text-white shadow-[0_0_25px_rgba(107,20,34,0.4)]"
+                  : "border-[color:var(--accent)]/40 bg-[#6b1422]/10 text-[#e7bcc3]"
               }`}
             >
               {" "}
-              <span className="flex h-5 items-center rounded bg-[#5f6516] px-2 text-[10px] max-sm:text-[12px] font-black uppercase text-black">
+              <span className="flex h-5 items-center rounded bg-[#6b1422] px-2 text-[10px] max-sm:text-[12px] font-black uppercase text-white">
                 {" "}
                 ₹300 OFF
               </span>{" "}
               <span className="font-semibold tracking-wide">
                 {" "}
                 {isComplete ? (
-                  <span className="text-emerald-300 font-bold">
+                  <span className="text-[#6b1422] font-bold">
                     {" "}
                     ₹300 Discount &amp; Free Shipping Unlocked!
                   </span>
@@ -333,7 +333,7 @@ export default function BundleBuilderModal({
               <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10 p-0.5 border border-white/10">
                 {" "}
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] transition-all duration-500 shadow-[0_0_12px_rgba(95, 101, 22,0.8)]"
+                  className="h-full rounded-full bg-gradient-to-r from-[#6b1422] via-[#e7bcc3] to-[#6b1422] transition-all duration-500 shadow-[0_0_12px_rgba(107,20,34,0.8)]"
                   style={{ width: `${progressPercent}%` }}
                 />{" "}
               </div>{" "}
@@ -342,7 +342,7 @@ export default function BundleBuilderModal({
         </div>{" "}
         {/* ── TOAST NOTIFICATION POPUP INSIDE MODAL ── */}
         {toastMessage && (
-          <div className="on-dark absolute top-24 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[color:var(--accent)]/60 bg-black/90 px-5 py-2 text-xs font-semibold text-[#cdd43f] shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-lg animate-in fade-in slide-in-from-top-2">
+          <div className="on-dark absolute top-24 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[color:var(--accent)]/60 bg-black/90 px-5 py-2 text-xs font-semibold text-[#e7bcc3] shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-lg animate-in fade-in slide-in-from-top-2">
             {" "}
             {toastMessage}
           </div>
@@ -378,9 +378,9 @@ export default function BundleBuilderModal({
                     onClick={() => setActiveSlot(slotIdx)}
                     className={`group relative flex cursor-pointer flex-col items-center rounded-[4px] border p-2.5 sm:p-4 transition-all duration-300 touch-manipulation ${
                       isActive
-                        ? "border-[color:var(--accent)] bg-[#5f6516]/20 shadow-[0_0_30px_rgba(95, 101, 22,0.45)] ring-2 ring-[#5f6516]/60 scale-[1.02]"
+                        ? "border-[color:var(--accent)] bg-[#6b1422]/20 shadow-[0_0_30px_rgba(107,20,34,0.45)] ring-2 ring-[#6b1422]/60 scale-[1.02]"
                         : item
-                          ? "border-[color:var(--accent)]/40 bg-white/[0.04] hover:border-[color:var(--accent)] hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(95, 101, 22,0.2)]"
+                          ? "border-[color:var(--accent)]/40 bg-white/[0.04] hover:border-[color:var(--accent)] hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(107,20,34,0.2)]"
                           : "border-dashed border-white/20 bg-transparent hover:border-[color:var(--accent)]/60 hover:bg-white/[0.03]"
                     }`}
                   >
@@ -393,7 +393,7 @@ export default function BundleBuilderModal({
                         SLOT {slotIdx + 1}
                       </span>{" "}
                       {item ? (
-                        <span className="text-[8px] max-sm:text-[12px] sm:text-[9px] text-emerald-400 font-semibold flex items-center gap-0.5 sm:gap-1">
+                        <span className="text-[8px] max-sm:text-[12px] sm:text-[9px] text-[#6b1422] font-semibold flex items-center gap-0.5 sm:gap-1">
                           {" "}
                           ✓ Filled
                         </span>
@@ -417,9 +417,9 @@ export default function BundleBuilderModal({
                           ✕
                         </button>{" "}
                         {/* Gold Aura Glowing Bottle Preview */}
-                        <div className="relative my-1 flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center overflow-hidden rounded-[4px] bg-gradient-to-b from-[#1a140f] to-[#111111] p-1.5 sm:p-2 border border-[color:var(--accent)]/20 shadow-[0_0_15px_rgba(95, 101, 22,0.15)] group-hover:border-[color:var(--accent)]/50">
+                        <div className="relative my-1 flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center overflow-hidden rounded-[4px] bg-gradient-to-b from-[#1a140f] to-[#111111] p-1.5 sm:p-2 border border-[color:var(--accent)]/20 shadow-[0_0_15px_rgba(107,20,34,0.15)] group-hover:border-[color:var(--accent)]/50">
                           {" "}
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(95, 101, 22,0.2)_0,transparent_70%)] opacity-60" />{" "}
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(107,20,34,0.2)_0,transparent_70%)] opacity-60" />{" "}
                           <img
                             src={item.image}
                             alt={item.name}
@@ -428,7 +428,7 @@ export default function BundleBuilderModal({
                         </div>{" "}
                         <div>
                           {" "}
-                          <span className="rounded bg-[#5f6516]/15 px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-[#cdd43f]">
+                          <span className="rounded bg-[#6b1422]/15 px-1.5 py-0.5 text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-[#e7bcc3]">
                             {" "}
                             {item.tag}
                           </span>{" "}
@@ -461,7 +461,7 @@ export default function BundleBuilderModal({
                     ) : (
                       <div className="flex min-h-[120px] sm:min-h-[160px] flex-col items-center justify-center text-center space-y-2">
                         {" "}
-                        <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-dashed border-[color:var(--accent)]/60 text-[color:var(--accent)] transition-transform duration-300 group-hover:scale-110 group-hover:border-[color:var(--accent)] group-hover:bg-[#5f6516]/10">
+                        <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-dashed border-[color:var(--accent)]/60 text-[color:var(--accent)] transition-transform duration-300 group-hover:scale-110 group-hover:border-[color:var(--accent)] group-hover:bg-[#6b1422]/10">
                           {" "}
                           <svg
                             className="h-5 w-5 sm:h-6 sm:w-6"
@@ -525,7 +525,7 @@ export default function BundleBuilderModal({
                     onClick={() => setActiveCategory(cat.id)}
                     className={`rounded-full px-3 py-1 text-[10px] max-sm:text-[12px] font-semibold uppercase tracking-wider transition-all cursor-pointer touch-manipulation ${
                       activeCategory === cat.id
-                        ? "bg-[#5f6516] text-black shadow-[0_0_12px_rgba(95, 101, 22,0.5)]"
+                        ? "bg-[#6b1422] text-white shadow-[0_0_12px_rgba(107,20,34,0.5)]"
                         : "bg-white/5 text-cream/70 hover:bg-white/10 hover:text-white"
                     }`}
                   >
@@ -551,19 +551,19 @@ export default function BundleBuilderModal({
                     onClick={() => handleSelectPerfume(perfume)}
                     className={`group relative flex flex-col justify-between items-center rounded-[4px] border p-2.5 sm:p-3.5 text-center transition-all duration-300 cursor-pointer touch-manipulation ${
                       isSelected
-                        ? "border-[color:var(--accent)] bg-[#5f6516]/15 shadow-[0_0_15px_rgba(95, 101, 22,0.25)]"
+                        ? "border-[color:var(--accent)] bg-[#6b1422]/15 shadow-[0_0_15px_rgba(107,20,34,0.25)]"
                         : "border-white/10 bg-white/[0.04] hover:border-[color:var(--accent)]/60 hover:bg-white/[0.08]"
                     }`}
                   >
                     {" "}
                     {/* Tag Badge Overlay */}
-                    <span className="absolute top-2 left-2 rounded-full bg-[#5f6516]/20 border border-[color:var(--accent)]/40 px-2 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f] backdrop-blur-xs">
+                    <span className="absolute top-2 left-2 rounded-full bg-[#6b1422]/20 border border-[color:var(--accent)]/40 px-2 py-0.5 text-[8px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#e7bcc3] backdrop-blur-xs">
                       {" "}
                       {perfume.tag}
                     </span>{" "}
                     {/* Selected Badge */}
                     {isSelected && (
-                      <span className="absolute right-2 top-2 rounded-full bg-[#5f6516] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-black shadow-md">
+                      <span className="absolute right-2 top-2 rounded-full bg-[#6b1422] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-white shadow-md">
                         {" "}
                         Slot {selectedInSlots.join(", ")}
                       </span>
@@ -593,7 +593,7 @@ export default function BundleBuilderModal({
                       </span>{" "}
                     </div>{" "}
                     {/* Add to Bundle CTA Button */}
-                    <span className="mt-2.5 w-full rounded-md border border-[color:var(--accent)]/40 bg-white/5 py-1.5 text-center text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#cdd43f] transition-colors group-hover:bg-[#5f6516] group-hover:text-black">
+                    <span className="mt-2.5 w-full rounded-md border border-[color:var(--accent)]/40 bg-white/5 py-1.5 text-center text-[9px] max-sm:text-[12px] font-bold uppercase tracking-wider text-[#e7bcc3] transition-colors group-hover:bg-[#6b1422] group-hover:text-white">
                       {" "}
                       {isSelected ? "Add Again +" : "+ Select"}
                     </span>{" "}
@@ -623,7 +623,7 @@ export default function BundleBuilderModal({
                   ₹{finalPrice.toLocaleString("en-IN")}
                 </span>{" "}
                 {isComplete && (
-                  <span className="rounded bg-[#5f6516] px-2 py-0.5 text-[10px] max-sm:text-[12px] font-extrabold text-black uppercase shadow-[0_0_10px_rgba(95, 101, 22,0.5)]">
+                  <span className="rounded bg-[#6b1422] px-2 py-0.5 text-[10px] max-sm:text-[12px] font-extrabold text-white uppercase shadow-[0_0_10px_rgba(107,20,34,0.5)]">
                     {" "}
                     SAVED ₹300
                   </span>
@@ -642,9 +642,9 @@ export default function BundleBuilderModal({
             disabled={!isComplete || addedToCart}
             className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-[4px] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.06em] transition-all duration-300 cursor-pointer ${
               addedToCart
-                ? "bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.5)]"
+                ? "bg-[#6b1422] text-white shadow-[0_0_20px_rgba(16,185,129,0.5)]"
                 : isComplete
-                  ? "bg-gradient-to-r from-[#5f6516] via-[#cdd43f] to-[#5f6516] text-black shadow-[0_0_25px_rgba(95, 101, 22,0.5)] hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(95, 101, 22,0.7)]"
+                  ? "bg-gradient-to-r from-[#6b1422] via-[#e7bcc3] to-[#6b1422] text-white shadow-[0_0_25px_rgba(107,20,34,0.5)] hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(107,20,34,0.7)]"
                   : "cursor-not-allowed bg-white/10 text-white/40"
             }`}
           >

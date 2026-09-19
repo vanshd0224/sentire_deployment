@@ -90,7 +90,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                 className="group flex flex-col text-left transition-transform duration-500 hover:-translate-y-2 cursor-pointer outline-none shrink-0 w-[78vw] sm:w-[280px] md:w-auto snap-center"
               >
                 {" "}
-                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-[4px] shadow-lg border border-[color:var(--accent)]/30 bg-[#120d09] group-hover:border-[color:var(--accent)] group-hover:shadow-[0_16px_36px_rgba(95, 101, 22,0.22)] transition-all duration-500">
+                <div className="relative aspect-[3/4] md:aspect-[3/3.7] w-full overflow-hidden rounded-[4px] shadow-lg border border-[color:var(--accent)]/30 bg-[#120d09] group-hover:border-[color:var(--accent)] group-hover:shadow-[0_16px_36px_rgba(107,20,34,0.22)] transition-all duration-500">
                   {" "}
                   <img
                     src={cat.image}

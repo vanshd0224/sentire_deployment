@@ -250,7 +250,7 @@ export default function AccountPage({
           </p>{" "}
           <button
             onClick={() => onOpenLoginModal?.()}
-            className="on-dark w-full py-4 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] font-semibold text-xs uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md cursor-pointer"
+            className="on-dark w-full py-4 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white font-semibold text-xs uppercase tracking-[0.06em] rounded-[4px] transition-all shadow-md cursor-pointer"
           >
             {" "}
             Login / Sign Up Now
@@ -418,7 +418,7 @@ export default function AccountPage({
                     </p>{" "}
                     <button
                       onClick={() => onNavigate("perfumes")}
-                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
+                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
                     >
                       {" "}
                       Shop Now
@@ -449,7 +449,7 @@ export default function AccountPage({
                           <span className="font-bold text-[#161616]">
                             ₹{(ord.total || 0).toLocaleString()}
                           </span>{" "}
-                          <p className="text-[10px] max-sm:text-[12px] text-emerald-600 font-semibold">
+                          <p className="text-[10px] max-sm:text-[12px] text-[#6b1422] font-semibold">
                             {ord.status || "Confirmed"}
                           </p>{" "}
                         </div>{" "}
@@ -489,7 +489,7 @@ export default function AccountPage({
                     </p>{" "}
                     <button
                       onClick={() => setIsAddressModalOpen(true)}
-                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
+                      className="on-dark px-6 py-2.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white text-xs font-semibold rounded-[4px] transition-all shadow-sm cursor-pointer"
                     >
                       {" "}
                       Add New Address Now
@@ -510,7 +510,7 @@ export default function AccountPage({
                             {addr.name}
                           </span>{" "}
                           {addr.isDefault && (
-                            <span className="bg-[#5f6516]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
+                            <span className="bg-[#6b1422]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
                               Default
                             </span>
                           )}
@@ -551,7 +551,7 @@ export default function AccountPage({
                   </p>{" "}
                   <button
                     onClick={() => onNavigate("perfumes")}
-                    className="on-dark px-8 py-3 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] hover:text-[#000000] text-xs font-semibold rounded-[4px] transition-all shadow-md cursor-pointer uppercase tracking-wider"
+                    className="on-dark px-8 py-3 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white text-xs font-semibold rounded-[4px] transition-all shadow-md cursor-pointer uppercase tracking-wider"
                   >
                     {" "}
                     Explore Perfumes Collection
@@ -580,7 +580,7 @@ export default function AccountPage({
                         </div>{" "}
                         <div className="flex items-center gap-3">
                           {" "}
-                          <span className="bg-emerald-100 text-emerald-800 text-[10px] max-sm:text-[12px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                          <span className="bg-[#f4e6e8] text-[#6b1422] text-[10px] max-sm:text-[12px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                             {" "}
                             {ord.status || "Confirmed"}
                           </span>{" "}
@@ -666,7 +666,7 @@ export default function AccountPage({
                 </h2>{" "}
                 <button
                   onClick={() => setIsAddressModalOpen(true)}
-                  className="on-dark px-4 py-2 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] text-xs font-semibold rounded-[4px] transition-all cursor-pointer"
+                  className="on-dark px-4 py-2 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] text-xs font-semibold rounded-[4px] transition-all cursor-pointer"
                 >
                   {" "}
                   + Add New Address
@@ -680,7 +680,7 @@ export default function AccountPage({
                   </p>{" "}
                   <button
                     onClick={() => setIsAddressModalOpen(true)}
-                    className="px-6 py-2.5 bg-[#5f6516] text-[#000000] text-xs font-semibold rounded-[4px]"
+                    className="px-6 py-2.5 bg-[#6b1422] text-white text-xs font-semibold rounded-[4px]"
                   >
                     {" "}
                     Add Shipping Address
@@ -701,7 +701,7 @@ export default function AccountPage({
                           {addr.name}
                         </span>{" "}
                         {addr.isDefault && (
-                          <span className="bg-[#5f6516]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
+                          <span className="bg-[#6b1422]/15 text-[color:var(--accent)] px-2 py-0.5 rounded text-[10px] max-sm:text-[12px] font-bold uppercase">
                             Default
                           </span>
                         )}
@@ -732,14 +732,14 @@ export default function AccountPage({
                     if (isEditing) handleSaveProfile();
                     else setIsEditing(true);
                   }}
-                  className="px-5 py-2.5 bg-[#5f6516] hover:bg-[#161616] text-[#000000] hover:text-[#ffffff] text-xs font-bold rounded-[4px] transition-all cursor-pointer shadow-sm"
+                  className="px-5 py-2.5 bg-[#6b1422] hover:bg-[#161616] text-white hover:text-[#ffffff] text-xs font-bold rounded-[4px] transition-all cursor-pointer shadow-sm"
                 >
                   {" "}
                   {isEditing ? "Save Changes" : "Edit Profile"}
                 </button>{" "}
               </div>{" "}
               {saveMessage && (
-                <div className="p-3 bg-green-50 text-green-700 text-xs rounded-[4px] mb-4 text-center font-semibold">
+                <div className="p-3 bg-[#f4e6e8] text-[#6b1422] text-xs rounded-[4px] mb-4 text-center font-semibold">
                   {" "}
                   {saveMessage}
                 </div>
@@ -881,7 +881,7 @@ export default function AccountPage({
               />{" "}
               <button
                 type="submit"
-                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#5f6516] text-[#ffffff] font-semibold text-xs rounded-[4px] transition-all mt-2"
+                className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] font-semibold text-xs rounded-[4px] transition-all mt-2"
               >
                 {" "}
                 Save Shipping Address
