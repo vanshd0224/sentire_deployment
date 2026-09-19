@@ -54,13 +54,20 @@ export default function ProductCard({
   return (
     <motion.article
       className="group flex h-full flex-col"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial="hidden"
+      whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.7,
-        delay: Math.min(index, 4) * 0.06,
-        ease: EASE_OUT_EXPO,
+      variants={{
+        hidden: { opacity: 0, y: 24 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.7,
+            delay: Math.min(index, 4) * 0.06,
+            ease: EASE_OUT_EXPO,
+          },
+        },
       }}
     >
       <button
@@ -68,12 +75,28 @@ export default function ProductCard({
         onClick={() => onSelectProduct?.(product, size)}
         className="relative block w-full cursor-pointer overflow-hidden rounded-[2px] bg-paper-2 text-left"
         aria-label={`View ${product.name}`}
+        data-cursor="View"
       >
-        <div className="aspect-[4/5] w-full">
+        <motion.div
+          className="aspect-[4/5] w-full"
+          // Driven by the card above: an element clipped to nothing never
+          // counts as "in view", so it can't trigger its own reveal.
+          variants={{
+            hidden: { clipPath: "inset(100% 0% 0% 0%)", scale: 1.12 },
+            show: {
+              clipPath: "inset(0% 0% 0% 0%)",
+              scale: 1,
+              transition: {
+                duration: 1.2,
+                delay: Math.min(index, 4) * 0.08,
+                ease: EASE_OUT_EXPO,
+              },
+            },
+          }}
+        >
           <img
             src={image}
             alt={`${product.name} extrait de parfum, ${size}ml`}
-            loading="lazy"
             decoding="async"
             className="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
           />
@@ -87,7 +110,7 @@ export default function ProductCard({
               className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             />
           )}
-        </div>
+        </motion.div>
 
         {product.badge && (
           <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-2.5 py-1 font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.02em] text-ink">
@@ -98,9 +121,7 @@ export default function ProductCard({
 
       <div className="mt-4 flex flex-1 flex-col">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="pc-name text-[20px] leading-tight">
-            {product.name}
-          </h3>
+          <h3 className="pc-name text-[20px] leading-tight">{product.name}</h3>
           <span className="ed-label shrink-0">{product.num}</span>
         </div>
 

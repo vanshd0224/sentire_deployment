@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { DrawnRule, KineticText } from "../editorial/home/Kinetic";
 import { ALL_PERFUMES } from "../data/perfumes";
 
 export interface ReelProduct {
@@ -464,11 +465,13 @@ export default function WatchAndBuy({
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {" "}
         {/* Carousel Heading */}
-        <div className="h-px w-full bg-[color:var(--color-rule)]" />{" "}
+        <DrawnRule />
         <p className="ed-label mt-5">In motion</p>{" "}
         <h2 className="mt-3 font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em] text-ink">
-          {" "}
-          Watch &amp; buy.
+          <KineticText text="Watch" />{" "}
+          <em>
+            <KineticText text="& buy." delay={0.12} />
+          </em>
         </h2>{" "}
         {/* Carousel Viewport with Floating Scroll Arrows */}
         <div className="relative mt-8 sm:mt-10 flex items-center">
@@ -517,6 +520,7 @@ export default function WatchAndBuy({
                   <div
                     key={i}
                     data-index={i}
+                    data-cursor="Play"
                     className="watch-carousel-card group flex shrink-0 flex-col transition-transform duration-300 hover:scale-[1.02] active:scale-95"
                     style={{ width: `${cardWidth}px` }}
                   >

@@ -1,4 +1,5 @@
 import ProductCard from "../editorial/ProductCard";
+import { DriftWord } from "../editorial/home/Kinetic";
 import SectionHeading from "./SectionHeading";
 import type { CartItem } from "./CartDrawer";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
@@ -94,15 +95,13 @@ export default function NewArrivals({
   onOpenCart: _onOpenCart,
   onNavigate,
 }: NewArrivalsProps) {
-
-
-
-
   return (
-    <section className="bg-gradient-to-b from-[#f2f2f0] to-[#f2f2f0] py-16 sm:py-24 text-ink relative border-t border-black/5">
-      {" "}
-      
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-gradient-to-b from-[#f2f2f0] to-[#f2f2f0] py-16 sm:py-24 text-ink relative border-t border-black/5 overflow-hidden">
+      <DriftWord
+        text="New arrivals — just in — New arrivals — just in —"
+        className="top-4 sm:top-8"
+      />{" "}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {" "}
         <div className="flex items-end justify-between mb-12">
           {" "}

@@ -6,7 +6,7 @@ export default function Newsletter() {
         {" "}
         <div className="flex items-center gap-3.5 text-center lg:text-left">
           {" "}
-          <span className="hidden shrink-0 text-gold sm:block">
+          <span className="hidden shrink-0 text-[color:var(--accent)] sm:block">
             {" "}
             <svg
               viewBox="0 0 24 24"

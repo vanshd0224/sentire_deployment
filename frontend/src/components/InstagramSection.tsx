@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { KineticText } from "../editorial/home/Kinetic";
+import { EASE_OUT_EXPO } from "../editorial/motion";
 const INSTAGRAM_REELS = [
   {
     id: "1",
@@ -97,8 +100,10 @@ export default function InstagramSection() {
             className="font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em]"
             style={{ color: "#f2f2f0" }}
           >
-            {" "}
-            As seen on Instagram.
+            <KineticText text="As seen on" />{" "}
+            <em className="text-[#e7bcc3]">
+              <KineticText text="Instagram." delay={0.2} />
+            </em>
           </h2>{" "}
           <p
             className="text-[14px] leading-relaxed"
@@ -115,10 +120,20 @@ export default function InstagramSection() {
         {/* 6 Clean Reel Grid Cards */}
         <div className="flex sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
           {" "}
-          {INSTAGRAM_REELS.map((post) => (
-            <a
+          {INSTAGRAM_REELS.map((post, i) => (
+            <motion.a
               key={post.id}
               href={post.url}
+              data-cursor="Play"
+              initial={{
+                opacity: 0,
+                y: 60,
+                rotate: i % 2 ? 6 : -6,
+                scale: 0.9,
+              }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1, delay: i * 0.07, ease: EASE_OUT_EXPO }}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative aspect-square shrink-0 w-[44vw] sm:w-auto snap-center block overflow-hidden rounded-[2px] bg-neutral-900 border border-white/10 hover:border-[color:var(--accent)]/60 transition-all duration-300 shadow-md hover:shadow-xl"
@@ -141,7 +156,7 @@ export default function InstagramSection() {
               </div>{" "}
               {/* Hover highlight overlay */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />{" "}
-            </a>
+            </motion.a>
           ))}
         </div>{" "}
         {/* CTA */}

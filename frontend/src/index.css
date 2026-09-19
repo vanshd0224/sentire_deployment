@@ -1871,3 +1871,29 @@ h3 .italic {
   font-weight: 600;
   letter-spacing: 0.08em;
 }
+
+/* Home hero: the thin line that fills while a bottle is facing you */
+.hero-turn {
+  transform: scaleX(0);
+  animation-name: heroTurn;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes heroTurn {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Accent words in headings: a real italic, not a slanted grotesk */
+h1 em,
+h2 em,
+h3 em,
+.accent-italic {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}

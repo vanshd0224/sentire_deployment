@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DrawnRule, KineticText, ScrollLean } from "../editorial/home/Kinetic";
 
 const CELEBRITY_IMAGES = [
   "/images/celebrities/IMG-20260807-WA0002.jpg",
@@ -50,6 +51,9 @@ export default function CelebrityReacts() {
             transform: translateX(-50%);
           }
         }
+        .celeb-marquee-wrapper:hover .animate-celeb-marquee {
+          animation-play-state: paused;
+        }
         .animate-celeb-marquee {
           display: flex;
           width: max-content;
@@ -67,11 +71,13 @@ export default function CelebrityReacts() {
       {/* Section Header */}
       <div className="relative z-10 mx-auto mb-10 w-full max-w-[1440px] px-5 md:px-10 lg:mb-14">
         {" "}
-        <div className="h-px w-full bg-paper/20" />{" "}
+        <DrawnRule light />
         <p className="ed-label mt-5 !text-paper/55">Worn by</p>{" "}
         <h2 className="mt-3 font-serif text-[clamp(1.9rem,4.5vw,3.25rem)] font-light leading-[1.04] tracking-[-0.02em] text-paper">
-          {" "}
-          Celebrity reacts <em className="italic">to Sentire.</em>{" "}
+          <KineticText text="Celebrity reacts" />{" "}
+          <em className="text-[#e7bcc3]">
+            <KineticText text="to Sentire." delay={0.15} />
+          </em>
         </h2>{" "}
       </div>{" "}
       {/* Moving Loop Container (Infinite Photo Marquee) */}
@@ -80,30 +86,33 @@ export default function CelebrityReacts() {
         {/* Left & Right edge gradient fade masks */}
         <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-r from-[#0e0e0e] to-transparent" />{" "}
         <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-20 w-16 md:w-32 bg-gradient-to-l from-[#0e0e0e] to-transparent" />{" "}
-        <div className="animate-celeb-marquee gap-5 md:gap-7 px-4">
-          {" "}
-          {marqueeItems.map((imgSrc, idx) => {
-            const originalIndex = idx % CELEBRITY_IMAGES.length;
-            return (
-              <div
-                key={`${imgSrc}-${idx}`}
-                onClick={() => setActiveModalIndex(originalIndex)}
-                className="on-dark group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-[4px] overflow-hidden border border-[color:var(--accent)]/30 bg-[#111111] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--accent)] hover:shadow-[0_12px_30px_rgba(107,20,34,0.3)]"
-              >
-                {" "}
-                <img
-                  src={imgSrc}
-                  alt={`Celebrity ${originalIndex + 1}`}
-                  className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />{" "}
-                {/* Subtle hover overlay highlight */}
-                <div className="absolute inset-0 bg-[#6b1422]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />{" "}
-              </div>
-            );
-          })}
-        </div>{" "}
+        <ScrollLean max={9}>
+          <div className="animate-celeb-marquee items-start gap-5 md:gap-7 px-4 pb-8">
+            {" "}
+            {marqueeItems.map((imgSrc, idx) => {
+              const originalIndex = idx % CELEBRITY_IMAGES.length;
+              return (
+                <div
+                  key={`${imgSrc}-${idx}`}
+                  onClick={() => setActiveModalIndex(originalIndex)}
+                  data-cursor="Open"
+                  className={`on-dark group relative flex-shrink-0 w-60 md:w-72 aspect-[3/4] rounded-[4px] overflow-hidden border border-[color:var(--accent)]/30 bg-[#111111] shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--accent)] hover:shadow-[0_12px_30px_rgba(107,20,34,0.3)] ${idx % 2 ? "mt-8" : ""}`}
+                >
+                  {" "}
+                  <img
+                    src={imgSrc}
+                    alt={`Celebrity ${originalIndex + 1}`}
+                    className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />{" "}
+                  {/* Subtle hover overlay highlight */}
+                  <div className="absolute inset-0 bg-[#6b1422]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />{" "}
+                </div>
+              );
+            })}
+          </div>{" "}
+        </ScrollLean>
       </div>{" "}
       {/* Fullscreen Photo Lightbox Modal */}
       {activeModalIndex !== null && (

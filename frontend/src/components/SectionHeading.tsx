@@ -1,3 +1,5 @@
+import { DrawnRule, KineticText } from "../editorial/home/Kinetic";
+
 /**
  * Shared section heading, editorial version: a hairline rule with a left-set
  * serif title. Same props as before, so every page that already uses it
@@ -15,14 +17,9 @@ export default function SectionHeading({
   return (
     <div className="w-full">
       {" "}
-      <div
-        className="h-px w-full"
-        style={{
-          background: light ? "rgba(242, 242, 240,0.22)" : "var(--color-rule)",
-        }}
-      />{" "}
+      <DrawnRule light={light} />
       <h2
-        className="mt-5 font-serif text-left font-light lowercase first-letter:uppercase"
+        className="mt-5 font-serif text-left font-light"
         style={{
           fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
           letterSpacing: "-0.02em",
@@ -30,8 +27,9 @@ export default function SectionHeading({
           color: light ? "#f2f2f0" : "#161616",
         }}
       >
-        {" "}
-        {title}
+        <KineticText
+          text={title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+        />
       </h2>{" "}
       {subtitle && (
         <p

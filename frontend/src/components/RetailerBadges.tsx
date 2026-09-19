@@ -1,3 +1,5 @@
+import { ScrollLean } from "../editorial/home/Kinetic";
+
 const logos = [
   { name: "Blinkit", src: "/logos/blinkit.png" },
   { name: "Myntra", src: "/logos/myntra.png" },
@@ -20,22 +22,24 @@ export default function RetailerBadges() {
         {/* Left & Right Gradient Fades */}
         <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#f2f2f0] via-[#f2f2f0]/80 to-transparent z-10 pointer-events-none" />{" "}
         <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#f2f2f0] via-[#f2f2f0]/80 to-transparent z-10 pointer-events-none" />{" "}
-        <div className="ticker-track flex items-center gap-6 sm:gap-12 w-max">
-          {" "}
-          {marqueeLogos.map((item, index) => (
-            <div
-              key={`${item.name}-${index}`}
-              className="flex items-center justify-center bg-white border border-[color:var(--accent)]/25 hover:border-[color:var(--accent)] rounded-lg px-4 py-2 transition-all duration-300 shadow-xs hover:shadow-md h-11 min-w-[120px]"
-            >
-              {" "}
-              <img
-                src={item.src}
-                alt={item.name}
-                className="h-6 sm:h-8 w-auto max-w-[130px] object-contain filter-none opacity-100 hover:scale-105 transition-transform duration-300"
-              />{" "}
-            </div>
-          ))}
-        </div>{" "}
+        <ScrollLean max={12}>
+          <div className="ticker-track flex items-center gap-6 sm:gap-12 w-max">
+            {" "}
+            {marqueeLogos.map((item, index) => (
+              <div
+                key={`${item.name}-${index}`}
+                className="flex items-center justify-center bg-white border border-[color:var(--accent)]/25 hover:border-[color:var(--accent)] rounded-lg px-4 py-2 transition-all duration-300 shadow-xs hover:shadow-md h-11 min-w-[120px]"
+              >
+                {" "}
+                <img
+                  src={item.src}
+                  alt={item.name}
+                  className="h-6 sm:h-8 w-auto max-w-[130px] object-contain filter-none opacity-100 hover:scale-105 transition-transform duration-300"
+                />{" "}
+              </div>
+            ))}
+          </div>{" "}
+        </ScrollLean>
       </div>{" "}
     </section>
   );

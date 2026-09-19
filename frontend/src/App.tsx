@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
-import Hero from "./components/Hero";
+import HomeHero from "./editorial/home/HomeHero";
+import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
 import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
 import BestSellers from "./components/BestSellers";
@@ -600,7 +601,12 @@ export default function App() {
         />
       ) : (
         <main>
-          <Hero onNavigate={handleNavigate} />
+          <ScrollProgress />
+          <CursorLabel />
+          <HomeHero
+            onNavigate={handleNavigate}
+            onSelectProduct={handleOpenProductModal}
+          />
           <WatchAndBuy
             onAddToCart={handleAddToCart}
             onOpenCart={() => handleNavigate("cart")}

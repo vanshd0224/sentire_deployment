@@ -1,3 +1,4 @@
+import { ScrollLean } from "../editorial/home/Kinetic";
 interface QualityBadge {
   id: string;
   name: string;
@@ -231,49 +232,36 @@ const marqueeBadges = [
 ];
 
 export default function TrustBadges() {
+  // One wine band of big type instead of a row of coloured stickers: the
+  // claims read at a glance, and the band leans with your scroll speed.
   return (
-    <section className="w-full bg-[#f7f7f5] border-y border-[color:var(--accent)]/20 py-4.5 overflow-hidden relative">
-      {" "}
-      {/* Infinite Scroll Marquee Loop */}
-      <div className="relative w-full overflow-hidden group">
-        {" "}
-        {/* Edge Gradient Fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#f7f7f5] via-[#f7f7f5]/90 to-transparent z-10 pointer-events-none" />{" "}
-        <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#f7f7f5] via-[#f7f7f5]/90 to-transparent z-10 pointer-events-none" />{" "}
-        <div className="ticker-track flex items-center gap-4 sm:gap-6 w-max py-1">
-          {" "}
+    <section
+      className="on-dark relative w-full overflow-hidden bg-[#6b1422] py-5 text-paper"
+      aria-label="Quality standards"
+    >
+      <ScrollLean max={10}>
+        <div
+          className="flex w-max items-center gap-10 whitespace-nowrap"
+          style={{ animation: "edMarqueeL 48s linear infinite" }}
+        >
           {marqueeBadges.map((badge, index) => (
             <div
               key={`${badge.id}-${index}`}
-              className={`flex items-center gap-3 px-4 py-2 border rounded-[4px] transition-all duration-300 shadow-xs hover:shadow-md cursor-default shrink-0 group/badge ${badge.cardStyle}`}
+              className="flex shrink-0 items-baseline gap-3"
             >
-              {" "}
-              <div className="transition-transform duration-300 group-hover/badge:scale-110">
-                {" "}
-                {badge.icon}
-              </div>{" "}
-              <div className="flex flex-col">
-                {" "}
-                <div className="flex items-center gap-1.5">
-                  {" "}
-                  <span
-                    className={`text-[11.5px] max-sm:text-[12px] font-black tracking-[0.06em] uppercase whitespace-nowrap ${badge.textStyle}`}
-                  >
-                    {" "}
-                    {badge.name}
-                  </span>{" "}
-                </div>{" "}
-                <span
-                  className={`text-[8.5px] max-sm:text-[12px] font-bold tracking-wider uppercase px-1.5 py-0.2 rounded border w-max mt-0.5 ${badge.subStyle}`}
-                >
-                  {" "}
-                  {badge.sub}
-                </span>{" "}
-              </div>{" "}
+              <span className="font-serif text-[clamp(1.25rem,2.4vw,2rem)] uppercase leading-none">
+                {badge.name.toLowerCase()}
+              </span>
+              <span className="font-mono text-[11px] uppercase text-paper/60 max-sm:text-[12px]">
+                {badge.sub.toLowerCase()}
+              </span>
+              <span aria-hidden className="ml-7 text-[#e7bcc3]">
+                ✦
+              </span>
             </div>
           ))}
-        </div>{" "}
-      </div>{" "}
+        </div>
+      </ScrollLean>
     </section>
   );
 }
