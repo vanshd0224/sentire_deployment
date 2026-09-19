@@ -8,7 +8,6 @@ import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
 import BestSellers from "./components/BestSellers";
 import NewArrivals from "./components/NewArrivals";
-import TrustBadges from "./components/TrustBadges";
 import Newsletter from "./components/Newsletter";
 import WatchAndBuy from "./components/WatchAndBuy";
 import CelebrityReacts from "./components/CelebrityReacts";
@@ -626,7 +625,6 @@ export default function App() {
             onSelectProduct={handleOpenProductModal}
           />
           <CelebrityReacts />
-          <TrustBadges />
           <Newsletter />
           <InstagramSection />
         </main>
