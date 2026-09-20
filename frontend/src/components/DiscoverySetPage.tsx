@@ -18,7 +18,11 @@ import Prelude from "../editorial/discovery/Prelude";
 import ScentReel from "../editorial/discovery/ScentReel";
 import SprayTest from "../editorial/discovery/SprayTest";
 import { Magnetic, StrikeLine, Ticker } from "../editorial/discovery/fx";
-import { EASE_OUT_EXPO, viewportOnce } from "../editorial/motion";
+import {
+  EASE_OUT_EXPO,
+  viewportOnce,
+  useMotionBudget,
+} from "../editorial/motion";
 
 interface DiscoverySetPageProps {
   onBackToHome?: () => void;
@@ -116,7 +120,7 @@ export default function DiscoverySetPage({
       <div ref={preludeEnd} />
 
       {/* ── 2. Why a set: a paragraph that lights up as you read ── */}
-      <section className="bg-paper py-24 md:py-36">
+      <section className="cv-section bg-paper py-24 md:py-36">
         <div className="ed-container">
           <p className="ed-label">Why a set</p>
           <LitParagraph text={INTRO} />
@@ -132,7 +136,7 @@ export default function DiscoverySetPage({
       <Week />
 
       {/* ── 5. The numbers ─────────────────────────────────────── */}
-      <section className="on-dark bg-ink py-20 text-paper md:py-28">
+      <section className="cv-section on-dark bg-ink py-20 text-paper md:py-28">
         <div className="ed-container">
           <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
             How far 36ML goes
@@ -416,7 +420,7 @@ export default function DiscoverySetPage({
       </section>
 
       {/* ── 9. Questions ───────────────────────────────────────── */}
-      <section className="bg-paper-2 py-20 md:py-28">
+      <section className="cv-section bg-paper-2 py-20 md:py-28">
         <div className="ed-container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <h2 className="mt-4 font-serif text-[clamp(2.2rem,5vw,3.75rem)] font-light leading-[1.02] tracking-[-0.025em]">
@@ -536,6 +540,9 @@ function Stat({ label, value }: { label: string; value: React.ReactNode }) {
 /** A paragraph whose words light up one by one as it scrolls through the view. */
 function LitParagraph({ text }: { text: string }) {
   const ref = useRef<HTMLParagraphElement | null>(null);
+  // One motion value per word means ~40 style writes per scroll frame. Worth
+  // it on a laptop, not on a phone — there the paragraph is simply read.
+  const rich = useMotionBudget();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 85%", "end 45%"],
@@ -547,18 +554,24 @@ function LitParagraph({ text }: { text: string }) {
       className="mt-6 max-w-5xl font-serif font-light leading-[1.18] tracking-[-0.02em]"
       style={{ fontSize: "clamp(1.9rem, 4.4vw, 4rem)" }}
     >
-      <span className="sr-only">{text}</span>
-      <span aria-hidden>
-        {words.map((w, i) => (
-          <LitWord
-            key={i}
-            word={w}
-            progress={scrollYProgress}
-            start={i / words.length}
-            end={(i + 1) / words.length}
-          />
-        ))}
-      </span>
+      {rich ? (
+        <>
+          <span className="sr-only">{text}</span>
+          <span aria-hidden>
+            {words.map((w, i) => (
+              <LitWord
+                key={i}
+                word={w}
+                progress={scrollYProgress}
+                start={i / words.length}
+                end={(i + 1) / words.length}
+              />
+            ))}
+          </span>
+        </>
+      ) : (
+        text
+      )}
     </p>
   );
 }
@@ -588,7 +601,7 @@ function Week() {
   const draw = useSpring(scrollYProgress, { stiffness: 110, damping: 26 });
 
   return (
-    <section className="bg-paper py-20 md:py-28">
+    <section className="cv-section bg-paper py-20 md:py-28">
       <div className="ed-container">
         <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
           Wear one a day for six days
@@ -676,7 +689,7 @@ function Week() {
 function Reviews() {
   const quotes = [...REVIEWS, ...REVIEWS];
   return (
-    <section className="on-dark overflow-hidden bg-ink py-20 text-paper md:py-28">
+    <section className="cv-section on-dark overflow-hidden bg-ink py-20 text-paper md:py-28">
       <div className="ed-container">
         <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
           4.9 · 428 verified reviews

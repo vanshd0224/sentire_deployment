@@ -50,7 +50,7 @@ interface ShopByCategoryProps {
 
 export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
   return (
-    <section className="w-full bg-[#f2f2f0] py-14 md:py-20 overflow-hidden reveal-fade-up">
+    <section className="cv-section w-full bg-[#f2f2f0] py-14 md:py-20 overflow-hidden reveal-fade-up">
       {" "}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {" "}

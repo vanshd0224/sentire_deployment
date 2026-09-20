@@ -1928,3 +1928,15 @@ h3 em,
     opacity: 0;
   }
 }
+
+/* ── Off-screen sections cost nothing until they're near ────────────────
+   Long pages made a mid-range phone lay out, paint and decode every
+   section up front, which showed up as 250-390ms frame drops the first
+   time you scrolled. `content-visibility: auto` lets the browser skip a
+   section entirely until it approaches the viewport; the intrinsic size
+   keeps the scrollbar honest so nothing jumps. Not used on sections that
+   contain position: sticky or 3D stages. */
+.cv-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}

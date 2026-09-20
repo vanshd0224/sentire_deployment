@@ -36,7 +36,7 @@ export default function CelebrityReacts() {
 
   return (
     <section
-      className="on-dark relative z-[1] -mt-8 w-full overflow-hidden rounded-t-[28px] bg-[#0e0e0e] py-14 text-[#e9e9e6] md:-mt-12 md:rounded-t-[48px] lg:py-20"
+      className="cv-section on-dark relative z-[1] -mt-8 w-full overflow-hidden rounded-t-[28px] bg-[#0e0e0e] py-14 text-[#e9e9e6] md:-mt-12 md:rounded-t-[48px] lg:py-20"
       aria-label="Celebrity Reacts to Sentire"
       id="celebrity-reacts"
     >

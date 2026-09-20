@@ -36,7 +36,7 @@ const INSTAGRAM_REELS = [
 
 export default function InstagramSection() {
   return (
-    <section className="on-dark relative z-[1] -mt-8 w-full rounded-t-[28px] bg-[#0a0a0a] py-14 sm:py-20 md:-mt-10 md:rounded-t-[48px]">
+    <section className="cv-section on-dark relative z-[1] -mt-8 w-full rounded-t-[28px] bg-[#0a0a0a] py-14 sm:py-20 md:-mt-10 md:rounded-t-[48px]">
       {" "}
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12">
         {" "}

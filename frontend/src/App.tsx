@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
+import NotFoundPage from "./components/NotFoundPage";
 import HeroRing from "./editorial/home/HeroRing";
 import Hero from "./components/Hero";
 import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
@@ -14,28 +15,58 @@ import WatchAndBuy from "./components/WatchAndBuy";
 import CelebrityReacts from "./components/CelebrityReacts";
 import InstagramSection from "./components/InstagramSection";
 import Footer from "./components/Footer";
-import BundleBuilderModal from "./components/BundleBuilderModal";
-import PerfumesPage from "./components/PerfumesPage";
-import BestSellersPage from "./components/BestSellersPage";
-import NewArrivalsPage from "./components/NewArrivalsPage";
-import AboutPage from "./components/AboutPage";
-import ByobPage from "./components/ByobPage";
-import DiscoverySetPage from "./components/DiscoverySetPage";
-import PersonalisationPage from "./components/PersonalisationPage";
-import CartDrawer, { CartItem } from "./components/CartDrawer";
-import CartPage from "./components/CartPage";
+import type { CartItem } from "./components/CartDrawer";
 import MobileBottomNav from "./components/MobileBottomNav";
-import AccountDrawerModal from "./components/AccountDrawerModal";
-import AccountPage from "./components/AccountPage";
-import ClientServicesPage from "./components/ClientServicesPage";
-import TrackOrderPage from "./components/TrackOrderPage";
 import SEOHead from "./components/SEOHead";
-import ProductDetailModal from "./components/ProductDetailModal";
-import ExitIntentPopup from "./components/ExitIntentPopup";
-import { auth } from "./lib/firebase";
 
 import type { PageName } from "./types/appTypes";
+
+/**
+ * Everything that isn't the landing page loads as its own chunk. The home
+ * page used to parse the code for the Discovery Set, BYOB, the account
+ * area and every modal before it could paint — about 1.2 MB of JavaScript
+ * on a phone. Each of these now arrives when it's actually opened.
+ */
+const BundleBuilderModal = lazy(
+  () => import("./components/BundleBuilderModal"),
+);
+const PerfumesPage = lazy(() => import("./components/PerfumesPage"));
+const BestSellersPage = lazy(() => import("./components/BestSellersPage"));
+const NewArrivalsPage = lazy(() => import("./components/NewArrivalsPage"));
+const AboutPage = lazy(() => import("./components/AboutPage"));
+const ByobPage = lazy(() => import("./components/ByobPage"));
+const DiscoverySetPage = lazy(() => import("./components/DiscoverySetPage"));
+const PersonalisationPage = lazy(
+  () => import("./components/PersonalisationPage"),
+);
+const CartPage = lazy(() => import("./components/CartPage"));
+const CartDrawer = lazy(() => import("./components/CartDrawer"));
+const AccountDrawerModal = lazy(
+  () => import("./components/AccountDrawerModal"),
+);
+const AccountPage = lazy(() => import("./components/AccountPage"));
+const ClientServicesPage = lazy(
+  () => import("./components/ClientServicesPage"),
+);
+const TrackOrderPage = lazy(() => import("./components/TrackOrderPage"));
+const ProductDetailModal = lazy(
+  () => import("./components/ProductDetailModal"),
+);
+const ExitIntentPopup = lazy(() => import("./components/ExitIntentPopup"));
+
 export type { PageName };
+
+/**
+ * Every path the site answers to. Anything else is a genuine wrong URL and
+ * gets the not-found page, instead of quietly showing the home page under a
+ * "200 OK" (which also let search engines index junk URLs as duplicates).
+ */
+const KNOWN_PATHS =
+  /^\/(?:$|index\.html|account|cart|bag|checkout|discovery-?set|about|our-story|extrait-de-parfum|35-percent|byob|build-your-own-bundle|personalisation|personalised-perfume|new-arrivals|bestsellers|best-sellers|perfumes|collections|products?|client-services|contact|faqs|shipping|track-order|ai-information|pages\/)/;
+
+function isKnownPath(path: string) {
+  return KNOWN_PATHS.test(path.replace(/\/+$/, "") || "/");
+}
 
 export default function App() {
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
@@ -163,7 +194,7 @@ export default function App() {
       return "client-services";
     if (hash === "#track-order" || path.includes("track-order"))
       return "track-order";
-    return "home";
+    return isKnownPath(path) ? "home" : "not-found";
   });
 
   const handleOpenProductModal = (product: any, size?: number) => {
@@ -325,7 +356,7 @@ export default function App() {
         setCurrentPage("client-services");
       else if (hash === "#track-order" || popPath.includes("track-order"))
         setCurrentPage("track-order");
-      else setCurrentPage("home");
+      else setCurrentPage(isKnownPath(popPath) ? "home" : "not-found");
 
       if (popPath.startsWith("/perfumes/")) {
         const slug = popPath
@@ -351,14 +382,22 @@ export default function App() {
     };
   }, []);
 
-  const handleAccountClick = () => {
-    const isStoredLoggedIn =
-      localStorage.getItem("sentire_is_logged_in") === "true";
-    if (auth.currentUser || isStoredLoggedIn) {
+  // Firebase auth (~100 KB) used to load on every page just to answer this
+  // one click. The stored flag answers it for signed-in visitors; everyone
+  // else only pays for Firebase when they actually open the account panel.
+  const handleAccountClick = async () => {
+    if (localStorage.getItem("sentire_is_logged_in") === "true") {
       handleNavigate("account");
-    } else {
-      setIsAccountOpen(true);
+      return;
     }
+    try {
+      const { auth } = await import("./lib/firebase");
+      if (auth.currentUser) {
+        handleNavigate("account");
+        return;
+      }
+    } catch {}
+    setIsAccountOpen(true);
   };
 
   const handleNavigate = (page: PageName, filters?: PerfumeFilterOptions) => {
@@ -504,269 +543,274 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
-      <SEOHead
-        currentPage={currentPage}
-        selectedProductModal={selectedProductModal}
-      />
-      {currentPage !== "cart" && (
-        <Navbar
-          onOpenBundleModal={openBundleModal}
-          onNavigate={handleNavigate}
+      <Suspense fallback={null}>
+        <SEOHead
           currentPage={currentPage}
-          cartCount={totalCartCount}
-          onOpenCart={() => handleNavigate("cart")}
-          onOpenAccount={handleAccountClick}
-          onSelectProduct={handleOpenProductModal}
-          isSearchOpen={isSearchOpen}
-          onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
-          onCloseSearch={() => setIsSearchOpen(false)}
+          selectedProductModal={selectedProductModal}
         />
-      )}
-
-      {currentPage === "perfumes" ? (
-        <PerfumesPage
-          onBackToHome={() => handleNavigate("home")}
-          onOpenBundleModal={openBundleModal}
-          initialFilters={activeFilters}
-          cartItems={cartItems}
-          onAddToCart={handleAddToCart}
-          onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => handleNavigate("cart")}
-        />
-      ) : currentPage === "bestsellers" ? (
-        <BestSellersPage
-          onBackToHome={() => handleNavigate("home")}
-          cartItems={cartItems}
-          onAddToCart={handleAddToCart}
-          onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => handleNavigate("cart")}
-        />
-      ) : currentPage === "discovery-set" ? (
-        <DiscoverySetPage
-          onAddToCart={handleAddToCart}
-          onOpenCart={() => handleNavigate("cart")}
-          onBackToHome={() => handleNavigate("home")}
-          onNavigate={handleNavigate}
-        />
-      ) : currentPage === "new-arrivals" ? (
-        <NewArrivalsPage
-          onBackToHome={() => handleNavigate("home")}
-          cartItems={cartItems}
-          onAddToCart={handleAddToCart}
-          onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => handleNavigate("cart")}
-        />
-      ) : currentPage === "about" ? (
-        <AboutPage
-          onBackToHome={() => handleNavigate("home")}
-          onNavigateToPerfumes={() => handleNavigate("perfumes")}
-          onNavigate={(page) => handleNavigate(page as PageName)}
-        />
-      ) : currentPage === "byob" ? (
-        <ByobPage
-          onBackToHome={() => handleNavigate("home")}
-          onAddToCart={handleAddToCart}
-          onOpenCart={() => handleNavigate("cart")}
-          onOpenAccount={handleAccountClick}
-        />
-      ) : currentPage === "personalisation" ? (
-        <PersonalisationPage
-          onBackToHome={() => handleNavigate("home")}
-          onAddToCart={handleAddToCart}
-          onOpenCart={() => handleNavigate("cart")}
-        />
-      ) : currentPage === "client-services" ? (
-        <ClientServicesPage
-          onBackToHome={() => handleNavigate("home")}
-          onNavigate={(page) => handleNavigate(page as PageName)}
-        />
-      ) : currentPage === "account" ? (
-        <AccountPage
-          onNavigate={handleNavigate}
-          onOpenLoginModal={() => setIsAccountOpen(true)}
-        />
-      ) : currentPage === "track-order" ? (
-        <TrackOrderPage
-          onBackToHome={() => handleNavigate("home")}
-          onNavigateToContact={() => handleNavigate("client-services")}
-        />
-      ) : currentPage === "cart" ? (
-        <CartPage
-          items={cartItems}
-          onUpdateQuantity={handleUpdateCartQuantity}
-          onRemoveItem={handleRemoveCartItem}
-          onClearCart={() => setCartItems([])}
-          onAddToCart={handleAddToCart}
-          onNavigate={(page) => handleNavigate(page as PageName)}
-        />
-      ) : (
-        <main>
-          <ScrollProgress />
-          <CursorLabel />
-          <Hero onNavigate={handleNavigate} />
-          <WatchAndBuy
-            onAddToCart={handleAddToCart}
-            onOpenCart={() => handleNavigate("cart")}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <RetailerBadges />
-          <ShopByCategory onNavigate={handleNavigate} />
-          <BestSellers
-            cartItems={cartItems}
-            onAddToCart={handleAddToCart}
-            onUpdateCartQuantity={handleUpdateCartQuantity}
+        {currentPage !== "cart" && (
+          <Navbar
+            onOpenBundleModal={openBundleModal}
             onNavigate={handleNavigate}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <NewArrivals
-            cartItems={cartItems}
-            onAddToCart={handleAddToCart}
-            onUpdateCartQuantity={handleUpdateCartQuantity}
-            onNavigate={handleNavigate}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <HeroRing
-            onNavigate={handleNavigate}
-            onSelectProduct={handleOpenProductModal}
-          />
-          <CelebrityReacts />
-          <Newsletter />
-          <InstagramSection />
-        </main>
-      )}
-
-      <Footer onNavigate={handleNavigate} />
-
-      {!isCartOpen &&
-        !isBundleModalOpen &&
-        currentPage !== "personalisation" &&
-        currentPage !== "cart" && (
-          <MobileBottomNav
             currentPage={currentPage}
-            onNavigate={handleNavigate}
+            cartCount={totalCartCount}
             onOpenCart={() => handleNavigate("cart")}
             onOpenAccount={handleAccountClick}
-            onOpenBundleModal={openBundleModal}
-            onToggleSearch={() => {
-              setIsSearchOpen(true);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            cartCount={totalCartCount}
+            onSelectProduct={handleOpenProductModal}
+            isSearchOpen={isSearchOpen}
+            onToggleSearch={() => setIsSearchOpen((prev) => !prev)}
+            onCloseSearch={() => setIsSearchOpen(false)}
           />
         )}
 
-      <BundleBuilderModal
-        isOpen={isBundleModalOpen}
-        onClose={closeBundleModal}
-        onAddToCart={handleAddToCart}
-      />
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateCartQuantity}
-        onRemoveItem={handleRemoveCartItem}
-        onOpenLoginModal={() => setIsAccountOpen(true)}
-        onAddToCart={handleAddToCart}
-      />
+        {currentPage === "perfumes" ? (
+          <PerfumesPage
+            onBackToHome={() => handleNavigate("home")}
+            onOpenBundleModal={openBundleModal}
+            initialFilters={activeFilters}
+            cartItems={cartItems}
+            onAddToCart={handleAddToCart}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onOpenCart={() => handleNavigate("cart")}
+            productModalOpen={!!selectedProductModal}
+          />
+        ) : currentPage === "bestsellers" ? (
+          <BestSellersPage
+            onBackToHome={() => handleNavigate("home")}
+            cartItems={cartItems}
+            onAddToCart={handleAddToCart}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onOpenCart={() => handleNavigate("cart")}
+          />
+        ) : currentPage === "discovery-set" ? (
+          <DiscoverySetPage
+            onAddToCart={handleAddToCart}
+            onOpenCart={() => handleNavigate("cart")}
+            onBackToHome={() => handleNavigate("home")}
+            onNavigate={handleNavigate}
+          />
+        ) : currentPage === "new-arrivals" ? (
+          <NewArrivalsPage
+            onBackToHome={() => handleNavigate("home")}
+            cartItems={cartItems}
+            onAddToCart={handleAddToCart}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onOpenCart={() => handleNavigate("cart")}
+          />
+        ) : currentPage === "about" ? (
+          <AboutPage
+            onBackToHome={() => handleNavigate("home")}
+            onNavigateToPerfumes={() => handleNavigate("perfumes")}
+            onNavigate={(page) => handleNavigate(page as PageName)}
+          />
+        ) : currentPage === "byob" ? (
+          <ByobPage
+            onBackToHome={() => handleNavigate("home")}
+            onAddToCart={handleAddToCart}
+            onOpenCart={() => handleNavigate("cart")}
+            onOpenAccount={handleAccountClick}
+          />
+        ) : currentPage === "personalisation" ? (
+          <PersonalisationPage
+            onBackToHome={() => handleNavigate("home")}
+            onAddToCart={handleAddToCart}
+            onOpenCart={() => handleNavigate("cart")}
+          />
+        ) : currentPage === "client-services" ? (
+          <ClientServicesPage
+            onBackToHome={() => handleNavigate("home")}
+            onNavigate={(page) => handleNavigate(page as PageName)}
+          />
+        ) : currentPage === "account" ? (
+          <AccountPage
+            onNavigate={handleNavigate}
+            onOpenLoginModal={() => setIsAccountOpen(true)}
+          />
+        ) : currentPage === "track-order" ? (
+          <TrackOrderPage
+            onBackToHome={() => handleNavigate("home")}
+            onNavigateToContact={() => handleNavigate("client-services")}
+          />
+        ) : currentPage === "not-found" ? (
+          <NotFoundPage onNavigate={handleNavigate} />
+        ) : currentPage === "cart" ? (
+          <CartPage
+            items={cartItems}
+            onUpdateQuantity={handleUpdateCartQuantity}
+            onRemoveItem={handleRemoveCartItem}
+            onClearCart={() => setCartItems([])}
+            onAddToCart={handleAddToCart}
+            onNavigate={(page) => handleNavigate(page as PageName)}
+          />
+        ) : (
+          <main>
+            <ScrollProgress />
+            <CursorLabel />
+            <Hero onNavigate={handleNavigate} />
+            <WatchAndBuy
+              onAddToCart={handleAddToCart}
+              onOpenCart={() => handleNavigate("cart")}
+              onSelectProduct={handleOpenProductModal}
+            />
+            <RetailerBadges />
+            <ShopByCategory onNavigate={handleNavigate} />
+            <BestSellers
+              cartItems={cartItems}
+              onAddToCart={handleAddToCart}
+              onUpdateCartQuantity={handleUpdateCartQuantity}
+              onNavigate={handleNavigate}
+              onSelectProduct={handleOpenProductModal}
+            />
+            <NewArrivals
+              cartItems={cartItems}
+              onAddToCart={handleAddToCart}
+              onUpdateCartQuantity={handleUpdateCartQuantity}
+              onNavigate={handleNavigate}
+              onSelectProduct={handleOpenProductModal}
+            />
+            <HeroRing
+              onNavigate={handleNavigate}
+              onSelectProduct={handleOpenProductModal}
+            />
+            <CelebrityReacts />
+            <Newsletter />
+            <InstagramSection />
+          </main>
+        )}
 
-      {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}
-      {selectedProductModal && (
-        <ProductDetailModal
-          product={
-            ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
-            selectedProductModal
-          }
-          onClose={handleCloseProductModal}
-          cartItems={cartItems}
-          onAddToCart={(prod, size, price) => {
-            handleAddToCart(
-              {
-                productId: prod.id,
-                name: prod.name,
-                price: price,
-                originalPrice: Math.round(price * 1.35),
-                image: prod.img,
-                size: size,
-                isPersonalised: prod.isPersonalised,
-                engravingText: prod.engravingText,
-                engravingDate: prod.engravingDate,
-              },
-              size,
-              price,
-            );
-            handleCloseProductModal();
-          }}
-          onUpdateCartQuantity={handleUpdateCartQuantity}
-          onOpenCart={() => {
-            handleCloseProductModal();
-            handleNavigate("cart");
-          }}
-          onSelectProduct={handleOpenProductModal}
-          allProducts={ALL_PERFUMES}
+        <Footer onNavigate={handleNavigate} />
+
+        {!isCartOpen &&
+          !isBundleModalOpen &&
+          currentPage !== "personalisation" &&
+          currentPage !== "cart" && (
+            <MobileBottomNav
+              currentPage={currentPage}
+              onNavigate={handleNavigate}
+              onOpenCart={() => handleNavigate("cart")}
+              onOpenAccount={handleAccountClick}
+              onOpenBundleModal={openBundleModal}
+              onToggleSearch={() => {
+                setIsSearchOpen(true);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              cartCount={totalCartCount}
+            />
+          )}
+
+        <BundleBuilderModal
+          isOpen={isBundleModalOpen}
+          onClose={closeBundleModal}
+          onAddToCart={handleAddToCart}
         />
-      )}
-      <AccountDrawerModal
-        isOpen={isAccountOpen}
-        onClose={() => setIsAccountOpen(false)}
-        onSuccessLogin={() => {
-          setIsAccountOpen(false);
-          handleNavigate("account");
-        }}
-      />
-      <ExitIntentPopup onNavigate={handleNavigate} />
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          items={cartItems}
+          onUpdateQuantity={handleUpdateCartQuantity}
+          onRemoveItem={handleRemoveCartItem}
+          onOpenLoginModal={() => setIsAccountOpen(true)}
+          onAddToCart={handleAddToCart}
+        />
 
-      {/* 🛒 LUXURY FLOATING CART TOAST NOTIFICATION (APPROACH 1) */}
-      {cartToast && (
-        <div
-          key={cartToast.id}
-          className="on-dark fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-[4px] border border-[#4f0e19]/60 bg-[#111111]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
-        >
-          <div className="flex items-center gap-3 min-w-0">
-            {cartToast.img && (
-              <div className="h-11 w-11 shrink-0 rounded-[4px] bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
-                <img
-                  src={cartToast.img}
-                  alt="Cart item thumbnail"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-            )}
-            <div className="min-w-0">
-              <p className="text-xs font-bold text-[color:var(--accent)] tracking-wide truncate">
-                {cartToast.message}
-              </p>
-              <p className="text-[10px] max-sm:text-[12px] text-white/70 font-medium">
-                Cart Updated ({totalCartCount} item
-                {totalCartCount === 1 ? "" : "s"})
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => {
-              setCartToast(null);
+        {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}
+        {selectedProductModal && (
+          <ProductDetailModal
+            product={
+              ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
+              selectedProductModal
+            }
+            onClose={handleCloseProductModal}
+            cartItems={cartItems}
+            onAddToCart={(prod, size, price) => {
+              handleAddToCart(
+                {
+                  productId: prod.id,
+                  name: prod.name,
+                  price: price,
+                  originalPrice: Math.round(price * 1.35),
+                  image: prod.img,
+                  size: size,
+                  isPersonalised: prod.isPersonalised,
+                  engravingText: prod.engravingText,
+                  engravingDate: prod.engravingDate,
+                },
+                size,
+                price,
+              );
+              handleCloseProductModal();
+            }}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onOpenCart={() => {
+              handleCloseProductModal();
               handleNavigate("cart");
             }}
-            className="shrink-0 rounded-full bg-[#4f0e19] px-3.5 py-2 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#6b1422] transition-all shadow-md cursor-pointer flex items-center gap-1"
+            onSelectProduct={handleOpenProductModal}
+            allProducts={ALL_PERFUMES}
+          />
+        )}
+        <AccountDrawerModal
+          isOpen={isAccountOpen}
+          onClose={() => setIsAccountOpen(false)}
+          onSuccessLogin={() => {
+            setIsAccountOpen(false);
+            handleNavigate("account");
+          }}
+        />
+        <ExitIntentPopup onNavigate={handleNavigate} />
+
+        {/* 🛒 LUXURY FLOATING CART TOAST NOTIFICATION (APPROACH 1) */}
+        {cartToast && (
+          <div
+            key={cartToast.id}
+            className="on-dark fixed z-[9999999] left-1/2 -translate-x-1/2 bottom-20 sm:bottom-8 w-[92%] max-w-md rounded-[4px] border border-[#4f0e19]/60 bg-[#111111]/95 backdrop-blur-xl p-3 text-white shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center justify-between gap-3 animate-fadeIn transition-all"
           >
-            <span>View Bag</span>
-            <svg
-              className="h-3 w-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
+            <div className="flex items-center gap-3 min-w-0">
+              {cartToast.img && (
+                <div className="h-11 w-11 shrink-0 rounded-[4px] bg-white/10 p-1 border border-white/20 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={cartToast.img}
+                    alt="Cart item thumbnail"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-[color:var(--accent)] tracking-wide truncate">
+                  {cartToast.message}
+                </p>
+                <p className="text-[10px] max-sm:text-[12px] text-white/70 font-medium">
+                  Cart Updated ({totalCartCount} item
+                  {totalCartCount === 1 ? "" : "s"})
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                setCartToast(null);
+                handleNavigate("cart");
+              }}
+              className="shrink-0 rounded-full bg-[#4f0e19] px-3.5 py-2 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-white hover:bg-[#6b1422] transition-all shadow-md cursor-pointer flex items-center gap-1"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </div>
-      )}
+              <span>View Bag</span>
+              <svg
+                className="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 }

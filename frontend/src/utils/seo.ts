@@ -289,6 +289,30 @@ export function getPageMetadata(
         keywords: `track your order, track order, delivery tracking, ${BASE_KEYWORDS}`,
       };
 
+    case "not-found":
+      return {
+        title: "Page not found | SENTIRE By PC",
+        description:
+          "This page does not exist. Browse the full Sentire by PC collection of extrait de parfum instead.",
+        canonical: `${PRODUCTION_DOMAIN}/`,
+        robots: "noindex, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
+    case "cart":
+      return {
+        title: "Your Bag | SENTIRE By PC",
+        description:
+          "Review the fragrances in your bag and check out securely.",
+        canonical: `${PRODUCTION_DOMAIN}/cart`,
+        robots: "noindex, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
     case "account":
       return {
         title: "Your Account | SENTIRE By PC",

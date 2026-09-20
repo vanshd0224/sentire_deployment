@@ -77,12 +77,16 @@ export function CursorLabel() {
 
 /** Wine hairline across the top of the window, filling as you read down. */
 export function ScrollProgress() {
+  // Desktop only: on a phone this spring ran on every scroll frame for a
+  // 3px decoration, and phones need those frames for the page itself.
+  const rich = useMotionBudget();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 200,
     damping: 40,
     restDelta: 0.001,
   });
+  if (!rich) return null;
   return (
     <motion.div
       aria-hidden

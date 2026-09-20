@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import BoxStage from "./BoxStage";
 import { Magnetic, Ticker } from "./fx";
-import { EASE_OUT_EXPO } from "../motion";
+import { EASE_OUT_EXPO, useMotionBudget } from "../motion";
 
 /**
  * First view of the Discovery Set page: a dark studio with the case turning
@@ -27,9 +27,14 @@ export default function Prelude({
     target: ref,
     offset: ["start start", "end start"],
   });
+  // Parallax costs a style write per frame per layer; phones get the
+  // composition without the drift.
+  const rich = useMotionBudget();
   const turn = useSpring(scrollYProgress, { stiffness: 80, damping: 22 });
-  const stageY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
-  const wordX = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
+  const stageYRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
+  const wordXRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
+  const stageY = rich ? stageYRaw : undefined;
+  const wordX = rich ? wordXRaw : undefined;
   // computed in JS: framer 13's native scroll timeline runs partial-range
   // opacity fades backwards
   const fade = useTransform(scrollYProgress, (v) => Math.max(0, 1 - v / 0.7));

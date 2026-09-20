@@ -447,7 +447,7 @@ export default function WatchAndBuy({
   };
 
   return (
-    <section className="w-full bg-[#f2f2f0] py-12 sm:py-16 overflow-hidden">
+    <section className="cv-section w-full bg-[#f2f2f0] py-12 sm:py-16 overflow-hidden">
       {" "}
       {/* Toast Notification */}
       {toastMsg && (

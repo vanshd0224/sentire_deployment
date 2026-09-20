@@ -49,6 +49,10 @@ interface PerfumesPageProps {
     delta: number,
   ) => void;
   onOpenCart?: () => void;
+  /** A product deep link (/perfumes/<slug>/<size>ml) is showing its modal:
+   *  the product owns the page's <h1>, so this page steps down to plain
+   *  text and the URL stops reporting two headings to search engines. */
+  productModalOpen?: boolean;
 }
 
 export default function PerfumesPage({
@@ -59,7 +63,9 @@ export default function PerfumesPage({
   onAddToCart,
   onUpdateCartQuantity,
   onOpenCart,
+  productModalOpen = false,
 }: PerfumesPageProps) {
+  const LibraryHeading = productModalOpen ? "p" : "h1";
   const [selectedCategory, setSelectedCategory] = useState<string>(
     initialFilters?.category || "all",
   );
@@ -431,10 +437,10 @@ export default function PerfumesPage({
                 {" "}
                 SENTIRE BY PC
               </span>{" "}
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-ink font-normal leading-[1.08] tracking-tight">
+              <LibraryHeading className="font-display text-4xl sm:text-5xl lg:text-6xl text-ink font-normal leading-[1.08] tracking-tight">
                 {" "}
                 The Perfume Library
-              </h1>{" "}
+              </LibraryHeading>{" "}
               <p className="mt-4 text-xs sm:text-sm lg:text-base text-ink/65 leading-relaxed font-light">
                 {" "}
                 An extraordinary repertoire of artisanal extraits and eau de

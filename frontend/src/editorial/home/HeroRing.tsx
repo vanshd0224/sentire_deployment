@@ -120,13 +120,15 @@ export default function HeroRing({
     offset: ["start start", "end start"],
   });
   useMotionValueEvent(scrollYProgress, "change", (p) => {
-    // no automatic turn while the page is being scrolled
     const st = s.current;
+    // phones: no tilt, and no work beyond holding off the next turn
+    if (mobile || reduced) {
+      st.idleSince = performance.now();
+      return;
+    }
+    // no automatic turn while the page is being scrolled
     st.idleSince = performance.now();
     if (!st.running && !st.dragging) scheduleNext();
-    // phones skip the tilt: re-tilting ten 3D images on every scroll frame
-    // is the one thing here a mid-range phone notices
-    if (mobile || reduced) return;
     s.current.tilt = -6 + p * 30;
     s.current.lift = -p * 120;
     kick();
@@ -462,7 +464,7 @@ export default function HeroRing({
                     alt=""
                     draggable={false}
                     decoding="async"
-                    fetchPriority={i === 0 ? "high" : "auto"}
+                    loading="lazy"
                     className="absolute inset-0 h-full w-full object-contain"
                   />
                   <img
