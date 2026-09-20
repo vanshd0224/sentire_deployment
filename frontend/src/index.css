@@ -52,6 +52,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* clip, not hidden: hidden turns body into a scroll box and silently
+     disables every position: sticky on the site */
+  overflow-x: clip;
 }
 
 a {
@@ -525,6 +528,7 @@ a {
   html, body {
     max-width: 100vw;
     overflow-x: hidden;
+    overflow-x: clip;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
@@ -1874,4 +1878,53 @@ h3 em,
   font-stretch: normal;
   letter-spacing: -0.01em;
   text-transform: none;
+}
+
+/* ── Home dive hero ─────────────────────────────────────────────── */
+.dive-bubble {
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.15) 45%, rgba(255, 255, 255, 0.05) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  animation-name: diveBubble;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes diveBubble {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(12px, -55svh, 0);
+  }
+  to {
+    transform: translate3d(-6px, -112svh, 0);
+  }
+}
+.dive-float {
+  animation: diveFloat 6s ease-in-out infinite;
+}
+@keyframes diveFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.6deg);
+  }
+}
+.dive-wheel {
+  animation: diveWheel 1.6s ease-in-out infinite;
+}
+@keyframes diveWheel {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, 12px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }

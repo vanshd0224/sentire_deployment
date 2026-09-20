@@ -9,7 +9,7 @@ import { ALL_PERFUMES, type PerfumeProduct } from "../../data/perfumes";
 import { EASE_OUT_EXPO, usePrefersReducedMotion } from "../motion";
 
 /**
- * Home hero: the five bottles standing in a ring in 3D space, cut out of
+ * Home, below New Arrivals: the five bottles standing in a ring in 3D space, cut out of
  * the studio photographs. Each bottle keeps turning towards you as it goes
  * round, and as it passes behind the ring it turns its back: the label
  * gives way to the gold PC, the way a real bottle would.
@@ -297,10 +297,10 @@ export default function HeroRing({
   return (
     <section
       ref={sectionRef}
-      className="hero-section relative w-full overflow-hidden bg-[#f3efe9] text-ink"
+      className="relative w-full overflow-hidden bg-[#f3efe9] text-ink"
       aria-label="The Sentire fragrances"
     >
-      <h1 className="sr-only">Sentire by PC — extrait de parfum</h1>
+      <h2 className="sr-only">The collection, in the round</h2>
 
       {/* the room takes the colour of the bottle facing you */}
       {/* One small glow per bottle, scaled up by the GPU and cross-faded:

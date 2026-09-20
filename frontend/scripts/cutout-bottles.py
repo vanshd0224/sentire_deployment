@@ -29,7 +29,7 @@ SHOTS = {
     "herrlich": ("herrlich/HERRLICH 1.jpg", "herrlich/HERRLICH 6.jpg"),
     "mirai": ("mirai/MIRAI 5.jpg", "mirai/MIRAI 3.jpg"),
 }
-HEIGHTS = {"lg": 900, "sm": 560}
+HEIGHTS = {"xl": 1400, "lg": 900, "sm": 560}
 
 
 def cut(path: Path) -> Image.Image:

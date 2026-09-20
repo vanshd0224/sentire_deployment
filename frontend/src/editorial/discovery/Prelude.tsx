@@ -30,7 +30,9 @@ export default function Prelude({
   const turn = useSpring(scrollYProgress, { stiffness: 80, damping: 22 });
   const stageY = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
   const wordX = useTransform(scrollYProgress, [0, 1], ["0%", "-22%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  // computed in JS: framer 13's native scroll timeline runs partial-range
+  // opacity fades backwards
+  const fade = useTransform(scrollYProgress, (v) => Math.max(0, 1 - v / 0.7));
 
   const reveal = (i: number) => ({
     initial: { opacity: 0, y: 18 },

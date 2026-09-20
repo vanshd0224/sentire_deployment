@@ -3,6 +3,7 @@ import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
 import HeroRing from "./editorial/home/HeroRing";
+import DiveHero from "./editorial/home/DiveHero";
 import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
 import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
@@ -602,7 +603,7 @@ export default function App() {
         <main>
           <ScrollProgress />
           <CursorLabel />
-          <HeroRing
+          <DiveHero
             onNavigate={handleNavigate}
             onSelectProduct={handleOpenProductModal}
           />
@@ -624,6 +625,10 @@ export default function App() {
             cartItems={cartItems}
             onAddToCart={handleAddToCart}
             onUpdateCartQuantity={handleUpdateCartQuantity}
+            onNavigate={handleNavigate}
+            onSelectProduct={handleOpenProductModal}
+          />
+          <HeroRing
             onNavigate={handleNavigate}
             onSelectProduct={handleOpenProductModal}
           />
