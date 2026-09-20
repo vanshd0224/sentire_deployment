@@ -95,17 +95,17 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
       >
         <button
           onClick={handleClose}
-          aria-label="Close"
-          className="absolute right-4 top-4 z-30 flex h-11 w-11 cursor-pointer items-center justify-center text-ink/70 transition-colors hover:text-ink sm:text-paper/80 sm:hover:text-paper"
+          aria-label="Close modal"
+          className="absolute top-3 right-3 z-50 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/90 focus:outline-none backdrop-blur-md border border-white/20 shadow-lg cursor-pointer transition-all hover:scale-105"
         >
           <svg
             viewBox="0 0 24 24"
-            className="h-5 w-5"
+            className="h-4 w-4"
             fill="none"
             stroke="currentColor"
-            strokeWidth={1.5}
+            strokeWidth={2}
           >
-            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
         <div className="grid sm:grid-cols-2">
