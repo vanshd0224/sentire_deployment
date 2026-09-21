@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { DrawnRule, KineticText } from "../editorial/home/Kinetic";
 import { ALL_PERFUMES } from "../data/perfumes";
 
@@ -642,9 +643,10 @@ export default function WatchAndBuy({
         </div>{" "}
       </div>{" "}
       {/* ── Interactive Full-Screen Reel Modal Player (FRAGRANOTE STYLE) ── */}
-      {activeReel && (
+      {activeReel && typeof document !== "undefined" && createPortal(
         <div
-          className="fixed inset-0 z-[99999999] flex items-center justify-center bg-black sm:bg-black/95 sm:p-4 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-[999999999] flex items-center justify-center bg-black sm:bg-black/95 sm:p-4 backdrop-blur-md animate-fadeIn"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh" }}
           onClick={() => setActiveReelIndex(null)}
         >
           <div
@@ -762,7 +764,7 @@ export default function WatchAndBuy({
                       const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
                       if (pData) onSelectProduct?.(pData);
                     }}
-                    className="h-14 w-14 shrink-0 rounded-xl bg-[#f5efe6] p-1 border border-black/10 flex items-center justify-center cursor-pointer overflow-hidden shadow-xs"
+                    className="h-12 w-12 rounded-xl overflow-hidden bg-[#f4f4f2] border border-black/10 shrink-0 cursor-pointer p-1"
                   >
                     <img
                       src={activeReel.swatch}
@@ -771,32 +773,17 @@ export default function WatchAndBuy({
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <h4
-                        onClick={() => {
-                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
-                          if (pData) onSelectProduct?.(pData);
-                        }}
-                        className="text-sm font-bold text-black truncate cursor-pointer hover:underline"
-                      >
-                        {activeReel.product}
-                      </h4>
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        className="h-4 w-4 text-black/60 shrink-0 cursor-pointer"
-                        onClick={() => {
-                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
-                          if (pData) onSelectProduct?.(pData);
-                        }}
-                      >
-                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-sm font-extrabold text-black tabular-nums">
+                    <h4
+                      onClick={() => {
+                        const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
+                        if (pData) onSelectProduct?.(pData);
+                      }}
+                      className="text-xs font-bold text-black uppercase tracking-wider truncate cursor-pointer hover:underline"
+                    >
+                      {activeReel.product}
+                    </h4>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-sm font-extrabold text-black">
                         {activeReel.priceText}
                       </span>
                       <span className="text-xs text-black/40 line-through tabular-nums">
@@ -822,12 +809,14 @@ export default function WatchAndBuy({
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
       {/* ── MULTI-OPTION SHARE SHEET MODAL (WhatsApp, Instagram, FB, X, Copy Link) ── */}
-      {shareModalReel && (
+      {shareModalReel && typeof document !== "undefined" && createPortal(
         <div
-          className="fixed inset-0 z-[99999999] flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          className="fixed inset-0 z-[999999999] flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4 animate-fadeIn"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, width: "100vw", height: "100vh" }}
           onClick={() => setShareModalReel(null)}
         >
           {" "}
@@ -977,7 +966,8 @@ export default function WatchAndBuy({
               </button>{" "}
             </div>{" "}
           </div>{" "}
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
