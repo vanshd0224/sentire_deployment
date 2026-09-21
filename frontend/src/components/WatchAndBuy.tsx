@@ -303,6 +303,7 @@ export default function WatchAndBuy({
 
   useEffect(() => {
     if (activeReelIndex !== null) {
+      document.body.style.overflow = "hidden";
       setIsMuted(false);
       setIsPlaying(true);
       if (modalVideoRef.current) {
@@ -316,7 +317,12 @@ export default function WatchAndBuy({
           }
         });
       }
+    } else {
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [activeReelIndex]);
 
   const toggleMute = (e: React.MouseEvent) => {
@@ -625,7 +631,7 @@ export default function WatchAndBuy({
       {/* ── Interactive Full-Screen Reel Modal Player (FRAGRANOTE STYLE) ── */}
       {activeReel && (
         <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/90 sm:p-4 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-[99999999] flex items-center justify-center bg-black sm:bg-black/95 sm:p-4 backdrop-blur-md animate-fadeIn"
           onClick={() => setActiveReelIndex(null)}
         >
           <div

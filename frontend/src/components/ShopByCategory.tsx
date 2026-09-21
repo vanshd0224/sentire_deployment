@@ -110,7 +110,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                       alt={`SENTIRE ${cat.title} - ${cat.subtitle} luxury perfume collection`}
                       width="320"
                       height="400"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.12] group-hover:rotate-[1.5deg]"
+                      className="h-full w-full object-cover object-[center_top] pointer-events-none select-none transition-transform duration-700 ease-out group-hover:scale-[1.08]"
                       loading="lazy"
                       decoding="async"
                     />{" "}
