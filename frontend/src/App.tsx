@@ -88,6 +88,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isReelOpen, setIsReelOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
   const [cartToast, setCartToast] = useState<{
     id: number;
@@ -548,7 +549,7 @@ export default function App() {
           currentPage={currentPage}
           selectedProductModal={selectedProductModal}
         />
-        {currentPage !== "cart" && (
+        {currentPage !== "cart" && !isReelOpen && (
           <Navbar
             onOpenBundleModal={openBundleModal}
             onNavigate={handleNavigate}
@@ -651,6 +652,7 @@ export default function App() {
               onAddToCart={handleAddToCart}
               onOpenCart={() => handleNavigate("cart")}
               onSelectProduct={handleOpenProductModal}
+              onReelStateChange={setIsReelOpen}
             />
             <RetailerBadges />
             <ShopByCategory onNavigate={handleNavigate} />
@@ -682,6 +684,7 @@ export default function App() {
 
         {!isCartOpen &&
           !isBundleModalOpen &&
+          !isReelOpen &&
           currentPage !== "personalisation" &&
           currentPage !== "cart" && (
             <MobileBottomNav

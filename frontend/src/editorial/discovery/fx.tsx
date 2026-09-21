@@ -122,7 +122,7 @@ export function TiltCard({
           rich ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined
         }
         onPointerMove={(e) => {
-          if (!rich) return;
+          if (!rich || e.pointerType === "touch") return;
           const r = e.currentTarget.getBoundingClientRect();
           px.set((e.clientX - r.left) / r.width);
           py.set((e.clientY - r.top) / r.height);

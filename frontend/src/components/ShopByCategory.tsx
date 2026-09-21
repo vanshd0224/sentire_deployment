@@ -8,7 +8,7 @@ const categories = [
   {
     title: "Discovery Set",
     subtitle: "Six Scents. Find Yours.",
-    image: "/images/curated-discovery-set-v5.jpg?v=v5_clean",
+    image: "/images/curated-discovery-set.jpg",
     page: "discovery-set" as const,
   },
   {

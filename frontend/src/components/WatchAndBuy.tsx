@@ -159,11 +159,13 @@ interface WatchAndBuyProps {
   ) => void;
   onOpenCart?: () => void;
   onSelectProduct?: (product: any, size?: number) => void;
+  onReelStateChange?: (isOpen: boolean) => void;
 }
 
 export default function WatchAndBuy({
   onAddToCart,
   onSelectProduct,
+  onReelStateChange,
 }: WatchAndBuyProps) {
   const [cardWidth, setCardWidth] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 640 ? 180 : 220,
@@ -171,6 +173,17 @@ export default function WatchAndBuy({
   const [trackIndex, setTrackIndex] = useState(ORIGIN);
   const [animated, setAnimated] = useState(true);
   const [activeReelIndex, setActiveReelIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    onReelStateChange?.(activeReelIndex !== null);
+    if (activeReelIndex !== null) {
+      const origOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = origOverflow;
+      };
+    }
+  }, [activeReelIndex, onReelStateChange]);
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
