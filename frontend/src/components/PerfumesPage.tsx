@@ -580,8 +580,8 @@ export default function PerfumesPage({
           </div>{" "}
         </div>{" "}
       </section>{" "}
-      {/* ── STICKY CONTROL BAR & QUICK CATEGORIES ── */}
-      <section className="sticky top-[102px] lg:top-[124px] z-20 border-b border-black/8 bg-[#f2f2f0]/95 backdrop-blur-md px-6 lg:px-16 py-3.5 shadow-sm transition-all">
+      {/* ── CONTROL BAR & QUICK CATEGORIES ── */}
+      <section className="border-b border-black/8 bg-[#f2f2f0] px-6 lg:px-16 py-3.5 transition-all">
         {" "}
         <div className="mx-auto max-w-[1400px] flex items-center justify-between gap-4 overflow-x-auto scrollbar-none">
           {" "}

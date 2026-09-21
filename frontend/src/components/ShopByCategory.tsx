@@ -73,17 +73,9 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     : "/perfumes";
 
             return (
-              <motion.a
+              <a
                 key={cat.title}
                 data-cursor="Explore"
-                initial={{ opacity: 0, y: 70, rotate: i % 2 ? 2.5 : -2.5 }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{
-                  duration: 1.1,
-                  delay: i * 0.1,
-                  ease: EASE_OUT_EXPO,
-                }}
                 href={targetHref}
                 onClick={(e) => {
                   e.preventDefault();
@@ -137,7 +129,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     </div>{" "}
                   </div>{" "}
                 </TiltCard>
-              </motion.a>
+              </a>
             );
           })}
         </div>{" "}

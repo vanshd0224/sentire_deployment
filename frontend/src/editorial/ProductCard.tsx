@@ -121,7 +121,12 @@ export default function ProductCard({
 
       <div className="mt-4 flex flex-1 flex-col">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="pc-name text-[20px] leading-tight">{product.name}</h3>
+          <h3
+            onClick={() => onSelectProduct?.(product, size)}
+            className="pc-name text-[20px] leading-tight cursor-pointer hover:underline hover:text-[#6b1422] transition-colors"
+          >
+            {product.name}
+          </h3>
           <span className="ed-label shrink-0">{product.num}</span>
         </div>
 
