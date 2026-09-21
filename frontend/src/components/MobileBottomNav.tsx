@@ -62,19 +62,9 @@ export default function MobileBottomNav({
           box-sizing: border-box;
         }
 
-        /* Subtle upward arch backing behind the raised BYOB circle */
+        /* Center BYOB circle clean floating dock integration */
         .snav-dock::before {
-          content: '';
-          position: absolute;
-          top: -8px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 72px;
-          height: 20px;
-          background: rgba(251, 248, 242, 0.97);
-          border-radius: 36px 36px 0 0;
-          border-top: 1px solid rgba(170, 130, 72, 0.10);
-          z-index: 1;
+          display: none;
         }
 
         .snav-item {

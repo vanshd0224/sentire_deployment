@@ -37,9 +37,8 @@ export default function AnnouncementBar() {
           animation: marqueeScroll 20s linear infinite;
         }
       `}</style>{" "}
-      <div className="sentire-announcement-bar w-full text-[#f2f2f0] overflow-hidden select-none py-1.5 z-50">
-        {" "}
-        <div className="sentire-marquee-track text-[10px] max-sm:text-[12px] sm:text-[11px] font-sans font-bold tracking-[0.06em] uppercase text-white">
+      <div className="sentire-announcement-bar w-full text-[#f2f2f0] overflow-hidden select-none py-2 z-50 flex items-center min-h-[30px] sm:min-h-[34px]">
+        <div className="sentire-marquee-track text-[9.5px] sm:text-[11px] font-sans font-bold tracking-[0.08em] uppercase text-white leading-none">
           {" "}
           {/* First Loop */}
           {items.map((item, i) => (

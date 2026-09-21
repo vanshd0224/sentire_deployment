@@ -523,7 +523,7 @@ a {
   color: #6b1422;
 }
 
-/* ─── Mobile luxury system ─── */
+/* ─── Mobile luxury & Instagram WebView system ─── */
 @media (max-width: 1023px) {
   html, body {
     max-width: 100vw;
@@ -531,11 +531,23 @@ a {
     overflow-x: clip;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Bottom nav safe area — 68px nav + env inset */
+  /* Dynamic Viewport Height for Instagram WebView & Mobile Chrome */
+  .min-h-dvh {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .h-dvh {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* Bottom nav safe area — 80px nav + env inset for Instagram bottom bar */
   .mobile-page-padding {
-    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(88px + max(12px, env(safe-area-inset-bottom, 12px)));
   }
 
   .touch-target-min {
