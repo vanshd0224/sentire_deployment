@@ -757,7 +757,7 @@ export default function WatchAndBuy({
             {/* Bottom Floating White Product Card (Fraganote Reel Interface) */}
             <div className="relative z-40 mt-auto p-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))]">
               <div className="bg-white text-black p-4 rounded-[20px] shadow-[0_15px_40px_rgba(0,0,0,0.5)] flex flex-col gap-3 border border-black/10">
-                {/* Top Row: Thumbnail, Product Title, Price & External Link */}
+                {/* Top Row: Thumbnail, Product Title, Price & External Link Icon */}
                 <div className="flex items-center gap-3.5">
                   <div
                     onClick={() => {
@@ -773,15 +773,29 @@ export default function WatchAndBuy({
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4
-                      onClick={() => {
-                        const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
-                        if (pData) onSelectProduct?.(pData);
-                      }}
-                      className="text-xs font-bold text-black uppercase tracking-wider truncate cursor-pointer hover:underline"
-                    >
-                      {activeReel.product}
-                    </h4>
+                    <div className="flex items-center justify-between gap-1">
+                      <h4
+                        onClick={() => {
+                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
+                          if (pData) onSelectProduct?.(pData);
+                        }}
+                        className="text-xs sm:text-sm font-bold text-black uppercase tracking-wider truncate cursor-pointer hover:underline"
+                      >
+                        {activeReel.product}
+                      </h4>
+                      <button
+                        onClick={() => {
+                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
+                          if (pData) onSelectProduct?.(pData);
+                        }}
+                        className="text-black/70 hover:text-black shrink-0 p-1 cursor-pointer transition-colors"
+                        aria-label="View product details"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </button>
+                    </div>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-sm font-extrabold text-black">
                         {activeReel.priceText}
@@ -789,7 +803,7 @@ export default function WatchAndBuy({
                       <span className="text-xs text-black/40 line-through tabular-nums">
                         {activeReel.original}
                       </span>
-                      <span className="text-[10px] font-bold text-white bg-[#9e2a2b] px-1.5 py-0.5 rounded">
+                      <span className="text-[10px] font-bold text-[#166534] bg-[#dcfce7] px-1.5 py-0.5 rounded">
                         {activeReel.badge}
                       </span>
                     </div>
