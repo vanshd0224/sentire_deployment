@@ -625,41 +625,45 @@ export default function WatchAndBuy({
       {/* ── Interactive Full-Screen Reel Modal Player (FRAGRANOTE STYLE) ── */}
       {activeReel && (
         <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80 p-2 sm:p-4 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/90 sm:p-4 backdrop-blur-md animate-fadeIn"
           onClick={() => setActiveReelIndex(null)}
         >
-          {" "}
           <div
-            className="on-dark relative w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] max-h-[90vh] rounded-[4px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.8)] bg-black flex flex-col justify-between"
+            className="on-dark relative w-full h-[100dvh] sm:h-auto sm:max-w-[380px] sm:aspect-[9/16] sm:max-h-[90vh] sm:rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.9)] bg-black flex flex-col justify-between"
             onClick={(e) => e.stopPropagation()}
           >
-            {" "}
             {/* Top Bar Controls Overlay */}
-            <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-end p-3.5 gap-2 bg-gradient-to-b from-black/80 via-black/30 to-transparent">
-              {" "}
+            <div className="absolute top-0 left-0 right-0 z-40 flex items-center justify-end p-4 gap-2.5 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
               <button
                 onClick={toggleMute}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md border border-white/20 hover:bg-white hover:text-black transition-colors cursor-pointer text-xs"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-white hover:text-black transition-all cursor-pointer shadow-md"
                 aria-label="Toggle mute"
               >
-                {" "}
-                {isMuted ? "" : ""}
-              </button>{" "}
+                {isMuted ? (
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  </svg>
+                )}
+              </button>
               <button
                 onClick={() => setActiveReelIndex(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md border border-white/20 hover:bg-white hover:text-black transition-colors cursor-pointer text-xs font-bold"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-white hover:text-black transition-all cursor-pointer text-sm font-bold shadow-md"
                 aria-label="Close reel"
               >
-                {" "}
                 ✕
-              </button>{" "}
-            </div>{" "}
+              </button>
+            </div>
+
             {/* Video Player */}
             <div
               className="absolute inset-0 w-full h-full cursor-pointer"
               onClick={togglePlayPause}
             >
-              {" "}
               <video
                 ref={modalVideoRef}
                 key={activeReel.video}
@@ -671,174 +675,134 @@ export default function WatchAndBuy({
                 preload="auto"
                 muted={isMuted}
                 className="w-full h-full object-cover"
-              />{" "}
-              {/* Play / Pause Indicator */}
+              />
               {!isPlaying && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-xs">
-                  {" "}
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black/70 text-white border border-white/40 shadow-2xl">
-                    {" "}
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="ml-1 h-7 w-7"
-                    >
-                      {" "}
-                      <path d="M6 4l14 8-14 8V4z" />{" "}
-                    </svg>{" "}
-                  </div>{" "}
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/75 text-white border border-white/30 shadow-2xl">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-8 w-8">
+                      <path d="M6 4l14 8-14 8V4z" />
+                    </svg>
+                  </div>
                 </div>
               )}
-            </div>{" "}
+            </div>
+
             {/* Right Side Action Buttons Overlay (Like & Share) */}
-            <div className="absolute right-3 bottom-28 z-30 flex flex-col gap-4 items-center">
-              {" "}
+            <div className="absolute right-4 bottom-44 sm:bottom-36 z-40 flex flex-col gap-5 items-center">
               {/* Like Button */}
               <button
                 onClick={(e) => toggleLike(e, activeReel.id)}
                 className="flex flex-col items-center gap-1 group cursor-pointer"
               >
-                {" "}
                 <div
-                  className={`h-10 w-10 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition-all ${
+                  className={`h-11 w-11 rounded-full flex items-center justify-center backdrop-blur-md border border-white/25 shadow-lg transition-all ${
                     likesMap[activeReel.id]?.liked
                       ? "bg-red-600 text-white border-red-500 scale-110"
                       : "bg-black/60 text-white hover:bg-white hover:text-black"
                   }`}
                 >
-                  {" "}
                   <svg
                     viewBox="0 0 24 24"
-                    fill={
-                      likesMap[activeReel.id]?.liked ? "currentColor" : "none"
-                    }
+                    fill={likesMap[activeReel.id]?.liked ? "currentColor" : "none"}
                     stroke="currentColor"
                     strokeWidth={2}
-                    className="h-5 w-5"
+                    className="h-5.5 w-5.5"
                   >
-                    {" "}
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />{" "}
-                  </svg>{" "}
-                </div>{" "}
-                <span className="text-[10px] max-sm:text-[12px] text-white font-bold tracking-wide shadow-sm">
-                  {" "}
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] text-white font-bold tracking-wide drop-shadow-md">
                   {likesMap[activeReel.id]?.count
                     ? (likesMap[activeReel.id].count / 1000).toFixed(1) + "k"
                     : "1.1k"}
-                </span>{" "}
-              </button>{" "}
+                </span>
+              </button>
               {/* Share Button */}
               <button
                 onClick={(e) => handleShareClick(e, activeReel)}
                 className="flex flex-col items-center gap-1 group cursor-pointer"
               >
-                {" "}
-                <div className="h-10 w-10 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                  {" "}
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    className="h-5 w-5"
-                  >
-                    {" "}
-                    <path
-                      d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />{" "}
-                  </svg>{" "}
-                </div>{" "}
-                <span className="text-[10px] max-sm:text-[12px] text-white font-bold tracking-wide shadow-sm">
+                <div className="h-11 w-11 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/25 shadow-lg flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5.5 w-5.5">
+                    <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <span className="text-[11px] text-white font-bold tracking-wide drop-shadow-md">
                   Share
-                </span>{" "}
-              </button>{" "}
-            </div>{" "}
-            {/* Bottom Floating White Product Card (Fragranote Reel Interface) */}
-            <div className="relative z-30 mt-auto p-3">
-              {" "}
-              <div className="bg-white text-black p-3.5 rounded-[4px] shadow-2xl flex flex-col gap-2.5 border border-black/10">
-                {" "}
-                {/* Top Row: Thumbnail, Product Title, Price & Link Icon */}
-                <div className="flex items-center gap-3">
-                  {" "}
+                </span>
+              </button>
+            </div>
+
+            {/* Bottom Floating White Product Card (Fraganote Reel Interface) */}
+            <div className="relative z-40 mt-auto p-4 pb-[max(1.25rem,env(safe-area-inset-bottom,1.25rem))]">
+              <div className="bg-white text-black p-4 rounded-[20px] shadow-[0_15px_40px_rgba(0,0,0,0.5)] flex flex-col gap-3 border border-black/10">
+                {/* Top Row: Thumbnail, Product Title, Price & External Link */}
+                <div className="flex items-center gap-3.5">
                   <div
                     onClick={() => {
-                      const pData = ALL_PERFUMES.find(
-                        (p) => p.id === activeReel.id,
-                      );
+                      const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
                       if (pData) onSelectProduct?.(pData);
                     }}
-                    className="h-11 w-11 shrink-0 rounded-lg bg-[#f2f2f0] p-1 border border-black/10 flex items-center justify-center cursor-pointer overflow-hidden"
+                    className="h-14 w-14 shrink-0 rounded-xl bg-[#f5efe6] p-1 border border-black/10 flex items-center justify-center cursor-pointer overflow-hidden shadow-xs"
                   >
-                    {" "}
                     <img
                       src={activeReel.swatch}
                       alt={activeReel.product}
                       className="h-full w-full object-contain"
-                    />{" "}
-                  </div>{" "}
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
-                    {" "}
-                    <div className="flex items-center gap-1">
-                      {" "}
+                    <div className="flex items-center justify-between gap-1">
                       <h4
                         onClick={() => {
-                          const pData = ALL_PERFUMES.find(
-                            (p) => p.id === activeReel.id,
-                          );
+                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
                           if (pData) onSelectProduct?.(pData);
                         }}
-                        className="text-xs sm:text-sm font-bold text-black truncate cursor-pointer hover:underline"
+                        className="text-sm font-bold text-black truncate cursor-pointer hover:underline"
                       >
-                        {" "}
                         {activeReel.product}
-                      </h4>{" "}
+                      </h4>
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth={2}
-                        className="h-3 w-3 text-black/60 shrink-0"
+                        className="h-4 w-4 text-black/60 shrink-0 cursor-pointer"
+                        onClick={() => {
+                          const pData = ALL_PERFUMES.find((p) => p.id === activeReel.id);
+                          if (pData) onSelectProduct?.(pData);
+                        }}
                       >
-                        {" "}
-                        <path
-                          d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />{" "}
-                      </svg>{" "}
-                    </div>{" "}
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      {" "}
-                      <span className="text-xs font-extrabold text-black">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-sm font-extrabold text-black tabular-nums">
                         {activeReel.priceText}
-                      </span>{" "}
-                      <span className="text-[10px] max-sm:text-[12px] text-black/40 line-through">
+                      </span>
+                      <span className="text-xs text-black/40 line-through tabular-nums">
                         {activeReel.original}
-                      </span>{" "}
-                      <span className="text-[9px] max-sm:text-[12px] font-bold text-white bg-[#9e2a2b] px-1 rounded">
-                        {" "}
+                      </span>
+                      <span className="text-[10px] font-bold text-white bg-[#9e2a2b] px-1.5 py-0.5 rounded">
                         {activeReel.badge}
-                      </span>{" "}
-                    </div>{" "}
-                  </div>{" "}
-                </div>{" "}
-                {/* ADD TO CART Button */}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Full Width ADD TO CART Pill Capsule Button */}
                 <button
                   onClick={(e) => {
                     triggerAdd(e, activeReel);
                     setActiveReelIndex(null);
                   }}
-                  className="on-dark w-full py-2.5 px-4 bg-black hover:bg-[#161616] text-white text-xs font-extrabold tracking-wider uppercase rounded-[4px] shadow-md transition-all cursor-pointer text-center"
+                  className="w-full py-3 px-4 bg-black hover:bg-[#1c1814] active:scale-[0.98] text-white text-xs font-extrabold tracking-widest uppercase rounded-xl shadow-lg transition-all cursor-pointer text-center"
                 >
-                  {" "}
                   ADD TO CART
-                </button>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>{" "}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
       {/* ── MULTI-OPTION SHARE SHEET MODAL (WhatsApp, Instagram, FB, X, Copy Link) ── */}
