@@ -112,12 +112,12 @@ export default function Prelude({
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
             <h1
-              className="font-serif font-light leading-[0.95] tracking-[-0.035em]"
-              style={{ fontSize: "clamp(2.6rem, 7vw, 6rem)" }}
+              className="font-serif font-light leading-[0.95] tracking-[-0.035em] max-w-full break-words"
+              style={{ fontSize: "clamp(1.75rem, 6.5vw, 4.5rem)" }}
             >
-              <span className="block overflow-hidden pb-[0.05em]">
+              <span className="block overflow-hidden pb-[0.05em] max-w-full">
                 <motion.span
-                  className="block"
+                  className="block max-w-full break-words"
                   initial={{ y: "105%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.25, ease: EASE_OUT_EXPO }}
