@@ -95,7 +95,7 @@ export default function Prelude({
 
       {/* The object */}
       <motion.div
-        className="absolute inset-x-0 top-[1%] z-10 h-[46%] sm:top-[2%] sm:h-[62%]"
+        className="relative md:absolute inset-x-0 top-0 md:top-[2%] z-10 h-[260px] sm:h-[320px] md:h-[62%] my-4 md:my-0"
         style={{ y: stageY }}
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -106,7 +106,7 @@ export default function Prelude({
 
       {/* Type and purchase, pinned to the bottom of the stage */}
       <motion.div
-        className="ed-container absolute inset-x-0 bottom-0 z-20 pb-8 md:pb-12"
+        className="ed-container relative md:absolute inset-x-0 bottom-0 z-20 pb-8 md:pb-12 pt-2 md:pt-0"
         style={{ opacity: fade }}
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">

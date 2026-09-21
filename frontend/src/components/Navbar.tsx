@@ -549,19 +549,17 @@ export default function Navbar({
         >
           {" "}
           {/* Left: Mobile Hamburger / Desktop Logo container */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 mr-2 md:mr-6 lg:mr-8">
-            {" "}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 mr-2 md:mr-6 lg:mr-8 relative z-30">
             <button
               aria-label="Toggle Mobile Navigation"
               onClick={() => setMobileNavOpen(true)}
-              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#161616]"
+              className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#161616] relative z-30"
               style={{
                 width: "clamp(32px, 5.1vw, 44px)",
                 height: "clamp(32px, 4.4vw, 38px)",
                 padding: 0,
               }}
             >
-              {" "}
               <svg
                 viewBox="0 0 28 20"
                 fill="none"
@@ -570,35 +568,32 @@ export default function Navbar({
                 strokeLinecap="round"
                 className="w-[85%] h-auto"
               >
-                {" "}
-                <line x1="1" y1="2" x2="27" y2="2" />{" "}
-                <line x1="1" y1="10" x2="27" y2="10" />{" "}
-                <line x1="1" y1="18" x2="27" y2="18" />{" "}
-              </svg>{" "}
-            </button>{" "}
+                <line x1="1" y1="2" x2="27" y2="2" />
+                <line x1="1" y1="10" x2="27" y2="10" />
+                <line x1="1" y1="18" x2="27" y2="18" />
+              </svg>
+            </button>
             {/* Desktop Brand Logo (Shown on left on Desktop) */}
             <div className="sentire-desktop-logo shrink-0">
-              {" "}
               <SentireLogo
                 variant="navbar"
                 theme="light"
                 animated={true}
                 onClick={() => onNavigate?.("home")}
                 className="shrink-0"
-              />{" "}
-            </div>{" "}
-          </div>{" "}
+              />
+            </div>
+          </div>
           {/* Mobile Centered Brand Logo */}
-          <div className="sentire-mobile-logo absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto items-center justify-center">
-            {" "}
+          <div className="sentire-mobile-logo absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-20 items-center justify-center max-w-[130px] xs:max-w-[160px] sm:max-w-[190px]">
             <SentireLogo
               variant="navbar"
               theme="gold"
               animated={false}
               onClick={() => onNavigate?.("home")}
-              height="clamp(32px, 7.2vw, 54px)"
-              className="shrink-0"
-            />{" "}
+              height="clamp(28px, 6.5vw, 48px)"
+              className="shrink-0 max-w-full h-auto"
+            />
           </div>{" "}
           {/* ── Main Navigation Links (Desktop) ── */}
           <nav className="sentire-desktop-nav items-center gap-2 sm:gap-3 lg:gap-4 xl:gap-6 shrink-0">
