@@ -135,6 +135,19 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
+
+    // Catch any incoming Shopify checkout redirects (/cart/c/..., /checkouts/...) and forward directly to Shopify domain!
+    if (
+      path.includes("/cart/c/") ||
+      path.includes("/checkouts/") ||
+      path.startsWith("/checkout")
+    ) {
+      window.location.replace(
+        `https://hbj1d0-99.myshopify.com${window.location.pathname}${window.location.search}`,
+      );
+      return "cart";
+    }
+
     const ref = (
       typeof document !== "undefined" ? document.referrer : ""
     ).toLowerCase();

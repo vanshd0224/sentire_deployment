@@ -627,7 +627,18 @@ export const createOrGetShopifyCheckoutUrl = async (
       body: JSON.stringify({ query: mutation, variables: { input } }),
     });
 
-    // Form POST items to Shopify cart/add returning to /cart so Shiprocket Fastrr App Embed loads 1-Click Popup
+    const data = await res.json();
+    const newCart = data?.data?.cartCreate?.cart;
+    if (newCart?.checkoutUrl) {
+      const cleanCheckoutUrl = newCart.checkoutUrl.replace(
+        "sentirebypc.com",
+        "hbj1d0-99.myshopify.com",
+      );
+      console.log("Direct Storefront cartCreate Success:", cleanCheckoutUrl);
+      return cleanCheckoutUrl;
+    }
+
+    // Fallback: Form POST items to Shopify cart/add returning to /cart
     redirectToShopifyFormCheckout(items);
     return `https://${shopDomain}/cart`;
   } catch (err) {
