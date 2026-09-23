@@ -627,27 +627,14 @@ export const createOrGetShopifyCheckoutUrl = async (
       body: JSON.stringify({ query: mutation, variables: { input } }),
     });
 
-    const data = await res.json();
-    const cart = data?.data?.cartCreate?.cart;
-    if (cart?.checkoutUrl) {
-      let finalUrl = cart.checkoutUrl;
-      if (discountCode && !finalUrl.includes("discount=")) {
-        finalUrl +=
-          (finalUrl.includes("?") ? "&" : "?") +
-          `discount=${encodeURIComponent(discountCode)}`;
-      }
-      console.log("[Direct Storefront Checkout Success]:", finalUrl);
-      return finalUrl;
-    }
+    // Form POST items to Shopify cart/add returning to /cart so Shiprocket Fastrr App Embed loads 1-Click Popup
+    redirectToShopifyFormCheckout(items);
+    return `https://${shopDomain}/cart`;
   } catch (err) {
     console.error("Direct Storefront cartCreate Error:", err);
   }
 
-  // Fallback to Shopify Cart Permalink
-  const permalinkItems = items
-    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
-    .join(",");
-  let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
-  if (discountCode) permalinkUrl += `?discount=${encodeURIComponent(discountCode)}`;
-  return permalinkUrl;
+  // Fallback to Form POST Checkout
+  redirectToShopifyFormCheckout(items);
+  return `https://${shopDomain}/cart`;
 };
