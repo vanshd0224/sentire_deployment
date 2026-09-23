@@ -762,7 +762,7 @@ export default function AccountPage({
                         })
                       }
                       className="px-3 py-1.5 bg-[#ffffff] border border-[color:var(--accent)] rounded-lg text-xs outline-none text-[#161616] font-semibold"
-                    />
+                     id="accountpage-input-1" name="accountpage-input-1"/>
                   ) : (
                     <span className="text-xs font-semibold text-[#161616]">
                       {displayName}
@@ -794,7 +794,7 @@ export default function AccountPage({
                         })
                       }
                       className="px-3 py-1.5 bg-[#ffffff] border border-[color:var(--accent)] rounded-lg text-xs outline-none text-[#161616] font-semibold"
-                    />
+                     id="accountpage-input-2" name="accountpage-input-2"/>
                   ) : (
                     <span className="text-xs font-semibold text-[#161616]">
                       {profileData.email}
@@ -835,7 +835,7 @@ export default function AccountPage({
                 }
                 className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
-              />{" "}
+               id="accountpage-input-3" name="accountpage-input-3"/>{" "}
               <input
                 type="text"
                 placeholder="Flat / House No / Street Address"
@@ -845,7 +845,7 @@ export default function AccountPage({
                 }
                 className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
-              />{" "}
+               id="accountpage-input-4" name="accountpage-input-4"/>{" "}
               <div className="grid grid-cols-2 gap-2">
                 {" "}
                 <input
@@ -857,7 +857,7 @@ export default function AccountPage({
                   }
                   className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                   required
-                />{" "}
+                 id="accountpage-input-5" name="accountpage-input-5"/>{" "}
                 <input
                   type="text"
                   placeholder="Pincode"
@@ -867,7 +867,7 @@ export default function AccountPage({
                   }
                   className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                   required
-                />{" "}
+                 id="accountpage-input-6" name="accountpage-input-6"/>{" "}
               </div>{" "}
               <input
                 type="tel"
@@ -878,7 +878,7 @@ export default function AccountPage({
                 }
                 className="w-full p-3 border border-[#ccc] rounded-[4px] outline-none"
                 required
-              />{" "}
+               id="accountpage-input-7" name="accountpage-input-7"/>{" "}
               <button
                 type="submit"
                 className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] font-semibold text-xs rounded-[4px] transition-all mt-2"

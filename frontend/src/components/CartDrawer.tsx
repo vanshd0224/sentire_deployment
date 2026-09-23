@@ -1055,7 +1055,7 @@ export default function CartDrawer({
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
                           className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                        />{" "}
+                         id="cartdrawer-input-1" name="cartdrawer-input-1"/>{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
                           className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-colors"
@@ -1108,7 +1108,7 @@ export default function CartDrawer({
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
                       className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                    >
+                     id="cartdrawer-select-2" name="cartdrawer-select-2">
                       {" "}
                       {items.map((i) => (
                         <option
@@ -1135,7 +1135,7 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                      />{" "}
+                       id="cartdrawer-input-3" name="cartdrawer-input-3"/>{" "}
                     </div>{" "}
                     <div>
                       {" "}
@@ -1149,7 +1149,7 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                      />{" "}
+                       id="cartdrawer-input-4" name="cartdrawer-input-4"/>{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
@@ -1225,7 +1225,7 @@ export default function CartDrawer({
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
                       className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] max-sm:text-[12px] sm:text-xs focus:outline-none focus:border-[color:var(--accent)] font-sans tracking-tight text-[#111111] h-6 sm:h-8"
-                    />{" "}
+                     id="cartdrawer-input-5" name="cartdrawer-input-5"/>{" "}
                     <button
                       onClick={() => handleApplyCoupon()}
                       className="on-dark bg-[#161616] text-[#e9e9e6] hover:bg-[#6b1422] hover:text-[#111111] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"

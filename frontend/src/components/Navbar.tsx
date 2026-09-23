@@ -819,7 +819,7 @@ export default function Navbar({
                       setSearchQuery("");
                     }
                   }}
-                />{" "}
+                 id="navbar-input-1" name="navbar-input-1"/>{" "}
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}

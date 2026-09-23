@@ -336,7 +336,7 @@ export default function AccountDrawerModal({
                   }}
                   className="w-full px-4 py-3 text-sm text-[#161616] bg-transparent outline-none font-medium placeholder-[#aaa]"
                   required
-                />{" "}
+                 id="accountdrawermodal-input-1" name="accountdrawermodal-input-1"/>{" "}
               </div>{" "}
               <button
                 type="submit"
@@ -442,7 +442,7 @@ export default function AccountDrawerModal({
                     value={digit}
                     onChange={(e) => handleOtpInput(idx, e.target.value)}
                     className="w-12 h-14 text-center text-xl font-bold border border-[#d5cecf] rounded-[4px] outline-none focus:border-[color:var(--accent)] focus:ring-2 focus:ring-[#6b1422]/20 bg-[#f7f7f5]"
-                  />
+                   name="accountdrawermodal-input-2"/>
                 ))}
               </div>{" "}
               <div className="text-xs text-[#666666]">
@@ -501,7 +501,7 @@ export default function AccountDrawerModal({
                 className="w-full px-4 py-3.5 text-sm text-[#161616] bg-[#f7f7f5] border border-[#e5e5e5] rounded-[4px] outline-none focus:border-[color:var(--accent)] font-medium"
                 autoFocus
                 required
-              />{" "}
+               id="accountdrawermodal-input-3" name="accountdrawermodal-input-3"/>{" "}
               <button
                 type="submit"
                 className="on-dark w-full py-3.5 bg-[#161616] hover:bg-[#6b1422] text-[#ffffff] hover:text-white font-semibold text-sm rounded-[4px] tracking-wider transition-all shadow-md cursor-pointer"

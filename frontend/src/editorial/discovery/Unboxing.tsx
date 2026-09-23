@@ -134,7 +134,7 @@ function Vial({
           alt={`${f.name} 6ML travel spray`}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-        />
+         width="600" height="600"/>
       </div>
       <motion.div style={{ opacity: label }} className="mt-3">
         <p className="font-mono text-[10px] max-sm:text-[12px] uppercase tracking-[0.02em] text-paper/45">
@@ -177,7 +177,7 @@ function StackedUnboxing({ onSelect }: { onSelect?: (index: number) => void }) {
                 alt={f.name}
                 loading="lazy"
                 className="h-full w-full object-cover"
-              />
+               width="600" height="600"/>
             </div>
             <p className="mt-2 font-serif text-[15px] font-light text-paper">
               {f.name}

@@ -63,7 +63,7 @@ export default function Coverflow({
                   loading="lazy"
                   draggable={false}
                   className="h-full w-full object-cover"
-                />
+                 width="600" height="600"/>
               </div>
             </motion.button>
           );

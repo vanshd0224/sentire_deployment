@@ -62,7 +62,7 @@ export default function Atelier() {
                   className={`absolute inset-0 hidden h-full w-full object-cover transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] lg:block ${
                     active === i ? "opacity-100" : "opacity-0"
                   }`}
-                />
+                 width="600" height="600"/>
               ))}
             </div>
           </div>
@@ -96,7 +96,7 @@ export default function Atelier() {
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover"
-                      />
+                       width="600" height="600"/>
                     </div>
                   </div>
                 </div>

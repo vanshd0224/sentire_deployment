@@ -739,7 +739,7 @@ export default function PersonalisationPage({
                       '"Cormorant Garamond", "EB Garamond", Georgia, serif',
                     letterSpacing: "0.06em",
                   }}
-                />{" "}
+                 name="personalisationpage-input-1"/>{" "}
                 <p className="mt-1.5 text-[10px] max-sm:text-[12px] font-light text-[#f2f2f0]/30">
                   {" "}
                   Engraved in elegant serif lettering on the bottle.
@@ -761,7 +761,7 @@ export default function PersonalisationPage({
                     const f = e.target.files?.[0];
                     if (f) handleFile(f);
                   }}
-                />{" "}
+                 id="personalisationpage-input-2" name="personalisationpage-input-2"/>{" "}
                 {!uploadedSrc ? (
                   /* Drop zone */
                   <div

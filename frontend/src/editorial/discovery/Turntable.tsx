@@ -192,7 +192,7 @@ export default function Turntable() {
               alt=""
               loading="lazy"
               className="h-full w-full object-cover"
-            />
+             width="600" height="600"/>
             {i === index && (
               <motion.span
                 layoutId="turntable-mark"

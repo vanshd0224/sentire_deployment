@@ -636,7 +636,7 @@ export default function CartPage({
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
                       className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                    >
+                     id="cartpage-select-1" name="cartpage-select-1">
                       {" "}
                       {engravingEligibleItems.map((i) => {
                         const cleanName = i.name
@@ -668,7 +668,7 @@ export default function CartPage({
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                      />{" "}
+                       id="cartpage-input-2" name="cartpage-input-2"/>{" "}
                     </div>{" "}
                     <div>
                       {" "}
@@ -682,7 +682,7 @@ export default function CartPage({
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                      />{" "}
+                       id="cartpage-input-3" name="cartpage-input-3"/>{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
@@ -787,7 +787,7 @@ export default function CartPage({
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
                           className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                        />{" "}
+                         id="cartpage-input-4" name="cartpage-input-4"/>{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
                           className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[color:var(--accent)] hover:bg-[#4f0e19] hover:text-white transition-colors"
@@ -872,7 +872,7 @@ export default function CartPage({
                       }}
                       placeholder="Enter 6-digit Pincode"
                       className="flex-1 min-w-0 rounded-lg border border-[#111111]/20 bg-white px-3 py-2 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                    />{" "}
+                     id="cartpage-input-5" name="cartpage-input-5"/>{" "}
                     <button
                       onClick={() => handleCheckPincode()}
                       disabled={isCheckingPincode}

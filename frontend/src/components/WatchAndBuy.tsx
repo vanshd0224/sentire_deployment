@@ -576,7 +576,7 @@ export default function WatchAndBuy({
                           alt={reel.product}
                           className="h-full w-full object-cover"
                           loading="lazy"
-                        />
+                         width="600" height="600"/>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />{" "}
                     </div>{" "}
@@ -966,7 +966,7 @@ export default function WatchAndBuy({
                 readOnly
                 value={`${window.location.origin}/perfumes/${shareModalReel.id}`}
                 className="flex-1 bg-transparent text-xs text-black font-mono px-2 outline-none select-all truncate"
-              />{" "}
+               id="watchandbuy-input-1" name="watchandbuy-input-1"/>{" "}
               <button
                 onClick={() =>
                   copyToClipboard(

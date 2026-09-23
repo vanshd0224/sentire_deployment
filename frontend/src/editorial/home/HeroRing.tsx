@@ -466,7 +466,7 @@ export default function HeroRing({
                     decoding="async"
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-contain"
-                  />
+                   width="600" height="600"/>
                   <img
                     {...bt.back}
                     sizes={mobile ? "132px" : "232px"}
@@ -476,7 +476,7 @@ export default function HeroRing({
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-contain"
                     style={{ opacity: 0 }}
-                  />
+                   width="600" height="600"/>
                 </div>
               ))}
             </div>

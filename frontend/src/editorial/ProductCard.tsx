@@ -108,7 +108,7 @@ export default function ProductCard({
               loading="lazy"
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            />
+             width="600" height="600"/>
           )}
         </motion.div>
 

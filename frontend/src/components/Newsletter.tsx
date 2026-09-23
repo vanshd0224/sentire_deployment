@@ -66,7 +66,7 @@ export default function Newsletter() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
                   className="w-full border-0 border-b border-ink/25 bg-transparent py-3 pr-14 text-[17px] text-ink placeholder:text-ink/35 focus:outline-none"
-                />
+                 name="newsletter-input-1"/>
                 {/* underline that fills in wine when you type */}
                 <span className="pointer-events-none absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-[#6b1422] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-focus-within:scale-x-100" />
                 <button
