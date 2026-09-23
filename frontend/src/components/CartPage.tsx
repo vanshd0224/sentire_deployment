@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { ALL_PERFUMES } from "../data/perfumes";
+import { auth } from "../lib/firebase";
 
 export interface CartItem {
   id: string;
@@ -26,6 +27,7 @@ export interface CartPageProps {
   onClearCart?: () => void;
   onAddToCart?: (item: any, size?: number, price?: number) => void;
   onNavigate?: (page: string) => void;
+  onOpenLoginModal?: () => void;
 }
 
 export default function CartPage({
@@ -35,6 +37,7 @@ export default function CartPage({
   onClearCart,
   onAddToCart,
   onNavigate,
+  onOpenLoginModal,
 }: CartPageProps) {
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
@@ -249,15 +252,39 @@ export default function CartPage({
 
   const handleProceedToShopifyCheckout = async () => {
     if (items.length === 0 || isRedirecting) return;
+
+    const currentUser = auth.currentUser;
+    const isStoredLoggedIn =
+      localStorage.getItem("sentire_is_logged_in") === "true";
+    const isLoggedIn = !!currentUser || isStoredLoggedIn;
+
+    if (!isLoggedIn) {
+      localStorage.setItem("sentire_pending_checkout", "true");
+      if (onOpenLoginModal) {
+        onOpenLoginModal();
+      }
+      return;
+    }
+
     setIsRedirecting(true);
 
     try {
       try {
         sessionStorage.setItem("sentire_went_to_checkout", "true");
       } catch (e) {}
+      const userEmail =
+        currentUser?.email ||
+        localStorage.getItem("sentire_user_email") ||
+        undefined;
+      const userPhone =
+        currentUser?.phoneNumber ||
+        localStorage.getItem("sentire_user_phone") ||
+        undefined;
       const checkoutUrl = await createOrGetShopifyCheckoutUrl(
         items,
         appliedCoupon ?? undefined,
+        userEmail,
+        userPhone,
       );
       if (checkoutUrl) {
         window.location.href = checkoutUrl;

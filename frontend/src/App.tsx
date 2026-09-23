@@ -642,6 +642,7 @@ export default function App() {
             onClearCart={() => setCartItems([])}
             onAddToCart={handleAddToCart}
             onNavigate={(page) => handleNavigate(page as PageName)}
+            onOpenLoginModal={() => setIsAccountOpen(true)}
           />
         ) : (
           <main>

@@ -530,12 +530,12 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
   const returnToInput = document.createElement("input");
   returnToInput.type = "hidden";
   returnToInput.name = "return_to";
-  returnToInput.value = "/checkout";
+  returnToInput.value = "/cart";
   form.appendChild(returnToInput);
 
   document.body.appendChild(form);
   console.log(
-    "[Option A Checkout] Submitting Native Multi-Item Form POST to Shopify...",
+    "[Option A Checkout] Submitting Native Multi-Item Form POST to Shopify Cart...",
   );
   form.submit();
 };
@@ -569,92 +569,37 @@ export const createOrGetShopifyCheckoutUrl = async (
   } catch (e) {}
 
   const shopDomain = "hbj1d0-99.myshopify.com";
-  const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
 
-  const lines = items.map((item) => ({
-    merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
-    quantity: Number(item.quantity) || 1,
-  }));
-
-  const input: any = { lines };
-  if (discountCode) {
-    input.discountCodes = [discountCode];
-  }
-
-  // Pre-fill Customer Details on Shopify Checkout if available
-  if (userEmail || userPhone) {
-    input.buyerIdentity = {};
-    if (userEmail && userEmail.includes("@")) {
-      input.buyerIdentity.email = userEmail.trim();
-    }
-    if (userPhone) {
-      const cleanPhone = userPhone.replace(/[^\d+]/g, "");
-      if (cleanPhone.length >= 10) {
-        input.buyerIdentity.phone = cleanPhone.startsWith("+")
-          ? cleanPhone
-          : `+91${cleanPhone}`;
-      }
+  // Check if Fastrr SDK is loaded on window to trigger 1-Click Popup directly on website
+  const win = window as any;
+  if (win.Fastrr && typeof win.Fastrr.openCheckout === "function") {
+    try {
+      console.log("[Fastrr SDK] Triggering 1-Click Checkout Popup on site...");
+      win.Fastrr.openCheckout({
+        shop: shopDomain,
+        items: items.map((i) => ({
+          variantId: resolveShopifyVariantId(i),
+          quantity: Number(i.quantity) || 1,
+        })),
+        discountCode,
+      });
+    } catch (e) {
+      console.warn("Fastrr SDK trigger notice:", e);
     }
   }
 
-  const storefrontToken =
-    (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  if (storefrontToken) {
-    headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
-  }
-
-  try {
-    const mutation = `
-      mutation cartCreate($input: CartInput!) {
-        cartCreate(input: $input) {
-          cart {
-            id
-            checkoutUrl
-          }
-          userErrors {
-            field
-            message
-          }
-        }
-      }
-    `;
-
-    const res = await fetch(graphqlUrl, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ query: mutation, variables: { input } }),
-    });
-
-    const data = await res.json();
-    const cart = data?.data?.cartCreate?.cart;
-    if (cart?.checkoutUrl) {
-      let finalUrl = cart.checkoutUrl;
-      if (discountCode && !finalUrl.includes("discount=")) {
-        finalUrl +=
-          (finalUrl.includes("?") ? "&" : "?") +
-          `discount=${encodeURIComponent(discountCode)}`;
-      }
-      console.log("[Direct Storefront Checkout Success]:", finalUrl);
-      return finalUrl;
-    }
-  } catch (err) {
-    console.error("Direct Storefront cartCreate Error:", err);
-  }
-
-  // Fast Fallback to Permalink URL
+  // Construct Fastrr Standalone Checkout Domain URL (bypassing Firebase single-page-app rewrite loop)
   const permalinkItems = items
     .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
     .join(",");
-  let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
-  const params: string[] = [];
-  if (discountCode) params.push(`discount=${encodeURIComponent(discountCode)}`);
+  
+  let fastrrCartUrl = `https://fastrr.app/checkout?shop=${shopDomain}&items=${permalinkItems}`;
+  if (discountCode) fastrrCartUrl += `&discount=${encodeURIComponent(discountCode)}`;
   if (userEmail && userEmail.includes("@"))
-    params.push(`email=${encodeURIComponent(userEmail.trim())}`);
-  if (params.length > 0) {
-    permalinkUrl += "?" + params.join("&");
-  }
-  return permalinkUrl;
+    fastrrCartUrl += `&email=${encodeURIComponent(userEmail.trim())}`;
+  if (userPhone)
+    fastrrCartUrl += `&phone=${encodeURIComponent(userPhone.replace(/[^\d+]/g, ""))}`;
+
+  console.log("[Fastrr App Standalone Redirect]:", fastrrCartUrl);
+  return fastrrCartUrl;
 };
