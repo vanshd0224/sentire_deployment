@@ -481,171 +481,42 @@ export const syncAddToCartToShopifyStorefront = async (
   }
 };
 
-// Option A: Native HTML Form POST Checkout redirect supporting multi-item, multi-quantity, multi-variant carts
-export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
-  if (!rawItems || rawItems.length === 0) return;
-
+// Official Shopify Cart Permalink Generator for Instant Fastrr 1-Click Checkout Redirect
+export const buildShopifyCartPermalink = (
+  rawItems: any[],
+  discountCode?: string,
+): string => {
+  if (!rawItems || rawItems.length === 0)
+    return "https://hbj1d0-99.myshopify.com/cart";
   const items = prepareShopifyCheckoutItems(rawItems);
-
-  // Track Meta Pixel InitiateCheckout Event
-  try {
-    const totalVal = items.reduce(
-      (acc, curr) => acc + curr.price * (curr.quantity || 1),
-      0,
-    );
-    trackInitiateCheckout(
-      items.map((i) => ({
-        id: i.productId || i.id,
-        name: i.name,
-        price: i.price,
-        quantity: i.quantity || 1,
-      })),
-      totalVal,
-    );
-  } catch (e) {}
-
   const shopDomain = "hbj1d0-99.myshopify.com";
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = `https://${shopDomain}/cart/add`;
-  form.style.display = "none";
 
-  items.forEach((item, index) => {
+  const cartParts = items.map((item) => {
     const variantId = resolveShopifyVariantId(item);
     const qty = Number(item.quantity) || 1;
-
-    const idInput = document.createElement("input");
-    idInput.type = "hidden";
-    idInput.name = `items[${index}][id]`;
-    idInput.value = variantId;
-    form.appendChild(idInput);
-
-    const qtyInput = document.createElement("input");
-    qtyInput.type = "hidden";
-    qtyInput.name = `items[${index}][quantity]`;
-    qtyInput.value = String(qty);
-    form.appendChild(qtyInput);
+    return `${variantId}:${qty}`;
   });
 
-  const returnToInput = document.createElement("input");
-  returnToInput.type = "hidden";
-  returnToInput.name = "return_to";
-  returnToInput.value = "/cart";
-  form.appendChild(returnToInput);
-
-  document.body.appendChild(form);
-  console.log(
-    "[Option A Checkout] Submitting Native Multi-Item Form POST to Shopify Cart...",
-  );
-  form.submit();
+  let permalink = `https://${shopDomain}/cart/${cartParts.join(",")}`;
+  if (discountCode) {
+    permalink += `?discount=${encodeURIComponent(discountCode.trim())}`;
+  }
+  return permalink;
 };
 
-// Asynchronously create a fresh GraphQL Shopify Cart via direct Storefront API or permalink fallback
+export const redirectToShopifyFormCheckout = (
+  rawItems: any[],
+  discountCode?: string,
+) => {
+  const permalink = buildShopifyCartPermalink(rawItems, discountCode);
+  window.location.href = permalink;
+};
+
 export const createOrGetShopifyCheckoutUrl = async (
   rawItems: any[],
   discountCode?: string,
-  userEmail?: string,
-  userPhone?: string,
+  _userEmail?: string,
+  _userPhone?: string,
 ): Promise<string> => {
-  if (!rawItems || rawItems.length === 0) return "";
-
-  const items = prepareShopifyCheckoutItems(rawItems);
-
-  // Track Meta Pixel InitiateCheckout Event
-  try {
-    const totalVal = items.reduce(
-      (acc, curr) => acc + curr.price * (curr.quantity || 1),
-      0,
-    );
-    trackInitiateCheckout(
-      items.map((i) => ({
-        id: i.productId || i.id,
-        name: i.name,
-        price: i.price,
-        quantity: i.quantity || 1,
-      })),
-      totalVal,
-    );
-  } catch (e) {}
-
-  const shopDomain = "hbj1d0-99.myshopify.com";
-  const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
-
-  const lines = items.map((item) => ({
-    merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
-    quantity: Number(item.quantity) || 1,
-  }));
-
-  const input: any = { lines };
-  if (discountCode) {
-    input.discountCodes = [discountCode];
-  }
-
-  if (userEmail || userPhone) {
-    input.buyerIdentity = {};
-    if (userEmail && userEmail.includes("@")) {
-      input.buyerIdentity.email = userEmail.trim();
-    }
-    if (userPhone) {
-      const cleanPhone = userPhone.replace(/[^\d+]/g, "");
-      if (cleanPhone.length >= 10) {
-        input.buyerIdentity.phone = cleanPhone.startsWith("+")
-          ? cleanPhone
-          : `+91${cleanPhone}`;
-      }
-    }
-  }
-
-  const storefrontToken =
-    (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  if (storefrontToken) {
-    headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
-  }
-
-  try {
-    const mutation = `
-      mutation cartCreate($input: CartInput!) {
-        cartCreate(input: $input) {
-          cart {
-            id
-            checkoutUrl
-          }
-          userErrors {
-            field
-            message
-          }
-        }
-      }
-    `;
-
-    const res = await fetch(graphqlUrl, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ query: mutation, variables: { input } }),
-    });
-
-    const data = await res.json();
-    const newCart = data?.data?.cartCreate?.cart;
-    if (newCart?.checkoutUrl) {
-      const cleanCheckoutUrl = newCart.checkoutUrl.replace(
-        "sentirebypc.com",
-        "hbj1d0-99.myshopify.com",
-      );
-      console.log("Direct Storefront cartCreate Success:", cleanCheckoutUrl);
-      return cleanCheckoutUrl;
-    }
-
-    // Fallback: Form POST items to Shopify cart/add returning to /cart
-    redirectToShopifyFormCheckout(items);
-    return `https://${shopDomain}/cart`;
-  } catch (err) {
-    console.error("Direct Storefront cartCreate Error:", err);
-  }
-
-  // Fallback to Form POST Checkout
-  redirectToShopifyFormCheckout(items);
-  return `https://${shopDomain}/cart`;
+  return buildShopifyCartPermalink(rawItems, discountCode);
 };
