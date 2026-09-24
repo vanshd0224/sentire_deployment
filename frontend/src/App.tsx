@@ -136,11 +136,12 @@ export default function App() {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
 
-    // Catch any incoming Shopify checkout redirects (/cart/c/..., /checkouts/...) and forward directly to Shopify domain!
+    // Catch any incoming Shopify checkout redirects (/cart/c/..., /checkouts/..., /cart/variant:qty...) and forward directly to Shopify domain!
     if (
       path.includes("/cart/c/") ||
       path.includes("/checkouts/") ||
-      path.startsWith("/checkout")
+      path.startsWith("/checkout") ||
+      (path.startsWith("/cart/") && path.includes(":"))
     ) {
       window.location.replace(
         `https://hbj1d0-99.myshopify.com${window.location.pathname}${window.location.search}`,

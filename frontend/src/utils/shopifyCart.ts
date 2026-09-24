@@ -481,35 +481,68 @@ export const syncAddToCartToShopifyStorefront = async (
   }
 };
 
-// Official Shopify Cart Permalink Generator for Instant Fastrr 1-Click Checkout Redirect
-export const buildShopifyCartPermalink = (
-  rawItems: any[],
-  discountCode?: string,
-): string => {
-  if (!rawItems || rawItems.length === 0)
-    return "https://hbj1d0-99.myshopify.com/cart";
-  const items = prepareShopifyCheckoutItems(rawItems);
-  const shopDomain = "hbj1d0-99.myshopify.com";
-
-  const cartParts = items.map((item) => {
-    const variantId = resolveShopifyVariantId(item);
-    const qty = Number(item.quantity) || 1;
-    return `${variantId}:${qty}`;
-  });
-
-  let permalink = `https://${shopDomain}/cart/${cartParts.join(",")}`;
-  if (discountCode) {
-    permalink += `?discount=${encodeURIComponent(discountCode.trim())}`;
-  }
-  return permalink;
-};
-
+// Form POST to Shopify /cart/add returning to /cart so Shiprocket Fastrr App Embed executes on Theme Cart Page
 export const redirectToShopifyFormCheckout = (
   rawItems: any[],
   discountCode?: string,
 ) => {
-  const permalink = buildShopifyCartPermalink(rawItems, discountCode);
-  window.location.href = permalink;
+  if (!rawItems || rawItems.length === 0) return;
+
+  const items = prepareShopifyCheckoutItems(rawItems);
+
+  // Track Meta Pixel InitiateCheckout Event
+  try {
+    const totalVal = items.reduce(
+      (acc, curr) => acc + curr.price * (curr.quantity || 1),
+      0,
+    );
+    trackInitiateCheckout(
+      items.map((i) => ({
+        id: i.productId || i.id,
+        name: i.name,
+        price: i.price,
+        quantity: i.quantity || 1,
+      })),
+      totalVal,
+    );
+  } catch (e) {}
+
+  const shopDomain = "hbj1d0-99.myshopify.com";
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://${shopDomain}/cart/add`;
+  form.style.display = "none";
+
+  items.forEach((item, index) => {
+    const variantId = resolveShopifyVariantId(item);
+    const qty = Number(item.quantity) || 1;
+
+    const idInput = document.createElement("input");
+    idInput.type = "hidden";
+    idInput.name = `items[${index}][id]`;
+    idInput.value = variantId;
+    form.appendChild(idInput);
+
+    const qtyInput = document.createElement("input");
+    qtyInput.type = "hidden";
+    qtyInput.name = `items[${index}][quantity]`;
+    qtyInput.value = String(qty);
+    form.appendChild(qtyInput);
+  });
+
+  const returnToInput = document.createElement("input");
+  returnToInput.type = "hidden";
+  returnToInput.name = "return_to";
+  returnToInput.value = discountCode
+    ? `/cart?discount=${encodeURIComponent(discountCode.trim())}`
+    : "/cart";
+  form.appendChild(returnToInput);
+
+  document.body.appendChild(form);
+  console.log(
+    "[Fastrr Checkout] Submitting items via Form POST to Shopify /cart/add...",
+  );
+  form.submit();
 };
 
 export const createOrGetShopifyCheckoutUrl = async (
@@ -518,5 +551,6 @@ export const createOrGetShopifyCheckoutUrl = async (
   _userEmail?: string,
   _userPhone?: string,
 ): Promise<string> => {
-  return buildShopifyCartPermalink(rawItems, discountCode);
+  redirectToShopifyFormCheckout(rawItems, discountCode);
+  return "";
 };
