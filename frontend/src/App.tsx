@@ -51,9 +51,7 @@ const ClientServicesPage = lazy(
   () => import("./components/ClientServicesPage"),
 );
 const TrackOrderPage = lazy(() => import("./components/TrackOrderPage"));
-const ProductDetailModal = lazy(
-  () => import("./components/ProductDetailModal"),
-);
+const ProductPage = lazy(() => import("./editorial/product/ProductPage"));
 const ExitIntentPopup = lazy(() => import("./components/ExitIntentPopup"));
 
 export type { PageName };
@@ -129,7 +127,7 @@ export default function App() {
       import("./components/AccountPage");
       import("./components/ClientServicesPage");
       import("./components/TrackOrderPage");
-      import("./components/ProductDetailModal");
+      import("./editorial/product/ProductPage");
     }, 400);
     return () => clearTimeout(preloaderTimer);
   }, []);
@@ -651,8 +649,7 @@ export default function App() {
         {/* A product opens as its own page. The page behind it stays
             mounted but hidden, so Back returns to it exactly as it was. */}
         {selectedProductModal && (
-          <ProductDetailModal
-            asPage
+          <ProductPage
             product={
               ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
               selectedProductModal

@@ -2015,3 +2015,11 @@ h3 em,
     display: none;
   }
 }
+
+/* Product page on a phone: its own Add to bag bar sits at the bottom, so the
+   chat bubble steps aside rather than covering it. */
+@media (max-width: 767px) {
+  body.product-page-open #sentire-suite-container {
+    display: none !important;
+  }
+}
