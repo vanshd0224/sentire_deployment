@@ -266,9 +266,60 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
     setIndex(i);
   };
 
+  // The picker and the stage bars sit under the vial on desktop, but on a
+  // phone they run full width below the vial-and-notes pair; one render each.
+  const picker = (className: string) => (
+    <div className={className} role="tablist" aria-label="Choose a fragrance">
+      {DISCOVERY_FRAGRANCES.map((v, i) => (
+        <button
+          key={v.id}
+          role="tab"
+          aria-selected={i === index}
+          aria-label={displayName(v.name)}
+          onClick={() => pick(i)}
+          className={`aspect-square cursor-pointer overflow-hidden rounded-[2px] transition-opacity ${
+            i === index
+              ? "opacity-100 ring-2 ring-[color:var(--color-print)]"
+              : "opacity-50 hover:opacity-80"
+          }`}
+        >
+          <img src={v.img} alt="" className="h-full w-full object-cover" />
+        </button>
+      ))}
+    </div>
+  );
+
+  const stageBars = (className: string) => (
+    <div className={className}>
+      {STAGES.map((s) => {
+        const fill = Math.max(
+          0,
+          Math.min(1, (progress - s.from) / (s.to - s.from)),
+        );
+        const on = s.key === stage.key && progress > 0;
+        return (
+          <div key={s.key}>
+            <div className="h-1 overflow-hidden rounded-full bg-paper/15">
+              <div
+                className="h-full origin-left bg-[color:var(--color-print)]"
+                style={{ transform: `scaleX(${fill})` }}
+              />
+            </div>
+            <p
+              className={`mt-2 font-mono text-[11px] max-sm:text-[12px] uppercase ${on ? "text-paper" : "text-paper/45"}`}
+            >
+              {s.label}
+            </p>
+            <p className="text-[12px] text-paper/40">{s.hours}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <section
-      className="relative overflow-hidden py-20 text-paper transition-colors duration-700 md:py-28"
+      className="relative overflow-hidden py-12 text-paper transition-colors duration-700 md:py-28"
       style={{ backgroundColor: tone(f.colorHex, 0.32 + progress * 0.1) }}
       aria-label="Spray test"
     >
@@ -276,14 +327,14 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h2 className="font-serif">Hold to spray</h2>
-            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-paper/70">
+            <p className="mt-2 max-w-md text-[14px] leading-relaxed text-paper/70 md:mt-4 md:text-[15px]">
               Press and hold a vial to see how it changes on skin, from the
               first hour to the twelfth. What you smell leaving the house is not
               what you smell coming home.
             </p>
           </div>
-          {/* Twelve-hour dial */}
-          <div className="flex items-center gap-4" aria-live="polite">
+          {/* Twelve-hour dial — on a phone it moves in beside the vial */}
+          <div className="hidden items-center gap-4 md:flex" aria-live="polite">
             <svg
               viewBox="0 0 100 100"
               className="h-20 w-20 -rotate-90 md:h-24 md:w-24"
@@ -320,7 +371,9 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-14">
+        {/* On a phone the vial and what it smells like sit side by side, so
+            the notes stay in view while your thumb is on the vial. */}
+        <div className="mt-6 grid grid-cols-[44%_1fr] items-start gap-4 md:mt-12 md:grid-cols-12 md:items-center md:gap-14">
           {/* The vial you hold */}
           <div className="md:col-span-5">
             <div className="relative mx-auto aspect-square w-full max-w-[360px]">
@@ -372,67 +425,51 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
             </div>
 
             {/* Choose a vial */}
-            <div
-              className="mx-auto mt-5 grid max-w-[360px] grid-cols-6 gap-2"
-              role="tablist"
-              aria-label="Choose a fragrance"
-            >
-              {DISCOVERY_FRAGRANCES.map((v, i) => (
-                <button
-                  key={v.id}
-                  role="tab"
-                  aria-selected={i === index}
-                  aria-label={displayName(v.name)}
-                  onClick={() => pick(i)}
-                  className={`aspect-square cursor-pointer overflow-hidden rounded-[2px] transition-opacity ${
-                    i === index
-                      ? "opacity-100 ring-2 ring-[color:var(--color-print)]"
-                      : "opacity-50 hover:opacity-80"
-                  }`}
-                >
-                  <img
-                    src={v.img}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
+            {picker(
+              "mx-auto mt-5 hidden max-w-[360px] grid-cols-6 gap-2 md:grid",
+            )}
           </div>
 
           {/* What you'd smell right now */}
-          <div className="md:col-span-7">
+          <div className="min-w-0 md:col-span-7">
+            {/* Phone-only clock, beside the vial */}
+            <div className="mb-3 flex items-center gap-2.5 md:hidden" aria-hidden>
+              <svg viewBox="0 0 100 100" className="h-9 w-9 -rotate-90">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="44"
+                  fill="none"
+                  stroke="rgba(242, 242, 240,0.15)"
+                  strokeWidth="6"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="44"
+                  fill="none"
+                  stroke="var(--color-print)"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray={2 * Math.PI * 44}
+                  strokeDashoffset={2 * Math.PI * 44 * (1 - progress)}
+                />
+              </svg>
+              <p className="font-serif text-[1.6rem] leading-none tabular-nums">
+                {hour}h
+                <span className="ml-1.5 font-mono text-[11px] uppercase text-paper/55">
+                  on skin
+                </span>
+              </p>
+            </div>
+
             <p className="font-mono text-[11px] max-sm:text-[12px] uppercase text-paper/55">
               {displayName(f.name)}
             </p>
 
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {STAGES.map((s) => {
-                const fill = Math.max(
-                  0,
-                  Math.min(1, (progress - s.from) / (s.to - s.from)),
-                );
-                const on = s.key === stage.key && progress > 0;
-                return (
-                  <div key={s.key}>
-                    <div className="h-1 overflow-hidden rounded-full bg-paper/15">
-                      <div
-                        className="h-full origin-left bg-[color:var(--color-print)]"
-                        style={{ transform: `scaleX(${fill})` }}
-                      />
-                    </div>
-                    <p
-                      className={`mt-2 font-mono text-[11px] max-sm:text-[12px] uppercase ${on ? "text-paper" : "text-paper/45"}`}
-                    >
-                      {s.label}
-                    </p>
-                    <p className="text-[12px] text-paper/40">{s.hours}</p>
-                  </div>
-                );
-              })}
-            </div>
+            {stageBars("mt-4 hidden grid-cols-3 gap-2 md:grid")}
 
-            <div className="mt-10 min-h-[190px]">
+            <div className="mt-2 min-h-[118px] md:mt-10 md:min-h-[190px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${f.id}-${stage.key}-${progress > 0}`}
@@ -442,7 +479,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                   transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
                 >
                   {progress === 0 ? (
-                    <p className="font-serif text-[clamp(1.5rem,3vw,2.4rem)] leading-[1.05]">
+                    <p className="font-serif text-[17px] leading-[1.15] md:text-[clamp(1.5rem,3vw,2.4rem)] md:leading-[1.05]">
                       Hold the vial to begin.
                     </p>
                   ) : (
@@ -450,7 +487,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                       <p className="font-mono text-[11px] max-sm:text-[12px] uppercase text-[color:var(--color-print)]">
                         {stage.label} · {stage.hours}
                       </p>
-                      <p className="mt-3 font-serif text-[clamp(1.6rem,3.4vw,2.8rem)] leading-[1.02]">
+                      <p className="mt-1.5 font-serif text-[16px] leading-[1.2] md:mt-3 md:text-[clamp(1.6rem,3.4vw,2.8rem)] md:leading-[1.02]">
                         {notes}
                       </p>
                     </>
@@ -465,7 +502,7 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="mt-6 max-w-lg text-[15px] leading-relaxed text-paper/75"
+                  className="mt-3 max-w-lg text-[13px] leading-relaxed text-paper/75 md:mt-6 md:text-[15px]"
                 >
                   {f.longevity} on skin · {f.sillage}. Best worn: {f.bestTime}.
                 </motion.p>
@@ -473,6 +510,10 @@ export default function SprayTest({ startIndex = 0 }: { startIndex?: number }) {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Phone: the day's stages and the vial picker run full width */}
+        {stageBars("mt-5 grid grid-cols-3 gap-3 md:hidden")}
+        {picker("mt-5 grid grid-cols-6 gap-2 md:hidden")}
       </div>
     </section>
   );

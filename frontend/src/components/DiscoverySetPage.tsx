@@ -120,7 +120,7 @@ export default function DiscoverySetPage({
       <div ref={preludeEnd} />
 
       {/* ── 2. Why a set: a paragraph that lights up as you read ── */}
-      <section className="cv-section bg-paper py-24 md:py-36">
+      <section className="cv-section bg-paper py-14 md:py-36">
         <div className="ed-container">
           <p className="ed-label">Why a set</p>
           <LitParagraph text={INTRO} />
@@ -136,13 +136,13 @@ export default function DiscoverySetPage({
       <Week />
 
       {/* ── 5. The numbers ─────────────────────────────────────── */}
-      <section className="cv-section on-dark bg-ink py-20 text-paper md:py-28">
+      <section className="cv-section on-dark bg-ink py-12 text-paper md:py-28">
         <div className="ed-container">
           <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
             How far 36ML goes
           </h2>
 
-          <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4">
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-7 md:mt-14 md:grid-cols-4 md:gap-y-12">
             {(
               [
                 [6, "", "ML", "in each vial"],
@@ -151,38 +151,38 @@ export default function DiscoverySetPage({
                 [35, "", "%+", "perfume oil — extrait strength"],
               ] as const
             ).map(([v, pre, suf, label]) => (
-              <div key={label} className="border-t border-paper/20 pt-5">
-                <dd className="font-serif text-[clamp(3rem,6vw,5.5rem)] font-light leading-none">
+              <div key={label} className="border-t border-paper/20 pt-3 md:pt-5">
+                <dd className="font-serif text-[clamp(2.1rem,6vw,5.5rem)] font-light leading-none">
                   <Ticker value={v} prefix={pre} suffix={suf} />
                 </dd>
-                <dt className="mt-3 max-w-[14rem] text-[14px] leading-snug text-paper/60">
+                <dt className="mt-2 max-w-[14rem] text-[13px] leading-snug text-paper/60 md:mt-3 md:text-[14px]">
                   {label}
                 </dt>
               </div>
             ))}
           </dl>
 
-          <div className="mt-16 grid gap-6 border-t border-paper/20 pt-8 md:grid-cols-2">
-            <p className="text-[17px] leading-relaxed text-paper/55">
+          <div className="mt-8 grid gap-3 border-t border-paper/20 pt-5 md:mt-16 md:grid-cols-2 md:gap-6 md:pt-8">
+            <p className="text-[15px] leading-relaxed text-paper/55 md:text-[17px]">
               <StrikeLine>
                 A paper strip: five seconds, top notes only, in a room of fifty
                 other perfumes.
               </StrikeLine>
             </p>
-            <p className="text-[17px] leading-relaxed">
+            <p className="text-[15px] leading-relaxed md:text-[17px]">
               Your skin: twelve hours, the whole drydown, and what people say
               when they're standing next to you.
             </p>
           </div>
 
           {/* Calculator */}
-          <div className="mt-16 rounded-[2px] border border-paper/15 p-6 md:p-10">
+          <div className="mt-8 rounded-[2px] border border-paper/15 p-5 md:mt-16 md:p-10">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
                   How long will 36ML last you?
                 </p>
-                <p className="mt-2 font-serif text-2xl font-light">
+                <p className="mt-2 font-serif text-xl font-light md:text-2xl">
                   Pick your sprays a day.
                 </p>
               </div>
@@ -218,7 +218,7 @@ export default function DiscoverySetPage({
                 ))}
               </div>
             </div>
-            <div className="mt-8 grid grid-cols-3 gap-6">
+            <div className="mt-5 grid grid-cols-3 gap-4 md:mt-8 md:gap-6">
               <Stat label="Days" value={<Ticker value={days} />} />
               <Stat
                 label="Months"
@@ -229,7 +229,7 @@ export default function DiscoverySetPage({
                 value={<Ticker value={PRICE / days} decimals={2} prefix="₹" />}
               />
             </div>
-            <div className="mt-8 grid grid-cols-12 gap-1.5" aria-hidden>
+            <div className="mt-5 grid grid-cols-12 gap-1.5 md:mt-8" aria-hidden>
               {Array.from({ length: 12 }).map((_, m) => (
                 <div
                   key={m}
@@ -266,14 +266,14 @@ export default function DiscoverySetPage({
       <section
         ref={orderRef}
         id="order"
-        className="scroll-mt-20 bg-paper py-20 md:py-28"
+        className="scroll-mt-20 bg-paper py-12 md:py-28"
       >
-        <div className="ed-container grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="ed-container grid gap-8 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <h2 className="mt-4 font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
               What's in the box
             </h2>
-            <div className="mt-10 flex items-end gap-5">
+            <div className="mt-6 flex items-end gap-5 md:mt-10">
               <motion.img
                 src="/discovery/studio/box-front.webp"
                 alt="The Discovery Set case"
@@ -324,7 +324,7 @@ export default function DiscoverySetPage({
               ].map(([t, b], i) => (
                 <motion.li
                   key={t}
-                  className="grid grid-cols-[28px_1fr] gap-3 border-b border-[color:var(--color-rule)] py-5"
+                  className="grid grid-cols-[28px_1fr] gap-3 border-b border-[color:var(--color-rule)] py-3.5 md:py-5"
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={viewportOnce}
@@ -338,7 +338,7 @@ export default function DiscoverySetPage({
                     0{i + 1}
                   </span>
                   <div>
-                    <p className="font-serif text-[21px] font-light">{t}</p>
+                    <p className="font-serif text-[17px] font-light md:text-[21px]">{t}</p>
                     <p className="mt-1 text-[14px] leading-relaxed text-ink-soft">
                       {b}
                     </p>
@@ -347,8 +347,8 @@ export default function DiscoverySetPage({
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-wrap items-baseline gap-3">
-              <span className="font-sans text-[3.25rem] font-light leading-none tracking-[-0.02em]">
+            <div className="mt-6 flex flex-wrap items-baseline gap-3 md:mt-8">
+              <span className="font-sans text-[2.5rem] font-light leading-none tracking-[-0.02em] md:text-[3.25rem]">
                 ₹{PRICE}
               </span>
               <span className="font-mono text-[13px] text-stone line-through">
@@ -360,7 +360,7 @@ export default function DiscoverySetPage({
               ₹91.50 a vial · 4.9 from 428 reviews
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-5 flex flex-wrap items-center gap-3 md:mt-7">
               <div className="flex h-12 items-center rounded-full border border-[color:var(--color-rule)]">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -411,7 +411,7 @@ export default function DiscoverySetPage({
               Buy it now
             </button>
 
-            <p className="mt-6 font-mono text-[11px] max-sm:text-[12px] uppercase leading-relaxed tracking-[0.04em] text-ink-soft">
+            <p className="mt-4 font-mono text-[11px] max-sm:text-[12px] uppercase leading-relaxed tracking-[0.04em] text-ink-soft md:mt-6">
               Dispatched within 24 hours · free express shipping, 2–4 days ·
               leak-proof, cabin-bag safe
             </p>
@@ -420,15 +420,15 @@ export default function DiscoverySetPage({
       </section>
 
       {/* ── 9. Questions ───────────────────────────────────────── */}
-      <section className="cv-section bg-paper-2 py-20 md:py-28">
-        <div className="ed-container grid gap-10 lg:grid-cols-12">
+      <section className="cv-section bg-paper-2 py-12 md:py-28">
+        <div className="ed-container grid gap-6 md:gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <h2 className="mt-4 font-serif text-[clamp(2.2rem,5vw,3.75rem)] font-light leading-[1.02] tracking-[-0.025em]">
               Questions
             </h2>
             <button
               onClick={() => onNavigate?.("perfumes")}
-              className="ed-link mt-6 cursor-pointer text-[14px]"
+              className="ed-link mt-4 cursor-pointer text-[14px] md:mt-6"
             >
               Or go straight to the full bottles
             </button>
@@ -444,9 +444,9 @@ export default function DiscoverySetPage({
                   <button
                     onClick={() => setOpenFaq(open ? null : i)}
                     aria-expanded={open}
-                    className="flex w-full cursor-pointer items-start justify-between gap-6 py-5 text-left"
+                    className="flex w-full cursor-pointer items-start justify-between gap-6 py-4 text-left md:py-5"
                   >
-                    <span className="font-serif text-[19px] font-light leading-snug">
+                    <span className="font-serif text-[16.5px] font-light leading-snug md:text-[19px]">
                       {faq.q}
                     </span>
                     <motion.span
@@ -467,7 +467,7 @@ export default function DiscoverySetPage({
                         transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
                         className="overflow-hidden"
                       >
-                        <p className="max-w-2xl pb-6 text-[15px] leading-[1.75] text-ink-soft">
+                        <p className="max-w-2xl pb-5 text-[14px] leading-[1.7] text-ink-soft md:pb-6 md:text-[15px] md:leading-[1.75]">
                           {faq.a}
                         </p>
                       </motion.div>
@@ -530,7 +530,7 @@ function Stat({ label, value }: { label: string; value: React.ReactNode }) {
       <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/50">
         {label}
       </p>
-      <p className="mt-2 font-serif text-[clamp(2rem,4vw,3.25rem)] font-light leading-none">
+      <p className="mt-2 font-serif text-[clamp(1.6rem,4vw,3.25rem)] font-light leading-none">
         {value}
       </p>
     </div>
@@ -552,7 +552,7 @@ function LitParagraph({ text }: { text: string }) {
     <p
       ref={ref}
       className="mt-6 max-w-5xl font-serif font-light leading-[1.18] tracking-[-0.02em]"
-      style={{ fontSize: "clamp(1.9rem, 4.4vw, 4rem)" }}
+      style={{ fontSize: "clamp(1.35rem, 4.4vw, 4rem)" }}
     >
       {rich ? (
         <>
@@ -601,7 +601,7 @@ function Week() {
   const draw = useSpring(scrollYProgress, { stiffness: 110, damping: 26 });
 
   return (
-    <section className="cv-section bg-paper py-20 md:py-28">
+    <section className="cv-section bg-paper py-12 md:py-28">
       <div className="ed-container">
         <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.4rem,6vw,5rem)] font-light leading-[1] tracking-[-0.03em]">
           Wear one a day for six days
@@ -611,7 +611,7 @@ function Week() {
           and notice which one people ask about by evening.
         </p>
 
-        <div ref={ref} className="relative mt-14">
+        <div ref={ref} className="relative mt-7 md:mt-14">
           <div
             aria-hidden
             className="absolute left-0 right-0 top-[11px] hidden h-px bg-[color:var(--color-rule)] md:block"
@@ -621,10 +621,11 @@ function Week() {
             className="on-dark absolute left-0 right-0 top-[11px] hidden h-px origin-left bg-ink md:block"
             style={{ scaleX: draw }}
           />
-          <ol className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-4 md:grid-cols-7">
+          <ol className="-mx-5 flex scroll-px-5 snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-x-4 sm:gap-y-10 sm:overflow-visible sm:px-0 sm:pb-0 md:grid-cols-7 [&::-webkit-scrollbar]:hidden">
             {WEEK.map((f, i) => (
               <motion.li
                 key={f.id}
+                className="w-[40%] shrink-0 snap-start sm:w-auto"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportOnce}
@@ -638,7 +639,7 @@ function Week() {
                   Day {i + 1}
                 </span>
                 <motion.div
-                  className="mt-4 aspect-square overflow-hidden rounded-[2px]"
+                  className="mt-2.5 aspect-square overflow-hidden rounded-[2px] sm:mt-4"
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 >
@@ -649,15 +650,16 @@ function Week() {
                     className="h-full w-full object-cover"
                   />
                 </motion.div>
-                <p className="mt-3 font-serif text-[19px] font-light">
+                <p className="mt-2 font-serif text-[16px] font-light sm:mt-3 sm:text-[19px]">
                   {title(f.name)}
                 </p>
-                <p className="text-[13px] leading-snug text-ink-soft">
+                <p className="text-[12px] leading-snug text-ink-soft sm:text-[13px]">
                   {f.character}
                 </p>
               </motion.li>
             ))}
             <motion.li
+              className="w-[40%] shrink-0 snap-start sm:w-auto"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
@@ -666,15 +668,15 @@ function Week() {
               <span className="relative z-10 inline-flex h-6 items-center bg-paper pr-2 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-clay">
                 Day 7
               </span>
-              <div className="on-dark mt-4 flex aspect-square items-center justify-center rounded-[2px] bg-ink p-4 text-center">
-                <p className="font-serif text-[22px] font-light italic leading-tight text-paper">
+              <div className="on-dark mt-2.5 flex aspect-square items-center justify-center rounded-[2px] bg-ink p-3 text-center sm:mt-4 sm:p-4">
+                <p className="font-serif text-[15px] font-light italic leading-tight text-paper sm:text-[22px]">
                   Wear the one they asked about.
                 </p>
               </div>
-              <p className="mt-3 font-serif text-[19px] font-light">
+              <p className="mt-2 font-serif text-[16px] font-light sm:mt-3 sm:text-[19px]">
                 Your signature
               </p>
-              <p className="text-[13px] leading-snug text-ink-soft">
+              <p className="text-[12px] leading-snug text-ink-soft sm:text-[13px]">
                 Then order the full 50ML
               </p>
             </motion.li>
@@ -689,7 +691,7 @@ function Week() {
 function Reviews() {
   const quotes = [...REVIEWS, ...REVIEWS];
   return (
-    <section className="cv-section on-dark overflow-hidden bg-ink py-20 text-paper md:py-28">
+    <section className="cv-section on-dark overflow-hidden bg-ink py-12 text-paper md:py-28">
       <div className="ed-container">
         <p className="font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/55">
           4.9 · 428 verified reviews
@@ -698,9 +700,12 @@ function Reviews() {
           Reviews
         </h2>
       </div>
-      <div className="group mt-14 space-y-5">
+      <div className="group mt-7 space-y-5 md:mt-14">
         {[0, 1].map((row) => (
-          <div key={row} className="flex overflow-hidden">
+          <div
+            key={row}
+            className={`flex overflow-hidden ${row ? "max-sm:hidden" : ""}`}
+          >
             <div
               className="ed-marquee flex shrink-0 gap-5 pr-5 group-hover:[animation-play-state:paused]"
               style={{
@@ -710,12 +715,12 @@ function Reviews() {
               {[...quotes, ...quotes].map((r, i) => (
                 <figure
                   key={`${row}-${i}`}
-                  className="w-[78vw] max-w-[440px] shrink-0 rounded-[2px] border border-paper/15 p-6 sm:w-[440px]"
+                  className="w-[74vw] max-w-[440px] shrink-0 rounded-[2px] border border-paper/15 p-5 sm:w-[440px] sm:p-6"
                 >
                   <p className="font-mono text-[11px] max-sm:text-[12px] text-[color:var(--color-print)]">
                     ★★★★★
                   </p>
-                  <blockquote className="mt-3 font-serif text-[18px] font-light leading-[1.55] text-paper/90">
+                  <blockquote className="mt-3 font-serif text-[15px] font-light leading-[1.5] text-paper/90 sm:text-[18px] sm:leading-[1.55]">
                     “{r.quote}”
                   </blockquote>
                   <figcaption className="mt-4 font-mono text-[11px] max-sm:text-[12px] uppercase tracking-[0.04em] text-paper/45">

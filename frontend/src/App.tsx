@@ -4,7 +4,9 @@ import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
 import NotFoundPage from "./components/NotFoundPage";
 import HeroRing from "./editorial/home/HeroRing";
-import Hero from "./components/Hero";
+// the previous opening, kept so it can be restored in one line
+// import Hero from "./components/Hero";
+import HoverHero from "./editorial/home/HoverHero";
 import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
 import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
@@ -646,7 +648,10 @@ export default function App() {
           <main>
             <ScrollProgress />
             <CursorLabel />
-            <Hero onNavigate={handleNavigate} />
+            <HoverHero
+              onNavigate={handleNavigate}
+              onSelectProduct={handleOpenProductModal}
+            />
             <WatchAndBuy
               onAddToCart={handleAddToCart}
               onOpenCart={() => handleNavigate("cart")}

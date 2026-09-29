@@ -1753,6 +1753,16 @@ h3 .italic {
   font-size: clamp(2.1rem, 5vw, 4.4rem) !important;
 }
 
+/* On a phone 2.1rem of wide capitals breaks "THE DISCOVERY SET" over two
+   lines and crowds everything under it; let it scale with the screen so it
+   holds one line instead. */
+@media (max-width: 640px) {
+  .ds h1.font-serif,
+  .ds h1 {
+    font-size: clamp(1.5rem, 6.8vw, 2.1rem) !important;
+  }
+}
+
 .ds h2.font-serif {
   font-size: clamp(1.8rem, 4.2vw, 3.5rem) !important;
 }
@@ -1765,7 +1775,6 @@ h3 .italic {
 .ds h3.font-serif:not(.ds-reel-name) {
   font-size: clamp(1.4rem, 2.6vw, 2.1rem) !important;
 }
-
 ::selection {
   background-color: var(--color-print);
   color: #111111;
@@ -1939,4 +1948,54 @@ h3 em,
 .cv-section {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
+}
+
+/* Hero: a band of studio light running down the glass every few seconds. */
+@keyframes hvGlint {
+  0%,
+  58% {
+    transform: translateY(-120%) rotate(-14deg);
+  }
+  86%,
+  100% {
+    transform: translateY(330%) rotate(-14deg);
+  }
+}
+.hv-glint {
+  top: 0;
+  animation: hvGlint 5.6s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv-glint {
+    animation: none;
+    display: none;
+  }
+}
+
+/* Hero notes: each hangs in the air, breathing up and down on its own beat. */
+@keyframes hvFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 7px));
+  }
+}
+.hv-float {
+  animation: hvFloat 3.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv-float {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* the hero's description gives way on a short phone, so the button stays in view */
+@media (max-width: 767px) and (max-height: 739px) {
+  .hv-desc {
+    display: none;
+  }
 }

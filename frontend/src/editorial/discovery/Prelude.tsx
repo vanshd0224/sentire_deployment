@@ -8,6 +8,10 @@ import { EASE_OUT_EXPO, useMotionBudget } from "../motion";
  * First view of the Discovery Set page: a dark studio with the case turning
  * in the light and the six vials orbiting it. Scrolling away turns the case
  * to its manifesto side and lifts the stage.
+ *
+ * From md up the case and the type are stacked layers of one composition.
+ * On a phone there isn't the height for that — the case would land on the
+ * headline — so the stage lays out in flow instead and the two can't meet.
  */
 export default function Prelude({
   onAdd,
@@ -48,7 +52,7 @@ export default function Prelude({
   return (
     <section
       ref={ref}
-      className="relative isolate overflow-hidden text-ink"
+      className="relative isolate flex flex-col overflow-hidden text-ink md:block"
       style={{
         minHeight: "calc(100svh - 96px)",
         background:
@@ -95,7 +99,7 @@ export default function Prelude({
 
       {/* The object */}
       <motion.div
-        className="absolute inset-x-0 top-[1%] z-10 h-[46%] sm:top-[2%] sm:h-[62%]"
+        className="relative z-10 mt-5 h-[31svh] min-h-[172px] w-full md:absolute md:inset-x-0 md:top-[2%] md:mt-0 md:h-[62%]"
         style={{ y: stageY }}
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -106,7 +110,7 @@ export default function Prelude({
 
       {/* Type and purchase, pinned to the bottom of the stage */}
       <motion.div
-        className="ed-container absolute inset-x-0 bottom-0 z-20 pb-8 md:pb-12"
+        className="ed-container relative z-20 mt-auto pb-8 pt-5 md:absolute md:inset-x-0 md:bottom-0 md:pb-12 md:pt-0"
         style={{ opacity: fade }}
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
