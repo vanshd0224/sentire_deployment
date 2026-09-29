@@ -73,7 +73,7 @@ const products: ProductItem[] = [
 ];
 
 interface BestSellersProps {
-  onSelectProduct?: (product: PerfumeProduct) => void;
+  onSelectProduct?: (product: PerfumeProduct, size?: number) => void;
   cartItems?: CartItem[];
   onAddToCart?: (
     product: { id: string; name: string; num?: string; img: string },
@@ -136,7 +136,7 @@ export default function BestSellers({
                 onAddToCart={(item, size, price) =>
                   onAddToCart?.(item, size ?? 50, price ?? item.price)
                 }
-                onSelectProduct={() => onSelectProduct?.(perfume)}
+                onSelectProduct={(_, size) => onSelectProduct?.(perfume, size)}
               />
             );
           })}

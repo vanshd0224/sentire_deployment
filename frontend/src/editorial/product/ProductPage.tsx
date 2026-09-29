@@ -299,7 +299,7 @@ export default function ProductPage({
   return (
     <article className="bg-paper pb-24 text-ink md:pb-0">
       {/* the way back, and where we are */}
-      <div className="ed-container flex items-center justify-between gap-4 pt-4 md:pt-3">
+      <div className="ed-container hidden items-center justify-between gap-4 md:flex md:pt-3">
         <button
           type="button"
           onClick={onClose}
@@ -317,11 +317,24 @@ export default function ProductPage({
         </nav>
       </div>
 
-      <div className="ed-container mt-2 grid gap-8 md:mt-2 md:grid-cols-12 md:gap-10 lg:gap-16">
+      <div className="ed-container grid gap-5 md:mt-2 md:grid-cols-12 md:gap-10 lg:gap-16">
         {/* ── the photographs ── */}
         <section aria-label={`${product.name} photographs`} className="md:col-span-7">
           {/* phone: swipe through; laptop: the lead image with the rest below */}
           <div className="relative -mx-5 md:mx-0">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Back to all fragrances"
+              className="absolute left-3 top-3 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-paper/90 text-[17px] shadow-[0_4px_14px_-6px_rgba(0,0,0,0.35)] md:hidden"
+            >
+              ←
+            </button>
+            {images.length > 1 && (
+              <span className="ed-label absolute right-3 top-3 z-10 rounded-full bg-paper/90 px-2.5 py-1 text-[10px] text-ink md:hidden">
+                {shot + 1} / {images.length}
+              </span>
+            )}
             <div
               ref={gallery}
               onScroll={onGalleryScroll}
@@ -335,7 +348,7 @@ export default function ProductPage({
                     setShot(i);
                     setLightbox(true);
                   }}
-                  className="aspect-square w-full shrink-0 snap-center cursor-zoom-in"
+                  className="h-[clamp(220px,42svh,100vw)] w-full shrink-0 snap-center cursor-zoom-in"
                   style={{ backgroundColor: colours.tint }}
                   aria-label={`Enlarge photograph ${i + 1}`}
                 >
@@ -426,8 +439,8 @@ export default function ProductPage({
               {product.num} · Extrait de parfum · 35%+ oil
             </motion.p>
             <h1
-              className="mt-3 font-serif font-light leading-[0.95] tracking-[-0.035em]"
-              style={{ fontSize: "clamp(2.4rem, 4vw, 3.9rem)" }}
+              className="mt-2 font-serif font-light leading-[0.95] tracking-[-0.035em] md:mt-3"
+              style={{ fontSize: "clamp(1.85rem, 4vw, 3.9rem)" }}
             >
               <span className="block overflow-hidden pb-[0.06em]">
                 <motion.span
@@ -441,7 +454,7 @@ export default function ProductPage({
                 </motion.span>
               </span>
             </h1>
-            <p className="mt-2 max-w-md text-[15px] leading-relaxed text-ink-soft md:mt-1.5">{product.desc}</p>
+            <p className="mt-1.5 max-w-md text-[14px] leading-snug text-ink-soft md:text-[15px] md:leading-relaxed">{product.desc}</p>
 
             <button
               type="button"
@@ -454,8 +467,8 @@ export default function ProductPage({
             </button>
 
             {/* price */}
-            <div className="mt-5 flex items-baseline gap-3 border-t border-rule pt-4">
-              <span className="text-[1.9rem] font-medium tabular-nums tracking-[-0.02em]">{inr(price)}</span>
+            <div className="mt-4 flex items-baseline gap-3 border-t border-rule pt-3 md:mt-5 md:pt-4">
+              <span className="text-[1.6rem] font-medium tabular-nums tracking-[-0.02em] md:text-[1.9rem]">{inr(price)}</span>
               {off > 0 && (
                 <>
                   <span className="text-[15px] text-stone line-through tabular-nums">{inr(mrp)}</span>
@@ -468,7 +481,7 @@ export default function ProductPage({
             <p className="mt-1 text-[12px] text-stone">Inclusive of taxes · Free shipping over ₹999</p>
 
             {/* size */}
-            <fieldset className="mt-5 md:mt-4">
+            <fieldset className="mt-4">
               <legend className="ed-label mb-3 flex w-full justify-between">
                 <span>Size</span>
                 <span className="normal-case tracking-normal text-ink-soft">{SIZE_NAME[size]}</span>
@@ -484,7 +497,7 @@ export default function ProductPage({
                       type="button"
                       onClick={() => setSize(s)}
                       aria-pressed={on}
-                      className={`relative flex min-h-[64px] cursor-pointer flex-col items-center justify-center rounded-[2px] border px-2 py-2.5 transition-colors ${
+                      className={`relative flex min-h-[56px] cursor-pointer md:min-h-[64px] flex-col items-center justify-center rounded-[2px] border px-2 py-2.5 transition-colors ${
                         on ? "border-ink bg-ink text-paper" : "border-rule bg-transparent text-ink hover:border-ink"
                       } ${out ? "opacity-50" : ""}`}
                     >
@@ -494,7 +507,7 @@ export default function ProductPage({
                       </span>
                       {s === 50 && !out && (
                         <span
-                          className={`absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-[1px] text-[9px] font-medium uppercase tracking-[0.12em] ${
+                          className={`absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-[1px] text-[10px] font-medium uppercase tracking-[0.12em] ${
                             on ? "bg-[#6b1422] text-paper" : "bg-paper text-[#6b1422] ring-1 ring-[#6b1422]/30"
                           }`}
                         >

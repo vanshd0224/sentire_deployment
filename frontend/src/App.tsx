@@ -650,10 +650,11 @@ export default function App() {
             mounted but hidden, so Back returns to it exactly as it was. */}
         {selectedProductModal && (
           <ProductPage
-            product={
-              ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
-              selectedProductModal
-            }
+            product={{
+              ...(ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
+                selectedProductModal),
+              initialSize: selectedProductModal.initialSize,
+            }}
             onClose={handleCloseProductModal}
             cartItems={cartItems}
             onAddToCart={(prod, size, price) => {

@@ -595,7 +595,7 @@ export default function ByobPage({
                 placeholder="Search scent..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="rounded-full border border-black/15 bg-white px-3.5 py-1 text-xs text-[#111111] placeholder-[#a3a3a3] focus:border-[color:var(--accent)] focus:outline-none w-36"
+                className="rounded-full border border-black/15 bg-white px-3.5 py-2 text-xs text-[#111111] placeholder-[#a3a3a3] focus:border-[color:var(--accent)] focus:outline-none w-36"
                id="byobpage-input-1" name="byobpage-input-1"/>{" "}
             </div>{" "}
           </div>{" "}
@@ -706,8 +706,9 @@ export default function ByobPage({
                           </button>{" "}
                           <button
                             onClick={() => setQuickViewPerfume(perfume)}
-                            className="rounded-[4px] border border-black/10 bg-white px-3 py-2.5 text-xs text-[#767676] hover:text-black hover:border-black/30 transition-colors cursor-pointer"
+                            className="min-w-[44px] rounded-[4px] border border-black/10 bg-white px-3 py-2.5 text-xs text-[#767676] hover:text-black hover:border-black/30 transition-colors cursor-pointer"
                             title="View Notes"
+                            aria-label="View notes"
                           >
                             {" "}
                             ℹ
@@ -825,7 +826,8 @@ export default function ByobPage({
                         {item && (
                           <button
                             onClick={(e) => handleRemoveSlot(slotIdx, e)}
-                            className="flex h-6 w-6 items-center justify-center rounded-full text-xs text-[#a3a3a3] hover:bg-red-50 hover:text-red-500 cursor-pointer"
+                            className="flex h-10 w-10 items-center justify-center rounded-full text-xs text-[#a3a3a3] hover:bg-red-50 hover:text-red-500 cursor-pointer"
+                            aria-label="Remove from box"
                           >
                             {" "}
                             ✕
@@ -962,7 +964,8 @@ export default function ByobPage({
             {" "}
             <button
               onClick={() => setQuickViewPerfume(null)}
-              className="absolute top-5 right-5 flex h-7 w-7 items-center justify-center rounded-full bg-black/5 text-xs text-[#767676] hover:bg-black/10 hover:text-black cursor-pointer"
+              aria-label="Close"
+              className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/5 text-xs text-[#767676] hover:bg-black/10 hover:text-black cursor-pointer"
             >
               {" "}
               ✕

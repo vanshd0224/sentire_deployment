@@ -50,7 +50,7 @@ interface PerfumesPageProps {
   ) => void;
   onOpenCart?: () => void;
   /** Opens the full product page (owned by App). */
-  onSelectProduct?: (product: PerfumeProduct) => void;
+  onSelectProduct?: (product: PerfumeProduct, size?: number) => void;
   /** A product deep link (/perfumes/<slug>/<size>ml) is showing its modal:
    *  the product owns the page's <h1>, so this page steps down to plain
    *  text and the URL stops reporting two headings to search engines. */
@@ -93,8 +93,8 @@ export default function PerfumesPage({
   const [selectedDetailProduct, setSelectedDetailProduct] =
     useState<PerfumeProduct | null>(null);
   // App shows a product as a full page; the popup is only a fallback
-  const openDetail = (p: PerfumeProduct) =>
-    onSelectProduct ? onSelectProduct(p) : setSelectedDetailProduct(p);
+  const openDetail = (p: PerfumeProduct, size?: number) =>
+    onSelectProduct ? onSelectProduct(p, size) : setSelectedDetailProduct(p);
 
   const isFirstRender = useRef(true);
 
@@ -305,7 +305,7 @@ export default function PerfumesPage({
       onAddToCart={(item, size, price) =>
         onAddToCart?.(item, size ?? 50, price ?? item.price)
       }
-      onSelectProduct={() => openDetail(p)}
+      onSelectProduct={(_, size) => openDetail(p, size)}
     />
   );
 

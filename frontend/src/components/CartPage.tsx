@@ -310,7 +310,8 @@ export default function CartPage({
           {" "}
           <button
             onClick={() => onNavigate?.("home")}
-            className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#111111]/70 hover:text-[#4f0e19] transition-colors"
+            aria-label="Back to Boutique"
+            className="flex min-h-[44px] min-w-[44px] items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#111111]/70 hover:text-[#4f0e19] transition-colors"
           >
             {" "}
             <svg

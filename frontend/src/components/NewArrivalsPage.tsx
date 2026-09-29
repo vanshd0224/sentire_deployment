@@ -19,7 +19,7 @@ interface NewArrivalsPageProps {
   ) => void;
   onOpenCart?: () => void;
   /** Opens the full product page (owned by App). */
-  onSelectProduct?: (product: PerfumeProduct) => void;
+  onSelectProduct?: (product: PerfumeProduct, size?: number) => void;
 }
 
 interface DisplayProduct {
@@ -117,8 +117,8 @@ export default function NewArrivalsPage({
 
   const isFirstRender = useRef(true);
   // App shows a product as a full page; the popup is only a fallback
-  const openDetail = (p: PerfumeProduct) =>
-    onSelectProduct ? onSelectProduct(p) : setSelectedDetailProduct(p);
+  const openDetail = (p: PerfumeProduct, size?: number) =>
+    onSelectProduct ? onSelectProduct(p, size) : setSelectedDetailProduct(p);
 
   // Sync address bar URL whenever selectedDetailProduct opens or closes in NewArrivalsPage
   useEffect(() => {
@@ -381,7 +381,7 @@ export default function NewArrivalsPage({
                 onAddToCart={(item, size, price) =>
                   onAddToCart?.(item, size ?? 50, price ?? item.price)
                 }
-                onSelectProduct={() => openDetail(perfume)}
+                onSelectProduct={(_, size) => openDetail(perfume, size)}
               />
             );
           })}

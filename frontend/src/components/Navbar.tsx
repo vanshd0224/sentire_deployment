@@ -555,8 +555,8 @@ export default function Navbar({
               onClick={() => setMobileNavOpen(true)}
               className="sentire-mobile-hamburger nav-icon-btn shrink-0 text-[#161616] relative z-30"
               style={{
-                width: "clamp(32px, 5.1vw, 44px)",
-                height: "clamp(32px, 4.4vw, 38px)",
+                width: "clamp(42px, 5.1vw, 44px)",
+                height: "clamp(42px, 4.4vw, 44px)",
                 padding: 0,
               }}
             >

@@ -113,7 +113,7 @@ export default function ProductCard({
         </motion.div>
 
         {product.badge && (
-          <span className="absolute left-2.5 top-2.5 rounded-full bg-paper/90 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-ink shadow-xs border border-black/10 max-w-[85%] truncate">
+          <span className="absolute left-2.5 top-2.5 rounded-full bg-paper/90 px-2 py-0.5 font-mono text-[10px] uppercase font-bold tracking-wider text-ink shadow-xs border border-black/10 max-w-[85%] truncate">
             {BADGE_COPY[product.badge] ?? product.badge}
           </span>
         )}
@@ -147,7 +147,7 @@ export default function ProductCard({
                 type="button"
                 onClick={() => setSize(s)}
                 aria-pressed={size === s}
-                className={`on-dark h-6 sm:h-7 min-w-[32px] cursor-pointer rounded-full px-2.5 font-mono text-[10px] sm:text-[11px] transition-colors flex items-center justify-center font-medium ${
+                className={`on-dark h-8 sm:h-7 min-w-[40px] sm:min-w-[32px] cursor-pointer rounded-full px-2.5 font-mono text-[11px] transition-colors flex items-center justify-center font-medium ${
                   size === s
                     ? "bg-ink text-paper font-semibold"
                     : "bg-paper-2/60 text-ink-soft hover:text-ink"

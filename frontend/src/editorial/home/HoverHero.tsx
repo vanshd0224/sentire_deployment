@@ -1664,18 +1664,18 @@ export default function HoverHero({
             <motion.div variants={rise} className="mt-4 flex flex-wrap items-center gap-4 md:mt-5">
               <button
                 type="button"
-                onClick={openProduct}
+                onClick={() => onNavigate?.("perfumes")}
                 className="min-h-[46px] cursor-pointer rounded-full px-6 text-[12.5px] font-medium uppercase tracking-[0.1em] text-white transition-colors duration-700"
                 style={{ backgroundColor: scent.deep }}
               >
-                Discover {name}
+                Discover all perfumes
               </button>
               <button
                 type="button"
-                onClick={() => onNavigate?.("perfumes")}
+                onClick={openProduct}
                 className="min-h-[46px] cursor-pointer text-[12.5px] font-medium uppercase tracking-[0.1em] underline max-md:hidden decoration-[#161416]/30 underline-offset-[6px] transition-colors hover:decoration-[#161416]"
               >
-                All fragrances →
+                View {name} →
               </button>
             </motion.div>
           </div>
