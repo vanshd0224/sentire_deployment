@@ -181,16 +181,6 @@ export const SHIPPING_DETAILS_SCHEMA = {
   },
 };
 
-export const RETURN_POLICY_SCHEMA = {
-  "@type": "MerchantReturnPolicy",
-  "@id": `${PRODUCTION_DOMAIN}/#return-policy`,
-  applicableCountry: "IN",
-  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-  merchantReturnDays: 7,
-  returnMethod: "https://schema.org/ReturnByMail",
-  returnFees: "https://schema.org/FreeReturn",
-};
-
 /**
  * Builds Schema.org Product / ProductGroup JSON-LD for a given perfume.
  */
@@ -237,9 +227,6 @@ export function generateProductSchema(product: PerfumeProduct) {
         },
         shippingDetails: {
           "@id": `${PRODUCTION_DOMAIN}/#shipping-details`,
-        },
-        hasMerchantReturnPolicy: {
-          "@id": `${PRODUCTION_DOMAIN}/#return-policy`,
         },
       },
       additionalProperty: [
@@ -404,7 +391,6 @@ export function getStructuredDataForPage(
     WEBSITE_SCHEMA,
     JAIPUR_STORE_SCHEMA,
     SHIPPING_DETAILS_SCHEMA,
-    RETURN_POLICY_SCHEMA,
   ];
 
   if (product) {

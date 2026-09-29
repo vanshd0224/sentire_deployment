@@ -299,7 +299,7 @@ export default function ProductPage({
   return (
     <article className="bg-paper pb-24 text-ink md:pb-0">
       {/* the way back, and where we are */}
-      <div className="ed-container flex items-center justify-between gap-4 pt-4 md:pt-6">
+      <div className="ed-container flex items-center justify-between gap-4 pt-4 md:pt-3">
         <button
           type="button"
           onClick={onClose}
@@ -317,7 +317,7 @@ export default function ProductPage({
         </nav>
       </div>
 
-      <div className="ed-container mt-2 grid gap-8 md:mt-6 md:grid-cols-12 md:gap-10 lg:gap-16">
+      <div className="ed-container mt-2 grid gap-8 md:mt-2 md:grid-cols-12 md:gap-10 lg:gap-16">
         {/* ── the photographs ── */}
         <section aria-label={`${product.name} photographs`} className="md:col-span-7">
           {/* phone: swipe through; laptop: the lead image with the rest below */}
@@ -361,11 +361,34 @@ export default function ProductPage({
             )}
           </div>
 
-          <div className="hidden md:block">
+          {/* laptop: the photograph fits the screen, thumbnails beside it */}
+          <div
+            className="hidden md:flex md:gap-3 lg:gap-4"
+            style={{ height: "clamp(400px, calc(100svh - 215px), 760px)" }}
+          >
+            {images.length > 1 && (
+              <div className="flex w-[64px] shrink-0 flex-col gap-3 lg:w-[80px]">
+                {images.map((src, i) => (
+                  <button
+                    key={src}
+                    type="button"
+                    onClick={() => setShot(i)}
+                    aria-label={`Show photograph ${i + 1}`}
+                    aria-pressed={i === shot}
+                    className={`aspect-square w-full cursor-pointer overflow-hidden rounded-[2px] transition-opacity ${
+                      i === shot ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-paper" : "opacity-60 hover:opacity-100"
+                    }`}
+                    style={{ backgroundColor: colours.tint }}
+                  >
+                    <img src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
             <button
               type="button"
               onClick={() => setLightbox(true)}
-              className="group relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden rounded-[2px]"
+              className="group relative h-full min-w-0 flex-1 cursor-zoom-in overflow-hidden rounded-[2px]"
               style={{ backgroundColor: colours.tint }}
               aria-label="Enlarge photograph"
             >
@@ -387,31 +410,12 @@ export default function ProductPage({
                 </span>
               )}
             </button>
-            {images.length > 1 && (
-              <div className="mt-3 grid grid-cols-4 gap-3">
-                {images.map((src, i) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => setShot(i)}
-                    aria-label={`Show photograph ${i + 1}`}
-                    aria-pressed={i === shot}
-                    className={`aspect-square cursor-pointer overflow-hidden rounded-[2px] transition-opacity ${
-                      i === shot ? "opacity-100 ring-1 ring-ink ring-offset-2 ring-offset-paper" : "opacity-60 hover:opacity-100"
-                    }`}
-                    style={{ backgroundColor: colours.tint }}
-                  >
-                    <img src={src} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </section>
 
         {/* ── the decision ── */}
         <section className="md:col-span-5">
-          <div className="md:sticky md:top-[120px]">
+          <div className="md:sticky md:top-[112px]">
             <motion.p
               className="ed-label"
               style={{ color: colours.deep }}
@@ -423,7 +427,7 @@ export default function ProductPage({
             </motion.p>
             <h1
               className="mt-3 font-serif font-light leading-[0.95] tracking-[-0.035em]"
-              style={{ fontSize: "clamp(2.6rem, 5.2vw, 4.8rem)" }}
+              style={{ fontSize: "clamp(2.4rem, 4vw, 3.9rem)" }}
             >
               <span className="block overflow-hidden pb-[0.06em]">
                 <motion.span
@@ -437,12 +441,12 @@ export default function ProductPage({
                 </motion.span>
               </span>
             </h1>
-            <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-soft">{product.desc}</p>
+            <p className="mt-2 max-w-md text-[15px] leading-relaxed text-ink-soft md:mt-1.5">{product.desc}</p>
 
             <button
               type="button"
               onClick={() => reviewsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="mt-3 inline-flex cursor-pointer items-center gap-2 text-[13px] text-ink-soft hover:text-ink"
+              className="mt-2 inline-flex cursor-pointer items-center gap-2 text-[13px] text-ink-soft hover:text-ink"
             >
               <Stars value={stats.averageRating} className="text-ink" />
               <span className="tabular-nums">{stats.averageRating.toFixed(1)}</span>
@@ -450,7 +454,7 @@ export default function ProductPage({
             </button>
 
             {/* price */}
-            <div className="mt-6 flex items-baseline gap-3 border-t border-rule pt-5">
+            <div className="mt-5 flex items-baseline gap-3 border-t border-rule pt-4">
               <span className="text-[1.9rem] font-medium tabular-nums tracking-[-0.02em]">{inr(price)}</span>
               {off > 0 && (
                 <>
@@ -464,7 +468,7 @@ export default function ProductPage({
             <p className="mt-1 text-[12px] text-stone">Inclusive of taxes · Free shipping over ₹999</p>
 
             {/* size */}
-            <fieldset className="mt-6">
+            <fieldset className="mt-5 md:mt-4">
               <legend className="ed-label mb-3 flex w-full justify-between">
                 <span>Size</span>
                 <span className="normal-case tracking-normal text-ink-soft">{SIZE_NAME[size]}</span>
@@ -504,7 +508,7 @@ export default function ProductPage({
             </fieldset>
 
             {/* engraving */}
-            <div className="mt-5 border-y border-rule">
+            <div className="mt-4 border-y border-rule">
               {size === 50 ? (
                 <>
                   <button
@@ -590,7 +594,7 @@ export default function ProductPage({
             </div>
 
             {/* buy */}
-            <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+            <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
               {soldOut ? (
                 <form
                   onSubmit={(e) => {
@@ -688,7 +692,7 @@ export default function ProductPage({
             <ul className="mt-6 grid grid-cols-3 border-y border-rule text-center">
               {[
                 ["Ships in 24h", "from Jaipur"],
-                ["7-day returns", "damage or errors"],
+                ["Free shipping", "over ₹999"],
                 ["Cruelty free", "IFRA-certified alcohol"],
               ].map(([a, b], i) => (
                 <li key={a} className={`px-2 py-3.5 ${i ? "border-l border-rule" : ""}`}>
@@ -785,8 +789,8 @@ export default function ProductPage({
               "Free shipping on orders above ₹999 across India. Orders are processed within 24 hours in Jaipur and travel by break-proof express courier with transit insurance: typically 24–48 hours to metro cities and 2–4 days elsewhere.",
             ],
             [
-              "Returns",
-              "A 7-day return window. If a bottle arrives damaged or we've sent the wrong one, submit a Return & Exchange request with photos and our Jaipur concierge will dispatch an express replacement.",
+              "Damaged or wrong item",
+              "If a bottle arrives damaged or we've sent the wrong one, submit a Return & Exchange request with photos and our Jaipur concierge will dispatch an express replacement.",
             ],
             [
               "How to wear it",

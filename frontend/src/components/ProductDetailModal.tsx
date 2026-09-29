@@ -1291,7 +1291,6 @@ export default function ProductDetailModal({
                   • Orders are dispatched within 24 hours in rigid
                   tamper-evident coffret packaging.
                 </p>{" "}
-                <p>• 7-Day Hassle-Free Returns &amp; Exchanges policy.</p>{" "}
               </div>
             )}
           </div>{" "}
