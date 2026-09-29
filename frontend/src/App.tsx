@@ -149,24 +149,6 @@ export default function App() {
       return "cart";
     }
 
-    const ref = (
-      typeof document !== "undefined" ? document.referrer : ""
-    ).toLowerCase();
-    const wentToCheckout =
-      typeof sessionStorage !== "undefined" &&
-      sessionStorage.getItem("sentire_went_to_checkout") === "true";
-
-    if (
-      wentToCheckout ||
-      ref.includes("myshopify.com") ||
-      ref.includes("checkouts")
-    ) {
-      try {
-        sessionStorage.removeItem("sentire_went_to_checkout");
-      } catch (e) {}
-      return "cart";
-    }
-
     if (hash === "#account" || path.includes("account")) return "account";
     if (
       hash === "#cart" ||

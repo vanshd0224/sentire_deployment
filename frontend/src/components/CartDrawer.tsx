@@ -1428,9 +1428,6 @@ export default function CartDrawer({
                 }
 
                 setIsRedirecting(true);
-                try {
-                  sessionStorage.setItem("sentire_went_to_checkout", "true");
-                } catch (e) {}
                 const userEmail =
                   currentUser?.email ||
                   localStorage.getItem("sentire_user_email") ||

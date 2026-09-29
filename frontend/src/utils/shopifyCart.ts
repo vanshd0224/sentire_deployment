@@ -642,17 +642,19 @@ export const createOrGetShopifyCheckoutUrl = async (
     );
   }
 
-  // Fallback: Shopify Cart Direct Permalink
+  // Fallback: Shopify Cart Direct Permalink to Checkout
   const permalinkParts = items.map((item) => {
     const variantId = resolveShopifyVariantId(item);
     const qty = Number(item.quantity) || 1;
     return `${variantId}:${qty}`;
   });
 
-  let permalinkUrl = `https://${shopDomain}/cart/${permalinkParts.join(",")}`;
+  const queryParams = ["checkout=1"];
   if (discountCode) {
-    permalinkUrl += `?discount=${encodeURIComponent(discountCode.trim())}`;
+    queryParams.push(`discount=${encodeURIComponent(discountCode.trim())}`);
   }
+
+  let permalinkUrl = `https://${shopDomain}/cart/${permalinkParts.join(",")}?${queryParams.join("&")}`;
   console.log("[Shopify Checkout] Fallback Permalink URL:", permalinkUrl);
   return permalinkUrl;
 };
