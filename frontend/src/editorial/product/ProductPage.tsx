@@ -456,15 +456,29 @@ export default function ProductPage({
             </h1>
             <p className="mt-1.5 max-w-md text-[14px] leading-snug text-ink-soft md:text-[15px] md:leading-relaxed">{product.desc}</p>
 
-            <button
-              type="button"
-              onClick={() => reviewsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="mt-2 inline-flex cursor-pointer items-center gap-2 text-[13px] text-ink-soft hover:text-ink"
-            >
-              <Stars value={stats.averageRating} className="text-ink" />
-              <span className="tabular-nums">{stats.averageRating.toFixed(1)}</span>
-              <span className="ed-link">{stats.count} reviews</span>
-            </button>
+            {/* rating, and sharing, right under the name */}
+            <div className="mt-2 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => reviewsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                className="inline-flex min-h-[36px] cursor-pointer items-center gap-2 text-[13px] text-ink-soft hover:text-ink"
+              >
+                <Stars value={stats.averageRating} className="text-ink" />
+                <span className="tabular-nums">{stats.averageRating.toFixed(1)}</span>
+                <span className="ed-link">{stats.count} reviews</span>
+              </button>
+              <button
+                type="button"
+                onClick={share}
+                aria-label="Share this fragrance"
+                className="inline-flex min-h-[36px] shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-rule px-3.5 text-[12.5px] font-medium text-ink transition-colors hover:border-ink"
+              >
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.7} aria-hidden>
+                  <path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Share
+              </button>
+            </div>
 
             {/* price */}
             <div className="mt-4 flex items-baseline gap-3 border-t border-rule pt-3 md:mt-5 md:pt-4">
@@ -714,17 +728,6 @@ export default function ProductPage({
                 </li>
               ))}
             </ul>
-
-            <button
-              type="button"
-              onClick={share}
-              className="mt-4 inline-flex cursor-pointer items-center gap-2 text-[13px] text-ink-soft hover:text-ink"
-            >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>
-                <path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="ed-link">Share this fragrance</span>
-            </button>
           </div>
         </section>
       </div>
