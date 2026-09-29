@@ -271,7 +271,7 @@ export default function NewArrivalsPage({
               value={selectedMood}
               onChange={(e) => setSelectedMood(e.target.value)}
               className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
-            >
+             id="newarrivalspage-select-1" name="newarrivalspage-select-1">
               {" "}
               <option value="all">All Moods</option>{" "}
               <option value="party">Evening & Party</option>{" "}
@@ -282,7 +282,7 @@ export default function NewArrivalsPage({
               value={selectedFamily}
               onChange={(e) => setSelectedFamily(e.target.value)}
               className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
-            >
+             id="newarrivalspage-select-2" name="newarrivalspage-select-2">
               {" "}
               <option value="all">All Scent Families</option>{" "}
               <option value="woody">Woody & Oud</option>{" "}
@@ -341,7 +341,7 @@ export default function NewArrivalsPage({
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             className="rounded-full bg-white border border-black/15 px-4 py-2 text-xs font-semibold text-ink cursor-pointer focus:outline-none focus:border-[color:var(--accent)]"
-          >
+           id="newarrivalspage-select-3" name="newarrivalspage-select-3">
             {" "}
             <option value="rank">Sort by Rank</option>{" "}
             <option value="price-low">Price: Low to High</option>{" "}

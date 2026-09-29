@@ -105,7 +105,7 @@ export default function CelebrityReacts() {
                     className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
-                  />{" "}
+                   width="600" height="600"/>{" "}
                   {/* Subtle hover overlay highlight */}
                   <div className="absolute inset-0 bg-[#6b1422]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />{" "}
                 </div>

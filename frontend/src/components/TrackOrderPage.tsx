@@ -215,14 +215,14 @@ export default function TrackOrderPage({
                 placeholder="Order Number (e.g., SNT-84920) or AWB #"
                 required
                 className="flex-1 bg-transparent px-4 py-3 text-xs sm:text-sm text-white placeholder-white/40 outline-none font-sans"
-              />{" "}
+               id="trackorderpage-input-1" name="trackorderpage-input-1"/>{" "}
               <input
                 type="text"
                 value={contactQuery}
                 onChange={(e) => setContactQuery(e.target.value)}
                 placeholder="Phone or Email (Optional)"
                 className="w-full sm:w-48 bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-xs text-white placeholder-white/30 outline-none font-sans"
-              />{" "}
+               id="trackorderpage-input-2" name="trackorderpage-input-2"/>{" "}
               <button
                 type="submit"
                 disabled={isSearching}

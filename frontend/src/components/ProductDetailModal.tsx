@@ -664,15 +664,13 @@ export default function ProductDetailModal({
                       {" "}
                       {/* Best Value & Personalisation Badge */}
                       {isBestValue && !isOutOfStock && (
-                        <span className="absolute -top-2.5 rounded-full bg-[#6b1422] px-2 py-0.5 text-[8px] max-sm:text-[12px] font-extrabold text-white uppercase tracking-wider shadow-sm">
-                          {" "}
+                        <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 max-w-[92%] truncate rounded-full bg-[#6b1422] px-2 py-0.5 text-[7.5px] sm:text-[9px] font-extrabold text-white uppercase tracking-wider shadow-sm z-10 whitespace-nowrap">
                           Best Value · Personalisable
                         </span>
                       )}
                       {/* Selected check mark */}
                       {isSelected && (
-                        <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#6b1422] text-[9px] max-sm:text-[12px] text-white font-bold">
-                          {" "}
+                        <span className="absolute top-1.5 right-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#6b1422] text-[8px] text-white font-bold z-10 shadow-xs">
                           ✓
                         </span>
                       )}
@@ -772,7 +770,7 @@ export default function ProductDetailModal({
                               value={notifyEmail}
                               onChange={(e) => setNotifyEmail(e.target.value)}
                               className="flex-1 rounded-[4px] border border-black/15 bg-white px-3 py-2 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                            />{" "}
+                             id="productdetailmodal-input-1" name="productdetailmodal-input-1"/>{" "}
                             <button
                               type="submit"
                               className="rounded-[4px] bg-[#6b1422] px-4 py-2 text-xs font-bold text-white uppercase tracking-wider hover:bg-[#4f0e19] transition-all cursor-pointer"
@@ -950,12 +948,10 @@ export default function ProductDetailModal({
                       </span>{" "}
                       <div className="min-w-0 flex-1">
                         {" "}
-                        <span className="text-[11px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#161616] block truncate">
-                          {" "}
+                        <span className="text-[10.5px] sm:text-xs font-bold uppercase tracking-[0.04em] sm:tracking-[0.12em] text-[#161616] block truncate">
                           Product Personalisation
-                        </span>{" "}
-                        <span className="text-[10px] max-sm:text-[12px] sm:text-[11px] text-[#161616]/65 block mt-0.5 truncate">
-                          {" "}
+                        </span>
+                        <span className="text-[9.5px] sm:text-[11px] text-[#161616]/65 block mt-0.5 truncate">
                           {engravingText || includeDate
                             ? `Custom Engraving: ${[
                                 engravingText ? `"${engravingText}"` : null,
@@ -966,10 +962,10 @@ export default function ProductDetailModal({
                                 .filter(Boolean)
                                 .join(" • ")} (+ ₹200)`
                             : "Add custom name & date engraving (+ ₹200)"}
-                        </span>{" "}
-                      </div>{" "}
-                    </div>{" "}
-                    <span className="text-[10.5px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shrink-0 whitespace-nowrap bg-[#6b1422]/15 px-2.5 py-1 rounded-lg">
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] shrink-0 whitespace-nowrap bg-[#6b1422]/15 px-2 py-1 rounded-lg">
                       {" "}
                       {isPersonalising
                         ? "Close"
@@ -1008,7 +1004,7 @@ export default function ProductDetailModal({
                         onChange={(e) => setEngravingText(e.target.value)}
                         placeholder="e.g. R.S. ALEXANDER"
                         className="w-full rounded-[4px] border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#161616] placeholder:text-[#161616]/30 focus:border-[color:var(--accent)] focus:outline-none shadow-xs font-serif tracking-[0.06em] uppercase"
-                      />{" "}
+                       id="productdetailmodal-input-2" name="productdetailmodal-input-2"/>{" "}
                     </div>{" "}
                     {/* 2. Date Engraving Toggle & Picker */}
                     <div className="space-y-2.5 pt-2 border-t border-black/8">
@@ -1062,7 +1058,7 @@ export default function ProductDetailModal({
                             value={engravingDate}
                             onChange={(e) => setEngravingDate(e.target.value)}
                             className="w-full rounded-[4px] border border-black/15 bg-white px-3.5 py-2.5 text-xs text-[#161616] focus:border-[color:var(--accent)] focus:outline-none shadow-xs font-medium"
-                          />{" "}
+                           id="productdetailmodal-input-3" name="productdetailmodal-input-3"/>{" "}
                         </div>
                       )}
                     </div>{" "}
@@ -1099,7 +1095,7 @@ export default function ProductDetailModal({
                     setPincode(e.target.value.replace(/[^\d]/g, ""))
                   }
                   className="flex-1 min-w-0 w-full rounded-[4px] border border-black/15 bg-cream/50 px-3 sm:px-4 py-2 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                />{" "}
+                 id="productdetailmodal-input-4" name="productdetailmodal-input-4"/>{" "}
                 <button
                   type="submit"
                   disabled={isCheckingPincode}
@@ -1468,7 +1464,7 @@ export default function ProductDetailModal({
                     onChange={(e) => setNewReviewAuthor(e.target.value)}
                     placeholder="e.g. Ananya Roy"
                     className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                  />{" "}
+                   id="productdetailmodal-input-5" name="productdetailmodal-input-5"/>{" "}
                 </div>{" "}
                 <div>
                   {" "}
@@ -1480,7 +1476,7 @@ export default function ProductDetailModal({
                     value={newReviewRating}
                     onChange={(e) => setNewReviewRating(Number(e.target.value))}
                     className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                  >
+                   id="productdetailmodal-select-6" name="productdetailmodal-select-6">
                     {" "}
                     <option value={5}> 5 Stars - Outstanding</option>{" "}
                     <option value={4}> 4 Stars - Great</option>{" "}
@@ -1501,7 +1497,7 @@ export default function ProductDetailModal({
                   onChange={(e) => setNewReviewTitle(e.target.value)}
                   placeholder="e.g. Unbelievable Sillage &amp; Elegant Packaging!"
                   className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                />{" "}
+                 id="productdetailmodal-input-7" name="productdetailmodal-input-7"/>{" "}
               </div>{" "}
               <div>
                 {" "}
@@ -1516,7 +1512,7 @@ export default function ProductDetailModal({
                   onChange={(e) => setNewReviewComment(e.target.value)}
                   placeholder="Describe the scent, longevity, and how it made you feel..."
                   className="w-full rounded-[4px] border border-black/15 bg-white p-3 text-xs font-medium outline-none focus:border-[color:var(--accent)]"
-                />{" "}
+                 id="productdetailmodal-textarea-8" name="productdetailmodal-textarea-8"/>{" "}
               </div>{" "}
               <button
                 type="submit"

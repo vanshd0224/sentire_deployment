@@ -828,7 +828,7 @@ export default function ClientServicesPage({
                       required
                       placeholder="e.g. Alexander"
                       className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
-                    />{" "}
+                     id="clientservicespage-input-1"/>{" "}
                   </div>{" "}
                   <div>
                     {" "}
@@ -843,7 +843,7 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       placeholder="e.g. Wright"
                       className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
-                    />{" "}
+                     id="clientservicespage-input-2"/>{" "}
                   </div>{" "}
                 </div>{" "}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -862,7 +862,7 @@ export default function ClientServicesPage({
                       required
                       placeholder="name@example.com"
                       className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
-                    />{" "}
+                     id="clientservicespage-input-3"/>{" "}
                   </div>{" "}
                   <div>
                     {" "}
@@ -877,7 +877,7 @@ export default function ClientServicesPage({
                       onChange={handleInputChange}
                       placeholder="+91 98765 43210"
                       className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
-                    />{" "}
+                     id="clientservicespage-input-4"/>{" "}
                   </div>{" "}
                 </div>{" "}
                 <div>
@@ -901,7 +901,7 @@ export default function ClientServicesPage({
                           checked={formData.preferredContact === method}
                           onChange={handleInputChange}
                           className="accent-[#6b1422]"
-                        />{" "}
+                         id="clientservicespage-input-5"/>{" "}
                         {method}
                       </label>
                     ))}
@@ -934,7 +934,7 @@ export default function ClientServicesPage({
                           required
                           placeholder="e.g. SNT-84920"
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
-                        />{" "}
+                         id="clientservicespage-input-6"/>{" "}
                       </div>{" "}
                       <div>
                         {" "}
@@ -947,7 +947,7 @@ export default function ClientServicesPage({
                           value={formData.issueType}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
-                        >
+                         id="clientservicespage-select-7">
                           {" "}
                           <option value="Order Status / Update">
                             Where is my order?
@@ -983,7 +983,7 @@ export default function ClientServicesPage({
                           onChange={handleFileChange}
                           accept="image/*"
                           className="w-full bg-white border border-black/15 rounded-[4px] p-2 text-xs text-[#161616] file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-[#6b1422] file:text-white hover:file:bg-[#6b1422]"
-                        />{" "}
+                         id="clientservicespage-input-8" name="clientservicespage-input-8"/>{" "}
                         {formData.fileName && (
                           <span className="text-[10px] max-sm:text-[12px] text-[#6b1422] font-bold mt-1 block">
                             {" "}
@@ -1015,7 +1015,7 @@ export default function ClientServicesPage({
                           {" "}
                           Primary Occasion
                         </label>{" "}
-                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none">
+                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none" id="clientservicespage-select-9" name="clientservicespage-select-9">
                           {" "}
                           <option>Everyday Signature Scent</option>{" "}
                           <option>Evening & Dinner Parties</option>{" "}
@@ -1029,7 +1029,7 @@ export default function ClientServicesPage({
                           {" "}
                           Favorite Scent Family
                         </label>{" "}
-                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none">
+                        <select className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none" id="clientservicespage-select-10" name="clientservicespage-select-10">
                           {" "}
                           <option>
                             Woody & Smoky Oud (e.g., White Oud, Purple Oud)
@@ -1072,7 +1072,7 @@ export default function ClientServicesPage({
                           placeholder="e.g. P.C. • 2026"
                           maxLength={20}
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
-                        />{" "}
+                         id="clientservicespage-input-11"/>{" "}
                       </div>{" "}
                       <div>
                         {" "}
@@ -1086,7 +1086,7 @@ export default function ClientServicesPage({
                           value={formData.requiredDate}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none focus:border-[color:var(--accent)]"
-                        />{" "}
+                         id="clientservicespage-input-12"/>{" "}
                       </div>{" "}
                     </div>{" "}
                   </div>
@@ -1133,7 +1133,7 @@ export default function ClientServicesPage({
                               onChange={handleInputChange}
                               placeholder="e.g. Luxury Private Group"
                               className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
-                            />{" "}
+                             id="clientservicespage-input-13"/>{" "}
                           </div>{" "}
                           <div>
                             {" "}
@@ -1146,7 +1146,7 @@ export default function ClientServicesPage({
                               value={formData.purpose}
                               onChange={handleInputChange}
                               className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
-                            >
+                             id="clientservicespage-select-14">
                               {" "}
                               <option>Corporate & Client Gifting</option>{" "}
                               <option>Employee Appreciation & Festive</option>{" "}
@@ -1170,7 +1170,7 @@ export default function ClientServicesPage({
                               value={formData.quantity}
                               onChange={handleInputChange}
                               className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
-                            >
+                             id="clientservicespage-select-15">
                               {" "}
                               <option>20 – 50 units</option>{" "}
                               <option>50 – 150 units</option>{" "}
@@ -1189,7 +1189,7 @@ export default function ClientServicesPage({
                               value={formData.gstRequired}
                               onChange={handleInputChange}
                               className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white outline-none focus:border-[color:var(--accent)]"
-                            >
+                             id="clientservicespage-select-16">
                               {" "}
                               <option>Yes — GST Invoice Required</option>{" "}
                               <option>No — Retail Purchase</option>{" "}
@@ -1221,7 +1221,7 @@ export default function ClientServicesPage({
                             onChange={handleInputChange}
                             placeholder="e.g. Single HQ in Mumbai OR Multi-address across India"
                             className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
-                          />{" "}
+                           id="clientservicespage-input-17"/>{" "}
                         </div>{" "}
                         {formData.gstRequired.startsWith("Yes") && (
                           <div>
@@ -1237,7 +1237,7 @@ export default function ClientServicesPage({
                               onChange={handleInputChange}
                               placeholder="e.g. 08AAAAA0000A1Z5"
                               className="on-dark w-full bg-[#161616] border border-white/20 rounded-[4px] px-3.5 py-2.5 text-xs text-white placeholder-white/40 outline-none focus:border-[color:var(--accent)]"
-                            />{" "}
+                             id="clientservicespage-input-18"/>{" "}
                           </div>
                         )}
                         <button
@@ -1273,7 +1273,7 @@ export default function ClientServicesPage({
                           value={formData.businessType}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
-                        >
+                         id="clientservicespage-select-19">
                           {" "}
                           <option>Boutique Retailer</option>{" "}
                           <option>Department Store</option>{" "}
@@ -1297,7 +1297,7 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           placeholder="e.g. India / UAE"
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
-                        />{" "}
+                         id="clientservicespage-input-20"/>{" "}
                       </div>{" "}
                       <div>
                         {" "}
@@ -1312,7 +1312,7 @@ export default function ClientServicesPage({
                           onChange={handleInputChange}
                           placeholder="https://..."
                           className="w-full bg-white border border-black/15 rounded-[4px] px-3.5 py-2.5 text-xs text-ink outline-none"
-                        />{" "}
+                         id="clientservicespage-input-21"/>{" "}
                       </div>{" "}
                     </div>{" "}
                   </div>
@@ -1332,7 +1332,7 @@ export default function ClientServicesPage({
                     rows={4}
                     placeholder="Tell us about your requirement or how our Client Services desk may guide you..."
                     className="w-full bg-[#f7f7f5] border border-black/15 rounded-[4px] px-4 py-3 text-xs text-ink placeholder-ink/35 outline-none focus:border-[color:var(--accent)]"
-                  />{" "}
+                   id="clientservicespage-textarea-22"/>{" "}
                 </div>{" "}
                 {/* Consent & Security Note */}
                 <div className="space-y-3 pt-2">

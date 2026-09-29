@@ -412,7 +412,7 @@ export default function DiveHero({
                       aspectRatio: "4 / 5",
                       objectFit: "cover",
                     }}
-                  />
+                   width="600" height="600"/>
                 </TunnelItem>
               );
             })}

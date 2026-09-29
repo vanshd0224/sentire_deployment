@@ -91,7 +91,7 @@ export default function Collections({
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover transition-transform duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-                />
+                 width="600" height="600"/>
               </div>
               <div className="mt-4">
                 <h3 className="font-serif text-2xl font-light tracking-[-0.01em]">

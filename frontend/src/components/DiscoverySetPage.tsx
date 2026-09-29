@@ -648,7 +648,7 @@ function Week() {
                     alt={f.name}
                     loading="lazy"
                     className="h-full w-full object-cover"
-                  />
+                   width="600" height="600"/>
                 </motion.div>
                 <p className="mt-2 font-serif text-[16px] font-light sm:mt-3 sm:text-[19px]">
                   {title(f.name)}

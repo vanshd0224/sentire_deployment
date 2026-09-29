@@ -295,7 +295,12 @@ export default function CartDrawer({
   const couponDiscount = useMemo(() => {
     if (!appliedCoupon) return 0;
     if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
-    if (appliedCoupon === "ANSH150" && subtotal >= 1249) return 150;
+    if (appliedCoupon === "TEST99") return Math.min(99, subtotal);
+    if (
+      (appliedCoupon === "ANSH150" || appliedCoupon === "BHAVYA150") &&
+      subtotal >= 1249
+    )
+      return 150;
     if (appliedCoupon === "PC200" && subtotal >= 1999) return 200;
     return 0;
   }, [appliedCoupon, subtotal]);
@@ -305,20 +310,23 @@ export default function CartDrawer({
     setCouponError(null);
     setCouponSuccess(null);
 
-    if (code === "PC100") {
+    if (code === "TEST99") {
+      setAppliedCoupon("TEST99");
+      setCouponSuccess("Test Code TEST99 applied!");
+    } else if (code === "PC100") {
       if (subtotal < 999) {
         setCouponError("PC100 requires a minimum order of ₹999");
         return;
       }
       setAppliedCoupon("PC100");
       setCouponSuccess("Code PC100 applied! ₹100 OFF");
-    } else if (code === "ANSH150") {
+    } else if (code === "ANSH150" || code === "BHAVYA150") {
       if (subtotal < 1249) {
-        setCouponError("ANSH150 requires a minimum order of ₹1,249");
+        setCouponError(`${code} requires a minimum order of ₹1,249`);
         return;
       }
-      setAppliedCoupon("ANSH150");
-      setCouponSuccess("Code ANSH150 applied! ₹150 OFF");
+      setAppliedCoupon(code);
+      setCouponSuccess(`Code ${code} applied! ₹150 OFF`);
     } else if (code === "PC200") {
       if (subtotal < 1999) {
         setCouponError("PC200 requires a minimum order of ₹1,999");
@@ -1055,7 +1063,7 @@ export default function CartDrawer({
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
                           className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                        />{" "}
+                         id="cartdrawer-input-1" name="cartdrawer-input-1"/>{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
                           className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-colors"
@@ -1108,7 +1116,7 @@ export default function CartDrawer({
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
                       className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                    >
+                     id="cartdrawer-select-2" name="cartdrawer-select-2">
                       {" "}
                       {items.map((i) => (
                         <option
@@ -1135,7 +1143,7 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                      />{" "}
+                       id="cartdrawer-input-3" name="cartdrawer-input-3"/>{" "}
                     </div>{" "}
                     <div>
                       {" "}
@@ -1149,7 +1157,7 @@ export default function CartDrawer({
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2 text-xs font-bold text-[#111111] focus:border-[color:var(--accent)] focus:outline-none"
-                      />{" "}
+                       id="cartdrawer-input-4" name="cartdrawer-input-4"/>{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
@@ -1225,7 +1233,7 @@ export default function CartDrawer({
                         if (e.key === "Enter") handleApplyCoupon();
                       }}
                       className="flex-1 min-w-0 bg-black/5 border border-black/15 rounded px-2 py-1 text-[10px] max-sm:text-[12px] sm:text-xs focus:outline-none focus:border-[color:var(--accent)] font-sans tracking-tight text-[#111111] h-6 sm:h-8"
-                    />{" "}
+                     id="cartdrawer-input-5" name="cartdrawer-input-5"/>{" "}
                     <button
                       onClick={() => handleApplyCoupon()}
                       className="on-dark bg-[#161616] text-[#e9e9e6] hover:bg-[#6b1422] hover:text-[#111111] transition-colors rounded px-2 sm:px-3 py-1 text-[9px] max-sm:text-[12px] font-semibold uppercase tracking-tight sm:tracking-wider cursor-pointer h-6 sm:h-8 shrink-0"
@@ -1420,9 +1428,6 @@ export default function CartDrawer({
                 }
 
                 setIsRedirecting(true);
-                try {
-                  sessionStorage.setItem("sentire_went_to_checkout", "true");
-                } catch (e) {}
                 const userEmail =
                   currentUser?.email ||
                   localStorage.getItem("sentire_user_email") ||

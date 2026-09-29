@@ -46,7 +46,7 @@ export default function Newsletter() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 className="min-h-[44px] w-full bg-transparent text-[16px] text-ink outline-none placeholder:text-stone"
-              />
+               name="newsletter-input-1"/>
               <button
                 type="submit"
                 className="ed-link shrink-0 cursor-pointer text-[14px] font-medium"

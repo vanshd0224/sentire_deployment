@@ -173,7 +173,7 @@ function Panel({
               alt={`${f.name} 6ML travel spray`}
               loading="lazy"
               className="h-full w-full object-cover"
-            />
+             width="600" height="600"/>
           </motion.button>
         </div>
 
@@ -486,6 +486,8 @@ function SwipeReel({ onPick }: { onPick?: (index: number) => void }) {
                     decoding="async"
                     draggable={false}
                     className="h-full w-full object-cover"
+                    width="600"
+                    height="600"
                   />
                 </motion.button>
               </div>

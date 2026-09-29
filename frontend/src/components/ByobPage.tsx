@@ -596,7 +596,7 @@ export default function ByobPage({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="rounded-full border border-black/15 bg-white px-3.5 py-1 text-xs text-[#111111] placeholder-[#a3a3a3] focus:border-[color:var(--accent)] focus:outline-none w-36"
-              />{" "}
+               id="byobpage-input-1" name="byobpage-input-1"/>{" "}
             </div>{" "}
           </div>{" "}
           {/* Two-Column Grid: Left Catalog (7 cols) + Right Sticky Scrollable Box Tray (5 cols) */}

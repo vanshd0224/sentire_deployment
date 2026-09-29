@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { ALL_PERFUMES } from "../data/perfumes";
+import { auth } from "../lib/firebase";
 
 export interface CartItem {
   id: string;
@@ -26,6 +27,7 @@ export interface CartPageProps {
   onClearCart?: () => void;
   onAddToCart?: (item: any, size?: number, price?: number) => void;
   onNavigate?: (page: string) => void;
+  onOpenLoginModal?: () => void;
 }
 
 export default function CartPage({
@@ -35,6 +37,7 @@ export default function CartPage({
   onClearCart,
   onAddToCart,
   onNavigate,
+  onOpenLoginModal,
 }: CartPageProps) {
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
@@ -140,7 +143,12 @@ export default function CartPage({
   const couponDiscount = useMemo(() => {
     if (!appliedCoupon) return 0;
     if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
-    if (appliedCoupon === "ANSH150" && subtotal >= 1249) return 150;
+    if (appliedCoupon === "TEST99") return Math.min(99, subtotal);
+    if (
+      (appliedCoupon === "ANSH150" || appliedCoupon === "BHAVYA150") &&
+      subtotal >= 1249
+    )
+      return 150;
     if (appliedCoupon === "PC200" && subtotal >= 1999) return 200;
     return 0;
   }, [appliedCoupon, subtotal]);
@@ -165,20 +173,23 @@ export default function CartPage({
     setCouponError(null);
     setCouponSuccess(null);
 
-    if (code === "PC100") {
+    if (code === "TEST99") {
+      setAppliedCoupon("TEST99");
+      setCouponSuccess("Test Code TEST99 applied!");
+    } else if (code === "PC100") {
       if (subtotal < 999) {
         setCouponError("Code PC100 requires a minimum order of ₹999");
         return;
       }
       setAppliedCoupon("PC100");
       setCouponSuccess("Code PC100 applied! ₹100 OFF");
-    } else if (code === "ANSH150") {
+    } else if (code === "ANSH150" || code === "BHAVYA150") {
       if (subtotal < 1249) {
-        setCouponError("Code ANSH150 requires a minimum order of ₹1,249");
+        setCouponError(`Code ${code} requires a minimum order of ₹1,249`);
         return;
       }
-      setAppliedCoupon("ANSH150");
-      setCouponSuccess("Code ANSH150 applied! ₹150 OFF");
+      setAppliedCoupon(code);
+      setCouponSuccess(`Code ${code} applied! ₹150 OFF`);
     } else if (code === "PC200") {
       if (subtotal < 1999) {
         setCouponError("Code PC200 requires a minimum order of ₹1,999");
@@ -249,21 +260,39 @@ export default function CartPage({
 
   const handleProceedToShopifyCheckout = async () => {
     if (items.length === 0 || isRedirecting) return;
+
+    const currentUser = auth.currentUser;
+    const isStoredLoggedIn =
+      localStorage.getItem("sentire_is_logged_in") === "true";
+    const isLoggedIn = !!currentUser || isStoredLoggedIn;
+
+    if (!isLoggedIn) {
+      localStorage.setItem("sentire_pending_checkout", "true");
+      if (onOpenLoginModal) {
+        onOpenLoginModal();
+      }
+      return;
+    }
+
     setIsRedirecting(true);
 
     try {
-      try {
-        sessionStorage.setItem("sentire_went_to_checkout", "true");
-      } catch (e) {}
+      const userEmail =
+        currentUser?.email ||
+        localStorage.getItem("sentire_user_email") ||
+        undefined;
+      const userPhone =
+        currentUser?.phoneNumber ||
+        localStorage.getItem("sentire_user_phone") ||
+        undefined;
       const checkoutUrl = await createOrGetShopifyCheckoutUrl(
         items,
         appliedCoupon ?? undefined,
+        userEmail,
+        userPhone,
       );
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
-      } else {
-        setIsRedirecting(false);
-        alert("Could not generate checkout link. Please try again.");
       }
     } catch (err) {
       console.error("Checkout error:", err);
@@ -609,7 +638,7 @@ export default function CartPage({
                       }
                       onChange={(e) => setEngraveTargetKey(e.target.value)}
                       className="w-full rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                    >
+                     id="cartpage-select-1" name="cartpage-select-1">
                       {" "}
                       {engravingEligibleItems.map((i) => {
                         const cleanName = i.name
@@ -641,7 +670,7 @@ export default function CartPage({
                         onChange={(e) => setEngraveName(e.target.value)}
                         placeholder="e.g. Vansh"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                      />{" "}
+                       id="cartpage-input-2" name="cartpage-input-2"/>{" "}
                     </div>{" "}
                     <div>
                       {" "}
@@ -655,7 +684,7 @@ export default function CartPage({
                         onChange={(e) => setEngraveDate(e.target.value)}
                         placeholder="e.g. 11.09.2026"
                         className="w-full rounded-[4px] border border-[#111111]/20 p-2.5 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                      />{" "}
+                       id="cartpage-input-3" name="cartpage-input-3"/>{" "}
                     </div>{" "}
                   </div>{" "}
                   <button
@@ -760,7 +789,7 @@ export default function CartPage({
                             if (e.key === "Enter") handleApplyCoupon();
                           }}
                           className="flex-1 min-w-0 rounded-[4px] border border-[#111111]/20 bg-[#f2f2f0] px-2.5 sm:px-3 py-2 text-xs font-bold font-sans tracking-tight text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                        />{" "}
+                         id="cartpage-input-4" name="cartpage-input-4"/>{" "}
                         <button
                           onClick={() => handleApplyCoupon()}
                           className="on-dark shrink-0 rounded-[4px] bg-[#111111] px-3.5 sm:px-4 py-2 text-xs font-bold uppercase text-[color:var(--accent)] hover:bg-[#4f0e19] hover:text-white transition-colors"
@@ -845,7 +874,7 @@ export default function CartPage({
                       }}
                       placeholder="Enter 6-digit Pincode"
                       className="flex-1 min-w-0 rounded-lg border border-[#111111]/20 bg-white px-3 py-2 text-xs font-semibold text-[#111111] focus:border-[#4f0e19] focus:outline-none"
-                    />{" "}
+                     id="cartpage-input-5" name="cartpage-input-5"/>{" "}
                     <button
                       onClick={() => handleCheckPincode()}
                       disabled={isCheckingPincode}

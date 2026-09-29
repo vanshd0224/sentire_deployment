@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense, useTransition } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
@@ -71,6 +71,7 @@ function isKnownPath(path: string) {
 }
 
 export default function App() {
+  const [isPending, startTransition] = useTransition();
   const [isBundleModalOpen, setIsBundleModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState<
     PerfumeFilterOptions | undefined
@@ -90,12 +91,33 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isReelOpen, setIsReelOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
   const [cartToast, setCartToast] = useState<{
     id: number;
     message: string;
     img?: string;
   } | null>(null);
+
+  // Background preloader: Prefetch lazy component bundles shortly after initial mount
+  // so every single page transition is 0ms instant without any network wait or white screen!
+  useEffect(() => {
+    const preloaderTimer = setTimeout(() => {
+      import("./components/PerfumesPage");
+      import("./components/BestSellersPage");
+      import("./components/NewArrivalsPage");
+      import("./components/AboutPage");
+      import("./components/ByobPage");
+      import("./components/DiscoverySetPage");
+      import("./components/PersonalisationPage");
+      import("./components/CartPage");
+      import("./components/AccountPage");
+      import("./components/ClientServicesPage");
+      import("./components/TrackOrderPage");
+      import("./components/ProductDetailModal");
+    }, 400);
+    return () => clearTimeout(preloaderTimer);
+  }, []);
 
   useEffect(() => {
     try {
@@ -115,21 +137,17 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName>(() => {
     const hash = window.location.hash;
     const path = window.location.pathname.toLowerCase();
-    const ref = (
-      typeof document !== "undefined" ? document.referrer : ""
-    ).toLowerCase();
-    const wentToCheckout =
-      typeof sessionStorage !== "undefined" &&
-      sessionStorage.getItem("sentire_went_to_checkout") === "true";
 
+    // Catch any incoming Shopify checkout redirects (/cart/c/..., /checkouts/..., /cart/variant:qty...) and forward directly to Shopify domain!
     if (
-      wentToCheckout ||
-      ref.includes("myshopify.com") ||
-      ref.includes("checkouts")
+      path.includes("/cart/c/") ||
+      path.includes("/checkouts/") ||
+      path.startsWith("/checkout") ||
+      (path.startsWith("/cart/") && path.includes(":"))
     ) {
-      try {
-        sessionStorage.removeItem("sentire_went_to_checkout");
-      } catch (e) {}
+      window.location.replace(
+        `https://hbj1d0-99.myshopify.com${window.location.pathname}${window.location.search}`,
+      );
       return "cart";
     }
 
@@ -304,61 +322,67 @@ export default function App() {
     const handlePopState = () => {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
+      let nextPg: PageName = "home";
+
       if (hash === "#account" || popPath.includes("account"))
-        setCurrentPage("account");
+        nextPg = "account";
       else if (
         hash === "#cart" ||
         popPath.includes("cart") ||
         popPath.includes("bag")
       )
-        setCurrentPage("cart");
+        nextPg = "cart";
       else if (
         hash === "#discovery-set" ||
         popPath.includes("discovery-set") ||
         hash === "#discoveryset" ||
         popPath.includes("discoveryset")
       )
-        setCurrentPage("discovery-set");
+        nextPg = "discovery-set";
       else if (
         hash === "#about" ||
         popPath.includes("about") ||
         popPath.includes("extrait-de-parfum") ||
         popPath.includes("35-percent")
       )
-        setCurrentPage("about");
+        nextPg = "about";
       else if (
         hash === "#byob" ||
         popPath.includes("byob") ||
         popPath.includes("build-your-own-bundle")
       )
-        setCurrentPage("byob");
+        nextPg = "byob";
       else if (
         hash === "#personalisation" ||
         popPath.includes("personalisation") ||
         popPath.includes("personalised-perfume")
       )
-        setCurrentPage("personalisation");
+        nextPg = "personalisation";
       else if (hash === "#discovery-set" || popPath.includes("discovery-set"))
-        setCurrentPage("discovery-set");
+        nextPg = "discovery-set";
       else if (hash === "#new-arrivals" || popPath.includes("new-arrivals"))
-        setCurrentPage("new-arrivals");
+        nextPg = "new-arrivals";
       else if (hash === "#bestsellers" || popPath.includes("bestsellers"))
-        setCurrentPage("bestsellers");
+        nextPg = "bestsellers";
       else if (
         hash === "#perfumes" ||
         popPath.includes("perfumes") ||
         popPath.includes("products")
       )
-        setCurrentPage("perfumes");
+        nextPg = "perfumes";
       else if (
         hash === "#client-services" ||
         popPath.includes("client-services") ||
         popPath.includes("contact")
       )
-        setCurrentPage("client-services");
+        nextPg = "client-services";
       else if (hash === "#track-order" || popPath.includes("track-order"))
-        setCurrentPage("track-order");
-      else setCurrentPage(isKnownPath(popPath) ? "home" : "not-found");
+        nextPg = "track-order";
+      else nextPg = isKnownPath(popPath) ? "home" : "not-found";
+
+      startTransition(() => {
+        setCurrentPage(nextPg);
+      });
 
       if (popPath.startsWith("/perfumes/")) {
         const slug = popPath
@@ -403,7 +427,6 @@ export default function App() {
   };
 
   const handleNavigate = (page: PageName, filters?: PerfumeFilterOptions) => {
-    setCurrentPage(page);
     setActiveFilters(filters);
     const targetPath = page === "home" ? "/" : `/${page}`;
     if (window.location.pathname !== targetPath && !window.location.hash) {
@@ -413,7 +436,10 @@ export default function App() {
         console.error("Could not update history state", e);
       }
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    startTransition(() => {
+      setCurrentPage(page);
+    });
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const handleAddToCart = (item: any, sizeArg?: number, priceArg?: number) => {
@@ -545,12 +571,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full bg-cream text-ink mobile-page-padding lg:pb-0">
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="min-h-screen w-full bg-[#f2f2f0] flex items-center justify-center min-h-[500px]">
+            <div className="h-6 w-6 rounded-full border-2 border-[#6b1422] border-t-transparent animate-spin"></div>
+          </div>
+        }
+      >
         <SEOHead
           currentPage={currentPage}
           selectedProductModal={selectedProductModal}
         />
-        {currentPage !== "cart" && (
+        {currentPage !== "cart" && !isReelOpen && (
           <Navbar
             onOpenBundleModal={openBundleModal}
             onNavigate={handleNavigate}
@@ -643,6 +675,7 @@ export default function App() {
             onClearCart={() => setCartItems([])}
             onAddToCart={handleAddToCart}
             onNavigate={(page) => handleNavigate(page as PageName)}
+            onOpenLoginModal={() => setIsAccountOpen(true)}
           />
         ) : (
           <main>
@@ -656,6 +689,7 @@ export default function App() {
               onAddToCart={handleAddToCart}
               onOpenCart={() => handleNavigate("cart")}
               onSelectProduct={handleOpenProductModal}
+              onReelStateChange={setIsReelOpen}
             />
             <RetailerBadges />
             <ShopByCategory onNavigate={handleNavigate} />
@@ -687,6 +721,7 @@ export default function App() {
 
         {!isCartOpen &&
           !isBundleModalOpen &&
+          !isReelOpen &&
           currentPage !== "personalisation" &&
           currentPage !== "cart" && (
             <MobileBottomNav

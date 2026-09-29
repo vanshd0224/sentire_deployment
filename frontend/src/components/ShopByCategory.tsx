@@ -8,7 +8,7 @@ const categories = [
   {
     title: "Discovery Set",
     subtitle: "Six Scents. Find Yours.",
-    image: "/images/curated-discovery-set-v5.jpg?v=v5_clean",
+    image: "/images/curated-discovery-set-v5.jpg?v=v7_perfect_framing",
     page: "discovery-set" as const,
   },
   {
@@ -73,17 +73,9 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     : "/perfumes";
 
             return (
-              <motion.a
+              <a
                 key={cat.title}
                 data-cursor="Explore"
-                initial={{ opacity: 0, y: 70, rotate: i % 2 ? 2.5 : -2.5 }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{
-                  duration: 1.1,
-                  delay: i * 0.1,
-                  ease: EASE_OUT_EXPO,
-                }}
                 href={targetHref}
                 onClick={(e) => {
                   e.preventDefault();
@@ -110,7 +102,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                       alt={`SENTIRE ${cat.title} - ${cat.subtitle} luxury perfume collection`}
                       width="320"
                       height="400"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.12] group-hover:rotate-[1.5deg]"
+                      className="h-full w-full object-cover object-[center_top] pointer-events-none select-none transition-transform duration-700 ease-out group-hover:scale-[1.08]"
                       loading="lazy"
                       decoding="async"
                     />{" "}
@@ -137,7 +129,7 @@ export default function ShopByCategory({ onNavigate }: ShopByCategoryProps) {
                     </div>{" "}
                   </div>{" "}
                 </TiltCard>
-              </motion.a>
+              </a>
             );
           })}
         </div>{" "}

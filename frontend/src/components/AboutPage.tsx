@@ -805,7 +805,7 @@ export default function AboutPage({
                     value={concentration}
                     onChange={(e) => setConcentration(Number(e.target.value))}
                     className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#6b1422]"
-                  />{" "}
+                   name="aboutpage-input-1"/>{" "}
                   <div className="flex justify-between text-[10px] max-sm:text-[12px] text-white/40 mt-1 uppercase font-bold">
                     {" "}
                     <span>10% Eau de Toilette</span>{" "}

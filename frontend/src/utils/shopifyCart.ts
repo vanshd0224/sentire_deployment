@@ -481,8 +481,11 @@ export const syncAddToCartToShopifyStorefront = async (
   }
 };
 
-// Option A: Native HTML Form POST Checkout redirect supporting multi-item, multi-quantity, multi-variant carts
-export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
+// Form POST to Shopify /cart/add returning to /cart so Shiprocket Fastrr App Embed executes on Theme Cart Page
+export const redirectToShopifyFormCheckout = (
+  rawItems: any[],
+  discountCode?: string,
+) => {
   if (!rawItems || rawItems.length === 0) return;
 
   const items = prepareShopifyCheckoutItems(rawItems);
@@ -504,7 +507,9 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
     );
   } catch (e) {}
 
-  const shopDomain = "hbj1d0-99.myshopify.com";
+  const shopDomain =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN) ||
+    "hbj1d0-99.myshopify.com";
   const form = document.createElement("form");
   form.method = "POST";
   form.action = `https://${shopDomain}/cart/add`;
@@ -530,22 +535,23 @@ export const redirectToShopifyFormCheckout = (rawItems: any[]) => {
   const returnToInput = document.createElement("input");
   returnToInput.type = "hidden";
   returnToInput.name = "return_to";
-  returnToInput.value = "/checkout";
+  returnToInput.value = discountCode
+    ? `/cart?discount=${encodeURIComponent(discountCode.trim())}`
+    : "/cart";
   form.appendChild(returnToInput);
 
   document.body.appendChild(form);
   console.log(
-    "[Option A Checkout] Submitting Native Multi-Item Form POST to Shopify...",
+    "[Fastrr Checkout] Submitting items via Form POST to Shopify /cart/add...",
   );
   form.submit();
 };
 
-// Asynchronously create a fresh GraphQL Shopify Cart via direct Storefront API or permalink fallback
 export const createOrGetShopifyCheckoutUrl = async (
   rawItems: any[],
   discountCode?: string,
   userEmail?: string,
-  userPhone?: string,
+  _userPhone?: string,
 ): Promise<string> => {
   if (!rawItems || rawItems.length === 0) return "";
 
@@ -568,45 +574,30 @@ export const createOrGetShopifyCheckoutUrl = async (
     );
   } catch (e) {}
 
-  const shopDomain = "hbj1d0-99.myshopify.com";
+  const shopDomain =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN) ||
+    "hbj1d0-99.myshopify.com";
   const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
+  const storefrontToken =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
 
+  // Prepare lines for GraphQL
   const lines = items.map((item) => ({
     merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
     quantity: Number(item.quantity) || 1,
   }));
 
-  const input: any = { lines };
-  if (discountCode) {
-    input.discountCodes = [discountCode];
-  }
-
-  // Pre-fill Customer Details on Shopify Checkout if available
-  if (userEmail || userPhone) {
-    input.buyerIdentity = {};
-    if (userEmail && userEmail.includes("@")) {
-      input.buyerIdentity.email = userEmail.trim();
-    }
-    if (userPhone) {
-      const cleanPhone = userPhone.replace(/[^\d+]/g, "");
-      if (cleanPhone.length >= 10) {
-        input.buyerIdentity.phone = cleanPhone.startsWith("+")
-          ? cleanPhone
-          : `+91${cleanPhone}`;
-      }
-    }
-  }
-
-  const storefrontToken =
-    (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  if (storefrontToken) {
-    headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
-  }
-
   try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (storefrontToken) {
+      headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
+    }
+
+    const discountCodes = discountCode ? [discountCode.trim()] : undefined;
+    const buyerIdentity = userEmail ? { email: userEmail } : undefined;
+
     const mutation = `
       mutation cartCreate($input: CartInput!) {
         cartCreate(input: $input) {
@@ -625,36 +616,45 @@ export const createOrGetShopifyCheckoutUrl = async (
     const res = await fetch(graphqlUrl, {
       method: "POST",
       headers,
-      body: JSON.stringify({ query: mutation, variables: { input } }),
+      body: JSON.stringify({
+        query: mutation,
+        variables: {
+          input: {
+            lines,
+            discountCodes,
+            buyerIdentity,
+          },
+        },
+      }),
     });
 
     const data = await res.json();
-    const cart = data?.data?.cartCreate?.cart;
-    if (cart?.checkoutUrl) {
-      let finalUrl = cart.checkoutUrl;
-      if (discountCode && !finalUrl.includes("discount=")) {
-        finalUrl +=
-          (finalUrl.includes("?") ? "&" : "?") +
-          `discount=${encodeURIComponent(discountCode)}`;
-      }
-      console.log("[Direct Storefront Checkout Success]:", finalUrl);
-      return finalUrl;
+    const checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+
+    if (checkoutUrl) {
+      console.log("[Shopify Checkout] Storefront cartCreate URL:", checkoutUrl);
+      return checkoutUrl;
     }
   } catch (err) {
-    console.error("Direct Storefront cartCreate Error:", err);
+    console.warn(
+      "[Shopify Checkout] GraphQL cartCreate failed, falling back to permalink:",
+      err,
+    );
   }
 
-  // Fast Fallback to Permalink URL
-  const permalinkItems = items
-    .map((item) => `${resolveShopifyVariantId(item)}:${item.quantity || 1}`)
-    .join(",");
-  let permalinkUrl = `https://${shopDomain}/cart/${permalinkItems}`;
-  const params: string[] = [];
-  if (discountCode) params.push(`discount=${encodeURIComponent(discountCode)}`);
-  if (userEmail && userEmail.includes("@"))
-    params.push(`email=${encodeURIComponent(userEmail.trim())}`);
-  if (params.length > 0) {
-    permalinkUrl += "?" + params.join("&");
+  // Fallback: Shopify Cart Direct Permalink to Checkout
+  const permalinkParts = items.map((item) => {
+    const variantId = resolveShopifyVariantId(item);
+    const qty = Number(item.quantity) || 1;
+    return `${variantId}:${qty}`;
+  });
+
+  const queryParams = ["checkout=1"];
+  if (discountCode) {
+    queryParams.push(`discount=${encodeURIComponent(discountCode.trim())}`);
   }
+
+  let permalinkUrl = `https://${shopDomain}/cart/${permalinkParts.join(",")}?${queryParams.join("&")}`;
+  console.log("[Shopify Checkout] Fallback Permalink URL:", permalinkUrl);
   return permalinkUrl;
 };

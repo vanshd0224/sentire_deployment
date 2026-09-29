@@ -803,7 +803,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                   src="/images/ganesh/benefit_ganesh.webp"
                   alt="Divine Blessings"
                   className="h-[30px] w-auto object-contain mb-1"
-                />{" "}
+                 width="600" height="600"/>{" "}
                 <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                   {" "}
                   DIVINE
@@ -819,7 +819,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                   src="/images/ganesh/benefit_lotus.webp"
                   alt="New Beginnings"
                   className="h-[28px] w-auto object-contain mb-1"
-                />{" "}
+                 width="600" height="600"/>{" "}
                 <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                   {" "}
                   NEW BEGINNINGS
@@ -835,7 +835,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                   src="/images/ganesh/benefit_perfume.webp"
                   alt="Crafted With Passion"
                   className="h-[30px] w-auto object-contain mb-1"
-                />{" "}
+                 width="600" height="600"/>{" "}
                 <span className="font-montserrat font-medium text-[9.5px] max-sm:text-[12px] leading-[1.25] text-[#31183A] uppercase">
                   {" "}
                   CRAFTED
