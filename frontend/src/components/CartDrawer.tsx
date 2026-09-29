@@ -295,6 +295,7 @@ export default function CartDrawer({
   const couponDiscount = useMemo(() => {
     if (!appliedCoupon) return 0;
     if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
+    if (appliedCoupon === "TEST99") return Math.min(99, subtotal);
     if (
       (appliedCoupon === "ANSH150" || appliedCoupon === "BHAVYA150") &&
       subtotal >= 1249
@@ -309,7 +310,10 @@ export default function CartDrawer({
     setCouponError(null);
     setCouponSuccess(null);
 
-    if (code === "PC100") {
+    if (code === "TEST99") {
+      setAppliedCoupon("TEST99");
+      setCouponSuccess("Test Code TEST99 applied!");
+    } else if (code === "PC100") {
       if (subtotal < 999) {
         setCouponError("PC100 requires a minimum order of ₹999");
         return;
