@@ -507,7 +507,9 @@ export const redirectToShopifyFormCheckout = (
     );
   } catch (e) {}
 
-  const shopDomain = "hbj1d0-99.myshopify.com";
+  const shopDomain =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN) ||
+    "hbj1d0-99.myshopify.com";
   const form = document.createElement("form");
   form.method = "POST";
   form.action = `https://${shopDomain}/cart/add`;
@@ -551,6 +553,96 @@ export const createOrGetShopifyCheckoutUrl = async (
   _userEmail?: string,
   _userPhone?: string,
 ): Promise<string> => {
-  redirectToShopifyFormCheckout(rawItems, discountCode);
-  return "";
+  if (!rawItems || rawItems.length === 0) return "";
+
+  const items = prepareShopifyCheckoutItems(rawItems);
+
+  // Track Meta Pixel InitiateCheckout Event
+  try {
+    const totalVal = items.reduce(
+      (acc, curr) => acc + curr.price * (curr.quantity || 1),
+      0,
+    );
+    trackInitiateCheckout(
+      items.map((i) => ({
+        id: i.productId || i.id,
+        name: i.name,
+        price: i.price,
+        quantity: i.quantity || 1,
+      })),
+      totalVal,
+    );
+  } catch (e) {}
+
+  const shopDomain =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN) ||
+    "hbj1d0-99.myshopify.com";
+  const graphqlUrl = `https://${shopDomain}/api/2026-07/graphql.json`;
+
+  const lines = items.map((item) => ({
+    merchandiseId: `gid://shopify/ProductVariant/${resolveShopifyVariantId(item)}`,
+    quantity: Number(item.quantity) || 1,
+  }));
+
+  const storefrontToken =
+    (import.meta.env && import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN) || "";
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (storefrontToken) {
+    headers["X-Shopify-Storefront-Access-Token"] = storefrontToken;
+  }
+
+  const mutation = `
+    mutation cartCreate($input: CartInput!) {
+      cartCreate(input: $input) {
+        cart {
+          id
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const res = await fetch(graphqlUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query: mutation,
+        variables: {
+          input: {
+            lines,
+            discountCodes: discountCode ? [discountCode.trim()] : [],
+          },
+        },
+      }),
+    });
+    const data = await res.json();
+    let checkoutUrl = data?.data?.cartCreate?.cart?.checkoutUrl;
+    if (checkoutUrl) {
+      if (discountCode) {
+        checkoutUrl +=
+          (checkoutUrl.includes("?") ? "&" : "?") +
+          `discount=${encodeURIComponent(discountCode.trim())}`;
+      }
+      return checkoutUrl;
+    }
+  } catch (e) {
+    console.error("Storefront API cartCreate Error:", e);
+  }
+
+  // Fallback: Shopify direct permalink checkout URL
+  const lineItemsStr = items
+    .map((item) => `${resolveShopifyVariantId(item)}:${Number(item.quantity) || 1}`)
+    .join(",");
+  let permalinkUrl = `https://${shopDomain}/cart/${lineItemsStr}`;
+  if (discountCode) {
+    permalinkUrl += `?discount=${encodeURIComponent(discountCode.trim())}`;
+  }
+  return permalinkUrl;
 };
