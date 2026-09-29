@@ -18,6 +18,8 @@ interface BestSellersPageProps {
     delta: number,
   ) => void;
   onOpenCart?: () => void;
+  /** Opens the full product page (owned by App). */
+  onSelectProduct?: (product: PerfumeProduct) => void;
 }
 
 interface DisplayProduct {
@@ -122,14 +124,20 @@ export default function BestSellersPage({
   onAddToCart,
   onUpdateCartQuantity,
   onOpenCart: _onOpenCart,
+  onSelectProduct,
 }: BestSellersPageProps) {
   const [selectedDetailProduct, setSelectedDetailProduct] =
     useState<PerfumeProduct | null>(null);
 
   const isFirstRender = useRef(true);
+  // App shows a product as a full page; the popup is only a fallback
+  const openDetail = (p: PerfumeProduct) =>
+    onSelectProduct ? onSelectProduct(p) : setSelectedDetailProduct(p);
 
   // Sync address bar URL whenever selectedDetailProduct opens or closes in BestSellersPage
   useEffect(() => {
+    // App owns product URLs when it shows products as pages
+    if (onSelectProduct) return;
     if (isFirstRender.current) {
       isFirstRender.current = false;
       const path = window.location.pathname.toLowerCase();
@@ -387,7 +395,7 @@ export default function BestSellersPage({
                 onAddToCart={(item, size, price) =>
                   onAddToCart?.(item, size ?? 50, price ?? item.price)
                 }
-                onSelectProduct={() => setSelectedDetailProduct(perfume)}
+                onSelectProduct={() => openDetail(perfume)}
               />
             );
           })}

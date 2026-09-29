@@ -427,9 +427,11 @@ function WaterCanvas({
 
     const fit = () => {
       const r = c.getBoundingClientRect();
-      // half size: the light is soft, and it's a quarter of the work
-      c.width = Math.max(1, Math.round(r.width * 0.5));
-      c.height = Math.max(1, Math.round(r.height * 0.5));
+      // half size (less on a phone): the light is soft, and it's a quarter
+      // of the work or less
+      const k = r.width < 768 ? 0.4 : 0.5;
+      c.width = Math.max(1, Math.round(r.width * k));
+      c.height = Math.max(1, Math.round(r.height * k));
       gl.viewport(0, 0, c.width, c.height);
       draw.current(performance.now());
     };
@@ -1204,8 +1206,10 @@ export default function HoverHero({
       while (!cancelled) {
         setActive(i);
         if (first) {
-          // the wordmark slams in, and the frame takes the hit
+          // the wordmark slams in, and the frame takes the hit; the words
+          // arrive with it, so the page says what it is straight away
           setMark(true);
+          setWords(true);
           await wait(800);
           if (cancelled) return;
           shake();
@@ -1679,7 +1683,7 @@ export default function HoverHero({
           {/* two stepped glass cards carrying the numbers */}
           <div className="hidden items-end gap-3 md:flex">
             <motion.figure variants={rise} className="w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
-              <img src={A("case-open.webp")} alt="The SENTIRE case, open" className="aspect-[4/3] w-full rounded-[9px] object-cover" draggable={false} />
+              <img src={A("case-open.webp")} alt="The SENTIRE case, open" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-[9px] object-cover" draggable={false} />
               <figcaption className="px-1.5 pb-1 pt-2.5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">Extrait strength</p>
                 <p className="mt-1 font-serif text-[1.9rem] font-light leading-none" style={{ color: scent.deep }}>
@@ -1690,7 +1694,7 @@ export default function HoverHero({
             </motion.figure>
             <motion.figure variants={rise} className="mb-10 w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
               <div className="flex aspect-[4/3] w-full items-center justify-center rounded-[9px]" style={{ background: `radial-gradient(closest-side, #ffffff, ${scent.tint})` }}>
-                <img src={`/assets/hero3d/${scent.id}.webp`} alt="" className="h-[88%] w-auto object-contain" draggable={false} />
+                <img src={`/assets/hero3d/${scent.id}.webp`} alt="" loading="lazy" decoding="async" className="h-[88%] w-auto object-contain" draggable={false} />
               </div>
               <figcaption className="px-1.5 pb-1 pt-2.5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">{name}</p>

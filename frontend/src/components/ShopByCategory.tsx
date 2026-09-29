@@ -8,27 +8,27 @@ const categories = [
   {
     title: "Discovery Set",
     subtitle: "Six Scents. Find Yours.",
-    image: "/images/curated-discovery-set-v5.jpg?v=v7_perfect_framing",
+    image: "/images/opt/curated-discovery-set-v5.webp",
     page: "discovery-set" as const,
   },
   {
     title: "New Arrivals",
     subtitle: "Discover The Unseen",
-    image: "/images/curated-new-arrivals.jpg",
+    image: "/images/opt/curated-new-arrivals.webp",
     filter: { category: "bestsellers" },
     page: "new-arrivals" as const,
   },
   {
     title: "Best Sellers",
     subtitle: "Most Loved Essentials",
-    image: "/images/curated-best-sellers.jpg",
+    image: "/images/opt/curated-best-sellers.webp",
     filter: { category: "bestsellers" },
     page: "bestsellers" as const,
   },
   {
     title: "Build Your Own Bundle",
     subtitle: "Curate Your Perfect Set",
-    image: "/images/curated-byob.jpg",
+    image: "/images/opt/curated-byob.webp",
     isByob: true,
   },
 ];

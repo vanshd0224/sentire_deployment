@@ -259,6 +259,27 @@
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Phones: smaller, and out of the way while scrolling, so it never sits on
+     an Add to Bag button or the words; it comes back when the page rests. */
+  @media (max-width: 768px) {
+    #sentire-suite-trigger {
+      width: 46px;
+      height: 46px;
+    }
+    #sentire-suite-trigger .online-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  #sentire-suite-container {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #sentire-suite-container.is-scrolling:not(:has(.active)) {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+  }
+
   #sentire-suite-trigger:hover {
     transform: scale(1.08) translateY(-2px);
     box-shadow: 0 14px 42px rgba(79,14,25, 0.32), 0 0 30px rgba(107,20,34, 0.38);
@@ -421,6 +442,17 @@
 
 <script>
 (function() {
+  // tuck the assistant away while the page is scrolling (phones)
+  var suite = document.getElementById('sentire-suite-container');
+  var restTimer = 0;
+  if (suite && window.matchMedia('(max-width: 768px)').matches) {
+    window.addEventListener('scroll', function() {
+      suite.classList.add('is-scrolling');
+      clearTimeout(restTimer);
+      restTimer = setTimeout(function() { suite.classList.remove('is-scrolling'); }, 900);
+    }, { passive: true });
+  }
+
   document.addEventListener('click', function(e) {
     const trigger = e.target.closest('#sentire-suite-trigger');
     const closeBtn = e.target.closest('#sentire-suite-close');

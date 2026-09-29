@@ -1187,10 +1187,10 @@ PERFUMES_DATA.forEach(p => {
 function generateHtml(templateHtml, route) {
   let html = templateHtml;
   const canonicalUrl = route.canonicalUrl || `${PRODUCTION_DOMAIN}/${route.path}`;
-  const buildTimestamp = Date.now();
-
-  // Cache-bust JS asset URL to force Edge CDN / Cloudflare / Instagram WebView to purge old cached JS bundles
-  html = html.replace(/src="(\/assets\/[^"]+\.js)"/g, (match, p1) => `src="${p1}?v=${buildTimestamp}"`);
+  // No ?v= on the entry script: its file name already carries a content hash,
+  // and a query string made it a *different* module from the one the lazy
+  // chunks import — so the whole app downloaded and ran twice on every
+  // pre-rendered route (product links, ads).
 
   // Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/, () => `<title>${route.title}</title>`);

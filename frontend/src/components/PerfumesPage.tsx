@@ -49,6 +49,8 @@ interface PerfumesPageProps {
     delta: number,
   ) => void;
   onOpenCart?: () => void;
+  /** Opens the full product page (owned by App). */
+  onSelectProduct?: (product: PerfumeProduct) => void;
   /** A product deep link (/perfumes/<slug>/<size>ml) is showing its modal:
    *  the product owns the page's <h1>, so this page steps down to plain
    *  text and the URL stops reporting two headings to search engines. */
@@ -64,6 +66,7 @@ export default function PerfumesPage({
   onUpdateCartQuantity,
   onOpenCart,
   productModalOpen = false,
+  onSelectProduct,
 }: PerfumesPageProps) {
   const LibraryHeading = productModalOpen ? "p" : "h1";
   const [selectedCategory, setSelectedCategory] = useState<string>(
@@ -89,6 +92,9 @@ export default function PerfumesPage({
     useState<PerfumeProduct | null>(null);
   const [selectedDetailProduct, setSelectedDetailProduct] =
     useState<PerfumeProduct | null>(null);
+  // App shows a product as a full page; the popup is only a fallback
+  const openDetail = (p: PerfumeProduct) =>
+    onSelectProduct ? onSelectProduct(p) : setSelectedDetailProduct(p);
 
   const isFirstRender = useRef(true);
 
@@ -299,7 +305,7 @@ export default function PerfumesPage({
       onAddToCart={(item, size, price) =>
         onAddToCart?.(item, size ?? 50, price ?? item.price)
       }
-      onSelectProduct={() => setSelectedDetailProduct(p)}
+      onSelectProduct={() => openDetail(p)}
     />
   );
 
@@ -708,7 +714,7 @@ export default function PerfumesPage({
                   </div>{" "}
                   <h2
                     onClick={() =>
-                      setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
+                      openDetail(EXCLUSIVE_PURPLE_OUD)
                     }
                     className="font-display text-3xl sm:text-4xl lg:text-6xl text-white font-normal leading-[1.05] tracking-tight cursor-pointer hover:text-[color:var(--accent)] transition-colors"
                   >
@@ -807,7 +813,7 @@ export default function PerfumesPage({
                       })()}
                       <button
                         onClick={() =>
-                          setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
+                          openDetail(EXCLUSIVE_PURPLE_OUD)
                         }
                         className="flex-1 sm:flex-none rounded-full border border-[color:var(--accent)]/40 bg-white/5 px-4 py-3 sm:px-6 sm:py-3.5 text-[10px] max-sm:text-[12px] sm:text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--accent)] hover:bg-[#6b1422] hover:text-white transition-all cursor-pointer min-h-[44px]"
                       >
@@ -821,7 +827,7 @@ export default function PerfumesPage({
                   {" "}
                   <div
                     onClick={() =>
-                      setSelectedDetailProduct(EXCLUSIVE_PURPLE_OUD)
+                      openDetail(EXCLUSIVE_PURPLE_OUD)
                     }
                     className="on-dark relative aspect-square w-full max-w-[320px] sm:w-80 lg:w-96 overflow-hidden rounded-[4px] border border-[color:var(--accent)]/40 bg-[#0e0e0e] shadow-2xl group cursor-pointer"
                   >
@@ -1154,7 +1160,7 @@ export default function PerfumesPage({
                     onClick={() => {
                       const p = quickViewProduct;
                       setQuickViewProduct(null);
-                      setSelectedDetailProduct(p);
+                      openDetail(p);
                     }}
                     className="rounded-full border border-ink/20 px-4 py-3 text-xs font-bold uppercase tracking-wider text-ink hover:bg-ink hover:text-white transition-all cursor-pointer"
                   >

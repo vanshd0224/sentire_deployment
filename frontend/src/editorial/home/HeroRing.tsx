@@ -361,6 +361,8 @@ export default function HeroRing({
                 <img
                   src={b.mood}
                   alt={`${b.name} campaign`}
+                  loading="lazy"
+                  decoding="async"
                   className="aspect-[3/2] w-full object-cover"
                 />
                 <figcaption className="flex justify-between px-1 pb-0.5 pt-1.5 font-mono text-[10px] uppercase text-ink/55">

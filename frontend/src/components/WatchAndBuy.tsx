@@ -20,7 +20,7 @@ export interface ReelProduct {
 const rawReels = [
   {
     id: "purple-oud",
-    thumb: "/images/watch/purple-oud.jpg?v=v8_reel_update",
+    thumb: "/images/opt/watch-purple-oud.webp",
     video: "/videos/watch/purple-oud.mp4?v=v8_reel_update",
     product: "Purple Oud 50ml",
     notes: "Cambodian Oud • Amethyst Rose • Saffron",
@@ -29,7 +29,7 @@ const rawReels = [
   },
   {
     id: "calantha",
-    thumb: "/images/watch/calantha.jpg?v=v8_reel_update",
+    thumb: "/images/opt/watch-calantha.webp",
     video: "/videos/watch/calantha.mp4?v=v8_reel_update",
     product: "Calantha 50ml",
     notes: "Velvet Rose • Amethyst Oud • Warm Amber",
@@ -38,7 +38,7 @@ const rawReels = [
   },
   {
     id: "rich",
-    thumb: "/images/watch/rich.jpg?v=v8_reel_update",
+    thumb: "/images/opt/watch-rich.webp",
     video: "/videos/watch/rich.mp4?v=v8_reel_update",
     product: "Rich 50ml",
     notes: "Golden Honey • Tonka Bean • Roasted Coffee",
@@ -47,7 +47,7 @@ const rawReels = [
   },
   {
     id: "mirai",
-    thumb: "/images/watch/mirai.jpg?v=v8_reel_update",
+    thumb: "/images/opt/watch-mirai.webp",
     video: "/videos/watch/mirai.mp4?v=v8_reel_update",
     product: "Mirai 50ml",
     notes: "White Tea • Cashmere Blossom • Soft Sandalwood",
@@ -56,7 +56,7 @@ const rawReels = [
   },
   {
     id: "deep-crush",
-    thumb: "/images/watch/deep-crush.jpg",
+    thumb: "/images/opt/watch-deep-crush.webp",
     video: "/videos/watch/deep-crush.mp4",
     product: "Deep Crush 50ml",
     notes: "Black Cherry • Dark Vanilla • Seductive Musk",
@@ -65,7 +65,7 @@ const rawReels = [
   },
   {
     id: "midnight",
-    thumb: "/images/watch/midnight.jpg",
+    thumb: "/images/opt/watch-midnight.webp",
     video: "/videos/watch/midnight.mp4",
     product: "Midnight 50ml",
     notes: "Dark Violet • Midnight Jasmine • Cedarwood",
@@ -74,7 +74,7 @@ const rawReels = [
   },
   {
     id: "personna",
-    thumb: "/images/watch/personna.jpg",
+    thumb: "/images/opt/watch-personna.webp",
     video: "/videos/watch/personna.mp4",
     product: "Personna 50ml",
     notes: "Italian Bergamot • Iris Root • Oakmoss",
@@ -83,7 +83,7 @@ const rawReels = [
   },
   {
     id: "herrlich",
-    thumb: "/images/watch/herrlich.jpg",
+    thumb: "/images/opt/watch-herrlich.webp",
     video: "/videos/watch/herrlich.mp4",
     product: "Herrlich 50ml",
     notes: "Smoky Birch • Leather Accord • Golden Amber",
@@ -92,7 +92,7 @@ const rawReels = [
   },
   {
     id: "0809",
-    thumb: "/images/watch/0809.jpg",
+    thumb: "/images/opt/watch-0809.webp",
     video: "/videos/watch/0809.mp4",
     product: "0809 Signature 50ml",
     notes: "Spiced Cinnamon • Tobacco Leaf • Vanilla Bean",
@@ -101,7 +101,7 @@ const rawReels = [
   },
   {
     id: "seductive",
-    thumb: "/images/watch/seductive.jpg",
+    thumb: "/images/opt/watch-seductive.webp",
     video: "/videos/watch/seductive.mp4",
     product: "Seductive 50ml",
     notes: "Red Plum • Orchid Petals • White Amber",
@@ -110,7 +110,7 @@ const rawReels = [
   },
   {
     id: "white-oud",
-    thumb: "/images/watch/white-oud.jpg",
+    thumb: "/images/opt/watch-white-oud.webp",
     video: "/videos/watch/white-oud.mp4",
     product: "White Oud 50ml",
     notes: "White Musks • Saffron Spice • Agarwood",

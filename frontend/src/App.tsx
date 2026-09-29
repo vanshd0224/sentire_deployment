@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense, useTransition } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useRef, lazy, Suspense, useTransition } from "react";
 import { syncAddToCartToShopifyStorefront } from "./utils/shopifyCart";
 import { ALL_PERFUMES } from "./data/perfumes";
 import Navbar, { PerfumeFilterOptions } from "./components/Navbar";
@@ -93,6 +93,21 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isReelOpen, setIsReelOpen] = useState(false);
   const [selectedProductModal, setSelectedProductModal] = useState<any>(null);
+  // where the list was scrolled to when a product page opened, to return there
+  const listScroll = useRef(0);
+  const restoreScroll = useRef<number | null>(null);
+  // once the list is showing again (before paint), put it back where it was
+  useLayoutEffect(() => {
+    if (!selectedProductModal && restoreScroll.current !== null) {
+      window.scrollTo({ top: restoreScroll.current, behavior: "instant" });
+      restoreScroll.current = null;
+    }
+  }, [selectedProductModal]);
+  // Arrived straight on a product (a shared link, an ad): the list behind it
+  // isn't built — with all its images — until the shopper goes back to it.
+  const [landedOnProduct, setLandedOnProduct] = useState(() =>
+    /^\/(perfumes|products?)\/[^/]+/i.test(window.location.pathname),
+  );
   const [cartToast, setCartToast] = useState<{
     id: number;
     message: string;
@@ -223,28 +238,35 @@ export default function App() {
       size ||
       product.initialSize ||
       (product.sizes?.includes(50) ? 50 : product.sizes?.[0] || 50);
+    // opening from a list: remember where the list was
+    if (!selectedProductModal) listScroll.current = window.scrollY;
     setSelectedProductModal({ ...product, initialSize: targetSize });
     if (product && product.id) {
       try {
         window.history.pushState(
-          null,
+          { pdp: true },
           "",
           `/perfumes/${product.id}/${targetSize}ml`,
         );
       } catch (e) {}
     }
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
+  // Back from a product page: to the list it came from, where it was left
   const handleCloseProductModal = () => {
-    setSelectedProductModal(null);
-    if (
-      window.location.pathname.includes("/perfumes/") ||
-      window.location.pathname.includes("/products/")
-    ) {
-      try {
-        window.history.pushState(null, "", "/perfumes");
-      } catch (e) {}
+    if (window.history.state?.pdp) {
+      window.history.back(); // popstate closes it and restores the scroll
+      return;
     }
+    // landed straight on the product: go to the collection
+    setLandedOnProduct(false);
+    setSelectedProductModal(null);
+    try {
+      window.history.replaceState(null, "", "/perfumes");
+    } catch (e) {}
+    startTransition(() => setCurrentPage("perfumes"));
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   useEffect(() => {
@@ -319,9 +341,38 @@ export default function App() {
       }
     }
 
+    if (!targetProductId || !ALL_PERFUMES.some((p) => p.id.toLowerCase() === targetProductId?.toLowerCase())) {
+      setLandedOnProduct(false);
+    }
+
     const handlePopState = () => {
       const popPath = window.location.pathname.toLowerCase();
       const hash = window.location.hash;
+
+      // a product URL: show that product's page over whatever list is behind it
+      if (popPath.startsWith("/perfumes/")) {
+        const parts = popPath.replace("/perfumes/", "").split("/");
+        const slug = parts[0].split(".")[0];
+        const match = ALL_PERFUMES.find(
+          (p) => p.id.toLowerCase() === slug.toLowerCase(),
+        );
+        if (match) {
+          const size = parseInt(parts[1] || "", 10);
+          setSelectedProductModal({
+            ...match,
+            initialSize: [10, 30, 50].includes(size) ? size : undefined,
+          });
+          window.scrollTo({ top: 0, behavior: "instant" });
+          return;
+        }
+      }
+      // anything else closes the product page and returns to the list's place
+      setLandedOnProduct(false);
+      setSelectedProductModal((open: any) => {
+        if (open) restoreScroll.current = listScroll.current;
+        return null;
+      });
+
       let nextPg: PageName = "home";
 
       if (hash === "#account" || popPath.includes("account"))
@@ -383,17 +434,6 @@ export default function App() {
       startTransition(() => {
         setCurrentPage(nextPg);
       });
-
-      if (popPath.startsWith("/perfumes/")) {
-        const slug = popPath
-          .replace("/perfumes/", "")
-          .split("/")[0]
-          .split(".")[0];
-        const match = ALL_PERFUMES.find(
-          (p) => p.id.toLowerCase() === slug.toLowerCase(),
-        );
-        if (match) setSelectedProductModal(match);
-      }
     };
 
     const handleOpenCartEvent = () => {
@@ -427,6 +467,8 @@ export default function App() {
   };
 
   const handleNavigate = (page: PageName, filters?: PerfumeFilterOptions) => {
+    setSelectedProductModal(null); // leaving a product page for another page
+    setLandedOnProduct(false);
     setActiveFilters(filters);
     const targetPath = page === "home" ? "/" : `/${page}`;
     if (window.location.pathname !== targetPath && !window.location.hash) {
@@ -597,8 +639,54 @@ export default function App() {
           />
         )}
 
+        {/* While a page's code loads, only the page area waits — the header
+            and footer stay — instead of the whole site going blank. */}
+        <Suspense
+          fallback={
+            <div className="flex min-h-[70svh] w-full items-center justify-center bg-cream">
+              <div className="h-6 w-6 rounded-full border-2 border-[#6b1422] border-t-transparent animate-spin" />
+            </div>
+          }
+        >
+        {/* A product opens as its own page. The page behind it stays
+            mounted but hidden, so Back returns to it exactly as it was. */}
+        {selectedProductModal && (
+          <ProductDetailModal
+            asPage
+            product={
+              ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
+              selectedProductModal
+            }
+            onClose={handleCloseProductModal}
+            cartItems={cartItems}
+            onAddToCart={(prod, size, price) => {
+              handleAddToCart(
+                {
+                  productId: prod.id,
+                  name: prod.name,
+                  price: price,
+                  originalPrice: Math.round(price * 1.35),
+                  image: prod.img,
+                  size: size,
+                  isPersonalised: prod.isPersonalised,
+                  engravingText: prod.engravingText,
+                  engravingDate: prod.engravingDate,
+                },
+                size,
+                price,
+              );
+            }}
+            onUpdateCartQuantity={handleUpdateCartQuantity}
+            onOpenCart={() => handleNavigate("cart")}
+            onSelectProduct={handleOpenProductModal}
+            allProducts={ALL_PERFUMES}
+          />
+        )}
+        {!landedOnProduct && (
+        <div style={selectedProductModal ? { display: "none" } : undefined}>
         {currentPage === "perfumes" ? (
           <PerfumesPage
+            onSelectProduct={handleOpenProductModal}
             onBackToHome={() => handleNavigate("home")}
             onOpenBundleModal={openBundleModal}
             initialFilters={activeFilters}
@@ -610,6 +698,7 @@ export default function App() {
           />
         ) : currentPage === "bestsellers" ? (
           <BestSellersPage
+            onSelectProduct={handleOpenProductModal}
             onBackToHome={() => handleNavigate("home")}
             cartItems={cartItems}
             onAddToCart={handleAddToCart}
@@ -625,6 +714,7 @@ export default function App() {
           />
         ) : currentPage === "new-arrivals" ? (
           <NewArrivalsPage
+            onSelectProduct={handleOpenProductModal}
             onBackToHome={() => handleNavigate("home")}
             cartItems={cartItems}
             onAddToCart={handleAddToCart}
@@ -716,12 +806,16 @@ export default function App() {
             <InstagramSection />
           </main>
         )}
+        </div>
+        )}
+        </Suspense>
 
         <Footer onNavigate={handleNavigate} />
 
         {!isCartOpen &&
           !isBundleModalOpen &&
           !isReelOpen &&
+          !selectedProductModal &&
           currentPage !== "personalisation" &&
           currentPage !== "cart" && (
             <MobileBottomNav
@@ -753,42 +847,6 @@ export default function App() {
           onAddToCart={handleAddToCart}
         />
 
-        {/* Full Product Detail Modal (High-Res Photoshoot Gallery, Laser Engraving, Reviews) */}
-        {selectedProductModal && (
-          <ProductDetailModal
-            product={
-              ALL_PERFUMES.find((ap) => ap.id === selectedProductModal.id) ||
-              selectedProductModal
-            }
-            onClose={handleCloseProductModal}
-            cartItems={cartItems}
-            onAddToCart={(prod, size, price) => {
-              handleAddToCart(
-                {
-                  productId: prod.id,
-                  name: prod.name,
-                  price: price,
-                  originalPrice: Math.round(price * 1.35),
-                  image: prod.img,
-                  size: size,
-                  isPersonalised: prod.isPersonalised,
-                  engravingText: prod.engravingText,
-                  engravingDate: prod.engravingDate,
-                },
-                size,
-                price,
-              );
-              handleCloseProductModal();
-            }}
-            onUpdateCartQuantity={handleUpdateCartQuantity}
-            onOpenCart={() => {
-              handleCloseProductModal();
-              handleNavigate("cart");
-            }}
-            onSelectProduct={handleOpenProductModal}
-            allProducts={ALL_PERFUMES}
-          />
-        )}
         <AccountDrawerModal
           isOpen={isAccountOpen}
           onClose={() => setIsAccountOpen(false)}

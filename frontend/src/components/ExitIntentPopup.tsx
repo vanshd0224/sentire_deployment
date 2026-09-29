@@ -10,12 +10,6 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
 
   useEffect(() => {
-    // Preload image and logo into browser cache immediately on page load
-    const preloadImg1 = new Image();
-    preloadImg1.src = "/assets/sentire_purple_oud_popup.webp";
-    const preloadImg2 = new Image();
-    preloadImg2.src = "/assets/sentire-logo-official-transparent.png";
-
     // Check if dismissed within last 24 hours
     const lastDismissed = localStorage.getItem("sentire_popup_dismissed_v1");
     if (lastDismissed) {
@@ -26,33 +20,58 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
     }
 
     let hasTriggered = false;
+    let armed = false; // not in the first seconds of a visit
+
+    // Never interrupt someone who is deciding or buying: not on a product
+    // page, in the bag, at checkout or in their account.
+    const busy = () => {
+      const p = window.location.pathname;
+      return (
+        /^\/(perfumes|products?)\/[^/]+/.test(p) ||
+        /^\/(cart|bag|checkout|account)/.test(p) ||
+        document.body.classList.contains("cart-drawer-open")
+      );
+    };
 
     const triggerPopup = () => {
-      if (!hasTriggered) {
-        hasTriggered = true;
-        setIsOpen(true);
-      }
+      if (hasTriggered || !armed || busy()) return;
+      hasTriggered = true;
+      setIsOpen(true);
     };
 
-    // Desktop Exit-Intent listener
+    // Desktop: the pointer leaving through the top of the window
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0) {
-        triggerPopup();
-      }
+      if (e.clientY <= 0) triggerPopup();
     };
 
-    // Timer fallback (trigger after 30 seconds)
-    const timer = setTimeout(() => {
-      triggerPopup();
-    }, 30000);
+    // Armed after 20s; the image is fetched only then, not on page load
+    const arm = setTimeout(() => {
+      armed = true;
+      const img = new Image();
+      img.src = "/assets/sentire_purple_oud_popup.webp";
+    }, 20000);
+
+    // Phones have no exit intent: offer it once after a minute of browsing
+    const timer = window.matchMedia("(hover: none)").matches
+      ? setTimeout(triggerPopup, 60000)
+      : 0;
 
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      clearTimeout(arm);
       clearTimeout(timer);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
+
+  // Esc closes it
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && handleClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Live 30-minute ticking timer
   useEffect(() => {
@@ -90,7 +109,7 @@ export default function ExitIntentPopup({ onNavigate }: ExitIntentPopupProps) {
       aria-label="Offer"
     >
       <div
-        className="ed-offer-card relative w-full max-w-3xl overflow-hidden bg-paper sm:rounded-[2px]"
+        className="ed-offer-card relative max-h-[92svh] w-full max-w-3xl overflow-y-auto bg-paper sm:rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
         <button

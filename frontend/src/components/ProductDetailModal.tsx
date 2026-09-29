@@ -41,6 +41,9 @@ interface ProductDetailModalProps {
   onOpenCart?: () => void;
   onSelectProduct?: (product: PerfumeProduct) => void;
   allProducts?: PerfumeProduct[];
+  /** Render as a full page in the site's flow (with its header and
+   *  footer) instead of a popup over the page. `onClose` is then Back. */
+  asPage?: boolean;
 }
 
 export default function ProductDetailModal({
@@ -52,6 +55,7 @@ export default function ProductDetailModal({
   onOpenCart,
   onSelectProduct,
   allProducts = [],
+  asPage = false,
 }: ProductDetailModalProps) {
   const [selectedSize, setSelectedSize] = useState<number>(
     () => product?.sizes[0] || 50,
@@ -171,13 +175,13 @@ export default function ProductDetailModal({
   // Keyboard listener: close on ESC
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && product) {
+      if (e.key === "Escape" && product && !asPage) {
         onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [product, onClose]);
+  }, [product, onClose, asPage]);
 
   const modalContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -230,11 +234,13 @@ export default function ProductDetailModal({
         });
       } catch (err) {}
 
-      if (modalContainerRef.current) {
+      if (asPage) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      } else if (modalContainerRef.current) {
         modalContainerRef.current.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
-  }, [product]);
+  }, [product]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSelectSize = (sz: number) => {
     setSelectedSize(sz);
@@ -386,20 +392,32 @@ export default function ProductDetailModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 transition-all">
+    <div
+      className={
+        asPage
+          ? "w-full bg-[#fcfbf7]"
+          : "fixed inset-0 z-50 flex items-end md:items-center justify-center overflow-y-auto bg-black/85 p-0 sm:p-6 transition-all"
+      }
+    >
       {" "}
       {/* Click backdrop to close */}
-      <div className="fixed inset-0" onClick={onClose} />{" "}
-      {/* Modal Card Window / Mobile Bottom Sheet */}
+      {!asPage && <div className="fixed inset-0" onClick={onClose} />}{" "}
+      {/* Modal Card Window / Mobile Bottom Sheet — or the page itself */}
       <div
         ref={modalContainerRef}
-        className="relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-[4px] bg-[#fcfbf7] border-t md:border border-[color:var(--accent)]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#161616] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury"
+        className={
+          asPage
+            ? "relative mx-auto w-full max-w-6xl bg-[#fcfbf7] text-[#161616]"
+            : "relative z-10 w-full max-w-6xl max-h-[94vh] md:max-h-[92vh] overflow-y-auto rounded-t-3xl md:rounded-[4px] bg-[#fcfbf7] border-t md:border border-[color:var(--accent)]/40 shadow-[0_25px_80px_rgba(0,0,0,0.8)] text-[#161616] transition-all duration-300 hide-scrollbar glass-bottom-sheet md:glass-card-luxury"
+        }
       >
         {" "}
         {/* Mobile Drag Handle Bar */}
-        <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />{" "}
+        {!asPage && (
+          <div className="w-12 h-1.5 rounded-full bg-black/20 mx-auto mt-3 -mb-1 md:hidden shrink-0" />
+        )}{" "}
         {/* Header Action Buttons (Close Button + Share Button directly below it) */}
-        <div className="absolute top-4 right-4 z-30 flex flex-col items-center gap-2.5">
+        <div className={asPage ? "hidden" : "absolute top-4 right-4 z-30 flex flex-col items-center gap-2.5"}>
           {" "}
           {/* 1. Close Button (✕) */}
           <button
@@ -446,14 +464,25 @@ export default function ProductDetailModal({
           </button>{" "}
         </div>{" "}
         {/* ── BREADCRUMB ── */}
-        <div className="px-6 pt-6 pb-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#161616]/40 pr-16">
+        {asPage && (
+          <div className="px-4 sm:px-6 pt-4 sm:pt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#161616]/70 hover:text-[color:var(--accent)] cursor-pointer"
+            >
+              <span aria-hidden className="text-base leading-none">←</span> All fragrances
+            </button>
+          </div>
+        )}
+        <div className={`${asPage ? "px-4 sm:px-6 pt-1" : "px-6 pt-6 pr-16"} pb-2 text-[10px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[#161616]/40`}>
           {" "}
           <span>Home</span> <span className="mx-1.5">•</span>{" "}
           <span>Fragrances</span> <span className="mx-1.5">•</span>{" "}
           <span className="text-[color:var(--accent)] font-bold">{product.name}</span>{" "}
         </div>{" "}
         {/* ── TOP BUY BOX GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 lg:p-10">
+        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 ${asPage ? "px-4 pb-6 pt-3 sm:p-6 lg:p-10" : "p-6 lg:p-10"}`}>
           {" "}
           {/* LEFT COLUMN: MULTI-IMAGE GALLERY & SCENT PYRAMID ACCORD */}
           <div className="lg:col-span-6 space-y-6">
@@ -876,7 +905,7 @@ export default function ProductDetailModal({
                           currentPrice,
                         );
                         onOpenCart?.();
-                        onClose();
+                        if (!asPage) onClose();
                       }}
                       className="flex-1 rounded-full border border-[#161616] py-3.5 text-[14px] font-medium text-[#161616] hover:bg-[#161616] hover:text-[#f2f2f0] transition-colors cursor-pointer min-h-[48px]"
                     >
@@ -1306,7 +1335,7 @@ export default function ProductDetailModal({
                 <div
                   key={rec.id}
                   onClick={() => {
-                    if (modalContainerRef.current) {
+                    if (!asPage && modalContainerRef.current) {
                       modalContainerRef.current.scrollTo({
                         top: 0,
                         behavior: "smooth",
@@ -1616,7 +1645,7 @@ export default function ProductDetailModal({
                 selectedSize,
                 currentPrice,
               );
-              onClose();
+              if (!asPage) onClose();
             }}
             className="rounded-full bg-[#6b1422] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-white hover:bg-[#4f0e19] transition-all shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >

@@ -6,7 +6,7 @@
 
 import { PRODUCTION_DOMAIN } from "./seo";
 import { ALL_PERFUMES, PerfumeProduct } from "../data/perfumes";
-import { getPerfumeReviewStats } from "../data/reviews";
+import { getReviewStats } from "../data/reviewStats";
 
 export const ORGANIZATION_SCHEMA = {
   "@type": "Organization",
@@ -270,7 +270,7 @@ export function generateProductSchema(product: PerfumeProduct) {
     };
   });
 
-  const stats = getPerfumeReviewStats(product.id);
+  const stats = getReviewStats(product.id);
 
   return {
     "@type": "ProductGroup",
