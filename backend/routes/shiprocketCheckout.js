@@ -13,6 +13,7 @@ const tokenSchema = z.object({
   items: z
     .array(
       z.object({
+        variantId: z.string().regex(/^\d{6,20}$/).optional(),
         productId: z.string().optional(),
         id: z.string().optional(),
         name: z.string().optional(),

@@ -19,6 +19,7 @@ const API_BASE =
 const SCRIPT = "https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js";
 const STYLE = "https://checkout-ui.shiprocket.com/assets/styles/shopify.css";
 const FLAG = "sentire_sr_checkout";
+const SELLER_DOMAIN = "sentirebypc.com"; // the Shop Domain in the Shiprocket dashboard
 
 type HeadlessCheckout = {
   addToCart: (event: Event, token: string, opts: { fallbackUrl: string; isInitiatedFromApp?: boolean }) => void;
@@ -48,6 +49,14 @@ export function loadShiprocketCheckout(): Promise<HeadlessCheckout> {
   if (ready()) return Promise.resolve(ready()!);
   if (loading) return loading;
   loading = new Promise((resolve, reject) => {
+    // tells Shiprocket's script which store this is (it falls back to the page's host)
+    if (!document.getElementById("sellerDomain")) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.id = "sellerDomain";
+      input.value = SELLER_DOMAIN;
+      document.body.appendChild(input);
+    }
     if (!document.querySelector(`link[href="${STYLE}"]`)) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
@@ -107,6 +116,8 @@ export async function startShiprocketCheckout(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: items.map((i) => ({
+          // the exact Shopify variant the site uses (same ids as our catalog)
+          variantId: resolveShopifyVariantId(i),
           productId: String(i.productId ?? i.id ?? ""),
           name: i.name,
           size: i.size,

@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { shiprocketCatalogPlugin } from "./scripts/shiprocketCatalog";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,6 +14,8 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    // Shiprocket Checkout's catalog, generated from the site's own product data
+    shiprocketCatalogPlugin(),
     // Preload the font files (Archivo, and Instrument Serif for the italic
     // accent words) so text is laid out once, in the right font. Without it
     // the page first rendered in a fallback and then re-shaped and
