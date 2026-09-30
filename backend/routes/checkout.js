@@ -151,3 +151,6 @@ router.post('/create-cart', async (req, res) => {
 });
 
 module.exports = router;
+// shared with the Shiprocket Checkout route
+module.exports.resolveVariantId = resolveVariantId;
+module.exports.ENGRAVING_FEE_VARIANT_ID = ENGRAVING_FEE_VARIANT_ID;

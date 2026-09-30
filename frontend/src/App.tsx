@@ -51,6 +51,7 @@ const ClientServicesPage = lazy(
   () => import("./components/ClientServicesPage"),
 );
 const TrackOrderPage = lazy(() => import("./components/TrackOrderPage"));
+const OrderSuccessPage = lazy(() => import("./components/OrderSuccessPage"));
 const ProductPage = lazy(() => import("./editorial/product/ProductPage"));
 const ExitIntentPopup = lazy(() => import("./components/ExitIntentPopup"));
 
@@ -62,7 +63,7 @@ export type { PageName };
  * "200 OK" (which also let search engines index junk URLs as duplicates).
  */
 const KNOWN_PATHS =
-  /^\/(?:$|index\.html|account|cart|bag|checkout|discovery-?set|about|our-story|extrait-de-parfum|35-percent|byob|build-your-own-bundle|personalisation|personalised-perfume|new-arrivals|bestsellers|best-sellers|perfumes|collections|products?|client-services|contact|faqs|shipping|track-order|ai-information|pages\/)/;
+  /^\/(?:$|index\.html|account|cart|bag|checkout|discovery-?set|about|our-story|extrait-de-parfum|35-percent|byob|build-your-own-bundle|personalisation|personalised-perfume|new-arrivals|bestsellers|best-sellers|perfumes|collections|products?|client-services|contact|faqs|shipping|track-order|order-success|ai-information|pages\/)/;
 
 function isKnownPath(path: string) {
   return KNOWN_PATHS.test(path.replace(/\/+$/, "") || "/");
@@ -164,6 +165,7 @@ export default function App() {
       return "cart";
     }
 
+    if (path.startsWith("/order-success")) return "order-success";
     if (hash === "#account" || path.includes("account")) return "account";
     if (
       hash === "#cart" ||
@@ -373,7 +375,8 @@ export default function App() {
 
       let nextPg: PageName = "home";
 
-      if (hash === "#account" || popPath.includes("account"))
+      if (popPath.startsWith("/order-success")) nextPg = "order-success";
+      else if (hash === "#account" || popPath.includes("account"))
         nextPg = "account";
       else if (
         hash === "#cart" ||
@@ -752,6 +755,11 @@ export default function App() {
           <TrackOrderPage
             onBackToHome={() => handleNavigate("home")}
             onNavigateToContact={() => handleNavigate("client-services")}
+          />
+        ) : currentPage === "order-success" ? (
+          <OrderSuccessPage
+            onNavigate={handleNavigate}
+            onClearCart={() => setCartItems([])}
           />
         ) : currentPage === "not-found" ? (
           <NotFoundPage onNavigate={handleNavigate} />

@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, type MouseEvent } from "react";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
+import { isShiprocketCheckoutOn, startShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { ALL_PERFUMES } from "../data/perfumes";
 import { auth } from "../lib/firebase";
 
@@ -258,8 +259,22 @@ export default function CartPage({
     setTimeout(() => setCouponSuccess(null), 3000);
   };
 
-  const handleProceedToShopifyCheckout = async () => {
+  const handleProceedToShopifyCheckout = async (e?: MouseEvent) => {
     if (items.length === 0 || isRedirecting) return;
+
+    // Shiprocket Checkout: its own phone OTP, so no login needed first.
+    // If it can't start, carry on to the Shopify checkout below.
+    if (isShiprocketCheckoutOn() && e) {
+      setIsRedirecting(true);
+      try {
+        await startShiprocketCheckout(e.nativeEvent, items, { couponCode: appliedCoupon ?? undefined });
+        setIsRedirecting(false);
+        return;
+      } catch (err) {
+        console.error("Shiprocket checkout error:", err);
+        setIsRedirecting(false);
+      }
+    }
 
     const currentUser = auth.currentUser;
     const isStoredLoggedIn =

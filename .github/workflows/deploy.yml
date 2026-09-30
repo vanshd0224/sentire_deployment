@@ -32,13 +32,23 @@ jobs:
           docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest
 
       - name: Deploy Backend to Cloud Run
+        env:
+          # Shiprocket Checkout keys, from GitHub secrets (or repo variables).
+          # Only set when present, so an empty value never wipes what Cloud Run has.
+          SR_KEY: ${{ secrets.SHIPROCKET_CHECKOUT_API_KEY || vars.SHIPROCKET_CHECKOUT_API_KEY }}
+          SR_SECRET: ${{ secrets.SHIPROCKET_CHECKOUT_API_SECRET || vars.SHIPROCKET_CHECKOUT_API_SECRET }}
         run: |
+          ENV_FLAGS=()
+          if [ -n "$SR_KEY" ] && [ -n "$SR_SECRET" ]; then
+            ENV_FLAGS=(--update-env-vars "SHIPROCKET_CHECKOUT_API_KEY=${SR_KEY},SHIPROCKET_CHECKOUT_API_SECRET=${SR_SECRET}")
+          fi
           gcloud run deploy ecommerce-backend \
             --image asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest \
             --region asia-south1 \
             --min-instances=1 \
             --allow-unauthenticated \
             --port 8080 \
+            "${ENV_FLAGS[@]}" \
             --quiet
 
   deploy-frontend:
