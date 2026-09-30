@@ -145,7 +145,9 @@ export default function CartPage({
     if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
     if (appliedCoupon === "TEST99") return Math.min(99, subtotal);
     if (
-      (appliedCoupon === "ANSH150" || appliedCoupon === "BHAVYA150") &&
+      (appliedCoupon === "ANSH150" ||
+        appliedCoupon === "BHAVYA150" ||
+        appliedCoupon === "AV150") &&
       subtotal >= 1249
     )
       return 150;
@@ -183,7 +185,11 @@ export default function CartPage({
       }
       setAppliedCoupon("PC100");
       setCouponSuccess("Code PC100 applied! ₹100 OFF");
-    } else if (code === "ANSH150" || code === "BHAVYA150") {
+    } else if (
+      code === "ANSH150" ||
+      code === "BHAVYA150" ||
+      code === "AV150"
+    ) {
       if (subtotal < 1249) {
         setCouponError(`Code ${code} requires a minimum order of ₹1,249`);
         return;
