@@ -781,6 +781,7 @@ export default function App() {
             />
             <RetailerBadges />
             <ShopByCategory onNavigate={handleNavigate} />
+            <div className="cv-section">
             <BestSellers
               cartItems={cartItems}
               onAddToCart={handleAddToCart}
@@ -788,6 +789,8 @@ export default function App() {
               onNavigate={handleNavigate}
               onSelectProduct={handleOpenProductModal}
             />
+            </div>
+            <div className="cv-section">
             <NewArrivals
               cartItems={cartItems}
               onAddToCart={handleAddToCart}
@@ -795,6 +798,7 @@ export default function App() {
               onNavigate={handleNavigate}
               onSelectProduct={handleOpenProductModal}
             />
+            </div>
             <HeroRing
               onNavigate={handleNavigate}
               onSelectProduct={handleOpenProductModal}

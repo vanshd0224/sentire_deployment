@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useMotionValueEvent,
-  useScroll,
 } from "framer-motion";
 import { ALL_PERFUMES, type PerfumeProduct } from "../../data/perfumes";
 import { EASE_OUT_EXPO, usePrefersReducedMotion } from "../motion";
@@ -114,12 +112,33 @@ export default function HeroRing({
   const R = mobile ? 172 : 360;
   const W = mobile ? 132 : 232;
 
-  // Scroll: tilt the ring back and lift it as the hero leaves.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
+  // Scroll: tilt the ring back and lift it as the section leaves. Progress
+  // is 0 when its top meets the top of the window and 1 when its bottom
+  // does — from scrollY and a position cached by ResizeObserver, so it never
+  // forces a layout. (framer's useScroll re-measured the page whenever
+  // anything resized, which stalled the hero's animation at the top.)
+  const onProgress = useRef<(p: number) => void>(() => {});
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    let top = 0;
+    let h = 1;
+    // inside a ResizeObserver callback layout is fresh: reading it is free
+    const ro = new ResizeObserver(() => {
+      const r = el.getBoundingClientRect();
+      top = r.top + window.scrollY;
+      h = r.height || 1;
+    });
+    ro.observe(el);
+    ro.observe(document.body); // sections above changing height move it
+    const onScroll = () => onProgress.current(Math.min(1, Math.max(0, (window.scrollY - top) / h)));
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+  onProgress.current = (p) => {
     const st = s.current;
     // phones: no tilt, and no work beyond holding off the next turn
     if (mobile || reduced) {
@@ -132,7 +151,7 @@ export default function HeroRing({
     s.current.tilt = -6 + p * 30;
     s.current.lift = -p * 120;
     kick();
-  });
+  };
 
   function render() {
     const st = s.current;

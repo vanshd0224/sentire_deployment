@@ -70,7 +70,19 @@ if (typeof window !== "undefined") {
     }
     idle(loadPixel, { timeout: 2000 });
   };
-  window.setTimeout(() => whenQuiet(), 1800);
+  // The home hero animates continuously, and evaluating the pixel (~1s of
+  // main thread on a mid-range phone) visibly stalled it whenever it landed.
+  // There it loads on the visitor's first interaction — a scroll, tap or key
+  // (the tap listener is below) — or after 15s, whichever is first; the
+  // queued PageView is sent the moment it loads.
+  if (window.location.pathname === "/") {
+    const soon = () => whenQuiet(12);
+    window.addEventListener("scroll", soon, { once: true, passive: true });
+    window.addEventListener("keydown", soon, { once: true });
+    window.setTimeout(soon, 15000);
+  } else {
+    window.setTimeout(() => whenQuiet(), 1800);
+  }
   // a tap is itself a pause in scrolling, so it's a safe moment
   window.addEventListener("pointerdown", loadPixel, {
     once: true,

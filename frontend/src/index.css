@@ -2010,7 +2010,9 @@ h3 em,
 }
 
 /* the hero's description gives way on a short phone, so the button stays in view */
-@media (max-width: 767px) and (max-height: 739px) {
+/* 780px: covers Instagram's in-app browser, whose bars leave ~650-700px
+   and which enlarges text to the phone's own text-size setting */
+@media (max-width: 767px) and (max-height: 779px) {
   .hv-desc {
     display: none;
   }
@@ -2021,5 +2023,42 @@ h3 em,
 @media (max-width: 767px) {
   body.product-page-open #sentire-suite-container {
     display: none !important;
+  }
+}
+
+/* The thin reading-progress bar at the top: a scroll-driven CSS animation,
+   run by the browser without JavaScript. Hidden where unsupported. */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    transform: scaleX(0);
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes scroll-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* The big outlined words that drift behind sections as you scroll past:
+   a view() timeline, run by the browser without JavaScript. */
+@supports (animation-timeline: view()) {
+  .drift-word {
+    animation: drift-word linear both;
+    animation-timeline: view();
+    animation-range: cover;
+  }
+}
+@keyframes drift-word {
+  from {
+    transform: translateX(var(--drift-from));
+  }
+  to {
+    transform: translateX(var(--drift-to));
   }
 }

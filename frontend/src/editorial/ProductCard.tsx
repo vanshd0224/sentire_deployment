@@ -159,8 +159,12 @@ export default function ProductCard({
           </div>
         )}
 
-        <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-          <p className="text-xs sm:text-sm font-bold text-ink">
+        {/* On a phone the price gets its own line and Add to bag is a full-
+            width button under it: side by side they collided in two-up grids,
+            worst in Instagram's browser, which enlarges text to the phone's
+            text-size setting. From sm up they sit on one line. */}
+        <div className="mt-auto flex flex-col gap-2 pt-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="min-w-0 text-xs sm:text-sm font-bold text-ink">
             <span className="tabular-nums">
               ₹{price?.toLocaleString("en-IN")}
             </span>
@@ -175,7 +179,7 @@ export default function ProductCard({
             type="button"
             onClick={handleAdd}
             disabled={soldOut}
-            className="ed-link cursor-pointer whitespace-nowrap text-xs font-semibold uppercase tracking-wider text-[#6b1422] hover:text-black transition-colors disabled:cursor-not-allowed disabled:text-stone"
+            className="min-h-[36px] w-full cursor-pointer whitespace-nowrap rounded-full border border-[#6b1422]/35 px-3 text-[11px] font-semibold uppercase tracking-wider text-[#6b1422] transition-colors hover:border-[#6b1422] hover:bg-[#6b1422] hover:text-white disabled:cursor-not-allowed disabled:border-stone/40 disabled:text-stone sm:min-h-0 sm:underline sm:decoration-[#6b1422]/40 sm:underline-offset-4 sm:w-auto sm:rounded-none sm:border-0 sm:px-0 sm:text-xs sm:hover:bg-transparent sm:hover:text-black"
           >
             {soldOut ? "Sold out" : added ? "Added ✓" : "Add to bag"}
           </button>

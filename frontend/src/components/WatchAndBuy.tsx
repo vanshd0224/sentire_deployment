@@ -217,101 +217,69 @@ export default function WatchAndBuy({
   );
 
   // Smart Video Playback Controller (Desktop: all visible play | Mobile: ONLY centered video plays)
+  // Driven by IntersectionObserver: the browser reports which cards are in
+  // view. (Measuring every card on a 600ms timer and on every scroll forced a
+  // full layout each time, which stalled the hero's animation above.)
   useEffect(() => {
-    const updateVideoPlayback = () => {
-      const isMobile = window.innerWidth < 768;
-      const cards = document.querySelectorAll<HTMLElement>(
-        ".watch-carousel-card",
-      );
-      const newActive = new Set<number>();
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>(".watch-carousel-card"),
+    );
+    if (!cards.length || typeof IntersectionObserver === "undefined") return;
+    const viewportEl = document.querySelector<HTMLElement>(
+      ".watch-carousel-viewport",
+    );
+    const isMobile = window.innerWidth < 768;
+    const inView = new Set<number>();
+    let sectionOn = false;
 
-      if (isMobile) {
-        // MOBILE: Find the video card closest to center of screen
-        const screenCenterX = window.innerWidth / 2;
-        let closestIndex: number | null = null;
-        let minDistance = Infinity;
-
-        cards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const onScreenY = rect.bottom > 0 && rect.top < window.innerHeight;
-          if (onScreenY && rect.right > 0 && rect.left < window.innerWidth) {
-            const cardCenterX = rect.left + rect.width / 2;
-            const dist = Math.abs(cardCenterX - screenCenterX);
-            if (dist < minDistance) {
-              minDistance = dist;
-              const idxAttr = card.getAttribute("data-index");
-              if (idxAttr !== null) closestIndex = parseInt(idxAttr, 10);
-            }
-          }
-        });
-
-        if (closestIndex !== null) {
-          newActive.add(closestIndex);
-        }
-      } else {
-        // DESKTOP: All visible cards play simultaneously
-        cards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          // Vertical check too: without it every reel downloads on first paint,
-          // even while the section is still far below the fold.
-          const onScreenY =
-            rect.bottom > -100 && rect.top < window.innerHeight + 100;
-          if (
-            onScreenY &&
-            rect.right > -50 &&
-            rect.left < window.innerWidth + 50
-          ) {
-            const idxAttr = card.getAttribute("data-index");
-            if (idxAttr !== null) {
-              newActive.add(parseInt(idxAttr, 10));
-            }
-          }
-        });
+    const commit = () => {
+      const next = new Set<number>();
+      if (sectionOn) {
+        // phone: only the card crossing the middle of the strip plays
+        const list = [...inView].sort((x, y) => x - y);
+        for (const i of isMobile ? list.slice(0, 1) : list) next.add(i);
       }
-
-      setActiveVideoIndexes((prev) => {
-        if (
-          prev.size === newActive.size &&
-          [...newActive].every((i) => prev.has(i))
-        ) {
-          return prev;
-        }
-        return newActive;
-      });
+      setActiveVideoIndexes((prev) =>
+        prev.size === next.size && [...next].every((i) => prev.has(i))
+          ? prev
+          : next,
+      );
     };
 
-    updateVideoPlayback();
-    const timer1 = setTimeout(updateVideoPlayback, 100);
-    const timer2 = setTimeout(updateVideoPlayback, 400);
-    const timer3 = setTimeout(updateVideoPlayback, 1000);
-    const interval = setInterval(updateVideoPlayback, 600);
+    const cardIO = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const i = parseInt(e.target.getAttribute("data-index") ?? "", 10);
+          if (Number.isNaN(i)) continue;
+          if (e.isIntersecting) inView.add(i);
+          else inView.delete(i);
+        }
+        commit();
+      },
+      {
+        root: viewportEl,
+        // phone: a narrow band down the middle; laptop: the whole strip
+        rootMargin: isMobile ? "0px -42% 0px -42%" : "0px 50px 0px 50px",
+      },
+    );
+    cards.forEach((c) => cardIO.observe(c));
 
-    const viewportEl = document.querySelector(".watch-carousel-viewport");
-    if (viewportEl) {
-      viewportEl.addEventListener("scroll", updateVideoPlayback, {
-        passive: true,
-      });
-    }
-
-    window.addEventListener("scroll", updateVideoPlayback, { passive: true });
-    window.addEventListener("touchmove", updateVideoPlayback, {
-      passive: true,
-    });
-    window.addEventListener("touchend", updateVideoPlayback, { passive: true });
-    window.addEventListener("resize", updateVideoPlayback, { passive: true });
+    // and nothing plays until a real part of the section is on screen — it
+    // sits right at the fold, and starting seven videos while the hero above
+    // runs its intro made the hero stutter
+    const sectionIO = new IntersectionObserver(
+      ([e]) => {
+        sectionOn = e.isIntersecting && e.intersectionRatio >= 0.3;
+        commit();
+      },
+      { threshold: [0, 0.3, 0.6] },
+    );
+    const section = cards[0].closest("section");
+    if (section) sectionIO.observe(section);
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearInterval(interval);
-      if (viewportEl) {
-        viewportEl.removeEventListener("scroll", updateVideoPlayback);
-      }
-      window.removeEventListener("scroll", updateVideoPlayback);
-      window.removeEventListener("touchmove", updateVideoPlayback);
-      window.removeEventListener("touchend", updateVideoPlayback);
-      window.removeEventListener("resize", updateVideoPlayback);
+      cardIO.disconnect();
+      sectionIO.disconnect();
     };
   }, [trackIndex]);
 

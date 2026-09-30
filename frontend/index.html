@@ -265,6 +265,7 @@
   #sentire-suite-container {
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
+  #sentire-suite-container.at-top:not(:has(.active)),
   #sentire-suite-container.is-scrolling:not(:has(.active)) {
     opacity: 0;
     transform: translateY(12px);
@@ -437,7 +438,14 @@
   var suite = document.getElementById('sentire-suite-container');
   var restTimer = 0;
   if (suite && window.matchMedia('(max-width: 768px)').matches) {
+    // on the home page it waits below the hero: at the top it sat on the
+    // hero's button (worst in Instagram's browser, where text is enlarged)
+    var home = location.pathname === '/';
+    var syncTop = function() { suite.classList.toggle('at-top', home && location.pathname === '/' && window.scrollY < 240); };
+    syncTop();
+    window.addEventListener('popstate', syncTop);
     window.addEventListener('scroll', function() {
+      syncTop();
       suite.classList.add('is-scrolling');
       clearTimeout(restTimer);
       restTimer = setTimeout(function() { suite.classList.remove('is-scrolling'); }, 900);

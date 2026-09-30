@@ -1,11 +1,5 @@
-import { useRef, type ReactNode } from "react";
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useVelocity,
-} from "framer-motion";
+import { useEffect, type CSSProperties, type ReactNode } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { EASE_OUT_EXPO, useMotionBudget } from "../motion";
 
 /**
@@ -97,33 +91,34 @@ export function DriftWord({
   from?: number;
   to?: number;
 }) {
-  const ref = useRef<HTMLDivElement | null>(null);
+  // A CSS scroll-driven animation (.drift-word, a view() timeline): the
+  // browser moves it as the section crosses the screen, with no JavaScript.
+  // (framer's useScroll re-measured the page whenever anything resized,
+  // which stalled the animation in the hero at the top.) Where unsupported,
+  // or on a phone, the word simply stands still.
   const rich = useMotionBudget();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [`${from}%`, `${to}%`]);
-
   return (
     <div
-      ref={ref}
       aria-hidden
       className={`pointer-events-none absolute inset-x-0 select-none overflow-hidden ${className}`}
     >
-      <motion.p
-        className="font-serif whitespace-nowrap uppercase leading-[0.8]"
-        style={{
-          x: rich ? x : "0%",
-          fontSize: "clamp(5rem, 17vw, 17rem)",
-          color: "transparent",
-          WebkitTextStroke: light
-            ? "1px rgba(242,242,240,0.13)"
-            : "1px rgba(22,22,22,0.09)",
-        }}
+      <p
+        className={`font-serif whitespace-nowrap uppercase leading-[0.8] ${rich ? "drift-word" : ""}`}
+        style={
+          {
+            "--drift-from": `${from}%`,
+            "--drift-to": `${to}%`,
+            transform: `translateX(${from}%)`,
+            fontSize: "clamp(5rem, 17vw, 17rem)",
+            color: "transparent",
+            WebkitTextStroke: light
+              ? "1px rgba(242,242,240,0.13)"
+              : "1px rgba(22,22,22,0.09)",
+          } as CSSProperties
+        }
       >
         {text}
-      </motion.p>
+      </p>
     </div>
   );
 }
@@ -141,13 +136,31 @@ export function ScrollLean({
   className?: string;
   max?: number;
 }) {
+  // Scroll speed from a passive listener (scrollY over time) — no layout
+  // reads, unlike framer's useScroll, which measured the page on resize.
   const rich = useMotionBudget();
-  const { scrollY } = useScroll();
-  const v = useVelocity(scrollY);
-  const smooth = useSpring(v, { stiffness: 260, damping: 40 });
-  const skewX = useTransform(smooth, [-2500, 0, 2500], [max, 0, -max], {
-    clamp: true,
-  });
+  const lean = useMotionValue(0);
+  const skewX = useSpring(lean, { stiffness: 260, damping: 40 });
+  useEffect(() => {
+    if (!rich) return;
+    let lastY = window.scrollY;
+    let lastT = performance.now();
+    let rest = 0;
+    const onScroll = () => {
+      const now = performance.now();
+      const v = ((window.scrollY - lastY) / Math.max(8, now - lastT)) * 1000; // px/s
+      lastY = window.scrollY;
+      lastT = now;
+      lean.set(Math.max(-max, Math.min(max, (-v / 2500) * max)));
+      window.clearTimeout(rest);
+      rest = window.setTimeout(() => lean.set(0), 90);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(rest);
+    };
+  }, [rich, max, lean]);
   return (
     <motion.div className={className} style={{ skewX: rich ? skewX : 0 }}>
       {children}

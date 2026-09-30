@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
   animate,
@@ -171,8 +171,9 @@ function BokehCanvas({
     const c = ref.current;
     const ctx = c?.getContext("2d", { alpha: false });
     if (!c || !ctx) return;
-    const fit = () => {
-      const r = c.getBoundingClientRect();
+    // sized from ResizeObserver's numbers — no layout read (on a phone a
+    // forced layout of this long page cost 200ms+ mid-animation)
+    const fit = (r: { width: number; height: number }) => {
       c.width = Math.max(1, Math.round(r.width / 4));
       c.height = Math.max(1, Math.round(r.height / 4));
       draw.current(performance.now());
@@ -220,8 +221,7 @@ function BokehCanvas({
         ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
       });
     };
-    fit();
-    const ro = new ResizeObserver(fit);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect));
     ro.observe(c);
     return () => ro.disconnect();
   }, [px, py]);
@@ -360,15 +360,20 @@ function WaterCanvas({
   py,
   running,
   ripple,
+  onReady,
 }: {
   scent: Scent;
   px: MotionValue<number>;
   py: MotionValue<number>;
   running: boolean;
   ripple: React.MutableRefObject<Ripple | null>;
+  onReady?: () => void;
 }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
   const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    if (failed) onReady?.();
+  }, [failed, onReady]);
   const cur = useRef<RGB[]>(paletteOf(scent));
   const from = useRef<RGB[]>(cur.current);
   const to = useRef<RGB[]>(cur.current);
@@ -389,22 +394,28 @@ function WaterCanvas({
       setFailed(true);
       return;
     }
+    // Compiling the shader used to block the page for ~100ms as it first
+    // appeared. With KHR_parallel_shader_compile the driver compiles in the
+    // background: we ask again each frame, and only then read the result
+    // (reading it earlier would wait for it). The water fades in when ready.
     const shader = (type: number, src: string) => {
-      const s = gl.createShader(type)!;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+      const sh = gl.createShader(type)!;
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
     };
     const vs = shader(gl.VERTEX_SHADER, WATER_VS);
     const fs = shader(gl.FRAGMENT_SHADER, WATER_FS);
     const prog = gl.createProgram()!;
-    if (!vs || !fs) {
-      setFailed(true);
-      return;
-    }
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
     gl.linkProgram(prog);
+    const par = gl.getExtension("KHR_parallel_shader_compile") as { COMPLETION_STATUS_KHR: number } | null;
+    let alive = true;
+    let teardown = () => {};
+    let poll = 0;
+    const setup = () => {
+    if (!alive) return;
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
       setFailed(true);
       return;
@@ -424,12 +435,16 @@ function WaterCanvas({
     const clock = (now: number) => ((now - epoch) / 1000) % 1800;
     const rings = new Float32Array(16); // x, y, start, strength — four at a time
     let slot = 0;
+    const size = { w: 0, h: 0 };
 
-    const fit = () => {
-      const r = c.getBoundingClientRect();
+    // sized from ResizeObserver's numbers — no layout read (on a phone a
+    // forced layout of this long page cost 200ms+ mid-animation)
+    const fit = (r: { width: number; height: number }) => {
       // half size (less on a phone): the light is soft, and it's a quarter
       // of the work or less
       const k = r.width < 768 ? 0.4 : 0.5;
+      size.w = r.width;
+      size.h = r.height;
       c.width = Math.max(1, Math.round(r.width * k));
       c.height = Math.max(1, Math.round(r.height * k));
       gl.viewport(0, 0, c.width, c.height);
@@ -453,11 +468,11 @@ function WaterCanvas({
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
     ripple.current = (x, y, strength = 1) => {
-      const r = c.getBoundingClientRect();
-      if (!r.width || !r.height) return;
+      const { w, h } = size;
+      if (!w || !h) return;
       const o = slot++ % 4;
-      rings[o * 4] = (x / r.width) * (r.width / r.height);
-      rings[o * 4 + 1] = 1 - y / r.height;
+      rings[o * 4] = (x / w) * (w / h);
+      rings[o * 4 + 1] = 1 - y / h;
       rings[o * 4 + 2] = clock(performance.now());
       rings[o * 4 + 3] = strength;
     };
@@ -466,16 +481,31 @@ function WaterCanvas({
       setFailed(true);
     };
     c.addEventListener("webglcontextlost", lost);
-    fit();
-    const ro = new ResizeObserver(fit);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect));
     ro.observe(c);
-    return () => {
+    c.style.opacity = "1";
+    onReady?.();
+    teardown = () => {
       ro.disconnect();
       c.removeEventListener("webglcontextlost", lost);
       ripple.current = null;
       draw.current = () => {};
     };
-  }, [px, py, ripple]);
+    };
+    if (par) {
+      const check = () => {
+        if (!alive) return;
+        if (gl.getProgramParameter(prog, par.COMPLETION_STATUS_KHR)) setup();
+        else poll = requestAnimationFrame(check);
+      };
+      poll = requestAnimationFrame(check);
+    } else setup();
+    return () => {
+      alive = false;
+      cancelAnimationFrame(poll);
+      teardown();
+    };
+  }, [px, py, ripple, onReady]);
 
   // the water moves only while someone can see it
   useEffect(() => {
@@ -495,10 +525,30 @@ function WaterCanvas({
   }, [running, failed]);
 
   if (failed) return <BokehCanvas scent={scent} px={px} py={py} running={running} />;
-  return <canvas ref={ref} aria-hidden className="absolute inset-0 -z-10 h-full w-full" />;
+  return (
+    <>
+      {/* the fragrance's ground, while the water is still being prepared */}
+      <div aria-hidden className="absolute inset-0 -z-10" style={{ background: mix(scent.tint, scent.accent, 0.28) }} />
+      <canvas
+        ref={ref}
+        aria-hidden
+        className="absolute inset-0 -z-10 h-full w-full transition-opacity duration-700"
+        style={{ opacity: 0 }}
+      />
+    </>
+  );
 }
 
+const WaterCanvasMemo = memo(WaterCanvas);
+
 const mixRgb = (a: RGB, b: RGB, t: number): RGB => [0, 1, 2].map((i) => a[i] + (b[i] - a[i]) * t) as RGB;
+
+/** Hand a sprite canvas to the GPU once, as an ImageBitmap; until it's
+ *  ready (or where unsupported) the canvas itself is used. */
+function toBitmap(c: HTMLCanvasElement, done: (b: CanvasImageSource) => void) {
+  done(c);
+  if (typeof createImageBitmap === "function") createImageBitmap(c).then(done, () => {});
+}
 
 /* ── the mist: spray, trails and bursts in the fragrance's colour ─────────
  *
@@ -507,12 +557,12 @@ const mixRgb = (a: RGB, b: RGB, t: number): RGB => [0, 1, 2].map((i) => a[i] + (
  * sprays it stops altogether.
  */
 
-type Puff = { x: number; y: number; vx: number; vy: number; r: number; grow: number; life: number; max: number; a: number };
+type Puff = { x: number; y: number; vx: number; vy: number; r: number; grow: number; rMax: number; life: number; max: number; a: number };
 
 function useMist(canvas: React.RefObject<HTMLCanvasElement | null>, tint: string) {
   const puffs = useRef<Puff[]>([]);
   const raf = useRef(0);
-  const sprite = useRef<HTMLCanvasElement | null>(null);
+  const sprite = useRef<CanvasImageSource | null>(null);
   const RES = 0.5;
 
   useEffect(() => {
@@ -527,19 +577,19 @@ function useMist(canvas: React.RefObject<HTMLCanvasElement | null>, tint: string
       g.fillStyle = grd;
       g.fillRect(0, 0, 64, 64);
     }
-    sprite.current = s;
+    toBitmap(s, (b) => (sprite.current = b));
   }, [tint]);
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
-    const fit = () => {
-      const r = c.getBoundingClientRect();
+    // sized from ResizeObserver's numbers — no layout read (on a phone a
+    // forced layout of this long page cost 200ms+ mid-animation)
+    const fit = (r: { width: number; height: number }) => {
       c.width = Math.max(1, Math.round(r.width * RES));
       c.height = Math.max(1, Math.round(r.height * RES));
     };
-    fit();
-    const ro = new ResizeObserver(fit);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect));
     ro.observe(c);
     return () => {
       ro.disconnect();
@@ -576,7 +626,7 @@ function useMist(canvas: React.RefObject<HTMLCanvasElement | null>, tint: string
         p.vy = p.vy * d - 16 * dt; //    …and warm air lifts it
         p.x += p.vx * dt;
         p.y += p.vy * dt;
-        p.r += p.grow * dt;
+        if (p.r < p.rMax) p.r += p.grow * dt; // big soft puffs cost fill, not beauty
         const t = p.life / p.max;
         ctx.globalAlpha = p.a * Math.min(1, t * 7) * (1 - t) * (1 - t);
         const R = p.r * RES;
@@ -605,6 +655,7 @@ function useMist(canvas: React.RefObject<HTMLCanvasElement | null>, tint: string
           vy: Math.sin(ang) * sp,
           r: size * (0.5 + Math.random() * 0.8),
           grow: size * (0.8 + Math.random() * 1.4),
+          rMax: size * 2,
           life: 0,
           max: 0.9 + Math.random() * 1.3,
           a: alpha,
@@ -656,18 +707,22 @@ function useGlints(canvas: React.RefObject<HTMLCanvasElement | null>) {
     }
     return s;
   }, []);
+  const spriteBm = useRef<CanvasImageSource | null>(null);
+  useEffect(() => {
+    if (sprite) toBitmap(sprite, (bm) => (spriteBm.current = bm));
+  }, [sprite]);
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
-    const fit = () => {
-      const r = c.getBoundingClientRect();
+    // sized from ResizeObserver's numbers — no layout read (on a phone a
+    // forced layout of this long page cost 200ms+ mid-animation)
+    const fit = (r: { width: number; height: number }) => {
       dpr.current = Math.min(1.5, window.devicePixelRatio || 1);
       c.width = Math.max(1, Math.round(r.width * dpr.current));
       c.height = Math.max(1, Math.round(r.height * dpr.current));
     };
-    fit();
-    const ro = new ResizeObserver(fit);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect));
     ro.observe(c);
     return () => {
       ro.disconnect();
@@ -682,7 +737,8 @@ function useGlints(canvas: React.RefObject<HTMLCanvasElement | null>) {
     const tick = (now: number) => {
       const c = canvas.current;
       const ctx = c?.getContext("2d");
-      if (!c || !ctx || !sprite) {
+      const spr = spriteBm.current ?? sprite;
+      if (!c || !ctx || !spr) {
         raf.current = 0;
         return;
       }
@@ -707,7 +763,7 @@ function useGlints(canvas: React.RefObject<HTMLCanvasElement | null>) {
         const twinkle = 0.55 + 0.45 * Math.sin(p.ph + p.life * 26);
         ctx.globalAlpha = Math.min(1, t * 10) * (1 - t) * twinkle;
         const R = p.r * k * (1 - t * 0.4);
-        ctx.drawImage(sprite, p.x * k - R, p.y * k - R, R * 2, R * 2);
+        ctx.drawImage(spr, p.x * k - R, p.y * k - R, R * 2, R * 2);
       }
       ctx.globalAlpha = 1;
       if (gs.length) raf.current = requestAnimationFrame(tick);
@@ -801,23 +857,27 @@ function useDroplets(canvas: React.RefObject<HTMLCanvasElement | null>, rim: str
   const raf = useRef(0);
   const dpr = useRef(1);
   const dirty = useRef<[number, number, number, number] | null>(null);
-  const sprites = useRef<HTMLCanvasElement[] | null>(null);
+  const sprites = useRef<CanvasImageSource[] | null>(null);
 
   useEffect(() => {
-    sprites.current = [dropSprite(rim, 0), dropSprite(rim, 1), dropSprite(rim, 2)];
+    const made = [dropSprite(rim, 0), dropSprite(rim, 1), dropSprite(rim, 2)];
+    sprites.current = made;
+    if (typeof createImageBitmap === "function")
+      Promise.all(made.map((c) => createImageBitmap(c))).then((b) => (sprites.current = b), () => {});
   }, [rim]);
 
   useEffect(() => {
     const c = canvas.current;
     if (!c) return;
-    const fit = () => {
-      const r = c.getBoundingClientRect();
-      dpr.current = Math.min(1.25, window.devicePixelRatio || 1);
+    // sized from ResizeObserver's numbers — no layout read (on a phone a
+    // forced layout of this long page cost 200ms+ mid-animation)
+    const fit = (r: { width: number; height: number }) => {
+      // specks a pixel or two across don't need a retina canvas; on a phone 1x
+      dpr.current = r.width < 768 ? 1 : Math.min(1.25, window.devicePixelRatio || 1);
       c.width = Math.max(1, Math.round(r.width * dpr.current));
       c.height = Math.max(1, Math.round(r.height * dpr.current));
     };
-    fit();
-    const ro = new ResizeObserver(fit);
+    const ro = new ResizeObserver(([e]) => fit(e.contentRect));
     ro.observe(c);
     return () => {
       ro.disconnect();
@@ -861,11 +921,12 @@ function useDroplets(canvas: React.RefObject<HTMLCanvasElement | null>, rim: str
         d.y += d.vy * dt;
         d.z += d.vz * dt;
       }
-      // far ones first, so the near ones pass in front
-      ds.sort((a, b) => a.z - b.z);
+      // (no depth sort: at this size the order of overlaps can't be seen, and
+      // sorting hundreds of drops every frame was the loop's biggest cost)
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "rgba(255,255,255,0.9)";
+      // every streak goes into one path, stroked once at the end
+      ctx.beginPath();
+      let streaks = 0;
       for (const d of ds) {
         const p = F / (F - d.z); // perspective: nearer, larger and further out
         const t = d.life / d.max;
@@ -880,14 +941,9 @@ function useDroplets(canvas: React.RefObject<HTMLCanvasElement | null>, rim: str
           const f = 0.02 / dt;
           const tx = cx - (cx - d.sx) * f, ty = cy - (cy - d.sy) * f;
           if (Math.abs(cx - tx) + Math.abs(cy - ty) > R * 4) {
-            const a = ctx.globalAlpha;
-            ctx.globalAlpha = a * 0.3;
-            ctx.lineWidth = R * 0.8 * k;
-            ctx.beginPath();
             ctx.moveTo(tx * k, ty * k);
             ctx.lineTo(cx * k, cy * k);
-            ctx.stroke();
-            ctx.globalAlpha = a;
+            streaks++;
             if ((tx - R) * k < x0) x0 = (tx - R) * k;
             if ((ty - R) * k < y0) y0 = (ty - R) * k;
             if ((tx + R) * k > x1) x1 = (tx + R) * k;
@@ -902,6 +958,13 @@ function useDroplets(canvas: React.RefObject<HTMLCanvasElement | null>, rim: str
         if (py < y0) y0 = py;
         if (px + w > x1) x1 = px + w;
         if (py + w > y1) y1 = py + w;
+      }
+      if (streaks) {
+        ctx.globalAlpha = 0.26;
+        ctx.lineCap = "round";
+        ctx.lineWidth = 1.3 * k;
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
       }
       dirty.current = ds.length ? [Math.floor(x0) - 2, Math.floor(y0) - 2, Math.ceil(x1) + 2, Math.ceil(y1) + 2] : null;
       ctx.globalAlpha = 1;
@@ -1021,22 +1084,32 @@ export default function HoverHero({
   const brot = useMotionValue(-22);
   const bsc = useMotionValue(0); // unseen until its entrance
   const spin = useMotionValue(-80);
-  const wobble = useMotionValue(0);
-  const float = useMotionValue(0);
+  // the hover (float + sway) runs as Web Animations on two wrappers, on the
+  // compositor, instead of rewriting the bottle's transform every frame
+  const stageEl = useRef<HTMLDivElement | null>(null);
+  const floatEl = useRef<HTMLDivElement | null>(null);
+  const wobbleEl = useRef<HTMLDivElement | null>(null);
+  const hoverAnims = useRef<Animation[]>([]);
+  // the scene's unit (--s) and the hero's size, measured on resize only —
+  // reading layout inside animation frames forced a layout every frame
+  const geo = useRef({ w: 0, h: 0, s: 300, wordsTop: 0 });
+  const wordsEl = useRef<HTMLDivElement | null>(null);
+  const markEl = useRef<HTMLParagraphElement | null>(null);
+  const letterPos = useRef<({ x: number; h: number } | null)[]>([]);
+  const sMV = useMotionValue(300);
   const px = useSpring(0, { stiffness: 50, damping: 16 });
   const py = useSpring(0, { stiffness: 50, damping: 16 });
   const cardRY = useTransform(px, (v) => v * 0.6);
   const cardRX = useTransform(py, (v) => v * -0.6);
 
-  const turn = useTransform(() => spin.get() + wobble.get() + px.get() * 0.9);
+  const turn = useTransform(() => spin.get() + px.get() * 0.9);
   const bottle = useTransform(
     () =>
-      `translate3d(calc(var(--s) * ${bx.get()}), calc(var(--s) * ${by.get() + float.get()}), 0) rotateZ(${brot.get()}deg) rotateX(${py.get() * -0.4}deg) rotateY(${turn.get()}deg) scale(${bsc.get()})`,
+      `translate3d(${(bx.get() * sMV.get()).toFixed(2)}px, ${(by.get() * sMV.get()).toFixed(2)}px, 0) rotateZ(${brot.get()}deg) rotateX(${py.get() * -0.4}deg) rotateY(${turn.get()}deg) scale(${bsc.get()})`,
   );
   const capT = useTransform(() => `rotateY(${-turn.get()}deg)`); // a sphere faces you from anywhere
-  const shadowOpacity = useTransform(() => Math.max(0, 0.55 - Math.abs(by.get()) * 0.6 - Math.abs(bx.get()) * 0.35 - float.get() * 3));
-  const shadowScale = useTransform(() => 1 - float.get() * 2.2);
-  const shadowX = useTransform(() => `calc(-50% + var(--s) * ${bx.get()})`);
+  const shadowOpacity = useTransform(() => Math.max(0, 0.55 - Math.abs(by.get()) * 0.6 - Math.abs(bx.get()) * 0.35));
+  const shadowX = useTransform(() => `calc(-50% + ${(bx.get() * sMV.get()).toFixed(2)}px)`);
 
   const liveRef = useRef(true);
   const dragging = useRef(false);
@@ -1053,6 +1126,48 @@ export default function HoverHero({
   const glint = useGlints(glintCanvas);
   const drop = useDroplets(dropCanvas, scent.deep);
   const ripple = useRef<Ripple | null>(null);
+
+  // Nothing moves until the heavy start-up work is done — the water's shader
+  // compiled and first drawn, the first bottle's photographs decoded — so the
+  // intro doesn't stutter through it. (Never waits more than ~2s.)
+  const gate = useRef<{ water: Promise<void>; open: () => void } | null>(null);
+  if (!gate.current) {
+    let open = () => {};
+    const water = new Promise<void>((r) => (open = r));
+    gate.current = { water, open };
+  }
+  const waterReady = gate.current.open;
+
+  useEffect(() => {
+    const sec = section.current;
+    const un = unit.current;
+    if (!sec || !un) return;
+    // Called by ResizeObserver, after layout: reading sizes here is free.
+    const measure = () => {
+      geo.current = {
+        w: sec.clientWidth,
+        h: sec.clientHeight,
+        s: un.offsetWidth || 300,
+        // where the words begin: note chips stay above it (in Instagram's
+        // browser the text is enlarged, and the block reaches higher)
+        wordsTop: wordsEl.current?.offsetTop ?? 0,
+      };
+      sMV.set(geo.current.s);
+      const left = sec.getBoundingClientRect().left;
+      letterPos.current = letterEls.current.map((el) => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - left, h: r.height };
+      });
+      fitMark.current();
+    };
+    const ro = new ResizeObserver(measure);
+    ro.observe(sec);
+    ro.observe(un);
+    if (markEl.current) ro.observe(markEl.current);
+    if (wordsEl.current) ro.observe(wordsEl.current);
+    return () => ro.disconnect();
+  }, [sMV]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -1114,22 +1229,31 @@ export default function HoverHero({
         if (liveRef.current && !dragging.current) t += 60;
       }
     };
-    const sPx = () => unit.current?.offsetWidth || 300;
+    // decode a bottle's photographs before it's shown, so its first frame
+    // doesn't pay for it
+    const decodeBottle = (id: string) =>
+      Promise.all(
+        [A(`body-${id}.webp`), A(`back-${id}.webp`), A("bottle-cap.webp")].map((src) => {
+          const im = new Image();
+          im.src = src;
+          return im.decode ? im.decode().catch(() => {}) : Promise.resolve();
+        }),
+      );
+    const sPx = () => geo.current.s;
     // where the bottle is on screen right now, in px from the hero's corner
+    // (from the measured size and the motion values — no layout reads)
     const at = (part: "body" | "nozzle") => {
-      const r = section.current?.getBoundingClientRect();
-      const s = sPx();
+      const { w, h, s } = geo.current;
       const sc = bsc.get();
-      const x = (r?.width ?? 0) * (phoneRef.current ? 0.5 : 0.55) + bx.get() * s;
-      const y = (r?.height ?? 0) * (phoneRef.current ? 0.37 : 0.46) + (by.get() + float.get()) * s;
+      const x = w * (phoneRef.current ? 0.5 : 0.55) + bx.get() * s;
+      const y = h * (phoneRef.current ? 0.37 : 0.46) + by.get() * s;
       return part === "nozzle" ? { x, y: y - (BOTTLE_H / 2 - CAP_H * 0.92) * s * sc } : { x, y: y + 0.06 * s * sc };
     };
     // in flight: glints in its wake, and the letters part as it passes
     const flight = () => {
-      const sec = section.current?.getBoundingClientRect();
-      const letters = letterEls.current.map((el) => {
-        const r = el?.getBoundingClientRect();
-        return el && r && sec ? { el, x: r.left + r.width / 2 - sec.left, h: r.height } : null;
+      const letters = letterEls.current.map((el, i) => {
+        const pos = letterPos.current[i];
+        return el && pos ? { el, x: pos.x, h: pos.h } : null;
       });
       let raf = 0;
       let frame = 0;
@@ -1167,10 +1291,9 @@ export default function HoverHero({
       const s = sPx();
       const phone = phoneRef.current;
       const n0 = at("nozzle");
-      mist(n0.x, n0.y, phone ? 22 : 40, 0, Math.PI * 2, 600 * (s / 500), 0.09 * s, 0.3);
-      const box = section.current?.getBoundingClientRect();
-      const W = box?.width ?? 0;
-      const H = box?.height ?? 0;
+      mist(n0.x, n0.y, phone ? 14 : 26, 0, Math.PI * 2, 600 * (s / 500), 0.09 * s, 0.34);
+      const W = geo.current.w;
+      const H = geo.current.h;
       setLens({
         key: Date.now(),
         drops: Array.from({ length: phone ? 5 : 9 }, () => {
@@ -1188,8 +1311,8 @@ export default function HoverHero({
       });
       for (let k = 0; k < 6 && !cancelled; k++) {
         const n = at("nozzle");
-        drop(n.x, n.y, phone ? 80 : 140, s);
-        if (k) mist(n.x, n.y, phone ? 4 : 7, 0, Math.PI * 2, 220 * (s / 500), 0.06 * s, 0.12);
+        drop(n.x, n.y, phone ? 34 : 64, s);
+        if (k) mist(n.x, n.y, phone ? 2 : 4, 0, Math.PI * 2, 220 * (s / 500), 0.06 * s, 0.14);
         if (k < 3) glint(n.x, n.y, 2, 0.06 * s, 0.06 * s, phone ? 6 : 8);
         await wait(70);
       }
@@ -1202,7 +1325,24 @@ export default function HoverHero({
     (async () => {
       let i = 0;
       let first = true;
-      await wait(200);
+      // draw the bottle once, invisibly, at full size while we wait: its
+      // faces are then already on the GPU when it bursts in
+      const stage = stageEl.current;
+      if (stage) stage.style.opacity = "0.001";
+      bsc.jump(1);
+      bx.jump(0);
+      by.jump(0);
+      await Promise.race([Promise.all([gate.current!.water, decodeBottle(SCENTS[0].id)]), wait(3500)]);
+      // and a quiet moment on the main thread, so the first frames of the
+      // show don't land on the tail of the page's own start-up work
+      await new Promise<void>((r) => {
+        const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
+          .requestIdleCallback;
+        if (ric) ric(() => r(), { timeout: 700 });
+        else window.setTimeout(r, 120);
+      });
+      bsc.jump(0);
+      if (stage) stage.style.opacity = "";
       while (!cancelled) {
         setActive(i);
         if (first) {
@@ -1221,7 +1361,7 @@ export default function HoverHero({
           spin.jump(-430);
           const b = at("body");
           const s = sPx();
-          mist(b.x, b.y, phoneRef.current ? 60 : 130, 0, Math.PI * 2, 520 * (s / 500), 0.06 * s, 0.26);
+          mist(b.x, b.y, phoneRef.current ? 26 : 56, 0, Math.PI * 2, 520 * (s / 500), 0.07 * s, 0.3);
           setBang((k) => k + 1);
           ripple.current?.(b.x, b.y, 1.3);
           go(spin, -16, { duration: 1.6, ease: EASE_OUT_EXPO });
@@ -1258,6 +1398,7 @@ export default function HoverHero({
         setNotes({ key: Date.now(), from: at("nozzle") });
         await hold(HOLD_MS * 0.45);
         if (cancelled) return;
+        void decodeBottle(SCENTS[(i + 1) % SCENTS.length].id);
         // it turns once, showing the PC on its back
         await go(spin, spin.get() + 360, { duration: 1.8, ease: [0.45, 0, 0.25, 1] });
         if (cancelled) return;
@@ -1267,8 +1408,6 @@ export default function HoverHero({
         setNotes(null);
         setWords(false);
         setIdle(false);
-        go(wobble, 0, { duration: 0.4 });
-        go(float, 0, { duration: 0.4 });
         await wait(380);
         if (cancelled) return;
         // it spins away into the distance, glinting, as light sweeps the frame
@@ -1291,28 +1430,55 @@ export default function HoverHero({
     };
   }, [reduce]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /* ── holding station: a hummingbird's hover, not a bob ───────────── */
+  /* ── holding station: a hummingbird's hover, not a bob ─────────────
+   * Two Web Animations on wrappers around the bottle — a float and a slow
+   * sway — run on the compositor, so holding station costs the main thread
+   * nothing. Leaving, each wrapper eases back from wherever it is. */
   useEffect(() => {
-    if (!idle || !live || reduce) return;
-    let raf = 0;
-    const t0 = performance.now();
-    const w0 = wobble.get();
-    const tick = (now: number) => {
-      const t = (now - t0) / 1000;
-      const e = Math.min(1, t / 0.9);
-      float.set((Math.sin(t * 1.7) * 0.018 + Math.sin(t * 4.3) * 0.004) * e);
-      if (!dragging.current) wobble.set(w0 * (1 - e) + Math.sin(t * 0.8) * 14 * e);
-      raf = requestAnimationFrame(tick);
+    const f = floatEl.current;
+    const w = wobbleEl.current;
+    if (!f || !w || !idle || !live || reduce || !f.animate) return;
+    const s = geo.current.s;
+    const a1 = f.animate(
+      [
+        { transform: "translateY(0px)" },
+        { transform: `translateY(${(-0.018 * s).toFixed(1)}px)` },
+        { transform: "translateY(0px)" },
+        { transform: `translateY(${(0.01 * s).toFixed(1)}px)` },
+        { transform: "translateY(0px)" },
+      ],
+      { duration: 3700, iterations: Infinity, easing: "ease-in-out" },
+    );
+    const a2 = w.animate(
+      [
+        { transform: "rotateY(0deg)" },
+        { transform: "rotateY(14deg)" },
+        { transform: "rotateY(0deg)" },
+        { transform: "rotateY(-14deg)" },
+        { transform: "rotateY(0deg)" },
+      ],
+      { duration: 7800, iterations: Infinity, easing: "ease-in-out" },
+    );
+    hoverAnims.current = [a1, a2];
+    return () => {
+      hoverAnims.current = [];
+      for (const [el, an] of [
+        [f, a1],
+        [w, a2],
+      ] as const) {
+        const from = getComputedStyle(el).transform;
+        an.cancel();
+        if (from && from !== "none") el.animate([{ transform: from }, { transform: "none" }], { duration: 420, easing: "ease-out" });
+      }
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [idle, live, reduce, float, wobble]);
+  }, [idle, live, reduce]);
 
   /* ── drag the bottle to turn it ──────────────────────────────────── */
   const from = useRef(0);
   const down = (e: React.PointerEvent) => {
     if (!idle) return;
     dragging.current = true;
+    hoverAnims.current.forEach((an) => an.pause());
     from.current = e.clientX;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
@@ -1324,15 +1490,14 @@ export default function HoverHero({
   const up = () => {
     if (!dragging.current) return;
     dragging.current = false;
+    hoverAnims.current.forEach((an) => an.play());
     animate(spin, Math.round(spin.get() / 180) * 180 - 16, { type: "spring", stiffness: 90, damping: 14 });
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (e.pointerType !== "mouse" || reduce) return;
-    const r = section.current?.getBoundingClientRect();
-    if (!r) return;
-    px.set(((e.clientX - r.left) / r.width - 0.5) * 18);
-    py.set(((e.clientY - r.top) / r.height - 0.5) * 12);
+    px.set((e.clientX / window.innerWidth - 0.5) * 18);
+    py.set((e.clientY / window.innerHeight - 0.5) * 12);
   };
 
   const scentNotes = useMemo(
@@ -1342,37 +1507,229 @@ export default function HoverHero({
 
   const openProduct = () => (p && onSelectProduct ? onSelectProduct(p) : onNavigate?.("perfumes"));
 
-  // the wordmark: measured once, then sized to span the frame
-  const markMeasure = useRef<HTMLSpanElement | null>(null);
+  // the wordmark: its width at 100px measured on a canvas once the font is
+  // in (no layout read), then sized to span the frame whenever that resizes
   const [markPx, setMarkPx] = useState(0);
-  useLayoutEffect(() => {
-    const fit = () => {
-      const m = markMeasure.current;
-      const sec = section.current;
-      if (!m || !sec) return;
-      const per100 = m.getBoundingClientRect().width;
-      if (per100) setMarkPx(Math.round(Math.min((sec.getBoundingClientRect().width * 0.9 * 100) / per100, 300)));
+  const per100 = useRef(0);
+  const fitMark = useRef(() => {});
+  fitMark.current = () => {
+    const w = geo.current.w;
+    if (per100.current && w) setMarkPx(Math.round(Math.min((w * 0.9 * 100) / per100.current, 300)));
+  };
+  useEffect(() => {
+    let off = false;
+    const ctx = document.createElement("canvas").getContext("2d");
+    if (!ctx) return;
+    const done = () => {
+      if (off) return;
+      ctx.font = '300 100px "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif';
+      per100.current = ctx.measureText("SENTIRE").width;
+      fitMark.current();
     };
-    fit();
-    window.addEventListener("resize", fit);
-    document.fonts?.ready.then(fit).catch(() => {});
-    return () => window.removeEventListener("resize", fit);
+    if (document.fonts?.load) document.fonts.load('300 100px "Archivo Variable"').then(done, done);
+    else done();
+    return () => {
+      off = true;
+    };
   }, []);
 
-  const glassSide: React.CSSProperties = {
-    background: [
-      "linear-gradient(90deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.08) 9%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 72%, rgba(255,255,255,.08) 91%, rgba(255,255,255,.72) 100%)",
-      `linear-gradient(180deg, rgba(255,255,255,.22) 0%, ${scent.juice}55 8%, ${scent.juice}60 55%, ${scent.juice}50 80%, rgba(255,255,255,.08) 84%, rgba(255,255,255,.16) 100%)`,
-    ].join(", "),
-  };
-  const liquidFace: React.CSSProperties = {
-    background: `linear-gradient(90deg, ${scent.liquid}8c, ${scent.liquid}c8 50%, ${scent.liquid}8c)`,
-    borderRadius: "12% / 8%",
-  };
-  const liquidSide: React.CSSProperties = {
-    background: `linear-gradient(90deg, ${scent.liquid}a0, ${scent.liquid}e0 50%, ${scent.liquid}a0)`,
-    borderRadius: "14% / 8%",
-  };
+  const bottleBody = useMemo(() => {
+    const glassSide: React.CSSProperties = {
+      background: [
+        "linear-gradient(90deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.08) 9%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 72%, rgba(255,255,255,.08) 91%, rgba(255,255,255,.72) 100%)",
+        `linear-gradient(180deg, rgba(255,255,255,.22) 0%, ${scent.juice}55 8%, ${scent.juice}60 55%, ${scent.juice}50 80%, rgba(255,255,255,.08) 84%, rgba(255,255,255,.16) 100%)`,
+      ].join(", "),
+    };
+    const liquidFace: React.CSSProperties = {
+      background: `linear-gradient(90deg, ${scent.liquid}8c, ${scent.liquid}c8 50%, ${scent.liquid}8c)`,
+      borderRadius: "12% / 8%",
+    };
+    const liquidSide: React.CSSProperties = {
+      background: `linear-gradient(90deg, ${scent.liquid}a0, ${scent.liquid}e0 50%, ${scent.liquid}a0)`,
+      borderRadius: "14% / 8%",
+    };
+    return (
+      <>
+        <motion.img
+          src={A("bottle-cap.webp")}
+          alt=""
+          draggable={false}
+          className="absolute"
+          style={{ left: u((BODY_W - CAP_W) / 2), top: 0, width: u(CAP_W), height: u(CAP_H), transform: capT }}
+        />
+        <Cuboid
+          w={BODY_W * 0.86}
+          h={BODY_H * 0.875}
+          d={BODY_D * 0.8}
+          style={{ top: u(CAP_H - 0.012 + BODY_H * 0.06), left: u(BODY_W * 0.07) }}
+          faces={{
+            front: liquidFace,
+            back: liquidFace,
+            left: liquidSide,
+            right: liquidSide,
+            top: { background: `linear-gradient(180deg, rgba(255,255,255,.55), ${scent.liquid}c0)` },
+          }}
+        />
+        <Cuboid
+          w={BODY_W}
+          h={BODY_H}
+          d={BODY_D}
+          style={{ top: u(CAP_H - 0.012), left: 0 }}
+          faces={{
+            front: { backgroundImage: `url(${A(`body-${scent.id}.webp`)})`, backgroundSize: "100% 100%", backfaceVisibility: "hidden" },
+            back: { backgroundImage: `url(${A(`back-${scent.id}.webp`)})`, backgroundSize: "100% 100%", backfaceVisibility: "hidden" },
+            left: glassSide,
+            right: glassSide,
+            top: {
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.1) 14%, rgba(255,255,255,.04) 86%, rgba(255,255,255,.5) 100%)",
+            },
+          }}
+        />
+        {/* studio light running down the front of the glass */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute overflow-hidden"
+          style={{
+            left: 0,
+            top: u(CAP_H - 0.012),
+            width: u(BODY_W),
+            height: u(BODY_H),
+            transform: `translateZ(${u(BODY_D / 2 + 0.002)})`,
+            backfaceVisibility: "hidden",
+            borderRadius: "4%",
+          }}
+        >
+          <span
+            className="hv-glint absolute left-[-30%] h-[34%] w-[160%]"
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.42) 50%, rgba(255,255,255,0))" }}
+          />
+        </div>
+      </>
+    );
+  }, [scent, capT]);
+
+  // The wordmark and the words only change when they come and go (or the
+  // fragrance does) — kept out of the re-renders the spray and notes cause.
+  const wordmark = useMemo(
+    () => (
+      <>
+      {/* the wordmark, enormous, behind the bottle */}
+      <motion.p
+        ref={markEl}
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[8%] z-0 flex -translate-x-1/2 whitespace-nowrap font-serif font-light uppercase leading-[0.9] md:top-[9%]"
+        style={{ fontSize: markPx || "18vw" }}
+        variants={group}
+        initial="out"
+        animate={mark ? "in" : "out"}
+      >
+        {"SENTIRE".split("").map((ch, i) => (
+          <span key={i} ref={(el) => void (letterEls.current[i] = el)} className="inline-block" style={{ willChange: "transform" }}>
+          <motion.span
+            variants={letter}
+            custom={!reduce}
+            className="inline-block"
+            style={{
+              backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.96) 12%, rgba(255,255,255,0.35) 62%, rgba(255,255,255,0) 92%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            {ch}
+          </motion.span>
+          </span>
+        ))}
+      </motion.p>
+
+      </>
+    ),
+    [mark, markPx, reduce],
+  );
+  const priceSize = price?.[0];
+  const priceValue = price?.[1];
+  const wordsBlock = useMemo(
+    () => (
+      <>
+      {/* ── the words, in front ─────────────────────────────────────────── */}
+      <motion.div
+        ref={wordsEl}
+        className="ed-container absolute inset-x-0 bottom-[4%] z-[4] md:bottom-[8%]"
+        variants={group}
+        initial="out"
+        animate={words ? "in" : "out"}
+      >
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[34rem]">
+            <motion.p variants={rise} className="font-mono text-[11px] uppercase tracking-[0.12em] max-sm:text-[12px]" style={{ color: scent.deep }}>
+              <span className="max-md:hidden">Sentire by PC · </span>Extrait de parfum<span className="max-md:hidden"> · Jaipur</span>
+            </motion.p>
+            <h1 className="mt-3 font-serif font-light leading-[0.95] tracking-[-0.03em]" style={{ fontSize: "clamp(2.3rem, 4.6vw, 4.4rem)" }}>
+              <span className="block overflow-hidden pb-[0.08em]">
+                <motion.span variants={mask} className="block">
+                  Longer than
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden pb-[0.08em]">
+                <motion.span variants={mask} className="block italic" style={{ color: scent.deep }}>
+                  a memory.
+                </motion.span>
+              </span>
+            </h1>
+            <motion.p variants={rise} className="hv-desc mt-3 max-w-md text-[14.5px] leading-relaxed text-[#161416]/75 md:mt-4 md:text-[15.5px]">
+              {name} — {p?.desc}. Extrait de parfum, 35%+ perfume oil.
+            </motion.p>
+            <motion.div variants={rise} className="mt-4 flex flex-wrap items-center gap-4 md:mt-5">
+              <button
+                type="button"
+                onClick={() => onNavigate?.("perfumes")}
+                className="min-h-[46px] cursor-pointer rounded-full px-6 text-[12.5px] font-medium uppercase tracking-[0.1em] text-white transition-colors duration-700"
+                style={{ backgroundColor: scent.deep }}
+              >
+                Discover all perfumes
+              </button>
+              <button
+                type="button"
+                onClick={() => (p && onSelectProduct ? onSelectProduct(p) : onNavigate?.("perfumes"))}
+                className="min-h-[46px] cursor-pointer text-[12.5px] font-medium uppercase tracking-[0.1em] underline max-md:hidden decoration-[#161416]/30 underline-offset-[6px] transition-colors hover:decoration-[#161416]"
+              >
+                View {name} →
+              </button>
+            </motion.div>
+          </div>
+
+          {/* two stepped glass cards carrying the numbers */}
+          <div className="hidden items-end gap-3 md:flex">
+            <motion.figure variants={rise} className="w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
+              <img src={A("case-open.webp")} alt="The SENTIRE case, open" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-[9px] object-cover" draggable={false} />
+              <figcaption className="px-1.5 pb-1 pt-2.5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">Extrait strength</p>
+                <p className="mt-1 font-serif text-[1.9rem] font-light leading-none" style={{ color: scent.deep }}>
+                  35%+
+                </p>
+                <p className="mt-1 text-[11.5px] text-[#161416]/60">perfume oil</p>
+              </figcaption>
+            </motion.figure>
+            <motion.figure variants={rise} className="mb-10 w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
+              <div className="flex aspect-[4/3] w-full items-center justify-center rounded-[9px]" style={{ background: `radial-gradient(closest-side, #ffffff, ${scent.tint})` }}>
+                <img src={`/assets/hero3d/${scent.id}.webp`} alt="" loading="lazy" decoding="async" className="h-[88%] w-auto object-contain" draggable={false} />
+              </div>
+              <figcaption className="px-1.5 pb-1 pt-2.5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">{name}</p>
+                <p className="mt-1 font-serif text-[1.9rem] font-light leading-none" style={{ color: scent.deep }}>
+                  {priceValue ? `₹${priceValue.toLocaleString("en-IN")}` : "—"}
+                </p>
+                <p className="mt-1 text-[11.5px] text-[#161416]/60">{priceSize ? `${priceSize}ml` : "extrait de parfum"}</p>
+              </figcaption>
+            </motion.figure>
+          </div>
+        </div>
+      </motion.div>
+      </>
+    ),
+    [words, scent, p, name, priceSize, priceValue, onNavigate, onSelectProduct, cardRX, cardRY],
+  );
 
   return (
     <section
@@ -1391,7 +1748,7 @@ export default function HoverHero({
       className="relative isolate h-[clamp(440px,calc(100svh-162px),760px)] w-full select-none overflow-hidden text-[#161416] [--s:min(74vw,300px)] md:h-[max(620px,min(960px,calc(100svh-126px)))] md:[--s:clamp(340px,37vw,620px)]"
     >
       {/* the water: light moving through a pool in this fragrance's colours */}
-      <WaterCanvas scent={scent} px={px} py={py} running={live && !reduce} ripple={ripple} />
+      <WaterCanvasMemo scent={scent} px={px} py={py} running={live && !reduce} ripple={ripple} onReady={waterReady} />
       {/* a little air at the foot so the words sit on something */}
       <div
         aria-hidden
@@ -1400,44 +1757,15 @@ export default function HoverHero({
       />
 
       <div ref={unit} aria-hidden className="invisible absolute" style={{ width: u(1) }} />
-      <motion.div className="absolute inset-0" style={{ x: shakeX, y: shakeY }}>
-      {/* the wordmark, enormous, behind the bottle */}
-      <span ref={markMeasure} aria-hidden className="invisible absolute left-0 top-0 whitespace-nowrap font-serif font-light uppercase leading-none" style={{ fontSize: 100 }}>
-        Sentire
-      </span>
-      <motion.p
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[8%] z-0 flex -translate-x-1/2 whitespace-nowrap font-serif font-light uppercase leading-[0.9] md:top-[9%]"
-        style={{ fontSize: markPx || "18vw" }}
-        variants={group}
-        initial="out"
-        animate={mark ? "in" : "out"}
-      >
-        {"SENTIRE".split("").map((ch, i) => (
-          <span key={i} ref={(el) => void (letterEls.current[i] = el)} className="inline-block">
-          <motion.span
-            variants={letter}
-            custom={!reduce}
-            className="inline-block"
-            style={{
-              backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.96) 12%, rgba(255,255,255,0.35) 62%, rgba(255,255,255,0) 92%)",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            {ch}
-          </motion.span>
-          </span>
-        ))}
-      </motion.p>
+      <motion.div className="absolute inset-0" style={{ x: shakeX, y: shakeY, willChange: "transform" }}>
+      {wordmark}
 
       {/* a band of studio light passes across the frame as the fragrance changes */}
       {sweep > 0 && !reduce && (
         <motion.span
           key={`sweep-${sweep}`}
           aria-hidden
-          className="pointer-events-none absolute inset-y-[-15%] left-0 z-[1] w-[38%]"
+          className="pointer-events-none absolute inset-y-[-15%] left-0 z-[1] w-[38%] will-change-transform"
           style={{
             rotate: 10,
             background:
@@ -1457,7 +1785,7 @@ export default function HoverHero({
         <motion.span
           key={`bang-${bang}`}
           aria-hidden
-          className="pointer-events-none absolute left-[50%] top-[37%] z-[1] rounded-full border-2 md:left-[55%] md:top-[46%]"
+          className="pointer-events-none absolute left-[50%] top-[37%] z-[1] rounded-full border-2 will-change-transform md:left-[55%] md:top-[46%]"
           style={{ width: u(0.9), height: u(0.9), marginLeft: u(-0.45), marginTop: u(-0.45), borderColor: scent.accent }}
           initial={{ scale: 0.15, opacity: 0.9 }}
           animate={{ scale: 3.2, opacity: 0, transition: { duration: 1.3, ease: [0.1, 0.8, 0.3, 1] } }}
@@ -1470,7 +1798,7 @@ export default function HoverHero({
           <motion.span
             key={`pulse-${active}`}
             aria-hidden
-            className="pointer-events-none absolute left-[50%] top-[37%] z-[1] rounded-full border-[1.5px] md:left-[55%] md:top-[46%]"
+            className="pointer-events-none absolute left-[50%] top-[37%] z-[1] rounded-full border-[1.5px] will-change-transform md:left-[55%] md:top-[46%]"
             style={{ width: u(0.9), height: u(0.9), marginLeft: u(-0.45), marginTop: u(-0.45), borderColor: scent.accent }}
             initial={{ scale: 0.4, opacity: 0.7 }}
             animate={{ scale: 1.9, opacity: 0, transition: { duration: 1.7, ease: EASE_OUT_EXPO } }}
@@ -1486,15 +1814,17 @@ export default function HoverHero({
         style={{
           width: u(0.62),
           height: u(0.09),
+          willChange: "transform, opacity",
           x: shadowX,
           opacity: shadowOpacity,
-          scale: shadowScale,
           background: "radial-gradient(closest-side, rgba(40,20,30,0.45), rgba(40,20,30,0))",
         }}
       />
 
       {/* the bottle, holding station */}
-      <div className="absolute left-[50%] top-[37%] z-[2] md:left-[55%] md:top-[46%]" style={{ perspective: "1400px" }}>
+      <div ref={stageEl} className="absolute left-[50%] top-[37%] z-[2] md:left-[55%] md:top-[46%]" style={{ perspective: "1400px" }}>
+        <div ref={floatEl} className="absolute left-0 top-0" style={{ transformStyle: "preserve-3d" }}>
+        <div ref={wobbleEl} className="absolute left-0 top-0" style={{ transformStyle: "preserve-3d" }}>
         <motion.div
           role="button"
           tabIndex={0}
@@ -1514,62 +1844,10 @@ export default function HoverHero({
             transform: bottle,
           }}
         >
-          <motion.img
-            src={A("bottle-cap.webp")}
-            alt=""
-            draggable={false}
-            className="absolute"
-            style={{ left: u((BODY_W - CAP_W) / 2), top: 0, width: u(CAP_W), height: u(CAP_H), transform: capT }}
-          />
-          <Cuboid
-            w={BODY_W * 0.86}
-            h={BODY_H * 0.875}
-            d={BODY_D * 0.8}
-            style={{ top: u(CAP_H - 0.012 + BODY_H * 0.06), left: u(BODY_W * 0.07) }}
-            faces={{
-              front: liquidFace,
-              back: liquidFace,
-              left: liquidSide,
-              right: liquidSide,
-              top: { background: `linear-gradient(180deg, rgba(255,255,255,.55), ${scent.liquid}c0)` },
-            }}
-          />
-          <Cuboid
-            w={BODY_W}
-            h={BODY_H}
-            d={BODY_D}
-            style={{ top: u(CAP_H - 0.012), left: 0 }}
-            faces={{
-              front: { backgroundImage: `url(${A(`body-${scent.id}.webp`)})`, backgroundSize: "100% 100%", backfaceVisibility: "hidden" },
-              back: { backgroundImage: `url(${A(`back-${scent.id}.webp`)})`, backgroundSize: "100% 100%", backfaceVisibility: "hidden" },
-              left: glassSide,
-              right: glassSide,
-              top: {
-                background:
-                  "linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.1) 14%, rgba(255,255,255,.04) 86%, rgba(255,255,255,.5) 100%)",
-              },
-            }}
-          />
-          {/* studio light running down the front of the glass */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute overflow-hidden"
-            style={{
-              left: 0,
-              top: u(CAP_H - 0.012),
-              width: u(BODY_W),
-              height: u(BODY_H),
-              transform: `translateZ(${u(BODY_D / 2 + 0.002)})`,
-              backfaceVisibility: "hidden",
-              borderRadius: "4%",
-            }}
-          >
-            <span
-              className="hv-glint absolute left-[-30%] h-[34%] w-[160%]"
-              style={{ background: "linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.42) 50%, rgba(255,255,255,0))" }}
-            />
-          </div>
+          {bottleBody}
         </motion.div>
+        </div>
+        </div>
       </div>
 
       <canvas ref={mistCanvas} aria-hidden className="pointer-events-none absolute inset-0 z-[3] h-full w-full" />
@@ -1580,9 +1858,7 @@ export default function HoverHero({
       <AnimatePresence>
         {notes &&
           scentNotes.map((note, k) => {
-            const W = section.current?.offsetWidth ?? 0;
-            const H = section.current?.offsetHeight ?? 0;
-            const s = unit.current?.offsetWidth ?? 300;
+            const { w: W, h: H, s, wordsTop } = geo.current;
             const spots = phone
               ? [{ x: -0.5, y: -0.5 }, { x: 0.5, y: -0.3 }, { x: 0.52, y: 0.1 }]
               : [{ x: -0.8, y: -0.3 }, { x: 0.74, y: -0.44 }, { x: 0.86, y: -0.06 }];
@@ -1590,11 +1866,13 @@ export default function HoverHero({
             const cx = W * (phone ? 0.5 : 0.55);
             const cy = H * (phone ? 0.37 : 0.46);
             const tx = Math.max(half + 8, Math.min(W - half - 8, cx + spots[k % 3].x * s));
-            const ty = Math.max(28, Math.min(H * (phone ? 0.5 : 0.62), cy + spots[k % 3].y * s));
+            // never down into the words (their top, less half a chip and a gap)
+            const floor = Math.min(H * (phone ? 0.5 : 0.62), wordsTop ? wordsTop - 30 : Infinity);
+            const ty = Math.max(28, Math.min(floor, cy + spots[k % 3].y * s));
             return (
               <motion.div
                 key={`${notes.key}-${k}`}
-                className="pointer-events-none absolute left-0 top-0 z-[4]"
+                className="pointer-events-none absolute left-0 top-0 z-[4] will-change-transform"
                 initial={{ x: notes.from.x, y: notes.from.y, scale: 0.2, opacity: 0, rotate: (k - 1) * 22 }}
                 animate={{
                   x: tx,
@@ -1634,79 +1912,7 @@ export default function HoverHero({
         </span>
       </motion.div>
 
-      {/* ── the words, in front ─────────────────────────────────────────── */}
-      <motion.div
-        className="ed-container absolute inset-x-0 bottom-[4%] z-[4] md:bottom-[8%]"
-        variants={group}
-        initial="out"
-        animate={words ? "in" : "out"}
-      >
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-[34rem]">
-            <motion.p variants={rise} className="font-mono text-[11px] uppercase tracking-[0.12em] max-sm:text-[12px]" style={{ color: scent.deep }}>
-              Sentire by PC · Extrait de parfum<span className="max-md:hidden"> · Jaipur</span>
-            </motion.p>
-            <h1 className="mt-3 font-serif font-light leading-[0.95] tracking-[-0.03em]" style={{ fontSize: "clamp(2.3rem, 4.6vw, 4.4rem)" }}>
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span variants={mask} className="block">
-                  Longer than
-                </motion.span>
-              </span>
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span variants={mask} className="block italic" style={{ color: scent.deep }}>
-                  a memory.
-                </motion.span>
-              </span>
-            </h1>
-            <motion.p variants={rise} className="hv-desc mt-3 max-w-md text-[14.5px] leading-relaxed text-[#161416]/75 md:mt-4 md:text-[15.5px]">
-              {name} — {p?.desc}. Extrait de parfum, 35%+ perfume oil.
-            </motion.p>
-            <motion.div variants={rise} className="mt-4 flex flex-wrap items-center gap-4 md:mt-5">
-              <button
-                type="button"
-                onClick={() => onNavigate?.("perfumes")}
-                className="min-h-[46px] cursor-pointer rounded-full px-6 text-[12.5px] font-medium uppercase tracking-[0.1em] text-white transition-colors duration-700"
-                style={{ backgroundColor: scent.deep }}
-              >
-                Discover all perfumes
-              </button>
-              <button
-                type="button"
-                onClick={openProduct}
-                className="min-h-[46px] cursor-pointer text-[12.5px] font-medium uppercase tracking-[0.1em] underline max-md:hidden decoration-[#161416]/30 underline-offset-[6px] transition-colors hover:decoration-[#161416]"
-              >
-                View {name} →
-              </button>
-            </motion.div>
-          </div>
-
-          {/* two stepped glass cards carrying the numbers */}
-          <div className="hidden items-end gap-3 md:flex">
-            <motion.figure variants={rise} className="w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
-              <img src={A("case-open.webp")} alt="The SENTIRE case, open" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-[9px] object-cover" draggable={false} />
-              <figcaption className="px-1.5 pb-1 pt-2.5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">Extrait strength</p>
-                <p className="mt-1 font-serif text-[1.9rem] font-light leading-none" style={{ color: scent.deep }}>
-                  35%+
-                </p>
-                <p className="mt-1 text-[11.5px] text-[#161416]/60">perfume oil</p>
-              </figcaption>
-            </motion.figure>
-            <motion.figure variants={rise} className="mb-10 w-[176px] overflow-hidden rounded-[14px] border border-white/70 bg-gradient-to-b from-white/75 to-white/45 p-2 shadow-[0_24px_50px_-28px_rgba(40,20,30,0.5)]" style={{ rotateX: cardRX, rotateY: cardRY, transformPerspective: 900 }}>
-              <div className="flex aspect-[4/3] w-full items-center justify-center rounded-[9px]" style={{ background: `radial-gradient(closest-side, #ffffff, ${scent.tint})` }}>
-                <img src={`/assets/hero3d/${scent.id}.webp`} alt="" loading="lazy" decoding="async" className="h-[88%] w-auto object-contain" draggable={false} />
-              </div>
-              <figcaption className="px-1.5 pb-1 pt-2.5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#161416]/55">{name}</p>
-                <p className="mt-1 font-serif text-[1.9rem] font-light leading-none" style={{ color: scent.deep }}>
-                  {price ? `₹${price[1].toLocaleString("en-IN")}` : "—"}
-                </p>
-                <p className="mt-1 text-[11.5px] text-[#161416]/60">{price ? `${price[0]}ml` : "extrait de parfum"}</p>
-              </figcaption>
-            </motion.figure>
-          </div>
-        </div>
-      </motion.div>
+      {wordsBlock}
       </motion.div>
 
       {/* drops of the spray that reached you, on the glass */}
@@ -1722,8 +1928,6 @@ export default function HoverHero({
                 width: d.r * 2,
                 height: d.r * 2.12,
                 borderRadius: "50% 50% 50% 50% / 45% 45% 55% 55%",
-                backdropFilter: "blur(0.8px) brightness(1.12)",
-                WebkitBackdropFilter: "blur(0.8px) brightness(1.12)",
                 background: `radial-gradient(circle at 34% 27%, rgba(255,255,255,0.95) 0 9%, rgba(255,255,255,0) 18%), radial-gradient(ellipse at 55% 80%, rgba(255,255,255,0.5), rgba(255,255,255,0) 48%), radial-gradient(circle at 50% 46%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.35) 100%)`,
                 boxShadow: `inset 0 ${-d.r * 0.22}px ${d.r * 0.3}px rgba(40,20,30,0.14), inset 0 ${d.r * 0.18}px ${d.r * 0.3}px rgba(255,255,255,0.7), 0 ${d.r * 0.16}px ${d.r * 0.26}px rgba(40,20,30,0.1)`,
               }}

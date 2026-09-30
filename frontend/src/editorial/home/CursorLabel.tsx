@@ -3,7 +3,6 @@ import {
   AnimatePresence,
   motion,
   useMotionValue,
-  useScroll,
   useSpring,
 } from "framer-motion";
 import { useMotionBudget } from "../motion";
@@ -77,21 +76,16 @@ export function CursorLabel() {
 
 /** Wine hairline across the top of the window, filling as you read down. */
 export function ScrollProgress() {
-  // Desktop only: on a phone this spring ran on every scroll frame for a
-  // 3px decoration, and phones need those frames for the page itself.
+  // Desktop only. Driven by the browser's own scroll timeline in CSS
+  // (.scroll-progress), with no JavaScript: the old useScroll tracker
+  // re-measured the whole page, and it ran even on phones where the bar
+  // wasn't shown. Browsers without scroll timelines just don't show it.
   const rich = useMotionBudget();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 40,
-    restDelta: 0.001,
-  });
   if (!rich) return null;
   return (
-    <motion.div
+    <div
       aria-hidden
-      className="pointer-events-none fixed inset-x-0 top-0 z-[99980] h-[3px] origin-left bg-[#6b1422]"
-      style={{ scaleX }}
+      className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[99980] h-[3px] origin-left bg-[#6b1422]"
     />
   );
 }
