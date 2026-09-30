@@ -137,6 +137,7 @@ router.get('/order-status/:orderId', async (req, res) => {
       paymentType: o?.payment_type,
       paymentStatus: o?.payment_status,
       edd: o?.edd,
+      totalAmount: o?.total_amount_payable ?? null,
       firstName: o?.shipping_address?.first_name,
       items: (o?.cart_data?.items || []).map((i) => ({ variantId: String(i.variant_id), quantity: i.quantity })),
     });

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { PageName } from "../types/appTypes";
 import { fetchShiprocketOrder } from "../utils/shiprocketCheckout";
+import { trackEvent } from "../utils/analytics";
 
 type Order = Awaited<ReturnType<typeof fetchShiprocketOrder>>;
 
@@ -45,6 +46,25 @@ export default function OrderSuccessPage({
     try {
       localStorage.removeItem("sentire_applied_coupon");
     } catch {}
+    // Purchase (Meta Pixel + GA4), once per order even if the page is reopened
+    if (!order || !oid) return;
+    try {
+      const key = `sentire_purchase_tracked_${oid}`;
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, "1");
+    } catch {}
+    trackEvent("purchase", {
+      transaction_id: oid,
+      value: Number(order.totalAmount) || 0,
+      currency: "INR",
+      payment_type: order.paymentType,
+      items: (order.items || []).map((i) => ({
+        item_id: i.variantId,
+        item_name: i.variantId,
+        price: 0,
+        quantity: i.quantity,
+      })),
+    });
   }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cod = (order?.paymentType || "").toUpperCase().includes("CASH");

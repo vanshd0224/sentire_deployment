@@ -1,4 +1,5 @@
 import { prepareShopifyCheckoutItems, resolveShopifyVariantId } from "./shopifyCart";
+import { trackInitiateCheckout } from "./analytics";
 
 /*
  * Shiprocket Checkout (custom website integration). Our server signs the
@@ -7,11 +8,11 @@ import { prepareShopifyCheckoutItems, resolveShopifyVariantId } from "./shopifyC
  * coupons) over the page. After the order, Shiprocket sends the customer to
  * /order-success?oid=…&ost=….
  *
- * While being tested it's switched on per browser: visit any page with
- * ?srcheckout=1 (and ?srcheckout=0 to turn it off again). Everyone else
- * keeps the Shopify checkout until SR_CHECKOUT_FOR_EVERYONE is true.
+ * On for everyone while SR_CHECKOUT_FOR_EVERYONE is true. Per browser,
+ * ?srcheckout=0 switches back to the Shopify checkout (?srcheckout=1 on);
+ * with the flag false, only browsers that opened ?srcheckout=1 get it.
  */
-export const SR_CHECKOUT_FOR_EVERYONE = false;
+export const SR_CHECKOUT_FOR_EVERYONE = true;
 
 const API_BASE =
   (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
@@ -28,17 +29,15 @@ type HeadlessCheckout = {
 // the test switch, from the address bar
 try {
   const q = new URLSearchParams(window.location.search).get("srcheckout");
-  if (q === "1") localStorage.setItem(FLAG, "1");
-  if (q === "0") localStorage.removeItem(FLAG);
+  if (q === "1" || q === "0") localStorage.setItem(FLAG, q);
 } catch {}
 
 export function isShiprocketCheckoutOn(): boolean {
-  if (SR_CHECKOUT_FOR_EVERYONE) return true;
+  let choice: string | null = null;
   try {
-    return localStorage.getItem(FLAG) === "1";
-  } catch {
-    return false;
-  }
+    choice = localStorage.getItem(FLAG);
+  } catch {}
+  return SR_CHECKOUT_FOR_EVERYONE ? choice !== "0" : choice === "1";
 }
 
 let loading: Promise<HeadlessCheckout> | null = null;
@@ -133,6 +132,19 @@ export async function startShiprocketCheckout(
   ]);
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.ok || !data.token) throw new Error(data?.error || "Could not start checkout");
+  // same InitiateCheckout the Shopify checkout path sends (Meta Pixel + GA4)
+  try {
+    const lines = prepareShopifyCheckoutItems(items);
+    trackInitiateCheckout(
+      lines.map((i: any) => ({
+        id: i.productId || i.id,
+        name: i.name,
+        price: Number(i.price) || 0,
+        quantity: Number(i.quantity) || 1,
+      })),
+      lines.reduce((sum: number, i: any) => sum + (Number(i.price) || 0) * (Number(i.quantity) || 1), 0),
+    );
+  } catch {}
   hc.addToCart(event, data.token, { fallbackUrl: shopifyFallbackUrl(items, opts.couponCode) });
 }
 
@@ -147,6 +159,7 @@ export async function fetchShiprocketOrder(orderId: string) {
     paymentStatus?: string;
     edd?: string;
     firstName?: string;
+    totalAmount?: number | null;
     items?: { variantId: string; quantity: number }[];
   };
 }
