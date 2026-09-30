@@ -13,6 +13,7 @@ export type PageName =
   | "extrait-de-parfum"
   | "account"
   | "cart"
+  | "order-success"
   | "not-found";
 
 export interface PerfumeProduct {

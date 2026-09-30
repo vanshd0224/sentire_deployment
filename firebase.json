@@ -38,6 +38,19 @@
         ]
       },
       {
+        "source": "/api/sr/seller/**",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
         "source": "**/*.html",
         "headers": [
           {

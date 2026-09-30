@@ -313,6 +313,17 @@ export function getPageMetadata(
         twitterCard: "summary",
       };
 
+    case "order-success":
+      return {
+        title: "Order confirmed | SENTIRE By PC",
+        description: "Thank you for your order from Sentire by PC.",
+        canonical: `${PRODUCTION_DOMAIN}/`,
+        robots: "noindex, nofollow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
     case "account":
       return {
         title: "Your Account | SENTIRE By PC",
