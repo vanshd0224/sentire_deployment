@@ -96,7 +96,7 @@ export default function NewArrivals({
   onNavigate,
 }: NewArrivalsProps) {
   return (
-    <section className="bg-gradient-to-b from-[#f2f2f0] to-[#f2f2f0] py-16 sm:py-24 text-ink relative border-t border-black/5 overflow-hidden">
+    <section className="bg-gradient-to-b from-[#f2f2f0] to-[#f2f2f0] py-16 sm:py-24 text-ink relative border-t border-black/5 overflow-clip">
       <DriftWord
         text="New arrivals — just in — New arrivals — just in —"
         className="top-4 sm:top-8"

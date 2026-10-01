@@ -96,11 +96,14 @@ export function DriftWord({
   // (framer's useScroll re-measured the page whenever anything resized,
   // which stalled the animation in the hero at the top.) Where unsupported,
   // or on a phone, the word simply stands still.
+  // Its clipping wrappers (here and the section) must use overflow: clip,
+  // not hidden: a hidden box is a scroll container, and view() would follow
+  // that box (which never scrolls) instead of the page.
   const rich = useMotionBudget();
   return (
     <div
       aria-hidden
-      className={`pointer-events-none absolute inset-x-0 select-none overflow-hidden ${className}`}
+      className={`pointer-events-none absolute inset-x-0 select-none overflow-clip ${className}`}
     >
       <p
         className={`font-serif whitespace-nowrap uppercase leading-[0.8] ${rich ? "drift-word" : ""}`}

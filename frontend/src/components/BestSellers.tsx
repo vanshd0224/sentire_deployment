@@ -96,7 +96,7 @@ export default function BestSellers({
   onNavigate,
 }: BestSellersProps) {
   return (
-    <section className="bg-[#f2f2f0] py-16 sm:py-24 text-ink relative overflow-hidden">
+    <section className="bg-[#f2f2f0] py-16 sm:py-24 text-ink relative overflow-clip">
       <DriftWord
         text="Best sellers — most loved — Best sellers — most loved —"
         className="top-4 sm:top-8"
