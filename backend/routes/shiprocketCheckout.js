@@ -113,17 +113,16 @@ async function recordOrder(o) {
 // once). It must answer 200; the record is keyed on the order id, so a
 // repeat just updates it.
 router.post('/order-webhook', async (req, res) => {
-  const order = req.body;
-  logger.info('Shiprocket order webhook', {
-    orderId: order?.order_id,
-    status: order?.status,
-    paymentType: order?.payment_type,
-    paymentStatus: order?.payment_status,
-  });
-  try {
-    await recordOrder(order);
-  } catch (error) {
-    logger.error('Shiprocket order webhook save failed', { message: error.message, orderId: order?.order_id });
+  const orderId = String(req.body?.order_id || '');
+  logger.info('Shiprocket order webhook', { orderId, status: req.body?.status });
+  // Shiprocket doesn't sign these, so the body only tells us which order
+  // changed: what we keep is read back from Shiprocket itself.
+  if (/^[a-f0-9]{24}$/i.test(orderId) && srCheckout.isConfigured()) {
+    try {
+      await recordOrder(await srCheckout.getOrderDetails(orderId));
+    } catch (error) {
+      logger.error('Shiprocket order webhook save failed', { message: error.message, orderId });
+    }
   }
   return res.status(200).json({ ok: true });
 });

@@ -104,6 +104,7 @@ function getActiveTestEventCode(): string | null {
 export function sendMetaCapiEvent(
   eventName: string,
   customData: Record<string, any> = {},
+  eventId?: string,
 ) {
   try {
     if (typeof window === "undefined") return;
@@ -140,6 +141,8 @@ export function sendMetaCapiEvent(
         {
           event_name: eventName,
           event_time: eventTime,
+          // same id as the browser pixel's eventID, so Meta counts it once
+          ...(eventId && { event_id: eventId }),
           event_source_url: eventSourceUrl,
           action_source: "website",
           user_data: userData,
@@ -173,10 +176,12 @@ export function trackMetaPixel(
   data: Record<string, any> = {},
 ) {
   try {
+    // one id for the pixel and the server copy (CAPI): Meta merges them
+    const eventId = `${eventName}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     if (typeof window !== "undefined" && typeof window.fbq === "function") {
-      window.fbq("track", eventName, data);
+      window.fbq("track", eventName, data, { eventID: eventId });
     }
-    sendMetaCapiEvent(eventName, data);
+    sendMetaCapiEvent(eventName, data, eventId);
   } catch (err) {
     // Non-blocking catch
   }
@@ -321,33 +326,9 @@ export function trackEvent(
         window.gtag("event", eventName, safePayload);
       }
 
-      // 3. Meta Pixel Automatic Mapping
-      if (eventName === "add_to_cart" && safePayload.item_id) {
-        trackMetaPixel("AddToCart", {
-          content_ids: [safePayload.item_id],
-          content_name: safePayload.item_name,
-          content_type: "product",
-          value: safePayload.value || safePayload.price || 0,
-          currency: safePayload.currency || "INR",
-        });
-      } else if (eventName === "view_item" && safePayload.item_id) {
-        trackMetaPixel("ViewContent", {
-          content_ids: [safePayload.item_id],
-          content_name: safePayload.item_name,
-          content_type: "product",
-          value: safePayload.price || 0,
-          currency: safePayload.currency || "INR",
-        });
-      } else if (eventName === "begin_checkout") {
-        const ids = safePayload.items?.map((i) => i.item_id) || [];
-        trackMetaPixel("InitiateCheckout", {
-          content_ids: ids,
-          content_type: "product",
-          value: safePayload.value || 0,
-          currency: "INR",
-          num_items: safePayload.items?.length || 1,
-        });
-      } else if (eventName === "purchase") {
+      // 3. Meta Pixel: Purchase (AddToCart / ViewContent / InitiateCheckout
+      // are sent by their own helpers above, so they aren't repeated here)
+      if (eventName === "purchase") {
         const ids = safePayload.items?.map((i) => i.item_id) || [];
         trackMetaPixel("Purchase", {
           content_ids: ids,
