@@ -59,10 +59,12 @@ async function call(path, payload) {
  * items: [{ variant_id: string, quantity: number }]
  * Returns { token, expires_at, order_id }.
  */
-async function createCheckoutToken({ items, customAttributes = {}, redirectUrl }) {
+async function createCheckoutToken({ items, customAttributes = {}, redirectUrl, cartDiscount = null }) {
   const result = await call('/api/v1/access-token/checkout', {
     cart_data: {
       items,
+      // a fixed discount Shiprocket shows as applied (our bag coupon)
+      ...(cartDiscount && { cart_discount: cartDiscount }),
       custom_attributes: customAttributes,
       mobile_app: false,
     },

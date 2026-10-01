@@ -9,6 +9,7 @@ const { resolveVariantId, ENGRAVING_FEE_VARIANT_ID } = require('./checkout');
 const rateLimit = require('express-rate-limit');
 const srOrders = require('../services/shiprocketOrders');
 const srShipping = require('../services/shiprocketShipping');
+const { bagDiscount } = require('../services/bagCoupons');
 
 const SITE_URL = (process.env.FRONTEND_URL || 'https://sentirebypc.com').replace(/\/+$/, '');
 
@@ -69,10 +70,12 @@ router.post('/checkout-token', async (req, res) => {
   if (utm) customAttributes.utm = utm;
 
   try {
+    const cartItems = [...lines].map(([variant_id, quantity]) => ({ variant_id, quantity }));
     const session = await srCheckout.createCheckoutToken({
-      items: [...lines].map(([variant_id, quantity]) => ({ variant_id, quantity })),
+      items: cartItems,
       customAttributes,
       redirectUrl: `${SITE_URL}/order-success`,
+      cartDiscount: couponCode ? await bagDiscount(couponCode, cartItems) : null,
     });
     if (!session.token) throw new Error('No token returned');
     return res.status(200).json({ ok: true, token: session.token, orderId: session.order_id });
