@@ -146,6 +146,15 @@ export async function startShiprocketCheckout(
       lines.reduce((sum: number, i: any) => sum + (Number(i.price) || 0) * (Number(i.quantity) || 1), 0),
     );
   } catch {}
+  // the bag's coupon: Shiprocket's script picks it up from this cookie and
+  // shows it applied in the checkout (the code must exist in Shiprocket →
+  // Discounts). Cleared when there's none, so an old code isn't reused.
+  try {
+    const code = (opts.couponCode || "").trim().toUpperCase();
+    document.cookie = code
+      ? `discount_code=${encodeURIComponent(code)}; path=/; max-age=3600; SameSite=Lax`
+      : "discount_code=; path=/; max-age=0";
+  } catch {}
   hc.addToCart(event, data.token, { fallbackUrl: shopifyFallbackUrl(items, opts.couponCode) });
 }
 
