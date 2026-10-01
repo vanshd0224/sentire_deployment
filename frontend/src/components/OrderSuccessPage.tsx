@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { PageName } from "../types/appTypes";
-import { fetchShiprocketOrder } from "../utils/shiprocketCheckout";
+import { fetchShiprocketOrder, saveOrder } from "../utils/shiprocketCheckout";
 import { trackEvent } from "../utils/analytics";
 
 type Order = Awaited<ReturnType<typeof fetchShiprocketOrder>>;
@@ -46,8 +46,16 @@ export default function OrderSuccessPage({
     try {
       localStorage.removeItem("sentire_applied_coupon");
     } catch {}
-    // Purchase (Meta Pixel + GA4), once per order even if the page is reopened
     if (!order || !oid) return;
+    // for My Orders on this device
+    saveOrder({
+      orderId: oid,
+      number: order.number || oid.slice(-8).toUpperCase(),
+      total: order.totalAmount ?? null,
+      paymentType: order.paymentType,
+      items: order.items || [],
+    });
+    // Purchase (Meta Pixel + GA4), once per order even if the page is reopened
     try {
       const key = `sentire_purchase_tracked_${oid}`;
       if (localStorage.getItem(key)) return;
@@ -117,9 +125,9 @@ export default function OrderSuccessPage({
               <dl className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-px overflow-hidden border border-ink/10 bg-ink/10 text-left">
                 {oid && (
                   <div className="bg-[#f2f2f0] px-4 py-3">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink/50">Order ID</dt>
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink/50">Order number</dt>
                     <dd className="mt-1 truncate text-[13px]" title={oid}>
-                      {oid.slice(-8).toUpperCase()}
+                      {order?.number || oid.slice(-8).toUpperCase()}
                     </dd>
                   </div>
                 )}
@@ -150,6 +158,20 @@ export default function OrderSuccessPage({
                   className="cursor-pointer bg-ink px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-paper transition-colors duration-300 hover:bg-[#6b1422]"
                 >
                   Continue shopping
+                </button>
+              )}
+              {state !== "failed" && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    try {
+                      localStorage.setItem("sentire_active_track_query", order?.number || oid);
+                    } catch {}
+                    onNavigate?.("track-order");
+                  }}
+                  className="cursor-pointer border-b border-ink/30 pb-1 text-[13px] text-ink hover:border-ink"
+                >
+                  Track this order →
                 </button>
               )}
               <button

@@ -80,4 +80,16 @@ async function getOrderDetails(orderId) {
   });
 }
 
-module.exports = { isConfigured, createCheckoutToken, getOrderDetails, sign };
+/** Order ids (and status) placed between two dates; page is 0-based. */
+async function listOrders({ startDate, endDate, status = 'SUCCESS', page = 0, limit = 250 }) {
+  return call('/api/v1/custom-platform-order/details/list', {
+    startDate,
+    endDate,
+    timestamp: new Date().toISOString(),
+    status,
+    limit,
+    page,
+  });
+}
+
+module.exports = { isConfigured, createCheckoutToken, getOrderDetails, listOrders, sign };

@@ -1,4 +1,5 @@
-import { prepareShopifyCheckoutItems, resolveShopifyVariantId } from "./shopifyCart";
+import { prepareShopifyCheckoutItems, resolveShopifyVariantId, SHOPIFY_VARIANT_MAP } from "./shopifyCart";
+import { ALL_PERFUMES } from "../data/perfumes";
 import { trackInitiateCheckout } from "./analytics";
 
 /*
@@ -154,6 +155,7 @@ export async function fetchShiprocketOrder(orderId: string) {
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.ok) throw new Error(data?.error || "Could not fetch order");
   return data as {
+    number?: string;
     status?: string;
     paymentType?: string;
     paymentStatus?: string;
@@ -162,4 +164,92 @@ export async function fetchShiprocketOrder(orderId: string) {
     totalAmount?: number | null;
     items?: { variantId: string; quantity: number }[];
   };
+}
+
+export type TrackedOrder = {
+  order: {
+    orderId: string;
+    number: string;
+    placedAt: string | null;
+    status: string;
+    paymentType: string | null;
+    paymentStatus: string | null;
+    edd: string | null;
+    firstName: string | null;
+    city: string | null;
+    total: number | null;
+    items: { variantId: string; quantity: number; price: number | null }[];
+  };
+  shipment: {
+    courier: string | null;
+    awb: string | null;
+    status: string | null;
+    edd: string | null;
+    deliveredAt: string | null;
+    trackUrl: string | null;
+    activities: { date: string; status: string; location: string }[];
+  } | null;
+};
+
+/** An order's real status (needs the order number and the phone it was placed with). */
+export async function trackShiprocketOrder(order: string, phone: string): Promise<TrackedOrder> {
+  const res = await fetch(`${API_BASE}/api/shiprocket/track`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ order, phone }),
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok || !data?.ok) throw new Error(data?.error || "Tracking is unavailable right now.");
+  return data as TrackedOrder;
+}
+
+/** What a Shopify variant id is on the site: product name, size and photo. */
+export function productForVariant(variantId: string) {
+  if (variantId === "46947691659425") return { name: "Custom Bottle Engraving", size: "", img: "/assets/sentire-logo-gold.png" };
+  if (variantId === "46965136031905")
+    return { name: "SENTIRE Discovery Set", size: "6 × 6 ML", img: "/discovery/studio/box-front.jpg" };
+  for (const p of ALL_PERFUMES) {
+    for (const [size, id] of Object.entries(SHOPIFY_VARIANT_MAP[p.id] || {})) {
+      if (id === variantId)
+        return { name: p.name, size: `${size} ML`, img: p.sizeImages?.[Number(size) as 10 | 30 | 50]?.[0] || p.img };
+    }
+  }
+  return { name: "SENTIRE Extrait de Parfum", size: "", img: "/assets/sentire-logo-gold.png" };
+}
+
+const MY_ORDERS = "sentire_sr_orders";
+
+/** Orders placed on this device through Shiprocket Checkout (newest first), for My Orders. */
+export function getSavedOrders(): any[] {
+  try {
+    const list = JSON.parse(localStorage.getItem(MY_ORDERS) || "[]");
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveOrder(order: {
+  orderId: string;
+  number: string;
+  total: number | null;
+  paymentType?: string | null;
+  items: { variantId: string; quantity: number; price?: number | null }[];
+}) {
+  try {
+    const list = getSavedOrders().filter((o) => o.id !== order.orderId);
+    list.unshift({
+      id: order.orderId,
+      orderNumber: order.number,
+      date: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+      status: "Confirmed",
+      total: Number(order.total) || 0,
+      paymentType: order.paymentType || null,
+      items: order.items.map((i) => {
+        const p = productForVariant(i.variantId);
+        return { name: p.name, size: p.size.replace(/\s*ML$/i, ""), quantity: i.quantity, price: Number(i.price) || 0, img: p.img };
+      }),
+    });
+    localStorage.setItem(MY_ORDERS, JSON.stringify(list.slice(0, 50)));
+  } catch {}
 }

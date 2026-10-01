@@ -37,10 +37,21 @@ jobs:
           # Only set when present, so an empty value never wipes what Cloud Run has.
           SR_KEY: ${{ secrets.SHIPROCKET_CHECKOUT_API_KEY || vars.SHIPROCKET_CHECKOUT_API_KEY }}
           SR_SECRET: ${{ secrets.SHIPROCKET_CHECKOUT_API_SECRET || vars.SHIPROCKET_CHECKOUT_API_SECRET }}
+          # Shiprocket API user, for courier tracking on the Track Order page
+          SR_API_EMAIL: ${{ secrets.SHIPROCKET_API_EMAIL || vars.SHIPROCKET_API_EMAIL }}
+          SR_API_PASSWORD: ${{ secrets.SHIPROCKET_API_PASSWORD }}
         run: |
-          ENV_FLAGS=()
+          VARS=()
           if [ -n "$SR_KEY" ] && [ -n "$SR_SECRET" ]; then
-            ENV_FLAGS=(--update-env-vars "SHIPROCKET_CHECKOUT_API_KEY=${SR_KEY},SHIPROCKET_CHECKOUT_API_SECRET=${SR_SECRET}")
+            VARS+=("SHIPROCKET_CHECKOUT_API_KEY=${SR_KEY}" "SHIPROCKET_CHECKOUT_API_SECRET=${SR_SECRET}")
+          fi
+          if [ -n "$SR_API_EMAIL" ] && [ -n "$SR_API_PASSWORD" ]; then
+            VARS+=("SHIPROCKET_API_EMAIL=${SR_API_EMAIL}" "SHIPROCKET_API_PASSWORD=${SR_API_PASSWORD}")
+          fi
+          ENV_FLAGS=()
+          if [ ${#VARS[@]} -gt 0 ]; then
+            # "^|^" makes | the separator, so values may contain commas
+            ENV_FLAGS=(--update-env-vars "^|^$(IFS='|'; echo "${VARS[*]}")")
           fi
           gcloud run deploy ecommerce-backend \
             --image asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/ecommerce-backend-repo/ecommerce-backend:latest \

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../lib/firebase";
+import { getSavedOrders } from "../utils/shiprocketCheckout";
 import {
   signOut,
   onAuthStateChanged,
@@ -113,6 +114,13 @@ export default function AccountPage({
         }
       } catch (e) {}
     }
+
+    // orders placed through Shiprocket Checkout on this device
+    const placed = getSavedOrders();
+    currentOrders = [
+      ...placed,
+      ...currentOrders.filter((o: any) => !placed.some((p) => p.id === o.id)),
+    ];
 
     // Persist orders safely across logins
     try {
@@ -632,7 +640,11 @@ export default function AccountPage({
                       <div className="pt-2 border-t border-[#e2e2df] flex items-center justify-between">
                         {" "}
                         <span className="text-[11px] max-sm:text-[12px] text-[#777777]">
-                          Shipped via Express Courier
+                          {ord.paymentType
+                            ? String(ord.paymentType).toUpperCase().includes("CASH")
+                              ? "Cash on delivery"
+                              : "Paid online"
+                            : "Track for the latest status"}
                         </span>{" "}
                         <button
                           onClick={() => {

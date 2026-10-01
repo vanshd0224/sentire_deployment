@@ -6,6 +6,9 @@ const logger = require('../utils/logger');
 const srCheckout = require('../services/shiprocketCheckout');
 const ShiprocketOrder = require('../models/ShiprocketOrder');
 const { resolveVariantId, ENGRAVING_FEE_VARIANT_ID } = require('./checkout');
+const rateLimit = require('express-rate-limit');
+const srOrders = require('../services/shiprocketOrders');
+const srShipping = require('../services/shiprocketShipping');
 
 const SITE_URL = (process.env.FRONTEND_URL || 'https://sentirebypc.com').replace(/\/+$/, '');
 
@@ -133,6 +136,7 @@ router.get('/order-status/:orderId', async (req, res) => {
     recordOrder(o).catch(() => {});
     return res.status(200).json({
       ok: true,
+      number: srOrders.orderNumber(o),
       status: o?.status,
       paymentType: o?.payment_type,
       paymentStatus: o?.payment_status,
@@ -143,6 +147,69 @@ router.get('/order-status/:orderId', async (req, res) => {
     });
   } catch (error) {
     return res.status(error.status || 502).json({ ok: false, error: 'Could not fetch order' });
+  }
+});
+
+// Order tracking needs the order number and the phone it was placed with,
+// so this keeps guessing slow (per visitor; Cloud Run sets X-Forwarded-For).
+const trackLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  validate: { xForwardedForHeader: false, trustProxy: false },
+  keyGenerator: (req) => String(req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim(),
+  handler: (req, res) =>
+    res.status(429).json({ ok: false, error: 'Too many attempts. Please try again in a few minutes.' }),
+});
+
+const trackSchema = z.object({
+  order: z.string().trim().min(4).max(40),
+  phone: z.string().trim().min(10).max(16),
+});
+
+// POST /api/shiprocket/track  { order, phone }
+// The real state of an order: what Shiprocket Checkout recorded, plus the
+// courier's tracking once it has shipped. Both fields must match the order;
+// otherwise it's "not found" (whether or not the order exists).
+router.post('/track', trackLimiter, async (req, res) => {
+  const parsed = trackSchema.safeParse(req.body);
+  if (!parsed.success) return res.status(400).json({ ok: false, error: 'Enter your order number and phone number.' });
+  if (!srCheckout.isConfigured()) return res.status(503).json({ ok: false, error: 'Tracking is unavailable right now.' });
+
+  try {
+    const o = await srOrders.findOrder(parsed.data.order, parsed.data.phone);
+    if (!o) {
+      return res.status(404).json({
+        ok: false,
+        error: "We couldn't find an order with that number and phone. Please check both and try again.",
+      });
+    }
+    const shipment = await srShipping.trackOrder([o.order_id, o.fastrr_order_id]);
+    return res.status(200).json({
+      ok: true,
+      order: {
+        orderId: o.order_id,
+        number: srOrders.orderNumber(o),
+        placedAt: o.order_created_date || null,
+        status: o.status,
+        paymentType: o.payment_type,
+        paymentStatus: o.payment_status,
+        edd: o.edd || null,
+        firstName: o.shipping_address?.first_name || null,
+        city: o.shipping_address?.city || null,
+        total: o.total_amount_payable ?? null,
+        items: (o.cart_data?.items || []).map((i) => ({
+          variantId: String(i.variant_id),
+          quantity: i.quantity,
+          price: i.price ?? null,
+        })),
+      },
+      shipment,
+    });
+  } catch (error) {
+    logger.error('Shiprocket track failed', { message: error.message });
+    return res.status(502).json({ ok: false, error: 'Tracking is unavailable right now. Please try again shortly.' });
   }
 });
 

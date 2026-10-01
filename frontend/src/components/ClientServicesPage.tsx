@@ -111,7 +111,7 @@ const CATEGORIES: {
 const FAQS = [
   {
     q: "How can I track my Sentire order?",
-    a: "You can track your package instantly using our dedicated Track My Order page by entering your Order Number (e.g. SNT-84920) or your courier AWB tracking number. All orders are dispatched via break-proof express courier.",
+    a: "You can track your package instantly using our dedicated Track My Order page by entering your order number and the phone number you ordered with. Once your parcel ships you also get the courier tracking link by SMS / WhatsApp. All orders are dispatched via break-proof express courier.",
   },
   {
     q: "Can I modify or cancel an order after placing it?",
