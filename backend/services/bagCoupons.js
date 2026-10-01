@@ -35,13 +35,20 @@ async function variantPrices() {
   return prices;
 }
 
+// public codes anyone can use; with a bag coupon, the best one applies
+const PUBLIC = ['PC100', 'PC200'];
+
 /**
- * The discount for `code` on these cart lines ([{ variant_id, quantity }]),
- * as Shiprocket's cart_discount ({ coupon_code, amount }), or null.
+ * The discount for these cart lines ([{ variant_id, quantity }]) when the
+ * bag has coupon `code`, as Shiprocket's cart_discount
+ * ({ coupon_code, amount }), or null. Shiprocket then locks the checkout to
+ * that discount (its own coupon list can't replace it), so the customer
+ * gets the best of their code and the public codes they qualify for; the
+ * code they entered is still kept on the order (requested_coupon).
  */
 async function bagDiscount(code, lines) {
-  const rule = RULES[String(code || '').trim().toUpperCase()];
-  if (!rule) return null;
+  const entered = String(code || '').trim().toUpperCase();
+  if (!RULES[entered]) return null;
   try {
     const map = await variantPrices();
     let subtotal = 0;
@@ -50,8 +57,14 @@ async function bagDiscount(code, lines) {
       if (!Number.isFinite(price)) return null; // unknown item: don't guess
       subtotal += price * l.quantity;
     }
-    if (subtotal < rule.min) return null;
-    return { coupon_code: String(code).trim().toUpperCase(), amount: Math.min(rule.off, subtotal) };
+    let best = null;
+    for (const c of [entered, ...PUBLIC.filter((p) => p !== entered)]) {
+      const rule = RULES[c];
+      if (subtotal < rule.min) continue;
+      const amount = Math.min(rule.off, subtotal);
+      if (!best || amount > best.amount) best = { coupon_code: c, amount };
+    }
+    return best;
   } catch (error) {
     logger.warn('Bag coupon not applied', { message: error.message });
     return null;

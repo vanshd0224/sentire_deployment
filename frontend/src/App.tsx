@@ -7,7 +7,7 @@ import HeroRing from "./editorial/home/HeroRing";
 // the previous opening, kept so it can be restored in one line
 // import Hero from "./components/Hero";
 import HoverHero from "./editorial/home/HoverHero";
-import { CursorLabel, ScrollProgress } from "./editorial/home/CursorLabel";
+import { ScrollProgress } from "./editorial/home/CursorLabel";
 import RetailerBadges from "./components/RetailerBadges";
 import ShopByCategory from "./components/ShopByCategory";
 import BestSellers from "./components/BestSellers";
@@ -776,7 +776,6 @@ export default function App() {
         ) : (
           <main>
             <ScrollProgress />
-            <CursorLabel />
             <HoverHero
               onNavigate={handleNavigate}
               onSelectProduct={handleOpenProductModal}
