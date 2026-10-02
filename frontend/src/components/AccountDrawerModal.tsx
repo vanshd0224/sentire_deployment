@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { auth } from "../lib/firebase";
 import {
   RecaptchaVerifier,
@@ -8,6 +8,14 @@ import {
   signInWithRedirect,
   getRedirectResult,
 } from "firebase/auth";
+
+// our server (Cloud Run) on the live site; VITE_BACKEND_URL or the dev proxy locally
+const AUTH_BASE =
+  (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname.includes("run.app") || window.location.hostname.includes("sentirebypc.com"))
+    ? "https://ecommerce-backend-1041917436859.asia-south1.run.app"
+    : "");
 
 interface AccountDrawerModalProps {
   isOpen: boolean;
@@ -97,51 +105,60 @@ export default function AccountDrawerModal({
   // Clean reCAPTCHA init
 
   // Submit Phone Number with E.164 formatting
+  // the OTP request MSG91 is checking (and our server's signature for it)
+  const otpRequest = useRef<{ reqId: string; ticket: string; exp: number } | null>(null);
+
+  const requestOtp = async (cleanDigits: string) => {
+    const res = await fetch(`${AUTH_BASE}/auth/send-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phoneNumber: `+91${cleanDigits}` }),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok || !data?.success) throw new Error(data?.error || "We couldn't send the OTP. Please try again.");
+    otpRequest.current = { reqId: data.reqId, ticket: data.ticket, exp: data.exp };
+  };
+
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-    const cleanDigits = phoneNumber.replace(/[^0-9]/g, "");
+    const cleanDigits = phoneNumber.replace(/[^0-9]/g, "").replace(/^91(?=\d{10}$)/, "");
 
     if (cleanDigits.length !== 10) {
       setErrorMessage("Please enter a valid 10-digit mobile number.");
       return;
     }
 
-    const fullE164 = `+91${cleanDigits}`;
-    setPhoneNumber(fullE164);
     setIsSendingOtp(true);
+    // Capture lead in database silently for Abandoned Cart recovery
+    fetch(`${AUTH_BASE}/api/leads/capture`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone: cleanDigits }),
+    }).catch(() => {});
 
     try {
-      const backendUrl =
-        window.location.hostname.includes("run.app") ||
-        window.location.hostname.includes("sentirebypc.com")
-          ? "https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/send-otp"
-          : "/auth/send-otp";
-
-      const captureUrl =
-        window.location.hostname.includes("run.app") ||
-        window.location.hostname.includes("sentirebypc.com")
-          ? "https://ecommerce-backend-1041917436859.asia-south1.run.app/api/leads/capture"
-          : "/api/leads/capture";
-
-      // Capture lead in database silently for Abandoned Cart recovery
-      fetch(captureUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: cleanDigits }),
-      }).catch(() => {});
-
-      await fetch(backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber: fullE164 }),
-      });
-    } catch (err: any) {
-      console.log("OTP Send notice:", err.message);
-    } finally {
-      setIsSendingOtp(false);
+      await requestOtp(cleanDigits);
+      setPhoneNumber(`+91${cleanDigits}`);
+      setOtpValues(["", "", "", ""]);
       setViewMode("otp");
       setResendTimer(30);
+    } catch (err: any) {
+      setErrorMessage(err.message);
+    } finally {
+      setIsSendingOtp(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setErrorMessage("");
+    setResendTimer(30);
+    try {
+      await requestOtp(phoneNumber.replace(/[^0-9]/g, "").slice(-10));
+      setOtpValues(["", "", "", ""]);
+    } catch (err: any) {
+      setErrorMessage(err.message);
+      setResendTimer(0);
     }
   };
 
@@ -154,44 +171,41 @@ export default function AccountDrawerModal({
       setErrorMessage("Please enter 4-digit OTP code.");
       return;
     }
+    if (!otpRequest.current) {
+      setErrorMessage("Please request a new OTP.");
+      return;
+    }
 
     setIsVerifyingOtp(true);
-
     try {
-      const backendUrl =
-        window.location.hostname.includes("run.app") ||
-        window.location.hostname.includes("sentirebypc.com")
-          ? "https://ecommerce-backend-1041917436859.asia-south1.run.app/auth/verify-otp"
-          : "/auth/verify-otp";
-
-      const verifyRes = await fetch(backendUrl, {
+      const verifyRes = await fetch(`${AUTH_BASE}/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber, code: enteredOtp }),
+        body: JSON.stringify({ phoneNumber, code: enteredOtp, ...otpRequest.current }),
       });
-      const verifyData = await verifyRes.json();
-
-      if (verifyData && !verifyData.success && verifyData.error) {
-        setErrorMessage(verifyData.error);
+      const verifyData = await verifyRes.json().catch(() => null);
+      if (!verifyRes.ok || !verifyData?.success) {
+        setErrorMessage(verifyData?.error || "We couldn't verify the OTP. Please try again.");
         return;
       }
-    } catch (err: any) {
-      console.log("OTP Verify notice:", err.message);
-    } finally {
-      setIsVerifyingOtp(false);
+      otpRequest.current = null;
       localStorage.setItem("sentire_user_phone", phoneNumber || "");
       localStorage.setItem("sentire_is_logged_in", "true");
-
-      const existingName =
-        localStorage.getItem("sentire_user_name") ||
-        auth.currentUser?.displayName;
-      if (!existingName || existingName.startsWith("+")) {
-        setViewMode("name-prompt");
-        return;
-      }
-
-      handleLoginCompletion();
+      if (verifyData.token) localStorage.setItem("sentire_session_token", verifyData.token);
+    } catch (err: any) {
+      setErrorMessage("We couldn't verify the OTP. Please check your connection and try again.");
+      return;
+    } finally {
+      setIsVerifyingOtp(false);
     }
+
+    const existingName =
+      localStorage.getItem("sentire_user_name") || auth.currentUser?.displayName;
+    if (!existingName || existingName.startsWith("+")) {
+      setViewMode("name-prompt");
+      return;
+    }
+    handleLoginCompletion();
   };
 
   // Google Sign In
@@ -451,7 +465,7 @@ export default function AccountDrawerModal({
                 <button
                   type="button"
                   disabled={resendTimer > 0}
-                  onClick={() => setResendTimer(30)}
+                  onClick={handleResendOtp}
                   className="text-[color:var(--accent)] font-semibold underline disabled:opacity-50 cursor-pointer"
                 >
                   {" "}
