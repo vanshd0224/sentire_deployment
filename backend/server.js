@@ -18,7 +18,6 @@ const analyticsRouter = require('./routes/analytics');
 const bundlesRouter = require('./routes/bundles');
 const integrationsRouter = require('./routes/integrations');
 const uploadsRouter = require('./routes/uploads');
-const affiliates = require('./routes/affiliates');
 const leadsRouter = require('./routes/leads');
 const pincodeRouter = require('./routes/pincode');
 
@@ -81,7 +80,8 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
+    database: require('mongoose').connection.readyState === 1 ? 'connected' : 'offline',
   });
 });
 
@@ -95,15 +95,15 @@ app.use('/analytics', analyticsRouter);
 app.use('/bundles', bundlesRouter);
 app.use('/integrations', integrationsRouter);
 app.use('/uploads', uploadsRouter);
-app.use('/affiliates', affiliates.publicRoutes);
-app.use('/admin/affiliates', affiliates.adminRoutes);
 app.use('/leads', leadsRouter);
+app.use('/api/leads', leadsRouter); // the site posts here
 app.use('/checkout', require('./routes/checkout'));
 app.use('/api/enquiries', require('./routes/enquiry'));
 app.use('/pincode', pincodeRouter);
 app.use('/api/pincode', pincodeRouter);
 app.use('/api/sr/seller', require('./routes/shiprocketSeller'));
 app.use('/api/shiprocket', require('./routes/shiprocketCheckout'));
+app.use('/api/partners', require('./routes/partners'));
 app.use('/feeds', require('./routes/feeds'));
 app.use('/assets', express.static(require('path').join(__dirname, 'public', 'assets')));
 

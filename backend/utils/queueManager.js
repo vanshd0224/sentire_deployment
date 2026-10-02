@@ -63,21 +63,8 @@ class QueueManager {
   async _processJobInline(jobName, payload) {
     logger.info(`[Inline Worker Processing] Executing ${jobName}`);
     try {
-      if (jobName === 'process-order-created') {
-        const noteAttributes = payload.note_attributes || payload.attributes || [];
-        const affiliateAttr = noteAttributes.find(attr => (attr.name || attr.key) === 'affiliate_ref');
-
-        if (affiliateAttr && affiliateAttr.value) {
-          const referralCode = affiliateAttr.value;
-          const orderId = payload.id?.toString();
-          const orderValue = parseFloat(payload.total_price || payload.total_price_set?.shop_money?.amount || '0');
-
-          if (orderId && orderValue > 0) {
-            const payoutService = require('../services/affiliate/payoutService');
-            await payoutService.processOrderConversion(referralCode, orderId, orderValue);
-          }
-        }
-      }
+      // Partner (affiliate) commission now comes from Shiprocket Checkout
+      // orders (services/partners.js), not Shopify order webhooks.
     } catch (err) {
       logger.error(`Error in background job worker (${jobName}): ${err.message}`);
     }

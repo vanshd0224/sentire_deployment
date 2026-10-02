@@ -1,6 +1,7 @@
 import { prepareShopifyCheckoutItems, resolveShopifyVariantId, SHOPIFY_VARIANT_MAP } from "./shopifyCart";
 import { ALL_PERFUMES } from "../data/perfumes";
 import { trackInitiateCheckout } from "./analytics";
+import { getPartnerRef } from "./partners";
 
 /*
  * Shiprocket Checkout (custom website integration). Our server signs the
@@ -127,6 +128,7 @@ export async function startShiprocketCheckout(
           engravingDate: i.engravingDate || undefined,
         })),
         couponCode: opts.couponCode || undefined,
+        ref: getPartnerRef(), // influencer partner link, if they came from one
         utm,
       }),
     }),

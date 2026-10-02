@@ -313,6 +313,29 @@ export function getPageMetadata(
         twitterCard: "summary",
       };
 
+    case "partners":
+      return {
+        title: "Partner with SENTIRE By PC | Influencer programme",
+        description:
+          "Influencers: get your own link and coupon for SENTIRE By PC extrait de parfum, and earn 15% on every order that comes through it.",
+        canonical: `${PRODUCTION_DOMAIN}/partners`,
+        robots: "index, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
+    case "admin":
+      return {
+        title: "Admin | SENTIRE By PC",
+        description: "Admin.",
+        canonical: `${PRODUCTION_DOMAIN}/`,
+        robots: "noindex, nofollow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
     case "order-success":
       return {
         title: "Order confirmed | SENTIRE By PC",

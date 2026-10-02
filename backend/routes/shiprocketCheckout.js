@@ -10,6 +10,7 @@ const rateLimit = require('express-rate-limit');
 const srOrders = require('../services/shiprocketOrders');
 const srShipping = require('../services/shiprocketShipping');
 const { bagDiscount } = require('../services/bagCoupons');
+const partners = require('../services/partners');
 
 const SITE_URL = (process.env.FRONTEND_URL || 'https://sentirebypc.com').replace(/\/+$/, '');
 
@@ -31,6 +32,7 @@ const tokenSchema = z.object({
     .min(1)
     .max(30),
   couponCode: z.string().max(40).optional(),
+  ref: z.string().max(40).optional(), // influencer partner link the customer came from
   utm: z.string().max(300).optional(),
 });
 
@@ -41,7 +43,11 @@ router.post('/checkout-token', async (req, res) => {
   if (!parsed.success) return res.status(400).json({ ok: false, error: 'Invalid cart' });
   if (!srCheckout.isConfigured()) return res.status(503).json({ ok: false, error: 'Checkout unavailable' });
 
-  const { items, couponCode, utm } = parsed.data;
+  const { items, utm, ref } = parsed.data;
+  // an influencer partner gets the order: their coupon, else their link
+  const partner = await partners.partnerFor({ couponCode: parsed.data.couponCode, ref }).catch(() => null);
+  // came by a partner link without a coupon in the bag: their coupon applies
+  const couponCode = parsed.data.couponCode || (partner ? partner.code : undefined);
   // one line per variant; engraving is its own paid line, like the Shopify cart
   const lines = new Map();
   const engravings = [];
@@ -68,6 +74,7 @@ router.post('/checkout-token', async (req, res) => {
   if (engravings.length) customAttributes.engraving = engravings.join(' | ');
   if (couponCode) customAttributes.requested_coupon = couponCode;
   if (utm) customAttributes.utm = utm;
+  if (partner) customAttributes.affiliate = partner.code;
 
   try {
     const cartItems = [...lines].map(([variant_id, quantity]) => ({ variant_id, quantity }));
@@ -88,6 +95,8 @@ router.post('/checkout-token', async (req, res) => {
 // Save (or update) an order from Shiprocket's data. Safe to repeat.
 async function recordOrder(o) {
   if (!o?.order_id || mongoose.connection.readyState !== 1) return;
+  // credit an influencer partner, if the order came through one
+  await partners.recordOrder(o).catch((e) => logger.warn('Partner order not recorded', { message: e.message }));
   await ShiprocketOrder.findOneAndUpdate(
     { orderId: String(o.order_id) },
     {

@@ -1,4 +1,5 @@
 const logger = require('../utils/logger');
+const partners = require('./partners');
 
 /**
  * The website's bag coupons, so the discount a customer sees in the bag is
@@ -48,7 +49,9 @@ const PUBLIC = ['PC100', 'PC200'];
  */
 async function bagDiscount(code, lines) {
   const entered = String(code || '').trim().toUpperCase();
-  if (!RULES[entered]) return null;
+  // the bag's code: a site code, or an influencer partner's code
+  const enteredRule = RULES[entered] || (await partners.partnerRule(entered));
+  if (!enteredRule) return null;
   try {
     const map = await variantPrices();
     let subtotal = 0;
@@ -59,7 +62,7 @@ async function bagDiscount(code, lines) {
     }
     let best = null;
     for (const c of [entered, ...PUBLIC.filter((p) => p !== entered)]) {
-      const rule = RULES[c];
+      const rule = c === entered ? enteredRule : RULES[c];
       if (subtotal < rule.min) continue;
       const amount = Math.min(rule.off, subtotal);
       if (!best || amount > best.amount) best = { coupon_code: c, amount };

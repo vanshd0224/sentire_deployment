@@ -9,6 +9,10 @@ import "./index.css";
 import { MotionConfig } from "framer-motion";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { capturePartnerRef } from "./utils/partners";
+
+// influencer links (/r/CODE, ?ref=CODE): before the app reads the URL
+capturePartnerRef();
 
 /**
  * Meta Pixel, without the startup cost.

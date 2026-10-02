@@ -79,4 +79,10 @@ async function findOrder(query, phone) {
   return phones.includes(p) ? o : null;
 }
 
-module.exports = { findOrder, orderNumber };
+/** Every successful order of the last LOOKBACK_DAYS, with its details. */
+async function recentOrders() {
+  await ensureIndex();
+  return indexIds.map((id) => details.get(id)).filter(Boolean);
+}
+
+module.exports = { findOrder, orderNumber, recentOrders };

@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, type MouseEvent } from "react";
+import { couponDiscount as discountForCoupon, lookupCoupon } from "../utils/coupons";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { isShiprocketCheckoutOn, startShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { ALL_PERFUMES } from "../data/perfumes";
@@ -141,20 +142,10 @@ export default function CartPage({
     [items],
   );
 
-  const couponDiscount = useMemo(() => {
-    if (!appliedCoupon) return 0;
-    if (appliedCoupon === "PC100" && subtotal >= 999) return 100;
-    if (appliedCoupon === "TEST99") return Math.min(99, subtotal);
-    if (
-      (appliedCoupon === "ANSH150" ||
-        appliedCoupon === "BHAVYA150" ||
-        appliedCoupon === "AV150") &&
-      subtotal >= 1249
-    )
-      return 150;
-    if (appliedCoupon === "PC200" && subtotal >= 1999) return 200;
-    return 0;
-  }, [appliedCoupon, subtotal]);
+  const couponDiscount = useMemo(
+    () => discountForCoupon(appliedCoupon, subtotal),
+    [appliedCoupon, subtotal],
+  );
 
   const FREE_SHIPPING_THRESHOLD = 999;
   const progressPercent = Math.min(
@@ -171,42 +162,24 @@ export default function CartPage({
     items.length === 0 ? 0 : isFreeShippingUnlocked ? 0 : 100;
   const finalTotal = Math.max(0, subtotal - couponDiscount + shippingCost);
 
-  const handleApplyCoupon = (codeToApply?: string) => {
+  const handleApplyCoupon = async (codeToApply?: string) => {
     const code = (codeToApply || couponInput).trim().toUpperCase();
     setCouponError(null);
     setCouponSuccess(null);
+    if (!code) return;
 
-    if (code === "TEST99") {
-      setAppliedCoupon("TEST99");
-      setCouponSuccess("Test Code TEST99 applied!");
-    } else if (code === "PC100") {
-      if (subtotal < 999) {
-        setCouponError("Code PC100 requires a minimum order of ₹999");
-        return;
-      }
-      setAppliedCoupon("PC100");
-      setCouponSuccess("Code PC100 applied! ₹100 OFF");
-    } else if (
-      code === "ANSH150" ||
-      code === "BHAVYA150" ||
-      code === "AV150"
-    ) {
-      if (subtotal < 1249) {
-        setCouponError(`Code ${code} requires a minimum order of ₹1,249`);
-        return;
-      }
-      setAppliedCoupon(code);
-      setCouponSuccess(`Code ${code} applied! ₹150 OFF`);
-    } else if (code === "PC200") {
-      if (subtotal < 1999) {
-        setCouponError("Code PC200 requires a minimum order of ₹1,999");
-        return;
-      }
-      setAppliedCoupon("PC200");
-      setCouponSuccess("Code PC200 applied! ₹200 OFF");
-    } else {
+    // the site's codes, or an influencer's code (checked with our server)
+    const rule = await lookupCoupon(code);
+    if (!rule) {
       setCouponError("Invalid promo code");
+      return;
     }
+    if (subtotal < rule.min) {
+      setCouponError(`Code ${code} requires a minimum order of ₹${rule.min.toLocaleString("en-IN")}`);
+      return;
+    }
+    setAppliedCoupon(code);
+    setCouponSuccess(`Code ${code} applied! ₹${rule.off} OFF`);
   };
 
   const handleRemoveCoupon = () => {

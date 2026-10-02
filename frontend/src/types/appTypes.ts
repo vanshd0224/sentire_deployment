@@ -14,6 +14,8 @@ export type PageName =
   | "account"
   | "cart"
   | "order-success"
+  | "partners"
+  | "admin"
   | "not-found";
 
 export interface PerfumeProduct {
