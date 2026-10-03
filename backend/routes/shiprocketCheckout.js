@@ -27,6 +27,7 @@ const tokenSchema = z.object({
         isPersonalised: z.boolean().optional(),
         engravingText: z.string().max(40).optional(),
         engravingDate: z.string().max(20).optional(),
+        bundleSize: z.number().int().min(2).max(4).optional(), // Build-Your-Own-Bundle bottle
       }),
     )
     .min(1)
@@ -82,7 +83,13 @@ router.post('/checkout-token', async (req, res) => {
       items: cartItems,
       customAttributes,
       redirectUrl: `${SITE_URL}/order-success`,
-      cartDiscount: couponCode ? await bagDiscount(couponCode, cartItems) : null,
+      cartDiscount: await bagDiscount(
+        couponCode,
+        cartItems,
+        items
+          .filter((i) => i.bundleSize)
+          .map((i) => ({ variant_id: String(resolveVariantId(i)), quantity: i.quantity || 1, bundleSize: i.bundleSize })),
+      ),
     });
     if (!session.token) throw new Error('No token returned');
     return res.status(200).json({ ok: true, token: session.token, orderId: session.order_id });

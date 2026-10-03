@@ -207,7 +207,7 @@ const BYOB_FAQS = [
 interface ByobPageProps {
   onBackToHome: () => void;
   onAddToCart?: (
-    product: { id: string; name: string; num?: string; img: string },
+    product: { id: string; name: string; num?: string; img: string; bundleSize?: number },
     size: number,
     price: number,
   ) => void;
@@ -324,6 +324,7 @@ export default function ByobPage({
               name: `${item.name} 50ML Extrait`,
               num: item.num,
               img: item.image,
+              bundleSize, // the checkout applies the same bundle discount
             },
             50,
             Math.max(0, item.price50ml - perBottleDiscount),

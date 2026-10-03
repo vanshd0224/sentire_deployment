@@ -143,6 +143,19 @@ export default function App() {
     }
   }, [cartItems]);
 
+  // Something in the bag: get Shiprocket Checkout ready in the background
+  // (its script also pre-loads the checkout window), so "Proceed to
+  // checkout" opens it straight away instead of after ~8–10 s.
+  const hasBagItems = cartItems.length > 0;
+  useEffect(() => {
+    if (!hasBagItems) return;
+    const warm = () =>
+      import("./utils/shiprocketCheckout").then((m) => m.warmShiprocketCheckout()).catch(() => {});
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    if (w.requestIdleCallback) w.requestIdleCallback(warm, { timeout: 4000 });
+    else window.setTimeout(warm, 2000);
+  }, [hasBagItems]);
+
   useEffect(() => {
     if (cartToast) {
       const timer = setTimeout(() => setCartToast(null), 3500);
@@ -537,6 +550,8 @@ export default function App() {
       isPersonalised,
       engravingText,
       engravingDate,
+      // Build-Your-Own-Bundle bottle: its bundle (2/3/4) sets the discount at checkout
+      ...(item?.bundleSize ? { bundleSize: Number(item.bundleSize) } : {}),
     };
 
     setCartItems((prev) => {

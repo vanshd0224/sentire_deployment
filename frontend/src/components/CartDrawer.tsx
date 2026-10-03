@@ -112,6 +112,7 @@ export interface CartItem {
   isPersonalised?: boolean;
   engravingText?: string;
   engravingDate?: string;
+  bundleSize?: number; // a Build-Your-Own-Bundle bottle (2/3/4)
 }
 
 export interface CartDrawerProps {

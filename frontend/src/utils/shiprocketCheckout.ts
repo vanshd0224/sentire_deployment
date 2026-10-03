@@ -159,6 +159,7 @@ export async function startShiprocketCheckout(
           isPersonalised: Boolean(i.isPersonalised),
           engravingText: i.engravingText || undefined,
           engravingDate: i.engravingDate || undefined,
+          bundleSize: i.bundleSize || undefined, // bundle discount, worked out by the server
         })),
         couponCode: opts.couponCode || undefined,
         ref: getPartnerRef(), // influencer partner link, if they came from one
