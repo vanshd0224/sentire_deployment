@@ -593,7 +593,7 @@
       const res = await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userText, sessionId: 'sentire-web-session' })
+        body: JSON.stringify({ message: userText, sessionId: (function(){ try { var k='sentire_chat_session', v=localStorage.getItem(k); if(!v){ v='web-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10); localStorage.setItem(k,v);} return v; } catch(e){ return 'web-anon'; } })() })
       });
       const data = await res.json();
 

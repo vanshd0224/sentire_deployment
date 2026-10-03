@@ -25,6 +25,12 @@ export function getPartnerRef(): string | undefined {
 
 /** Run once on page load: pick up /r/CODE or ?ref=CODE. */
 export function capturePartnerRef() {
+  // keep the ad / campaign source for this visit (the site rewrites the address)
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const utm = [...p].filter(([k]) => k.startsWith("utm_")).map(([k, v]) => `${k}=${v}`).join("&");
+    if (utm) sessionStorage.setItem("sentire_utm", utm.slice(0, 300));
+  } catch {}
   try {
     const url = new URL(window.location.href);
     const fromPath = url.pathname.match(/^\/r\/([^/?#]+)/i)?.[1];

@@ -42,9 +42,9 @@ const CATEGORIES: {
   },
   {
     id: "returns-exchanges",
-    label: "Returns & Exchanges",
+    label: "Order Issues",
     icon: "↩",
-    desc: "Damaged item, returns & refund status",
+    desc: "Delivery problems & refund status",
   },
   {
     id: "product-guidance",
@@ -115,15 +115,15 @@ const FAQS = [
   },
   {
     q: "Can I modify or cancel an order after placing it?",
-    a: "Orders are processed swiftly within 24 hours at our Jaipur facility. If you need to update a delivery address or modify items, please submit an Order Support enquiry immediately or call Client Services at +91 98765 43210.",
+    a: "Orders can't be cancelled or changed once placed, as they are processed within 24 hours at our Jaipur facility. Please check your order and delivery address before you place it. For questions, call or WhatsApp Client Services at +91 99508 91935.",
   },
   {
-    q: "How do I request a return or exchange?",
-    a: "Sentire offers standard return assistance for items damaged in transit or incorrect dispatches. Submit a Return & Exchange request with photos of the package and item. Our team will verify and arrange a complimentary replacement.",
+    q: "Do you accept returns or exchanges?",
+    a: "No. All sales are final: orders can't be returned, exchanged or replaced once placed. Not sure about a scent? Try our Discovery Set first, or ask Client Services for a recommendation before you order.",
   },
   {
     q: "What should I do if my perfume bottle arrives damaged?",
-    a: "We take extreme care with break-proof eco-luxury packaging. In the rare event of transit damage, please keep the original packaging and upload photos through our Damaged Product submission flow. We will dispatch a new bottle immediately.",
+    a: "Every bottle is packed in break-proof packaging. If the outer package looks opened or badly damaged when the courier arrives, please don't accept the parcel, and contact us with your order number.",
   },
   {
     q: "Can Sentire help me choose a signature scent?",
@@ -614,16 +614,16 @@ export default function ClientServicesPage({
               {" "}
               <span className="text-[9px] max-sm:text-[12px] font-bold uppercase tracking-[0.06em] text-[color:var(--accent)] block mb-1">
                 {" "}
-                GUARANTEE & REPLACEMENT CONCIERGE
+                BEFORE YOU ORDER
               </span>{" "}
               <h2 className="font-display text-3xl font-semibold text-ink flex items-center gap-3">
                 {" "}
-                <span>↩</span> Returns & Replacements Policy
+                <span>↩</span> Returns &amp; Cancellations
               </h2>{" "}
             </div>{" "}
             <span className="px-4 py-1.5 rounded-full bg-[#f2f2f0] border border-[color:var(--accent)]/30 text-xs font-bold text-[color:var(--accent)] uppercase tracking-[0.06em] self-start md:self-auto">
               {" "}
-              100% Transit Guarantee
+              All sales final
             </span>{" "}
           </div>{" "}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -632,37 +632,37 @@ export default function ClientServicesPage({
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
-                Transit Damage Replacement
+                No Returns or Exchanges
               </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
                 {" "}
-                If your perfume flacon arrives damaged or leaking, we dispatch
-                an immediate complimentary replacement without hassle.
+                Orders cannot be cancelled, returned, exchanged or replaced once
+                placed. Please check the fragrance, size and engraving before
+                you order.
               </p>{" "}
             </div>{" "}
             <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl">⏱</span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
-                7-Day Assistance Window
+                Check at Delivery
               </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
                 {" "}
-                Contact our Jaipur Client Services desk within 7 days of
-                receiving your order to initiate an exchange or replacement
-                request.
+                If the outer package looks opened or badly damaged when the
+                courier arrives, please don't accept the parcel and contact us.
               </p>{" "}
             </div>{" "}
             <div className="p-5 rounded-[4px] bg-[#f7f7f5] border border-black/5">
               {" "}
               <span className="text-xl"></span>{" "}
               <h4 className="text-xs font-bold uppercase tracking-wider text-ink mt-2">
-                Quick Photo Verification
+                Need Help Choosing?
               </h4>{" "}
               <p className="text-xs text-ink/70 mt-1 leading-relaxed">
                 {" "}
-                Simply upload 2 photos of the damaged package using our online
-                form below for instant 1-step verification.
+                Not sure which scent or size? Try the Discovery Set, or ask our
+                Client Services team before you order.
               </p>{" "}
             </div>{" "}
           </div>{" "}
@@ -1587,7 +1587,7 @@ export default function ClientServicesPage({
               </h3>{" "}
               <p className="text-xs text-ink/70 leading-relaxed mt-2 font-sans">
                 {" "}
-                Telephone: <strong>+91 98765 43210</strong>
+                Telephone: <strong>+91 99508 91935</strong>
                 <br /> Email: <strong>support@sentirebypc.com</strong>
                 <br /> Domain: <strong>sentirebypc.com</strong>{" "}
               </p>{" "}

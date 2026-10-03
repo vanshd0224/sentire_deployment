@@ -1027,7 +1027,7 @@ export default function PersonalisationPage({
                       <path d="M3.51 15a9 9 0 1 0 .49-4.47" />{" "}
                     </>
                   ),
-                  label: "30-DAY RETURNS",
+                  label: "DISPATCHED IN 24H",
                 },
               ].map((b, i) => (
                 <div

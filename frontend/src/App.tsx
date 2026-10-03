@@ -53,6 +53,7 @@ const ClientServicesPage = lazy(
 const TrackOrderPage = lazy(() => import("./components/TrackOrderPage"));
 const OrderSuccessPage = lazy(() => import("./components/OrderSuccessPage"));
 const PartnersPage = lazy(() => import("./components/PartnersPage"));
+const PolicyPage = lazy(() => import("./components/PolicyPage"));
 const AdminPage = lazy(() => import("./components/AdminPage"));
 const ProductPage = lazy(() => import("./editorial/product/ProductPage"));
 const ExitIntentPopup = lazy(() => import("./components/ExitIntentPopup"));
@@ -65,7 +66,7 @@ export type { PageName };
  * "200 OK" (which also let search engines index junk URLs as duplicates).
  */
 const KNOWN_PATHS =
-  /^\/(?:$|index\.html|account|cart|bag|checkout|discovery-?set|about|our-story|extrait-de-parfum|35-percent|byob|build-your-own-bundle|personalisation|personalised-perfume|new-arrivals|bestsellers|best-sellers|perfumes|collections|products?|client-services|contact|faqs|shipping|track-order|order-success|partners|admin|ai-information|pages\/)/;
+  /^\/(?:$|index\.html|account|cart|bag|checkout|discovery-?set|about|our-story|extrait-de-parfum|35-percent|byob|build-your-own-bundle|personalisation|personalised-perfume|new-arrivals|bestsellers|best-sellers|perfumes|collections|products?|client-services|contact|faqs|shipping|track-order|order-success|partners|admin|privacy-policy|terms-and-conditions|refund-policy|shipping-policy|r\/|ai-information|pages\/)/;
 
 function isKnownPath(path: string) {
   return KNOWN_PATHS.test(path.replace(/\/+$/, "") || "/");
@@ -182,6 +183,8 @@ export default function App() {
 
     if (path.startsWith("/order-success")) return "order-success";
     if (path.startsWith("/partners")) return "partners";
+    for (const policy of ["privacy-policy", "terms-and-conditions", "refund-policy", "shipping-policy"] as const)
+      if (path.startsWith(`/${policy}`)) return policy;
     if (path.startsWith("/admin")) return "admin";
     if (hash === "#account" || path.includes("account")) return "account";
     if (
@@ -394,6 +397,10 @@ export default function App() {
 
       if (popPath.startsWith("/order-success")) nextPg = "order-success";
       else if (popPath.startsWith("/partners")) nextPg = "partners";
+      else if (popPath.startsWith("/privacy-policy")) nextPg = "privacy-policy";
+      else if (popPath.startsWith("/terms-and-conditions")) nextPg = "terms-and-conditions";
+      else if (popPath.startsWith("/refund-policy")) nextPg = "refund-policy";
+      else if (popPath.startsWith("/shipping-policy")) nextPg = "shipping-policy";
       else if (popPath.startsWith("/admin")) nextPg = "admin";
       else if (hash === "#account" || popPath.includes("account"))
         nextPg = "account";
@@ -777,6 +784,11 @@ export default function App() {
             onBackToHome={() => handleNavigate("home")}
             onNavigateToContact={() => handleNavigate("client-services")}
           />
+        ) : currentPage === "privacy-policy" ||
+          currentPage === "terms-and-conditions" ||
+          currentPage === "refund-policy" ||
+          currentPage === "shipping-policy" ? (
+          <PolicyPage slug={currentPage} onNavigate={handleNavigate} />
         ) : currentPage === "partners" ? (
           <PartnersPage />
         ) : currentPage === "admin" ? (
@@ -866,6 +878,9 @@ export default function App() {
             />
           )}
 
+        {/* Overlays load on their own, in the background: the page must not
+            wait for them (it showed only a spinner for 3–4 s on first visit). */}
+        <Suspense fallback={null}>
         <BundleBuilderModal
           isOpen={isBundleModalOpen}
           onClose={closeBundleModal}
@@ -890,6 +905,7 @@ export default function App() {
           }}
         />
         <ExitIntentPopup onNavigate={handleNavigate} />
+        </Suspense>
 
         {/* 🛒 LUXURY FLOATING CART TOAST NOTIFICATION (APPROACH 1) */}
         {cartToast && (

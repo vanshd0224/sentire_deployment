@@ -198,10 +198,6 @@ const BYOB_FAQS = [
     q: "Can I choose multiple bottles of the same fragrance?",
     a: "Yes! You can curate any combination you like, including multiple bottles of your signature scent.",
   },
-  {
-    q: "What is the 30-Day Discovery Guarantee?",
-    a: "Your box includes complimentary matching sample trial vials. Try the sample vial first; if a scent isn't right for you, exchange the unopened 50ML bottle within 30 days.",
-  },
 ];
 
 interface ByobPageProps {
@@ -904,8 +900,7 @@ export default function ByobPage({
                   </button>{" "}
                   <p className="text-[9px] max-sm:text-[12px] text-center text-[#a3a3a3]">
                     {" "}
-                    Includes 30-Day Discovery Guarantee & free trial sample
-                    vials
+                    Not sure yet? Try the Discovery Set first
                   </p>{" "}
                 </div>{" "}
               </div>{" "}

@@ -19,7 +19,7 @@ const helpLinks = [
   "Client Services",
   "FAQs",
   "Shipping & Delivery",
-  "Returns & Exchanges",
+  "Refund & Cancellation",
 ];
 const aboutLinks = [
   "About SENTIRE",
@@ -116,8 +116,7 @@ function MobileAccordionColumn({
     if (link === "FAQs") return "/client-services#faqs";
     if (link === "Shipping & Delivery")
       return "/client-services#shipping-delivery";
-    if (link === "Returns & Exchanges")
-      return "/client-services#returns-exchanges";
+    if (link === "Refund & Cancellation") return "/refund-policy";
     if (link === "Client Services" || sectionTitle === "Help")
       return "/client-services";
     return "/";
@@ -202,19 +201,8 @@ function MobileAccordionColumn({
                       const el = document.getElementById("shipping-delivery");
                       el?.scrollIntoView({ behavior: "smooth" });
                     }, 150);
-                  } else if (link === "Returns & Exchanges") {
-                    try {
-                      window.history.pushState(
-                        null,
-                        "",
-                        "/client-services#returns-exchanges",
-                      );
-                    } catch (err) {}
-                    onNavigate?.("client-services");
-                    setTimeout(() => {
-                      const el = document.getElementById("returns-exchanges");
-                      el?.scrollIntoView({ behavior: "smooth" });
-                    }, 150);
+                  } else if (link === "Refund & Cancellation") {
+                    onNavigate?.("refund-policy");
                   } else if (link === "Client Services") {
                     try {
                       window.history.pushState(null, "", "/client-services");
@@ -380,26 +368,44 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {" "}
             <a
-              href="/client-services"
+              href="/privacy-policy"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate?.("client-services");
+                onNavigate?.("privacy-policy");
               }}
               className="transition-colors duration-300 hover:text-[color:var(--accent)]"
             >
-              {" "}
               Privacy Policy
             </a>{" "}
             <a
-              href="/client-services"
+              href="/terms-and-conditions"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate?.("client-services");
+                onNavigate?.("terms-and-conditions");
               }}
               className="transition-colors duration-300 hover:text-[color:var(--accent)]"
             >
-              {" "}
               Terms & Conditions
+            </a>{" "}
+            <a
+              href="/refund-policy"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate?.("refund-policy");
+              }}
+              className="transition-colors duration-300 hover:text-[color:var(--accent)]"
+            >
+              Refund &amp; Cancellation
+            </a>{" "}
+            <a
+              href="/shipping-policy"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate?.("shipping-policy");
+              }}
+              className="transition-colors duration-300 hover:text-[color:var(--accent)]"
+            >
+              Shipping Policy
             </a>{" "}
             <span className="flex items-center gap-1">
               {" "}

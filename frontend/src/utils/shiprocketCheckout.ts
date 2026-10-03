@@ -169,10 +169,12 @@ export async function startShiprocketCheckout(
   items: any[],
   opts: { couponCode?: string } = {},
 ): Promise<void> {
+  // where the visitor came from (saved on landing: the address loses it)
   const utm = (() => {
     try {
       const p = new URLSearchParams(window.location.search);
-      return [...p].filter(([k]) => k.startsWith("utm_")).map(([k, v]) => `${k}=${v}`).join("&") || undefined;
+      const now = [...p].filter(([k]) => k.startsWith("utm_")).map(([k, v]) => `${k}=${v}`).join("&");
+      return now || sessionStorage.getItem("sentire_utm") || undefined;
     } catch {
       return undefined;
     }

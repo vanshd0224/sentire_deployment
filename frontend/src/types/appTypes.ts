@@ -15,6 +15,10 @@ export type PageName =
   | "cart"
   | "order-success"
   | "partners"
+  | "privacy-policy"
+  | "terms-and-conditions"
+  | "refund-policy"
+  | "shipping-policy"
   | "admin"
   | "not-found";
 
