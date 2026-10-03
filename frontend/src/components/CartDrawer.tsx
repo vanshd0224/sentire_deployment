@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { couponDiscount as discountForCoupon, lookupCoupon } from "../utils/coupons";
+import { isLoggedIn } from "../utils/account";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { isShiprocketCheckoutOn, startShiprocketCheckout, warmShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { auth } from "../lib/firebase";
@@ -131,6 +132,7 @@ export default function CartDrawer({
   onUpdateQuantity,
   onRemoveItem,
   onClearCart,
+  onOpenLoginModal,
   onAddToCart,
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
@@ -1400,6 +1402,13 @@ export default function CartDrawer({
                 // Shiprocket Checkout: its own phone OTP, so no login needed
                 // first. If it can't start, carry on to Shopify below.
                 if (isShiprocketCheckoutOn()) {
+                  // log in (phone OTP + name) first; the bag page then opens the checkout
+                  if (!isLoggedIn() && onOpenLoginModal) {
+                    localStorage.setItem("sentire_pending_checkout", "true");
+                    handleCloseSmooth();
+                    onOpenLoginModal();
+                    return;
+                  }
                   setIsRedirecting(true);
                   try {
                     await startShiprocketCheckout(e.nativeEvent, items, {

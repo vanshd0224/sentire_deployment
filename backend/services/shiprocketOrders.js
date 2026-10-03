@@ -43,8 +43,8 @@ async function refreshIndex() {
   indexAt = Date.now();
 }
 
-async function ensureIndex() {
-  if (Date.now() - indexAt < INDEX_TTL) return;
+async function ensureIndex(maxAge = INDEX_TTL) {
+  if (Date.now() - indexAt < maxAge) return;
   if (!indexing) indexing = refreshIndex().finally(() => (indexing = null));
   await indexing;
 }
@@ -80,9 +80,19 @@ async function findOrder(query, phone) {
 }
 
 /** Every successful order of the last LOOKBACK_DAYS, with its details. */
-async function recentOrders() {
-  await ensureIndex();
+async function recentOrders(maxAge) {
+  await ensureIndex(maxAge);
   return indexIds.map((id) => details.get(id)).filter(Boolean);
 }
 
-module.exports = { findOrder, orderNumber, recentOrders };
+/** Recent orders placed with this phone number (newest first). */
+async function ordersForPhone(phone, maxAge) {
+  const p = last10(phone);
+  if (p.length !== 10) return [];
+  const orders = await recentOrders(maxAge);
+  return orders
+    .filter((o) => [o.phone, o.shipping_address?.phone, o.billing_address?.phone].map(last10).includes(p))
+    .sort((a, b) => String(b.order_created_date || '').localeCompare(String(a.order_created_date || '')));
+}
+
+module.exports = { findOrder, orderNumber, recentOrders, ordersForPhone };

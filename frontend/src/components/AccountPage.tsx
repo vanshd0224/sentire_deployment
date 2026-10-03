@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../lib/firebase";
-import { getSavedOrders } from "../utils/shiprocketCheckout";
+import { getSavedOrders, productForVariant } from "../utils/shiprocketCheckout";
+import { fetchAccount, fetchMyOrders, isLoggedIn } from "../utils/account";
 import {
   signOut,
   onAuthStateChanged,
@@ -137,6 +138,51 @@ export default function AccountPage({
   // User Orders State
   const [userOrders, setUserOrders] = useState<any[]>(loadAndSyncUserOrders);
 
+  // Logged in with phone + OTP: their name and the orders placed with their
+  // number come from our server (Shiprocket), so they show on any device.
+  useEffect(() => {
+    if (!isLoggedIn()) return;
+    let cancelled = false;
+    fetchAccount()
+      .then((me) => {
+        if (cancelled) return;
+        if (me.name) localStorage.setItem("sentire_user_name", me.name);
+        setProfileData((p) => ({
+          ...p,
+          firstName: me.name || p.firstName,
+          phone: me.phone || p.phone,
+          email: me.email || p.email,
+        }));
+      })
+      .catch(() => {});
+    fetchMyOrders(true)
+      .then((orders) => {
+        if (cancelled) return;
+        const fromServer = orders.map((o) => ({
+          id: o.orderId,
+          orderNumber: o.number,
+          date: o.placedAt
+            ? new Date(o.placedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+            : "",
+          status: String(o.status || "").toUpperCase() === "SUCCESS" ? "Confirmed" : o.status,
+          total: Number(o.total) || 0,
+          paymentType: o.paymentType,
+          items: o.items.map((i) => {
+            const p = productForVariant(i.variantId);
+            return { name: p.name, size: p.size.replace(/\s*ML$/i, ""), quantity: i.quantity, price: Number(i.price) || 0, img: p.img };
+          }),
+        }));
+        setUserOrders((prev) => [
+          ...fromServer,
+          ...prev.filter((o: any) => !fromServer.some((s) => s.id === o.id)),
+        ]);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
@@ -213,6 +259,10 @@ export default function AccountPage({
     localStorage.removeItem("sentire_user_name");
     localStorage.removeItem("sentire_user_email");
     localStorage.removeItem("sentire_user_addresses");
+    // the phone login and this device's order list (a shared device)
+    localStorage.removeItem("sentire_session_token");
+    localStorage.removeItem("sentire_sr_orders");
+    localStorage.removeItem("sentire_user_orders");
     try {
       await signOut(auth);
     } catch (e) {}

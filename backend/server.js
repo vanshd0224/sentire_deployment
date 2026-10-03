@@ -111,6 +111,7 @@ app.use('/api/pincode', pincodeRouter);
 app.use('/api/sr/seller', require('./routes/shiprocketSeller'));
 app.use('/api/shiprocket', require('./routes/shiprocketCheckout'));
 app.use('/api/partners', require('./routes/partners'));
+app.use('/api/account', require('./routes/account'));
 app.use('/feeds', require('./routes/feeds'));
 app.use('/assets', express.static(require('path').join(__dirname, 'public', 'assets')));
 

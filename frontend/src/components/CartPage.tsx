@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect, type MouseEvent } from "react";
+import { useState, useMemo, useEffect, useRef, type MouseEvent } from "react";
 import { couponDiscount as discountForCoupon, lookupCoupon } from "../utils/coupons";
+import { isLoggedIn } from "../utils/account";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { isShiprocketCheckoutOn, startShiprocketCheckout, warmShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { ALL_PERFUMES } from "../data/perfumes";
@@ -39,6 +40,7 @@ export default function CartPage({
   onClearCart,
   onAddToCart,
   onNavigate,
+  onOpenLoginModal,
 }: CartPageProps) {
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
@@ -56,6 +58,23 @@ export default function CartPage({
   useEffect(() => {
     if (items.length) warmShiprocketCheckout();
   }, [items.length]);
+
+  // just logged in from "Proceed to checkout": open the checkout straight away
+  const proceedRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    const autostart = () => {
+      const at = Number(localStorage.getItem("sentire_autostart_checkout") || 0);
+      if (!at || Date.now() - at > 2 * 60 * 1000 || !isLoggedIn()) return;
+      localStorage.removeItem("sentire_autostart_checkout");
+      proceedRef.current();
+    };
+    const t = window.setTimeout(autostart, 300);
+    window.addEventListener("sentire_autostart_checkout", autostart);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("sentire_autostart_checkout", autostart);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -245,12 +264,20 @@ export default function CartPage({
   const handleProceedToShopifyCheckout = async (e?: MouseEvent) => {
     if (items.length === 0 || isRedirecting) return;
 
-    // Shiprocket Checkout: its own phone OTP, so no login needed first.
+    // Shiprocket Checkout, after the customer has logged in with their
+    // phone (OTP) and name — that's what fills their profile and My Orders.
     // If it can't start, carry on to the Shopify checkout below.
-    if (isShiprocketCheckoutOn() && e) {
+    if (isShiprocketCheckoutOn()) {
+      if (!isLoggedIn() && onOpenLoginModal) {
+        localStorage.setItem("sentire_pending_checkout", "true");
+        onOpenLoginModal();
+        return;
+      }
       setIsRedirecting(true);
       try {
-        await startShiprocketCheckout(e.nativeEvent, items, { couponCode: appliedCoupon ?? undefined });
+        await startShiprocketCheckout(e?.nativeEvent ?? new Event("click"), items, {
+          couponCode: appliedCoupon ?? undefined,
+        });
         setIsRedirecting(false);
         return;
       } catch (err) {
@@ -286,6 +313,10 @@ export default function CartPage({
       console.error("Checkout error:", err);
       setIsRedirecting(false);
     }
+  };
+
+  proceedRef.current = () => {
+    handleProceedToShopifyCheckout();
   };
 
   return (

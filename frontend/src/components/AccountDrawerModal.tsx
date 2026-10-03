@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { auth } from "../lib/firebase";
+import { fetchAccount, saveProfile } from "../utils/account";
 import {
   RecaptchaVerifier,
   ConfirmationResult,
@@ -40,14 +41,19 @@ export default function AccountDrawerModal({
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [resendTimer, setResendTimer] = useState(30);
+  // the OTP request MSG91 is checking (and our server's signature for it)
+  const otpRequest = useRef<{ reqId: string; ticket: string; exp: number } | null>(null);
 
   const handleLoginCompletion = () => {
     localStorage.setItem("sentire_is_logged_in", "true");
     onClose();
     const pendingCheckout = localStorage.getItem("sentire_pending_checkout");
     if (pendingCheckout === "true") {
+      // came from "Proceed to checkout": back to the bag, which opens the checkout
       localStorage.removeItem("sentire_pending_checkout");
+      localStorage.setItem("sentire_autostart_checkout", String(Date.now()));
       window.dispatchEvent(new CustomEvent("sentire_open_cart"));
+      window.dispatchEvent(new CustomEvent("sentire_autostart_checkout"));
     } else if (onSuccessLogin) {
       onSuccessLogin();
     } else {
@@ -105,8 +111,6 @@ export default function AccountDrawerModal({
   // Clean reCAPTCHA init
 
   // Submit Phone Number with E.164 formatting
-  // the OTP request MSG91 is checking (and our server's signature for it)
-  const otpRequest = useRef<{ reqId: string; ticket: string; exp: number } | null>(null);
 
   const requestOtp = async (cleanDigits: string) => {
     const res = await fetch(`${AUTH_BASE}/auth/send-otp`, {
@@ -199,8 +203,18 @@ export default function AccountDrawerModal({
       setIsVerifyingOtp(false);
     }
 
-    const existingName =
-      localStorage.getItem("sentire_user_name") || auth.currentUser?.displayName;
+    // a returning customer's name is on their account (any device)
+    let existingName =
+      localStorage.getItem("sentire_user_name") || auth.currentUser?.displayName || "";
+    try {
+      const me = await fetchAccount();
+      if (me.name) {
+        existingName = me.name;
+        localStorage.setItem("sentire_user_name", me.name);
+      } else if (existingName && !existingName.startsWith("+")) {
+        saveProfile(existingName).catch(() => {});
+      }
+    } catch {}
     if (!existingName || existingName.startsWith("+")) {
       setViewMode("name-prompt");
       return;
@@ -501,6 +515,8 @@ export default function AccountDrawerModal({
                 e.preventDefault();
                 if (inputName.trim()) {
                   localStorage.setItem("sentire_user_name", inputName.trim());
+                  // on their account, so it shows on any device
+                  saveProfile(inputName.trim()).catch(() => {});
                 }
                 handleLoginCompletion();
               }}
