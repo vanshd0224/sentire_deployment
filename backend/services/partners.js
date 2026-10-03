@@ -13,7 +13,7 @@ const logger = require('../utils/logger');
  */
 
 // site-wide codes that can't be taken as a partner code
-const RESERVED = new Set(['PC100', 'PC200', 'TEST99']);
+const RESERVED = new Set(['PC100', 'PC200', 'TEST99', 'AV50', 'TS150']);
 const CODE_RE = /^[A-Z0-9]{4,15}$/;
 
 const dbReady = () => mongoose.connection.readyState === 1;

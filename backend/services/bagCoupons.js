@@ -13,6 +13,8 @@ const RULES = {
   ANSH150: { min: 1249, off: 150 },
   BHAVYA150: { min: 1249, off: 150 },
   AV150: { min: 1249, off: 150 },
+  AV50: { min: 499, off: 50 },
+  TS150: { min: 1249, off: 150 },
   PC200: { min: 1999, off: 200 },
   TEST99: { min: 0, off: 99 },
 };

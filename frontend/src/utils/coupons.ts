@@ -12,6 +12,8 @@ const SITE: Record<string, CouponRule> = {
   ANSH150: { off: 150, min: 1249 },
   BHAVYA150: { off: 150, min: 1249 },
   AV150: { off: 150, min: 1249 },
+  AV50: { off: 50, min: 499 },
+  TS150: { off: 150, min: 1249 },
 };
 
 const API_BASE =
