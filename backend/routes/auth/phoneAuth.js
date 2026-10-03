@@ -114,13 +114,18 @@ router.post('/verify-otp', verifyLimiter, async (req, res) => {
     if (data?.type !== 'success') {
       return res.status(400).json({ error: 'Invalid OTP code entered. Please check and try again.' });
     }
-    const token = jwt.sign({ sub: `+91${phone}`, typ: 'customer' }, SESSION_SECRET, { expiresIn: '30d' });
+    const token = sessionTokenFor(`+91${phone}`);
     return res.json({ success: true, user: { phone: `+91${phone}`, displayName: 'Sentire Patron' }, token });
   } catch (err) {
     logger.error('Verify OTP Error', { message: err.message });
     return res.status(502).json({ error: "We couldn't check the OTP right now. Please try again." });
   }
 });
+
+/** A 30-day login for a phone number that has been verified (by our OTP, or Shiprocket's at checkout). */
+function sessionTokenFor(phone) {
+  return jwt.sign({ sub: phone, typ: 'customer' }, SESSION_SECRET, { expiresIn: '30d' });
+}
 
 /** The phone a session token was issued to (or null). For routes that need a logged-in customer. */
 function phoneFromSession(req) {
@@ -136,3 +141,4 @@ function phoneFromSession(req) {
 
 module.exports = router;
 module.exports.phoneFromSession = phoneFromSession;
+module.exports.sessionTokenFor = sessionTokenFor;

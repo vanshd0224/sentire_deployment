@@ -41,7 +41,6 @@ export default function CartPage({
   onClearCart,
   onAddToCart,
   onNavigate,
-  onOpenLoginModal,
 }: CartPageProps) {
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
@@ -265,15 +264,11 @@ export default function CartPage({
   const handleProceedToShopifyCheckout = async (e?: MouseEvent) => {
     if (items.length === 0 || isRedirecting) return;
 
-    // Shiprocket Checkout, after the customer has logged in with their
-    // phone (OTP) and name — that's what fills their profile and My Orders.
+    // Shiprocket Checkout: it verifies the customer's phone with its own OTP;
+    // back on /order-success they're logged in with that number (no second
+    // OTP), which fills their profile and My Orders.
     // If it can't start, carry on to the Shopify checkout below.
     if (isShiprocketCheckoutOn()) {
-      if (!isLoggedIn() && onOpenLoginModal) {
-        localStorage.setItem("sentire_pending_checkout", "true");
-        onOpenLoginModal();
-        return;
-      }
       setIsRedirecting(true);
       try {
         await startShiprocketCheckout(e?.nativeEvent ?? new Event("click"), items, {

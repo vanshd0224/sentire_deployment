@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import type { PageName } from "../types/appTypes";
 import { fetchShiprocketOrder, saveOrder } from "../utils/shiprocketCheckout";
 import { trackEvent } from "../utils/analytics";
+import { isLoggedIn } from "../utils/account";
+import { API_BASE } from "../utils/partners";
 
 type Order = Awaited<ReturnType<typeof fetchShiprocketOrder>>;
 
@@ -22,6 +24,44 @@ export default function OrderSuccessPage({
   const ost = (params.get("ost") || "").toUpperCase();
   const [order, setOrder] = useState<Order | null>(null);
   const [state, setState] = useState<"loading" | "placed" | "failed" | "pending">(oid ? "loading" : "pending");
+  // the account they're logged in to (from the number Shiprocket verified)
+  const [account, setAccount] = useState<{ name: string; phone: string } | null>(() => {
+    try {
+      const phone = localStorage.getItem("sentire_user_phone") || "";
+      return isLoggedIn() && phone ? { name: localStorage.getItem("sentire_user_name") || "", phone } : null;
+    } catch {
+      return null;
+    }
+  });
+
+  // Placed an order without logging in to the site: Shiprocket verified their
+  // phone at checkout, so log them in with it (no second OTP) — their name,
+  // number and this order then show in their profile / My Orders.
+  useEffect(() => {
+    if (state !== "placed" || !oid || isLoggedIn()) return;
+    let cancelled = false;
+    fetch(`${API_BASE}/api/shiprocket/claim-order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId: oid }),
+    })
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled || !d?.ok || !d.token) return;
+        try {
+          localStorage.setItem("sentire_session_token", d.token);
+          localStorage.setItem("sentire_user_phone", d.phone);
+          localStorage.setItem("sentire_is_logged_in", "true");
+          if (d.name) localStorage.setItem("sentire_user_name", d.name);
+          if (d.email) localStorage.setItem("sentire_user_email", d.email);
+        } catch {}
+        setAccount({ name: d.name || "", phone: d.phone });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [state, oid]);
 
   useEffect(() => {
     if (!oid) return;
@@ -140,6 +180,21 @@ export default function OrderSuccessPage({
                   </dd>
                 </div>
               </dl>
+            )}
+
+            {account && state === "placed" && (
+              <p className="mx-auto mt-6 max-w-sm border border-ink/10 bg-white px-4 py-3 text-[13px] text-ink/75">
+                Your account: <strong className="text-ink">{account.name || "SENTIRE customer"}</strong> ·{" "}
+                {account.phone}
+                <br />
+                <button
+                  type="button"
+                  onClick={() => onNavigate?.("account")}
+                  className="mt-1 cursor-pointer text-[13px] font-semibold text-[#6b1422] underline"
+                >
+                  View my orders →
+                </button>
+              </p>
             )}
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">

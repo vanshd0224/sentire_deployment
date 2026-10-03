@@ -11,6 +11,8 @@ const srOrders = require('../services/shiprocketOrders');
 const srShipping = require('../services/shiprocketShipping');
 const { bagDiscount } = require('../services/bagCoupons');
 const partners = require('../services/partners');
+const { saveCustomerFromOrder } = require('../services/customers');
+const { sessionTokenFor } = require('./auth/phoneAuth');
 
 const SITE_URL = (process.env.FRONTEND_URL || 'https://sentirebypc.com').replace(/\/+$/, '');
 
@@ -104,6 +106,10 @@ async function recordOrder(o) {
   if (!o?.order_id || mongoose.connection.readyState !== 1) return;
   // credit an influencer partner, if the order came through one
   await partners.recordOrder(o).catch((e) => logger.warn('Partner order not recorded', { message: e.message }));
+  // the customer's name / verified phone, for their profile and My Orders
+  if (String(o.status || '').toUpperCase() === 'SUCCESS') {
+    await saveCustomerFromOrder(o).catch((e) => logger.warn('Customer not saved', { message: e.message }));
+  }
   await ShiprocketOrder.findOneAndUpdate(
     { orderId: String(o.order_id) },
     {
@@ -228,6 +234,61 @@ router.post('/track', trackLimiter, async (req, res) => {
   } catch (error) {
     logger.error('Shiprocket track failed', { message: error.message });
     return res.status(502).json({ ok: false, error: 'Tracking is unavailable right now. Please try again shortly.' });
+  }
+});
+
+const claimLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  validate: { xForwardedForHeader: false, trustProxy: false },
+  keyGenerator: (req) => String(req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim(),
+  handler: (req, res) => res.status(429).json({ ok: false, error: 'Too many attempts.' }),
+});
+
+// POST /api/shiprocket/claim-order { orderId }
+// Back on the site after ordering: log the buyer in with the mobile number
+// Shiprocket verified (its checkout OTP), so there's no second OTP of ours.
+// Only for a successful order, and only once per order — the order id only
+// reaches the buyer's browser, in Shiprocket's redirect to /order-success.
+router.post('/claim-order', claimLimiter, async (req, res) => {
+  const orderId = String(req.body?.orderId || '');
+  if (!/^[a-f0-9]{24}$/i.test(orderId)) return res.status(400).json({ ok: false, error: 'Invalid order.' });
+  if (!srCheckout.isConfigured() || mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ ok: false, error: 'Unavailable right now.' });
+  }
+  try {
+    const o = await srCheckout.getOrderDetails(orderId);
+    if (String(o?.status || '').toUpperCase() !== 'SUCCESS') {
+      return res.status(409).json({ ok: false, error: 'Order not completed.' });
+    }
+    // once per order: make sure the order's row exists, then stamp it only
+    // if it isn't stamped yet (atomic on one document — a second claim
+    // modifies nothing and is refused)
+    try {
+      await ShiprocketOrder.updateOne({ orderId }, { $setOnInsert: { orderId } }, { upsert: true });
+    } catch (e) {
+      if (e?.code !== 11000) throw e; // created by a parallel request — fine
+    }
+    const stamp = await ShiprocketOrder.updateOne(
+      { orderId, sessionIssuedAt: { $exists: false } },
+      { $set: { sessionIssuedAt: new Date() } },
+    );
+    if (stamp.modifiedCount !== 1) return res.status(409).json({ ok: false, error: 'Already used.' });
+    await recordOrder(o).catch(() => {});
+    const customer = await saveCustomerFromOrder(o);
+    if (!customer) return res.status(422).json({ ok: false, error: 'No phone on the order.' });
+    return res.json({
+      ok: true,
+      token: sessionTokenFor(customer.phone),
+      phone: customer.phone,
+      name: customer.name,
+      email: customer.email,
+    });
+  } catch (error) {
+    logger.error('Claim order failed', { message: error.message });
+    return res.status(502).json({ ok: false, error: 'Please try again.' });
   }
 });
 

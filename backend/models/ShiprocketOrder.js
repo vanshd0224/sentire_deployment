@@ -17,6 +17,7 @@ const ShiprocketOrderSchema = new mongoose.Schema({
   customAttributes: { type: mongoose.Schema.Types.Mixed },
   payload: { type: mongoose.Schema.Types.Mixed }, // the full webhook body, as received
   webhookCount: { type: Number, default: 0 },
+  sessionIssuedAt: { type: Date }, // the buyer was logged in from this order (once)
 }, { timestamps: true });
 
 module.exports = mongoose.models.ShiprocketOrder || mongoose.model('ShiprocketOrder', ShiprocketOrderSchema);
