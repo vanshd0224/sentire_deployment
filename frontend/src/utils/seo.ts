@@ -313,6 +313,50 @@ export function getPageMetadata(
         twitterCard: "summary",
       };
 
+    case "privacy-policy":
+      return {
+        title: "Privacy Policy | SENTIRE By PC",
+        description: "How SENTIRE By PC (S P Ventures, Jaipur) collects, uses and protects your personal information.",
+        canonical: `${PRODUCTION_DOMAIN}/privacy-policy`,
+        robots: "index, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
+    case "terms-and-conditions":
+      return {
+        title: "Terms & Conditions | SENTIRE By PC",
+        description: "Terms for using sentirebypc.com and buying from SENTIRE By PC.",
+        canonical: `${PRODUCTION_DOMAIN}/terms-and-conditions`,
+        robots: "index, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
+    case "refund-policy":
+      return {
+        title: "Refund & Cancellation Policy | SENTIRE By PC",
+        description: "SENTIRE By PC refund and cancellation policy: all sales are final.",
+        canonical: `${PRODUCTION_DOMAIN}/refund-policy`,
+        robots: "index, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
+    case "shipping-policy":
+      return {
+        title: "Shipping & Delivery Policy | SENTIRE By PC",
+        description: "How and when SENTIRE By PC ships across India from Jaipur.",
+        canonical: `${PRODUCTION_DOMAIN}/shipping-policy`,
+        robots: "index, follow",
+        ogType: "website",
+        ogImage: `${PRODUCTION_DOMAIN}/images/hero-celestial.png`,
+        twitterCard: "summary",
+      };
+
     case "partners":
       return {
         title: "Partner with SENTIRE By PC | Influencer programme",
