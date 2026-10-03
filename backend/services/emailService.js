@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
  * Send Client Service Enquiry Notification to sentireforwork@gmail.com
  */
 async function sendEnquiryNotificationEmail(enquiryData) {
-  const {
+  let {
     referenceId,
     firstName,
     lastName,
@@ -24,8 +24,15 @@ async function sendEnquiryNotificationEmail(enquiryData) {
     queryType,
     message
   } = enquiryData;
+  const replyTo = enquiryData.email; // raw address, for "Reply" in Gmail
 
-  const recipientEmail = 'sentireforwork@gmail.com';
+  const recipientEmail = process.env.ENQUIRY_EMAIL_TO || 'sentireforwork@gmail.com';
+  const esc = (v) =>
+    String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  // customer text goes into HTML: escape it
+  ({ referenceId, firstName, lastName, email, phone, orderNumber, queryType, message } = Object.fromEntries(
+    Object.entries({ referenceId, firstName, lastName, email, phone, orderNumber, queryType, message }).map(([k, v]) => [k, v == null ? v : esc(v)]),
+  ));
 
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #c89b5a; border-radius: 12px; padding: 24px; background: #0b0907; color: #f8f5f1;">
@@ -77,6 +84,7 @@ async function sendEnquiryNotificationEmail(enquiryData) {
   const mailOptions = {
     from: '"Sentire Concierge Desk" <sentireforwork@gmail.com>',
     to: recipientEmail,
+    replyTo, // pressing Reply answers the customer
     subject: `[New Enquiry ${referenceId}] ${firstName} ${lastName || ''} - ${queryType || 'Order Support'}`,
     html: htmlContent
   };
@@ -86,7 +94,7 @@ async function sendEnquiryNotificationEmail(enquiryData) {
       await transporter.sendMail(mailOptions);
       logger.info(`Enquiry Email sent to ${recipientEmail} for ${referenceId}`);
     } else {
-      logger.info(`[Email Service Triggered] New Enquiry Email created for ${recipientEmail}: ${referenceId}`);
+      logger.warn(`Enquiry email NOT sent (EMAIL_PASS not set): ${referenceId}`);
     }
   } catch (error) {
     logger.error('Failed to send enquiry email alert:', error.message);

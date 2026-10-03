@@ -3,6 +3,7 @@ const router = express.Router();
 const Enquiry = require('../models/Enquiry');
 const logger = require('../utils/logger');
 const { sendEnquiryNotificationEmail } = require('../services/emailService');
+const { requireAdmin } = require('../middleware/requireAdmin');
 
 /**
  * POST /api/enquiries
@@ -69,9 +70,10 @@ router.post('/', async (req, res) => {
 
 /**
  * GET /api/enquiries
- * Retrieve all submitted customer enquiries (For Store Owner)
+ * Customer enquiries, newest first — admins only (they hold names, emails,
+ * phone numbers; this used to be open to anyone).
  */
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     const enquiries = await Enquiry.find().sort({ createdAt: -1 }).limit(100);
     return res.status(200).json({ success: true, count: enquiries.length, enquiries });

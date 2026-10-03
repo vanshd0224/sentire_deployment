@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type User } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { inr, partnerApi } from "../utils/partners";
+import { API_BASE, inr, partnerApi } from "../utils/partners";
 
 /**
  * /admin — influencer partners, their orders and payouts. Sign in with
@@ -36,6 +36,20 @@ type Order = {
   payoutRef?: string;
 };
 
+type Enquiry = {
+  _id: string;
+  referenceId: string;
+  category?: string;
+  firstName: string;
+  lastName?: string;
+  email: string;
+  phone?: string;
+  orderNumber?: string;
+  queryType?: string;
+  message: string;
+  createdAt: string;
+};
+
 const serif = { fontFamily: "'Instrument Serif', Georgia, serif" };
 const btn =
   "cursor-pointer border border-ink px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-ink hover:bg-ink hover:text-paper disabled:opacity-50";
@@ -59,7 +73,8 @@ function download(name: string, text: string) {
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(auth.currentUser);
   const [ready, setReady] = useState(false);
-  const [tab, setTab] = useState<"partners" | "orders" | "payouts">("partners");
+  const [tab, setTab] = useState<"partners" | "orders" | "payouts" | "enquiries">("enquiries");
+  const [enquiries, setEnquiries] = useState<Enquiry[] | null>(null);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -77,8 +92,23 @@ export default function AdminPage() {
     return partnerApi<T>(path, await user.getIdToken(), init);
   };
 
+  const loadEnquiries = async () => {
+    if (!user) return;
+    try {
+      const res = await fetch(`${API_BASE}/api/enquiries`, {
+        headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || "Couldn't load enquiries.");
+      setEnquiries(data.enquiries || []);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   const load = async () => {
     setError(null);
+    loadEnquiries();
     try {
       const [p, o] = await Promise.all([
         api<{ partners: Partner[] }>("/admin/partners"),
@@ -205,7 +235,7 @@ export default function AdminPage() {
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/55">Admin · {user.email}</p>
             <h1 className="mt-1 text-[clamp(2rem,5vw,3rem)] leading-none" style={serif}>
-              Influencer partners
+              SENTIRE admin
             </h1>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -222,17 +252,78 @@ export default function AdminPage() {
         {notice && <p className="mt-5 border border-ink/15 bg-white px-4 py-3 text-[13px] text-ink/80">{notice}</p>}
 
         <div className="mt-8 flex gap-6 border-b border-ink/15 text-[13px] font-semibold uppercase tracking-[0.08em]">
-          {(["partners", "orders", "payouts"] as const).map((t) => (
+          {(["enquiries", "partners", "orders", "payouts"] as const).map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setTab(t)}
               className={`-mb-px cursor-pointer border-b-2 pb-3 ${tab === t ? "border-ink text-ink" : "border-transparent text-ink/50"}`}
             >
-              {t === "payouts" ? `Payouts${due.length ? ` (${due.length})` : ""}` : t}
+              {t === "payouts"
+                ? `Payouts${due.length ? ` (${due.length})` : ""}`
+                : t === "enquiries"
+                  ? `Customer messages${enquiries?.length ? ` (${enquiries.length})` : ""}`
+                  : t}
             </button>
           ))}
         </div>
+
+        {tab === "enquiries" && (
+          <section className="mt-6 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-[13px] text-ink/70">
+                Messages from the Client Services form on the website (newest first).
+              </p>
+              <button type="button" className={btn} onClick={loadEnquiries}>
+                Refresh
+              </button>
+            </div>
+            {enquiries === null ? (
+              <p className="py-6 text-[14px] text-ink/60">Loading…</p>
+            ) : enquiries.length === 0 ? (
+              <p className="py-6 text-[14px] text-ink/60">No messages yet.</p>
+            ) : (
+              enquiries.map((q) => {
+                const name = `${q.firstName} ${q.lastName || ""}`.trim();
+                const digits = String(q.phone || "").replace(/\D/g, "").slice(-10);
+                return (
+                  <article key={q._id} className="border border-ink/15 bg-white px-4 py-4">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <p className="font-semibold">
+                        {name} <span className="font-mono text-[12px] font-normal text-ink/50">{q.referenceId}</span>
+                      </p>
+                      <p className="text-[12px] text-ink/50">
+                        {new Date(q.createdAt).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}
+                      </p>
+                    </div>
+                    <p className="mt-1 text-[12px] uppercase tracking-[0.06em] text-ink/55">
+                      {[q.queryType || q.category, q.orderNumber && `Order ${q.orderNumber}`].filter(Boolean).join(" · ")}
+                    </p>
+                    <p className="mt-3 whitespace-pre-wrap text-[14px] leading-relaxed text-ink/85">{q.message}</p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-[13px]">
+                      <a
+                        className={btn}
+                        href={`mailto:${q.email}?subject=${encodeURIComponent(`Re: your SENTIRE enquiry ${q.referenceId}`)}`}
+                      >
+                        Reply by email · {q.email}
+                      </a>
+                      {digits.length === 10 && (
+                        <a
+                          className={btn}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={`https://wa.me/91${digits}?text=${encodeURIComponent(`Hi ${q.firstName}, this is SENTIRE By PC about your message ${q.referenceId}.`)}`}
+                        >
+                          WhatsApp · {q.phone}
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            )}
+          </section>
+        )}
 
         {tab === "partners" && (
           <section className="mt-6 space-y-5">

@@ -4,7 +4,6 @@ const { z } = require('zod');
 const Partner = require('../models/Partner');
 const PartnerOrder = require('../models/PartnerOrder');
 const partners = require('../services/partners');
-const { verifyIdToken } = require('../services/firebaseIdToken');
 const { phoneFromSession } = require('./auth/phoneAuth');
 const logger = require('../utils/logger');
 
@@ -16,10 +15,7 @@ const logger = require('../utils/logger');
  */
 const router = express.Router();
 
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || 'sentireforwork@gmail.com')
-  .split(',')
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
+const { requireAdmin } = require('../middleware/requireAdmin');
 
 const visitorKey = (req) => String(req.headers['x-forwarded-for'] || req.ip || '').split(',')[0].trim();
 const limiter = (max) =>
@@ -136,22 +132,7 @@ router.post('/apply', needDb, needPartnerLogin, limiter(10), async (req, res) =>
 // ── admin (Google sign-in, allow-listed emails) ───────────────────────
 
 const admin = express.Router();
-admin.use(limiter(300), async (req, res, next) => {
-  const h = String(req.headers.authorization || '');
-  if (!h.startsWith('Bearer ')) return res.status(401).json({ ok: false, error: 'Please sign in.' });
-  try {
-    const claims = await verifyIdToken(h.slice(7));
-    const email = String(claims.email || '').toLowerCase();
-    if (!claims.email_verified || !ADMIN_EMAILS.includes(email)) {
-      logger.warn('Admin access refused', { email });
-      return res.status(403).json({ ok: false, error: 'This account is not an admin.' });
-    }
-    req.adminEmail = email;
-    return next();
-  } catch (error) {
-    return res.status(401).json({ ok: false, error: 'Your sign-in has expired. Please sign in again.' });
-  }
-});
+admin.use(limiter(300), requireAdmin);
 admin.use(needDb);
 
 // GET /api/partners/admin/partners — every partner with totals
