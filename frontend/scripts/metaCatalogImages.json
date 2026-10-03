@@ -1,0 +1,638 @@
+{
+ "calantha-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/calantha-10ml-1.jpg",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/calantha-10ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "calantha-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/calantha-30ml-1.jpg",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/calantha-30ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "calantha-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/calantha-50ml-1.jpg",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/calantha-50ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Luxury floral extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "deep-crush-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/deep-crush-10ml-1.jpg",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/deep-crush-10ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "deep-crush-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/deep-crush-30ml-1.jpg",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/deep-crush-30ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "deep-crush-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/deep-crush-50ml-1.jpg",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/deep-crush-50ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Alluring gourmand floral extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "herrlich-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/herrlich-10ml-1.jpg",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/herrlich-10ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "herrlich-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/herrlich-30ml-1.jpg",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/herrlich-30ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "herrlich-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/herrlich-50ml-1.jpg",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/herrlich-50ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Commanding woody luxury extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "midnight-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/midnight-10ml-1.jpg",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/midnight-10ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "midnight-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/midnight-30ml-1.jpg",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/midnight-30ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "midnight-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/midnight-50ml-1.jpg",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/midnight-50ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Mysterious sensual night extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "mirai-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/mirai-10ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/mirai-10ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "mirai-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/mirai-30ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/mirai-30ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "mirai-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/mirai-50ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/mirai-50ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Luminous fresh signature extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "0809-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/0809-10ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/0809-10ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 10ml."
+  }
+ },
+ "0809-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/0809-30ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/0809-30ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 30ml."
+  }
+ },
+ "0809-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/0809-50ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/0809-50ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Royal oriental extrait de parfum by House of Sentire. Size: 50ml."
+  }
+ },
+ "personna-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/personna-10ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/personna-10ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "personna-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/personna-30ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/personna-30ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "personna-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/personna-50ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/personna-50ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Bespoke oriental luxury extrait de parfum. Size: 50ml."
+  }
+ },
+ "purple-oud-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/purple-oud-50ml-1.jpg",
+   "label": "Woody",
+   "desc": "Rare artisanal purple oud extrait de parfum. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/purple-oud-50ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Rare artisanal purple oud extrait de parfum. Size: 50ml."
+  }
+ },
+ "rich-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/rich-10ml-1.jpg",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/rich-10ml-1.jpg?v=20260916v3",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 10ml."
+  }
+ },
+ "rich-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/rich-30ml-1.jpg",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/rich-30ml-1.jpg?v=20260916v3",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 30ml."
+  }
+ },
+ "rich-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/rich-50ml-1.jpg",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/rich-50ml-1.jpg?v=20260916v3",
+   "label": "Ambar",
+   "desc": "Opulent amber extrait de parfum with 12+ hour sillage. Size: 50ml."
+  }
+ },
+ "seductive-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/seductive-10ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/seductive-10ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 10ml."
+  }
+ },
+ "seductive-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/seductive-30ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/seductive-30ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 30ml."
+  }
+ },
+ "seductive-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/seductive-50ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/seductive-50ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Magnetic fresh seductive extrait de parfum. Size: 50ml."
+  }
+ },
+ "white-oud-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/white-oud-10ml-1.jpg",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/white-oud-10ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "white-oud-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/white-oud-30ml-1.jpg",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/white-oud-30ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "white-oud-50": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/white-oud-50ml-1.jpg",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 50ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/white-oud-50ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Precious white oud luxury extrait de parfum. Size: 50ml."
+  }
+ },
+ "zephyrine-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/zephyrine-10ml-1.jpg",
+   "label": "Floral",
+   "desc": "Bespoke luxury floral extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/zephyrine-10ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Bespoke luxury floral extrait de parfum. Size: 10ml."
+  }
+ },
+ "zephyrine-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/zephyrine-30ml-1.jpg",
+   "label": "Floral",
+   "desc": "Bespoke luxury floral extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/zephyrine-30ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Bespoke luxury floral extrait de parfum. Size: 30ml."
+  }
+ },
+ "bijou-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/bijou-10ml-1.jpg",
+   "label": "Floral",
+   "desc": "Artisanal floral luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/bijou-10ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Artisanal floral luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "bijou-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/bijou-30ml-1.jpg",
+   "label": "Floral",
+   "desc": "Artisanal floral luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/bijou-30ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Artisanal floral luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "dapper-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/dapper-10ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Crisp fresh luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/dapper-10ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Crisp fresh luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "dapper-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/dapper-30ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Crisp fresh luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/dapper-30ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Crisp fresh luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "le-chocolat-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/le-chocolat-10ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Indulgent gourmet cocoa extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/le-chocolat-10ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Indulgent gourmet cocoa extrait de parfum. Size: 10ml."
+  }
+ },
+ "le-chocolat-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/le-chocolat-30ml-1.jpg",
+   "label": "Oriental",
+   "desc": "Indulgent gourmet cocoa extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/le-chocolat-30ml-1.jpg?v=20260916v3",
+   "label": "Oriental",
+   "desc": "Indulgent gourmet cocoa extrait de parfum. Size: 30ml."
+  }
+ },
+ "pc-leather-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/pc-leather-10ml-1.jpg",
+   "label": "Woody",
+   "desc": "Sophisticated leather extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/pc-leather-10ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Sophisticated leather extrait de parfum. Size: 10ml."
+  }
+ },
+ "pc-leather-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/pc-leather-30ml-1.jpg",
+   "label": "Woody",
+   "desc": "Sophisticated leather extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/pc-leather-30ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Sophisticated leather extrait de parfum. Size: 30ml."
+  }
+ },
+ "quantillion-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/quantillion-10ml-1.jpg",
+   "label": "Citrus",
+   "desc": "Zesty citrus luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/quantillion-10ml-1.jpg?v=20260916v3",
+   "label": "Citrus",
+   "desc": "Zesty citrus luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "quantillion-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/quantillion-30ml-1.jpg",
+   "label": "Citrus",
+   "desc": "Zesty citrus luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/quantillion-30ml-1.jpg?v=20260916v3",
+   "label": "Citrus",
+   "desc": "Zesty citrus luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "reiz-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/reiz-10ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Captivating fresh luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/reiz-10ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Captivating fresh luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "reiz-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/reiz-30ml-1.jpg",
+   "label": "Fresh",
+   "desc": "Captivating fresh luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/reiz-30ml-1.jpg?v=20260916v3",
+   "label": "Fresh",
+   "desc": "Captivating fresh luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "sent-aura-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/sent-aura-10ml-1.jpg",
+   "label": "Floral",
+   "desc": "Ethereal floral luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/sent-aura-10ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Ethereal floral luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "sent-aura-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/sent-aura-30ml-1.jpg",
+   "label": "Floral",
+   "desc": "Ethereal floral luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/sent-aura-30ml-1.jpg?v=20260916v3",
+   "label": "Floral",
+   "desc": "Ethereal floral luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "vanaco-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/vanaco-10ml-1.jpg",
+   "label": "Ambar",
+   "desc": "Warm vanilla amber luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/vanaco-10ml-1.jpg?v=20260916v3",
+   "label": "Ambar",
+   "desc": "Warm vanilla amber luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "vanaco-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/vanaco-30ml-1.jpg",
+   "label": "Ambar",
+   "desc": "Warm vanilla amber luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/vanaco-30ml-1.jpg?v=20260916v3",
+   "label": "Ambar",
+   "desc": "Warm vanilla amber luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "woo-dy-10": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/woo-dy-10ml-1.jpg",
+   "label": "Woody",
+   "desc": "Intense rare wood luxury extrait de parfum. Size: 10ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/woo-dy-10ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Intense rare wood luxury extrait de parfum. Size: 10ml."
+  }
+ },
+ "woo-dy-30": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/woo-dy-30ml-1.jpg",
+   "label": "Woody",
+   "desc": "Intense rare wood luxury extrait de parfum. Size: 30ml."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/woo-dy-30ml-1.jpg?v=20260916v3",
+   "label": "Woody",
+   "desc": "Intense rare wood luxury extrait de parfum. Size: 30ml."
+  }
+ },
+ "discovery-set": {
+  "main": {
+   "image": "https://sentirebypc.com/discovery_hero_cover.jpg",
+   "label": "Sample Box",
+   "desc": "Experience 5 signature 35%+ extrait de parfum 5ml vials with a complimentary ₹500 voucher."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/byob-bundle.jpg?v=20260916v3",
+   "label": "Sample Box",
+   "desc": "Experience 5 signature 35%+ extrait de parfum 5ml vials with a complimentary ₹500 voucher."
+  }
+ },
+ "byob": {
+  "main": {
+   "image": "https://sentirebypc.com/assets/perfumes/byob-bundle.jpg",
+   "label": "Custom Bundle",
+   "desc": "Customise your bespoke 3-bottle luxury perfume box with photo engraving."
+  },
+  "flat": {
+   "image": "https://ecommerce-backend-1041917436859.asia-south1.run.app/assets/perfumes/byob-bundle.jpg?v=20260916v3",
+   "label": "Custom Bundle",
+   "desc": "Customise your bespoke 3-bottle luxury perfume box with photo engraving."
+  }
+ }
+}

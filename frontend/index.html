@@ -5,6 +5,14 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
+      // One address: Firebase's own domains (where the Shopify store and old
+      // links send people) go to the same page on sentirebypc.com, keeping
+      // ?utm/fbclid, so checkout, login, the bag and Meta tracking all work.
+      if (/\.(web\.app|firebaseapp\.com)$/.test(location.hostname)) {
+        location.replace("https://sentirebypc.com" + location.pathname + location.search + location.hash);
+      }
+    </script>
+    <script>
       (function() {
         // Force full network reload if page was restored from Instagram WebView Back-Forward Memory Cache (BF Cache)
         window.addEventListener('pageshow', function(e) {

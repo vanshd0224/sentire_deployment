@@ -23,6 +23,36 @@ const SCRIPT = "https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js
 const STYLE = "https://checkout-ui.shiprocket.com/assets/styles/shopify.css";
 const FLAG = "sentire_sr_checkout";
 const SELLER_DOMAIN = "sentirebypc.com"; // the Shop Domain in the Shiprocket dashboard
+const CHECKOUT_UI = "https://fastrr-boost-ui.pickrr.com/";
+const MODE_KEY = "sentire_sr_mode";
+
+// ?srmode=page / ?srmode=popup: force how the checkout opens on this browser (testing)
+try {
+  const m = new URLSearchParams(window.location.search).get("srmode");
+  if (m === "page" || m === "popup") localStorage.setItem(MODE_KEY, m);
+} catch {}
+
+/**
+ * In-app browsers (Instagram, Facebook… where ad clicks open) can refuse
+ * storage to embedded third-party pages, and Shiprocket's checkout window
+ * then stays blank. There the checkout opens as a full page instead (same
+ * session; Shiprocket sends the customer back to /order-success).
+ */
+export function checkoutAsPage(): boolean {
+  try {
+    const m = localStorage.getItem(MODE_KEY);
+    if (m === "page") return true;
+    if (m === "popup") return false;
+  } catch {}
+  return /Instagram|FBAN|FBAV|FB_IAB|FBIOS|FBSS|Snapchat|Line\//i.test(navigator.userAgent || "");
+}
+
+/** Shiprocket's checkout for a session, as a page of its own. */
+function checkoutPageUrl(token: string) {
+  const channel = btoa(encodeURIComponent(JSON.stringify({ shop_url: SELLER_DOMAIN })));
+  const emptyCart = btoa(encodeURIComponent("[]"));
+  return `${CHECKOUT_UI}?platform=CUSTOM&channel=${channel}&customCheckoutToken=${encodeURIComponent(token)}&type=cart&cart=${emptyCart}`;
+}
 
 type HeadlessCheckout = {
   addToCart: (event: Event, token: string, opts: { fallbackUrl: string; isInitiatedFromApp?: boolean }) => void;
@@ -49,7 +79,8 @@ let loading: Promise<HeadlessCheckout> | null = null;
  * shown), so the checkout opens straight away. Errors are left for the click.
  */
 export function warmShiprocketCheckout() {
-  if (!isShiprocketCheckoutOn()) return;
+  // a full-page checkout needs nothing loaded here
+  if (!isShiprocketCheckoutOn() || checkoutAsPage()) return;
   loadShiprocketCheckout().catch(() => {});
 }
 
@@ -146,8 +177,9 @@ export async function startShiprocketCheckout(
       return undefined;
     }
   })();
+  const asPage = checkoutAsPage();
   const [hc, res] = await Promise.all([
-    loadShiprocketCheckout(),
+    asPage ? Promise.resolve(null) : loadShiprocketCheckout(),
     postJson(`${API_BASE}/api/shiprocket/checkout-token`, {
         items: items.map((i) => ({
           // the exact Shopify variant the site uses (same ids as our catalog)
@@ -181,6 +213,10 @@ export async function startShiprocketCheckout(
       lines.reduce((sum: number, i: any) => sum + (Number(i.price) || 0) * (Number(i.quantity) || 1), 0),
     );
   } catch {}
+  if (asPage || !hc) {
+    window.location.href = checkoutPageUrl(data.token);
+    return;
+  }
   hc.addToCart(event, data.token, { fallbackUrl: shopifyFallbackUrl(items, opts.couponCode) });
 }
 
