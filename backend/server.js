@@ -27,7 +27,14 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration locked to FRONTEND_URL
-const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:3000'];
+// the site and the other addresses it is served from (www, Firebase's own domains)
+const allowedOrigins = [
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.replace(/\/+$/, '')] : ['http://localhost:3000']),
+  'https://sentirebypc.com',
+  'https://www.sentirebypc.com',
+  'https://sentire-perfumes.web.app',
+  'https://sentire-perfumes.firebaseapp.com',
+];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {

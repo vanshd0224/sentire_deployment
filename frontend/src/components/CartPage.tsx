@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, type MouseEvent } from "react";
 import { couponDiscount as discountForCoupon, lookupCoupon } from "../utils/coupons";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
-import { isShiprocketCheckoutOn, startShiprocketCheckout } from "../utils/shiprocketCheckout";
+import { isShiprocketCheckoutOn, startShiprocketCheckout, warmShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { ALL_PERFUMES } from "../data/perfumes";
 import { auth } from "../lib/firebase";
 
@@ -39,7 +39,6 @@ export default function CartPage({
   onClearCart,
   onAddToCart,
   onNavigate,
-  onOpenLoginModal,
 }: CartPageProps) {
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
@@ -52,6 +51,11 @@ export default function CartPage({
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponSuccess, setCouponSuccess] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+  // checkout script ready before "Proceed to checkout" is pressed
+  useEffect(() => {
+    if (items.length) warmShiprocketCheckout();
+  }, [items.length]);
 
   useEffect(() => {
     try {
@@ -255,19 +259,9 @@ export default function CartPage({
       }
     }
 
+    // Fallback: the Shopify checkout (it asks for phone/email itself, so no
+    // login step here either).
     const currentUser = auth.currentUser;
-    const isStoredLoggedIn =
-      localStorage.getItem("sentire_is_logged_in") === "true";
-    const isLoggedIn = !!currentUser || isStoredLoggedIn;
-
-    if (!isLoggedIn) {
-      localStorage.setItem("sentire_pending_checkout", "true");
-      if (onOpenLoginModal) {
-        onOpenLoginModal();
-      }
-      return;
-    }
-
     setIsRedirecting(true);
 
     try {

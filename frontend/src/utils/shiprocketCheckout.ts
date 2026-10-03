@@ -44,6 +44,35 @@ export function isShiprocketCheckoutOn(): boolean {
 
 let loading: Promise<HeadlessCheckout> | null = null;
 
+/**
+ * Get Shiprocket's script ready ahead of the click (call when the bag is
+ * shown), so the checkout opens straight away. Errors are left for the click.
+ */
+export function warmShiprocketCheckout() {
+  if (!isShiprocketCheckoutOn()) return;
+  loadShiprocketCheckout().catch(() => {});
+}
+
+/** POST with a time limit, retried once if the network drops. */
+async function postJson(url: string, body: unknown, timeoutMs = 15000): Promise<Response> {
+  for (let attempt = 0; ; attempt++) {
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      return await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: ctrl.signal,
+      });
+    } catch (err) {
+      if (attempt >= 1) throw err;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+}
+
 /** Shiprocket's script and stylesheet, loaded the first time they're needed. */
 export function loadShiprocketCheckout(): Promise<HeadlessCheckout> {
   const ready = () => (window as unknown as { HeadlessCheckout?: HeadlessCheckout }).HeadlessCheckout;
@@ -67,14 +96,21 @@ export function loadShiprocketCheckout(): Promise<HeadlessCheckout> {
     const s = document.createElement("script");
     s.src = SCRIPT;
     s.async = true;
+    const fail = (why: string) => {
+      loading = null;
+      s.remove();
+      reject(new Error(why));
+    };
+    const timer = window.setTimeout(() => fail("Shiprocket checkout script timed out"), 12000);
     s.onload = () => {
+      window.clearTimeout(timer);
       const hc = ready();
       if (hc) resolve(hc);
-      else reject(new Error("Shiprocket checkout script loaded without HeadlessCheckout"));
+      else fail("Shiprocket checkout script loaded without HeadlessCheckout");
     };
     s.onerror = () => {
-      loading = null;
-      reject(new Error("Shiprocket checkout script failed to load"));
+      window.clearTimeout(timer);
+      fail("Shiprocket checkout script failed to load");
     };
     document.body.appendChild(s);
   });
@@ -112,10 +148,7 @@ export async function startShiprocketCheckout(
   })();
   const [hc, res] = await Promise.all([
     loadShiprocketCheckout(),
-    fetch(`${API_BASE}/api/shiprocket/checkout-token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    postJson(`${API_BASE}/api/shiprocket/checkout-token`, {
         items: items.map((i) => ({
           // the exact Shopify variant the site uses (same ids as our catalog)
           variantId: resolveShopifyVariantId(i),
@@ -130,7 +163,6 @@ export async function startShiprocketCheckout(
         couponCode: opts.couponCode || undefined,
         ref: getPartnerRef(), // influencer partner link, if they came from one
         utm,
-      }),
     }),
   ]);
   const data = await res.json().catch(() => null);

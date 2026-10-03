@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { couponDiscount as discountForCoupon, lookupCoupon } from "../utils/coupons";
 import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
-import { isShiprocketCheckoutOn, startShiprocketCheckout } from "../utils/shiprocketCheckout";
+import { isShiprocketCheckoutOn, startShiprocketCheckout, warmShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { auth } from "../lib/firebase";
 import { ALL_PERFUMES } from "../data/perfumes";
 
@@ -131,11 +131,15 @@ export default function CartDrawer({
   onUpdateQuantity,
   onRemoveItem,
   onClearCart,
-  onOpenLoginModal,
   onAddToCart,
 }: CartDrawerProps) {
   const [animatingItemId, setAnimatingItemId] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+  // checkout script ready before "Proceed to checkout" is pressed
+  useEffect(() => {
+    if (isOpen && items.length) warmShiprocketCheckout();
+  }, [isOpen, items.length]);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(() => {
     try {
       return localStorage.getItem("sentire_applied_coupon") || null;
@@ -1409,20 +1413,9 @@ export default function CartDrawer({
                   }
                 }
 
+                // Fallback: the Shopify checkout (it asks for phone/email
+                // itself, so no login step here either).
                 const currentUser = auth.currentUser;
-                const isStoredLoggedIn =
-                  localStorage.getItem("sentire_is_logged_in") === "true";
-                const isLoggedIn = !!currentUser || isStoredLoggedIn;
-
-                if (!isLoggedIn) {
-                  localStorage.setItem("sentire_pending_checkout", "true");
-                  handleCloseSmooth();
-                  if (onOpenLoginModal) {
-                    onOpenLoginModal();
-                  }
-                  return;
-                }
-
                 setIsRedirecting(true);
                 const userEmail =
                   currentUser?.email ||
