@@ -215,11 +215,17 @@ export default function WatchAndBuy({
   const [activeVideoIndexes, setActiveVideoIndexes] = useState<Set<number>>(
     new Set(),
   );
+  // Cards whose <video> stays mounted after they have played once, so
+  // swiping back resumes instantly instead of reloading the clip. Most
+  // recent last; capped so a long swipe doesn't keep every clip in memory.
+  const [mountedVideos, setMountedVideos] = useState<number[]>([]);
+  const videoEls = useRef(new Map<number, HTMLVideoElement>());
 
-  // Smart Video Playback Controller (Desktop: all visible play | Mobile: ONLY centered video plays)
-  // Driven by IntersectionObserver: the browser reports which cards are in
-  // view. (Measuring every card on a 600ms timer and on every scroll forced a
-  // full layout each time, which stalled the hero's animation above.)
+  // Which cards play, driven by IntersectionObserver (measuring every card
+  // on a timer forced a full layout each time and stalled the hero above).
+  //   laptop: every card in the strip
+  //   phone:  the cards that are mostly on screen — the two you can see —
+  //           together; the rest pause
   useEffect(() => {
     const cards = Array.from(
       document.querySelectorAll<HTMLElement>(".watch-carousel-card"),
@@ -233,17 +239,21 @@ export default function WatchAndBuy({
     let sectionOn = false;
 
     const commit = () => {
-      const next = new Set<number>();
-      if (sectionOn) {
-        // phone: only the card crossing the middle of the strip plays
-        const list = [...inView].sort((x, y) => x - y);
-        for (const i of isMobile ? list.slice(0, 1) : list) next.add(i);
-      }
+      const next = sectionOn ? new Set(inView) : new Set<number>();
       setActiveVideoIndexes((prev) =>
         prev.size === next.size && [...next].every((i) => prev.has(i))
           ? prev
           : next,
       );
+      if (next.size) {
+        setMountedVideos((prev) => {
+          const add = [...next].filter((i) => !prev.includes(i));
+          if (!add.length) return prev;
+          // the playing ones are newest, so the cap never drops one of them
+          const keep = prev.filter((i) => !next.has(i));
+          return [...keep, ...next].slice(-Math.max(6, next.size + 2));
+        });
+      }
     };
 
     const cardIO = new IntersectionObserver(
@@ -251,15 +261,18 @@ export default function WatchAndBuy({
         for (const e of entries) {
           const i = parseInt(e.target.getAttribute("data-index") ?? "", 10);
           if (Number.isNaN(i)) continue;
-          if (e.isIntersecting) inView.add(i);
+          const on = isMobile
+            ? e.isIntersecting && e.intersectionRatio >= 0.6
+            : e.isIntersecting;
+          if (on) inView.add(i);
           else inView.delete(i);
         }
         commit();
       },
       {
         root: viewportEl,
-        // phone: a narrow band down the middle; laptop: the whole strip
-        rootMargin: isMobile ? "0px -42% 0px -42%" : "0px 50px 0px 50px",
+        rootMargin: isMobile ? "0px" : "0px 50px 0px 50px",
+        threshold: [0, 0.6, 1],
       },
     );
     cards.forEach((c) => cardIO.observe(c));
@@ -282,6 +295,20 @@ export default function WatchAndBuy({
       sectionIO.disconnect();
     };
   }, [trackIndex]);
+
+  // Play the active cards together, pause the rest (and all of them while
+  // a reel is open full screen).
+  useEffect(() => {
+    const els = [...videoEls.current.entries()];
+    for (const [i, el] of els) {
+      if (activeVideoIndexes.has(i) && activeReelIndex === null) {
+        el.muted = true;
+        if (el.paused) el.play().catch(() => {});
+      } else if (!el.paused) {
+        el.pause();
+      }
+    }
+  }, [activeVideoIndexes, mountedVideos, activeReelIndex]);
 
   useEffect(() => {
     if (activeReelIndex !== null) {
@@ -487,7 +514,7 @@ export default function WatchAndBuy({
             </svg>{" "}
           </button>{" "}
           {/* Viewport */}
-          <div className="relative flex-1 overflow-x-auto scroll-smooth hide-scrollbar md:overflow-hidden watch-carousel-viewport">
+          <div className="relative flex-1 overflow-x-auto overscroll-x-contain hide-scrollbar md:overflow-hidden watch-carousel-viewport">
             {" "}
             {/* Track */}
             <div
@@ -509,7 +536,7 @@ export default function WatchAndBuy({
                     key={i}
                     data-index={i}
                     data-cursor="Play"
-                    className="watch-carousel-card group flex shrink-0 flex-col transition-transform duration-300 hover:scale-[1.02] active:scale-95"
+                    className="watch-carousel-card group flex shrink-0 flex-col md:transition-transform md:duration-300 md:hover:scale-[1.02] md:active:scale-95"
                     style={{ width: `${cardWidth}px` }}
                   >
                     {" "}
@@ -520,22 +547,18 @@ export default function WatchAndBuy({
                       style={{ width: `${cardWidth}px` }}
                     >
                       {" "}
-                      {activeVideoIndexes.has(i) ? (
+                      {mountedVideos.includes(i) ? (
                         <video
                           ref={(el) => {
-                            if (el) {
-                              el.muted = true;
-                              const p = el.play();
-                              if (p !== undefined) p.catch(() => {});
-                            }
+                            if (el) videoEls.current.set(i, el);
+                            else videoEls.current.delete(i);
                           }}
                           src={reel.video}
                           poster={reel.thumb}
-                          autoPlay
                           loop
                           muted
                           playsInline
-                          preload="metadata"
+                          preload="auto"
                           className="watch-carousel-video h-full w-full object-cover"
                         />
                       ) : (
@@ -544,7 +567,9 @@ export default function WatchAndBuy({
                           alt={reel.product}
                           className="h-full w-full object-cover"
                           loading="lazy"
-                         width="600" height="600"/>
+                          width="600"
+                          height="600"
+                        />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />{" "}
                     </div>{" "}

@@ -22,7 +22,7 @@ export default function MobileBottomNav({
     currentPage === "bestsellers" ||
     currentPage === "new-arrivals";
   const isHomeActive = currentPage === "home";
-  const isByobActive = currentPage === "byob";
+  const isDiscoveryActive = currentPage === "discovery-set";
 
   return (
     <>
@@ -167,6 +167,46 @@ export default function MobileBottomNav({
           margin-top: 5px;
         }
 
+        /* Center: the Discovery Set case, turning in 3D (as on its page) */
+        .snav-byob-circle.snav-disc-circle {
+          background: #fbfaf6 !important;
+          border: 1px solid #161616 !important;
+          perspective: 140px;
+          overflow: hidden;
+        }
+        .snav-center.is-active .snav-byob-circle.snav-disc-circle {
+          box-shadow: 0 0 0 2px #f2f2f0, 0 0 0 3px #161616 !important;
+        }
+        .snav-disc-tilt {
+          display: block;
+          transform-style: preserve-3d;
+          transform: rotateX(-14deg);
+        }
+        .snav-disc-box {
+          display: block;
+          position: relative;
+          width: 0;
+          height: 0;
+          transform-style: preserve-3d;
+          animation: snavDiscSpin 7s linear infinite;
+          will-change: transform;
+        }
+        .snav-disc-face {
+          position: absolute;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          background-color: #121212;
+          background-size: cover;
+          background-position: center;
+        }
+        @keyframes snavDiscSpin {
+          from { transform: rotateY(-28deg); }
+          to { transform: rotateY(332deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .snav-disc-box { animation: none; transform: rotateY(-28deg); }
+        }
+
         /* Luxury Cart Badge */
         .snav-cart-badge {
           position: absolute;
@@ -250,33 +290,17 @@ export default function MobileBottomNav({
             </span>{" "}
             <span className="snav-label">Perfumes</span>{" "}
           </button>{" "}
-          {/* 3. CENTER: BYOB */}
+          {/* 3. CENTER: DISCOVERY SET */}
           <button
-            onClick={() => {
-              onNavigate("byob");
-            }}
-            className={`snav-center${isByobActive ? " is-active" : ""}`}
-            aria-label="Build your own bundle"
+            onClick={() => onNavigate("discovery-set")}
+            className={`snav-center${isDiscoveryActive ? " is-active" : ""}`}
+            aria-label="Discovery set"
           >
-            {" "}
-            <span className="snav-byob-circle">
-              {" "}
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#FFFDF8"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                width={24}
-                height={24}
-              >
-                {" "}
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />{" "}
-              </svg>{" "}
-            </span>{" "}
-            <span className="snav-center-label">BYOB</span>{" "}
-          </button>{" "}
+            <span className="snav-byob-circle snav-disc-circle">
+              <MiniDiscoveryBox />
+            </span>
+            <span className="snav-center-label">Discovery</span>
+          </button>
           {/* 4. SEARCH */}
           <button
             onClick={onToggleSearch}
@@ -337,5 +361,39 @@ export default function MobileBottomNav({
         </nav>{" "}
       </div>{" "}
     </>
+  );
+}
+
+// The Discovery Set case at button size: the same five faces as the 3D case
+// on the Discovery Set page (204 × 330 × 152), scaled to the star's size.
+const DISC_FACES = "/discovery/cube";
+const DW = 15;
+const DH = 25;
+const DD = 11;
+
+function MiniDiscoveryBox() {
+  const face = (name: string, w: number, h: number, transform: string) => (
+    <span
+      className="snav-disc-face"
+      style={{
+        width: w,
+        height: h,
+        left: -w / 2,
+        top: -h / 2,
+        transform,
+        backgroundImage: `url(${DISC_FACES}/${name}.webp)`,
+      }}
+    />
+  );
+  return (
+    <span className="snav-disc-tilt" aria-hidden>
+      <span className="snav-disc-box">
+        {face("front", DW, DH, `translateZ(${DD / 2}px)`)}
+        {face("right", DD, DH, `rotateY(90deg) translateZ(${DW / 2}px)`)}
+        {face("back", DW, DH, `rotateY(180deg) translateZ(${DD / 2}px)`)}
+        {face("left", DD, DH, `rotateY(-90deg) translateZ(${DW / 2}px)`)}
+        {face("top", DW, DD, `rotateX(90deg) translateZ(${DH / 2}px)`)}
+      </span>
+    </span>
   );
 }
