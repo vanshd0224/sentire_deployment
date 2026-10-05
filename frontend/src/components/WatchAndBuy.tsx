@@ -28,6 +28,15 @@ const rawReels = [
     initialLikes: 1420,
   },
   {
+    id: "herrlich",
+    thumb: "/images/opt/watch-herrlich.webp?v=v9_reel_update",
+    video: "/videos/watch/herrlich.mp4?v=v9_reel_update",
+    product: "Herrlich 50ml",
+    notes: "Bergamot • Peach • Dark Chocolate",
+    swatch: "/assets/herrlich.png",
+    initialLikes: 760,
+  },
+  {
     id: "calantha",
     thumb: "/images/opt/watch-calantha.webp",
     video: "/videos/watch/calantha.mp4?v=v8_reel_update",
@@ -80,15 +89,6 @@ const rawReels = [
     notes: "Italian Bergamot • Iris Root • Oakmoss",
     swatch: "/assets/personna.png",
     initialLikes: 890,
-  },
-  {
-    id: "herrlich",
-    thumb: "/images/opt/watch-herrlich.webp",
-    video: "/videos/watch/herrlich.mp4",
-    product: "Herrlich 50ml",
-    notes: "Smoky Birch • Leather Accord • Golden Amber",
-    swatch: "/assets/herrlich.png",
-    initialLikes: 760,
   },
   {
     id: "0809",
