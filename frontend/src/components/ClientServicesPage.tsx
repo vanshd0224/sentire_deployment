@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BACKEND_URL } from "../config/backend";
 
 interface ClientServicesPageProps {
   onBackToHome?: () => void;
@@ -266,7 +267,7 @@ export default function ClientServicesPage({
       const backendUrl =
         window.location.hostname.includes("run.app") ||
         window.location.hostname.includes("sentirebypc.com")
-          ? "https://ecommerce-backend-1041917436859.asia-south1.run.app/api/enquiries"
+          ? `${BACKEND_URL}/api/enquiries`
           : "/api/enquiries";
 
       const res = await fetch(backendUrl, {

@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "../config/backend";
 /*
  * The bag's coupons: the site's own codes plus influencer partner codes
  * (looked up on our server). The checkout server applies the same rules
@@ -17,8 +18,7 @@ const SITE: Record<string, CouponRule> = {
 };
 
 const API_BASE =
-  (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
-  "https://ecommerce-backend-1041917436859.asia-south1.run.app";
+  BACKEND_URL;
 const PARTNER_RULES = "sentire_partner_rules";
 
 const normalize = (code?: string | null) => String(code || "").trim().toUpperCase();

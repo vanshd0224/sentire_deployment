@@ -2,13 +2,12 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDsre9XitnehMTO7Du3aw5-vJfLSjZWl0c",
-  authDomain: "sentire-perfumes.firebaseapp.com",
-  projectId: "sentire-perfumes",
-  storageBucket: "sentire-perfumes.firebasestorage.app",
-  messagingSenderId: "646931469677",
-  appId: "1:646931469677:web:466d1c04e48e675949f664",
-  measurementId: "G-3R3PDHT3B0",
+  apiKey: "AIzaSyBxXmQXs5nJe5zd9MBbd9AXZ914eFrwdAc",
+  authDomain: "sentire-bypc.firebaseapp.com",
+  projectId: "sentire-bypc",
+  storageBucket: "sentire-bypc.firebasestorage.app",
+  messagingSenderId: "306952336272",
+  appId: "1:306952336272:web:fe3ef68f5330d6baf7f915",
 };
 
 // Initialize Firebase

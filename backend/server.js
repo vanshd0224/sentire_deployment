@@ -34,6 +34,8 @@ const allowedOrigins = [
   'https://www.sentirebypc.com',
   'https://sentire-perfumes.web.app',
   'https://sentire-perfumes.firebaseapp.com',
+  'https://sentire-bypc.web.app',
+  'https://sentire-bypc.firebaseapp.com',
 ];
 app.use(cors({
   origin: (origin, callback) => {

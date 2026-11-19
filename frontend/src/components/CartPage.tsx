@@ -5,6 +5,7 @@ import { createOrGetShopifyCheckoutUrl } from "../utils/shopifyCart";
 import { isShiprocketCheckoutOn, startShiprocketCheckout, warmShiprocketCheckout } from "../utils/shiprocketCheckout";
 import { ALL_PERFUMES } from "../data/perfumes";
 import { auth } from "../lib/firebase";
+import { BACKEND_URL } from "../config/backend";
 
 export interface CartItem {
   id: string;
@@ -114,7 +115,7 @@ export default function CartPage({
 
     try {
       const res = await fetch(
-        `https://ecommerce-backend-1041917436859.asia-south1.run.app/api/pincode/check?pincode=${pin}`,
+        `${BACKEND_URL}/api/pincode/check?pincode=${pin}`,
       );
       const data = await res.json();
       if (data && data.success) {

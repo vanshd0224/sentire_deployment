@@ -8,7 +8,8 @@
       // One address: Firebase's own domains (where the Shopify store and old
       // links send people) go to the same page on sentirebypc.com, keeping
       // ?utm/fbclid, so checkout, login, the bag and Meta tracking all work.
-      if (/\.(web\.app|firebaseapp\.com)$/.test(location.hostname)) {
+      // (?preview on the web.app address skips it, for checking a deploy)
+      if (/\.(web\.app|firebaseapp\.com)$/.test(location.hostname) && !/[?&]preview/.test(location.search)) {
         location.replace("https://sentirebypc.com" + location.pathname + location.search + location.hash);
       }
     </script>
@@ -588,8 +589,8 @@
     // 3. Call Gemini RAG LLM Backend API
     try {
       const backendUrl = window.location.hostname.includes('run.app') 
-        ? 'https://ecommerce-backend-1041917436859.asia-south1.run.app/chat'
-        : 'https://ecommerce-backend-1041917436859.asia-south1.run.app/chat';
+        ? 'https://ecommerce-backend-306952336272.asia-south1.run.app/chat'
+        : 'https://ecommerce-backend-306952336272.asia-south1.run.app/chat';
 
       const res = await fetch(backendUrl, {
         method: 'POST',

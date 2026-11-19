@@ -1,4 +1,5 @@
 import { rememberPartnerRule } from "./coupons";
+import { BACKEND_URL } from "../config/backend";
 
 /*
  * Influencer partner links: sentirebypc.com/r/CODE (or any page with
@@ -7,8 +8,7 @@ import { rememberPartnerRule } from "./coupons";
  * checkout then credits the order to them.
  */
 export const API_BASE =
-  (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
-  "https://ecommerce-backend-1041917436859.asia-south1.run.app";
+  BACKEND_URL;
 
 const REF_KEY = "sentire_partner_ref";
 const REF_DAYS = 30;

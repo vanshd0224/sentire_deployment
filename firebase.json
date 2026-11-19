@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "sentire-perfumes",
+    "site": "sentire-bypc",
     "public": "frontend/dist",
     "cleanUrls": true,
     "trailingSlash": false,

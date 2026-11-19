@@ -2,6 +2,7 @@ import { prepareShopifyCheckoutItems, resolveShopifyVariantId, SHOPIFY_VARIANT_M
 import { ALL_PERFUMES } from "../data/perfumes";
 import { trackInitiateCheckout } from "./analytics";
 import { getPartnerRef } from "./partners";
+import { BACKEND_URL } from "../config/backend";
 
 /*
  * Shiprocket Checkout (custom website integration). Our server signs the
@@ -17,8 +18,7 @@ import { getPartnerRef } from "./partners";
 export const SR_CHECKOUT_FOR_EVERYONE = true;
 
 const API_BASE =
-  (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
-  "https://ecommerce-backend-1041917436859.asia-south1.run.app";
+  BACKEND_URL;
 const SCRIPT = "https://checkout-ui.shiprocket.com/assets/js/channels/shopify.js";
 const STYLE = "https://checkout-ui.shiprocket.com/assets/styles/shopify.css";
 const FLAG = "sentire_sr_checkout";

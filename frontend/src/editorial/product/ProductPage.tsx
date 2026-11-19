@@ -6,6 +6,7 @@ import { getPerfumeReviews, getPerfumeReviewStats, type Review } from "../../dat
 import { trackViewContent } from "../../utils/analytics";
 import ProductCard from "../ProductCard";
 import { EASE_OUT_EXPO } from "../motion";
+import { BACKEND_URL } from "../../config/backend";
 
 /*
  * The product page, in the house style: the bottle large on the left, the
@@ -247,7 +248,7 @@ export default function ProductPage({
     setChecking(true);
     try {
       const res = await fetch(
-        `https://ecommerce-backend-1041917436859.asia-south1.run.app/api/pincode/check?pincode=${p}`,
+        `${BACKEND_URL}/api/pincode/check?pincode=${p}`,
       );
       const data = await res.json();
       if (data?.success) {

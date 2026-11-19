@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "sentire-perfumes"
+    "default": "sentire-bypc"
   },
   "targets": {
-    "sentire-perfumes": {
+    "sentire-bypc": {
       "hosting": {
-        "sentire-perfumes": [
-          "sentire-perfumes"
+        "sentire-bypc": [
+          "sentire-bypc"
         ]
       }
     }

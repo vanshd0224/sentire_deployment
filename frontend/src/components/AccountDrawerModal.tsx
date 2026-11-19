@@ -9,13 +9,14 @@ import {
   signInWithRedirect,
   getRedirectResult,
 } from "firebase/auth";
+import { BACKEND_URL } from "../config/backend";
 
 // our server (Cloud Run) on the live site; VITE_BACKEND_URL or the dev proxy locally
 const AUTH_BASE =
   (import.meta.env.VITE_BACKEND_URL as string | undefined) ||
   (typeof window !== "undefined" &&
   (window.location.hostname.includes("run.app") || window.location.hostname.includes("sentirebypc.com"))
-    ? "https://ecommerce-backend-1041917436859.asia-south1.run.app"
+    ? BACKEND_URL
     : "");
 
 interface AccountDrawerModalProps {

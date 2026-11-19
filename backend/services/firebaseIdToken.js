@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
  * against Google's published keys, without the firebase-admin SDK.
  * Returns the token's claims (email, email_verified, …) or throws.
  */
-const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'sentire-perfumes';
+const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'sentire-bypc';
 const CERTS_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com';
 
 let certs = null;
