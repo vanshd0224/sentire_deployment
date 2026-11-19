@@ -44,6 +44,12 @@ jobs:
           DB_URI: ${{ secrets.MONGODB_URI }}
           # Gmail app password for sentireforwork@gmail.com (customer enquiry emails)
           MAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          # Phone OTP (account login), the chatbot, and Meta's server-side events
+          MSG91_AUTH_KEY: ${{ secrets.MSG91_AUTH_KEY }}
+          MSG91_WIDGET_ID: ${{ secrets.MSG91_WIDGET_ID }}
+          MSG91_TOKEN_AUTH: ${{ secrets.MSG91_TOKEN_AUTH }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          META_CAPI_TOKEN: ${{ secrets.META_CAPI_TOKEN }}
         run: |
           VARS=()
           if [ -n "$DB_URI" ]; then
@@ -52,6 +58,11 @@ jobs:
           if [ -n "$MAIL_PASS" ]; then
             VARS+=("EMAIL_PASS=${MAIL_PASS}")
           fi
+          for NAME in MSG91_AUTH_KEY MSG91_WIDGET_ID MSG91_TOKEN_AUTH GEMINI_API_KEY META_CAPI_TOKEN; do
+            if [ -n "${!NAME}" ]; then
+              VARS+=("${NAME}=${!NAME}")
+            fi
+          done
           if [ -n "$SR_KEY" ] && [ -n "$SR_SECRET" ]; then
             VARS+=("SHIPROCKET_CHECKOUT_API_KEY=${SR_KEY}" "SHIPROCKET_CHECKOUT_API_SECRET=${SR_SECRET}")
           fi
