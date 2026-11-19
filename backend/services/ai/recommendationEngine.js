@@ -8,7 +8,7 @@ class RecommendationEngine {
     this.apiKey = process.env.GEMINI_API_KEY;
     if (this.apiKey && this.apiKey !== 'mock_gemini_key') {
       this.genAI = new GoogleGenerativeAI(this.apiKey);
-      this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      this.model = this.genAI.getGenerativeModel({ model: 'gemini-flash-lite-latest' });
     }
   }
 

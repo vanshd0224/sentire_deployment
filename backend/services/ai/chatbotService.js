@@ -6,12 +6,12 @@ const sentireDataset = require('../../data/sentire_dataset.json');
 
 class ChatbotService {
   constructor() {
-    this.apiKey = process.env.GEMINI_API_KEY || "AIzaSyDsre9XitnehMTO7Du3aw5-vJfLSjZWl0c";
+    this.apiKey = process.env.GEMINI_API_KEY;
+    // Google retires numbered models; the "-latest" names always point at
+    // the current ones, so the chatbot keeps working without code changes.
     this.candidateModels = [
-      "gemini-2.0-flash",
-      "gemini-1.5-flash",
-      "gemini-1.5-pro",
-      "gemini-2.0-flash-lite"
+      "gemini-flash-lite-latest",
+      "gemini-flash-latest"
     ];
     logger.info('Multi-Model Fallback RAG LLM Engine Active with live API key');
   }
